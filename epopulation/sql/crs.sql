@@ -5,7 +5,7 @@ USE `epopulation`;
 DROP TABLE IF EXISTS `birth_register`;
 
 CREATE TABLE `birth_register` (
-  `serialNumber` VARCHAR(20) NOT NULL AUTO_INCREMENT,
+  `serialNumber` VARCHAR(20) NOT NULL,
   `childDOB` DATETIME,
   `childBirthDistrict` VARCHAR(50),
   `childBirthDivision` VARCHAR(50),

@@ -136,7 +136,7 @@
         </dependency>
 
         <dependency>
-            <groupId>jasperreports</groupId>
+            <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>3.7.2</version>
         </dependency>
