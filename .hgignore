@@ -1,2 +1,4 @@
-epopulation/target
-boru
+target
+epopulation-register.ipr
+epopulation-register.iws
+epopulation-register.iml
