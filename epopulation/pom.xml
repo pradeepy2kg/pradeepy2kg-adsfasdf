@@ -15,6 +15,8 @@
 	        <!-- Install JTA using:
 	            mvn install:install-file -DgroupId=javax.transaction -DartifactId=jta 
 	            -Dversion=1.0.1B -Dpackaging=jar -Dfile=c:\path\to\jar\jta-1.0.1B.jar
+
+	            
 		-->
 
         <!-- Java Transactions -->
@@ -136,7 +138,7 @@
         </dependency>
 
         <dependency>
-            <groupId>jasperreports</groupId>
+            <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>3.7.2</version>
         </dependency>
