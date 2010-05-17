@@ -7,7 +7,6 @@ import java.util.Date;
 @Table(name = "birth_register")
 public class BirthRegister {
     @Id
-    @GeneratedValue
     private String serialNumber;
 
     private Date childDOB;
