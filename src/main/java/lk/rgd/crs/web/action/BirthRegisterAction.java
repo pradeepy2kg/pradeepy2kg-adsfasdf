@@ -1,15 +1,14 @@
 package lk.rgd.crs.web.action;
 
 
+import lk.rgd.crs.api.domain.BirthRegister;
+import lk.rgd.crs.api.domain.Person;
+import lk.rgd.crs.api.service.BirthRegisterService;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.log4j.Logger;
-import lk.rgd.crs.api.BirthRegister;
-import lk.rgd.crs.api.Person;
-import lk.rgd.crs.api.BirthRegisterService;
 import lk.rgd.crs.web.util.Constant;
 import lk.rgd.crs.web.util.EPopDate;
-import lk.rgd.crs.web.util.MasterDataLoad;
 
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
