@@ -10,6 +10,7 @@ import org.apache.struts2.interceptor.RequestAware;
 import org.apache.log4j.Logger;
 import lk.rgd.crs.web.util.Constant;
 import lk.rgd.crs.web.util.EPopDate;
+import lk.rgd.crs.web.util.LoginBD;
 
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,9 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
+    private String userName;
+    private String password;
+
     private String childDOB;
     private String year;
     private String month;
@@ -41,8 +45,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Logger log = Logger.getLogger(this.getClass().getName());
     /*pageNo is used to decide the next pageNo of the Birht Registration Form*/
     private int pageNo;
+    private LoginBD loginBD = new LoginBD();
 
-    private int language;
+    private String language;
     private List<Person> myList;
     private Map session;
 
@@ -50,7 +55,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
+    /*
+   *  User Login of the EPR System.
+   * */
     public String login() {
+        if (loginBD.login(userName, password)) {
+            this.setLanguage(loginBD.getLanguage(userName));
+            return "success";
+        }
+        return "error";
+    }
+
+
+    /**
+     * Set the Language that the user preffered to work.
+     */
+    public String selectLanguage() {
+        this.setLanguage(language);
         return "success";
     }
 
@@ -121,27 +142,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         /** List to use as our JasperReports dataSource.
          * Store people in our dataSource list (normally would come from database).
          */
-        language = 1;
-        switch (language) {
-            case 1: {
-                Person p = new Person(new Long(1), "amith", "jayasekara");
-                myList = new ArrayList<Person>();
-                myList.add(p);
-                break;
-            }
-            case 2: {
-                Person p = new Person(new Long(1), "", "");
-                myList = new ArrayList<Person>();
-                myList.add(p);
-                break;
-            }
-            case 3: {
-                Person p = new Person(new Long(1), "amith", "jayasekara");
-                myList = new ArrayList<Person>();
-                myList.add(p);
-                break;
-            }
-        }
         return "success";
     }
 
@@ -206,11 +206,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.pageNo = pageNo;
     }
 
-    public int getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(int language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
@@ -260,6 +260,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setChildDOB(String childDOB) {
         this.childDOB = childDOB;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUserName(String userName) {
+
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+
+        return password;
+    }
+
+    public String getUserName() {
+
+        return userName;
     }
 }
 

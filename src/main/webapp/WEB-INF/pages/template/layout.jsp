@@ -17,6 +17,12 @@
     <%-- Menu & Body--%>
     <div id="layout-body">
         <div id="body-sidebar">
+            <s:form action="eprLanguage.do" method="POST"
+                    name="eprLanguage">
+                <s:label value="Select your language"></s:label>
+                <s:select list="{'English','Sinhala','Tamil'}" name="language"></s:select>
+                <s:submit value="select"></s:submit>
+            </s:form><br><br>
             <tiles:insertAttribute name="menu"/>
         </div>
         <div id="body-content">

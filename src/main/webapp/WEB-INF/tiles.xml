@@ -35,6 +35,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationForm4.jsp"/>
     </definition>
 
+    <definition name="epr.home" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/home.jsp"/>
+    </definition>
+
     <definition name="epr.error" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/error.jsp"/>
     </definition>

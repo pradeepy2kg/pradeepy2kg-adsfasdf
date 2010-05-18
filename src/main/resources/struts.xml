@@ -22,13 +22,18 @@
     <package name="epr" namespace="/" extends="NG">
 
         <action name="eprLogin" class="lk.rgd.crs.web.action.BirthRegisterAction" method="login">
-            <result type="tiles" name="success">epr.welcome</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprHome" class="lk.rgd.crs.web.action.BirthRegisterAction" method="welcome">
             <result type="tiles" name="success">epr.welcome</result>
         </action>
 
+        <action name="eprLanguage" class="lk.rgd.crs.web.action.BirthRegisterAction" method="selectLanguage">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+                
         <action name="eprBirthRegistration_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
             <result type="tiles" name="pageLoad">epr.birthRegistration_form1</result>
             <result type="tiles" name="form2">epr.birthRegistration_form2</result>
