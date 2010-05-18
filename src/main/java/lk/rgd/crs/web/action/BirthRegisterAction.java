@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 
 
 /**
@@ -28,7 +29,7 @@ import com.opensymphony.xwork2.ActionContext;
  * @author Duminda
  */
 
-public class BirthRegisterAction extends ActionSupport implements SessionAware {
+public class BirthRegisterAction extends ActionSupport implements SessionAware, ScopedModelDriven<BirthRegister> {
 
     private String userName;
     private String password;
@@ -51,8 +52,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private List<Person> myList;
     private Map session;
 
+    private String scopeKey;
+
+    BirthRegisterService service;
+
     public String welcome() {
         return "success";
+    }
+
+    public void BirthRegisterAction(BirthRegisterService service) {
+        this.service = service;
     }
 
     /*
@@ -76,9 +85,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String pageLoad() {
-        //birthRegister = new BirthRegister();
-        //session = ActionContext.getContext().getSession();
-        //session.put("birthRegister", birthRegister);
+        birthRegister = new BirthRegister();
+        setModel(birthRegister);
         return "pageLoad";
     }
 
@@ -93,6 +101,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String birthRegistrationPreProcessor() {
         switch (pageNo) {
             case 1:
+                log.debug("inside page1 submission. value of serial is " + birthRegister.getSerialNumber());
+                log.debug("inside page1 submission. value of serial is (from session) " + ((BirthRegister)(session.get("birthRegister"))).getSerialNumber());
                 //birthRegister.setChildDOB(new EPopDate().getDate(year + "/" + month + "/" + day));
                 return "form2";
             case 2:
@@ -262,22 +272,35 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.childDOB = childDOB;
     }
 
+    public void setModel(BirthRegister o) {
+        birthRegister = o;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setUserName(String userName) {
+    public void setScopeKey(String s) {
+        this.scopeKey = s;
+    }
 
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public String getPassword() {
+    public String getScopeKey() {
+        return scopeKey;
+    }
 
+    public String getPassword() {
         return password;
     }
 
-    public String getUserName() {
+    public BirthRegister getModel() {
+        return birthRegister;
+    }
 
+    public String getUserName() {
         return userName;
     }
 }
