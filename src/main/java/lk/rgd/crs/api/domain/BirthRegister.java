@@ -8,6 +8,7 @@ import java.util.Date;
 public class BirthRegister {
     @Id
     private String serialNumber;
+    private String confirmSerialNumber;
 
     private Date childDOB;
     private String childBirthDistrict;           // place of birth
@@ -61,6 +62,24 @@ public class BirthRegister {
     private String informantPhoneNo;
     private String informantEmail;
     private String authority;
+
+    private String birthRegistrationSerialNumber;
+    private String year;
+    private String month;
+    private String day;
+    private String dobYear;
+    private String dobMonth;
+    private String dobDay;
+    private String marriedStatus;
+
+    private String confirmantFullName;
+    private String confirmYear;
+    private String confirmMonth;
+    private String confirmDay;
+    private String finalizeYear;
+    private String finalizeMonth;
+    private String finalizeDay;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -431,5 +450,133 @@ public class BirthRegister {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public String getBirthRegistrationSerialNumber() {
+        return birthRegistrationSerialNumber;
+    }
+
+    public void setBirthRegistrationSerialNumber(String birthRegistrationSerialNumber) {
+        this.birthRegistrationSerialNumber = birthRegistrationSerialNumber;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getDobYear() {
+        return dobYear;
+    }
+
+    public void setDobYear(String dobYear) {
+        this.dobYear = dobYear;
+    }
+
+    public String getDobMonth() {
+        return dobMonth;
+    }
+
+    public void setDobMonth(String dobMonth) {
+        this.dobMonth = dobMonth;
+    }
+
+    public String getDobDay() {
+        return dobDay;
+    }
+
+    public void setDobDay(String dobDay) {
+        this.dobDay = dobDay;
+    }
+
+    public String getMarriedStatus() {
+        return marriedStatus;
+    }
+
+    public void setMarriedStatus(String marriedStatus) {
+        this.marriedStatus = marriedStatus;
+    }
+
+    public String getConfirmantFullName() {
+        return confirmantFullName;
+    }
+
+    public void setConfirmantFullName(String confirmantFullName) {
+        this.confirmantFullName = confirmantFullName;
+    }
+
+    public String getConfirmYear() {
+        return confirmYear;
+    }
+
+    public void setConfirmYear(String confirmYear) {
+        this.confirmYear = confirmYear;
+    }
+
+    public String getConfirmMonth() {
+        return confirmMonth;
+    }
+
+    public void setConfirmMonth(String confirmMonth) {
+        this.confirmMonth = confirmMonth;
+    }
+
+    public String getConfirmDay() {
+        return confirmDay;
+    }
+
+    public void setConfirmDay(String confirmDay) {
+        this.confirmDay = confirmDay;
+    }
+
+    public String getFinalizeYear() {
+        return finalizeYear;
+    }
+
+    public void setFinalizeYear(String finalizeYear) {
+        this.finalizeYear = finalizeYear;
+    }
+
+    public String getFinalizeMonth() {
+        return finalizeMonth;
+    }
+
+    public void setFinalizeMonth(String finalizeMonth) {
+        this.finalizeMonth = finalizeMonth;
+    }
+
+    public String getFinalizeDay() {
+        return finalizeDay;
+    }
+
+    public void setFinalizeDay(String finalizeDay) {
+        this.finalizeDay = finalizeDay;
+    }
+
+    public String getConfirmSerialNumber() {
+        return confirmSerialNumber;
+    }
+
+    public void setConfirmSerialNumber(String confirmSerialNumber) {
+        this.confirmSerialNumber = confirmSerialNumber;
     }
 }

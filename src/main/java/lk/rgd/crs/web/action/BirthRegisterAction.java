@@ -1,19 +1,22 @@
 package lk.rgd.crs.web.action;
 
 
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
+import lk.rgd.crs.api.domain.District;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegisterService;
 import lk.rgd.crs.web.util.LoginBD;
-
+import lk.rgd.crs.web.util.MasterDataLoad;
 import org.apache.struts2.interceptor.SessionAware;
-import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
-import java.util.*;
-
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,9 +52,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
     private List<Person> myList;
     private Map session;
 
-    private String scopeKey;
-
-    BirthRegisterService service;
+	private String scopeKey;
+    private ArrayList<District> districtList;
+	BirthRegisterService service;
 
     public String welcome() {
         return "success";
@@ -82,6 +85,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
     }
 
     public String pageLoad() {
+		populate();
         birthRegister = new BirthRegister();
         setModel(birthRegister);
         return "pageLoad";
@@ -95,6 +99,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
      *
      * @return String which decides next page to be loaded
      */
+    public BirthRegisterAction(BirthRegisterService service) {
+//        MasterDataLoad masterDataLoad=MasterDataLoad.getInstance();
+//        List<String> districtList=masterDataLoad.loadDistricts();
+//        log.debug("District List:"+districtList);
+//        List<String> countryList=masterDataLoad.loadCountries();
+
+        this.service = service;
+    }
+
     public String birthRegistrationPreProcessor() {
         switch (pageNo) {
             case 1:
@@ -167,7 +180,24 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
         return "success";
     }
 
-    public String getFatherDOB() {
+    public String populate(){
+        MasterDataLoad masterDataLoad=MasterDataLoad.getInstance();
+
+        setDistrictList((ArrayList<District>) masterDataLoad.loadDistricts(1));
+        return "populate";
+    }
+
+    public String birthConfirmationPreProcessor(){
+        // still implementing
+        return "form2";
+    }
+
+    public String birthConfirmFinalizer() {
+        // still implementing));
+        return "success";
+    }
+	
+	public String getFatherDOB() {
         return fatherDOB;
     }
 
@@ -301,6 +331,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
 
     public String getUserName() {
         return userName;
+    }
+
+    public ArrayList<District> getDistrictList() {
+        return districtList;
+    }
+
+    public void setDistrictList(ArrayList<District> districtList) {
+        this.districtList = districtList;
     }
 }
 

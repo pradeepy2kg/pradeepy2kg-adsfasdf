@@ -12,8 +12,7 @@
 <html>
 <head><title>Simple jsp page</title></head>
 <body>jasper testing
-<%
-      %>
+<%        %>
 
 give a brit certificate
 </body>
