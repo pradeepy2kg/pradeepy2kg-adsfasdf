@@ -12,7 +12,7 @@
         name="birthRegistrationForm1">
     <div id="birth-registration-form-1-body">
          <div id="birth-registration-form-1-serial">
-            <s:textfield name="session.birthRegister.serialNumber"/>
+            <s:textfield name="birthRegister.serialNumber"/>
         </div>
         <div id="date-of-birth">
             <s:select list="{'2009','2010','2011'}" name="year"/>

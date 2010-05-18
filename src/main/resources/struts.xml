@@ -12,14 +12,19 @@
     <constant name="struts.devMode" value="true" />
 
     <package name="NG" namespace="/NG" extends="struts-default">
-
         <result-types>
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
-
     </package>
 
     <package name="epr" namespace="/" extends="NG">
+        <interceptors>
+            <interceptor name="scopedModelDriven" class="com.opensymphony.interceptor.ScopedModelDrivenInterceptor">
+                 <param name="scope">session</param>
+                 <param name="name">birthRegister</param>
+                 <param name="className">lk.rgd.crs.api.domain.BirthRegister</param>
+             </interceptor>
+        </interceptors>
 
         <action name="eprLogin" class="lk.rgd.crs.web.action.BirthRegisterAction" method="login">
             <result type="tiles" name="success">epr.home</result>
@@ -35,6 +40,7 @@
         </action>
                 
         <action name="eprBirthRegistration_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
+            <interceptor-ref name="scopedModelDriven"/>
             <result type="tiles" name="pageLoad">epr.birthRegistration_form1</result>
             <result type="tiles" name="form2">epr.birthRegistration_form2</result>
             <result type="tiles" name="form3">epr.birthRegistration_form3</result>
@@ -48,22 +54,5 @@
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.newBirthCertificate</result>
         </action>
-
     </package>
-
-    <!--
-    jasper reports  -->
-
-    <!--<package name="default" namespace="/" extends="jasperreports-default">-->
-        <!--<action name="epr_birth_conformation_report" class="lk.rgd.crs.web.action.BirthRegisterAction"-->
-                <!--method="getBirtConfermationReport">-->
-            <!--<result name="success" type="jasper">-->
-                <!--<param name="location">-->
-                    <!--/templates/birth_test_part1_template.jasper-->
-                <!--</param>-->
-                <!--<param name="dataSource">myList</param>-->
-                <!--<param name="format">PDF</param>-->
-            <!--</result>-->
-        <!--</action>-->
-    <!--</package>-->
 </struts>
