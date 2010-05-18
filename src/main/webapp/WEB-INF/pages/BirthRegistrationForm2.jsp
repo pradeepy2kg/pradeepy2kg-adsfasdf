@@ -11,7 +11,7 @@
 <s:form action="eprBirthRegistration_birthRegistrationPreProcessor.do" method="POST"
         name="birthRegistrationForm2">
      <div id="birth-registration-form-2-body">
-        <div id="father-serial-no"><s:textfield name="birthRegister.serialNumber"/></div>
+        <div id="father-serial-no"><s:label value="birthRegister.serialNumber"/></div>
         <div id="father-nic-no"><s:textfield name="birthRegister.fathersNIC" /></div>
         <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
         <div id="father-country"><s:textfield name="birthRegister.fatherForeignerCountry"/></div>
