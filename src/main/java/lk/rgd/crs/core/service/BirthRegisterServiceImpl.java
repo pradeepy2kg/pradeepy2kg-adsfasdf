@@ -1,7 +1,7 @@
-package lk.rgd.crs.core;
+package lk.rgd.crs.core.service;
 
-import lk.rgd.crs.api.BirthRegisterService;
-import lk.rgd.crs.api.BirthRegister;
+import lk.rgd.crs.api.service.BirthRegisterService;
+import lk.rgd.crs.api.domain.BirthRegister;
 
 import org.apache.log4j.Logger;
 

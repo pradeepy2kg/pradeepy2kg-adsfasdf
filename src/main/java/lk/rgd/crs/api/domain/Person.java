@@ -1,4 +1,4 @@
-package lk.rgd.crs.api;
+package lk.rgd.crs.api.domain;
 
 public class Person {
     private Long id;

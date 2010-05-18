@@ -1,4 +1,4 @@
-package lk.rgd.crs.api;
+package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
 import java.util.Date;
