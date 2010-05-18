@@ -49,6 +49,13 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprBirthConfirmation_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
+            <result type="tiles" name="pageLoad">epr.birthConfirmation_form1</result>
+            <result type="tiles" name="form2">epr.birthConfirmation_form2</result>
+            <result type="tiles" name="success">epr.welcome</result>
+            <result type="tiles" name="error">epr.newBirthCertificate</result>
+        </action>
+
         <action name="eprBirth_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
             <result type="tiles" name="pageLoad">epr.newBirthCertificate</result>
             <result type="tiles" name="success">epr.welcome</result>

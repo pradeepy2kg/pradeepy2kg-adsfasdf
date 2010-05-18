@@ -7,4 +7,7 @@
     <tr>
         <td><a href="eprBirthRegistration_pageLoad.do" >Birth Registration</a></td>
     </tr>
+    <tr>
+        <td><a href="eprBirthConfirmation_pageLoad.do">Birth Confirmation</a> </td>
+    </tr>
 </table>
