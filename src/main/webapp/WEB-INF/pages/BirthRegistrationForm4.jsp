@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%session.setAttribute("birthRegister", request.getAttribute("birthRegister"));%>
+
 <s:form action="eprBirthRegistration_birthRegisterFinalizer.do" name="birthRegistrationForm4">
    <div id="birth-registration-form-4-body">
         <div id="serial-no"><s:textfield name="birthRegister.serialNumber" value="%{#session.birthRegister.serialNumber}"/></div>

@@ -4,19 +4,15 @@ package lk.rgd.crs.web.action;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegisterService;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.SessionAware;
-import org.apache.struts2.interceptor.RequestAware;
-import org.apache.log4j.Logger;
-import lk.rgd.crs.web.util.Constant;
-import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.crs.web.util.LoginBD;
 
+import org.apache.struts2.interceptor.SessionAware;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
-import javax.servlet.http.HttpServletRequest;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 
 
@@ -31,6 +27,8 @@ import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 
 public class BirthRegisterAction extends ActionSupport implements SessionAware, ScopedModelDriven<BirthRegister> {
 
+    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+
     private String userName;
     private String password;
 
@@ -43,7 +41,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
     private String motherDOB;
     private String dateOfMarriage;
     private BirthRegister birthRegister;
-    private Logger log = Logger.getLogger(this.getClass().getName());
     /*pageNo is used to decide the next pageNo of the Birht Registration Form*/
     private int pageNo;
     private LoginBD loginBD = new LoginBD();
@@ -101,11 +98,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
     public String birthRegistrationPreProcessor() {
         switch (pageNo) {
             case 1:
-                log.debug("inside page1 submission. value of serial is " + birthRegister.getSerialNumber());
-                log.debug("inside page1 submission. value of serial is (from session) " + ((BirthRegister)(session.get("birthRegister"))).getSerialNumber());
+                logger.debug("inside page 1 submission. value of serial is {}", birthRegister.getSerialNumber());
+                //log.debug("inside page1 submission. value of serial is (from session) " + ((BirthRegister)(session.get("birthRegister"))).getSerialNumber());
                 //birthRegister.setChildDOB(new EPopDate().getDate(year + "/" + month + "/" + day));
                 return "form2";
             case 2:
+                logger.debug("inside page 2 submission. value of serial is {}", birthRegister.getSerialNumber());
                 /*temp is a tempory  instance which holds the previously entered birth registration information*/
 //                    BirthRegister temp=(BirthRegister) session.get("birthRegister");
 //                    temp.setFathersNIC(birthRegister.getFathersNIC());
@@ -131,6 +129,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
 //                    session.put("birthRegister", temp);
                 return "form3";
             case 3:
+                logger.debug("inside page 2 submission. value of serial is {}", birthRegister.getSerialNumber());
 
 //                birthRegister = (BirthRegister) session.get("birthRegister");
 //                birthRegister.setDateOfMarriage(new EPopDate().getDate(dateOfMarriage));
