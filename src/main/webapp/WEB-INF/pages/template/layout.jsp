@@ -6,6 +6,7 @@
     <title>E-Population System</title>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
+    <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
 </head>
 <body>
 <div id="wrapper">
