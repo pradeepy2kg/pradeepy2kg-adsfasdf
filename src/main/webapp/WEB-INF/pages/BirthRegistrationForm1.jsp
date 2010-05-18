@@ -20,19 +20,19 @@
             <s:select list="{'01','02','03'}" name="day"/>
         </div>
         <div id="district">
-            <s:select list="{'Colombo','Gampaha','Kaluthara'}" name="session.birthRegister.childBirthDistrict"/>
+            <s:select list="{'Colombo','Gampaha','Kaluthara'}" name="birthRegister.childBirthDistrict"/>
         </div>
-        <div id="division"><s:textfield name="session.birthRegister.childBirthDivision"/></div>
-        <div id="place"><s:textfield name="session.birthRegister.childBirthPlace"/></div>
-        <div id="name"><s:textfield name="session.birthRegister.childFullNameOfficialLang"/></div>
-        <div id="name-in-english"><s:textfield name="session.birthRegister.childFullNameEnglish"/></div>
+        <div id="division"><s:textfield name="birthRegister.childBirthDivision"/></div>
+        <div id="place"><s:textfield name="birthRegister.childBirthPlace"/></div>
+        <div id="name"><s:textfield name="birthRegister.childFullNameOfficialLang"/></div>
+        <div id="name-in-english"><s:textfield name="birthRegister.childFullNameEnglish"/></div>
         <div id="gender">
-            <s:select list="{'Male','Female'}" name="session.birthRegister.childGender"/>
+            <s:select list="{'Male','Female'}" name="birthRegister.childGender"/>
         </div>
-        <div id="birth-weight"><s:textfield name="session.birthRegister.childBirthWeight"/></div>
-        <div id="no-of-children"><s:textfield name="session.birthRegister.noOfLiveChildren"/></div>
-        <div id="multiple-no-of-children"><s:textfield name="session.birthRegister.noOfMultipleBirths"/></div>
-        <div id="hospital-code"><s:textfield name="session.birthRegister.hospitalOrGNCode"/></div>
+        <div id="birth-weight"><s:textfield name="birthRegister.childBirthWeight"/></div>
+        <div id="no-of-children"><s:textfield name="birthRegister.noOfLiveChildren"/></div>
+        <div id="multiple-no-of-children"><s:textfield name="birthRegister.noOfMultipleBirths"/></div>
+        <div id="hospital-code"><s:textfield name="birthRegister.hospitalOrGNCode"/></div>
     </div>
     <s:hidden name="pageNo" value="1" />
     <div class="button"><s:submit value="NEXT"/></div>
