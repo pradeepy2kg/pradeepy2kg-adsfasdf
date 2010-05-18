@@ -129,7 +129,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
 //                    session.put("birthRegister", temp);
                 return "form3";
             case 3:
-                logger.debug("inside page 2 submission. value of serial is {}", birthRegister.getSerialNumber());
+                logger.debug("inside page 3 submission. value of serial is {}", birthRegister.getSerialNumber());
 
 //                birthRegister = (BirthRegister) session.get("birthRegister");
 //                birthRegister.setDateOfMarriage(new EPopDate().getDate(dateOfMarriage));
