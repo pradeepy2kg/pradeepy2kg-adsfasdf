@@ -1,6 +1,5 @@
 package lk.rgd.crs.web.action;
 
-
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 import lk.rgd.crs.api.domain.District;
@@ -17,7 +16,6 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * EntryAction is a struts action class
@@ -305,28 +303,28 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
         birthRegister = o;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public BirthRegister getModel() {
+        return birthRegister;
     }
 
     public void setScopeKey(String s) {
         this.scopeKey = s;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getScopeKey() {
         return scopeKey;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public BirthRegister getModel() {
-        return birthRegister;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserName() {
@@ -341,4 +339,3 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
         this.districtList = districtList;
     }
 }
-
