@@ -64,6 +64,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void BirthRegisterAction(BirthRegisterService service) {
         this.service = service;
+        birthRegister = new BirthRegister();
     }
 
     /*
@@ -98,26 +99,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
       *  This will have no performace impact as they will be cached in the backend.
       */
     public String birthRegistration() {
+        logger.debug("Step {} of 4. serial number {}",
+           pageNo, birthRegister.getSerialNumber());
+
         switch (pageNo) {
             case 0 :
-                logger.debug("preparing to data capture, step {}", pageNo);
-                populate();
-                break;
             case 1 :
             case 2 :
             case 3 :
-                logger.debug("inside page {} submission with serial {}",
-                    pageNo, birthRegister.getSerialNumber());
                 populate();
-                break;
+                return "form" + pageNo;
             case 4 :
-                //todo persist
-                logger.debug("persisting BDF, step {}", pageNo);
+                //todo persist after validations
                 return "success";
             default : return "error";
         }
-
-        return "form" + pageNo;
     }
 
     /**
