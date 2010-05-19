@@ -8,17 +8,7 @@
     <packaging>war</packaging>
     <name>epopulation-register</name>
 
-
     <dependencies>
-		<!-- Download JTA from here: http://java.sun.com/products/jta/
-	            and rename it to jta-1.0.1B.jar-->
-	        <!-- Install JTA using:
-	            mvn install:install-file -DgroupId=javax.transaction -DartifactId=jta 
-	            -Dversion=1.0.1B -Dpackaging=jar -Dfile=c:\path\to\jar\jta-1.0.1B.jar
-
-	            
-		-->
-
         <!-- Java Transactions -->
         <dependency>
             <groupId>javax.transaction</groupId>
@@ -135,7 +125,7 @@
             <artifactId>struts2-core</artifactId>
             <version>2.0.6</version>
         </dependency>
-		
+
 		<dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-spring-plugin</artifactId>
