@@ -7,8 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<s:form action="eprBirthRegistration_birthRegistrationPreProcessor.do" method="POST"
-        name="birthRegistrationForm1">
+<s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1">
     <div id="birth-registration-form-1-body">
          <div id="birth-registration-form-1-serial">
             <s:textfield name="birthRegister.serialNumber"/>

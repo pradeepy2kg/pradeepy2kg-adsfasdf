@@ -7,7 +7,7 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:form action="eprBirthRegistration_birthRegistrationPreProcessor.do" method="post" name="birthRegistrationForm3">
+<s:form action="eprBirthRegistration.do" method="post" name="birthRegistrationForm3">
     <div id="birth-registration-form-3-body"><s:textfield name="birthRegister.fathersNIC"/><s:textfield name="birthRegister.serialNumber"/>
         <div id="place-of-marriage"><s:textfield name="birthRegister.placeOfMarriage"/></div>
         <%--<div id="date-of-marriage"><s:textfield name="dateOfMarriage" value="2005/05/01"/></div>--%>
