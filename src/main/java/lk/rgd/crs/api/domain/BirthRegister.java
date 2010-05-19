@@ -17,9 +17,9 @@ public class BirthRegister {
     private String childFullNameOfficialLang;
     private String childFullNameEnglish;
     private String childGender;
-    private float childBirthWeight;
-    private int noOfLiveChildren;              // according to live birth
-    private int noOfMultipleBirths;          // if multiple births, num of children
+    private float childBirthWeight = (float)0.0;
+    private int noOfLiveChildren = 0;              // according to live birth
+    private int noOfMultipleBirths = 0;          // if multiple births, num of children
     private String hospitalOrGNCode;
 
     private String fathersNIC;
@@ -38,7 +38,7 @@ public class BirthRegister {
     private Date motherDOB;
     private String motherBirthPlace;
     private String motherRace;
-    private int motherAgeAtBirth;
+    private int motherAgeAtBirth = 0;
     private String motherAddress;
     private String motherPhoneNo;
     private String motherEmail;
