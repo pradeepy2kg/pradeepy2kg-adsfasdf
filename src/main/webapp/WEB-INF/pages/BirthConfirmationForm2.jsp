@@ -5,7 +5,6 @@
   Time: 10:38:55 AM
   Birth Registration Confirmation Page 1
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <s:form action="eprBirthConfirmation_birthConfirmFinalizer.do" method="POST">

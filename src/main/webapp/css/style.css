@@ -1,3 +1,9 @@
+@font-face {
+    font-family: Potha;
+    src: url(POTHA0.eot);
+}
+@font-face { font-family:Bamini; src:url(eot/BAMINI0.eot);@font-face { font-family:Latha; src:url(eot/LATHA0.eot);
+
 /* Style for the Birth Registration Form */
 
 #birth-registration-form-1-body{height:1097px; background:url(../images/1.png) no-repeat center;}
