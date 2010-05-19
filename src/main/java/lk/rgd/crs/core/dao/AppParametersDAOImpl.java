@@ -26,21 +26,12 @@ import java.util.Map;
  *
  * @author asankha
  */
-@Repository
-public class AppParametersDAOImpl implements AppParametersDAO, PreloadableDAO {
-
-    private static final Logger logger = LoggerFactory.getLogger(AppParametersDAOImpl.class);
+public class AppParametersDAOImpl extends BaseDAO implements AppParametersDAO, PreloadableDAO {
 
     /**
      * The internal Map where parameters read from the table are held
      */
     private final Map<String, String> parameters = new HashMap<String, String>();
-    private EntityManager em;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
 
     /**
      * Loads all values from the database table into a cache
