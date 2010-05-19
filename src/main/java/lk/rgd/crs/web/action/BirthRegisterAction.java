@@ -1,5 +1,6 @@
 package lk.rgd.crs.web.action;
 
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 import lk.rgd.crs.api.domain.District;
@@ -16,6 +17,8 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+
 
 /**
  * EntryAction is a struts action class
@@ -26,7 +29,7 @@ import java.util.Map;
  * @author Duminda
  */
 
-public class BirthRegisterAction extends ActionSupport implements SessionAware, ScopedModelDriven<BirthRegister> {
+public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
@@ -50,9 +53,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
     private List<Person> myList;
     private Map session;
 
-	private String scopeKey;
+    private String scopeKey;
     private ArrayList<District> districtList;
-	BirthRegisterService service;
+    private HashMap<Integer, String> countryMap;
+    BirthRegisterService service;
 
     public String welcome() {
         return "success";
@@ -68,6 +72,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
     public String login() {
         if (loginBD.login(userName, password)) {
             this.setLanguage(loginBD.getLanguage(userName));
+            logger.debug("inside login : {} is prefered.", language);
+            session.put("user_lang",language);
             return "success";
         }
         return "error";
@@ -76,14 +82,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
 
     /**
      * Set the Language that the user preffered to work.
+     * And set preffered language to the session
      */
     public String selectLanguage() {
-        this.setLanguage(language);
+        logger.debug("inside selectLanguage : {} passed.", language);
+        session.put("user_lang",language);
         return "success";
     }
 
     public String pageLoad() {
-		populate();
+        populate();
         birthRegister = new BirthRegister();
         setModel(birthRegister);
         return "pageLoad";
@@ -178,24 +186,43 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
         return "success";
     }
 
-    public String populate(){
-        MasterDataLoad masterDataLoad=MasterDataLoad.getInstance();
+    /**
+       * Populate data to the UIs
+       */
+    public void populate() {
+        MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
+        logger.debug("inside populate : masterload obtained.");
 
-        setDistrictList((ArrayList<District>) masterDataLoad.loadDistricts(1));
-        return "populate";
+        language= (String) (session.get("user_lang"));
+        logger.debug("inside populate : {} observed.", language);
+
+        setDistrictList((ArrayList<District>) masterDataLoad.loadDistricts(language));
+        logger.debug("inside populte : districts set, setting countries.");
+        setCountryMap(masterDataLoad.loadCountries());
     }
 
-    public String birthConfirmationPreProcessor(){
+    /**
+     * For Birth Confirmation pre processing purposes.
+     * <p>BirthRegister Entity Bean is populated based on the values sent by UI. Variables are passed from the BirthConfirmationForm1 page.
+     *
+     * @return String returns next form page to be loaded or error page
+     */
+    public String birthConfirmationPreProcessor() {
         // still implementing
         return "form2";
     }
 
+    /**
+     * This method finalize Birth confirmation process
+     *
+     * @return return success or error
+     */
     public String birthConfirmFinalizer() {
         // still implementing));
         return "success";
     }
-	
-	public String getFatherDOB() {
+
+    public String getFatherDOB() {
         return fatherDOB;
     }
 
@@ -337,5 +364,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware, 
 
     public void setDistrictList(ArrayList<District> districtList) {
         this.districtList = districtList;
+    }
+
+    public HashMap<Integer, String> getCountryMap() {
+        return countryMap;
+    }
+
+    public void setCountryMap(HashMap<Integer, String> countryMap) {
+        this.countryMap = countryMap;
     }
 }
