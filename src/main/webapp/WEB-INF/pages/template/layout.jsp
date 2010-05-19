@@ -8,6 +8,14 @@
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
+    <style type="text/css">
+            @font-face {
+                font-family: Potha;
+                src: url(POTHA0.eot);
+            }
+        @font-face { font-family:Bamini; src:url(eot/BAMINI0.eot);@font-face { font-family:Latha; src:url(eot/LATHA0.eot);
+        </style>
+
 </head>
 <body>
 <div id="wrapper">
