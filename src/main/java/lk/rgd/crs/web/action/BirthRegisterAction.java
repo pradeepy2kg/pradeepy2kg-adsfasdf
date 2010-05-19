@@ -79,7 +79,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "error";
     }
 
-
     /**
      * Set the Language that the user preffered to work.
      * And set preffered language to the session
@@ -90,72 +89,35 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public String pageLoad() {
-        populate();
-        birthRegister = new BirthRegister();
-        setModel(birthRegister);
-        return "pageLoad";
-    }
-
-    /**
-     * method is used for birth registration purposes birthRegister Entity
-     * Bean is populated based on the variable values and return type is
-     * decided based on the pageNo variable which is  passed from the
-     * jsp page
-     *
-     * @return String which decides next page to be loaded
-     */
-    public BirthRegisterAction(BirthRegisterService service) {
-//        MasterDataLoad masterDataLoad=MasterDataLoad.getInstance();
-//        List<String> districtList=masterDataLoad.loadDistricts();
-//        log.debug("District List:"+districtList);
-//        List<String> countryList=masterDataLoad.loadCountries();
-
-        this.service = service;
-    }
-
-    public String birthRegistrationPreProcessor() {
+   /**
+      *  This method is responsible for loading and capture data for all 4 BDF pages as well
+      *  as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
+      *  very first form page) is used to decide which state of the process we are in. at the last step
+      *  only we do a persistance, until then all data will be in the session. This is a design decision
+      *  to limit DB writes. Masterdata population will be done before displaying every page.
+      *  This will have no performace impact as they will be cached in the backend.
+      */
+    public String birthRegistration() {
         switch (pageNo) {
-            case 1:
-                logger.debug("inside page 1 submission. value of serial is {}", birthRegister.getSerialNumber());
-                //log.debug("inside page1 submission. value of serial is (from session) " + ((BirthRegister)(session.get("birthRegister"))).getSerialNumber());
-                //birthRegister.setChildDOB(new EPopDate().getDate(year + "/" + month + "/" + day));
-                return "form2";
-            case 2:
-                logger.debug("inside page 2 submission. value of serial is {}", birthRegister.getSerialNumber());
-                /*temp is a tempory  instance which holds the previously entered birth registration information*/
-//                    BirthRegister temp=(BirthRegister) session.get("birthRegister");
-//                    temp.setFathersNIC(birthRegister.getFathersNIC());
-//                    temp.setFatherForeignerPassportNo(birthRegister.getFatherForeignerPassportNo());
-//                    temp.setFatherForeignerCountry(birthRegister.getFatherForeignerCountry());
-//                    temp.setFatherFullName(birthRegister.getFatherFullName());
-//                    temp.setFatherDOB(new EPopDate().getDate(fatherDOB));
-//                    temp.setFatherBirthPlace(birthRegister.getFatherBirthPlace());
-//                    temp.setFatherRace(birthRegister.getFatherRace());
-//                    temp.setMotherNIC(birthRegister.getMotherNIC());
-//                    temp.setMotherPassportNo(birthRegister.getMotherPassportNo());
-//                    temp.setMotherCountry(birthRegister.getMotherCountry());
-//                    temp.setMotherAdmissionNoAndDate(birthRegister.getMotherAdmissionNoAndDate());
-//                    temp.setMotherFullName(birthRegister.getMotherFullName());
-//                    temp.setMotherDOB(new EPopDate().getDate(motherDOB));
-//                    temp.setMotherBirthPlace(birthRegister.getMotherBirthPlace());
-//                    temp.setMotherRace(birthRegister.getMotherRace());
-//                    temp.setMotherAgeAtBirth(birthRegister.getMotherAgeAtBirth());
-//                    temp.setMotherRace(birthRegister.getMotherRace());
-//                    temp.setMotherAddress(birthRegister.getMotherAddress());
-//                    temp.setMotherPhoneNo(birthRegister.getMotherPhoneNo());
-//                    temp.setMotherEmail(birthRegister.getMotherEmail());
-//                    session.put("birthRegister", temp);
-                return "form3";
-            case 3:
-                logger.debug("inside page 3 submission. value of serial is {}", birthRegister.getSerialNumber());
-
-//                birthRegister = (BirthRegister) session.get("birthRegister");
-//                birthRegister.setDateOfMarriage(new EPopDate().getDate(dateOfMarriage));
-//                session.put("birthRegister", birthRegister);
-                return "form4";
+            case 0 :
+                logger.debug("preparing to data capture, step {}", pageNo);
+                populate();
+                break;
+            case 1 :
+            case 2 :
+            case 3 :
+                logger.debug("inside page {} submission with serial {}",
+                    pageNo, birthRegister.getSerialNumber());
+                populate();
+                break;
+            case 4 :
+                //todo persist
+                logger.debug("persisting BDF, step {}", pageNo);
+                return "success";
+            default : return "error";
         }
-        return "error";
+
+        return "form" + pageNo;
     }
 
     /**

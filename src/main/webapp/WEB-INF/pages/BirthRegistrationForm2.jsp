@@ -6,9 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%session.setAttribute("birthRegister",request.getAttribute("birthRegister"));%>
-<s:form action="eprBirthRegistration_birthRegistrationPreProcessor.do" method="POST"
-        name="birthRegistrationForm2">
+<s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm2">
      <div id="birth-registration-form-2-body">
         <div id="father-serial-no"><s:label value="%{#session.birthRegister.serialNumber}"/></div>
         <div id="father-nic-no"><s:textfield name="birthRegister.fathersNIC" /></div>

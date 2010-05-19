@@ -5,7 +5,7 @@
         <td><a href="epr_birth_conformation_report.do">birth comformation report </a> </td>
     </tr>
     <tr>
-        <td><a href="eprBirthRegistration_pageLoad.do" >Birth Registration</a></td>
+        <td><a href="eprBirthRegistration.do" >Birth Registration</a></td>
     </tr>
     <tr>
         <td><a href="eprBirthConfirmation_pageLoad.do">Birth Confirmation</a> </td>
