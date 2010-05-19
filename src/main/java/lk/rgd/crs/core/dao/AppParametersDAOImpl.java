@@ -1,44 +1,59 @@
-package lk.rgd.crs.core.service;
+package lk.rgd.crs.core.dao;
 
 import lk.rgd.crs.api.domain.AppParameter;
-import lk.rgd.crs.api.service.AppParametersManager;
+import lk.rgd.crs.api.dao.AppParametersDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
-import java.lang.annotation.Inherited;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * The interface to application parameters. This instance in a singleton, and always caches parameters by reading the
- * complete table at first read, and on any subsequent updates
+ * The application parameter DAO. This always caches parameters by reading the complete table at first read,
+ * and on any subsequent updates
  *
  * @author asankha
  */
-public class AppParametersManagerImpl implements AppParametersManager {
+@Repository
+public class AppParametersDAOImpl implements AppParametersDAO, PreloadableDAO {
 
-    private static final Logger logger = LoggerFactory.getLogger(AppParametersManagerImpl.class);
-
-    /** The internal Map where parameters read from the table are held */
-    private final Map<String, String> parameters = new HashMap<String, String>();
-    private final EntityManager em;
+    private static final Logger logger = LoggerFactory.getLogger(AppParametersDAOImpl.class);
 
     /**
-     * Constructs the singleton instance by loading all values from the database table into a cache
-     * @param em
+     * The internal Map where parameters read from the table are held
      */
-    public AppParametersManagerImpl(EntityManager em) {
+    private final Map<String, String> parameters = new HashMap<String, String>();
+    private EntityManager em;
+
+    @PersistenceContext
+    public void setEntityManager(EntityManager em) {
         this.em = em;
+    }
+
+    /**
+     * Loads all values from the database table into a cache
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public void preload() {
 
         // load application parameters
-        Query query = em.createQuery("SELECT value FROM app_parameters");
+        Query query = em.createQuery("SELECT p FROM AppParameter p");
         List<AppParameter> params = query.getResultList();
 
         for (AppParameter p : params) {
-            parameters.put(p.getKey(), p.getValue());
+            parameters.put(p.getName(), p.getValue());
         }
 
         logger.debug("Loaded : {} parameters from the database", params.size());
