@@ -1,4 +1,4 @@
-package lk.rgd.crs.api.service;
+package lk.rgd.crs.api.dao;
 
 /**
  * Stores application configuration parameters such as the number of days between the birth and submission date to
@@ -9,7 +9,7 @@ package lk.rgd.crs.api.service;
  *
  * @author asankha
  */
-public interface AppParametersManager {
+public interface AppParametersDAO {
 
     /**
      * Returns the parameter value as an integer if found, or returns -1

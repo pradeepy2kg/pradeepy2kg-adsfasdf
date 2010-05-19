@@ -2,3 +2,5 @@ target
 epopulation-register.ipr
 epopulation-register.iws
 epopulation-register.iml
+derby.log
+epopulation.log
