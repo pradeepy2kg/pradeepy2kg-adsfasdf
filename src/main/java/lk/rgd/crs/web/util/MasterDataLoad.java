@@ -4,6 +4,7 @@ import lk.rgd.crs.api.domain.District;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -31,34 +32,42 @@ public class MasterDataLoad {
      * @param language selected  
      * @return list of districts
      */
-    public List<District> loadDistricts(int language){
+    public List<District> loadDistricts(String language){
+        int lang_id=0;
+        if(language.equals("Sinhala")){
+            lang_id=1;
+        }else if(language.equals("Tamil")){
+            lang_id=2;
+        } else{
+            lang_id=3;
+        }
         // hard coded for the moment should be loaded from the database
         List<District> districtList=new ArrayList<District>();
 
-        switch (language){
+        switch (lang_id){
             case 1:
                 // sinhala
-                districtList.add(new District(1,convertToString("\u0DBD\u0DD2\u0DBA\u0DCF\u0DB4\u0DAF\u0DD2\u0D82\u0DA0\u0DD2 \u0DAF\u0DD2\u0DB1\u0DBA")));
-                districtList.add(new District(2,convertToString("\u0D9A\u0DAD\u0DD4\u0DC0\u0DBB\u0DBA\u0DCF\u0D9C\u0DDA \u0DB1\u0DB8")));
-                districtList.add(new District(3,"දිවුලපිටි"));
-                districtList.add(new District(4,"GalleS"));
-                districtList.add(new District(5,"MataraS"));
-                districtList.add(new District(6,"HambantotaS"));
-                districtList.add(new District(7,"JaffnaS"));
-                districtList.add(new District(8,"MataleS"));
-                districtList.add(new District(9,"AnuradhapuraS"));
+                districtList.add(new District(1,"කොළඹ"));
+                districtList.add(new District(2,"ගම්පහ"));
+                districtList.add(new District(3,"ගාල්ල"));
+                districtList.add(new District(4,"පානදුර"));
+                districtList.add(new District(5,"මාතර"));
+                districtList.add(new District(6,"හම්බන්තොට"));
+                districtList.add(new District(7,"යාපනය"));
+                districtList.add(new District(8,"මාතලේ"));
+                districtList.add(new District(9,"අනුරාධපුර"));
                 break;
             case 2:
                 // tamil
-                districtList.add(new District(1,"ColomboT"));
-                districtList.add(new District(2,"KalutaraT"));
-                districtList.add(new District(3,"GampahaT"));
-                districtList.add(new District(4,"GalleT"));
-                districtList.add(new District(5,"MataraT"));
-                districtList.add(new District(6,"HambantotaT"));
-                districtList.add(new District(7,"JaffnaT"));
-                districtList.add(new District(8,"MataleT"));
-                districtList.add(new District(9,"AnuradhapuraT"));
+                districtList.add(new District(1,"ச்cட்ச்ட்c"));
+                districtList.add(new District(2,"ச்cட்ச்ட்c"));
+                districtList.add(new District(3,"ச்cட்ச்ட்c"));
+                districtList.add(new District(4,"அச்டச்ட்க்க்"));
+                districtList.add(new District(5,"அச்டச்ட்க்க்"));
+                districtList.add(new District(6,"அச்டச்ட்க்க்"));
+                districtList.add(new District(7,"அச்டச்ட்க்க்"));
+                districtList.add(new District(8,"பானதுர"));
+                districtList.add(new District(9,"பானதுர"));
                 break;
             case 3:
                 // english
@@ -95,15 +104,15 @@ public class MasterDataLoad {
      *   Returns list of Countries
      * @return list of countries
      */
-    public List<String> loadCountries(){
-        // hard coded for the moment should be loaded from the database
-        List<String> countryList=new ArrayList<String>();
-        countryList.add("Canada");
-        countryList.add("USA");
-        countryList.add("England");
-        countryList.add("Germany");
-        countryList.add("India");
-        countryList.add("Australia");
+    public HashMap loadCountries(){
+//        // hard coded for the moment should be loaded from the database
+        HashMap<Integer,String> countryList=new HashMap<Integer,String>();
+        countryList.put(1,"Canada");
+        countryList.put(2,"USA");
+        countryList.put(3,"England");
+        countryList.put(4,"Germany");
+        countryList.put(5,"India");
+        countryList.put(6,"Australia");
 
         return countryList;
     }

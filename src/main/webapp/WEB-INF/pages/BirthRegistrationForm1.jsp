@@ -6,7 +6,6 @@
   Time: 3:59:13 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:form action="eprBirthRegistration_birthRegistrationPreProcessor.do" method="POST"
         name="birthRegistrationForm1">
@@ -20,7 +19,8 @@
             <s:select list="{'01','02','03'}" name="day"/>
         </div>
         <div id="district">
-            <s:select list="{'Colombo','Gampaha','Kaluthara'}" name="birthRegister.childBirthDistrict"/>
+            <s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"
+                      listValue="districtName" headerKey="0" headerValue="-Select District-"/>
         </div>
         <div id="division"><s:textfield name="birthRegister.childBirthDivision"/></div>
         <div id="place"><s:textfield name="birthRegister.childBirthPlace"/></div>

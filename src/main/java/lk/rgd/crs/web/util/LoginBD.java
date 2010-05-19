@@ -59,6 +59,6 @@ public class LoginBD {
         users.put("duminda", "duminda,Sinhala");
         users.put("indunil", "indunil,Sinhala");
         users.put("amith", "amith,Sinhala");
-        users.put("chathuranga", "chathuranga,Sinhala");
+        users.put("chathuranga", "chathuranga,English");
     }
 }

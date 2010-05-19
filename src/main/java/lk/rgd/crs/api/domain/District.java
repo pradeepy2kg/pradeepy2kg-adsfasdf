@@ -1,6 +1,6 @@
 package lk.rgd.crs.api.domain;
 
-/** * 
+/**
  * @author chathuranga
  */
 public class District {
