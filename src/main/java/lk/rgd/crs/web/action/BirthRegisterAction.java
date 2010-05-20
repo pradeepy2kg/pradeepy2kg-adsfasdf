@@ -64,7 +64,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void BirthRegisterAction(BirthRegisterService service) {
         this.service = service;
-        birthRegister = new BirthRegister();
+        logger.debug("inside birth register action constructor");
     }
 
     /*
@@ -74,7 +74,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (loginBD.login(userName, password)) {
             this.setLanguage(loginBD.getLanguage(userName));
             logger.debug("inside login : {} is prefered.", language);
-            session.put("user_lang",language);
+            session.put("user_lang", language);
             return "success";
         }
         return "error";
@@ -99,6 +99,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
       *  This will have no performace impact as they will be cached in the backend.
       */
     public String birthRegistration() {
+        if (birthRegister == null) {
+            birthRegister = new BirthRegister();
+        }
+
         logger.debug("Step {} of 4. serial number {}",
            pageNo, birthRegister.getSerialNumber());
 
