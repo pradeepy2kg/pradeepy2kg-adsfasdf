@@ -10,6 +10,7 @@ import lk.rgd.crs.api.service.BirthRegisterService;
 import lk.rgd.crs.web.util.LoginBD;
 import lk.rgd.crs.web.util.MasterDataLoad;
 import lk.rgd.crs.web.util.Constant;
+import lk.rgd.AppConstants;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -86,38 +87,46 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * And set preffered language to the session
      */
     public String selectLanguage() {
+        if (language.equals("English")) {
+            language = AppConstants.ENGLISH;
+        } else if (language.equals("Sinhala")) {
+            language = AppConstants.SINHALA;
+        } else {
+            language = AppConstants.TAMIL;
+        }
         logger.debug("inside selectLanguage : {} passed.", language);
         session.put(Constant.SESSION_USER_LANG, language);
         return "success";
     }
 
-   /**
-      *  This method is responsible for loading and capture data for all 4 BDF pages as well
-      *  as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
-      *  very first form page) is used to decide which state of the process we are in. at the last step
-      *  only we do a persistance, until then all data will be in the session. This is a design decision
-      *  to limit DB writes. Masterdata population will be done before displaying every page.
-      *  This will have no performace impact as they will be cached in the backend.
-      */
+    /**
+     * This method is responsible for loading and capture data for all 4 BDF pages as well
+     * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
+     * very first form page) is used to decide which state of the process we are in. at the last step
+     * only we do a persistance, until then all data will be in the session. This is a design decision
+     * to limit DB writes. Masterdata population will be done before displaying every page.
+     * This will have no performace impact as they will be cached in the backend.
+     */
     public String birthRegistration() {
         if (birthRegister == null) {
             birthRegister = new BirthRegister();
         }
 
         logger.debug("Step {} of 4. serial number {}",
-           pageNo, birthRegister.getSerialNumber());
+                pageNo, birthRegister.getSerialNumber());
 
         switch (pageNo) {
-            case 0 :
-            case 1 :
-            case 2 :
-            case 3 :
+            case 0:
+            case 1:
+            case 2:
+            case 3:
                 populate();
                 return "form" + pageNo;
-            case 4 :
+            case 4:
                 //todo persist after validations
                 return "success";
-            default : return "error";
+            default:
+                return "error";
         }
     }
 

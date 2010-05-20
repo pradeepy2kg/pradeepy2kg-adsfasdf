@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <table>
     <tr>
-        <td><a href="epr_birth_conformation_report.do">birth comformation report </a> </td>
+        <td><a href="eprBirthConfirmationReport.do">Birth Comformation Report </a> </td>
     </tr>
     <tr>
         <td><a href="eprBirthRegistration.do" >Birth Registration</a></td>

@@ -56,10 +56,9 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirth_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
-            <result type="tiles" name="pageLoad">epr.newBirthCertificate</result>
+        <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction" method="getBirthConfirmationReport">
             <result type="tiles" name="success">epr.welcome</result>
-            <result type="tiles" name="error">epr.newBirthCertificate</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
     </package>
 </struts>

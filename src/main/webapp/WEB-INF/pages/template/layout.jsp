@@ -27,6 +27,7 @@
                     name="eprLanguage">
                 <s:label value="Select your language"></s:label>
                 <s:select list="{'English','Sinhala','Tamil'}" name="language"></s:select>
+                <%--<s:select name="language" list="%{#['en_US':'English','si_LK':'Sinhala','ta_LK':'Tamil']}" headerKey="0" headerValue="--Select--"/>--%>
                 <s:submit value="select"></s:submit>
             </s:form><br><br>
             <tiles:insertAttribute name="menu"/>
