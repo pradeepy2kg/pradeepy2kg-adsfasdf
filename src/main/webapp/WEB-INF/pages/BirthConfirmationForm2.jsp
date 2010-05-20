@@ -1,4 +1,3 @@
-<%@ page import="java.util.List" %>
 <%--
   User: chathuranga
   Date: May 13, 2010
@@ -7,7 +6,7 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:form action="eprBirthConfirmation_birthConfirmFinalizer.do" method="POST">
+<s:form name="birthConfirmationForm2" action="eprBirthConfirmation.do" method="POST">
     <div id="birth-confirmation-form-2-body">
 
         <div id="birth-confirmation-father-pin">
@@ -21,7 +20,7 @@
         <div id="birth-confirmation-fatherRace">
             <s:textfield name="birthRegister.fatherRace"/>
         </div>
-        <div id="birth-confirmation-mother-pin" >
+        <div id="birth-confirmation-mother-pin">
             <s:textfield name="birthRegister.motherNIC"/>
         </div>
         <div id="birth-confirmation-mother-name">
@@ -34,22 +33,23 @@
             <s:select list="{'YES','NO'}" name="birthRegister.marriedStatus"/>
         </div>
         <div id="birth-confirmation-confim-nic">
-            <s:textfield name="birthRegister.confirmantPINorPIN"/>                 
+            <s:textfield name="birthRegister.confirmantPINorPIN"/>
         </div>
         <div id="birth-confirmation-confim-name">
             <s:textarea name="birthRegister.confirmantFullName" cols="38"/>
         </div>
         <div id="birth-confirmation-date">
-            <s:select list="{'2009','2010','2011'}" name="birthRegister.confirmYear" />
-            <s:select list="{'January','February','March'}" name="birthRegister.confirmMonth" />
-            <s:select list="{'01','02','03'}" name="birthRegister.confirmDay" />
+            <s:select list="{'2009','2010','2011'}" name="birthRegister.confirmYear"/>
+            <s:select list="{'January','February','March'}" name="birthRegister.confirmMonth"/>
+            <s:select list="{'01','02','03'}" name="birthRegister.confirmDay"/>
         </div>
         <div id="birth-confirmation-finalize-date">
-            <s:select list="{'2009','2010','2011'}" name="birthRegister.finalizeYear" />
-            <s:select list="{'January','February','March'}" name="birthRegister.finalizeMonth" />
-            <s:select list="{'01','02','03'}" name="birthRegister.finalizeDay" />
+            <s:select list="{'2009','2010','2011'}" name="birthRegister.finalizeYear"/>
+            <s:select list="{'January','February','March'}" name="birthRegister.finalizeMonth"/>
+            <s:select list="{'01','02','03'}" name="birthRegister.finalizeDay"/>
         </div>
 
+        <s:hidden name="pageNo" value="2"/>
         <div class="button"><input type="submit" value="NEXT"/></div>
     </div>
 </s:form>
