@@ -26,16 +26,21 @@
              </interceptor>
         </interceptors>
 
-        <action name="eprLogin" class="lk.rgd.crs.web.action.BirthRegisterAction" method="login">
+        <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
             <result type="tiles" name="success">epr.home</result>
-            <result type="tiles" name="error">epr.error</result>
+            <result name="error">/WEB-INF/pages/login/login.jsp</result>
+        </action>
+
+        <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">
+            <result name="success">/WEB-INF/pages/login/login.jsp</result>
+            <result type="tiles" name="error">epr.home</result>
         </action>
 
         <action name="eprHome" class="lk.rgd.crs.web.action.BirthRegisterAction" method="welcome">
             <result type="tiles" name="success">epr.welcome</result>
         </action>
 
-        <action name="eprLanguage" class="lk.rgd.crs.web.action.BirthRegisterAction" method="selectLanguage">
+        <action name="eprLanguage" class="lk.rgd.crs.web.action.UserPreferencesAction" method="selectLanguage">
             <result type="tiles" name="success">epr.home</result>
         </action>
                 
@@ -49,17 +54,23 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthConfirmAction" method="birthConfirmation">
-            <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
-            <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
+        <action name="eprBirthConfirmation_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
+            <result type="tiles" name="pageLoad">epr.birthConfirmation_form1</result>
+            <result type="tiles" name="form2">epr.birthConfirmation_form2</result>
             <result type="tiles" name="success">epr.welcome</result>
-            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="error">epr.newBirthCertificate</result>
         </action>
 
         <action name="eprBirth_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
             <result type="tiles" name="pageLoad">epr.newBirthCertificate</result>
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.newBirthCertificate</result>
+        </action>
+
+        <action name="eprBirthRegisterApproval_*" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="birthRegisterApproval">
+            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.welcome</result>
         </action>
     </package>
 </struts>
