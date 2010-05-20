@@ -50,4 +50,8 @@
     <definition name="epr.error" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/error.jsp"/>
     </definition>
+
+    <definition name="epr.birthRegisterApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthRegisterApproval.jsp"/>
+    </definition>
 </tiles-definitions>

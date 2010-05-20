@@ -14,4 +14,5 @@ public class Constant {
 
     /** session related constant values */
     public static final String SESSION_USER_LANG="user_lang";
+    public static final String SESSION_USER_NAME = "user_name";
 }

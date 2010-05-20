@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.crs.web.util.Constant" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
@@ -30,6 +31,12 @@
                 <s:submit value="select"></s:submit>
             </s:form><br><br>
             <tiles:insertAttribute name="menu"/>
+            <br><br>
+            <%if(session.getAttribute(Constant.SESSION_USER_NAME)!= null){ %>
+                <s:form action="eprLogout.do" method="POST" name="eprLogout">
+                    <s:submit name="submit" value="logout"></s:submit>
+                </s:form>
+            <% } %>
         </div>
         <div id="body-content">
             <tiles:insertAttribute name="body"/>
