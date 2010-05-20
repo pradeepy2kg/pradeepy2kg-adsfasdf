@@ -8,6 +8,7 @@ import lk.rgd.crs.api.domain.Race;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.web.WebConstants;
 
+import lk.rgd.AppConstants;
 import java.util.Map;
 import java.util.List;
 
@@ -68,8 +69,20 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         language = (String) session.get(WebConstants.SESSION_USER_LANG);
         logger.debug("inside populate : {} observed.", getLanguage());
 
-        setDistrictList(raceDao.getRaces(language));
-        logger.debug("inside populte : districts {}.", getDistrictList());
+        if (language.equals("English")) {
+            language = AppConstants.ENGLISH;
+        } else if (language.equals("Sinhala")) {
+            language = AppConstants.SINHALA;
+        } else if (language.equals("Tamil")) {
+            language = AppConstants.TAMIL;
+        }
+        districtList = raceDao.getRaces(language);
+        logger.debug("inside populate : districts {}.", districtList);
+    }
+
+    public String getBirthConfirmationReport() {
+        logger.debug("inside birth confirmation report");
+        return "success";
     }
 
     public int getPageNo() {

@@ -19,4 +19,4 @@
     </div>
     <s:hidden  name="pageNo" value="4" />
     <div class="button"><s:submit value="NEXT"/></div>
-</s:form>
+   </s:form>
