@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
 
+import lk.rgd.crs.web.WebConstants;
 import org.apache.log4j.Logger;
 
 
@@ -27,7 +28,7 @@ public class EPopDate {
      * @return date is a java.util.Date instance*
      */
     public Date getDate(String dateString) {
-        df = new SimpleDateFormat(Constant.DATEFORMAT);
+        df = new SimpleDateFormat(WebConstants.DATEFORMAT);
         try {
             date = df.parse(dateString);
         } catch (Exception e) {
@@ -43,7 +44,7 @@ public class EPopDate {
      * @return dateInString is a String
      */
     public String getDateInString(Date date) {
-        df = new SimpleDateFormat(Constant.DATEFORMAT);
+        df = new SimpleDateFormat(WebConstants.DATEFORMAT);
         dateInString = df.format(date);
         return dateInString;
     }
