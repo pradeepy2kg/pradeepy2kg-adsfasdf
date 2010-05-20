@@ -2,7 +2,6 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 import lk.rgd.crs.api.domain.District;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.domain.Person;
@@ -18,7 +17,6 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 
 /**
@@ -33,9 +31,6 @@ import java.util.HashMap;
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
-
-    private String userName;
-    private String password;
 
     private String childDOB;
     private String year;
@@ -67,30 +62,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.service = service;
         logger.debug("inside birth register action constructor");
     }
-
-    /*
-   *  User Login of the EPR System.
-   * */
-    public String login() {
-        if (loginBD.login(userName, password)) {
-            this.setLanguage(loginBD.getLanguage(userName));
-            logger.debug("inside login : {} is prefered.", language);
-            session.put(Constant.SESSION_USER_LANG, language);
-            return "success";
-        }
-        return "error";
-    }
-
-    /**
-     * Set the Language that the user preffered to work.
-     * And set preffered language to the session
-     */
-    public String selectLanguage() {
-        logger.debug("inside selectLanguage : {} passed.", language);
-        session.put(Constant.SESSION_USER_LANG, language);
-        return "success";
-    }
-
+        
    /**
       *  This method is responsible for loading and capture data for all 4 BDF pages as well
       *  as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
@@ -283,22 +255,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public String getScopeKey() {
         return scopeKey;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 
     public ArrayList<District> getDistrictList() {
