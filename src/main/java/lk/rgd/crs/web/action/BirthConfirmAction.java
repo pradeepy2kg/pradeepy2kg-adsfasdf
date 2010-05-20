@@ -86,7 +86,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
             // filling report with data sorce
             JasperPrint print = JasperFillManager.fillReport(report, new HashMap(), dataSource);
             // exporting report to HTML format
-            lk.rgd.crs.web.jasper.JasperExportManager.exportReportToHtmlFileIncludeExternalScript(print, "/home/amith23/Desktop/amith23/Templates/BirthConfermation_report_test.html", "hikzzzzz");
+            lk.rgd.crs.web.jasper.JasperExportManager.exportReportToHtmlFileIncludeExternalScript(print, "/home/amith23/Desktop/amith23/Templates/5.html", "hikzzzzz");
         }
         catch (Exception e) {
             logger.info("jasper error", e);
