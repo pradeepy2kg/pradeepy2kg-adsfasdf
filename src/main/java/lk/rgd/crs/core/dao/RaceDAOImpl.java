@@ -1,5 +1,7 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.AppConstants;
+import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.domain.Race;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,13 +18,24 @@ import java.util.Map;
  */
 public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
 
-    private final Map<String, List<Race>> races = new HashMap<String, List<Race>>();
+    private final Map<Integer, String> siRaces = new HashMap<Integer, String>();
+    private final Map<Integer, String> enRaces = new HashMap<Integer, String>();
+    private final Map<Integer, String> taRraces = new HashMap<Integer, String>();
 
     /**
      * @inheritDoc
      */
-    public List<Race> getRaces(String language) {
-        return races.get(language);
+    public Map<Integer, String> getRaces(String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return siRaces;
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return enRaces;
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return taRraces;
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return null;
     }
 
     /**
@@ -35,12 +48,9 @@ public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
         List<Race> results = query.getResultList();
 
         for (Race r : results) {
-            List<Race> list = races.get(r.getLanguageId());
-            if (list == null) {
-                list = new ArrayList<Race>();
-                races.put(r.getLanguageId(), list);
-            }
-            list.add(r);
+            siRaces.put(r.getRaceId(), r.getSiRaceName());
+            enRaces.put(r.getRaceId(), r.getEnRaceName());
+            taRraces.put(r.getRaceId(), r.getTaRaceName());
         }
 
         logger.debug("Loaded : {} races from the database", results.size());

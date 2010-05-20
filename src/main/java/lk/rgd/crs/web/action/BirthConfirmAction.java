@@ -73,7 +73,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         language = (String) session.get(WebConstants.SESSION_USER_LANG);
         logger.debug("inside populate : {} observed.", getLanguage());
 
-        districtList=raceDao.getRaces(language);
+        // TODO fix me - districtList=raceDao.getRaces(language);
         logger.debug("inside populte : districts {}.", districtList);
     }
 

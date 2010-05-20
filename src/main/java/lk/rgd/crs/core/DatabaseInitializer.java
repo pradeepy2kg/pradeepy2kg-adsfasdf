@@ -28,7 +28,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
         SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-            new ClassPathResource("test_database.sql"), true);
+            new ClassPathResource("test_database.sql"), false);
         logger.info("Initialized the test database by executing test_database.sql");
     }
 }

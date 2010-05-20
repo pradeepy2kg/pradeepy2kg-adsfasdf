@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.crs.CRSRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,15 @@ public class BaseDAO {
 
     protected BaseDAO() {
         logger = LoggerFactory.getLogger(this.getClass());  // makes subclasses pick up the correct logger
+    }
+
+    protected void handleException(String msg, int code) {
+        logger.error(msg);
+        throw new CRSRuntimeException(msg, code);
+    }
+
+    protected void handleException(String msg, int code, Exception e) {
+        logger.error(msg, e);
+        throw new CRSRuntimeException(msg, code, e);
     }
 }

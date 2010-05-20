@@ -1,12 +1,13 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.AppConstants;
+import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.domain.Country;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +17,24 @@ import java.util.Map;
  */
 public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDAO {
 
-    private final Map<String, List<Country>> countries = new HashMap<String, List<Country>>();
+    private final Map<Integer, String> siCountries = new HashMap<Integer, String>();
+    private final Map<Integer, String> enCountries = new HashMap<Integer, String>();
+    private final Map<Integer, String> taCountries = new HashMap<Integer, String>();
 
     /**
      * @inheritDoc
      */
-    public List<Country> getCountries(String language) {
-        return countries.get(language);
+    public Map<Integer, String> getCountries(String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return siCountries;
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return enCountries;
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return taCountries;
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return null;
     }
 
     /**
@@ -34,13 +46,10 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
         Query query = em.createQuery("SELECT c FROM Country c");
         List<Country> results = query.getResultList();
 
-        for (Country p : results) {
-            List<Country> list = countries.get(p.getLanguageId());
-            if (list == null) {
-                list = new ArrayList<Country>();
-                countries.put(p.getLanguageId(), list);
-            }
-            list.add(p);
+        for (Country c : results) {
+            siCountries.put(c.getCountryId(), c.getSiCountryName());
+            enCountries.put(c.getCountryId(), c.getEnCountryName());
+            taCountries.put(c.getCountryId(), c.getTaCountryName());
         }
 
         logger.debug("Loaded : {} countries from the database", results.size());

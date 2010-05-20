@@ -52,7 +52,7 @@ public class MasterDataLoad {
         switch (lang_id) {
             case 1:
                 // sinhala
-                districtList.add(new District(1, "කොළඹ"));
+                /*districtList.add(new District(1, "කොළඹ"));
                 districtList.add(new District(2, "ගම්පහ"));
                 districtList.add(new District(3, "ගාල්ල"));
                 districtList.add(new District(4, "පානදුර"));
@@ -60,11 +60,11 @@ public class MasterDataLoad {
                 districtList.add(new District(6, "හම්බන්තොට"));
                 districtList.add(new District(7, "යාපනය"));
                 districtList.add(new District(8, "මාතලේ"));
-                districtList.add(new District(9, "අනුරාධපුර"));
+                districtList.add(new District(9, "අනුරාධපුර"));*/
                 break;
             case 2:
                 // tamil
-                districtList.add(new District(1, "ச்cட்ச்ட்c"));
+                /*districtList.add(new District(1, "ச்cட்ச்ட்c"));
                 districtList.add(new District(2, "ச்cட்ச்ட்c"));
                 districtList.add(new District(3, "ச்cட்ச்ட்c"));
                 districtList.add(new District(4, "அச்டச்ட்க்க்"));
@@ -72,11 +72,11 @@ public class MasterDataLoad {
                 districtList.add(new District(6, "அச்டச்ட்க்க்"));
                 districtList.add(new District(7, "அச்டச்ட்க்க்"));
                 districtList.add(new District(8, "பானதுர"));
-                districtList.add(new District(9, "பானதுர"));
+                districtList.add(new District(9, "பானதுர"));*/
                 break;
             case 3:
                 // english
-                districtList.add(new District(1, "Colombo"));
+                /*districtList.add(new District(1, "Colombo"));
                 districtList.add(new District(2, "Kalutara"));
                 districtList.add(new District(3, "Gampaha"));
                 districtList.add(new District(4, "Galle"));
@@ -84,7 +84,7 @@ public class MasterDataLoad {
                 districtList.add(new District(6, "Hambantota"));
                 districtList.add(new District(7, "Jaffna"));
                 districtList.add(new District(8, "Matale"));
-                districtList.add(new District(9, "Anuradhapura"));
+                districtList.add(new District(9, "Anuradhapura"));*/
                 break;
         }
         return districtList;
