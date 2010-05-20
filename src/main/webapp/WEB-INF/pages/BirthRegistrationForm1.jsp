@@ -1,21 +1,26 @@
-<%@ page import="java.util.List" %>
+<html><%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: duminda
   Date: May 10, 2010
   Time: 3:59:13 PM
   To change this template use File | Settings | File Templates.
---%>
+--%> <head>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+    <s:head theme="ajax"/>
+     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+</head><body>
 <s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1">
     <div id="birth-registration-form-1-body">
          <div id="birth-registration-form-1-serial">
             <s:textfield name="birthRegister.serialNumber"/>
         </div>
         <div id="date-of-birth">
-            <s:select list="{'2009','2010','2011'}" name="year"/>
-            <s:select list="{'01','02','03'}" name="month"/>
-            <s:select list="{'01','02','03'}" name="day"/>
+            <s:select list="{'2009','2010','2011'}" name="year" id="year" onchange="javascript:setDate('year')"/>
+            <s:select list="{'01','02','03'}" name="month" id="month" onchange="javascript:setDate('month')"/>
+            <s:select list="{'01','02','03'}" name="day" id="day" onchange="javascript:setDate('day')"/>
+            <s:datetimepicker id="datePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+                              onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="district">
             <s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"
@@ -35,4 +40,5 @@
     </div>
     <s:hidden name="pageNo" value="1" />
     <div class="button"><s:submit value="NEXT"/></div>
-</s:form>
+</s:form>  </body>
+</html>
