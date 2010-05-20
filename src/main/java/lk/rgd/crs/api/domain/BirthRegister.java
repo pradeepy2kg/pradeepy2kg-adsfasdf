@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "birth_register")
 public class BirthRegister {
     @Id
-    private String serialNumber = "";
+    private String serialNumber;
     private String confirmSerialNumber;
 
     private Date childDOB;
