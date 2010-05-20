@@ -2,14 +2,13 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.interceptor.ScopedModelDriven;
 import lk.rgd.crs.api.domain.District;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegisterService;
+import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.LoginBD;
 import lk.rgd.crs.web.util.MasterDataLoad;
-import lk.rgd.crs.web.util.Constant;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 
 /**
@@ -75,7 +73,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (loginBD.login(userName, password)) {
             this.setLanguage(loginBD.getLanguage(userName));
             logger.debug("inside login : {} is prefered.", language);
-            session.put(Constant.SESSION_USER_LANG, language);
+            session.put(WebConstants.SESSION_USER_LANG, language);
             return "success";
         }
         return "error";
@@ -87,7 +85,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String selectLanguage() {
         logger.debug("inside selectLanguage : {} passed.", language);
-        session.put(Constant.SESSION_USER_LANG, language);
+        session.put(WebConstants.SESSION_USER_LANG, language);
         return "success";
     }
 
@@ -156,7 +154,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
         logger.debug("inside populate : masterload obtained.");
 
-        language = (String) (session.get(Constant.SESSION_USER_LANG));
+        language = (String) (session.get(WebConstants.SESSION_USER_LANG));
         logger.debug("inside populate : {} observed.", language);
 
         setDistrictList((ArrayList<District>) masterDataLoad.loadDistricts(language));
