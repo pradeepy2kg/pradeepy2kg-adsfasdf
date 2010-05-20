@@ -12,7 +12,7 @@ import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 import javax.sql.DataSource;
 
 /**
- * Initializes an in-memory database for testing
+ * Initializes an in-memory database for testing and populates it with sample/initial data
  *
  * @author asankha
  */
