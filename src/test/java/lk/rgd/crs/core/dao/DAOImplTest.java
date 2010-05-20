@@ -7,7 +7,9 @@ import junit.framework.TestSuite;
 import lk.rgd.AppConstants;
 import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.AppParametersDAO;
+import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
+import lk.rgd.crs.api.domain.Country;
 import lk.rgd.crs.api.domain.District;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -33,11 +35,16 @@ public class DAOImplTest extends TestCase {
     private static GenericApplicationContext ctx = null;
 
     private static Set<String> sinhalaDistricts = new HashSet<String>();
+    private static Set<String> sinhalaCountries = new HashSet<String>();
 
     static {
-        sinhalaDistricts.add("\u0D9A\u0DDC\u0DC5\u0DB9");
-        sinhalaDistricts.add("\u0D9C\u0DCF\u0DBD\u0DCA\u0DBD");
-        sinhalaDistricts.add("\u0DB8\u0DC4\u0DB1\u0DD4\u0DC0\u0DBB");
+        sinhalaDistricts.add("කොළඹ");
+        sinhalaDistricts.add("ගාල්ල");
+        sinhalaDistricts.add("මහනුවර");
+
+        sinhalaCountries.add("ශ්‍රී ලංකාව");
+        sinhalaCountries.add("ජපානය");
+        sinhalaCountries.add("ඉන්දියාව");
     }
 
     public static Test suite() {
@@ -45,60 +52,7 @@ public class DAOImplTest extends TestCase {
 
             protected void setUp() throws Exception {
                 super.setUp();
-                setupDatabase();
                 startSpring();
-            }
-
-            private void setupDatabase() throws Exception {
-
-                try {
-                    logger.info("Starting in-memory database for unit tests");
-                    Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-                    Connection con = DriverManager.getConnection("jdbc:derby:memory:unit-testing-jpa;create=true;user=epop;password=epop");
-
-                    // --- create sample app_parameters ---
-                    con.prepareStatement("CREATE TABLE app_parameters ( \n" +
-                        "\tNAME      \tVARCHAR(25),\n" +
-                        "\tVALUE     \tVARCHAR(40)\n" +
-                        "\t)").executeUpdate();
-
-                    con.prepareStatement("INSERT INTO app_parameters(NAME, VALUE)\n" +
-                        "  VALUES('crs.birth.late_reg_days', '90')").executeUpdate();
-
-                    // --- create sample districts ---
-                    con.prepareStatement("CREATE TABLE districts ( \n" +
-                        "\tID               \tINTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,\n" +
-                        "\tDISTRICTID       \tINTEGER,\n" +
-                        "\tDISTRICTNAME     \tVARCHAR(25),\n" +
-                        "\tLANGUAGEID       \tVARCHAR(5)\n" +
-                        "\t)").executeUpdate();
-
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(1, '\u0D9A\u0DDC\u0DC5\u0DB9', '" + AppConstants.SINHALA + "')").executeUpdate();
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(2, '\u0D9C\u0DCF\u0DBD\u0DCA\u0DBD', '" + AppConstants.SINHALA + "')").executeUpdate();
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(3, '\u0DB8\u0DC4\u0DB1\u0DD4\u0DC0\u0DBB', '" + AppConstants.SINHALA + "')").executeUpdate();
-
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(1, 'Colombo', '" + AppConstants.ENGLISH + "')").executeUpdate();
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(2, 'Galle', '" + AppConstants.ENGLISH + "')").executeUpdate();
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(3, 'Kandy', '" + AppConstants.ENGLISH + "')").executeUpdate();
-
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(1, '\u0B95\u0BC6\u0BBE\u0BB4\u0BC1\u0BAE\u0BCD\u0BAA\u0BC1', '" + AppConstants.TAMIL + "')").executeUpdate();
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(2, '\u0B95\u0BBE\u0BB2\u0BBF', '" + AppConstants.TAMIL + "')").executeUpdate();
-                    con.prepareStatement("INSERT INTO districts (DISTRICTID, DISTRICTNAME, LANGUAGEID) " +
-                        "VALUES(3, '\u0B95\u0BA3\u0BCD\u0B9F\u0BBF', '" + AppConstants.TAMIL + "')").executeUpdate();
-
-                    con.close();
-
-                } catch (Exception e) {
-                    handleException("Exception during unit test database startup", e);
-                }
             }
 
             private void startSpring() throws Exception {
@@ -141,6 +95,15 @@ public class DAOImplTest extends TestCase {
         Assert.assertEquals(3, districts.size());
         for (District d : districts) {
             Assert.assertTrue(sinhalaDistricts.contains(d.getDistrictName()));
+        }
+    }
+
+    public void testCountries() throws Exception {
+        CountryDAO bean = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+        List<Country> countries = bean.getCountries(AppConstants.SINHALA);
+        Assert.assertEquals(3, countries.size());
+        for (Country d : countries) {
+            Assert.assertTrue(sinhalaCountries.contains(d.getCountryName()));
         }
     }
 }
