@@ -73,4 +73,7 @@
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">
         <constructor-arg ref="manageBirthService"/>
     </bean>
+    <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
+        <constructor-arg ref="raceDAOImpl"/>
+    </bean>
 </beans>

@@ -63,7 +63,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public void BirthRegisterAction(BirthRegisterService service) {
+    public BirthRegisterAction(BirthRegisterService service) {
         this.service = service;
         logger.debug("inside birth register action constructor");
     }

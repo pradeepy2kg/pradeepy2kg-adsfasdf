@@ -25,8 +25,8 @@
             <s:select list="{'01','02','03'}" name="birthRegister.dobDay"/>
         </div>
         <div id="birth-confirmation-birth-place">
-            <s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"
-                      listValue="districtName" headerKey="0" headerValue="-Select District-"/>
+            <s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="raceId"
+                      listValue="raceName" headerKey="0" headerValue="-Select District-"/>
         </div>
         <div id="birth-confirmation-name"><s:textarea name="birthRegister.childFullNameOfficialLang" cols="38"
                                                       rows="7"/></div>
