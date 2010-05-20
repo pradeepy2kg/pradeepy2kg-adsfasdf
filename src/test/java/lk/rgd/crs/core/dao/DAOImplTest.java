@@ -9,8 +9,10 @@ import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.AppParametersDAO;
 import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
+import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.domain.Country;
 import lk.rgd.crs.api.domain.District;
+import lk.rgd.crs.api.domain.Race;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,7 @@ public class DAOImplTest extends TestCase {
 
     private static Set<String> sinhalaDistricts = new HashSet<String>();
     private static Set<String> sinhalaCountries = new HashSet<String>();
+    private static Set<String> sinhalaRaces = new HashSet<String>();
 
     static {
         sinhalaDistricts.add("කොළඹ");
@@ -45,6 +48,10 @@ public class DAOImplTest extends TestCase {
         sinhalaCountries.add("ශ්‍රී ලංකාව");
         sinhalaCountries.add("ජපානය");
         sinhalaCountries.add("ඉන්දියාව");
+
+        sinhalaRaces.add("සිංහල");
+        sinhalaRaces.add("ශ්‍රී ලංකික දෙමල");
+        sinhalaRaces.add("ඉන්දියානු දෙමල");
     }
 
     public static Test suite() {
@@ -104,6 +111,15 @@ public class DAOImplTest extends TestCase {
         Assert.assertEquals(3, countries.size());
         for (Country d : countries) {
             Assert.assertTrue(sinhalaCountries.contains(d.getCountryName()));
+        }
+    }
+
+    public void testRaces() throws Exception {
+        RaceDAO bean = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
+        List<Race> races = bean.getRaces(AppConstants.SINHALA);
+        Assert.assertEquals(3, races.size());
+        for (Race r : races) {
+            Assert.assertTrue(sinhalaRaces.contains(r.getRaceName()));
         }
     }
 }
