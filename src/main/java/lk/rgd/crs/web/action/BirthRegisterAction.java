@@ -17,6 +17,9 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 
 
 /**
@@ -31,6 +34,7 @@ import java.util.Map;
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private final BirthRegisterService service;
 
     private String childDOB;
     private String year;
@@ -52,7 +56,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String scopeKey;
     private ArrayList<District> districtList;
     private ArrayList countryList;
-    BirthRegisterService service;
 
     public String welcome() {
         return "success";
@@ -71,27 +74,62 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
       *  to limit DB writes. Masterdata population will be done before displaying every page.
       *  This will have no performace impact as they will be cached in the backend.
       */
-    public String birthRegistration() {
-        if (birthRegister == null) {
-            birthRegister = new BirthRegister();
-        }
+   public String birthRegistration() {
+       logger.debug("Step {} of 4 ", pageNo);
+       if (pageNo > 4) {
+           return "error";
+       } else if (pageNo == 4) {
+           // all pages captured, proceed to persist after validations
+           // todo business validations and persiatance
+           return "success";
+       }
 
-        logger.debug("Step {} of 4. serial number {}",
-           pageNo, birthRegister.getSerialNumber());
+       populate();
+       if (pageNo == 0) {
+           initForm();
+       } else {
+           // submissions of pages 1 - 4
+           try {
+               beanMerge();
+           } catch (Exception e) {
+               handleErrors(e);
+               return "error";
+           }
+       }
 
-        switch (pageNo) {
-            case 0 :
-            case 1 :
-            case 2 :
-            case 3 :
-                populate();
-                return "form" + pageNo;
-            case 4 :
-                //todo persist after validations
-                return "success";
-            default : return "error";
-        }
-    }
+       return "form" + pageNo;
+   }
+
+   private void handleErrors(Exception e) {
+       logger.error(e.getLocalizedMessage());
+       //todo pass the error to the error.jsp page
+   }
+
+   /**
+    *  update the bean in session with the values of local bean
+    */
+   private void beanMerge() throws Exception {
+       BirthRegister target = (BirthRegister) session.get("birthRegister");
+       BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+
+       // Iterate over all the attributes
+       for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+           Object originalValue = descriptor.getReadMethod().invoke(target);
+
+           // Only copy values values where the destination values is null
+           if (originalValue == null) {
+               Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
+               descriptor.getWriteMethod().invoke(target, defaultValue);
+           }
+       }
+
+       session.put("birthRegister", target);
+   }
+
+   private void initForm() {
+       birthRegister = new BirthRegister();
+       //todo set fields to proper initial values based on user and date
+   }
 
     /**
      * creat Birth confermation report in PDF type
