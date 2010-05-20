@@ -128,6 +128,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
    private void initForm() {
        birthRegister = new BirthRegister();
+       session.put("birthRegister", birthRegister);
        //todo set fields to proper initial values based on user and date
    }
 
