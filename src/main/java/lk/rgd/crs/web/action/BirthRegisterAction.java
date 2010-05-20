@@ -32,9 +32,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
-    private String userName;
-    private String password;
-
     private String childDOB;
     private String year;
     private String month;
@@ -64,29 +61,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public BirthRegisterAction(BirthRegisterService service) {
         this.service = service;
         logger.debug("inside birth register action constructor");
-    }
-
-    /*
-   *  User Login of the EPR System.
-   * */
-    public String login() {
-        if (loginBD.login(userName, password)) {
-            this.setLanguage(loginBD.getLanguage(userName));
-            logger.debug("inside login : {} is prefered.", language);
-            session.put(WebConstants.SESSION_USER_LANG, language);
-            return "success";
-        }
-        return "error";
-    }
-
-    /**
-     * Set the Language that the user preffered to work.
-     * And set preffered language to the session
-     */
-    public String selectLanguage() {
-        logger.debug("inside selectLanguage : {} passed.", language);
-        session.put(WebConstants.SESSION_USER_LANG, language);
-        return "success";
     }
 
    /**
@@ -281,22 +255,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public String getScopeKey() {
         return scopeKey;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 
     public ArrayList<District> getDistrictList() {
