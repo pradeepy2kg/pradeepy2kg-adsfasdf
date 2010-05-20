@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.domain.Race;
 import lk.rgd.crs.api.dao.RaceDAO;
-import lk.rgd.crs.web.util.Constant;
+import lk.rgd.crs.web.WebConstants;
 
 import java.util.Map;
 import java.util.List;
@@ -65,7 +65,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
      * Populate data to Birth Confirmation Forms
      */
     private void populate() {
-        language = (String) session.get(Constant.SESSION_USER_LANG);
+        language = (String) session.get(WebConstants.SESSION_USER_LANG);
         logger.debug("inside populate : {} observed.", getLanguage());
 
         setDistrictList(raceDao.getRaces(language));
