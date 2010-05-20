@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <definition name="epr.template" template="/WEB-INF/pages/template/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/pages/template/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/pages/template/menu.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/login/login.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
+    </definition>
+
+    <definition name="epr.welcome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/Welcome.jsp"/>
+    </definition>
+
+    <definition name="epr.newBirthCertificate" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/newBirthCertificate.jsp"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationForm1.jsp"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationForm2.jsp"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationForm3.jsp"/>
+    </definition>
+
+    <definition name="epr.birthRegistration_form4" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationForm4.jsp"/>
+    </definition>
+
+    <definition name="epr.birthConfirmation_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationForm1.jsp"/>
+    </definition>
+
+    <definition name="epr.birthConfirmation_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationForm2.jsp"/>
+    </definition>
+
+	<definition name="epr.home" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/home.jsp"/>
+    </definition>
+
+    <definition name="epr.error" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/error.jsp"/>
+    </definition>
+</tiles-definitions>
