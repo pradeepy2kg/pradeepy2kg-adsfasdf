@@ -9,6 +9,7 @@ import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegisterService;
 import lk.rgd.crs.web.util.LoginBD;
 import lk.rgd.crs.web.util.MasterDataLoad;
+import lk.rgd.crs.web.util.Constant;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private String scopeKey;
     private ArrayList<District> districtList;
-    private HashMap<Integer, String> countryMap;
+    private ArrayList countryList;
     BirthRegisterService service;
 
     public String welcome() {
@@ -74,7 +75,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (loginBD.login(userName, password)) {
             this.setLanguage(loginBD.getLanguage(userName));
             logger.debug("inside login : {} is prefered.", language);
-            session.put("user_lang", language);
+            session.put(Constant.SESSION_USER_LANG, language);
             return "success";
         }
         return "error";
@@ -86,7 +87,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String selectLanguage() {
         logger.debug("inside selectLanguage : {} passed.", language);
-        session.put("user_lang",language);
+        session.put(Constant.SESSION_USER_LANG, language);
         return "success";
     }
 
@@ -149,39 +150,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-       * Populate data to the UIs
-       */
-    public void populate() {
+     * Populate data to the UIs
+     */
+    private void populate() {
         MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
         logger.debug("inside populate : masterload obtained.");
 
-        language= (String) (session.get("user_lang"));
+        language = (String) (session.get(Constant.SESSION_USER_LANG));
         logger.debug("inside populate : {} observed.", language);
 
         setDistrictList((ArrayList<District>) masterDataLoad.loadDistricts(language));
         logger.debug("inside populte : districts set, setting countries.");
-        setCountryMap(masterDataLoad.loadCountries());
-    }
-
-    /**
-     * For Birth Confirmation pre processing purposes.
-     * <p>BirthRegister Entity Bean is populated based on the values sent by UI. Variables are passed from the BirthConfirmationForm1 page.
-     *
-     * @return String returns next form page to be loaded or error page
-     */
-    public String birthConfirmationPreProcessor() {
-        // still implementing
-        return "form2";
-    }
-
-    /**
-     * This method finalize Birth confirmation process
-     *
-     * @return return success or error
-     */
-    public String birthConfirmFinalizer() {
-        // still implementing));
-        return "success";
+        setCountryList((ArrayList) masterDataLoad.loadCountries(language));
+        logger.debug("inside populte : countries {}", countryList);
     }
 
     public String getFatherDOB() {
@@ -328,11 +309,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.districtList = districtList;
     }
 
-    public HashMap<Integer, String> getCountryMap() {
-        return countryMap;
+    public ArrayList getCountryList() {
+        return countryList;
     }
 
-    public void setCountryMap(HashMap<Integer, String> countryMap) {
-        this.countryMap = countryMap;
+    public void setCountryList(ArrayList countryList) {
+        this.countryList = countryList;
     }
 }

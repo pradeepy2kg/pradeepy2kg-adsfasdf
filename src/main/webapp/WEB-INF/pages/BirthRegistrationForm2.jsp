@@ -11,7 +11,10 @@
         <div id="father-serial-no"><s:label value="%{#session.birthRegister.serialNumber}"/></div>
         <div id="father-nic-no"><s:textfield name="birthRegister.fathersNIC" /></div>
         <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
-        <div id="father-country"><s:textfield name="birthRegister.fatherForeignerCountry"/></div>
+        <div id="father-country">
+            <s:select name="birthRegister.fatherForeignerCountry" list="districtList" listKey="districtId"
+                      listValue="districtName" headerKey="0" headerValue="-Select District-"/>
+        </div>
         <div id="father-name"><s:textfield name="birthRegister.fatherFullName"/></div>
         <%--<div id="father-dob"><s:textfield name="fatherDOB" value="2005/05/01" /></div>--%>
         <div id="father-birth-place"><s:textfield name="birthRegister.fatherBirthPlace"/></div>
