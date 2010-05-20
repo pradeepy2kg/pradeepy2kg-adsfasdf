@@ -6,10 +6,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import lk.rgd.AppConstants;
 import lk.rgd.crs.api.BirthConstants;
-import lk.rgd.crs.api.dao.AppParametersDAO;
-import lk.rgd.crs.api.dao.CountryDAO;
-import lk.rgd.crs.api.dao.DistrictDAO;
-import lk.rgd.crs.api.dao.RaceDAO;
+import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.Country;
 import lk.rgd.crs.api.domain.District;
 import lk.rgd.crs.api.domain.Race;
@@ -20,10 +17,9 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -39,6 +35,7 @@ public class DAOImplTest extends TestCase {
     private static Set<String> sinhalaDistricts = new HashSet<String>();
     private static Set<String> sinhalaCountries = new HashSet<String>();
     private static Set<String> sinhalaRaces = new HashSet<String>();
+    private static Set<String> sinhalaBDDivisions = new HashSet<String>();
 
     static {
         sinhalaDistricts.add("කොළඹ");
@@ -52,6 +49,10 @@ public class DAOImplTest extends TestCase {
         sinhalaRaces.add("සිංහල");
         sinhalaRaces.add("ශ්‍රී ලංකික දෙමල");
         sinhalaRaces.add("ඉන්දියානු දෙමල");
+
+        sinhalaBDDivisions.add("කොළඹ කොටුව (Medical)");
+        sinhalaBDDivisions.add("කොම්පන්න වීදීය (Medical)");
+        sinhalaBDDivisions.add("අලුත් කඩේ (Medical)");
     }
 
     public static Test suite() {
@@ -98,28 +99,37 @@ public class DAOImplTest extends TestCase {
 
     public void testDistricts() throws Exception {
         DistrictDAO bean = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
-        List<District> districts = bean.getDistricts(AppConstants.SINHALA);
+        Map<Integer, String> districts = bean.getDistricts(AppConstants.SINHALA);
         Assert.assertEquals(3, districts.size());
-        for (District d : districts) {
-            Assert.assertTrue(sinhalaDistricts.contains(d.getDistrictName()));
+        for (String d : districts.values()) {
+            Assert.assertTrue(sinhalaDistricts.contains(d));
         }
     }
 
     public void testCountries() throws Exception {
         CountryDAO bean = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
-        List<Country> countries = bean.getCountries(AppConstants.SINHALA);
+        Map<Integer, String> countries = bean.getCountries(AppConstants.SINHALA);
         Assert.assertEquals(3, countries.size());
-        for (Country d : countries) {
-            Assert.assertTrue(sinhalaCountries.contains(d.getCountryName()));
+        for (String d : countries.values()) {
+            Assert.assertTrue(sinhalaCountries.contains(d));
         }
     }
 
     public void testRaces() throws Exception {
         RaceDAO bean = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
-        List<Race> races = bean.getRaces(AppConstants.SINHALA);
+        Map<Integer, String> races = bean.getRaces(AppConstants.SINHALA);
         Assert.assertEquals(3, races.size());
-        for (Race r : races) {
-            Assert.assertTrue(sinhalaRaces.contains(r.getRaceName()));
+        for (String r : races.values()) {
+            Assert.assertTrue(sinhalaRaces.contains(r));
+        }
+    }
+
+    public void testBDDivisions() throws Exception {
+        BDDivisionDAO bean = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+        Map<Integer, String> bdDivisions = bean.getDivisions(AppConstants.SINHALA, 11);
+        Assert.assertEquals(3, bdDivisions.size());
+        for (String bd : bdDivisions.values()) {
+            Assert.assertTrue(sinhalaBDDivisions.contains(bd));
         }
     }
 }

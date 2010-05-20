@@ -1,10 +1,9 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.AppConstants;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Represents a Race maintained by the system. A race has a unique ID, and multiple names in
@@ -14,25 +13,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "races")
-public class Race {
+public class Race implements Serializable {
 
     @Id
-    private int id;
     private int raceId;
-    private String raceName;
-    private String languageId;
+    private String siRaceName;
+    private String enRaceName;
+    private String taRaceName;
+    private boolean active;
 
     public Race() {}
-
-    public Race(int raceId, String raceName) {
-        this(raceId, raceName, AppConstants.ENGLISH);
-    }
-
-    public Race(int raceId, String raceName, String languageId) {
-        this.raceId = raceId;
-        this.raceName = raceName;
-        this.languageId = languageId;
-    }
 
     public int getRaceId() {
         return raceId;
@@ -42,19 +32,35 @@ public class Race {
         this.raceId = raceId;
     }
 
-    public String getRaceName() {
-        return raceName;
+    public String getSiRaceName() {
+        return siRaceName;
     }
 
-    public void setRaceName(String raceName) {
-        this.raceName = raceName;
+    public void setSiRaceName(String siRaceName) {
+        this.siRaceName = siRaceName;
     }
 
-    public String getLanguageId() {
-        return languageId;
+    public String getEnRaceName() {
+        return enRaceName;
     }
 
-    public void setLanguageId(String languageId) {
-        this.languageId = languageId;
+    public void setEnRaceName(String enRaceName) {
+        this.enRaceName = enRaceName;
+    }
+
+    public String getTaRaceName() {
+        return taRaceName;
+    }
+
+    public void setTaRaceName(String taRaceName) {
+        this.taRaceName = taRaceName;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

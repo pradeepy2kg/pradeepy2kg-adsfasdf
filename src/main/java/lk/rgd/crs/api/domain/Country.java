@@ -15,17 +15,20 @@ import javax.persistence.Table;
 public class Country {
 
     @Id
-    private int id;
     private int countryId;
-    private String countryName;
-    private String languageId;
+    private String siCountryName;
+    private String enCountryName;
+    private String taCountryName;
+    private boolean active;
 
     public Country() {}
 
-    public Country(int countryId, String countryName, String languageId) {
+    public Country(int countryId, String siCountryName, String enCountryName, String taCountryName, boolean active) {
         this.countryId = countryId;
-        this.countryName = countryName;
-        this.languageId = languageId;
+        this.siCountryName = siCountryName;
+        this.enCountryName = enCountryName;
+        this.taCountryName = taCountryName;
+        this.active = active;
     }
 
     public int getCountryId() {
@@ -36,19 +39,35 @@ public class Country {
         this.countryId = countryId;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getSiCountryName() {
+        return siCountryName;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setSiCountryName(String siCountryName) {
+        this.siCountryName = siCountryName;
     }
 
-    public String getLanguageId() {
-        return languageId;
+    public String getEnCountryName() {
+        return enCountryName;
     }
 
-    public void setLanguageId(String languageId) {
-        this.languageId = languageId;
+    public void setEnCountryName(String enCountryName) {
+        this.enCountryName = enCountryName;
+    }
+
+    public String getTaCountryName() {
+        return taCountryName;
+    }
+
+    public void setTaCountryName(String taCountryName) {
+        this.taCountryName = taCountryName;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

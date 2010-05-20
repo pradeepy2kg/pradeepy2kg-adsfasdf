@@ -1,8 +1,6 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.crs.api.domain.District;
-
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author asankha
@@ -12,7 +10,7 @@ public interface DistrictDAO {
     /**
      * Returns the list of Districts for the given language
      * @param language the language ID (see AppConstants)
-     * @return the list of known districts for the given language
+     * @return a Map of known districts for the given language along with the ID
      */
-    public List<District> getDistricts(String language);
+    public Map<Integer, String> getDistricts(String language);
 }
