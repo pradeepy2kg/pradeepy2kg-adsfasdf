@@ -5,12 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.domain.Race;
+import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.web.WebConstants;
 
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
+import java.io.UnsupportedEncodingException;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.*;
 /**
  * Birth Confirmation related actions.
  *
@@ -68,8 +73,63 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         language = (String) session.get(WebConstants.SESSION_USER_LANG);
         logger.debug("inside populate : {} observed.", getLanguage());
 
-        setDistrictList(raceDao.getRaces(language));
-        logger.debug("inside populte : districts {}.", getDistrictList());
+        districtList=raceDao.getRaces(language);
+        logger.debug("inside populte : districts {}.", districtList);
+    }
+
+    public String getBirthConfirmationReport() {
+  try {
+            // compiling jasper report
+            JasperReport report = JasperCompileManager.compileReport("/home/amith23/Desktop/amith23/Templates/BirthConfermation_report_test.jrxml");
+            //setting data
+            JRDataSource dataSource = createReportDataSource();
+            // filling report with data sorce
+            JasperPrint print = JasperFillManager.fillReport(report, new HashMap(), dataSource);
+            // exporting report to HTML format
+            lk.rgd.crs.web.jasper.JasperExportManager.exportReportToHtmlFileIncludeExternalScript(print, "/home/amith23/Desktop/amith23/Templates/BirthConfermation_report_test.html", "hikzzzzz");
+        }
+        catch (Exception e) {
+            logger.info("jasper error", e);
+        }
+
+        return "success";
+    }
+
+     /*creating a pojo data source*/
+    private JRDataSource createReportDataSource() {
+        JRBeanArrayDataSource dataSource;
+        Person[] reportRows = initializeBeanArray();
+        dataSource = new JRBeanArrayDataSource(reportRows);
+        return dataSource;
+    }
+
+    /*
+    * init data
+    * */
+    private Person[] initializeBeanArray() {
+        //test data
+        String uniName = "\u0DBD\u0DD2\u0DBA\u0DCF\u0DB4\u0DAF\u0DD2\u0D82\u0DA0\u0DD2 \u0DAF\u0DD2\u0DB1\u0DBA";
+        String uniLastName = "\u0D9A\u0DAD\u0DD4\u0DC0\u0DBB\u0DBA\u0DCF\u0D9C\u0DDA \u0DB1\u0DB8";
+        Person[] reportRows = new Person[1];
+        Person p = new Person();
+        p.setId(new Long("10000"));
+        p.setLastName(convertToString(uniLastName));
+        p.setName(convertToString(uniName));
+
+        reportRows[0] = p;
+        return reportRows;
+    }
+
+    /*convert a unicode sequance to a String*/
+    private String convertToString(String unicodeSequance) {
+        String converted = null;
+        try {
+            byte[] utf8 = unicodeSequance.getBytes("UTF-8");
+            converted = new String(utf8, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("unicode sequance cannot convert to UTF-8", e);
+        }
+        return converted;
     }
 
     public int getPageNo() {
