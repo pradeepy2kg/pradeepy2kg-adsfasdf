@@ -63,6 +63,7 @@
     <bean id="appParametersDAOImpl" class="lk.rgd.crs.core.dao.AppParametersDAOImpl" />
     <bean id="districtDAOImpl" class="lk.rgd.crs.core.dao.DistrictDAOImpl" />
     <bean id="countryDAOImpl" class="lk.rgd.crs.core.dao.CountryDAOImpl" />
+    <bean id="raceDAOImpl" class="lk.rgd.crs.core.dao.RaceDAOImpl" />
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
