@@ -1,0 +1,10 @@
+/* Style for the Layout */
+
+/* Basic layout */
+
+#wrapper{width:1250px; margin:auto;}
+#layout-header{width:100%; height:150px; background:lightgreen;}
+#layout-body{width:100%; margin-top:2px; }
+#body-sidebar{width:195px; float:left; min-height:650px; background:pink;}
+#body-content{width:1050px; margin-left:200px; min-height:650px; background:lightyellow;}
+#layout-footer{width:100%; height:30px; float:left;  margin-top:2px; background:lightblue;}
