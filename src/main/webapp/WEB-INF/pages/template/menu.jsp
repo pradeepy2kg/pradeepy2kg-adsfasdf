@@ -2,13 +2,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <table>
     <tr>
-        <td><a href="epr_birth_conformation_report.do">birth comformation report </a> </td>
+        <td><a href="eprBirthConfirmationReport.do">birth comformation report </a> </td>
     </tr>
     <tr>
         <td><a href="eprBirthRegistration.do" >Birth Registration</a></td>
     </tr>
     <tr>
-        <td><a href="eprBirthConfirmation_pageLoad.do">Birth Confirmation</a> </td>
+        <td><a href="eprBirthConfirmation.do">Birth Confirmation</a> </td>
     </tr>
     <tr>
         <td><a href="eprBirthRegisterApproval_pageLoad.do">Birth Register Approval</a> </td>
