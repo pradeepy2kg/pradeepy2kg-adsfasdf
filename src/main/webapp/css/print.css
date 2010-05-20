@@ -1,0 +1,28 @@
+/* Main-Layout for the print */
+@media print {
+    body {
+        background-color: white !important;
+        font-family: verdana, arial, sans-serif;
+        font-size: 10pt;
+        color: green;
+        width: 8in;
+        height: 11in;
+    }
+    *{background:none; }
+    select,input,textarea{border:none; background:none;}
+    .button{display:none;}
+		#layout-header, #body-sidebar, #layout-footer {
+        display: none !important;
+    }
+
+    #body-content {
+        float: left;
+        position: static;
+        top: 0;
+        left: 0;
+        margin: 0;
+        color: #003333;
+        background: url("../images/1.png") no-repeat center;
+    }
+		textarea{color:black; font-size:12pt;}
+}
