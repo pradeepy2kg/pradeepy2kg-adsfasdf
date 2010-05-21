@@ -1,4 +1,6 @@
 <html><%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Iterator" %>
 <%--
   @author duminda
 --%> <head>
@@ -19,8 +21,22 @@
                               onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="district">
-            <s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"
-                      listValue="districtName" headerKey="0" headerValue="-Select District-"/>
+            <%--todo change this into struts tag--%>
+            <% Map<Integer, String> districtList = (Map<Integer, String>) session.getAttribute("districtList");
+                Iterator it = districtList.entrySet().iterator();
+            %>
+            <select name="birthRegister.childBirthDistrict">
+                <option value="-1">- Select District -</option>
+                <% while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                %>
+                <option value="<%= pair.getKey()%>">
+                    <%= pair.getValue()%>
+                </option>
+                <%}%>
+            </select>
+            <%--<s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"--%>
+                      <%--listValue="districtName" headerKey="0" headerValue="-Select District-"/>--%>
         </div>
         <div id="division"><s:textfield name="birthRegister.childBirthDivision"/></div>
         <div id="place"><s:textfield name="birthRegister.childBirthPlace"/></div>

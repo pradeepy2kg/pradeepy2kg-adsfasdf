@@ -8,7 +8,7 @@
         <td><a href="eprBirthRegistration.do" >Birth Registration</a></td>
     </tr>
     <tr>
-        <td><a href="eprBirthConfirmation_pageLoad.do">Birth Confirmation</a> </td>
+        <td><a href="eprBirthConfirmation.do">Birth Confirmation</a> </td>
     </tr>
     <tr>
         <td><a href="eprBirthRegisterApproval_pageLoad.do">Birth Register Approval</a> </td>

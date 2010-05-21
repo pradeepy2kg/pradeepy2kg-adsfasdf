@@ -4,13 +4,13 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
-import lk.rgd.crs.api.domain.Race;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.dao.RaceDAO;
+import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
 
 import java.util.Map;
-import java.util.List;
 import java.util.HashMap;
 import java.io.UnsupportedEncodingException;
 
@@ -19,25 +19,25 @@ import net.sf.jasperreports.engine.data.*;
 /**
  * Birth Confirmation related actions.
  *
- * @author chathuranga
- * @author amith
+ * @author Chathuranga Withana
+ * @author Amith Jayasekara
  */
 public class BirthConfirmAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
     private final RaceDAO raceDao;
-
-    /**
-     * pageNo is used to navigate through Birht Confirmation Form
-     */
+    private final DistrictDAO districtDAO;
+    
     private int pageNo;
     private String language;
-    private List<Race> districtList;
+    private Map<Integer,String> districtList;
+    private Map<Integer,String> raceList;
     private Map session;
 
-    public BirthConfirmAction(RaceDAO raceDao) {
+    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO) {
         this.raceDao = raceDao;
+        this.districtDAO = districtDAO;
     }
 
     /**
@@ -73,8 +73,23 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         language = (String) session.get(WebConstants.SESSION_USER_LANG);
         logger.debug("inside populate : {} observed.", getLanguage());
 
-        // TODO fix me - districtList=raceDao.getRaces(language);
-        logger.debug("inside populte : districts {}.", districtList);
+        //todo temporary fix : should be changed
+        if (language.equals("English")) {
+            language = AppConstants.ENGLISH;
+        } else if (language.equals("Sinhala")) {
+            language = AppConstants.SINHALA;
+        } else if (language.equals("Tamil")) {
+            language = AppConstants.TAMIL;
+        }
+
+        districtList=districtDAO.getDistricts(language);
+        raceList=raceDao.getRaces(language);
+
+        //todo temporary solution until use a method to show Map in UI
+        session.put("districtList", districtList);
+        session.put("raceList",raceList);
+
+        logger.debug("inside populte : districts , countries and races populated.");
     }
 
     public String getBirthConfirmationReport() {
@@ -148,7 +163,6 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         this.language = language;
     }
 
-
     public void setSession(Map session) {
         this.session = session;
     }
@@ -157,11 +171,19 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         return session;
     }
 
-    public List<Race> getDistrictList() {
+    public Map<Integer, String> getDistrictList() {
         return districtList;
     }
 
-    public void setDistrictList(List<Race> districtList) {
+    public void setDistrictList(Map<Integer, String> districtList) {
         this.districtList = districtList;
+    }
+
+    public Map<Integer, String> getRaceList() {
+        return raceList;
+    }
+
+    public void setRaceList(Map<Integer, String> raceList) {
+        this.raceList = raceList;
     }
 }

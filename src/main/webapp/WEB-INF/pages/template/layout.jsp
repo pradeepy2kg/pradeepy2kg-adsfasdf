@@ -10,8 +10,27 @@
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
     <style type="text/css">
-        @font-face {font-family: Potha;src: url(POTHA0.eot);}
-        @font-face { font-family:Bamini; src:url(eot/BAMINI0.eot);@font-face { font-family:Latha; src:url(eot/LATHA0.eot);
+        @font-face
+        {
+            font-family: Potha
+        ;
+            src: url(POTHA0.eot)
+        ;
+        }
+        @font-face
+        {
+            font-family: Bamini
+        ;
+            src: url(eot/BAMINI0.eot)
+        ;
+        @font-face
+        {
+        font-family
+        :
+        Latha
+        ;
+            src: url(eot/LATHA0.eot)
+        ;
     </style>
 
 </head>
@@ -27,7 +46,9 @@
             <s:form action="eprLanguage.do" method="POST"
                     name="eprLanguage">
                 <s:label value="Select your language"></s:label>
+                <%--todo  edit this to pass language constants --%>
                 <s:select list="{'English','Sinhala','Tamil'}" name="language"></s:select>
+                <%--<s:select name="language" list="%{#['en_US':'English','si_LK':'Sinhala','ta_LK':'Tamil']}" headerKey="0" headerValue="--Select--"/>--%>
                 <s:submit value="select"></s:submit>
             </s:form><br><br>
             <tiles:insertAttribute name="menu"/>

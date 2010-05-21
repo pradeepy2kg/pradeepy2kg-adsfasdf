@@ -1,3 +1,5 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Iterator" %>
 <%--
   User: chathuranga
   Date: May 13, 2010
@@ -18,7 +20,22 @@
             <s:textarea name="%{#session.confirmBirth.fatherFullName}" cols="38"/>
         </div>
         <div id="birth-confirmation-fatherRace">
-            <s:textfield name="birthRegister.fatherRace"/>
+                <%--<s:select name="birthRegister.fatherRace" list="raceList" headerKey="0" headerValue="- Select Race -"--%>
+                <%--listKey="raceId" listValue="raceName"/>--%>
+                <%--todo change this into struts tag--%>
+            <% Map<Integer, String> raceList = (Map<Integer, String>) session.getAttribute("raceList");
+                Iterator it = raceList.entrySet().iterator();
+            %>
+            <select name="birthRegister.fatherRace">
+                <option value="-1">- Select Race -</option>
+                <% while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                %>
+                <option value="<%= pair.getKey()%>">
+                    <%= pair.getValue()%>
+                </option>
+                <%}%>
+            </select>
         </div>
         <div id="birth-confirmation-mother-pin">
             <s:textfield name="birthRegister.motherNIC"/>
@@ -27,10 +44,24 @@
             <s:textarea name="birthRegister.motherFullName" cols="38"/>
         </div>
         <div id="birth-confirmation-motherRace">
-            <s:textfield name="birthRegister.motherRace"/>
+                <%--<s:select name="birthRegister.motherRace" list="raceList" headerKey="0" headerValue="- Select Race -" listKey="raceId" listValue="raceName"/>--%>
+                <%--todo change this into struts tag--%>
+            <% Iterator iterator = raceList.entrySet().iterator();
+            %>
+            <select name="birthRegister.motherRace">
+                <option value="-1">- Select Race -</option>
+                <% while (iterator.hasNext()) {
+                    Map.Entry pair = (Map.Entry) iterator.next();
+                %>
+                <option value="<%= pair.getKey()%>">
+                    <%= pair.getValue()%>
+                </option>
+                <%}%>
+            </select>
         </div>
         <div id="birth-confirmation-married">
-            <s:select list="{'YES','NO'}" name="birthRegister.marriedStatus"/>
+            <s:select name="birthRegister.marriedStatus" list="{'YES','NO'}" headerKey="0"
+                      headerValue="- Select Status -"/>
         </div>
         <div id="birth-confirmation-confim-nic">
             <s:textfield name="birthRegister.confirmantPINorPIN"/>
