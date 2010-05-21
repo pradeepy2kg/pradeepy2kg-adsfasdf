@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.domain.Person;
+import lk.rgd.crs.api.domain.BirthConfirm;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
@@ -32,12 +33,14 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
 
     private final RaceDAO raceDao;
     private final DistrictDAO districtDAO;
-    
+
     private int pageNo;
     private String language;
     private Map<Integer,String> districtList;
     private Map<Integer,String> raceList;
     private Map session;
+
+    private BirthRegister birthConfirm;
 
     public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO) {
         this.raceDao = raceDao;
@@ -55,45 +58,34 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
      */
     public String birthConfirmation() {
         logger.debug("Step {} of 2.", pageNo);
+        if (pageNo > 2) {
+            return "error";
+        } else if (pageNo == 2) {
+            // all pages captured, proceed to persist after validations
+            // todo business validations and persiatance
+            BirthRegister confirm = (BirthRegister) session.get("birthConfirm");
 
-        switch (getPageNo()) {
-            case 0:
-            case 1:
-                populate();
-                logger.debug("birth confirmation page {}", getPageNo());                    
-                session.put("page_title", "birth confirm");
-                return "form" + getPageNo();
-            case 2:
-                logger.debug("persistence code here.");
-                //todo persist after validations
-                return "success";
-            default:
-                return "error";
+            logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getSerialNumber(), confirm.getChildBirthDistrict());
+            logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+            return "success";
         }
-//
-//        logger.debug("Step {} of 4 ", pageNo);
-//       if (pageNo > 2) {
-//           return "error";
-//       } else if (pageNo == 2) {
-//           // all pages captured, proceed to persist after validations
-//           // todo business validations and persiatance
-//           return "success";
-//       }
-//
-//       populate();
-//       if (pageNo == 0) {
-//           initForm();
-//       } else {
-//           // submissions of pages 1 - 4
-//           try {
-//               beanMerge();
-//           } catch (Exception e) {
-//               handleErrors(e);
-//               return "error";
-//           }
-//       }
-//
-//       return "form" + pageNo;
+
+        populate();
+        if (pageNo == 0) {
+            initForm();
+        } else {
+            // submissions of pages 1 - 2
+            BirthRegister confirm = (BirthRegister) session.get("birthConfirm");
+            logger.debug("Birth Confirmation : District {} .", confirm.getSerialNumber(), confirm.getChildBirthDistrict());
+            try {
+                beanMerge();
+            } catch (Exception e) {
+                handleErrors(e);
+                return "error";
+            }
+        }
+
+        return "form" + pageNo;
     }
 
     private void handleErrors(Exception e) {
@@ -127,41 +119,32 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
     /**
      *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
      * store it in session
-      */
-//   private void initForm() {
-//       birthRegister = new BirthRegister();
-//       session.put("birthRegister", birthRegister);
-//       //todo set fields to proper initial values based on user and date
-//   }
+     */
+    private void initForm() {
+        setBirthConfirm(new BirthRegister());
+        session.put("birthConfirm", getBirthConfirm());
+        //todo set fields to proper initial values based on user and date
+    }
 
     /**
      * Populate data to Birth Confirmation Forms
      */
     private void populate() {
-        language = (String) session.get(WebConstants.SESSION_USER_LANG);
-        logger.debug("inside populate : {} observed.", getLanguage());
+        String language = (String) session.get(WebConstants.SESSION_USER_LANG);
+        logger.debug("inside populate : {} observed.", language);
 
-        //todo temporary fix : should be changed
-        if (language.equals("English")) {
-            language = AppConstants.ENGLISH;
-        } else if (language.equals("Sinhala")) {
-            language = AppConstants.SINHALA;
-        } else if (language.equals("Tamil")) {
-            language = AppConstants.TAMIL;
-        }
-
-        districtList=districtDAO.getDistricts(language);
-        raceList=raceDao.getRaces(language);
+        districtList = districtDAO.getDistricts(language);
+        raceList = raceDao.getRaces(language);
 
         //todo temporary solution until use a method to show Map in UI
         session.put("districtList", districtList);
-        session.put("raceList",raceList);
+        session.put("raceList", raceList);
 
         logger.debug("inside populte : districts , countries and races populated.");
     }
 
     public String getBirthConfirmationReport() {
-  try {
+        try {
             // compiling jasper report
             JasperReport report = JasperCompileManager.compileReport("/home/amith23/Desktop/amith23/Templates/BirthConfermation_report_test.jrxml");
             //setting data
@@ -178,7 +161,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-     /*creating a pojo data source*/
+    /*creating a pojo data source*/
     private JRDataSource createReportDataSource() {
         JRBeanArrayDataSource dataSource;
         Person[] reportRows = initializeBeanArray();
@@ -221,14 +204,6 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public void setSession(Map session) {

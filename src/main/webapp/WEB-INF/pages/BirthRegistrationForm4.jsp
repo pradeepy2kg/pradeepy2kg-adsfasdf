@@ -8,15 +8,21 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4">
-   <div id="birth-registration-form-4-body">
-        <div id="serial-no"><s:textfield name="birthRegister.serialNumber" value="%{#session.birthRegister.serialNumber}" disabled="true"/></div>
-        <div id="child-name"><s:textfield name="birthRegister.childFullNameEnglish" value="%{#session.birthRegister.childFullNameEnglish}" disabled="true"/></div>
-        <div id="child-dob"><s:textfield name="birthRegister.childDOB" value="%{#session.birthRegister.childDOB}" disabled="true"/></div>
-        <div id="child-gender"><s:textfield name="birthRegister.childGender" value="%{#session.birthRegister.childGender}" disabled="true" /></div>
-        <div id="child-father"><s:textfield name="birthRegister.fatherFullName" value="%{#session.birthRegister.fatherFullName}" disabled="true"/></div>
-        <div id="child-mother"><s:textfield name="birthRegister.motherFullName" value="%{#session.birthRegister.motherFullName}" disabled="true"/></div>
+    <div id="birth-registration-form-4-body">
+        <div id="serial-no"><s:textfield name="birthRegister.serialNumber"
+                                         value="%{#session.birthRegister.serialNumber}" disabled="true"/></div>
+        <div id="child-name"><s:textfield name="birthRegister.childFullNameEnglish"
+                                          value="%{#session.birthRegister.childFullNameEnglish}" disabled="true"/></div>
+        <div id="child-dob"><s:textfield name="birthRegister.childDOB" value="%{#session.birthRegister.childDOB}"
+                                         disabled="true"/></div>
+        <div id="child-gender"><s:textfield name="birthRegister.childGender"
+                                            value="%{#session.birthRegister.childGender}" disabled="true"/></div>
+        <div id="child-father"><s:textfield name="birthRegister.fatherFullName"
+                                            value="%{#session.birthRegister.fatherFullName}" disabled="true"/></div>
+        <div id="child-mother"><s:textfield name="birthRegister.motherFullName"
+                                            value="%{#session.birthRegister.motherFullName}" disabled="true"/></div>
         <div id="authority"><s:textfield name="birthRegister.authority"/></div>
     </div>
-    <s:hidden  name="pageNo" value="4" />
+    <s:hidden name="pageNo" value="4"/>
     <div class="button"><s:submit value="NEXT"/></div>
 </s:form>

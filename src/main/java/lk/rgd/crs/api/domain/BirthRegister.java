@@ -22,7 +22,7 @@ public class BirthRegister {
     private int noOfMultipleBirths;          // if multiple births, num of children
     private String hospitalOrGNCode;
 
-    private String fathersNIC;
+    private String fatherNIC;
     private String fatherForeignerPassportNo;        // if foreigner
     private String fatherForeignerCountry;           // if foreigner
     private String fatherFullName;
@@ -72,6 +72,7 @@ public class BirthRegister {
     private String dobDay;
     private String marriedStatus;
 
+    private String confirmantNIC;
     private String confirmantFullName;
     private String confirmYear;
     private String confirmMonth;
@@ -80,9 +81,6 @@ public class BirthRegister {
     private String finalizeMonth;
     private String finalizeDay;
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public String getSerialNumber() {
         return serialNumber;
     }
@@ -179,12 +177,12 @@ public class BirthRegister {
         this.hospitalOrGNCode = hospitalOrGNCode;
     }
 
-    public String getFathersNIC() {
-        return fathersNIC;
+    public String getFatherNIC() {
+        return fatherNIC;
     }
 
-    public void setFathersNIC(String fathersNIC) {
-        this.fathersNIC = fathersNIC;
+    public void setFatherNIC(String fatherNIC) {
+        this.fatherNIC = fatherNIC;
     }
 
     public String getFatherForeignerPassportNo() {
@@ -578,5 +576,13 @@ public class BirthRegister {
 
     public void setConfirmSerialNumber(String confirmSerialNumber) {
         this.confirmSerialNumber = confirmSerialNumber;
+    }
+
+    public String getConfirmantNIC() {
+        return confirmantNIC;
+    }
+
+    public void setConfirmantNIC(String confirmantNIC) {
+        this.confirmantNIC = confirmantNIC;
     }
 }
