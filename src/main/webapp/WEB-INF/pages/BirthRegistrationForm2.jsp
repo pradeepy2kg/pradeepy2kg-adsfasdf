@@ -14,6 +14,7 @@
         onsubmit="javascript:return ageValidator()">
     <div id="birth-registration-form-2-body">
         <div id="father-nic-no"><s:textfield name="birthRegister.fathersNIC"/></div>
+
         <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
         <div id="father-country">
                 <%--todo change this into struts tag--%>
@@ -34,7 +35,13 @@
                 <%--listValue="districtName" headerKey="0" headerValue="-Select District-"/>--%>
         </div>
         <div id="father-name"><s:textfield name="birthRegister.fatherFullName"/></div>
-            <%--<div id="father-dob"><s:textfield name="fatherDOB" value="2005/05/01" /></div>--%>
+        <div id="father-dob">
+            <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear" onchange="javascript:setDate('fatherYear')"/>
+            <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth" onchange="javascript:setDate('fatherMonth')"/>
+            <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay" onchange="javascript:setDate('fatherDay')"/>
+            <s:datetimepicker id="fatherDatePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+                              onmouseover="javascript:splitDate('fatherDatePicker')"/>
+        </div>
         <div id="father-birth-place"><s:textfield name="birthRegister.fatherBirthPlace"/></div>
         <div id="father-race">
                 <%--<s:textfield name="birthRegister.fatherRace"/>--%>
@@ -73,7 +80,13 @@
         </div>
         <div id="mother-admision-no"><s:textfield name="birthRegister.motherAdmissionNoAndDate"/></div>
         <div id="mother-name"><s:textfield name="birthRegister.motherFullName"/></div>
-            <%--<div id="mother-dob"><s:textfield name="motherDOB" value="2005/05/01"/></div>--%>
+        <div id="mother-dob">
+        <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear" onchange="javascript:setDate('motherYear')"/>
+            <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth" onchange="javascript:setDate('motherMonth')"/>
+            <s:select list="{'01','02','03'}" name="motherDay" id="motherDay" onchange="javascript:setDate('motherDay')"/>
+            <s:datetimepicker id="motherdatePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+                              onmouseover="javascript:splitDate('motherdatePicker')"/>
+        </div>
         <div id="mother-birth-place"><s:textfield name="birthRegister.motherBirthPlace"/></div>
         <div id="mother-race">
                 <%--<s:textfield name="birthRegister.motherRace"/>--%>
