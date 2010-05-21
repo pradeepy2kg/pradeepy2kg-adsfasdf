@@ -80,7 +80,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else if (pageNo == 4) {
             // all pages captured, proceed to persist after validations
+            BirthRegister register = (BirthRegister) session.get("birthRegister");
             // todo business validations and persiatance
+            logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
+            logger.debug("Birth Register : {}.", register.getMotherFullName());
             return "success";
         }
 
@@ -94,6 +97,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
                 birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
             }
+        }
 
             // submissions of pages 1 - 4
             try {
@@ -114,30 +118,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * update the bean in session with the values of local bean
-     */
-    private void beanMerge() throws Exception {
-        BirthRegister target = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
-
-        // Iterate over all the attributes
-        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object originalValue = descriptor.getReadMethod().invoke(target);
-
-            // Only copy values where the session value is null or empty (do not replace already set values in the session)
-            if ((originalValue == null) || (originalValue.equals(""))) {
-                Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
-                descriptor.getWriteMethod().invoke(target, defaultValue);
-            } else {
-                logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
-            }
-        }
-
-        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
-    }
-
-    /**
-     * initialises the birthRegister bean with proper initial values (depending on user, date etc) and
+     *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
      * store it in session
      */
     private void initForm() {
@@ -170,6 +151,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         countryList = countryDAO.getCountries(language);
         raceList = raceDAO.getRaces(language);
 
+        //todo temporary solution until use a method to show Map in UI
         session.put("districtList", districtList);
         session.put("countryList", countryList);
         session.put("raceList", raceList);
