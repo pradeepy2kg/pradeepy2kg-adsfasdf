@@ -1,10 +1,6 @@
 <html><%@ page import="java.util.List" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: duminda
-  Date: May 10, 2010
-  Time: 3:59:13 PM
-  To change this template use File | Settings | File Templates.
+  @author duminda
 --%> <head>
 <%@ taglib prefix="s" uri="/struts-tags" %>
     <s:head theme="ajax"/>

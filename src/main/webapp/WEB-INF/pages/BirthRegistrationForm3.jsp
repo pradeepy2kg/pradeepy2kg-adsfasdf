@@ -1,9 +1,5 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: duminda
-  Date: May 10, 2010
-  Time: 4:00:31 PM
-  To change this template use File | Settings | File Templates.
+  @author duminda
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
