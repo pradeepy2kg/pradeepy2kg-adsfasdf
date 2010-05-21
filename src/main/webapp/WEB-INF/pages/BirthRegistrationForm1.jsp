@@ -1,17 +1,21 @@
-<html><%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Iterator" %>
 <%--
   @author duminda
---%> <head>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+--%>
+<html>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Iterator" %>
+<head>
+    <%@ taglib prefix="s" uri="/struts-tags" %>
     <s:head theme="ajax"/>
-     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
+    <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
-</head><body>
-<s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1" onsubmit="javascript:return birthRegistrationValidator()">
+</head>
+<body>
+<s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1"
+        onsubmit="javascript:return birthRegistrationValidator()">
     <div id="birth-registration-form-1-body">
-         <div id="birth-registration-form-1-serial">
+        <div id="birth-registration-form-1-serial">
             <s:textfield name="birthRegister.serialNumber" id="serialNumber"/>
         </div>
         <div id="date-of-birth">
@@ -22,7 +26,7 @@
                               onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="district">
-            <%--todo change this into struts tag--%>
+                <%--todo change this into struts tag--%>
             <% Map<Integer, String> districtList = (Map<Integer, String>) session.getAttribute("districtList");
                 Iterator it = districtList.entrySet().iterator();
             %>
@@ -36,8 +40,8 @@
                 </option>
                 <%}%>
             </select>
-            <%--<s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"--%>
-                      <%--listValue="districtName" headerKey="0" headerValue="-Select District-"/>--%>
+                <%--<s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"--%>
+                <%--listValue="districtName" headerKey="0" headerValue="-Select District-"/>--%>
         </div>
         <div id="division"><s:textfield name="birthRegister.childBirthDivision"/></div>
         <div id="place"><s:textfield name="birthRegister.childBirthPlace"/></div>
@@ -47,11 +51,12 @@
             <s:select list="{'Male','Female'}" name="birthRegister.childGender"/>
         </div>
         <div id="birth-weight"><s:textfield name="birthRegister.childBirthWeight" id="childBirthWeight"/></div>
-        <div id="no-of-children"><s:textfield name="birthRegister.noOfLiveChildren"  id="noOfLiveChildren"/></div>
-        <div id="multiple-no-of-children"><s:textfield name="birthRegister.noOfMultipleBirths" id="noOfMultipleBirths"/></div>
+        <div id="no-of-children"><s:textfield name="birthRegister.noOfLiveChildren" id="noOfLiveChildren"/></div>
+        <div id="multiple-no-of-children"><s:textfield name="birthRegister.noOfMultipleBirths"
+                                                       id="noOfMultipleBirths"/></div>
         <div id="hospital-code"><s:textfield name="birthRegister.hospitalOrGNCode"/></div>
     </div>
-    <s:hidden name="pageNo" value="1" />
+    <s:hidden name="pageNo" value="1"/>
     <div class="button"><s:submit value="NEXT"/></div>
-</s:form>  </body>
+</s:form></body>
 </html>
