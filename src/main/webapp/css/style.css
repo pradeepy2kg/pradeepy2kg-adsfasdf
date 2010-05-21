@@ -62,10 +62,10 @@
 
 /* Styles for the forth page of the web form */
 #serial-no{margin-left:34%; padding-top:105px;}
-#child-name,#child-dob,#child-gender,#child-father,#child-mother,#authority{margin-left:34%; padding-top:15px;}
+#child-name,#child-dob,#child-gender,#child-father,#child-mother,#authority{margin-left:34%; padding-top:12px;}
 #serial-no input,#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input,#authority input{width:92%;}
-#serial-no input,#authority input{height:105px;}
-#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input{height:50px;}
+#serial-no input,#authority input{height:100px;}
+#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input{height:45px;}
 
 /* Styles for the BirthConfirmationForm1 page one of the web form */
 #birth-confirmation-form-1-serial{height:40px; float:left; margin-top:70px; margin-left:850px; overflow:hidden;}
