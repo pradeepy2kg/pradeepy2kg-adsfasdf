@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.domain.Person;
+import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
@@ -13,6 +14,9 @@ import lk.rgd.AppConstants;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.UnsupportedEncodingException;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
@@ -38,6 +42,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
     public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO) {
         this.raceDao = raceDao;
         this.districtDAO = districtDAO;
+        logger.debug("inside birth register action constructor");
     }
 
     /**
@@ -49,7 +54,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
      * This will have no performace impact as they will be cached in the backend.
      */
     public String birthConfirmation() {
-        logger.debug("Step {} of 2.", getPageNo());
+        logger.debug("Step {} of 2.", pageNo);
 
         switch (getPageNo()) {
             case 0:
@@ -64,7 +69,69 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
             default:
                 return "error";
         }
+//
+//        logger.debug("Step {} of 4 ", pageNo);
+//       if (pageNo > 2) {
+//           return "error";
+//       } else if (pageNo == 2) {
+//           // all pages captured, proceed to persist after validations
+//           // todo business validations and persiatance
+//           return "success";
+//       }
+//
+//       populate();
+//       if (pageNo == 0) {
+//           initForm();
+//       } else {
+//           // submissions of pages 1 - 4
+//           try {
+//               beanMerge();
+//           } catch (Exception e) {
+//               handleErrors(e);
+//               return "error";
+//           }
+//       }
+//
+//       return "form" + pageNo;
     }
+
+    private void handleErrors(Exception e) {
+       logger.error(e.getLocalizedMessage());
+       //todo pass the error to the error.jsp page
+   }
+
+   /**
+    *  update the bean in session with the values of local bean
+    */
+//   private void beanMerge() throws Exception {
+//       BirthRegister target = (BirthRegister) session.get("birthRegister");
+//       BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+//
+//       // Iterate over all the attributes
+//       for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+//           Object originalValue = descriptor.getReadMethod().invoke(target);
+//
+//           // Only copy values values where the destination values is null
+//           if (originalValue == null) {
+//               Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
+//               descriptor.getWriteMethod().invoke(target, defaultValue);
+//           } else {
+//               logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue );
+//           }
+//       }
+//
+//       session.put("birthRegister", target);
+//   }
+
+    /**
+     *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
+     * store it in session
+      */
+//   private void initForm() {
+//       birthRegister = new BirthRegister();
+//       session.put("birthRegister", birthRegister);
+//       //todo set fields to proper initial values based on user and date
+//   }
 
     /**
      * Populate data to Birth Confirmation Forms
