@@ -6,6 +6,7 @@
 <%@ page import="java.util.Map" %>
 <head>
     <%@ taglib prefix="s" uri="/struts-tags" %>
+    <s:head theme="ajax"/>
     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
 </head>
 
