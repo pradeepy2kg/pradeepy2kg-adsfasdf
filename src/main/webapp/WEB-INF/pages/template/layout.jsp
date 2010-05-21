@@ -43,20 +43,12 @@
     <%-- Menu & Body--%>
     <div id="layout-body">
         <div id="body-sidebar">
-            <s:form action="eprLanguage.do" method="POST"
-                    name="eprLanguage">
-                <s:label value="Select your language"></s:label>
-                <%--todo  edit this to pass language constants --%>
-                <s:select list="{'English','Sinhala','Tamil'}" name="language"></s:select>
-                <%--<s:select name="language" list="%{#['en_US':'English','si_LK':'Sinhala','ta_LK':'Tamil']}" headerKey="0" headerValue="--Select--"/>--%>
-                <s:submit value="select"></s:submit>
-            </s:form><br><br>
             <tiles:insertAttribute name="menu"/>
-            <br><br>
-            <%if(session.getAttribute(WebConstants.SESSION_USER_NAME)!= null){ %>
-                <s:form action="eprLogout.do" method="POST" name="eprLogout">
-                    <s:submit name="submit" value="logout"></s:submit>
-                </s:form>
+            <br>
+            <%if (session.getAttribute(WebConstants.SESSION_USER_NAME) != null) { %>
+            <s:form action="eprLogout.do" method="POST" name="eprLogout">
+                <s:submit name="submit" value="logout"></s:submit>
+            </s:form>
             <% } %>
         </div>
         <div id="body-content">
