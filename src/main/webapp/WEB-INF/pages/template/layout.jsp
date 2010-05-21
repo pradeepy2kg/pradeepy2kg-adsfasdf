@@ -5,7 +5,7 @@
 <html>
 <head>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>E-Population System</title>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
@@ -53,7 +53,12 @@
             <% } %>
         </div>
         <div id="body-content">
-            <tiles:insertAttribute name="body"/>
+            <div id="body-content-title">
+                <tiles:insertAttribute name="title"/>
+            </div>
+            <div id="body-content-data">
+                <tiles:insertAttribute name="body"/>
+            </div>
         </div>
     </div>
     <%-- Footer --%>
