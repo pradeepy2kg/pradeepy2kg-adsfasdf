@@ -19,9 +19,9 @@
             <s:textfield name="birthRegister.serialNumber" id="serialNumber"/>
         </div>
         <div id="date-of-birth">
-            <s:select list="{'2009','2010','2011'}" name="year" id="year" onchange="javascript:setDate('year')"/>
-            <s:select list="{'01','02','03'}" name="month" id="month" onchange="javascript:setDate('month')"/>
-            <s:select list="{'01','02','03'}" name="day" id="day" onchange="javascript:setDate('day')"/>
+            <s:select list="{'2009','2010','2011'}" name="year" id="year" onchange="javascript:setDate('year','1')"/>
+            <s:select list="{'01','02','03'}" name="month" id="month" onchange="javascript:setDate('month','1')"/>
+            <s:select list="{'01','02','03'}" name="day" id="day" onchange="javascript:setDate('day','1')"/>
             <s:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('datePicker')"/>
         </div>

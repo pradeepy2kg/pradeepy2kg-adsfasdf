@@ -37,9 +37,9 @@
         </div>
         <div id="father-name"><s:textfield name="birthRegister.fatherFullName"/></div>
         <div id="father-dob">
-            <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear" onchange="javascript:setDate('fatherYear')"/>
-            <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth" onchange="javascript:setDate('fatherMonth')"/>
-            <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay" onchange="javascript:setDate('fatherDay')"/>
+            <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear" onchange="javascript:setDate('fatherYear','2')"/>
+            <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth" onchange="javascript:setDate('fatherMonth','2')"/>
+            <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay" onchange="javascript:setDate('fatherDay','2')"/>
             <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
@@ -82,9 +82,9 @@
         <div id="mother-admision-no"><s:textfield name="birthRegister.motherAdmissionNoAndDate"/></div>
         <div id="mother-name"><s:textfield name="birthRegister.motherFullName"/></div>
         <div id="mother-dob">
-        <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear" onchange="javascript:setDate('motherYear')"/>
-            <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth" onchange="javascript:setDate('motherMonth')"/>
-            <s:select list="{'01','02','03'}" name="motherDay" id="motherDay" onchange="javascript:setDate('motherDay')"/>
+        <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear" onchange="javascript:setDate('motherYear','3')"/>
+            <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth" onchange="javascript:setDate('motherMonth','3')"/>
+            <s:select list="{'01','02','03'}" name="motherDay" id="motherDay" onchange="javascript:setDate('motherDay','3')"/>
             <s:datetimepicker id="motherdatePicker" name="motherDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('motherdatePicker')"/>
         </div>
