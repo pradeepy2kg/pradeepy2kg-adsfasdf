@@ -22,7 +22,7 @@
             <s:select list="{'2009','2010','2011'}" name="year" id="year" onchange="javascript:setDate('year')"/>
             <s:select list="{'01','02','03'}" name="month" id="month" onchange="javascript:setDate('month')"/>
             <s:select list="{'01','02','03'}" name="day" id="day" onchange="javascript:setDate('day')"/>
-            <s:datetimepicker id="datePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+            <s:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="district">

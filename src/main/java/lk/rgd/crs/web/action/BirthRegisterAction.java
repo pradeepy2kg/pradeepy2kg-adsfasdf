@@ -9,8 +9,7 @@ import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.LoginBD;
-import lk.rgd.AppConstants;
+import lk.rgd.crs.web.util.EPopDate;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -44,7 +43,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
-
+    private String childDOB;
+    private String motherDOB;
+    private String fatherDOB;
     private List<Person> myList;
     private Map session;
 
@@ -87,6 +88,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
        if (pageNo == 0) {
            initForm();
        } else {
+           if(pageNo==1){
+               birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
+           }
+          else if(pageNo==2){
+               birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
+               birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
+           }
+
            // submissions of pages 1 - 4
            try {
                beanMerge();
@@ -238,5 +247,29 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setRaceList(Map<Integer, String> raceList) {
         this.raceList = raceList;
+    }
+
+    public String getChildDOB() {
+        return childDOB;
+    }
+
+    public void setChildDOB(String childDOB) {
+        this.childDOB = childDOB;
+    }
+
+    public String getMotherDOB() {
+        return motherDOB;
+    }
+
+    public void setMotherDOB(String motherDOB) {
+        this.motherDOB = motherDOB;
+    }
+
+    public String getFatherDOB() {
+        return fatherDOB;
+    }
+
+    public void setFatherDOB(String fatherDOB) {
+        this.fatherDOB = fatherDOB;
     }
 }

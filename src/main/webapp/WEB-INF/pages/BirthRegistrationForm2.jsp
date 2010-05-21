@@ -40,7 +40,7 @@
             <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear" onchange="javascript:setDate('fatherYear')"/>
             <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth" onchange="javascript:setDate('fatherMonth')"/>
             <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay" onchange="javascript:setDate('fatherDay')"/>
-            <s:datetimepicker id="fatherDatePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+            <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
         <div id="father-birth-place"><s:textfield name="birthRegister.fatherBirthPlace"/></div>
@@ -85,7 +85,7 @@
         <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear" onchange="javascript:setDate('motherYear')"/>
             <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth" onchange="javascript:setDate('motherMonth')"/>
             <s:select list="{'01','02','03'}" name="motherDay" id="motherDay" onchange="javascript:setDate('motherDay')"/>
-            <s:datetimepicker id="motherdatePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+            <s:datetimepicker id="motherdatePicker" name="motherDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('motherdatePicker')"/>
         </div>
         <div id="mother-birth-place"><s:textfield name="birthRegister.motherBirthPlace"/></div>
