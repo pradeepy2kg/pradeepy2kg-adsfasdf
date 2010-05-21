@@ -66,85 +66,84 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("inside birth register action constructor");
     }
 
-   /**
-      *  This method is responsible for loading and capture data for all 4 BDF pages as well
-      *  as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
-      *  very first form page) is used to decide which state of the process we are in. at the last step
-      *  only we do a persistance, until then all data will be in the session. This is a design decision
-      *  to limit DB writes. Masterdata population will be done before displaying every page.
-      *  This will have no performace impact as they will be cached in the backend.
-      */
-   public String birthRegistration() {
-       logger.debug("Step {} of 4 ", pageNo);
-       if (pageNo > 4) {
-           return "error";
-       } else if (pageNo == 4) {
-           // all pages captured, proceed to persist after validations
-           // todo business validations and persiatance
-           return "success";
-       }
+    /**
+     * This method is responsible for loading and capture data for all 4 BDF pages as well
+     * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
+     * very first form page) is used to decide which state of the process we are in. at the last step
+     * only we do a persistance, until then all data will be in the session. This is a design decision
+     * to limit DB writes. Masterdata population will be done before displaying every page.
+     * This will have no performace impact as they will be cached in the backend.
+     */
+    public String birthRegistration() {
+        logger.debug("Step {} of 4 ", pageNo);
+        if (pageNo > 4) {
+            return "error";
+        } else if (pageNo == 4) {
+            // all pages captured, proceed to persist after validations
+            // todo business validations and persiatance
+            return "success";
+        }
 
-       populate();
-       if (pageNo == 0) {
-           initForm();
-       } else {
-           if(pageNo==1){
-               birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
-           }
-          else if(pageNo==2){
-               birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
-               birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
-           }
+        populate();
+        if (pageNo == 0) {
+            initForm();
+        } else {
+            if (pageNo == 1) {
+                birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
+            } else if (pageNo == 2) {
+                birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
+                birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
+            }
 
-           // submissions of pages 1 - 4
-           try {
-               beanMerge();
-           } catch (Exception e) {
-               handleErrors(e);
-               return "error";
-           }
-       }
+            // submissions of pages 1 - 4
+            try {
+                beanMerge();
+            } catch (Exception e) {
+                handleErrors(e);
+                return "error";
+            }
+        }
 
-       return "form" + pageNo;
-   }
+        return "form" + pageNo;
+    }
 
-   private void handleErrors(Exception e) {
-       logger.error(e.getLocalizedMessage());
-       //todo pass the error to the error.jsp page
-   }
-
-   /**
-    *  update the bean in session with the values of local bean
-    */
-   private void beanMerge() throws Exception {
-       BirthRegister target = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-       BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
-
-       // Iterate over all the attributes
-       for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-           Object originalValue = descriptor.getReadMethod().invoke(target);
-
-           // Only copy values where the session value is null or empty (do not replace already set values in the session)
-           if ((originalValue == null) || (originalValue.equals(""))) {
-               Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
-               descriptor.getWriteMethod().invoke(target, defaultValue);
-           } else {
-               logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue );
-           }
-       }
-
-       session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
-   }
+    private void handleErrors(Exception e) {
+        logger.error(e.getLocalizedMessage());
+        //todo pass the error to the error.jsp page
+    }
 
     /**
-     *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
+     * update the bean in session with the values of local bean
+     */
+    private void beanMerge() throws Exception {
+        BirthRegister target = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+
+        // Iterate over all the attributes
+        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+            Object originalValue = descriptor.getReadMethod().invoke(target);
+
+            // Only copy values where the session value is null or empty (do not replace already set values in the session)
+            if ((originalValue == null) || (originalValue.equals(""))) {
+                Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
+                descriptor.getWriteMethod().invoke(target, defaultValue);
+            } else {
+                logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
+            }
+        }
+
+        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
+    }
+
+    /**
+     * initialises the birthRegister bean with proper initial values (depending on user, date etc) and
      * store it in session
-      */
-   private void initForm() {
-       birthRegister = new BirthRegister();
-       //todo set fields to proper initial values based on user and date
-       session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, birthRegister);
-   }
+     */
+    private void initForm() {
+        birthRegister = new BirthRegister();
+        //todo set fields to proper initial values based on user and date
+        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, birthRegister);
+    }
 
     /**
      * birthRegisterFinalizer is called by the fourth jsp page of the Birth
