@@ -5,9 +5,9 @@ html{background:url(../images/body-bg1.png) repeat;}
 #wrapper{width:1250px; margin:auto;}
 #layout-header{width:100%; height:150px; background: url(../images/epr-header.jpg) no-repeat;}
 #layout-body{width:100%; margin-top:2px; }
-#body-sidebar{width:198px; float:left; min-height:600px; background: url(../images/sidebar-bg.png) repeat-y;}
-#body-content{width:1050px; margin-left:200px; min-height:600px;}
-#layout-footer{width:100%; height:30px; float:left;  margin-top:2px;}
+#body-sidebar{width:198px; float:left; min-height:590px; background: url(../images/sidebar-bg.png) repeat-y;}
+#body-content{width:1050px; margin-left:200px; min-height:590px;}
+#layout-footer{width:100%; height:30px; float:left;  margin-top:2px; font-size:10pt;}
 
 #user-language{float:right; margin-top:120px; margin-right:10px;}
 
