@@ -1,15 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td width="100%" align="left" valign="center">
-
-            <img src="<s:url value="/images/dms.jpg"/>" alt="dms" width="100%" height="150">
-
-            </td>
-    </tr>
-    <tr><td>
-        <s:actionerror />
-<s:fielderror />
-    </td></tr>
-</table>
+<div id="user-language">
+    <s:form action="eprLanguage.do" method="POST" name="eprLanguage">
+        <s:select list="{'English','Sinhala','Tamil'}" name="language"></s:select>
+        <s:submit value="select"></s:submit>
+    </s:form>
+</div>

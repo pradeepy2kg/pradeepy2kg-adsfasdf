@@ -8,7 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
-<head><title>Simple jsp page</title></head>
+<head>
+    <title>EPR Login</title>
+    <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
+    <style type="text/css">
+        html{background:<s:url value="/images/body-bg1.png"/> repeat;}
+    </style>
+</head>
 <body>
 <div id="login-form">
     <div id="login-form-title">user login</div>
