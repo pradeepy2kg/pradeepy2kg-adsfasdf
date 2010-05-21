@@ -30,6 +30,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public String selectLanguage() {
         logger.debug("inside selectLanguage : {} passed.", language);
         session.put(WebConstants.SESSION_USER_LANG, language);
+        session.put("page_title", "home");
         return "success";
     }
 

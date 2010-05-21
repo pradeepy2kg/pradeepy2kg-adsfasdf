@@ -2,7 +2,6 @@
 <%@ page import="lk.rgd.crs.api.domain.BirthRegisterApproval" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<% String info = session.getAttribute("info").toString();%>
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
         <s:form action="eprBirthRegisterApproval_getList" name="birth_register_approval_head" method="POST">
@@ -21,6 +20,7 @@
                     <th>serial</th>
                     <th>name</th>
                     <th>changes</th>
+                    <th>date</th>
                     <th>actions</th>
                 </tr>
                 <% ArrayList<BirthRegisterApproval> bra = (ArrayList<BirthRegisterApproval>) session.getAttribute("data");
@@ -28,9 +28,10 @@
                         BirthRegisterApproval B = bra.get(i); %>
                 <tr>
                     <td><s:checkbox name="index_"/></td>
-                    <% out.write("<td>" + B.getSerial() + "</td>");
+                    <%  out.write("<td>" + B.getSerial() + "</td>");
                         out.write("<td>" + B.getName() + "</td>");
                         out.write("<td>" + B.isChanges() + "</td>");
+                        out.write("<td>" + B.getRecievedDate() + "</td>");
                         out.write("<td>" + B.getActions() + "</td>");
                     }
                     %>

@@ -60,7 +60,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
             case 0:
             case 1:
                 populate();
-                logger.debug("birth confirmation page {}", getPageNo());
+                logger.debug("birth confirmation page {}", getPageNo());                    
+                session.put("page_title", "birth confirm");
                 return "form" + getPageNo();
             case 2:
                 logger.debug("persistence code here.");
@@ -172,8 +173,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         }
         catch (Exception e) {
             logger.info("jasper error", e);
-        }
-
+        }           
+        session.put("page_title", "birth confirm report");
         return "success";
     }
 

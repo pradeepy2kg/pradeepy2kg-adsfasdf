@@ -104,6 +104,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         }
 
+        session.put("page_title", "birth registration form : "+ (pageNo+1));
         return "form" + pageNo;
     }
 

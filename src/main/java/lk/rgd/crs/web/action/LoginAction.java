@@ -36,6 +36,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             logger.debug("inside login : {} is prefered.", userPreferencesAction.getLanguage());
             session.put(WebConstants.SESSION_USER_LANG, userPreferencesAction.getLanguage());
             session.put(WebConstants.SESSION_USER_NAME, userName);
+            session.put("page_title", "home");
             return "success";
         }
         return "error";
