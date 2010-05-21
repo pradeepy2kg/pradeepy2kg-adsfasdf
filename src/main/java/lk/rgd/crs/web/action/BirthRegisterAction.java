@@ -45,9 +45,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String motherDOB;
     private String dateOfMarriage;
     private BirthRegister birthRegister;
-    /*pageNo is used to decide the next pageNo of the Birht Registration Form*/
+
+    /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
-    private LoginBD loginBD = new LoginBD();
 
     private String language;
     private List<Person> myList;
@@ -120,12 +120,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
            if (originalValue == null) {
                Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
                descriptor.getWriteMethod().invoke(target, defaultValue);
+           } else {
+               logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue );
            }
        }
 
        session.put("birthRegister", target);
    }
 
+    /**
+     *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
+     * store it in session
+      */
    private void initForm() {
        birthRegister = new BirthRegister();
        session.put("birthRegister", birthRegister);

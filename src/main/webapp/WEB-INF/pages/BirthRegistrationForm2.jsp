@@ -8,7 +8,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm2">
      <div id="birth-registration-form-2-body">
-        <div id="father-serial-no"><s:label value="%{#session.birthRegister.serialNumber}"/></div>
         <div id="father-nic-no"><s:textfield name="birthRegister.fathersNIC" /></div>
         <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
         <div id="father-country">
@@ -32,6 +31,6 @@
         <div id="mother-phone"><s:textfield name="birthRegister.motherPhoneNo"/></div>
         <div id="mother-email"><s:textfield name="birthRegister.motherEmail"/></div>
     </div>
-    <s:hidden  name="pageNo" value="2" />
+    <s:hidden name="pageNo" value="2" />
     <div class="button"><s:submit type="submit" value="NEXT"/></div>
 </s:form>
