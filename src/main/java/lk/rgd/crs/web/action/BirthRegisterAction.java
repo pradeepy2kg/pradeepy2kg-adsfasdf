@@ -125,8 +125,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
            Object originalValue = descriptor.getReadMethod().invoke(target);
 
-           // Only copy values values where the destination values is null
-           if (originalValue == null) {
+           // Only copy values where the session value is null or empty (do not replace already set values in the session)
+           if ((originalValue == null) || (originalValue.equals(""))) {
                Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
                descriptor.getWriteMethod().invoke(target, defaultValue);
            } else {
@@ -143,8 +143,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
       */
    private void initForm() {
        birthRegister = new BirthRegister();
-       session.put("birthRegister", birthRegister);
        //todo set fields to proper initial values based on user and date
+       session.put("birthRegister", birthRegister);
    }
 
     /**
