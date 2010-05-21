@@ -1,5 +1,8 @@
 package lk.rgd.crs.web.util;
 
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
+
 import java.util.Hashtable;
 
 /**
@@ -47,18 +50,18 @@ public class LoginBD {
             String info = users.get(userName);
             return info.substring(info.indexOf(',') + 1);
         }
-        return "English";
+        return AppConstants.ENGLISH;
     }
 
     /**
      * Creates a simple hashtable to store information of the users.     *
      */
     private void createHashTable() {
-        users.put("ashoka", "ashoka,Sinhala");
-        users.put("asanka", "asanka,Sinhala");
-        users.put("duminda", "duminda,Sinhala");
-        users.put("indunil", "indunil,Sinhala");
-        users.put("amith", "amith,Sinhala");
-        users.put("chathuranga", "chathuranga,English");
+        users.put("ashoka", "ashoka,si_LK");
+        users.put("asanka", "asanka,si_LK");
+        users.put("duminda", "duminda,si_LK");
+        users.put("indunil", "indunil,si_LK");
+        users.put("amith", "amith,ta_LK");
+        users.put("chathuranga", "chathuranga,en_US");
     }
 }

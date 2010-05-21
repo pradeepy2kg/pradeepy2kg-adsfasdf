@@ -36,25 +36,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
     private final BirthRegisterService service;
+    private final DistrictDAO districtDAO;
+    private final CountryDAO countryDAO;
+    private final RaceDAO raceDAO;
 
-    private DistrictDAO districtDAO;
-    private CountryDAO countryDAO;
-    private RaceDAO raceDAO;
-
-    private String childDOB;
-    private String year;
-    private String month;
-    private String day;
-    private String fatherDOB;
-    private String motherAdmissionNoAndDate;
-    private String motherDOB;
-    private String dateOfMarriage;
     private BirthRegister birthRegister;
 
     /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
 
-    private String language;
     private List<Person> myList;
     private Map session;
 
@@ -118,7 +108,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     *  update the bean in session with the values of local bean
     */
    private void beanMerge() throws Exception {
-       BirthRegister target = (BirthRegister) session.get("birthRegister");
+       BirthRegister target = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
 
        // Iterate over all the attributes
@@ -134,7 +124,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
            }
        }
 
-       session.put("birthRegister", target);
+       session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
    }
 
     /**
@@ -144,23 +134,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
    private void initForm() {
        birthRegister = new BirthRegister();
        //todo set fields to proper initial values based on user and date
-       session.put("birthRegister", birthRegister);
+       session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, birthRegister);
    }
-
-    /**
-     * creat Birth confermation report in PDF type
-     * exception throws if pre compiled .jasper file is not available
-     * <p/>
-     * eng>>>1
-     * sinhala>>2
-     * tamil>>>3
-     */
-    public String getBirtConfermationReport() {
-        /** List to use as our JasperReports dataSource.
-         * Store people in our dataSource list (normally would come from database).
-         */
-        return "success";
-    }
 
     /**
      * birthRegisterFinalizer is called by the fourth jsp page of the Birth
@@ -170,70 +145,27 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String birthRegisterFinalizer() {
-        birthRegister = (BirthRegister) session.get("birthRegister");
+        birthRegister = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
         //birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
         return "success";
     }
 
     /**
-     * Populate data to the UIs
+     * Populate master data to the UIs
      */
     private void populate() {
-
-        language = (String) (session.get(WebConstants.SESSION_USER_LANG));
+        String language = (String) (session.get(WebConstants.SESSION_USER_LANG));
         logger.debug("inside populate : {} observed.", language);
-
-        //todo temporary fix : should be changed
-        if (language.equals("English")) {
-            language = AppConstants.ENGLISH;
-        } else if (language.equals("Sinhala")) {
-            language = AppConstants.SINHALA;
-        } else if (language.equals("Tamil")) {
-            language = AppConstants.TAMIL;
-        }
 
         districtList = districtDAO.getDistricts(language);
         countryList = countryDAO.getCountries(language);
         raceList = raceDAO.getRaces(language);
 
-        //todo temporary solution until use a method to show Map in UI
         session.put("districtList", districtList);
         session.put("countryList", countryList);
-        session.put("raceList",raceList);
+        session.put("raceList", raceList);
 
         logger.debug("inside populte : districts , countries and races populated.");
-    }
-
-    public String getFatherDOB() {
-        return fatherDOB;
-    }
-
-    public void setFatherDOB(String fatherDOB) {
-        this.fatherDOB = fatherDOB;
-    }
-
-    public String getMotherAdmissionNoAndDate() {
-        return motherAdmissionNoAndDate;
-    }
-
-    public void setMotherAdmissionNoAndDate(String motherAdmissionNoAndDate) {
-        this.motherAdmissionNoAndDate = motherAdmissionNoAndDate;
-    }
-
-    public String getMotherDOB() {
-        return motherDOB;
-    }
-
-    public void setMotherDOB(String motherDOB) {
-        this.motherDOB = motherDOB;
-    }
-
-    public String getDateOfMarriage() {
-        return dateOfMarriage;
-    }
-
-    public void setDateOfMarriage(String dateOfMarriage) {
-        this.dateOfMarriage = dateOfMarriage;
     }
 
     public BirthRegister getBirthRegister() {
@@ -252,14 +184,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.pageNo = pageNo;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public List<Person> getMyList() {
         return myList;
     }
@@ -274,38 +198,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public Map getSession() {
         return session;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getChildDOB() {
-        return childDOB;
-    }
-
-    public void setChildDOB(String childDOB) {
-        this.childDOB = childDOB;
     }
 
     public void setModel(BirthRegister o) {
