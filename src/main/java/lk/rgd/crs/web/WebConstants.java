@@ -16,6 +16,6 @@ public class WebConstants {
 
     public static final String RETURN_TYPE_ERROR = "error";
     public static final String RETURN_TYPE_SUCCESS = "success";
-    public static final String DATEFORMAT = "yyyy/mm/dd";
+    public static final String DATEFORMAT = "yyyy-MM-dd";
 
 }
