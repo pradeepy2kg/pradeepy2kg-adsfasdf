@@ -1,4 +1,4 @@
-/*@author Indunil Moremada
+/** @author Indunil Moremada
     javascript for changing the datepicker dynamically with the changes done for the list boxes year,month and date
   */
 function setDate(id) {

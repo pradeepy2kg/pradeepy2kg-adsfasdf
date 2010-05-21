@@ -84,7 +84,7 @@
                 <%}%>
             </select>
         </div>
-        <div id="mother-age-for-birth"><s:textfield name="birthRegister.motherAgeAtBirth"/></div>
+        <div id="mother-age-for-birth"><s:textfield name="birthRegister.motherAgeAtBirth" id="motherAgeAtBirth"/></div>
         <div id="mother-address"><s:textfield name="birthRegister.motherAddress"/></div>
         <div id="mother-phone"><s:textfield name="birthRegister.motherPhoneNo"/></div>
         <div id="mother-email"><s:textfield name="birthRegister.motherEmail"/></div>
