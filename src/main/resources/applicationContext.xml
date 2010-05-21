@@ -73,8 +73,12 @@
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">
         <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
     </bean>
     <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
         <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
     </bean>
 </beans>

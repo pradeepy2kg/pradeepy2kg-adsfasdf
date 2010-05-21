@@ -1,3 +1,7 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Iterator" %>
 <%--
   User: chathuranga
   Date: May 13, 2010
@@ -25,8 +29,22 @@
             <s:select list="{'01','02','03'}" name="birthRegister.dobDay"/>
         </div>
         <div id="birth-confirmation-birth-place">
-            <s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="raceId"
-                      listValue="raceName" headerKey="0" headerValue="-Select District-"/>
+                <%--todo change this into struts tag--%>
+            <% Map<Integer, String> districtList = (Map<Integer, String>) session.getAttribute("districtList");
+                Iterator it = districtList.entrySet().iterator();
+            %>
+            <select name="birthRegister.childBirthDistrict">
+                <option value="-1">- Select District -</option>
+                <% while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                %>
+                <option value="<%= pair.getKey()%>">
+                    <%= pair.getValue()%>
+                </option>
+                <%}%>
+            </select>
+                <%--<s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"--%>
+                <%--listValue="districtName" headerKey="0" headerValue="- Select District -"/>--%>
         </div>
         <div id="birth-confirmation-name"><s:textarea name="birthRegister.childFullNameOfficialLang" cols="38"
                                                       rows="7"/></div>

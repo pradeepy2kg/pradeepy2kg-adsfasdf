@@ -2,19 +2,20 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.crs.api.domain.District;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegisterService;
+import lk.rgd.crs.api.dao.DistrictDAO;
+import lk.rgd.crs.api.dao.CountryDAO;
+import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.LoginBD;
-import lk.rgd.crs.web.util.MasterDataLoad;
+import lk.rgd.AppConstants;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.beans.BeanInfo;
@@ -36,6 +37,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
     private final BirthRegisterService service;
 
+    private DistrictDAO districtDAO;
+    private CountryDAO countryDAO;
+    private RaceDAO raceDAO;
+
     private String childDOB;
     private String year;
     private String month;
@@ -54,15 +59,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map session;
 
     private String scopeKey;
-    private ArrayList<District> districtList;
-    private ArrayList countryList;
+    private Map<Integer, String> districtList;
+    private Map<Integer, String> countryList;
+    private Map<Integer, String> raceList;
 
     public String welcome() {
         return "success";
     }
 
-    public BirthRegisterAction(BirthRegisterService service) {
+    public BirthRegisterAction(BirthRegisterService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
         this.service = service;
+        this.districtDAO = districtDAO;
+        this.countryDAO = countryDAO;
+        this.raceDAO = raceDAO;
         logger.debug("inside birth register action constructor");
     }
 
@@ -170,16 +179,29 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * Populate data to the UIs
      */
     private void populate() {
-        MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
-        logger.debug("inside populate : masterload obtained.");
 
         language = (String) (session.get(WebConstants.SESSION_USER_LANG));
         logger.debug("inside populate : {} observed.", language);
 
-        setDistrictList((ArrayList<District>) masterDataLoad.loadDistricts(language));
-        logger.debug("inside populte : districts set, setting countries.");
-        setCountryList((ArrayList) masterDataLoad.loadCountries(language));
-        logger.debug("inside populte : countries {}", countryList);
+        //todo temporary fix : should be changed
+        if (language.equals("English")) {
+            language = AppConstants.ENGLISH;
+        } else if (language.equals("Sinhala")) {
+            language = AppConstants.SINHALA;
+        } else if (language.equals("Tamil")) {
+            language = AppConstants.TAMIL;
+        }
+
+        districtList = districtDAO.getDistricts(language);
+        countryList = countryDAO.getCountries(language);
+        raceList = raceDAO.getRaces(language);
+
+        //todo temporary solution until use a method to show Map in UI
+        session.put("districtList", districtList);
+        session.put("countryList", countryList);
+        session.put("raceList",raceList);
+
+        logger.debug("inside populte : districts , countries and races populated.");
     }
 
     public String getFatherDOB() {
@@ -302,19 +324,27 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return scopeKey;
     }
 
-    public ArrayList<District> getDistrictList() {
+    public Map<Integer, String> getDistrictList() {
         return districtList;
     }
 
-    public void setDistrictList(ArrayList<District> districtList) {
+    public void setDistrictList(Map<Integer, String> districtList) {
         this.districtList = districtList;
     }
 
-    public ArrayList getCountryList() {
+    public Map<Integer, String> getCountryList() {
         return countryList;
     }
 
-    public void setCountryList(ArrayList countryList) {
+    public void setCountryList(Map<Integer, String> countryList) {
         this.countryList = countryList;
+    }
+
+    public Map<Integer, String> getRaceList() {
+        return raceList;
+    }
+
+    public void setRaceList(Map<Integer, String> raceList) {
+        this.raceList = raceList;
     }
 }
