@@ -8,6 +8,7 @@
     <%@ taglib prefix="s" uri="/struts-tags" %>
     <s:head theme="ajax"/>
     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
+    <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
 </head>
 
 <body>
