@@ -1,13 +1,15 @@
+<html>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Iterator" %>
 <%--
-  User: chathuranga
-  Date: May 13, 2010
-  Time: 10:38:55 AM
-  Birth Registration Confirmation Page 1
+ @author chathuranga
 --%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-
+<head>
+    <%@ taglib prefix="s" uri="/struts-tags" %>
+    <s:head theme="ajax"/>
+    <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+</head>
+<body>
 <s:form name="birthConfirmationForm2" action="eprBirthConfirmation.do" method="POST">
     <div id="birth-confirmation-form-2-body">
 
@@ -18,6 +20,13 @@
         </div>
         <div id="birth-confirmation-father-name">
             <s:textarea name="%{#session.confirmBirth.fatherFullName}" cols="38"/>
+        </div>
+        <div id="father-dob">
+            <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear" onchange="javascript:setDate('fatherYear')"/>
+            <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth" onchange="javascript:setDate('fatherMonth')"/>
+            <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay" onchange="javascript:setDate('fatherDay')"/>
+            <s:datetimepicker id="fatherDatePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+                              onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
         <div id="birth-confirmation-fatherRace">
                 <%--<s:select name="birthRegister.fatherRace" list="raceList" headerKey="0" headerValue="- Select Race -"--%>
@@ -42,6 +51,13 @@
         </div>
         <div id="birth-confirmation-mother-name">
             <s:textarea name="birthRegister.motherFullName" cols="38"/>
+        </div>
+        <div id="mother-dob">
+        <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear" onchange="javascript:setDate('motherYear')"/>
+            <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth" onchange="javascript:setDate('motherMonth')"/>
+            <s:select list="{'01','02','03'}" name="motherDay" id="motherDay" onchange="javascript:setDate('motherDay')"/>
+            <s:datetimepicker id="motherdatePicker" name="" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+                              onmouseover="javascript:splitDate('motherdatePicker')"/>
         </div>
         <div id="birth-confirmation-motherRace">
                 <%--<s:select name="birthRegister.motherRace" list="raceList" headerKey="0" headerValue="- Select Race -" listKey="raceId" listValue="raceName"/>--%>
@@ -84,3 +100,5 @@
         <div class="button"><input type="submit" value="NEXT"/></div>
     </div>
 </s:form>
+</body>
+</html>

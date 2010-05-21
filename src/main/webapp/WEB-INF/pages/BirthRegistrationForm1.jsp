@@ -6,12 +6,13 @@
 --%> <head>
 <%@ taglib prefix="s" uri="/struts-tags" %>
     <s:head theme="ajax"/>
-     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
+    <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
 </head><body>
-<s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1">
+<s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1" onsubmit="javascript:return birthRegistrationValidator()">
     <div id="birth-registration-form-1-body">
          <div id="birth-registration-form-1-serial">
-            <s:textfield name="birthRegister.serialNumber"/>
+            <s:textfield name="birthRegister.serialNumber" id="serialNumber"/>
         </div>
         <div id="date-of-birth">
             <s:select list="{'2009','2010','2011'}" name="year" id="year" onchange="javascript:setDate('year')"/>
@@ -45,9 +46,9 @@
         <div id="gender">
             <s:select list="{'Male','Female'}" name="birthRegister.childGender"/>
         </div>
-        <div id="birth-weight"><s:textfield name="birthRegister.childBirthWeight"/></div>
-        <div id="no-of-children"><s:textfield name="birthRegister.noOfLiveChildren"/></div>
-        <div id="multiple-no-of-children"><s:textfield name="birthRegister.noOfMultipleBirths"/></div>
+        <div id="birth-weight"><s:textfield name="birthRegister.childBirthWeight" id="childBirthWeight"/></div>
+        <div id="no-of-children"><s:textfield name="birthRegister.noOfLiveChildren"  id="noOfLiveChildren"/></div>
+        <div id="multiple-no-of-children"><s:textfield name="birthRegister.noOfMultipleBirths" id="noOfMultipleBirths"/></div>
         <div id="hospital-code"><s:textfield name="birthRegister.hospitalOrGNCode"/></div>
     </div>
     <s:hidden name="pageNo" value="1" />
