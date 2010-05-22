@@ -99,17 +99,40 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         }
 
-            // submissions of pages 1 - 4
-            try {
-                beanMerge();
-            } catch (Exception e) {
-                handleErrors(e);
-                return "error";
-            }
+        // submissions of pages 1 - 4
+        try {
+            beanMerge();
+        } catch (Exception e) {
+            handleErrors(e);
+            return "error";
         }
 
         session.put("page_title", "birth registration form : "+ (pageNo+1));
         return "form" + pageNo;
+    }
+
+    /**
+     * update the bean in session with the values of local bean
+     */
+    private void beanMerge() throws Exception {
+        BirthRegister target = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+
+        // Iterate over all the attributes
+        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+            Object originalValue = descriptor.getReadMethod().invoke(target);
+
+            // Only copy values where the session value is null or empty (do not replace already set
+            // values in the session)
+            if ((originalValue == null) || (originalValue.equals(""))) {
+                Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
+                descriptor.getWriteMethod().invoke(target, defaultValue);
+            } else {
+                logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
+            }
+        }
+
+        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
     }
 
     private void handleErrors(Exception e) {
@@ -117,6 +140,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         //todo pass the error to the error.jsp page
     }
 
+    
     /**
      *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
      * store it in session

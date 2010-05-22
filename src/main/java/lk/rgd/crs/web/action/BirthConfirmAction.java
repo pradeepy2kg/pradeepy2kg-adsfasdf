@@ -5,12 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.domain.BirthConfirm;
 import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.AppConstants;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -86,6 +84,30 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         }
 
         return "form" + pageNo;
+    }
+
+    /**
+     * update the bean in session with the values of local bean
+     */
+    private void beanMerge() throws Exception {
+        BirthRegister target = (BirthRegister) session.get("birthConfirm");
+        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+
+        // Iterate over all the attributes
+        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+            Object originalValue = descriptor.getReadMethod().invoke(target);
+
+            // Only copy values where the session value is null or empty (do not replace already set
+            // values in the session)
+            if ((originalValue == null) || (originalValue.equals(""))) {
+                Object defaultValue = descriptor.getReadMethod().invoke(birthConfirm);
+                descriptor.getWriteMethod().invoke(target, defaultValue);
+            } else {
+                logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
+            }
+        }
+
+        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
     }
 
     private void handleErrors(Exception e) {
@@ -228,5 +250,13 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
 
     public void setRaceList(Map<Integer, String> raceList) {
         this.raceList = raceList;
+    }
+
+    public BirthRegister getBirthConfirm() {
+        return birthConfirm;
+    }
+
+    public void setBirthConfirm(BirthRegister birthConfirm) {
+        this.birthConfirm = birthConfirm;
     }
 }
