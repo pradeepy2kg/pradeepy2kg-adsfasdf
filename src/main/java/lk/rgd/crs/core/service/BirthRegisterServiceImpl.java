@@ -1,7 +1,7 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.service.BirthRegisterService;
-import lk.rgd.crs.api.domain.BirthRegister;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +15,7 @@ public class BirthRegisterServiceImpl implements BirthRegisterService {
     @PersistenceContext
     protected EntityManager em;
 
-    public void birthRegistration(BirthRegister br) {
+    public void birthRegistration(BirthDeclaration br) {
         em.persist(br);
     }
 }

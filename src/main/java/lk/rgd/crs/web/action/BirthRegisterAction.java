@@ -2,7 +2,7 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.crs.api.domain.BirthRegister;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegisterService;
 import lk.rgd.crs.api.dao.DistrictDAO;
@@ -39,7 +39,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
 
-    private BirthRegister birthRegister;
+    private BirthDeclaration birthRegister;
 
     /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
@@ -80,7 +80,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else if (pageNo == 4) {
             // all pages captured, proceed to persist after validations
-            BirthRegister register = (BirthRegister) session.get("birthRegister");
+            BirthDeclaration register = (BirthDeclaration) session.get("birthRegister");
             // todo business validations and persiatance
             logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
             logger.debug("Birth Register : {}.", register.getMotherFullName());
@@ -115,8 +115,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * update the bean in session with the values of local bean
      */
     private void beanMerge() throws Exception {
-        BirthRegister target = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+        BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
 
         // Iterate over all the attributes
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
@@ -146,7 +146,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * store it in session
      */
     private void initForm() {
-        birthRegister = new BirthRegister();
+        birthRegister = new BirthDeclaration();
         //todo set fields to proper initial values based on user and date
         session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, birthRegister);
     }
@@ -159,7 +159,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String birthRegisterFinalizer() {
-        birthRegister = (BirthRegister) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+        birthRegister = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
         //birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
         return "success";
     }
@@ -183,11 +183,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("inside populte : districts , countries and races populated.");
     }
 
-    public BirthRegister getBirthRegister() {
+    public BirthDeclaration getBirthRegister() {
         return birthRegister;
     }
 
-    public void setBirthRegister(BirthRegister birthRegister) {
+    public void setBirthRegister(BirthDeclaration birthRegister) {
         this.birthRegister = birthRegister;
     }
 
@@ -215,11 +215,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return session;
     }
 
-    public void setModel(BirthRegister o) {
+    public void setModel(BirthDeclaration o) {
         birthRegister = o;
     }
 
-    public BirthRegister getModel() {
+    public BirthDeclaration getModel() {
         return birthRegister;
     }
 

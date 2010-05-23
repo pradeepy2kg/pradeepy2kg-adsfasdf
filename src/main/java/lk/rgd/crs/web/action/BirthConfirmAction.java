@@ -1,11 +1,11 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.domain.BirthRegister;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
@@ -38,7 +38,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
     private Map<Integer,String> raceList;
     private Map session;
 
-    private BirthRegister birthConfirm;
+    private BirthDeclaration birthConfirm;
 
     public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO) {
         this.raceDao = raceDao;
@@ -61,7 +61,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         } else if (pageNo == 2) {
             // all pages captured, proceed to persist after validations
             // todo business validations and persiatance
-            BirthRegister confirm = (BirthRegister) session.get("birthConfirm");
+            BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 
             logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
             logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
@@ -73,7 +73,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
             initForm();
         } else {
             // submissions of pages 1 - 2
-            BirthRegister confirm = (BirthRegister) session.get("birthConfirm");
+            BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
             logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
             try {
                 beanMerge();
@@ -90,8 +90,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
      * update the bean in session with the values of local bean
      */
     private void beanMerge() throws Exception {
-        BirthRegister target = (BirthRegister) session.get("birthConfirm");
-        BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+        BirthDeclaration target = (BirthDeclaration) session.get("birthConfirm");
+        BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
 
         // Iterate over all the attributes
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
@@ -119,8 +119,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
     *  update the bean in session with the values of local bean
     */
 //   private void beanMerge() throws Exception {
-//       BirthRegister target = (BirthRegister) session.get("birthRegister");
-//       BeanInfo beanInfo = Introspector.getBeanInfo(BirthRegister.class);
+//       BirthDeclaration target = (BirthDeclaration) session.get("birthRegister");
+//       BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
 //
 //       // Iterate over all the attributes
 //       for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
@@ -143,7 +143,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
      * store it in session
      */
     private void initForm() {
-        setBirthConfirm(new BirthRegister());
+        setBirthConfirm(new BirthDeclaration());
         session.put("birthConfirm", getBirthConfirm());
         //todo set fields to proper initial values based on user and date
     }
@@ -252,11 +252,11 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         this.raceList = raceList;
     }
 
-    public BirthRegister getBirthConfirm() {
+    public BirthDeclaration getBirthConfirm() {
         return birthConfirm;
     }
 
-    public void setBirthConfirm(BirthRegister birthConfirm) {
+    public void setBirthConfirm(BirthDeclaration birthConfirm) {
         this.birthConfirm = birthConfirm;
     }
 }
