@@ -1,7 +1,7 @@
 package lk.rgd.crs.api.service;
 
-import lk.rgd.crs.api.domain.BirthRegister;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 
 public interface BirthRegisterService {
-    public void birthRegistration(BirthRegister br);
+    public void birthRegistration(BirthDeclaration br);
 }

@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "birth_register")
-public class BirthRegister {
+public class BirthDeclaration {
 
     /**
      * This is an auto generated unique row identifier
