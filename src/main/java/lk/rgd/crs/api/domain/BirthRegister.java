@@ -3,122 +3,214 @@ package lk.rgd.crs.api.domain;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
+ */
 @Entity
 @Table(name = "birth_register")
 public class BirthRegister {
-    @Id
-    private String serialNumber;
-    private String confirmSerialNumber;
 
-    private Date childDOB;
-    private String childBirthDistrict;           // place of birth
-    private String childBirthDivision;           // place of birth
-    private String childBirthPlace;              // place of birth
+    /**
+     * This is an auto generated unique row identifier
+     */
+    @Id
+    private long id;
+
+    /** The district code where the birth is registered */
+    private int birthDistrict;
+    /** The Birth/Death registration division where the birth is registered */
+    private int birthDivision;
+    /** This is the serial number captured from the BDF */
+    private String bdfSerialNo;
+
+    /** The date of the birth */
+    private Date dateOfBirth;
+    /** The date when the birth declaration was submitted to the medical registrar or the DS office */
+    private Date dateOfSubmission;
+    /**
+     * 0 - BDF added, 1 - ADR approved, 2 - Confirmation printed
+     * 3 - confirmed, 4 - changed (i.e. during the confirmation by parents), 5 - rejected
+     */
+    private int status;
+    /** Status comment - e.g. reason for rejection due to duplicate */
+    private String comments;
+
+    /** The place of birth - usually the village or hospital name */
+    private String placeOfBirth;
+    /** Name in Sinhala or Tamil */
     private String childFullNameOfficialLang;
+    /** Name in English */
     private String childFullNameEnglish;
-    private String childGender;
+    /** Gender 0 - male, 1 - female, 2 - unknown */
+    private int childGender;
+    /** Wight in kilogrammes */
     private float childBirthWeight;
-    private int noOfLiveChildren;              // according to live birth
-    private int noOfMultipleBirths;          // if multiple births, num of children
+    /** Child rank according to the order of live births */
+    private int childRank;
+    /** Number of children born along with the child being registered */
+    private int numberOfChildrenBorn;
+    /** Hospial or GN code */
     private String hospitalOrGNCode;
 
-    private String fatherNIC;
-    private String fatherForeignerPassportNo;        // if foreigner
-    private String fatherForeignerCountry;           // if foreigner
+    //----------------------------------------------------
+    /** NIC or PIN of father */
+    private String fatherNICorPIN;
+    /** Passport number if a foreigner */
+    private String fatherPassportNo;
+    /** Country if a foreigner */
+    private String fatherCountry;
+    /** Name of father */
     private String fatherFullName;
-    private Date fatherDOB;
-    private String fatherBirthPlace;
-    private String fatherRace;
-
-    private String motherNIC;
-    private String motherPassportNo;        // if foreigner
-    private String motherCountry;           // if foreigner
+    /** DOB of father */
+    private Date   fatherDOB;
+    /** Place of birth of father */
+    private String fatherPlaceOfBirth;
+    /** Race of father */
+    private int    fatherRace;
+    //----------------------------------------------------
+    /** NIC or PIN of mother */
+    private String motherNICorPIN;
+    /** Passport number if a foreigner */
+    private String motherPassportNo;
+    /** Country if a foreigner */
+    private String motherCountry;
+    /** Hospital admission and date for mother */
     private String motherAdmissionNoAndDate;
+    /** Full name of mother */
     private String motherFullName;
-    private Date motherDOB;
-    private String motherBirthPlace;
-    private String motherRace;
-    private int motherAgeAtBirth;
+    /** DOB of mother */
+    private Date   motherDOB;
+    /** Place of birth for mother */
+    private String motherPlaceOfBirth;
+    /** Race for mother */
+    private int    motherRace;
+    /** Age of mother at birth */
+    private int    motherAgeAtBirth;
+    /** Address of mother */
     private String motherAddress;
+    /** Phone number of mother */
     private String motherPhoneNo;
+    /** Email of mother */
     private String motherEmail;
 
-    private String placeOfMarriage;
-    private Date dateOfMarriage;
-
-    private String grandFatherFullName;     // If grandfather of the child born in Sri Lanka
-    private String grandFatherBirthYear;    // If grandfather of the child born in Sri Lanka
-    private String grandFatherBirthPlace;   // If grandfather of the child born in Sri Lanka
-
-    //If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka
+    //-----------------------------------------------------
+    /** Were parents married at birth - 0 - no, 1 - yes, 2 - no but married later */
+    private int parentsMarried;
+    /** Place of marriage */
+    private String  placeOfMarriage;
+    /** Date of marriage */
+    private Date    dateOfMarriage;
+    /** If parents are unmarried - Has the mother signed to include fathers details? */
+    private boolean motherSigned;
+    /** If parents are unmarried - Has the father signed to include fathers details? */
+    private boolean fatherSigned;
+    //-----------------------------------------------------
+    // If grandfather of the child born in Sri Lanka, grandfather's details
+    private String grandFatherFullName;
+    private String grandFatherBirthYear;
+    private String grandFatherBirthPlace;
+    //-----------------------------------------------------
+    // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
     private String greatGrandFatherFullName;
     private String greatGrandFatherBirthYear;
     private String greatGrandFatherBirthPlace;
-
-    private String informant;
+    //-----------------------------------------------------
+    /** 0 - father, 1 - mother, 2 - guardian */
+    private String informantType;
     private String informantName;
-    private String informantNIC;
-    private String informantPostalAddress;
+    private String informantNICorPIN;
+    private String informantAddress;
     private String informantPhoneNo;
     private String informantEmail;
-    private String authority;
+    private Date   informantSignDate;
+    //-----------------------------------------------------
+    /** The notifying authority PIN */
+    private String notifyingAuthorityPIN;
+    /** The notifying authority Name */
+    private String notifyingAuthorityName;
+    //-----------------------------------------------------
+    /** The PIN of the ADR approving the BDF */
+    private String approvePIN;
+    /** The date when an ADR or higher approves the BDF */
+    private Date   approveDate;
 
-    private String birthRegistrationSerialNumber;
-    private String year;
-    private String month;
-    private String day;
-    private String dobYear;
-    private String dobMonth;
-    private String dobDay;
-    private String marriedStatus;
+    //-----------------------------------------------------
+    /** This represents a system generated serial number for the confirmation by parents */
+    private String confirmationSerialNumber;
 
-    private String confirmantNIC;
+    /** PIN or NIC of person confirming BDF details */
+    private String confirmantNICorPIN;
+    /** Name of person confirming BDF details */
     private String confirmantFullName;
-    private String confirmYear;
-    private String confirmMonth;
-    private String confirmDay;
-    private String finalizeYear;
-    private String finalizeMonth;
-    private String finalizeDay;
+    /** Date of the confirmation */
+    private Date   confirmantSignDate;
+    /** Date confirmation is received */
+    private Date   confirmationReceiveDate;
+    //-----------------------------------------------------
 
-    public String getSerialNumber() {
-        return serialNumber;
+
+    public int getBirthDistrict() {
+        return birthDistrict;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setBirthDistrict(int birthDistrict) {
+        this.birthDistrict = birthDistrict;
     }
 
-    public Date getChildDOB() {
-        return childDOB;
+    public int getBirthDivision() {
+        return birthDivision;
     }
 
-    public void setChildDOB(Date childDOB) {
-        this.childDOB = childDOB;
+    public void setBirthDivision(int birthDivision) {
+        this.birthDivision = birthDivision;
     }
 
-    public String getChildBirthDistrict() {
-        return childBirthDistrict;
+    public String getBdfSerialNo() {
+        return bdfSerialNo;
     }
 
-    public void setChildBirthDistrict(String childBirthDistrict) {
-        this.childBirthDistrict = childBirthDistrict;
+    public void setBdfSerialNo(String bdfSerialNo) {
+        this.bdfSerialNo = bdfSerialNo;
     }
 
-    public String getChildBirthDivision() {
-        return childBirthDivision;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setChildBirthDivision(String childBirthDivision) {
-        this.childBirthDivision = childBirthDivision;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public String getChildBirthPlace() {
-        return childBirthPlace;
+    public Date getDateOfSubmission() {
+        return dateOfSubmission;
     }
 
-    public void setChildBirthPlace(String childBirthPlace) {
-        this.childBirthPlace = childBirthPlace;
+    public void setDateOfSubmission(Date dateOfSubmission) {
+        this.dateOfSubmission = dateOfSubmission;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
     public String getChildFullNameOfficialLang() {
@@ -137,11 +229,11 @@ public class BirthRegister {
         this.childFullNameEnglish = childFullNameEnglish;
     }
 
-    public String getChildGender() {
+    public int getChildGender() {
         return childGender;
     }
 
-    public void setChildGender(String childGender) {
+    public void setChildGender(int childGender) {
         this.childGender = childGender;
     }
 
@@ -153,20 +245,20 @@ public class BirthRegister {
         this.childBirthWeight = childBirthWeight;
     }
 
-    public int getNoOfLiveChildren() {
-        return noOfLiveChildren;
+    public int getChildRank() {
+        return childRank;
     }
 
-    public void setNoOfLiveChildren(int noOfLiveChildren) {
-        this.noOfLiveChildren = noOfLiveChildren;
+    public void setChildRank(int childRank) {
+        this.childRank = childRank;
     }
 
-    public int getNoOfMultipleBirths() {
-        return noOfMultipleBirths;
+    public int getNumberOfChildrenBorn() {
+        return numberOfChildrenBorn;
     }
 
-    public void setNoOfMultipleBirths(int noOfMultipleBirths) {
-        this.noOfMultipleBirths = noOfMultipleBirths;
+    public void setNumberOfChildrenBorn(int numberOfChildrenBorn) {
+        this.numberOfChildrenBorn = numberOfChildrenBorn;
     }
 
     public String getHospitalOrGNCode() {
@@ -177,28 +269,28 @@ public class BirthRegister {
         this.hospitalOrGNCode = hospitalOrGNCode;
     }
 
-    public String getFatherNIC() {
-        return fatherNIC;
+    public String getFatherNICorPIN() {
+        return fatherNICorPIN;
     }
 
-    public void setFatherNIC(String fatherNIC) {
-        this.fatherNIC = fatherNIC;
+    public void setFatherNICorPIN(String fatherNICorPIN) {
+        this.fatherNICorPIN = fatherNICorPIN;
     }
 
-    public String getFatherForeignerPassportNo() {
-        return fatherForeignerPassportNo;
+    public String getFatherPassportNo() {
+        return fatherPassportNo;
     }
 
-    public void setFatherForeignerPassportNo(String fatherForeignerPassportNo) {
-        this.fatherForeignerPassportNo = fatherForeignerPassportNo;
+    public void setFatherPassportNo(String fatherPassportNo) {
+        this.fatherPassportNo = fatherPassportNo;
     }
 
-    public String getFatherForeignerCountry() {
-        return fatherForeignerCountry;
+    public String getFatherCountry() {
+        return fatherCountry;
     }
 
-    public void setFatherForeignerCountry(String fatherForeignerCountry) {
-        this.fatherForeignerCountry = fatherForeignerCountry;
+    public void setFatherCountry(String fatherCountry) {
+        this.fatherCountry = fatherCountry;
     }
 
     public String getFatherFullName() {
@@ -217,28 +309,28 @@ public class BirthRegister {
         this.fatherDOB = fatherDOB;
     }
 
-    public String getFatherBirthPlace() {
-        return fatherBirthPlace;
+    public String getFatherPlaceOfBirth() {
+        return fatherPlaceOfBirth;
     }
 
-    public void setFatherBirthPlace(String fatherBirthPlace) {
-        this.fatherBirthPlace = fatherBirthPlace;
+    public void setFatherPlaceOfBirth(String fatherPlaceOfBirth) {
+        this.fatherPlaceOfBirth = fatherPlaceOfBirth;
     }
 
-    public String getFatherRace() {
+    public int getFatherRace() {
         return fatherRace;
     }
 
-    public void setFatherRace(String fatherRace) {
+    public void setFatherRace(int fatherRace) {
         this.fatherRace = fatherRace;
     }
 
-    public String getMotherNIC() {
-        return motherNIC;
+    public String getMotherNICorPIN() {
+        return motherNICorPIN;
     }
 
-    public void setMotherNIC(String motherNIC) {
-        this.motherNIC = motherNIC;
+    public void setMotherNICorPIN(String motherNICorPIN) {
+        this.motherNICorPIN = motherNICorPIN;
     }
 
     public String getMotherPassportNo() {
@@ -281,19 +373,19 @@ public class BirthRegister {
         this.motherDOB = motherDOB;
     }
 
-    public String getMotherBirthPlace() {
-        return motherBirthPlace;
+    public String getMotherPlaceOfBirth() {
+        return motherPlaceOfBirth;
     }
 
-    public void setMotherBirthPlace(String motherBirthPlace) {
-        this.motherBirthPlace = motherBirthPlace;
+    public void setMotherPlaceOfBirth(String motherPlaceOfBirth) {
+        this.motherPlaceOfBirth = motherPlaceOfBirth;
     }
 
-    public String getMotherRace() {
+    public int getMotherRace() {
         return motherRace;
     }
 
-    public void setMotherRace(String motherRace) {
+    public void setMotherRace(int motherRace) {
         this.motherRace = motherRace;
     }
 
@@ -329,6 +421,14 @@ public class BirthRegister {
         this.motherEmail = motherEmail;
     }
 
+    public int getParentsMarried() {
+        return parentsMarried;
+    }
+
+    public void setParentsMarried(int parentsMarried) {
+        this.parentsMarried = parentsMarried;
+    }
+
     public String getPlaceOfMarriage() {
         return placeOfMarriage;
     }
@@ -343,6 +443,22 @@ public class BirthRegister {
 
     public void setDateOfMarriage(Date dateOfMarriage) {
         this.dateOfMarriage = dateOfMarriage;
+    }
+
+    public boolean isMotherSigned() {
+        return motherSigned;
+    }
+
+    public void setMotherSigned(boolean motherSigned) {
+        this.motherSigned = motherSigned;
+    }
+
+    public boolean isFatherSigned() {
+        return fatherSigned;
+    }
+
+    public void setFatherSigned(boolean fatherSigned) {
+        this.fatherSigned = fatherSigned;
     }
 
     public String getGrandFatherFullName() {
@@ -393,12 +509,12 @@ public class BirthRegister {
         this.greatGrandFatherBirthPlace = greatGrandFatherBirthPlace;
     }
 
-    public String getInformant() {
-        return informant;
+    public String getInformantType() {
+        return informantType;
     }
 
-    public void setInformant(String informant) {
-        this.informant = informant;
+    public void setInformantType(String informantType) {
+        this.informantType = informantType;
     }
 
     public String getInformantName() {
@@ -409,20 +525,20 @@ public class BirthRegister {
         this.informantName = informantName;
     }
 
-    public String getInformantNIC() {
-        return informantNIC;
+    public String getInformantNICorPIN() {
+        return informantNICorPIN;
     }
 
-    public void setInformantNIC(String informantNIC) {
-        this.informantNIC = informantNIC;
+    public void setInformantNICorPIN(String informantNICorPIN) {
+        this.informantNICorPIN = informantNICorPIN;
     }
 
-    public String getInformantPostalAddress() {
-        return informantPostalAddress;
+    public String getInformantAddress() {
+        return informantAddress;
     }
 
-    public void setInformantPostalAddress(String informantPostalAddress) {
-        this.informantPostalAddress = informantPostalAddress;
+    public void setInformantAddress(String informantAddress) {
+        this.informantAddress = informantAddress;
     }
 
     public String getInformantPhoneNo() {
@@ -441,77 +557,60 @@ public class BirthRegister {
         this.informantEmail = informantEmail;
     }
 
-
-    public String getAuthority() {
-        return authority;
+    public Date getInformantSignDate() {
+        return informantSignDate;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setInformantSignDate(Date informantSignDate) {
+        this.informantSignDate = informantSignDate;
     }
 
-    public String getBirthRegistrationSerialNumber() {
-        return birthRegistrationSerialNumber;
+    public String getNotifyingAuthorityPIN() {
+        return notifyingAuthorityPIN;
     }
 
-    public void setBirthRegistrationSerialNumber(String birthRegistrationSerialNumber) {
-        this.birthRegistrationSerialNumber = birthRegistrationSerialNumber;
+    public void setNotifyingAuthorityPIN(String notifyingAuthorityPIN) {
+        this.notifyingAuthorityPIN = notifyingAuthorityPIN;
     }
 
-    public String getYear() {
-        return year;
+    public String getNotifyingAuthorityName() {
+        return notifyingAuthorityName;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setNotifyingAuthorityName(String notifyingAuthorityName) {
+        this.notifyingAuthorityName = notifyingAuthorityName;
     }
 
-    public String getMonth() {
-        return month;
+    public String getApprovePIN() {
+        return approvePIN;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setApprovePIN(String approvePIN) {
+        this.approvePIN = approvePIN;
     }
 
-    public String getDay() {
-        return day;
+    public Date getApproveDate() {
+        return approveDate;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setApproveDate(Date approveDate) {
+        this.approveDate = approveDate;
     }
 
-    public String getDobYear() {
-        return dobYear;
+    public String getConfirmationSerialNumber() {
+        return confirmationSerialNumber;
     }
 
-    public void setDobYear(String dobYear) {
-        this.dobYear = dobYear;
+    public void setConfirmationSerialNumber(String confirmationSerialNumber) {
+        this.confirmationSerialNumber = confirmationSerialNumber;
     }
 
-    public String getDobMonth() {
-        return dobMonth;
+    public String getConfirmantNICorPIN() {
+        return confirmantNICorPIN;
     }
 
-    public void setDobMonth(String dobMonth) {
-        this.dobMonth = dobMonth;
-    }
-
-    public String getDobDay() {
-        return dobDay;
-    }
-
-    public void setDobDay(String dobDay) {
-        this.dobDay = dobDay;
-    }
-
-    public String getMarriedStatus() {
-        return marriedStatus;
-    }
-
-    public void setMarriedStatus(String marriedStatus) {
-        this.marriedStatus = marriedStatus;
+    public void setConfirmantNICorPIN(String confirmantNICorPIN) {
+        this.confirmantNICorPIN = confirmantNICorPIN;
     }
 
     public String getConfirmantFullName() {
@@ -522,67 +621,19 @@ public class BirthRegister {
         this.confirmantFullName = confirmantFullName;
     }
 
-    public String getConfirmYear() {
-        return confirmYear;
+    public Date getConfirmantSignDate() {
+        return confirmantSignDate;
     }
 
-    public void setConfirmYear(String confirmYear) {
-        this.confirmYear = confirmYear;
+    public void setConfirmantSignDate(Date confirmantSignDate) {
+        this.confirmantSignDate = confirmantSignDate;
     }
 
-    public String getConfirmMonth() {
-        return confirmMonth;
+    public Date getConfirmationReceiveDate() {
+        return confirmationReceiveDate;
     }
 
-    public void setConfirmMonth(String confirmMonth) {
-        this.confirmMonth = confirmMonth;
-    }
-
-    public String getConfirmDay() {
-        return confirmDay;
-    }
-
-    public void setConfirmDay(String confirmDay) {
-        this.confirmDay = confirmDay;
-    }
-
-    public String getFinalizeYear() {
-        return finalizeYear;
-    }
-
-    public void setFinalizeYear(String finalizeYear) {
-        this.finalizeYear = finalizeYear;
-    }
-
-    public String getFinalizeMonth() {
-        return finalizeMonth;
-    }
-
-    public void setFinalizeMonth(String finalizeMonth) {
-        this.finalizeMonth = finalizeMonth;
-    }
-
-    public String getFinalizeDay() {
-        return finalizeDay;
-    }
-
-    public void setFinalizeDay(String finalizeDay) {
-        this.finalizeDay = finalizeDay;
-    }
-
-    public String getConfirmSerialNumber() {
-        return confirmSerialNumber;
-    }
-
-    public void setConfirmSerialNumber(String confirmSerialNumber) {
-        this.confirmSerialNumber = confirmSerialNumber;
-    }
-
-    public String getConfirmantNIC() {
-        return confirmantNIC;
-    }
-
-    public void setConfirmantNIC(String confirmantNIC) {
-        this.confirmantNIC = confirmantNIC;
+    public void setConfirmationReceiveDate(Date confirmationReceiveDate) {
+        this.confirmationReceiveDate = confirmationReceiveDate;
     }
 }

@@ -92,7 +92,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             initForm();
         } else {
             if (pageNo == 1) {
-                birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
+                birthRegister.setDateOfBirth(new EPopDate().getDate(childDOB));
             } else if (pageNo == 2) {
                 birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
                 birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
