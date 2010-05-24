@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://10.42.104.105/epopulation"/>
+        <property name="username" value="epop"/>
+        <property name="password" value="epop"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean
+                class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="MYSQL"/>
+                <property name="showSql" value="true"/>
+            </bean>
+        </property>
+    </bean>-->
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+        <property name="url" value="jdbc:derby:memory:unit-testing-jpa;create=true"/>
+        <property name="username" value="epop"/>
+        <property name="password" value="epop"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true"/>
+            </bean>
+        </property>
+        <property name="persistenceUnitName" value="punit"/>
+    </bean>
+
+    <!--Performs injection of an EntityManager into JPA code-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--A special bean that initializes the in-memory test database with test_database.sql-->
+    <bean id="dbInit" class="lk.rgd.crs.core.DatabaseInitializer">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--A special bean that pre-loads all DAOs implementing the PreloadableDAO interface-->
+    <bean id="preloader" class="lk.rgd.crs.core.dao.PreloadableDAOInitializer"/>
+
+    <!--DAO Beans - These allow access to the lower levels of the application data-->
+    <bean id="appParametersDAOImpl" class="lk.rgd.crs.core.dao.AppParametersDAOImpl" />
+    <bean id="districtDAOImpl" class="lk.rgd.crs.core.dao.DistrictDAOImpl" />
+    <bean id="countryDAOImpl" class="lk.rgd.crs.core.dao.CountryDAOImpl" />
+    <bean id="raceDAOImpl" class="lk.rgd.crs.core.dao.RaceDAOImpl" />
+    <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl" />
+
+    <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
+    the web interface as well as a Web Services interface -->
+    <bean id="manageBirthService" class="lk.rgd.crs.core.service.BirthRegisterServiceImpl"/>
+
+    <!--Web module related classes-->
+    <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">
+        <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
+    </bean>
+    <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+    </bean>
+</beans>
