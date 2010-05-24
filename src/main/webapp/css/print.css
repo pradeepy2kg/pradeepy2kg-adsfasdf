@@ -8,11 +8,30 @@
         width: 8in;
         height: 11in;
     }
-    *{background:none; }
-    select,input,textarea{border:none; background:none;}
-    .button{display:none;}
-		#layout-header, #body-sidebar, #layout-footer {
-        display: none !important;
+
+    * {
+        background: none;
+    }
+
+    select, input, textarea {
+        border: none;
+        background: none;
+    }
+
+    .button {
+        display: none;
+    }
+
+    #layout-header, #body-content-title, #layout-footer {
+        display: none;
+    }
+
+    .button_print {
+        display: none;
+    }
+
+    #body-sidebar {
+        display: none;
     }
 
     #body-content {
@@ -21,8 +40,25 @@
         top: 0;
         left: 0;
         margin: 0;
+        margin-top: 45px;
         color: #003333;
         background: url("../images/1.png") no-repeat center;
     }
-		textarea{color:black; font-size:12pt;}
+
+    textarea {
+        color: black;
+        font-size: 12pt;
+    }
 }
+
+/*@media print {*/
+
+/*div.header {*/
+/*display: none;*/
+/*}*/
+
+/*div.birth-confirmation-form-1-body {*/
+/*page-break-inside: avoid;*/
+/*page-break-after: always;*/
+/*}*/
+/*}*/
