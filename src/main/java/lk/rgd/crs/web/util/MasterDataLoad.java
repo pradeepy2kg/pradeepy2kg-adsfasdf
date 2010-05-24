@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.util;
 
 import lk.rgd.crs.api.domain.District;
+import lk.rgd.crs.api.domain.PrintData;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -104,7 +105,24 @@ public class MasterDataLoad {
 //        countryMap.add(4, "Germany");
 //        countryMap.add(5, "India");
 //        countryMap.add(6, "Australia");
-                
+
         return countryMap;
+    }
+
+    /**
+     * Return list of birth confirmation forms to be printed
+     *
+     * @return
+     */
+    public List<PrintData> getPrintList() {
+        List<PrintData> printList = new ArrayList<PrintData>();
+
+        printList.add(new PrintData("BC001", "Chathuranga", 1));
+        printList.add(new PrintData("BC002", "Amith", 1));
+        printList.add(new PrintData("BC003", "Indunil", 1));
+        printList.add(new PrintData("BC004", "Duminda", 1));
+        printList.add(new PrintData("BC005", "Sunil", 1));
+
+        return printList;
     }
 }

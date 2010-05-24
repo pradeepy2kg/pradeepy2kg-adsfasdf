@@ -55,4 +55,8 @@
     <definition name="epr.birthRegisterApproval" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegisterApproval.jsp"/>
     </definition>
+
+    <definition name="epr.birthConfirmationPrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmPrint.jsp"/>
+    </definition>
 </tiles-definitions>

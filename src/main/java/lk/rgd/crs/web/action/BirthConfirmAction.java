@@ -5,12 +5,25 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.RequestAware;
 import lk.rgd.crs.api.domain.Race;
+import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.dao.RaceDAO;
-import lk.rgd.crs.web.util.Constant;
+import lk.rgd.crs.api.dao.DistrictDAO;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
+import java.beans.PropertyDescriptor;
+import java.beans.Introspector;
+import java.beans.BeanInfo;
+import java.io.UnsupportedEncodingException;
+
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 
 /**
  * Birth Confirmation related actions.

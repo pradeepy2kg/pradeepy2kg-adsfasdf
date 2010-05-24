@@ -60,11 +60,11 @@
     <bean id="preloader" class="lk.rgd.crs.core.dao.PreloadableDAOInitializer"/>
 
     <!--DAO Beans - These allow access to the lower levels of the application data-->
-    <bean id="appParametersDAOImpl" class="lk.rgd.crs.core.dao.AppParametersDAOImpl" />
-    <bean id="districtDAOImpl" class="lk.rgd.crs.core.dao.DistrictDAOImpl" />
-    <bean id="countryDAOImpl" class="lk.rgd.crs.core.dao.CountryDAOImpl" />
-    <bean id="raceDAOImpl" class="lk.rgd.crs.core.dao.RaceDAOImpl" />
-    <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl" />
+    <bean id="appParametersDAOImpl" class="lk.rgd.crs.core.dao.AppParametersDAOImpl"/>
+    <bean id="districtDAOImpl" class="lk.rgd.crs.core.dao.DistrictDAOImpl"/>
+    <bean id="countryDAOImpl" class="lk.rgd.crs.core.dao.CountryDAOImpl"/>
+    <bean id="raceDAOImpl" class="lk.rgd.crs.core.dao.RaceDAOImpl"/>
+    <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
@@ -79,6 +79,9 @@
     </bean>
     <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
         <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+    </bean>
+    <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.PrintAction">
         <constructor-arg ref="districtDAOImpl"/>
     </bean>
 </beans>
