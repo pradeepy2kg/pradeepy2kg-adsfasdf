@@ -26,10 +26,11 @@ public class BirthDeclaration {
     /** The date of the birth */
     private Date dateOfBirth;
     /** The date when the birth declaration was submitted to the medical registrar or the DS office */
-    private Date dateOfSubmission;
+    private Date dateOfRegistration;
     /**
      * 0 - BDF added, 1 - ADR approved, 2 - Confirmation printed
-     * 3 - confirmed, 4 - changed (i.e. during the confirmation by parents), 5 - rejected
+     * 3 - confirmed, 4 - corrected (i.e. during the confirmation by parents), 5 - rejected
+     * 6 - record updated
      */
     private int status;
     /** Status comment - e.g. reason for rejection due to duplicate */
@@ -137,6 +138,10 @@ public class BirthDeclaration {
     //-----------------------------------------------------
     /** This represents a system generated serial number for the confirmation by parents */
     private String confirmationSerialNumber;
+    /** Has the confirmation for parents been printed ? */
+    private boolean    confirmationPrinted;
+    /** The last date for confirmation - set as 14 days from confirmation print date */
+    private Date       lastDateForConfirmation;
 
     /** PIN or NIC of person confirming BDF details */
     private String confirmantNICorPIN;
@@ -148,6 +153,10 @@ public class BirthDeclaration {
     private Date   confirmationReceiveDate;
     //-----------------------------------------------------
 
+    /** The date of issue for the original birth certificate - free copy */
+    private Date   originalBCDateOfIssue;
+    /** The place of issue for the original birth certificate - free copy */
+    private Date   originalBCPlaceOfIssue;
 
     public int getBirthDistrict() {
         return birthDistrict;
@@ -181,12 +190,12 @@ public class BirthDeclaration {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Date getDateOfSubmission() {
-        return dateOfSubmission;
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
     }
 
-    public void setDateOfSubmission(Date dateOfSubmission) {
-        this.dateOfSubmission = dateOfSubmission;
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
     }
 
     public int getStatus() {
@@ -635,5 +644,37 @@ public class BirthDeclaration {
 
     public void setConfirmationReceiveDate(Date confirmationReceiveDate) {
         this.confirmationReceiveDate = confirmationReceiveDate;
+    }
+
+    public boolean isConfirmationPrinted() {
+        return confirmationPrinted;
+    }
+
+    public void setConfirmationPrinted(boolean confirmationPrinted) {
+        this.confirmationPrinted = confirmationPrinted;
+    }
+
+    public Date getLastDateForConfirmation() {
+        return lastDateForConfirmation;
+    }
+
+    public void setLastDateForConfirmation(Date lastDateForConfirmation) {
+        this.lastDateForConfirmation = lastDateForConfirmation;
+    }
+
+    public Date getOriginalBCDateOfIssue() {
+        return originalBCDateOfIssue;
+    }
+
+    public void setOriginalBCDateOfIssue(Date originalBCDateOfIssue) {
+        this.originalBCDateOfIssue = originalBCDateOfIssue;
+    }
+
+    public Date getOriginalBCPlaceOfIssue() {
+        return originalBCPlaceOfIssue;
+    }
+
+    public void setOriginalBCPlaceOfIssue(Date originalBCPlaceOfIssue) {
+        this.originalBCPlaceOfIssue = originalBCPlaceOfIssue;
     }
 }
