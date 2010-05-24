@@ -63,7 +63,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
-        logger.debug("inside birth register action constructor");
     }
 
     /**
