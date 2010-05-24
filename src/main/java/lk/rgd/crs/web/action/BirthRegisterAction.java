@@ -80,7 +80,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else if (pageNo == 4) {
             // all pages captured, proceed to persist after validations
-            BirthDeclaration register = (BirthDeclaration) session.get("birthRegister");
+            BirthDeclaration register = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
             // todo business validations and persiatance
             logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
             logger.debug("Birth Register : {}.", register.getMotherFullName());
@@ -97,14 +97,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
                 birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
             }
-        }
 
-        // submissions of pages 1 - 4
-        try {
-            beanMerge();
-        } catch (Exception e) {
-            handleErrors(e);
-            return "error";
+            try {
+                beanMerge();
+            } catch (Exception e) {
+                handleErrors(e);
+                return "error";
+            }
         }
 
         session.put("page_title", "birth registration form : "+ (pageNo+1));
@@ -118,13 +117,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
         BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
 
-        // Iterate over all the attributes
+        // Iterate over all the attributes of form bean
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object originalValue = descriptor.getReadMethod().invoke(target);
+            Object originalValue = descriptor.getReadMethod().invoke(birthRegister);
 
-            // Only copy values where the session value is null or empty (do not replace already set
-            // values in the session)
-            if ((originalValue == null) || (originalValue.equals(""))) {
+            // Only copy values where the form value is not null or empty (do not replace already set
+            // values in the session with empty form values, b'cos the form has proper values only for
+            //  the current submitting page)
+            if ((originalValue != null) && (!(originalValue.equals("") ||
+                    originalValue.equals("0") || originalValue.equals("0.0") ))) {
                 Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
                 descriptor.getWriteMethod().invoke(target, defaultValue);
             } else {
@@ -136,7 +137,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error(e.getLocalizedMessage());
+        logger.error("{} : {}", e.getMessage(), e.toString());
         //todo pass the error to the error.jsp page
     }
 
