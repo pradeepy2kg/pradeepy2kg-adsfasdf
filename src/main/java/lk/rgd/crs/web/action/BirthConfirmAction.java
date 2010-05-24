@@ -5,37 +5,18 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
-import org.apache.struts2.interceptor.RequestAware;
-import lk.rgd.crs.api.domain.Person;
+import lk.rgd.crs.api.domain.Race;
 import lk.rgd.crs.api.dao.RaceDAO;
-import lk.rgd.crs.api.dao.DistrictDAO;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.AppConstants;
+import lk.rgd.crs.web.util.Constant;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.io.UnsupportedEncodingException;
-import java.io.File;
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.*;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpServletRequest;
-
-//import org.springframework.web.struts.ActionSupport;
+import java.util.List;
 
 /**
  * Birth Confirmation related actions.
  *
- * @author Chathuranga Withana
- * @author Amith Jayasekara
+ * @author chathuranga
+ * @author amith
  */
 public class BirthConfirmAction extends ActionSupport implements SessionAware, RequestAware {
 
@@ -245,6 +226,15 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
     }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
 
     public void setSession(Map session) {
         this.session = session;
