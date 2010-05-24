@@ -64,5 +64,9 @@
         <div class="button"><input type="submit" value="SUBMIT"/></div>
     </div>
 </s:form>
+<s:form id="print_2">
+    <div class="button_print">
+        <s:submit type="button" value="PRINT" onclick="print()"/></div>
+</s:form>
 </body>
 </html>

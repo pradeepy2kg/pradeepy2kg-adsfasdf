@@ -5,14 +5,19 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.RequestAware;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.io.UnsupportedEncodingException;
+import java.io.File;
+import java.io.InputStream;
+import java.io.FileInputStream;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -20,13 +25,19 @@ import java.beans.PropertyDescriptor;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServletRequest;
+
+//import org.springframework.web.struts.ActionSupport;
+
 /**
  * Birth Confirmation related actions.
  *
  * @author Chathuranga Withana
  * @author Amith Jayasekara
  */
-public class BirthConfirmAction extends ActionSupport implements SessionAware {
+public class BirthConfirmAction extends ActionSupport implements SessionAware, RequestAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
@@ -38,6 +49,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> raceList;
     private Map session;
+    private HttpServletRequest request;
 
     private BirthDeclaration birthConfirm;
 
@@ -159,13 +171,18 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         districtList = districtDAO.getDistricts(language);
         raceList = raceDao.getRaces(language);
 
+        //todo temporary solution until use a method to show Map in UI
+        session.put("districtList", districtList);
+        session.put("raceList", raceList);
+
         logger.debug("inside populte : districts , countries and races populated.");
     }
 
     public String getBirthConfirmationReport() {
         try {
+            logger.info(AppConstants.HOME_DIRECTORY);
             // compiling jasper report
-            JasperReport report = JasperCompileManager.compileReport("/home/amith23/Desktop/amith23/Templates/BirthConfermation_report_test.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(AppConstants.HOME_DIRECTORY + "/templates/birth_confirmation_report_part1_final_test.jrxml");
             //setting data
             JRDataSource dataSource = createReportDataSource();
             // filling report with data sorce
@@ -196,6 +213,10 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         String uniName = "\u0DBD\u0DD2\u0DBA\u0DCF\u0DB4\u0DAF\u0DD2\u0D82\u0DA0\u0DD2 \u0DAF\u0DD2\u0DB1\u0DBA";
         String uniLastName = "\u0D9A\u0DAD\u0DD4\u0DC0\u0DBB\u0DBA\u0DCF\u0D9C\u0DDA \u0DB1\u0DB8";
         Person[] reportRows = new Person[1];
+        // accessing session data
+        Object dataObj = session.get("birthRegister");
+        BirthDeclaration birt = (BirthDeclaration) dataObj;
+        logger.info("session object", dataObj);
         Person p = new Person();
         p.setId(new Long("10000"));
         p.setLastName(convertToString(uniLastName));
@@ -255,5 +276,9 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
 
     public void setBirthConfirm(BirthDeclaration birthConfirm) {
         this.birthConfirm = birthConfirm;
+    }
+
+    public void setRequest(Map map) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

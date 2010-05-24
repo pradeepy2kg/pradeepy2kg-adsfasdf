@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.dispatcher.ApplicationMap;
 
 import java.util.Map;
 import java.util.ArrayList;

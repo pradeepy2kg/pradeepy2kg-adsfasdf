@@ -7,6 +7,8 @@ package lk.rgd;
  */
 public class AppConstants {
 
+    public static final String HOME_DIRECTORY = System.getProperty("POPREG_HOME"); 
+
     /** Language identifier for English */
     public static final String ENGLISH = "en_US";
     /** Language identifier for Sinhala */

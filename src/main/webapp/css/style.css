@@ -7,6 +7,7 @@
 #birth-confirmation-form-1-body{height:1366px; background:url(../images/confirm1.png) no-repeat center;}
 #birth-confirmation-form-2-body{height:1334px; background:url(../images/confirm2.png) no-repeat center;}
 .button{float:right; margin-right:20px; margin-top:-15px; margin-bottom:10px;}
+.button_print{float:right; margin-right:60px; margin-top:-15px; margin-bottom:10px;}
 
 /* Styles for the page one of the web form */
 #birth-registration-form-1-serial{height:40px; float:left; margin-top:160px; margin-left:850px; overflow:hidden;}
