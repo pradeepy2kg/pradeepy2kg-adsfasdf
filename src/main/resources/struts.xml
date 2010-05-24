@@ -74,5 +74,9 @@
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.welcome</result>
         </action>
+
+        <action name="eprBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="viewPrintList">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+        </action>
     </package>
 </struts>
