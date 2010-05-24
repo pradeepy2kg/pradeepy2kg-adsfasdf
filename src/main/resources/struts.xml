@@ -45,8 +45,7 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
-        <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
-                method="birthRegistration">
+        <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction" method="birthRegistration">
             <!--<interceptor-ref name="scopedModelDriven"/>-->
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>

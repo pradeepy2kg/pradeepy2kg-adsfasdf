@@ -1,5 +1,6 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
   User: chathuranga
   Date: May 13, 2010
@@ -27,24 +28,18 @@
             <s:select list="{'01','02','03'}" name=""/>
         </div>
         <div id="birth-confirmation-birth-place">
-                <%--todo change this into struts tag--%>
-            <% Map<Integer, String> districtList = (Map<Integer, String>) session.getAttribute("districtList");
-                Iterator it = districtList.entrySet().iterator();
-            %>
-            <select name="">
-                <option value="-1">- Select District -</option>
-                <% while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
-                <%--<s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtId"--%>
-                <%--listValue="districtName" headerKey="0" headerValue="- Select District -"/>--%>
-                <%--<s:select name="birthRegister.childBirthDistrict" list="districtList" listKey="districtList.key" listValue="districtList.value"--%>
-                <%--headerKey="0" headerValue="- Select District -"/>--%>
+            <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.childBirthDistrict"
+                                                                  list="districtList"
+                                                                  headerKey="0"
+                                                                  headerValue="-Select District-"/></s:if>
+            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.childBirthDistrict"
+                                                                  list="districtList"
+                                                                  headerKey="0"
+                                                                  headerValue="-දිස්ත්‍රික්කය තෝරන්න-"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.childBirthDistrict"
+                                                                  list="districtList"
+                                                                  headerKey="0"
+                                                                  headerValue="-In Tamil-"/></s:if>
         </div>
 
         <div id="birth-confirmation-name"><s:textarea name="birthConfirm.childFullNameOfficialLang" cols="38"
@@ -52,8 +47,15 @@
         <div id="birth-confirmation-name-in-english"><s:textarea name="birthConfirm.childFullNameEnglish" cols="38"
                                                                  rows="5"/></div>
         <div id="birth-confirmation-gender">
-            <s:select list="{'Male','Female'}" name="birthConfirm.childGender" headerKey="0"
-                      headerValue="-Select Gender-"/>
+            <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
+                                                                 name="birthConfirm.childGender" headerKey="0"
+                                                                 headerValue="-Select Gender-"/> </s:if>
+            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
+                                                                  name="birthConfirm.childGender" headerKey="0"
+                                                                  headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
+                                                                 name="birthConfirm.childGender" headerKey="0"
+                                                                 headerValue="-In Tamil-"/> </s:if>
         </div>
         <s:hidden name="pageNo" value="1"/>
         <div class="button"><s:submit type="submit" value="NEXT"/></div>

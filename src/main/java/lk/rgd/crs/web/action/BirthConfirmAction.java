@@ -19,6 +19,7 @@ import java.beans.PropertyDescriptor;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
+
 /**
  * Birth Confirmation related actions.
  *
@@ -34,8 +35,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
 
     private int pageNo;
     private String language;
-    private Map<Integer,String> districtList;
-    private Map<Integer,String> raceList;
+    private Map<Integer, String> districtList;
+    private Map<Integer, String> raceList;
     private Map session;
 
     private BirthDeclaration birthConfirm;
@@ -111,13 +112,13 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-       logger.error(e.getLocalizedMessage());
-       //todo pass the error to the error.jsp page
-   }
+        logger.error(e.getLocalizedMessage());
+        //todo pass the error to the error.jsp page
+    }
 
-   /**
-    *  update the bean in session with the values of local bean
-    */
+    /**
+     *  update the bean in session with the values of local bean
+     */
 //   private void beanMerge() throws Exception {
 //       BirthDeclaration target = (BirthDeclaration) session.get("birthRegister");
 //       BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
@@ -139,7 +140,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
 //   }
 
     /**
-     *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
+     * initialises the birthRegister bean with proper initial values (depending on user, date etc) and
      * store it in session
      */
     private void initForm() {
@@ -158,10 +159,6 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         districtList = districtDAO.getDistricts(language);
         raceList = raceDao.getRaces(language);
 
-        //todo temporary solution until use a method to show Map in UI
-        session.put("districtList", districtList);
-        session.put("raceList", raceList);
-
         logger.debug("inside populte : districts , countries and races populated.");
     }
 
@@ -178,7 +175,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware {
         }
         catch (Exception e) {
             logger.info("jasper error", e);
-        }           
+        }
         session.put("page_title", "birth confirm report");
         return "success";
     }

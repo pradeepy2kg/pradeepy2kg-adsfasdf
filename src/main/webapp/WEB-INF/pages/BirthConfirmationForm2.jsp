@@ -1,6 +1,8 @@
 <html>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%--
  @author chathuranga
 --%>
@@ -16,22 +18,12 @@
             <s:textarea name="birthConfirm.fatherFullName" cols="38"/>
         </div>
         <div id="birth-confirmation-fatherRace">
-                <%--<s:select name="birthRegister.fatherRace" list="raceList" headerKey="0" headerValue="- Select Race -"--%>
-                <%--listKey="raceId" listValue="raceName"/>--%>
-                <%--todo change this into struts tag--%>
-            <% Map<Integer, String> raceList = (Map<Integer, String>) session.getAttribute("raceList");
-                Iterator it = raceList.entrySet().iterator();
-            %>
-            <select name="birthConfirm.fatherRace">
-                <option value="-1">- Select Race -</option>
-                <% while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
+            <s:if test="#session.user_lang == 'en_US'"><s:select name="birthRegister.fatherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- Select Race -"/></s:if>
+            <s:if test="#session.user_lang == 'si_LK'"><s:select name="birthRegister.fatherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- ජාතිය තෝරන්න -"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"><s:select name="birthRegister.fatherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- In Tamil -"/> </s:if>
         </div>
         <div id="birth-confirmation-mother-pin">
             <s:textfield name="birthConfirm.motherNIC"/>
@@ -40,20 +32,12 @@
             <s:textarea name="birthConfirm.motherFullName" cols="38"/>
         </div>
         <div id="birth-confirmation-motherRace">
-                <%--<s:select name="birthRegister.motherRace" list="raceList" headerKey="0" headerValue="- Select Race -" listKey="raceId" listValue="raceName"/>--%>
-                <%--todo change this into struts tag--%>
-            <% Iterator iterator = raceList.entrySet().iterator();
-            %>
-            <select name="birthConfirm.motherRace">
-                <option value="-1">- Select Race -</option>
-                <% while (iterator.hasNext()) {
-                    Map.Entry pair = (Map.Entry) iterator.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
+            <s:if test="#session.user_lang == 'en_US'"><s:select name="birthRegister.motherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- Select Race -"/></s:if>
+            <s:if test="#session.user_lang == 'si_LK'"><s:select name="birthRegister.motherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- ජාතිය තෝරන්න -"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"><s:select name="birthRegister.motherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- In Tamil -"/> </s:if>
         </div>
         <div id="birth-confirmation-married">
             <s:select name="birthConfirm.marriedStatus" list="{'YES','NO'}" headerKey="0"

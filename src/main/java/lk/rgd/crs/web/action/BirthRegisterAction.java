@@ -106,7 +106,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         }
 
-        session.put("page_title", "birth registration form : "+ (pageNo+1));
+        session.put("page_title", "birth registration form : " + (pageNo + 1));
         return "form" + pageNo;
     }
 
@@ -141,9 +141,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         //todo pass the error to the error.jsp page
     }
 
-    
+
     /**
-     *  initialises the birthRegister bean with proper initial values (depending on user, date etc) and
+     * initialises the birthRegister bean with proper initial values (depending on user, date etc) and
      * store it in session
      */
     private void initForm() {
@@ -175,11 +175,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         districtList = districtDAO.getDistricts(language);
         countryList = countryDAO.getCountries(language);
         raceList = raceDAO.getRaces(language);
-
-        //todo temporary solution until use a method to show Map in UI
-        session.put("districtList", districtList);
-        session.put("countryList", countryList);
-        session.put("raceList", raceList);
 
         logger.debug("inside populte : districts , countries and races populated.");
     }

@@ -2,10 +2,10 @@
   @author duminda
 --%>
 <html>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.Map" %>
 <head>
     <%@ taglib prefix="s" uri="/struts-tags" %>
+
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <s:head theme="ajax"/>
     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
@@ -19,92 +19,83 @@
 
         <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
         <div id="father-country">
-                <%--todo change this into struts tag--%>
-            <% Map<Integer, String> countryList = (Map<Integer, String>) session.getAttribute("countryList");
-                Iterator it = countryList.entrySet().iterator();
-            %>
-            <select name="birthRegister.fatherForeignerCountry">
-                <option value="-1">- Select Country -</option>
-                <% while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
-                <%--<s:select name="birthRegister.fatherForeignerCountry" list="districtList" listKey="districtId"--%>
-                <%--listValue="districtName" headerKey="0" headerValue="-Select District-"/>--%>
+            <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.fatherForeignerCountry"
+                                                                  list="countryList"
+                                                                  headerKey="0"
+                                                                  headerValue="-Select Country-"/></s:if>
+            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.fatherForeignerCountry"
+                                                                  list="countryList"
+                                                                  headerKey="0"
+                                                                  headerValue="-රට තෝරන්න-"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.fatherForeignerCountry"
+                                                                  list="countryList"
+                                                                  headerKey="0"
+                                                                  headerValue="-In Tamil-"/></s:if>
         </div>
         <div id="father-name"><s:textfield name="birthRegister.fatherFullName"/></div>
         <div id="father-dob">
-            <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear" onchange="javascript:setDate('fatherYear','2')"/>
-            <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth" onchange="javascript:setDate('fatherMonth','2')"/>
-            <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay" onchange="javascript:setDate('fatherDay','2')"/>
-            <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+            <s:select list="{'2009','2010','2011'}" name="fatherYear" id="fatherYear"
+                      onchange="javascript:setDate('fatherYear','2')"/>
+            <s:select list="{'01','02','03'}" name="fatherMonth" id="fatherMonth"
+                      onchange="javascript:setDate('fatherMonth','2')"/>
+            <s:select list="{'01','02','03'}" name="fatherDay" id="fatherDay"
+                      onchange="javascript:setDate('fatherDay','2')"/>
+            <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
+                              displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
         <div id="father-birth-place"><s:textfield name="birthRegister.fatherBirthPlace"/></div>
         <div id="father-race">
-                <%--<s:textfield name="birthRegister.fatherRace"/>--%>
-                <%--todo change this into struts tag--%>
-            <% Map<Integer, String> raceList = (Map<Integer, String>) session.getAttribute("raceList");
-                Iterator itRace1 = raceList.entrySet().iterator();
-            %>
-            <select name="birthRegister.fatherRace">
-                <option value="-1">- Select Race -</option>
-                <% while (itRace1.hasNext()) {
-                    Map.Entry pair = (Map.Entry) itRace1.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
+            <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
+                                                                 name="birthConfirm.fatherRace" headerKey="0"
+                                                                 headerValue="-Select Gender-"/> </s:if>
+            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
+                                                                  name="birthConfirm.fatherRace" headerKey="0"
+                                                                  headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
+                                                                 name="birthConfirm.fatherRace" headerKey="0"
+                                                                 headerValue="-In Tamil-"/> </s:if>
         </div>
         <div id="mother-nic-no"><s:textfield name="birthRegister.motherNIC"/></div>
         <div id="mother-passport-no"><s:textfield name="birthRegister.motherPassportNo"/></div>
         <div id="mother-country">
-                <%--todo change this into struts tag--%>
-            <% Iterator iterator = countryList.entrySet().iterator();
-            %>
-            <select name="birthRegister.motherCountry">
-                <option value="-1">- Select Country -</option>
-                <% while (iterator.hasNext()) {
-                    Map.Entry pair = (Map.Entry) iterator.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
-                <%--<s:textfield name="birthRegister.motherCountry"/>--%>
+            <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.motherCountry"
+                                                                  list="countryList"
+                                                                  headerKey="0"
+                                                                  headerValue="-Select Country-"/></s:if>
+            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.motherCountry"
+                                                                  list="countryList"
+                                                                  headerKey="0"
+                                                                  headerValue="-රට තෝරන්න-"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.motherCountry"
+                                                                  list="countryList"
+                                                                  headerKey="0"
+                                                                  headerValue="-In Tamil-"/></s:if>
         </div>
         <div id="mother-admision-no"><s:textfield name="birthRegister.motherAdmissionNoAndDate"/></div>
         <div id="mother-name"><s:textfield name="birthRegister.motherFullName"/></div>
         <div id="mother-dob">
-        <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear" onchange="javascript:setDate('motherYear','3')"/>
-            <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth" onchange="javascript:setDate('motherMonth','3')"/>
-            <s:select list="{'01','02','03'}" name="motherDay" id="motherDay" onchange="javascript:setDate('motherDay','3')"/>
-            <s:datetimepicker id="motherdatePicker" name="motherDOB" label="Format (yyyy-MM-dd)" displayFormat="yyyy-MM-dd"
+            <s:select list="{'2009','2010','2011'}" name="motherYear" id="motherYear"
+                      onchange="javascript:setDate('motherYear','3')"/>
+            <s:select list="{'01','02','03'}" name="motherMonth" id="motherMonth"
+                      onchange="javascript:setDate('motherMonth','3')"/>
+            <s:select list="{'01','02','03'}" name="motherDay" id="motherDay"
+                      onchange="javascript:setDate('motherDay','3')"/>
+            <s:datetimepicker id="motherdatePicker" name="motherDOB" label="Format (yyyy-MM-dd)"
+                              displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('motherdatePicker')"/>
         </div>
         <div id="mother-birth-place"><s:textfield name="birthRegister.motherBirthPlace"/></div>
         <div id="mother-race">
-                <%--<s:textfield name="birthRegister.motherRace"/>--%>
-                <%--todo change this into struts tag--%>
-            <% Iterator itRace2 = raceList.entrySet().iterator();
-            %>
-            <select name="birthRegister.fatherRace">
-                <option value="-1">- Select Race -</option>
-                <% while (itRace2.hasNext()) {
-                    Map.Entry pair = (Map.Entry) itRace2.next();
-                %>
-                <option value="<%= pair.getKey()%>">
-                    <%= pair.getValue()%>
-                </option>
-                <%}%>
-            </select>
+            <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
+                                                                 name="birthConfirm.motherRace" headerKey="0"
+                                                                 headerValue="-Select Gender-"/> </s:if>
+            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
+                                                                  name="birthConfirm.motherRace" headerKey="0"
+                                                                  headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
+            <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
+                                                                 name="birthConfirm.motherRace" headerKey="0"
+                                                                 headerValue="-In Tamil-"/> </s:if>
         </div>
         <div id="mother-age-for-birth"><s:textfield name="birthRegister.motherAgeAtBirth" id="motherAgeAtBirth"/></div>
         <div id="mother-address"><s:textfield name="birthRegister.motherAddress"/></div>
