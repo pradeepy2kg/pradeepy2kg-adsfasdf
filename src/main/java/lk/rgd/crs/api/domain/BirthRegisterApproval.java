@@ -1,10 +1,11 @@
 package lk.rgd.crs.api.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 /**
  * @author Duminda Dharmakeerthi.
+ * @author Indunil Moremada
  */
 
 public class BirthRegisterApproval {

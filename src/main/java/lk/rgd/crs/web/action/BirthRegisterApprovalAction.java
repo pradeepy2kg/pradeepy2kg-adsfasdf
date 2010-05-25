@@ -13,6 +13,8 @@ import lk.rgd.crs.api.domain.BirthRegisterApproval;
 
 /**
  * @author Duminda Dharmakeerthi.
+ * @author Indunil Moremada
+ * struts action class which is used for the birth registration approval purposes
  */
 
 public class BirthRegisterApprovalAction extends ActionSupport implements SessionAware {
@@ -34,11 +36,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         BirthRegisterApproval BRA1 = new BirthRegisterApproval();
         BirthRegisterApproval BRA2 = new BirthRegisterApproval();
 
-        BRA.setSerial(1);
+        BRA.setSerial(10);
         BRA.setName("Duminda");
         BRA.setChanges(true);
         BRA.setRecievedDate(new Date(110, 10, 24));
-        BRA.setActions("Approve");
+        BRA.setActions("Expired");
         birthRegisterApproval.add(BRA);
 
         BRA1.setSerial(2);
@@ -57,7 +59,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     public String birthRegisterApproval() {
-        session.put("data", birthRegisterApproval);
+        session.put("ApprovelData", birthRegisterApproval);
         session.put("page_title", "birth register approval");
         return "pageLoad";
     }

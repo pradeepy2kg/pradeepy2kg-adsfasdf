@@ -43,7 +43,18 @@ function setDate(id, flag) {
         }
     }
     else {
-        //to do mother's datepicker
+        if (id == "motherYear") {
+            selectedDate = getDateWhenYearIsGiven("motherYear", "motherMonth", "motherDay");
+            motherDatePicker.setValue(selectedDate);
+        }
+        else if (id == "motherMonth") {
+            selectedDate = getDateWhenMonthIsGiven("motherYear", "motherMonth", "motherDay");
+            motherDatePicker.setValue(selectedDate);
+        }
+        else {
+            selectedDate = getDateWhenDayIsGiven("motherYear", "motherMonth", "motherDay");
+            motherDatePicker.setValue(selectedDate);
+        }
     }
 }
 
@@ -84,7 +95,10 @@ function getDateWhenDayIsGiven(y, m, d) {
     day = sel.options[sel.selectedIndex].value;
     return year + "-" + Selectedmonth + "-" + day;
 }
-
+/**
+ *  method used to populate the list boxes according to the selected value of the datepicker
+ * @param id used to identify the request
+ */
 function splitDate(id) {
     //to do this
 }

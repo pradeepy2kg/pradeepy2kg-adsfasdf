@@ -15,9 +15,9 @@
 <s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm2"
         onsubmit="javascript:return ageValidator()">
     <div id="birth-registration-form-2-body">
-        <div id="father-nic-no"><s:textfield name="birthRegister.fathersNIC"/></div>
+        <div id="father-nic-no"><s:textfield name="birthRegister.fatherNICorPIN"/></div>
 
-        <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
+        <div id="father-passport-no"><s:textfield name="birthRegister.fatherPassportNo"/></div>
         <div id="father-country">
             <s:select name="birthRegister.fatherForeignerCountry"list="countryList" headerKey="0"
                       headerValue="%{getText('select_country.label')}"/>
@@ -42,7 +42,7 @@
                               displayFormat="yyyy-MM-dd"
                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
-        <div id="father-birth-place"><s:textfield name="birthRegister.fatherBirthPlace"/></div>
+        <div id="father-birth-place"><s:textfield name="birthRegister.fatherPlaceOfBirth"/></div>
         <div id="father-race">
             <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
                                                                  name="birthConfirm.fatherRace" headerKey="0"
@@ -54,7 +54,7 @@
                                                                  name="birthConfirm.fatherRace" headerKey="0"
                                                                  headerValue="-In Tamil-"/> </s:if>
         </div>
-        <div id="mother-nic-no"><s:textfield name="birthRegister.motherNIC"/></div>
+        <div id="mother-nic-no"><s:textfield name="birthRegister.motherNICorPIN"/></div>
         <div id="mother-passport-no"><s:textfield name="birthRegister.motherPassportNo"/></div>
         <div id="mother-country">
             <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.motherCountry"

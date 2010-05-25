@@ -92,7 +92,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             initForm();
         } else {
             if (pageNo == 1) {
-                birthRegister.setDateOfBirth(new EPopDate().getDate(childDOB));
+                //birthRegister.setDateOfBirth(new EPopDate().getDate(childDOB));
             } else if (pageNo == 2) {
                 birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
                 birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
@@ -136,7 +136,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error("{} : {}", e.getMessage(), e.toString());
+        logger.error("{} : {}", e.getMessage(),e);
         //todo pass the error to the error.jsp page
     }
 

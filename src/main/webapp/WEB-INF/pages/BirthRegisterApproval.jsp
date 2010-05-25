@@ -1,7 +1,12 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="lk.rgd.crs.api.domain.BirthRegisterApproval" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<html>
+<head>
+    <%@ page import="java.util.ArrayList" %>
+    <%@ page import="lk.rgd.crs.api.domain.BirthRegisterApproval" %>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ taglib prefix="s" uri="/struts-tags" %>
+    <script type="text/javascript" src='<s:url value="/js/SelectAll.js"/>'></script>
+</head>
+<body>
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
         <s:form action="eprBirthRegisterApproval_getList" name="birth_register_approval_head" method="POST">
@@ -17,28 +22,25 @@
             <table>
                 <tr>
                     <th></th>
-                    <th>serial</th>
-                    <th>name</th>
-                    <th>changes</th>
-                    <th>date</th>
-                    <th>actions</th>
+                    <th>Serial</th>
+                    <th>Name</th>
+                    <th>Changes</th>
+                    <th>Received</th>
+                    <th>Actions</th>
                 </tr>
-                <% ArrayList<BirthRegisterApproval> bra = (ArrayList<BirthRegisterApproval>) session.getAttribute("data");
-                    for (int i = 0; i < bra.size(); i++) {
-                        BirthRegisterApproval B = bra.get(i); %>
-                <tr>
-                    <td><s:checkbox name="index_"/></td>
-                    <%  out.write("<td>" + B.getSerial() + "</td>");
-                        out.write("<td>" + B.getName() + "</td>");
-                        out.write("<td>" + B.isChanges() + "</td>");
-                        out.write("<td>" + B.getRecievedDate() + "</td>");
-                        out.write("<td>" + B.getActions() + "</td>");
-                    }
-                    %>
-                </tr>
+                <s:iterator value="#session.ApprovelData">
+                    <tr class="<s:if test="%{actions=='Expired'}" >expired</s:if>">
+                        <td><s:checkbox name="index" onclick="javascript:selectall()"/></td>
+                        <td><s:property value="serial"/></td>
+                        <td><s:property value="name"/></td>
+                        <td><s:property value="changes"/></td>
+                        <td><s:property value="recievedDate"/></td>
+                        <td><s:property value="actions"/></td>
+                    </tr>
+                </s:iterator>
                 <tr></tr>
             </table>
-            <s:label><s:checkbox name="select_all"/><span>Select All</span></s:label>
+            <s:label><s:checkbox name="allCheck" onclick="javascript:selectallMe()"/><span>Select All</span></s:label>
             <s:submit name="approve" value="approve"/>
         </s:form>
     </div>
@@ -46,3 +48,5 @@
 
     </div>
 </div>
+</body>
+</html>
