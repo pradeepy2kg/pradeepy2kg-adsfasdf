@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -167,7 +168,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * Populate master data to the UIs
      */
     private void populate() {
-        String language = (String) (session.get(WebConstants.SESSION_USER_LANG));
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate : {} observed.", language);
 
         districtList = districtDAO.getDistricts(language);
