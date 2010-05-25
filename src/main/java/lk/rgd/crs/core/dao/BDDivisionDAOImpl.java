@@ -1,6 +1,7 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
+import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -8,7 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,20 +1,11 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.domain.AppParameter;
 import lk.rgd.crs.api.dao.AppParametersDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.orm.jpa.EntityManagerFactoryUtils;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
