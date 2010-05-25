@@ -10,9 +10,9 @@ public class AppConstants {
     public static final String HOME_DIRECTORY = System.getProperty("POPREG_HOME"); 
 
     /** Language identifier for English */
-    public static final String ENGLISH = "en_US";
+    public static final String ENGLISH = "en";
     /** Language identifier for Sinhala */
-    public static final String SINHALA = "si_LK";
+    public static final String SINHALA = "si";
     /** Language identifier for Tamil */
-    public static final String TAMIL   = "ta_LK";
+    public static final String TAMIL   = "ta";
 }
