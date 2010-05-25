@@ -28,6 +28,8 @@
         </interceptors>
 
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
+            <interceptor-ref name="i18n"/>
+            <interceptor-ref name="basicStack"/>
             <result type="tiles" name="success">epr.home</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
         </action>
@@ -42,6 +44,8 @@
         </action>
 
         <action name="eprLanguage" class="lk.rgd.crs.web.action.UserPreferencesAction" method="selectLanguage">
+            <interceptor-ref name="i18n"/>
+            <interceptor-ref name="basicStack"/>
             <result type="tiles" name="success">epr.home</result>
         </action>
 

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,7 +32,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public String selectLanguage() {
         logger.debug("inside selectLanguage : {} passed.", language);
         String country = "LK";
-        if (language.equals("en")) {
+        if (language.equals(AppConstants.ENGLISH)) {
             country = "US";
         }
 
