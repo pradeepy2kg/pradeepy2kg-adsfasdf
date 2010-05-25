@@ -68,7 +68,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthRegisterApproval_*" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="birthRegisterApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
             <result type="tiles" name="success">epr.home</result>

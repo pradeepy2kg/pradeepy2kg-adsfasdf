@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.EPopDate;
+
 import javax.persistence.*;
 import java.util.Date;
 
