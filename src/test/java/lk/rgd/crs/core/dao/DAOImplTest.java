@@ -5,6 +5,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import lk.rgd.AppConstants;
+import lk.rgd.Permission;
+import lk.rgd.common.api.dao.RoleDAO;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.Country;
@@ -131,5 +137,35 @@ public class DAOImplTest extends TestCase {
         for (String bd : bdDivisions.values()) {
             Assert.assertTrue(sinhalaBDDivisions.contains(bd));
         }
+    }
+
+    public void testUsersAndRoles() throws Exception {
+        UserManager bean = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+        User user = bean.authenticateUser("asankha", "asankha");
+        Assert.assertNotNull(user);
+        try {
+            user = bean.authenticateUser("asankha", "wrong");
+            fail("Should fail for 'wrong' password");
+        } catch (AuthorizationException e) {}
+        try {
+            user = bean.authenticateUser("asankha", null);
+            fail("Should fail for null password");
+        } catch (AuthorizationException e) {}
+
+        RoleDAO role = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
+
+        user = bean.authenticateUser("rg", "password");
+        Assert.assertTrue(user.getRoles().contains(role.getRole("RG")));
+        Assert.assertTrue(user.getRoles().contains(role.getRole("ADR")));
+        Assert.assertFalse(user.getRoles().contains(role.getRole("DEO")));
+        Assert.assertTrue(user.isAuthorized(Permission.APPROVE_BDF));
+        Assert.assertTrue(user.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
+
+        user = bean.authenticateUser("asankha", "asankha");
+        Assert.assertFalse(user.getRoles().contains(role.getRole("RG")));
+        Assert.assertTrue(user.getRoles().contains(role.getRole("ADR")));
+        Assert.assertFalse(user.getRoles().contains(role.getRole("DEO")));
+        Assert.assertTrue(user.isAuthorized(Permission.APPROVE_BDF));
+        Assert.assertFalse(user.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
     }
 }

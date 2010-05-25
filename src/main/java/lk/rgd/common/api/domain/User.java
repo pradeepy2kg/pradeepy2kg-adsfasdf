@@ -1,8 +1,10 @@
-package lk.rgd.crs.api.domain;
+package lk.rgd.common.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.BitSet;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a User of the system and his groups, preferences and privileges
@@ -40,7 +42,30 @@ public class User {
     /** Is the user account active - 0 : active, 1 - inactive, 2 - locked out */
     private int status;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_ROLES",
+        joinColumns = @JoinColumn(name="userId"),
+        inverseJoinColumns = @JoinColumn(name="roleId"))
+    private Set<Role> roles;
+
+    @Transient
+    private BitSet permissions = null;
+
     public User() {}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return userId != null ? userId.hashCode() : 0;
+    }
 
     public String getUserId() {
         return userId;
@@ -136,5 +161,29 @@ public class User {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setPermissions(BitSet permissions) {
+        this.permissions = permissions;
+    }
+
+    public boolean isAuthorized(int permission) {
+        if (permissions == null) {
+            permissions = new BitSet();
+            for (Role r : roles) {
+                if (r.getPermBitSet() != null) {
+                    permissions.or(r.getPermBitSet());
+                }
+            }
+        }
+        return permissions.get(permission);
     }
 }

@@ -1,23 +1,17 @@
 package lk.rgd.crs;
 
+import lk.rgd.common.RGDRuntimeException;
+
 /**
  * @author asankha
  */
-public class CRSRuntimeException extends RuntimeException {
-
-    private int errorCode;
+public class CRSRuntimeException extends RGDRuntimeException {
 
     public CRSRuntimeException(String message, int errorCode) {
-        super(message);
-        this.errorCode = errorCode;
+        super(message, errorCode);
     }
 
     public CRSRuntimeException(String message, int errorCode, Throwable cause) {
-        super(message, cause);
-        this.errorCode = errorCode;
-    }
-
-    public int getErrorCode() {
-        return errorCode;
+        super(message, errorCode, cause);
     }
 }

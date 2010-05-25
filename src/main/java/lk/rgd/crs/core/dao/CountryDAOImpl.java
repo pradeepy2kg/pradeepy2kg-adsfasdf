@@ -1,6 +1,7 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
+import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.domain.Country;
