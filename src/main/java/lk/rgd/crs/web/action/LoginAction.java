@@ -31,6 +31,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
    *  User LoginAction of the EPR System.
    * */
     public String login() {
+        logger.debug("detected useName : {} and password : {}", userName, password);
         if (loginBD.login(userName, password)) {
             String language = loginBD.getLanguage(userName);
             String country = "LK";
@@ -41,7 +42,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
             session.put(WebConstants.SESSION_USER_NAME, userName);
             session.put("page_title", "home");
-            logger.debug(" user {} logged in. language {}", userName, loginBD.getLanguage(userName));
+            logger.debug(" user {} logged in. language {}", userName, language);
             return "success";
         }
         return "error";
