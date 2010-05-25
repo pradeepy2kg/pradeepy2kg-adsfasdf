@@ -28,18 +28,8 @@
             <s:select list="{'01','02','03'}" name=""/>
         </div>
         <div id="birth-confirmation-birth-place">
-            <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.childBirthDistrict"
-                                                                  list="districtList"
-                                                                  headerKey="0"
-                                                                  headerValue="-Select District-"/></s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.childBirthDistrict"
-                                                                  list="districtList"
-                                                                  headerKey="0"
-                                                                  headerValue="-දිස්ත්‍රික්කය තෝරන්න-"/></s:if>
-            <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.childBirthDistrict"
-                                                                  list="districtList"
-                                                                  headerKey="0"
-                                                                  headerValue="-In Tamil-"/></s:if>
+            <s:select name="birthRegister.childBirthDistrict" list="districtList" headerKey="0"
+                      headerValue="%{getText('select_district.label')}"/>
         </div>
 
         <div id="birth-confirmation-name"><s:textarea name="birthConfirm.childFullNameOfficialLang" cols="38"
