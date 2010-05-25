@@ -125,8 +125,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             //  the current submitting page)
             if ((originalValue != null) && (!(originalValue.equals("") ||
                     originalValue.equals("0") || originalValue.equals("0.0") ))) {
-                Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
-                descriptor.getWriteMethod().invoke(target, defaultValue);
+                descriptor.getWriteMethod().invoke(target, originalValue);
             } else {
                 logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
             }

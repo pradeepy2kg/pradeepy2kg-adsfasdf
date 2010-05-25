@@ -57,11 +57,11 @@ public class LoginBD {
      * Creates a simple hashtable to store information of the users.     *
      */
     private void createHashTable() {
-        users.put("ashoka", "ashoka,si_LK");
-        users.put("asanka", "asanka,si_LK");
-        users.put("duminda", "duminda,si_LK");
-        users.put("indunil", "indunil,si_LK");
-        users.put("amith", "amith,ta_LK");
-        users.put("chathuranga", "chathuranga,en_US");
+        users.put("ashoka", "ashoka,si");
+        users.put("asanka", "asanka,si");
+        users.put("duminda", "duminda,si");
+        users.put("indunil", "indunil,si");
+        users.put("amith", "amith,ta");
+        users.put("chathuranga", "chathuranga,en");
     }
 }

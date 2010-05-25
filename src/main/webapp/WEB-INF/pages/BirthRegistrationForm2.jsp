@@ -19,18 +19,16 @@
 
         <div id="father-passport-no"><s:textfield name="birthRegister.fatherForeignerPassportNo"/></div>
         <div id="father-country">
-            <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.fatherForeignerCountry"
-                                                                  list="countryList"
-                                                                  headerKey="0"
-                                                                  headerValue="-Select Country-"/></s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.fatherForeignerCountry"
-                                                                  list="countryList"
-                                                                  headerKey="0"
-                                                                  headerValue="-රට තෝරන්න-"/></s:if>
-            <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.fatherForeignerCountry"
-                                                                  list="countryList"
-                                                                  headerKey="0"
-                                                                  headerValue="-In Tamil-"/></s:if>
+            <s:select name="birthRegister.fatherForeignerCountry"list="countryList" headerKey="0"
+                      headerValue="%{getText('select_country.label')}"/>
+            <%--<s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.fatherForeignerCountry"--%>
+                                                                  <%--list="countryList"--%>
+                                                                  <%--headerKey="0"--%>
+                                                                  <%--headerValue="-රට තෝරන්න-"/></s:if>--%>
+            <%--<s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.fatherForeignerCountry"--%>
+                                                                  <%--list="countryList"--%>
+                                                                  <%--headerKey="0"--%>
+                                                                  <%--headerValue="-In Tamil-"/></s:if>--%>
         </div>
         <div id="father-name"><s:textfield name="birthRegister.fatherFullName"/></div>
         <div id="father-dob">

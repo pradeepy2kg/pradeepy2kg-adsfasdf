@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
 
@@ -29,7 +30,12 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
      */
     public String selectLanguage() {
         logger.debug("inside selectLanguage : {} passed.", language);
-        session.put(WebConstants.SESSION_USER_LANG, language);
+        String country = "LK";
+        if (language.equals("en")) {
+            country = "US";
+        }
+
+        session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
         session.put("page_title", "home");
         return "success";
     }
