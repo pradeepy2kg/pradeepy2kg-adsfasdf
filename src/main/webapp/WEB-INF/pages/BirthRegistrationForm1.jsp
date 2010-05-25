@@ -24,18 +24,16 @@
                               onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="district">
-            <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.childBirthDistrict"
-                                                                  list="districtList"
-                                                                  headerKey="0"
-                                                                  headerValue="-Select District-"/></s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.childBirthDistrict"
-                                                                  list="districtList"
-                                                                  headerKey="0"
-                                                                  headerValue="-දිස්ත්‍රික්කය තෝරන්න-"/></s:if>
-            <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.childBirthDistrict"
-                                                                  list="districtList"
-                                                                  headerKey="0"
-                                                                  headerValue="-In Tamil-"/></s:if>
+            <s:select name="birthRegister.childBirthDistrict" list="districtList" headerKey="0"
+                headerValue="%{getText('select_district.label')}"/>
+            <%--<s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.childBirthDistrict"--%>
+                                                                  <%--list="districtList"--%>
+                                                                  <%--headerKey="0"--%>
+                                                                  <%--headerValue="-දිස්ත්‍රික්කය තෝරන්න-"/></s:if>--%>
+            <%--<s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.childBirthDistrict"--%>
+                                                                  <%--list="districtList"--%>
+                                                                  <%--headerKey="0"--%>
+                                                                  <%--headerValue="-In Tamil-"/></s:if>--%>
         </div>
         <div id="division"><s:textfield name="birthRegister.childBirthDivision"/></div>
         <div id="place"><s:textfield name="birthRegister.childBirthPlace"/></div>

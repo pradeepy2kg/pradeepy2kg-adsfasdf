@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Locale;
 
 import lk.rgd.crs.web.util.LoginBD;
 import lk.rgd.crs.web.WebConstants;
@@ -25,18 +26,22 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     private LoginBD loginBD = new LoginBD();
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
-    private UserPreferencesAction userPreferencesAction = new UserPreferencesAction();
 
     /*
    *  User LoginAction of the EPR System.
    * */
     public String login() {
         if (loginBD.login(userName, password)) {
-            userPreferencesAction.setLanguage(loginBD.getLanguage(userName));
-            logger.debug("inside login : {} is prefered.", userPreferencesAction.getLanguage());
-            session.put(WebConstants.SESSION_USER_LANG, userPreferencesAction.getLanguage());
+            String language = loginBD.getLanguage(userName);
+            String country = "LK";
+            if (language.equals("en")) {
+                country = "US";
+            }
+
+            session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
             session.put(WebConstants.SESSION_USER_NAME, userName);
             session.put("page_title", "home");
+            logger.debug(" user {} logged in. language {}", userName, loginBD.getLanguage(userName));
             return "success";
         }
         return "error";
