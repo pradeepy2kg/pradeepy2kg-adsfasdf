@@ -54,7 +54,9 @@
         </div>
         <div id="body-content">
             <div id="body-content-title">
-                <tiles:insertAttribute name="title"/>
+                <div id="page-title">
+                    <tiles:getAsString name="title"/> 
+                </div>
             </div>
             <div id="body-content-data">
                 <tiles:insertAttribute name="body"/>
