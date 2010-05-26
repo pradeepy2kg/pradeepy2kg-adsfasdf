@@ -4,7 +4,7 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.service.BirthRegisterService;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.RaceDAO;
@@ -35,7 +35,7 @@ import java.beans.PropertyDescriptor;
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
-    private final BirthRegisterService service;
+    private final BirthRegistrationService service;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
@@ -59,7 +59,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public BirthRegisterAction(BirthRegisterService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
