@@ -12,6 +12,7 @@ import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
+import lk.rgd.common.api.domain.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -161,9 +162,10 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
 
-        districtList = districtDAO.getDistricts(language);
+        districtList = districtDAO.getDistricts(language, user);
         raceList = raceDao.getRaces(language);
 
         //todo temporary solution until use a method to show Map in UI

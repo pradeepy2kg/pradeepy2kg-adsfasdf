@@ -12,8 +12,11 @@ import java.util.Locale;
 import lk.rgd.crs.web.util.MasterDataLoad;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.PrintData;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.common.api.domain.User;
 
 /**
  * Printing actions
@@ -26,16 +29,18 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
+    private final BirthDeclarationDAO birthDeclarationDAO;
 
-    private List<PrintData> printList;
+    private List<BirthDeclaration> printList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
     private Map session;
     private String selectOption;
 
-    public PrintAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO) {
+    public PrintAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
     /**
@@ -49,16 +54,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
         if (selectOption != null) {
             if (selectOption.equals("Not Printed")) {
-                printList = masterDataLoad.getPrintList(WebConstants.VIEW_NOT_PRINTED);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
             } else if (selectOption.equals("Printed")) {
-//            session.remove("printStart");
-                printList = masterDataLoad.getPrintList(WebConstants.VIEW_PRINTED);
-            } else {
-//            session.remove("printStart");
-                printList = masterDataLoad.getPrintList(WebConstants.VIEW_ALL);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, true);
             }
-        } else {
-            printList = masterDataLoad.getPrintList(WebConstants.VIEW_ALL);
         }
 
         session.put("printList", printList);
@@ -66,6 +65,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
+    // todo some problems still there in UI
     public String nextPage() {
         Integer i = (Integer) session.get("printStart");
         Integer count = (Integer) session.get("printCount");
@@ -81,6 +81,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
+    // todo some problems still there in UI
     public String previousPage() {
         Integer i = (Integer) session.get("printStart");
         if (i != null && i != 0) {
@@ -96,16 +97,17 @@ public class PrintAction extends ActionSupport implements SessionAware {
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        districtList = districtDAO.getDistricts(language);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        districtList = districtDAO.getDistricts(language, user);
         //todo district id hardcoded for the moment
-        divisionList = bdDivisionDAO.getDivisions(language, 11);
+        divisionList = bdDivisionDAO.getDivisions(language, 11, user);
     }
 
-    public List<PrintData> getPrintList() {
+    public List<BirthDeclaration> getPrintList() {
         return printList;
     }
 
-    public void setPrintList(List<PrintData> printList) {
+    public void setPrintList(List<BirthDeclaration> printList) {
         this.printList = printList;
     }
 

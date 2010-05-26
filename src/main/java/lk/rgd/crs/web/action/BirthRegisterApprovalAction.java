@@ -14,6 +14,7 @@ import lk.rgd.crs.api.domain.BirthRegisterApproval;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.common.api.domain.User;
 
 
 /**
@@ -135,10 +136,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
 
-        divisionList = bdDivisionDAO.getDivisions(language, 11);
-        districtList = districtDAO.getDistricts(language);
+        divisionList = bdDivisionDAO.getDivisions(language, 11, user);
+        districtList = districtDAO.getDistricts(language, user);
         logger.debug("inside populte : districts , countries and races populated.");
     }
 

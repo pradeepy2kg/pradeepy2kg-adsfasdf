@@ -2,6 +2,7 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
 import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -25,7 +26,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getDivisions(String language, int districtId) {
+    public Map<Integer, String> getDivisions(String language, int districtId, User user) {
         Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
             result = siDivisions.get(districtId);
@@ -71,7 +72,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
             districtMap = taDivisions.get(districtId);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                taDivisions.put(districtId, districtMap);                
+                taDivisions.put(districtId, districtMap);
             }
             districtMap.put(r.getDivisionId(), r.getTaDivisionName());
         }
