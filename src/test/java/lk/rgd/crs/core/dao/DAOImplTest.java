@@ -110,7 +110,8 @@ public class DAOImplTest extends TestCase {
 
     public void testDistricts() throws Exception {
         DistrictDAO bean = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
-        Map<Integer, String> districts = bean.getDistricts(AppConstants.SINHALA);
+        // TODO User should be added
+        Map<Integer, String> districts = bean.getDistricts(AppConstants.SINHALA, null);
         Assert.assertEquals(3, districts.size());
         for (String d : districts.values()) {
             Assert.assertTrue(sinhalaDistricts.contains(d));
@@ -137,7 +138,8 @@ public class DAOImplTest extends TestCase {
 
     public void testBDDivisions() throws Exception {
         BDDivisionDAO bean = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
-        Map<Integer, String> bdDivisions = bean.getDivisions(AppConstants.SINHALA, 11);
+        // TODO User should be added
+        Map<Integer, String> bdDivisions = bean.getDivisions(AppConstants.SINHALA, 11, null);
         Assert.assertEquals(3, bdDivisions.size());
         for (String bd : bdDivisions.values()) {
             Assert.assertTrue(sinhalaBDDivisions.contains(bd));
@@ -151,11 +153,13 @@ public class DAOImplTest extends TestCase {
         try {
             user = bean.authenticateUser("asankha", "wrong");
             fail("Should fail for 'wrong' password");
-        } catch (AuthorizationException e) {}
+        } catch (AuthorizationException e) {
+        }
         try {
             user = bean.authenticateUser("asankha", null);
             fail("Should fail for null password");
-        } catch (AuthorizationException e) {}
+        } catch (AuthorizationException e) {
+        }
 
         RoleDAO role = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 

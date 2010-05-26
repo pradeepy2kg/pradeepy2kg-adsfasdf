@@ -10,7 +10,7 @@
                                                      headerValue="%{getText('select_district.label')}"/> </s:label>
             <s:label><span>Division:</span><s:select name="" list="divisionList" headerKey="0"
                                                      headerValue="%{getText('select_division.label')}"/></s:label>
-            <s:radio name="selectOption" list="{'All','Not Printed','Printed'}"/>
+            <s:radio name="selectOption" list="{'Not Printed','Printed'}"/>
             <s:submit value="View"></s:submit>
         </s:form>
     </div>
