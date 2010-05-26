@@ -6,14 +6,24 @@ package lk.rgd.crs.api.domain;
  * @author Chathuranga Withana
  */
 public class PrintData {
+    private int id;
     private String serial;
     private String name;
     private int status;
 
-    public PrintData(String serial, String name, int status) {
+    public PrintData(int id, String serial, String name, int status) {
+        this.id = id;
         this.serial = serial;
         this.name = name;
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSerial() {
