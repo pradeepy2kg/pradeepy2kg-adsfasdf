@@ -59,7 +59,8 @@
         <div id="body-content">
             <div id="body-content-title">
                 <div id="page-title">
-                    <tiles:getAsString name="title"/> 
+                    <tiles:importAttribute name="title" toName="title" scope="request"/>
+                    <s:label value="%{getText(#request.title)}"/>
                 </div>
             </div>
             <div id="body-content-data">
