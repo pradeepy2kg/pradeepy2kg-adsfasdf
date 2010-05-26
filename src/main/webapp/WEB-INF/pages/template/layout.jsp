@@ -1,4 +1,5 @@
 <%@ page import="lk.rgd.crs.web.WebConstants" %>
+<%@ page import="lk.rgd.common.api.domain.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -49,7 +50,7 @@
         <div id="body-sidebar">
             <tiles:insertAttribute name="menu"/>
             <br>
-            <%if (session.getAttribute(WebConstants.SESSION_USER_NAME) != null) { %>
+            <%if (((User)session.getAttribute(WebConstants.SESSION_USER_BEAN)).getUserName() != null) { %>
             <s:form action="eprLogout.do" method="POST" name="eprLogout">
                 <s:submit name="submit" value="logout"></s:submit>
             </s:form>
