@@ -37,15 +37,8 @@
         <div id="birth-confirmation-name-in-english"><s:textarea name="birthConfirm.childFullNameEnglish" cols="38"
                                                                  rows="5"/></div>
         <div id="birth-confirmation-gender">
-            <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
-                                                                 name="birthConfirm.childGender" headerKey="0"
-                                                                 headerValue="-Select Gender-"/> </s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
-                                                                  name="birthConfirm.childGender" headerKey="0"
-                                                                  headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
-            <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
-                                                                 name="birthConfirm.childGender" headerKey="0"
-                                                                 headerValue="-In Tamil-"/> </s:if>
+            <s:select list="#{'1':'Male','2':'Female','3':'Unknown'}" name="birthConfirm.childGender"
+                      headerKey="0" headerValue="-Select Gender-"/> 
         </div>
         <s:hidden name="pageNo" value="1"/>
         <div class="button"><s:submit type="submit" value="NEXT"/></div>
