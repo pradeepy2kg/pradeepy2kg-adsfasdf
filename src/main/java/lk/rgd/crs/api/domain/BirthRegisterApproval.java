@@ -5,7 +5,6 @@ import java.util.Date;
 
 /**
  * @author Duminda Dharmakeerthi.
- * @author Indunil Moremada
  */
 
 public class BirthRegisterApproval {

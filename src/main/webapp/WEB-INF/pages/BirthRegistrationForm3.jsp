@@ -1,14 +1,8 @@
 <%--
   @author duminda
 --%>
-<html>
-<head>
     <%@ taglib prefix="s" uri="/struts-tags" %>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <s:head theme="ajax"/>
-    <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
-</head>
-<body>
 <s:form action="eprBirthRegistration.do" method="post" name="birthRegistrationForm3">
     <div id="birth-registration-form-3-body">
         <div id="place-of-marriage"><s:textfield name="birthRegister.placeOfMarriage"/></div>
@@ -40,5 +34,3 @@
     <s:hidden name="birthRegister.parentsMarried" value="0"/>
     <div class="button"><s:submit value="NEXT"/></div>
 </s:form>
-</body>
-</html>

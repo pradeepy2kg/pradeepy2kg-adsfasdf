@@ -1,15 +1,9 @@
 <%--
   @author duminda
 --%>
-<html>
-<head>
     <%@ taglib prefix="s" uri="/struts-tags" %>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <s:head theme="ajax"/>
-    <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
-    <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
-</head>
-<body>
+
 <s:form action="eprBirthRegistration.do" method="POST" name="birthRegistrationForm1"
         onsubmit="javascript:return birthRegistrationValidator()">
     <div id="birth-registration-form-1-body">
@@ -58,5 +52,4 @@
     </div>
     <s:hidden name="pageNo" value="1"/>
     <div class="button"><s:submit value="NEXT"/></div>
-</s:form></body>
-</html>
+</s:form>
