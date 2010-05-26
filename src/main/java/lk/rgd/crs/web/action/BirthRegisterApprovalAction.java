@@ -14,6 +14,7 @@ import java.sql.Date;
 import lk.rgd.crs.api.domain.BirthRegisterApproval;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 
 
@@ -35,7 +36,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private Map<Integer, String> districtList;
     private Map session;
     private ArrayList<BirthRegisterApproval> birthRegisterApproval = new ArrayList();
-    private ArrayList<BirthRegisterApproval> birthRegisterApprovalExpired=new ArrayList();
+    private ArrayList<BirthRegisterApproval> birthRegisterApprovalExpired = new ArrayList();
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO) {
         this.districtDAO = districtDAO;
@@ -93,7 +94,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         logger.debug("inside populte : districts , countries and races populated.");
     }
 
-    public String getExpiredList(){
+    public String getExpiredList() {
 
         return "sucess";
     }

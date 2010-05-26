@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Locale;
 import java.beans.PropertyDescriptor;
 import java.beans.Introspector;
 import java.beans.BeanInfo;
@@ -159,7 +160,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      * Populate data to Birth Confirmation Forms
      */
     private void populate() {
-        String language = (String) session.get(WebConstants.SESSION_USER_LANG);
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate : {} observed.", language);
 
         districtList = districtDAO.getDistricts(language);

@@ -67,6 +67,7 @@
     <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
     <bean id="userDAOImpl" class="lk.rgd.common.core.dao.UserDAOImpl" />
     <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl" />
+    <bean id="birthDeclarationDAOImpl" class="lk.rgd.crs.core.dao.BirthDeclarationDAOImpl" />
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
@@ -96,5 +97,6 @@
     </bean>
     <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction">
         <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
     </bean>
 </beans>
