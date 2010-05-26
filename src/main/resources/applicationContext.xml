@@ -99,4 +99,8 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
     </bean>
+
+    <bean id="loginAction" class="lk.rgd.crs.web.action.LoginAction">
+        <constructor-arg ref="userManagerService"/>
+    </bean>
 </beans>

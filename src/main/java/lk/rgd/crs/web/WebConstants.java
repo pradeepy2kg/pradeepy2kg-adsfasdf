@@ -11,6 +11,7 @@ public class WebConstants {
     /** session related constant values */
     public static final String SESSION_USER_LANG="WW_TRANS_I18N_LOCALE";
     public static final String SESSION_USER_NAME = "user_name";
+    public static final String SESSION_USER_BEAN="user_bean";
 
     public static final String SESSION_BIRTH_REGISTER_BEAN = "birthRegister";
 

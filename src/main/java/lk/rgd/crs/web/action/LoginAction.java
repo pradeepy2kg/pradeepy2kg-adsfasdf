@@ -8,53 +8,66 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Locale;
 
-import lk.rgd.crs.web.util.LoginBD;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.AuthorizationException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: duminda
- * Date: May 20, 2010
- * Time: 11:37:24 AM
- * To change this template use File | Settings | File Templates.
+ * @author Indunil Moremada
+ *         action class which handles the login and logout actions
+ *         of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
 
     private String userName;
     private String password;
     private Map session;
-
-    private LoginBD loginBD = new LoginBD();
+    private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
-    /*
-   *  User LoginAction of the EPR System.
-   * */
+    public LoginAction(UserManager userManager) {
+        this.userManager = userManager;
+    }
+
+    /**
+     * Handles the login process of the EPR system
+     * if login is success user is redirected
+     * home page otherwise he is redirected to
+     * the login page
+     *
+     * @return String
+     */
     public String login() {
         logger.debug("detected useName : {} and password : {}", userName, password);
-        if (loginBD.login(userName, password)) {
-            String language = loginBD.getLanguage(userName);
+        try {
+            User user = userManager.authenticateUser(userName, password);
+            String language = user.getPrefLanguage();
             String country = "LK";
             if (language.equals("en")) {
                 country = "US";
             }
-
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
-            session.put(WebConstants.SESSION_USER_NAME, userName);
+            session.put(WebConstants.SESSION_USER_BEAN, user);
             session.put("page_title", "home");
             logger.debug(" user {} logged in. language {}", userName, language);
             return "success";
+        } catch (AuthorizationException e) {
+            logger.error("{} : {}", e.getMessage(), e);
+            return "error";
         }
-        return "error";
     }
 
     /**
-     * User Logout of the EPR System.
-     * */
-    public String logout(){
-        if(session.containsKey(WebConstants.SESSION_USER_NAME)){
-            logger.debug("Inside logout : {} is going to logout.", session.get(WebConstants.SESSION_USER_NAME).toString());
-            session.remove(WebConstants.SESSION_USER_NAME);
+     * logout action whch invalidate the session of
+     * the user
+     *
+     * @return String
+     */
+    public String logout() {
+        if (session.containsKey(WebConstants.SESSION_USER_BEAN)) {
+            logger.debug("Inside logout : {} is going to logout.", ((User)session.get(WebConstants.SESSION_USER_BEAN)).getUserName());
+            session.remove(WebConstants.SESSION_USER_BEAN);
             return "success";
         }
         return "error";

@@ -79,8 +79,10 @@
             <result type="tiles" name="error">epr.welcome</result>
         </action>
 
-		<action name="eprGetExpiredList" class="" method="getExpiredList">
+        <action name="eprGetExpiredList" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="getExpiredList">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
+            <result type="redirect-action" name="redirect" >eprBirthRegisterApproval</result>
         </action>
 
         <!--PrintAction related actions-->
