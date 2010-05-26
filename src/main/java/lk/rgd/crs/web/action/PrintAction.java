@@ -53,11 +53,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
         session.remove("printStart");
 
         if (selectOption != null) {
-            if (selectOption.equals("Not Printed")) {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
-            } else if (selectOption.equals("Printed")) {
+            if (selectOption.equals("Printed")) {
                 printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, true);
+            } else {
+                printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
             }
+        } else {
+            printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
         }
 
         session.put("printList", printList);
