@@ -8,9 +8,9 @@
     <div id="birth-register-approval-header">
         <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST">
             <s:label><span>District:</span><s:select name="" list="districtList" headerKey="0"
-                                                     headerValue="-Select District-"/> </s:label>
+                                                     headerValue="%{getText('select_district.label')}"/> </s:label>
             <s:label><span>Division:</span><s:select name="" list="divisionList" headerKey="0"
-                                                     headerValue="-Select Division-"/></s:label>
+                                                     headerValue="%{getText('select_division.label')}"/></s:label>
             <s:radio name="selectOption" list="{'All','Not Printed','Printed'}"/>
             <s:submit value="View"></s:submit>
         </s:form>

@@ -38,7 +38,7 @@
                                                                  rows="5"/></div>
         <div id="birth-confirmation-gender">
             <s:select list="#{'1':'Male','2':'Female','3':'Unknown'}" name="birthConfirm.childGender"
-                      headerKey="0" headerValue="-Select Gender-"/> 
+                      headerKey="0" headerValue="%{getText('select_gender.label')}"/> 
         </div>
         <s:hidden name="pageNo" value="1"/>
         <div class="button"><s:submit type="submit" value="NEXT"/></div>
