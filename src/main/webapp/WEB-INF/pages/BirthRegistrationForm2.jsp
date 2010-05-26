@@ -38,13 +38,13 @@
         <div id="father-race">
             <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
                                                                  name="birthConfirm.fatherRace" headerKey="0"
-                                                                 headerValue="-Select Gender-"/> </s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
+                                                                  headerValue="%{getText('select_gender.lable')}"/> </s:if>
+           <%-- <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
                                                                   name="birthConfirm.fatherRace" headerKey="0"
                                                                   headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
             <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
                                                                  name="birthConfirm.fatherRace" headerKey="0"
-                                                                 headerValue="-In Tamil-"/> </s:if>
+                                                                 headerValue="-In Tamil-"/> </s:if>    --%>
         </div>
         <div id="mother-nic-no"><s:textfield name="birthRegister.motherNICorPIN"/></div>
         <div id="mother-passport-no"><s:textfield name="birthRegister.motherPassportNo"/></div>
@@ -52,15 +52,15 @@
             <s:if test="#session.user_lang == 'en_US'"> <s:select name="birthRegister.motherCountry"
                                                                   list="countryList"
                                                                   headerKey="0"
-                                                                  headerValue="-Select Country-"/></s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.motherCountry"
+                                                                  headerValue="%{getText('select_country.label')}"/></s:if>
+            <%--<s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.motherCountry"
                                                                   list="countryList"
                                                                   headerKey="0"
                                                                   headerValue="-රට තෝරන්න-"/></s:if>
             <s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.motherCountry"
                                                                   list="countryList"
                                                                   headerKey="0"
-                                                                  headerValue="-In Tamil-"/></s:if>
+                                                                  headerValue="-In Tamil-"/></s:if>   --%>
         </div>
         <div id="mother-admision-no"><s:textfield name="birthRegister.motherAdmissionNoAndDate"/></div>
         <div id="mother-name"><s:textfield name="birthRegister.motherFullName"/></div>
@@ -79,13 +79,13 @@
         <div id="mother-race">
             <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
                                                                  name="birthConfirm.motherRace" headerKey="0"
-                                                                 headerValue="-Select Gender-"/> </s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
+                                                                 headerValue="%{getText('select_gender.lable')}"/> </s:if>
+           <%-- <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
                                                                   name="birthConfirm.motherRace" headerKey="0"
                                                                   headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
             <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
                                                                  name="birthConfirm.motherRace" headerKey="0"
-                                                                 headerValue="-In Tamil-"/> </s:if>
+                                                                 headerValue="-In Tamil-"/> </s:if>  --%>
         </div>
         <div id="mother-age-for-birth"><s:textfield name="birthRegister.motherAgeAtBirth" id="motherAgeAtBirth"/></div>
         <div id="mother-address"><s:textfield name="birthRegister.motherAddress"/></div>
