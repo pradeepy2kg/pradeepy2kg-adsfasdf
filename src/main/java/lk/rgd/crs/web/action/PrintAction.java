@@ -7,6 +7,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 
 import lk.rgd.crs.web.util.MasterDataLoad;
 import lk.rgd.crs.web.WebConstants;
@@ -94,7 +95,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * Populate District list and Division list
      */
     private void populate() {
-        String language = (String) session.get(WebConstants.SESSION_USER_LANG);
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         districtList = districtDAO.getDistricts(language);
         //todo district id hardcoded for the moment
         divisionList = bdDivisionDAO.getDivisions(language, 11);

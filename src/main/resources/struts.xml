@@ -84,9 +84,6 @@
         </action>
 
         <!--PrintAction related actions-->
-        <!--<action name="eprBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="viewPrintList">-->
-            <!--<result type="tiles" name="success">epr.birthConfirmationPrint</result>-->
-        <!--</action>-->
         <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="filterPrintList">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
