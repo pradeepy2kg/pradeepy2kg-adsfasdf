@@ -5,11 +5,11 @@
 <%@ taglib prefix="sx" uri="/struts-tags" %>
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
-        <s:form action="eprGetExpiredList.do" name="birth_register_approval_head" method="POST">
+        <s:form action="eprGetExpiredList" name="birth_register_approval_head" method="POST">
             <s:label><span>District:</span><s:select list="districtList" name="district"/></s:label>
             <s:label><span>Division:</span><s:select list="divisionList"
                                                      name="division" headerKey="0"/></s:label>
-            <s:label><span>Show Expired:</span><s:checkbox name="expired"></s:checkbox></s:label>
+            <s:label><span>Show Expired:</span><s:checkbox name="expired" /></s:label>
             <s:submit name="refresh" value="refresh"></s:submit>
         </s:form>
     </div>
@@ -25,8 +25,7 @@
                     <th>Received</th>
                     <th>Actions</th>
                 </tr>
-                
-                <s:iterator value="#session.ApprovelData" status="stat">
+                <s:iterator status="stat" value="#session.ApprovelData">
                     <tr class="<s:if test="%{actions=='Expired'}" >expired</s:if>">
                         <td><s:checkbox name="index"
                                         onclick="javascript:selectall('birth_register_approval_body')"/></td>
@@ -39,14 +38,14 @@
                 </s:iterator>
                 <tr></tr>
             </table>
-            <s:label><s:checkbox name="allCheck"
-                                 onclick="javascript:selectallMe('birth_register_approval_body')"/><span>Select All</span></s:label>
+            <s:label><span>Select All</span><s:checkbox name="allCheck"
+                                 onclick="javascript:selectallMe('birth_register_approval_body')"/></s:label>
             <br/>
             <s:property value="%{#session.ApprovelData.size}" /><s:label value=" Items found , displaying 1 to " />
             <s:property value="%{#session.ApprovelData.size}" /><s:a href="#" name="next" > Next</s:a>
 
-            <br/>
-            <s:submit name="approve" value="approve"/>
+            <br/><br/>
+            <s:submit name="approve" value="Approve"/>
         </s:form>
     </div>
     <div id="birth-register-approval-footer">
