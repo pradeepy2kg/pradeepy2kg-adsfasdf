@@ -34,15 +34,8 @@
         <div id="name"><s:textfield name="birthRegister.childFullNameOfficialLang"/></div>
         <div id="name-in-english"><s:textfield name="birthRegister.childFullNameEnglish"/></div>
         <div id="gender">
-            <s:if test="#session.user_lang == 'en_US'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
-                                                                 name="" headerKey="0"
-                                                                 headerValue="-Select Gender-"/> </s:if>
-            <s:if test="#session.user_lang == 'si_LK'"> <s:select list="#{'1':'පිරිමි','2':'ගැහැණු','3':'නොදනී'}"
-                                                                  name="" headerKey="0"
-                                                                  headerValue="-ලිංගභේදය තෝරන්න-"/></s:if>
-            <s:if test="#session.user_lang == 'ta_LK'"><s:select list="#{'1':'Male','2':'Female','3':'Unknown'}"
-                                                                 name="" headerKey="0"
-                                                                 headerValue="-In Tamil-"/> </s:if>
+            <s:select list="#{'1':getText('male.label'),'2':getText('female.label'),
+                '3':getText('unknown.label')}" name="" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
         </div>
         <div id="birth-weight"><s:textfield name="birthRegister.childBirthWeight" id="childBirthWeight"/></div>
         <div id="no-of-children"><s:textfield name="birthRegister.childRank" id="noOfLiveChildren"/></div>
