@@ -26,7 +26,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
-        private final DistrictDAO districtDAO;
+    private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private Map<Integer, String> divisionList;
     private Map<Integer, String> districtList;
@@ -124,7 +124,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public String birthRegisterApproval() {
         populate();
-        
+
         session.put("ApprovelData", birthRegisterApproval);
         session.put("page_title", "birth register approval");
         return "pageLoad";
@@ -148,24 +148,23 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * for further usage
      *
      * @return success is returned if expired checkbox
-     * is selected by the user else redirect is returned
-     * redirect causes to redirect the action to the
-     * birthRegisterApproval() action
+     *         is selected by the user else redirect is returned
+     *         redirect causes to redirect the action to the
+     *         birthRegisterApproval() action
      */
     public String getExpiredList() {
         populate();
-        if(isExpired()){
-        birthRegisterApproval = (ArrayList<BirthRegisterApproval>) session.get("ApprovelData");
-        for (BirthRegisterApproval bra : birthRegisterApproval) {
-            if(bra.getActions().equals("Expired")){
-                birthRegisterApprovalExpired.add(bra);
+        if (isExpired()) {
+            birthRegisterApproval = (ArrayList<BirthRegisterApproval>) session.get("ApprovelData");
+            for (BirthRegisterApproval bra : birthRegisterApproval) {
+                if (bra.getActions().equals("Expired")) {
+                    birthRegisterApprovalExpired.add(bra);
+                }
             }
-        }
-        session.put("ApprovelData",birthRegisterApprovalExpired);
-        return "success";
-        }
-        else{
-           birthRegisterApproval();
+            session.put("ApprovelData", birthRegisterApprovalExpired);
+            return "success";
+        } else {
+            birthRegisterApproval();
             return "redirect";
         }
     }
