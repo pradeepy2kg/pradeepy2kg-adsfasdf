@@ -2,6 +2,7 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.AppConstants;
 import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.domain.District;
@@ -25,7 +26,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getDistricts(String language) {
+    public Map<Integer, String> getDistricts(String language, User user) {
         if (AppConstants.SINHALA.equals(language)) {
             return siDistricts;
         } else if (AppConstants.ENGLISH.equals(language)) {

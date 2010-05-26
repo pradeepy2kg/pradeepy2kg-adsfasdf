@@ -72,8 +72,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.setBirthDistrict(11);
             bdf.setBirthDivision(1);
             bdf.setBdfSerialNo("A112");
-            bdf.setChildFullNameEnglish("Baby A112 name in English");
-            bdf.setChildFullNameOfficialLang("A112 බබාගේ නම සිංහලෙන්");
+            bdf.setChildFullNameEnglish("Amith Sampath Jayasekara");
+            bdf.setChildFullNameOfficialLang("අමිත් සමිපත් ජයසේකර");
             bdf.setDateOfBirth(dfm.parse("2010-02-26"));
             bdf.setDateOfRegistration(dfm.parse("2010-03-01"));
             bdf.setChildGender(AppConstants.GENDER_FEMALE);
@@ -108,13 +108,14 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.setBirthDistrict(11);
             bdf.setBirthDivision(1);
             bdf.setBdfSerialNo("A115");
-            bdf.setChildFullNameEnglish("Baby A115 name in English");
-            bdf.setChildFullNameOfficialLang("A115 බබාගේ නම සිංහලෙන්");
+            bdf.setChildFullNameEnglish("Chathuranaga Gihan Chandimal Withana");
+            bdf.setChildFullNameOfficialLang("චතුරංග ගිහාන් චන්දිමාල් විතාන");
             bdf.setDateOfBirth(dfm.parse("2010-02-21"));
             bdf.setDateOfRegistration(dfm.parse("2010-02-22"));
             bdf.setChildGender(AppConstants.GENDER_MALE);
             bdf.setStatus(2);
             dao.addBirthDeclaration(bdf);
+            
         } catch (Exception e) {
             logger.warn("Error populating database with sample BDFs");
         }

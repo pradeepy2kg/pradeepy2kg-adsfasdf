@@ -10,6 +10,7 @@ import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.EPopDate;
+import lk.rgd.common.api.domain.User;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -125,7 +126,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             // values in the session with empty form values, b'cos the form has proper values only for
             //  the current submitting page)
             if ((originalValue != null) && (!(originalValue.equals("") ||
-                    originalValue.equals("0") || originalValue.equals("0.0") ))) {
+                    originalValue.equals("0") || originalValue.equals("0.0")))) {
                 descriptor.getWriteMethod().invoke(target, originalValue);
             } else {
                 logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
@@ -136,7 +137,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error("{} : {}", e.getMessage(),e);
+        logger.error("{} : {}", e.getMessage(), e);
         //todo pass the error to the error.jsp page
     }
 
@@ -169,9 +170,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
 
-        districtList = districtDAO.getDistricts(language);
+        districtList = districtDAO.getDistricts(language, user);
         countryList = countryDAO.getCountries(language);
         raceList = raceDAO.getRaces(language);
 

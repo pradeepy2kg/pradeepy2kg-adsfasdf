@@ -3,7 +3,6 @@
 <%@ page import="lk.rgd.crs.api.domain.PrintData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%--<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>--%>
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
         <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST">
@@ -23,6 +22,8 @@
                     <th>Item</th>
                     <th>Serial</th>
                     <th>Name</th>
+                        <%--TODO add registration/printed date--%>
+                    <th>Registered Date</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -36,16 +37,17 @@
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                             <td><s:property value="%{#printStatus.count+#session.printStart}"/></td>
                             <td><s:checkbox name="index_" onclick="javascript:selectall()"/></td>
-                            <td align=" center"><s:property value="serial"/></td>
-                            <td><s:property value="name"/></td>
+                            <td align=" center"><s:property value="bdfSerialNo"/></td>
+                            <td><s:property value="childFullNameOfficialLang"/></td>
+                            <td><s:property value="dateOfRegistration"/></td>
                             <td align="right">
-                                <s:if test="status==0"><s:label value="Not Printed"/></s:if>
+                                <s:if test="confirmationPrinted"><s:label value="Not Printed"/></s:if>
                                 <s:else><s:label value="Already printed"/></s:else>
                             </td>
                             <td align="right">
                                 <s:submit value="Print"/>
                             </td>
-                        </tr>                          
+                        </tr>
                         <s:set name="printCount" value="#printStatus.count" scope="session"/>
                     </s:iterator>
                 </s:subset>
