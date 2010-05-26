@@ -1,7 +1,5 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.crs.web.util.EPopDate;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,12 +8,25 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "birth_register")
+@NamedQueries({
+    @NamedQuery(name = "confirmation.print.pending", query =
+            "SELECT bdf FROM BirthDeclaration bdf " +
+            "WHERE bdf.birthDistrict = :birthDistrict and bdf.birthDivision = :birthDivision and bdf.status = 1 " +
+            "ORDER BY bdf.dateOfRegistration desc"),
+
+    @NamedQuery(name = "confirmation.printed.and.pending", query =
+            "SELECT bdf FROM BirthDeclaration bdf " +
+            "WHERE bdf.birthDistrict = :birthDistrict and bdf.birthDivision = :birthDivision " +
+            "and (bdf.status = 1 or bdf.status = 2) " +
+            "ORDER BY bdf.dateOfRegistration desc")
+})
 public class BirthDeclaration {
 
     /**
      * This is an auto generated unique row identifier
      */
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
     /** The district code where the birth is registered */
@@ -52,8 +63,10 @@ public class BirthDeclaration {
     private int childRank;
     /** Number of children born along with the child being registered */
     private int numberOfChildrenBorn;
-    /** Hospial or GN code */
-    private String hospitalOrGNCode;
+    /** Hospial code */
+    private String hospitalCode;
+    /** Grama Niladhari code */
+    private String gnCode;
 
     //----------------------------------------------------
     /** NIC or PIN of father */
@@ -110,7 +123,7 @@ public class BirthDeclaration {
     //-----------------------------------------------------
     // If grandfather of the child born in Sri Lanka, grandfather's details
     private String grandFatherFullName;
-    private String grandFatherBirthYear;
+    private int grandFatherBirthYear;
     private String grandFatherBirthPlace;
     //-----------------------------------------------------
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
@@ -119,7 +132,7 @@ public class BirthDeclaration {
     private String greatGrandFatherBirthPlace;
     //-----------------------------------------------------
     /** 0 - father, 1 - mother, 2 - guardian */
-    private String informantType;
+    private int informantType;
     private String informantName;
     private String informantNICorPIN;
     private String informantAddress;
@@ -157,8 +170,8 @@ public class BirthDeclaration {
 
     /** The date of issue for the original birth certificate - free copy */
     private Date   originalBCDateOfIssue;
-    /** The place of issue for the original birth certificate - free copy */
-    private Date   originalBCPlaceOfIssue;
+    /** The place of issue for the original birth certificate - free copy (Stores the DS Division ID) */
+    private int   originalBCPlaceOfIssue;
 
     public int getBirthDistrict() {
         return birthDistrict;
@@ -270,14 +283,6 @@ public class BirthDeclaration {
 
     public void setNumberOfChildrenBorn(int numberOfChildrenBorn) {
         this.numberOfChildrenBorn = numberOfChildrenBorn;
-    }
-
-    public String getHospitalOrGNCode() {
-        return hospitalOrGNCode;
-    }
-
-    public void setHospitalOrGNCode(String hospitalOrGNCode) {
-        this.hospitalOrGNCode = hospitalOrGNCode;
     }
 
     public String getFatherNICorPIN() {
@@ -480,11 +485,11 @@ public class BirthDeclaration {
         this.grandFatherFullName = grandFatherFullName;
     }
 
-    public String getGrandFatherBirthYear() {
+    public int getGrandFatherBirthYear() {
         return grandFatherBirthYear;
     }
 
-    public void setGrandFatherBirthYear(String grandFatherBirthYear) {
+    public void setGrandFatherBirthYear(int grandFatherBirthYear) {
         this.grandFatherBirthYear = grandFatherBirthYear;
     }
 
@@ -520,11 +525,11 @@ public class BirthDeclaration {
         this.greatGrandFatherBirthPlace = greatGrandFatherBirthPlace;
     }
 
-    public String getInformantType() {
+    public int getInformantType() {
         return informantType;
     }
 
-    public void setInformantType(String informantType) {
+    public void setInformantType(int informantType) {
         this.informantType = informantType;
     }
 
@@ -672,11 +677,35 @@ public class BirthDeclaration {
         this.originalBCDateOfIssue = originalBCDateOfIssue;
     }
 
-    public Date getOriginalBCPlaceOfIssue() {
+    public int getOriginalBCPlaceOfIssue() {
         return originalBCPlaceOfIssue;
     }
 
-    public void setOriginalBCPlaceOfIssue(Date originalBCPlaceOfIssue) {
+    public void setOriginalBCPlaceOfIssue(int originalBCPlaceOfIssue) {
         this.originalBCPlaceOfIssue = originalBCPlaceOfIssue;
+    }
+
+    public String getHospitalCode() {
+        return hospitalCode;
+    }
+
+    public void setHospitalCode(String hospitalCode) {
+        this.hospitalCode = hospitalCode;
+    }
+
+    public String getGnCode() {
+        return gnCode;
+    }
+
+    public void setGnCode(String gnCode) {
+        this.gnCode = gnCode;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

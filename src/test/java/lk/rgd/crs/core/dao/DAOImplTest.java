@@ -13,6 +13,7 @@ import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.*;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.Country;
 import lk.rgd.crs.api.domain.District;
 import lk.rgd.crs.api.domain.Race;
@@ -23,6 +24,8 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +39,8 @@ import java.util.Set;
 public class DAOImplTest extends TestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(DAOImplTest.class);
+    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+
     private static GenericApplicationContext ctx = null;
 
     private static Set<String> sinhalaDistricts = new HashSet<String>();
@@ -167,5 +172,15 @@ public class DAOImplTest extends TestCase {
         Assert.assertFalse(user.getRoles().contains(role.getRole("DEO")));
         Assert.assertTrue(user.isAuthorized(Permission.APPROVE_BDF));
         Assert.assertFalse(user.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
+    }
+
+    public void testBirthDeclaration() throws Exception {
+        BirthDeclarationDAO dao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+
+        List<BirthDeclaration> r = dao.getConfirmationPrintPending(11, 1, false);
+        Assert.assertEquals(2, r.size());
+
+        r = dao.getConfirmationPrintPending(11, 1, true);
+        Assert.assertEquals(3, r.size());
     }
 }

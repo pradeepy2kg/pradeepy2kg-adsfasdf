@@ -1,8 +1,11 @@
 package lk.rgd.crs.core;
 
+import lk.rgd.AppConstants;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.Role;
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -13,6 +16,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
 import javax.sql.DataSource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.BitSet;
 
 /**
@@ -23,6 +28,7 @@ import java.util.BitSet;
 public class DatabaseInitializer implements ApplicationContextAware {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
+    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     private DataSource dataSource;
 
@@ -35,6 +41,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             new ClassPathResource("test_database.sql"), false);
         logger.info("Initialized the test database by executing test_database.sql");
 
+        // ---------------- populate permissions ---------------------
         RoleDAO roleDao = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
         Role adrRole = roleDao.getRole("ADR");
@@ -56,5 +63,60 @@ public class DatabaseInitializer implements ApplicationContextAware {
         bs.set(Permission.DISTRICT_WIDE_ACCESS);
         rgRole.setPermBitSet(bs);
         roleDao.save(rgRole);
+
+        // ---------------- populate sample BDFs ---------------------
+        BirthDeclarationDAO dao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+        try {
+
+            BirthDeclaration bdf = new BirthDeclaration();
+            bdf.setBirthDistrict(11);
+            bdf.setBirthDivision(1);
+            bdf.setBdfSerialNo("A112");
+            bdf.setChildFullNameEnglish("Baby A112 name in English");
+            bdf.setChildFullNameOfficialLang("A112 බබාගේ නම සිංහලෙන්");
+            bdf.setDateOfBirth(dfm.parse("2010-02-26"));
+            bdf.setDateOfRegistration(dfm.parse("2010-03-01"));
+            bdf.setChildGender(AppConstants.GENDER_FEMALE);
+            bdf.setStatus(1);
+            dao.addBirthDeclaration(bdf);
+
+            bdf = new BirthDeclaration();
+            bdf.setBirthDistrict(11);
+            bdf.setBirthDivision(1);
+            bdf.setBdfSerialNo("A113");
+            bdf.setChildFullNameEnglish("Baby A113 name in English");
+            bdf.setChildFullNameOfficialLang("A113 බබාගේ නම සිංහලෙන්");
+            bdf.setDateOfBirth(dfm.parse("2010-02-23"));
+            bdf.setDateOfRegistration(dfm.parse("2010-03-02"));
+            bdf.setChildGender(AppConstants.GENDER_MALE);
+            bdf.setStatus(1);
+            dao.addBirthDeclaration(bdf);
+
+            bdf = new BirthDeclaration();
+            bdf.setBirthDistrict(11);
+            bdf.setBirthDivision(1);
+            bdf.setBdfSerialNo("A114");
+            bdf.setChildFullNameEnglish("Baby A114 name in English");
+            bdf.setChildFullNameOfficialLang("A114 බබාගේ නම සිංහලෙන්");
+            bdf.setDateOfBirth(dfm.parse("2010-01-12"));
+            bdf.setDateOfRegistration(dfm.parse("2010-02-01"));
+            bdf.setChildGender(AppConstants.GENDER_MALE);
+            bdf.setStatus(5);
+            dao.addBirthDeclaration(bdf);
+
+            bdf = new BirthDeclaration();
+            bdf.setBirthDistrict(11);
+            bdf.setBirthDivision(1);
+            bdf.setBdfSerialNo("A115");
+            bdf.setChildFullNameEnglish("Baby A115 name in English");
+            bdf.setChildFullNameOfficialLang("A115 බබාගේ නම සිංහලෙන්");
+            bdf.setDateOfBirth(dfm.parse("2010-02-21"));
+            bdf.setDateOfRegistration(dfm.parse("2010-02-22"));
+            bdf.setChildGender(AppConstants.GENDER_MALE);
+            bdf.setStatus(2);
+            dao.addBirthDeclaration(bdf);
+        } catch (Exception e) {
+            logger.warn("Error populating database with sample BDFs");
+        }
     }
 }

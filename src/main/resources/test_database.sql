@@ -125,3 +125,84 @@ INSERT INTO USER_ROLES VALUES('duminda', 'ADR');
 INSERT INTO USER_ROLES VALUES('indunil', 'ADR');
 INSERT INTO USER_ROLES VALUES('amith', 'ADR');
 INSERT INTO USER_ROLES VALUES('chathuranga', 'ADR');
+
+CREATE TABLE BIRTH_REGISTER (
+    id                      BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY,
+    birthDistrict           INTEGER NOT NULL,
+    birthDivision           INTEGER NOT NULL,
+    bdfSerialNo             VARCHAR(10) NOT NULL,
+    dateOfBirth             DATE,
+    dateOfRegistration      DATE,
+    status                  INTEGER NOT NULL WITH DEFAULT 0,
+    comments                VARCHAR(60),
+    placeOfBirth            VARCHAR(60),
+    childFullNameOfficialLang VARCHAR(600),
+    childFullNameEnglish    VARCHAR(600),
+    childGender             INTEGER NOT NULL,
+    childBirthWeight        FLOAT,
+    childRank               INTEGER,
+    numberOfChildrenBorn    INTEGER,
+    hospitalCode            VARCHAR(10),
+    gnCode                  VARCHAR(10),
+
+    fatherNICorPIN          VARCHAR(10),
+    fatherPassportNo        VARCHAR(10),
+    fatherCountry           VARCHAR(2),
+    fatherFullName          VARCHAR(600),
+    fatherDOB               DATE,
+    fatherPlaceOfBirth      VARCHAR(80),
+    fatherRace              INTEGER,
+
+    motherNICorPIN          VARCHAR(10),
+    motherPassportNo        VARCHAR(10),
+    motherCountry           VARCHAR(2),
+    motherAdmissionNoAndDate VARCHAR(20),
+    motherFullName          VARCHAR(600),
+    motherDOB               DATE,
+    motherPlaceOfBirth      VARCHAR(80),
+    motherRace              INTEGER,
+    motherAgeAtBirth        INTEGER,
+    motherAddress           VARCHAR(300),
+    motherPhoneNo           VARCHAR(20),
+    motherEmail             VARCHAR(20),
+
+    parentsMarried          INTEGER,
+    placeOfMarriage         VARCHAR(80),
+    dateOfMarriage          DATE,
+    motherSigned            INTEGER,
+    fatherSigned            INTEGER,
+
+    grandFatherFullName     VARCHAR(600),
+    grandFatherBirthYear    INTEGER,
+    grandFatherBirthPlace   VARCHAR(80),
+    greatGrandFatherFullName   VARCHAR(600),
+    greatGrandFatherBirthYear  INTEGER,
+    greatGrandFatherBirthPlace VARCHAR(80),
+
+    informantType           INTEGER,
+    informantName           VARCHAR(600),
+    informantNICorPIN       VARCHAR(10),
+    informantAddress        VARCHAR(300),
+    informantPhoneNo        VARCHAR(20),
+    informantEmail          VARCHAR(20),
+    informantSignDate       DATE,
+
+    notifyingAuthorityPIN   VARCHAR(10),
+    notifyingAuthorityName  VARCHAR(80),
+    approvePIN              VARCHAR(10),
+    approveDate             DATE,
+
+    confirmationSerialNumber VARCHAR(10),
+    confirmationPrinted     INTEGER,
+    lastDateForConfirmation DATE,
+    confirmantNICorPIN      VARCHAR(10),
+    confirmantFullName      VARCHAR(600),
+    confirmantSignDate      DATE,
+    confirmationReceiveDate DATE,
+    originalBCDateOfIssue   DATE,
+    originalBCPlaceOfIssue  INTEGER,
+    PRIMARY KEY(ID)
+);
+
+ALTER TABLE BIRTH_REGISTER ADD CONSTRAINT C_UNIQUE UNIQUE (birthDistrict, birthDivision, bdfSerialNo, status);
+
