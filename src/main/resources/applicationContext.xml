@@ -92,6 +92,7 @@
     </bean>
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.PrintAction">
         <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
     </bean>
     <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction">
         <constructor-arg ref="districtDAOImpl"/>

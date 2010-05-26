@@ -100,3 +100,16 @@
 #birth-register-approval-header{width:100%; height:40px;}
 
 .expired{background-color:gold;}
+
+/*Styles for BirthConfirmPrint page*/
+/*Used to high light printed rows*/
+.alreadyPrinted{
+    background-color:lightcoral;
+}
+/*To change background color of table, odd and even rows*/
+.odd{
+    background-color:lavender;
+}
+.even{
+    background-color:lightblue;
+}

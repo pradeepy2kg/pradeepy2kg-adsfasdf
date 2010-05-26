@@ -18,4 +18,7 @@ public class WebConstants {
     public static final String RETURN_TYPE_SUCCESS = "success";
     public static final String DATEFORMAT = "yyyy-MM-dd";
 
+    public static final int VIEW_ALL=1;
+    public static final int VIEW_NOT_PRINTED=2;
+    public static final int VIEW_PRINTED=3;
 }

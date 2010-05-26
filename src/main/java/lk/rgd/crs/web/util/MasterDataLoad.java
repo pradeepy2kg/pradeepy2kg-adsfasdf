@@ -114,15 +114,55 @@ public class MasterDataLoad {
      *
      * @return
      */
-    public List<PrintData> getPrintList() {
+    public List<PrintData> getPrintList(int i) {
         List<PrintData> printList = new ArrayList<PrintData>();
 
-        printList.add(new PrintData("BC001", "Chathuranga", 1));
-        printList.add(new PrintData("BC002", "Amith", 1));
-        printList.add(new PrintData("BC003", "Indunil", 1));
-        printList.add(new PrintData("BC004", "Duminda", 1));
-        printList.add(new PrintData("BC005", "Sunil", 1));
-
+        if (i == 1) {
+            printList.add(new PrintData(1, "BC001", "Chathuranga", 0));
+            printList.add(new PrintData(2, "BC002", "Amith", 0));
+            printList.add(new PrintData(3, "BC003", "Indunil", 0));
+            printList.add(new PrintData(4, "BC004", "Duminda", 0));
+            printList.add(new PrintData(5, "BC005", "Sunil", 0));
+            printList.add(new PrintData(6, "BC006", "Tharanga", 0));
+            printList.add(new PrintData(7, "BC007", "Mahesh", 1));
+            printList.add(new PrintData(8, "BC008", "Chathuranga", 1));
+            printList.add(new PrintData(9, "BC009", "Amith", 0));
+            printList.add(new PrintData(10, "BC010", "Indunil", 0));
+            printList.add(new PrintData(11, "BC011", "Yasas", 1));
+            printList.add(new PrintData(12, "BC012", "Dilan", 0));
+            printList.add(new PrintData(13, "BC013", "Udara", 0));
+            printList.add(new PrintData(14, "BC014", "Mahinda", 0));
+            printList.add(new PrintData(15, "BC015", "Chathuranga", 0));
+            printList.add(new PrintData(16, "BC016", "Amith", 0));
+            printList.add(new PrintData(17, "BC017", "Indunil", 0));
+            printList.add(new PrintData(18, "BC018", "Duminda", 0));
+            printList.add(new PrintData(19, "BC019", "Sunil", 0));
+            printList.add(new PrintData(20, "BC020", "Tharanga", 0));
+            printList.add(new PrintData(21, "BC021", "Mahesh", 1));
+            printList.add(new PrintData(22, "BC022", "Chathuranga", 1));
+            printList.add(new PrintData(23, "BC023", "Amith", 0));
+            printList.add(new PrintData(24, "BC024", "Indunil", 0));
+            printList.add(new PrintData(25, "BC025", "Yasas", 1));
+            printList.add(new PrintData(26, "BC026", "Dilan", 0));
+            printList.add(new PrintData(27, "BC027", "Udara", 0));
+            printList.add(new PrintData(28, "BC028", "Mahinda", 0));
+        } else if (i == 2) {
+            printList.add(new PrintData(1, "BC001", "Chathuranga", 0));
+            printList.add(new PrintData(2, "BC002", "Amith", 0));
+            printList.add(new PrintData(3, "BC003", "Indunil", 0));
+            printList.add(new PrintData(4, "BC004", "Duminda", 0));
+            printList.add(new PrintData(5, "BC005", "Sunil", 0));
+            printList.add(new PrintData(6, "BC006", "Tharanga", 0));
+            printList.add(new PrintData(9, "BC009", "Amith", 0));
+            printList.add(new PrintData(10, "BC010", "Indunil", 0));
+            printList.add(new PrintData(12, "BC012", "Dilan", 0));
+            printList.add(new PrintData(13, "BC013", "Udara", 0));
+            printList.add(new PrintData(14, "BC014", "Mahinda", 0));
+        } else {
+            printList.add(new PrintData(7, "BC007", "Mahesh", 1));
+            printList.add(new PrintData(8, "BC008", "Chathuranga", 1));
+            printList.add(new PrintData(11, "BC011", "Yasas", 1));
+        }
         return printList;
     }
 }
