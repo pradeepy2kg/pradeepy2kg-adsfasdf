@@ -3,65 +3,58 @@
  * when clicking on one check box  */
 
 
-/**
- * fieldName is the name of the dynamicaly growing checkboxes
- */
 var fieldName = 'index';
-/**
- * @param frm   is the form name of the check box containing jsp
- */
-function selectall(frm) {
-    var frm1 = document.getElementById(frm);
-    var i = frm1.elements.length;
-    var e = document.frm.elements;
+
+function selectall(form, allCheck) {
+    var e = form.elements;
     var name = new Array();
     var value = new Array();
     var j = 0;
     for (var k = 0; k < i; k++)
     {
-        if (frm1.elements[k].name == fieldName)
+        if (form.elements[k].name == fieldName)
         {
-            if (frm1.elements[k].checked == true) {
-                value[j] = frm1.elements[k].value;
+            if (form.elements[k].checked == true) {
+                value[j] = form.elements[k].value;
                 j++;
             }
         }
     }
-    checkSelect(frm);
+    checkSelect(form, allCheck);
 }
-function selectCheck(obj, frm)
-{   var frm1=document.getElementById(frm);
-    var i = frm1.elements.length;
+function selectCheck(obj, form, allCheck)
+{
+    var i = form.elements.length;
     for (var k = 0; k < i; k++)
     {
-        if (frm1.elements[k].name == fieldName)
+        if (form.elements[k].name == fieldName)
         {
-            frm1.elements[k].checked = obj;
+            form.elements[k].checked = obj;
         }
     }
-    selectall(frm);
+    selectall(form, allCheck);
 }
 
-function selectallMe(frm)
-{   frm1=document.getElementById(frm);
-    if (frm1.allCheck.checked == true)
+function selectallMe(form, allCheck)
+{
+    if (allCheck.checked == true)
     {
-        selectCheck(true,frm);
+        selectCheck(true, form, allCheck);
     }
     else
     {
-        selectCheck(false,frm);
+        selectCheck(false, form);
     }
 }
-function checkSelect(frm)
-{   frm1=document.getElementById(frm);
-    var i = frm1.elements.length;
+function checkSelect(form, allCheck)
+{
+    var i = form.elements.length;
     var berror = true;
     for (var k = 0; k < i; k++)
     {
-        if (frm1.elements[k].name == fieldName)
+        if (form.elements[k].name == fieldName)
         {
-            if (frm1.elements[k].checked == false)
+            if (form.elements[k].checked == false)
             {
                 berror = false;
                 break;
@@ -70,12 +63,12 @@ function checkSelect(frm)
     }
     if (berror == false)
     {
-        frm1.allCheck.checked = false;
+        alert("hello");
+        document.birth_register_approval_body.allCheck.checked = false;//allCheck.checked = false;
     }
     else
     {
-        frm1.allCheck.checked = true;
+        alert("hello1");
+        document.birth_register_approval_body.allCheck.checked = true;
     }
 }
-
-
