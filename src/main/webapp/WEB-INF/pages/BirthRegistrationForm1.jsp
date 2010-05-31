@@ -18,12 +18,12 @@
             </div>
             <div id="serial-no">
                 <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
-                    <s:textfield name="birthRegister.bdfSerialNo"/>
+                    <s:textfield name="child.bdfSerialNo"/>
                 </label>
             </div>
             <div id="submit-date">
                 <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span>
-                    <s:textfield name=""/>
+                    <s:textfield name="child.dateOfRegistration"/>
                 </label>
             </div>
             <div id="birth-registration-form-header-info" class="font-9">
@@ -71,7 +71,7 @@
                 <div>
                     <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
                 </div>
-                <s:datetimepicker id="datePicker" name="birthRegister.childDOB" label="Format (yyyy-MM-dd)"
+                <s:datetimepicker id="datePicker" name="child.dateOfBirth" label="Format (yyyy-MM-dd)"
                                   displayFormat="yyyy-MM-dd" value="2010-05-27"
                                   onmouseover="javascript:splitDate('datePicker')"/>
             </div>
@@ -86,7 +86,7 @@
                         <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
                     </div>
                     <div>
-                        <s:select name="birthRegister.childBirthDistrict" list="districtList" headerKey="0"
+                        <s:select name="child.birthDistrict" list="districtList" headerKey="0"
                                   headerValue="%{getText('select_district.label')}"/>
                     </div>
                 </div>
@@ -97,8 +97,8 @@
                         <label>කොට්ඨාශය பிரிவு Division</label>
                     </div>
                     <div>
-                        <s:select name="birthRegister.childBirthDistrict" list="districtList" headerKey="0"
-                                  headerValue="%{getText('select_district.label')}"/>
+                        <s:select name="child.birthDivision" list="divisionList" headerKey="0"
+                                  headerValue="%{getText('select_division.label')}"/>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                         <label>ස්ථානය பிறந்த இடம் Place</label>
                     </div>
                     <div>
-                        <s:textfield name="birthRegister.placeOfBirth"/>
+                        <s:textfield name="child.placeOfBirth"/>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                             இலக்கம்<br>Hospital Code or GN area code</label>
                     </div>
                     <div>
-                        <s:textfield name="birthRegister.hospitalOrGNCode"/>
+                        <s:textfield name="child.hospitalOrGNCode"/>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                     in any of the official languages (Sinhala / Tamil)</label>
             </div>
             <div>
-                <s:textarea name="birthRegister.childFullNameOfficialLang"/>
+                <s:textarea name="child.childFullNameOfficialLang"/>
             </div>
         </div>
         <div id="child-name-in-english" class="font-9">
@@ -138,7 +138,7 @@
                 <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English </label>
             </div>
             <div>
-                <s:textarea name="birthRegister.childFullNameEnglish"/>
+                <s:textarea name="child.childFullNameEnglish"/>
             </div>
         </div>
         <div id="child-gender" class="font-9">
@@ -146,8 +146,8 @@
                 <label>(5)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
             </div>
             <div>
-                <s:select list="#{'1':getText('male.label'),'2':getText('female.label'),'3':getText('unknown.label')}"
-                          name="" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
+                <s:select list="#{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                          name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
             </div>
         </div>
         <div id="child-weight" class="font-9">
@@ -155,7 +155,7 @@
                 <label>(6) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label>
             </div>
             <div>
-                <s:textfield name="birthRegister.childBirthWeight"/>
+                <s:textfield name="child.childBirthWeight"/>
             </div>
         </div>
         <div id="child-birth-order-no" class="font-9">
@@ -164,7 +164,7 @@
                     Order, number of children?</label>
             </div>
             <div>
-                <s:textfield name="birthRegister.childRank"/>
+                <s:textfield name="child.childRank"/>
             </div>
         </div>
         <div id="multiple-birth" class="font-9">
@@ -173,7 +173,7 @@
                     எண்ணிக்கை<br>If multiple births, number of children</label>
             </div>
             <div>
-                <s:textfield name="birthRegister.numberOfChildrenBorn"/>
+                <s:textfield name="child.numberOfChildrenBorn"/>
             </div>
         </div>
         <%--<input type="submit" value="next" />--%>

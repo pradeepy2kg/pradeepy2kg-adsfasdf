@@ -8,6 +8,7 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.RaceDAO;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.common.api.domain.User;
@@ -40,6 +41,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
+    private final BDDivisionDAO bdDivisionDAO;
 
     private BirthDeclaration birthRegister;
 
@@ -55,16 +57,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
+    private Map<Integer, String> divisionList;
 
     public String welcome() {
         return "success";
     }
 
-    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
+        this.bdDivisionDAO = bdDivisionDAO;
     }
 
     /**
@@ -126,7 +130,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             // values in the session with empty form values, b'cos the form has proper values only for
             //  the current submitting page)
             if ((originalValue != null) && (!(originalValue.equals("") ||
-                    originalValue.equals("0") || originalValue.equals("0.0") ))) {
+                    originalValue.equals("0") || originalValue.equals("0.0")))) {
                 if (descriptor.getWriteMethod() != null) {
                     logger.debug("field merged");
                     descriptor.getWriteMethod().invoke(target, originalValue);
@@ -140,7 +144,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error("{} : {}", e.getMessage(),e.toString());
+        logger.error("{} : {}", e.getMessage(), e.toString());
         //todo pass the error to the error.jsp page
     }
 
@@ -179,6 +183,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         districtList = districtDAO.getDistricts(language, user);
         countryList = countryDAO.getCountries(language);
         raceList = raceDAO.getRaces(language);
+        // TODO division hard coded for the moment
+        divisionList = bdDivisionDAO.getDivisions(language, 11, user);
 
         logger.debug("inside populte : districts , countries and races populated.");
     }
@@ -277,5 +283,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setFatherDOB(String fatherDOB) {
         this.fatherDOB = fatherDOB;
+    }
+
+    public Map<Integer, String> getDivisionList() {
+        return divisionList;
+    }
+
+    public void setDivisionList(Map<Integer, String> divisionList) {
+        this.divisionList = divisionList;
     }
 }
