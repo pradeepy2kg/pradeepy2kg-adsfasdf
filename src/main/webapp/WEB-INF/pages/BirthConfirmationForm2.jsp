@@ -19,11 +19,11 @@
         </div>
         <div id="birth-confirmation-fatherRace">
             <s:if test="#session.user_lang == 'en_US'"><s:select name="birthRegister.fatherRace" list="raceList"
-                                                                 headerKey="0" headerValue="%{getText('select_race.label')}"/></s:if>
-           <%-- <s:if test="#session.user_lang == 'si_LK'"><s:select name="birthRegister.fatherRace" list="raceList"
+                                                                 headerKey="0" headerValue="- Select Race -"/></s:if>
+            <s:if test="#session.user_lang == 'si_LK'"><s:select name="birthRegister.fatherRace" list="raceList"
                                                                  headerKey="0" headerValue="- ජාතිය තෝරන්න -"/></s:if>
             <s:if test="#session.user_lang == 'ta_LK'"><s:select name="birthRegister.fatherRace" list="raceList"
-                                                                 headerKey="0" headerValue="- In Tamil -"/> </s:if>     --%>
+                                                                 headerKey="0" headerValue="- In Tamil -"/> </s:if>
         </div>
         <div id="birth-confirmation-mother-pin">
             <s:textfield name="birthConfirm.motherNIC"/>
@@ -32,16 +32,12 @@
             <s:textarea name="birthConfirm.motherFullName" cols="38"/>
         </div>
         <div id="birth-confirmation-motherRace">
-            <s:if test="#session.user_lang == 'en_US'"><s:select name="birthRegister.motherRace" list="raceList"
-                                                                 headerKey="0" headerValue="%{getText('select_race.label')}"/></s:if>
-            <%--<s:if test="#session.user_lang == 'si_LK'"><s:select name="birthRegister.motherRace" list="raceList"
-                                                                 headerKey="0" headerValue="- ජාතිය තෝරන්න -"/></s:if>
-            <s:if test="#session.user_lang == 'ta_LK'"><s:select name="birthRegister.motherRace" list="raceList"
-                                                                 headerKey="0" headerValue="- In Tamil -"/> </s:if>                 --%>
+            <s:select name="birthRegister.motherRace" list="raceList"
+                                                                 headerKey="0" headerValue="%{getText('race.label')}"/>
         </div>
         <div id="birth-confirmation-married">
             <s:select name="birthConfirm.marriedStatus" list="{'YES','NO'}" headerKey="0"
-                      headerValue="%{getText('select_status.label')}"/>
+                      headerValue="%{getText('status.label')}"/>
         </div>
         <div id="birth-confirmation-confim-nic">
             <s:textfield name="birthConfirm.confirmantNIC"/>
@@ -61,12 +57,12 @@
         </div>
 
         <s:hidden name="pageNo" value="2"/>
-        <div class="button"><input type="submit" value="Submit"/></div>
+        <div class="button"><input type="%{getText('nextButton.label')}" value="SUBMIT"/></div>
     </div>
 </s:form>
 <s:form id="print_2">
     <div class="button_print">
-        <s:submit type="button" value="%{getText('print.label')}" onclick="print()"/></div>
+        <s:submit type="button" value="%{getText('printButton.label')}" onclick="print()"/></div>
 </s:form>
 </body>
 </html>
