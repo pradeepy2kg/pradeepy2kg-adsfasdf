@@ -34,15 +34,17 @@
                 </s:if>
                 <s:subset source="#session.ApprovalData" count="10" start="#session.approvalStart">
                     <s:iterator status="approvalStatus">
-                        <tr class="<s:if test="%{actions=='Expired'}" >expired</s:if>">
+                        <tr class="<s:if test="%{status==5}" >expired</s:if>">
                             <td><s:property value="%{#approvalStatus.count+#session.approvalStart}"/></td>
                             <td><s:checkbox name="index"
                                             onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/></td>
                             <td><s:property value="bdfSerialNo"/></td>
                             <td><s:property value="childFullNameEnglish"/></td>
-                            <td><s:property value=""/></td>
-                            <td><s:property value=""/></td>
-                            <td><s:property value=""/></td>
+                            <td><s:if test="status==4"><s:label value="Yes"/></s:if><s:else><s:label
+                                    value="No"/></s:else></td>
+                            <td><s:property value="confirmationReceiveDate"/></td>
+                            <td><s:if test="status==3 || status==4"><s:label value="Approve"/></s:if>
+                            <s:elseif test="status==5"><s:label value="Expired" /></s:elseif> </td>
                         </tr>
                         <%--counter keeps track the displayed data--%>
                         <s:set name="counter" value="#approvalStatus.count" scope="session"/>

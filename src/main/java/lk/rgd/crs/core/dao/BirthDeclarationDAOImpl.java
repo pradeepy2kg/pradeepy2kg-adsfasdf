@@ -51,9 +51,16 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         div.setDivisionId(1);
         bd.setBirthDivision(div);
         bd.setBdfSerialNo("A25");
-        bd.setStatus(0);
+        bd.setStatus(4);
+
+        BirthDeclaration bd1 = new BirthDeclaration();
+        bd1.setChildFullNameEnglish("Nimal");
+        bd1.setBirthDivision(div);
+        bd1.setBdfSerialNo("A458");
+        bd1.setStatus(5);
         List<BirthDeclaration> a = new ArrayList<BirthDeclaration>();
         a.add(bd);
+        a.add(bd1);
         return a;
     }
 }
