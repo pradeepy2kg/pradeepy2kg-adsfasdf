@@ -49,7 +49,8 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
-        <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction" method="birthRegistration">
+        <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthRegistration">
             <!--<interceptor-ref name="scopedModelDriven"/>-->
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
@@ -71,7 +72,7 @@
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-
+        <!--BirthRegistration Approval Related-->
         <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="birthRegisterApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
@@ -82,7 +83,16 @@
         <action name="eprGetExpiredList" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="getExpiredList">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
-            <result type="redirect-action" name="redirect" >eprBirthRegisterApproval</result>
+            <result type="redirect-action" name="redirect">eprBirthRegisterApproval</result>
+        </action>
+
+        <action name="eprApprovalNext" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="nextPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApprovalPrevious" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <!--PrintAction related actions-->

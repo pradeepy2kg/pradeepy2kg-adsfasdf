@@ -18,7 +18,7 @@ public class BirthRegisterApproval {
         this.actions = actions;
     }
 
-    public String getActions() {                
+    public String getActions() {
         return actions;
     }
 
@@ -26,7 +26,7 @@ public class BirthRegisterApproval {
         this.recievedDate = recievedDate;
     }
 
-    public Date getRecievedDate() {                     
+    public Date getRecievedDate() {
         return recievedDate;
     }
 
@@ -34,7 +34,7 @@ public class BirthRegisterApproval {
         this.changes = changes;
     }
 
-    public boolean isChanges() {                 
+    public boolean isChanges() {
         return changes;
     }
 
@@ -42,7 +42,7 @@ public class BirthRegisterApproval {
         this.name = name;
     }
 
-    public String getName() {             
+    public String getName() {
         return name;
     }
 
@@ -50,7 +50,7 @@ public class BirthRegisterApproval {
         this.serial = serial;
     }
 
-    public int getSerial() {               
+    public int getSerial() {
         return serial;
     }
 }
