@@ -6,11 +6,13 @@
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
         <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST">
-            <s:label><span>District:</span><s:select name="" list="districtList" headerKey="0"
+            <s:label><span><s:label name="district" value= "%{getText('district.label')}" /></span><s:select name="" list="districtList" headerKey="0"
                                                      headerValue="%{getText('select_district.label')}"/> </s:label>
-            <s:label><span>Division:</span><s:select name="" list="divisionList" headerKey="0"
+            <s:label><span><s:label name="division" value= "%{getText('division.label')}" /></span><s:select name="" list="divisionList" headerKey="0"
                                                      headerValue="%{getText('select_division.label')}"/></s:label>
-            <s:radio name="selectOption" list="{'Not Printed','Printed'}"/>
+            
+            <s:radio name="selectOption" list="{getText('all.label'), getText('not_printed.label'),
+             getText('already_printed.label')}"/>
             <s:submit value="View"></s:submit>
         </s:form>
     </div>
@@ -19,12 +21,12 @@
             <table cellpadding="3">
                 <tr>
                     <th></th>
-                    <th>Item</th>
-                    <th>Serial</th>
-                    <th>Name</th>
+                    <th><s:label name="item" value= "%{getText('item.label')}" /></th>
+                    <th><s:label name="serial" value= "%{getText('serial.label')}" /></th>
+                    <th><s:label name="name" value= "%{getText('name.label')}" /></th>
                         <%--TODO add registration/printed date--%>
-                    <th>Registered Date</th>
-                    <th>Status</th>
+                    <th><s:label name="registered_date" value= "%{getText('registered_date.label')}" /></th>
+                    <th><s:label name="status" value= "%{getText('status.label')}" /></th>
                     <th></th>
                 </tr>
 
@@ -41,11 +43,11 @@
                             <td><s:property value="childFullNameOfficialLang"/></td>
                             <td><s:property value="dateOfRegistration"/></td>
                             <td align="right">
-                                <s:if test="status == 1"><s:label value="Not Printed"/></s:if>
-                                <s:elseif test="status == 2"><s:label value="Already printed"/></s:elseif>
+                                <s:if test="confirmationPrinted"><s:label value="%{getText('not_printed.label')}"/></s:if>
+                                <s:else><s:label value="%{getText('already_printed.label')}"/></s:else>
                             </td>
                             <td align="right">
-                                <s:submit value="Print"/>
+                                <s:submit value="%{getText('print.label')}"/>
                             </td>
                         </tr>
                         <s:set name="printCount" value="#printStatus.count" scope="session"/>
@@ -62,7 +64,7 @@
             <table>
                 <tr>
                     <td>
-                        <s:property value="#session.printList.size"/> Items Found, displaying <s:property
+                        <s:property value="#session.printList.size"/> <s:label name="items_found" value=" %{getText('items_found.label')} " /> <s:property
                             value="#session.printStart+1"/> to <s:property
                             value="%{#session.printCount+#session.printStart}"/>.
                     </td>
@@ -72,8 +74,7 @@
                             <s:label value="<<Previous"/></s:a></s:if>
                     </td>
                     <td width="10">
-                        <%--todo size>10--%>
-                        <s:if test="%{#session.printList.size > 10 & #session.printCount >=10 }"><s:a href="%{nextUrl}">
+                        <s:if test="#session.printCount != 28"><s:a href="%{nextUrl}">
                             <s:label value="Next>>"/></s:a></s:if>
                     </td>
                 </tr>
@@ -81,8 +82,8 @@
 
             <br/><br/>
             <s:label><s:checkbox name="allCheck" onclick="javascript:selectallMe()"/>
-                <span>Select All</span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
-            <s:label><span>Print Selected:</span><s:submit value="Print"/></s:label>
+                <span><s:label name="select_all" value= "%{getText('select_all.label')}" /></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
+            <s:label><span><s:label name="print_selected" value= "%{getText('print_selected.label')}" /></span><s:submit value="%{getText('print.label')}"/></s:label>
         </s:form>
     </div>
     <div id="birth-register-approval-footer">

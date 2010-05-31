@@ -61,12 +61,12 @@
         </div>
 
         <s:hidden name="pageNo" value="2"/>
-        <div class="button"><input type="submit" value="SUBMIT"/></div>
+        <div class="button"><input type="submit" value="Submit"/></div>
     </div>
 </s:form>
 <s:form id="print_2">
     <div class="button_print">
-        <s:submit type="button" value="PRINT" onclick="print()"/></div>
+        <s:submit type="button" value="%{getText('print.label')}" onclick="print()"/></div>
 </s:form>
 </body>
 </html>

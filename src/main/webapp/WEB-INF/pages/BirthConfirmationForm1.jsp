@@ -37,15 +37,16 @@
         <div id="birth-confirmation-name-in-english"><s:textarea name="birthConfirm.childFullNameEnglish" cols="38"
                                                                  rows="5"/></div>
         <div id="birth-confirmation-gender">
-            <s:select list="#{'1':'Male','2':'Female','3':'Unknown'}" name="birthConfirm.childGender"
+            <s:select list="#{'1':getText('male.label'),'2':getText('female.label'),
+                '3':getText('unknown.label')}" name="birthConfirm.childGender"
                       headerKey="0" headerValue="%{getText('select_gender.label')}"/> 
         </div>
         <s:hidden name="pageNo" value="1"/>
-        <div class="button"><s:submit type="submit" value="NEXT"/></div>
+        <div class="button"><s:submit type="submit" value="%{getText('next.label')}"/></div>
     </div>
 </s:form>
 <s:form id="print">
     <div class="button_print">
-        <s:submit type="button" value="PRINT" onclick="print()"/></div>
+        <s:submit type="button" value="%{getText('print.label')}" onclick="print()"/></div>
 </s:form>
 </html>
