@@ -30,7 +30,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
 
         Query q = null;
         if (includeAlreadyPrinted) {
-            q = em.createNamedQuery("confirmation.printed.and.pending");
+            q = em.createNamedQuery("confirmation.printed");
         } else {
             q = em.createNamedQuery("confirmation.print.pending");
         }

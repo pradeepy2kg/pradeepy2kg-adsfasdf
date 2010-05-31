@@ -50,10 +50,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
      */
     public String filterPrintList() {
         MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
-        session.remove("printStart");
+        session.remove(WebConstants.SESSION_PRINT_START);
+        // TODO Namedquery in BirthDeclaration should be changed Printed only status=2
 
         if (selectOption != null) {
-            if (selectOption.equals("Printed")) {
+            if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
                 printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, true);
             } else {
                 printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
@@ -62,21 +63,21 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
         }
 
-        session.put("printList", printList);
+        session.put(WebConstants.SESSION_PRINT_LIST, printList);
         populate();
         return "success";
     }
 
     // todo some problems still there in UI
     public String nextPage() {
-        Integer i = (Integer) session.get("printStart");
-        Integer count = (Integer) session.get("printCount");
-        List<PrintData> printData = (List<PrintData>) session.get("printList");
+        Integer i = (Integer) session.get(WebConstants.SESSION_PRINT_START);
+        Integer count = (Integer) session.get(WebConstants.SESSION_PRINT_COUNT);
+        List<PrintData> printData = (List<PrintData>) session.get(WebConstants.SESSION_PRINT_LIST);
 
         logger.debug("Next Page: Count {} , List Size {}", count, printData.size());
 
         if (i != null && printData.size() != count) {
-            session.put("printStart", i + 10);
+            session.put(WebConstants.SESSION_PRINT_START, i + 10);
         }
 
         populate();
@@ -85,9 +86,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     // todo some problems still there in UI
     public String previousPage() {
-        Integer i = (Integer) session.get("printStart");
+        Integer i = (Integer) session.get(WebConstants.SESSION_PRINT_START);
         if (i != null && i != 0) {
-            session.put("printStart", i - 10);
+            session.put(WebConstants.SESSION_PRINT_START, i - 10);
         }
 
         populate();
