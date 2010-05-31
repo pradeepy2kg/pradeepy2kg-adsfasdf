@@ -9,6 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>E-Population System</title>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
+    <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
     <style type="text/css">
@@ -50,7 +51,7 @@
         <div id="body-sidebar">
             <tiles:insertAttribute name="menu"/>
             <br>
-            <%if (((User)session.getAttribute(WebConstants.SESSION_USER_BEAN)).getUserName() != null) { %>
+            <%if (((User) session.getAttribute(WebConstants.SESSION_USER_BEAN)).getUserName() != null) { %>
             <s:form action="eprLogout.do" method="POST" name="eprLogout">
                 <s:submit name="submit" value="logout"></s:submit>
             </s:form>

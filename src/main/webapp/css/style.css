@@ -10,63 +10,63 @@
 .button_print{float:right; margin-right:60px; margin-top:-15px; margin-bottom:10px;}
 
 /* Styles for the page one of the web form */
-#birth-registration-form-1-serial{height:40px; float:left; margin-top:160px; margin-left:850px; overflow:hidden;}
-#birth-registration-form-1-serial input{width:120px; height:25px; line-height:25px;}
-#date-of-birth{padding-top:290px; padding-bottom:10px;}
-#date-of-birth,#name,#name-in-english,#gender,#birth-weight,#no-of-children,#multiple-no-of-children,#hospital-code{width:60%; margin-left:35%;}
-#district,#division,#place{width:40%; margin-left:53%; padding-top:6px;}
-#date-of-birth select{padding-top:5px; margin-top:5px; height:35px;}
-#birth-weight input,#no-of-children input,#multiple-no-of-children input,#hospital-code input{width:95%; margin:auto; height:45px;}
-#district select{width:270px; height:30px; padding-top:3px; }
-#division input,#place input{width:270px; height:20px; padding-top:3px;}
-#name,#name-in-english{padding-top:10px;}
-#name input,#name-in-english input{width:95%; height:110px;}
-#gender{padding-top:20px;}
-#gender select{width:200px; height:30px; padding-top:3px;}
-#birth-weight,#no-of-children,#multiple-no-of-children,#hospital-code{padding-top:20px;}
+/*#birth-registration-form-1-serial{height:40px; float:left; margin-top:160px; margin-left:850px; overflow:hidden;}*/
+/*#birth-registration-form-1-serial input{width:120px; height:25px; line-height:25px;}*/
+/*#date-of-birth{padding-top:290px; padding-bottom:10px;}*/
+/*#date-of-birth,#name,#name-in-english,#gender,#birth-weight,#no-of-children,#multiple-no-of-children,#hospital-code{width:60%; margin-left:35%;}*/
+/*#district,#division,#place{width:40%; margin-left:53%; padding-top:6px;}*/
+/*#date-of-birth select{padding-top:5px; margin-top:5px; height:35px;}*/
+/*#birth-weight input,#no-of-children input,#multiple-no-of-children input,#hospital-code input{width:95%; margin:auto; height:45px;}*/
+/*#district select{width:270px; height:30px; padding-top:3px; }*/
+/*#division input,#place input{width:270px; height:20px; padding-top:3px;}*/
+/*#name,#name-in-english{padding-top:10px;}*/
+/*#name input,#name-in-english input{width:95%; height:110px;}*/
+/*#gender{padding-top:20px;}*/
+/*#gender select{width:200px; height:30px; padding-top:3px;}*/
+/*#birth-weight,#no-of-children,#multiple-no-of-children,#hospital-code{padding-top:20px;}*/
 
 /* Styles for the second page of the web form */
-#father-nic-no{padding-top:100px;}
-#father-nic-no,#father-name,#father-dob,#father-birth-place,#father-race,#mother-nic-no,#mother-name,#mother-dob,#mother-birth-place,#mother-race,#mother-age-for-birth,#mother-address,#mother-admision-no{width:60%; margin-left:38%;}
-#father-nic-no input,#mother-nic-no input{width:95%; margin:auto; height:80px;}
-#father-passport-no,#father-country,#mother-passport-no,#mother-country{margin-left:57%; padding-top:12px;}
-#father-passport-no input,#father-country input{width:200px; height:50px;}
-#father-name,#father-dob,#father-birth-place,#father-race{ padding-top:10px;}
-#father-name input,#father-dob input,#father-birth-place input,#father-race input{width:95%; margin:auto; height:50px;}
-#mother-nic-no{padding-top:85px;}
-#mother-passport-no input,#mother-country input{width:200px; height:55px;}
-#mother-name,#mother-dob,#mother-birth-place,#mother-race,#mother-age-for-birth,#mother-address,#mother-admision-no{padding-top:15px;}
-#mother-name input,#mother-dob input,#mother-birth-place input,#mother-race input,#mother-age-for-birth input,#mother-address input,#mother-admision-no input{width:95%; margin:auto; height:46px;}
-#mother-phone{width:20%; margin-left:48%; padding-top:15px;}
-#mother-email{width:20%; margin-left:78%; padding-top:-25px;}
+/*#father-nic-no{padding-top:100px;}*/
+/*#father-nic-no,#father-name,#father-dob,#father-birth-place,#father-race,#mother-nic-no,#mother-name,#mother-dob,#mother-birth-place,#mother-race,#mother-age-for-birth,#mother-address,#mother-admision-no{width:60%; margin-left:38%;}*/
+/*#father-nic-no input,#mother-nic-no input{width:95%; margin:auto; height:80px;}*/
+/*#father-passport-no,#father-country,#mother-passport-no,#mother-country{margin-left:57%; padding-top:12px;}*/
+/*#father-passport-no input,#father-country input{width:200px; height:50px;}*/
+/*#father-name,#father-dob,#father-birth-place,#father-race{ padding-top:10px;}*/
+/*#father-name input,#father-dob input,#father-birth-place input,#father-race input{width:95%; margin:auto; height:50px;}*/
+/*#mother-nic-no{padding-top:85px;}*/
+/*#mother-passport-no input,#mother-country input{width:200px; height:55px;}*/
+/*#mother-name,#mother-dob,#mother-birth-place,#mother-race,#mother-age-for-birth,#mother-address,#mother-admision-no{padding-top:15px;}*/
+/*#mother-name input,#mother-dob input,#mother-birth-place input,#mother-race input,#mother-age-for-birth input,#mother-address input,#mother-admision-no input{width:95%; margin:auto; height:46px;}*/
+/*#mother-phone{width:20%; margin-left:48%; padding-top:15px;}*/
+/*#mother-email{width:20%; margin-left:78%; padding-top:-25px;}*/
 
 /* Styles for the third page of the web form */
-#place-of-marriage{margin-left:56%; padding-top:50px;}
-#date-of-marriage{margin-left:56%; padding-top:20px;}
-#grandfather-name_lk{margin-left:56%; padding-top:27px;}
-#grandfather-dob_lk,#grandfather-birth-place_lk,#grandfather-name,#grandfather-dob,#grandfather-birth-place,#info-person-address,#info-person-phone,#info-person-email{margin-left:56%; padding-top:16px;}
-#place-of-marriage input,#date-of-marriage input{width:350px; height:50px;}
-#grandfather-name_lk input,#grandfather-dob_lk input,#grandfather-birth-place_lk input,#grandfather-name input,#grandfather-dob input,#grandfather-birth-place input,#info-person-address input,#info-person-phone input,#info-person-email input{width:350px; height:50px;}
-#signature{margin-left:38%; padding-top:40px;padding-bottom:70px;}
-#signature input{ height:50px; margin-left:15%; margin-right:200px;}
-#info-person{padding-top:80px; margin-left:48.8%;}
-#info-person input{height:25px; width:25px;}
-#info-person  #mother, #info-person #father,#info-person #holder{width:30px;}
-#info-person #father{padding-left:157px; margin-top:-21px;}
-#info-person #holder{padding-left:355px; margin-top:-20px;}
-#info-person-name{padding-top:40px;}
-#info-person-name input{width:92%; height:50px;}
-#info-person-name,#info-person-nic{margin-left:38%;}
-#info-person-nic{padding-top:10px;}
-#info-person-nic input{width:92%; height:80px;}
-#info-person-signature{margin-left:38%; padding-top:30px;}
+/*#place-of-marriage{margin-left:56%; padding-top:50px;}*/
+/*#date-of-marriage{margin-left:56%; padding-top:20px;}*/
+/*#grandfather-name_lk{margin-left:56%; padding-top:27px;}*/
+/*#grandfather-dob_lk,#grandfather-birth-place_lk,#grandfather-name,#grandfather-dob,#grandfather-birth-place,#info-person-address,#info-person-phone,#info-person-email{margin-left:56%; padding-top:16px;}*/
+/*#place-of-marriage input,#date-of-marriage input{width:350px; height:50px;}*/
+/*#grandfather-name_lk input,#grandfather-dob_lk input,#grandfather-birth-place_lk input,#grandfather-name input,#grandfather-dob input,#grandfather-birth-place input,#info-person-address input,#info-person-phone input,#info-person-email input{width:350px; height:50px;}*/
+/*#signature{margin-left:38%; padding-top:40px;padding-bottom:70px;}*/
+/*#signature input{ height:50px; margin-left:15%; margin-right:200px;}*/
+/*#info-person{padding-top:80px; margin-left:48.8%;}*/
+/*#info-person input{height:25px; width:25px;}*/
+/*#info-person  #mother, #info-person #father,#info-person #holder{width:30px;}*/
+/*#info-person #father{padding-left:157px; margin-top:-21px;}*/
+/*#info-person #holder{padding-left:355px; margin-top:-20px;}*/
+/*#info-person-name{padding-top:40px;}*/
+/*#info-person-name input{width:92%; height:50px;}*/
+/*#info-person-name,#info-person-nic{margin-left:38%;}*/
+/*#info-person-nic{padding-top:10px;}*/
+/*#info-person-nic input{width:92%; height:80px;}*/
+/*#info-person-signature{margin-left:38%; padding-top:30px;}*/
 
 /* Styles for the forth page of the web form */
-#serial-no{margin-left:34%; padding-top:105px;}
-#child-name,#child-dob,#child-gender,#child-father,#child-mother,#authority{margin-left:34%; padding-top:12px;}
-#serial-no input,#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input,#authority input{width:92%;}
-#serial-no input,#authority input{height:100px;}
-#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input{height:45px;}
+/*#serial-no{margin-left:34%; padding-top:105px;}*/
+/*#child-name,#child-dob,#child-gender,#child-father,#child-mother,#authority{margin-left:34%; padding-top:12px;}*/
+/*#serial-no input,#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input,#authority input{width:92%;}*/
+/*#serial-no input,#authority input{height:100px;}*/
+/*#child-name input,#child-dob input,#child-gender input,#child-father input,#child-mother input{height:45px;}*/
 
 /* Styles for the BirthConfirmationForm1 page one of the web form */
 #birth-confirmation-form-1-serial{height:40px; float:left; margin-top:70px; margin-left:850px; overflow:hidden;}

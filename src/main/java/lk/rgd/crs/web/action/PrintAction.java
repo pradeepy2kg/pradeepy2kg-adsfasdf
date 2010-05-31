@@ -51,7 +51,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String filterPrintList() {
         MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
         session.remove(WebConstants.SESSION_PRINT_START);
-        // TODO Namedquery in BirthDeclaration should be changed Printed only status=2
 
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
@@ -68,7 +67,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    // todo some problems still there in UI
+    /**
+     * Used in Pagination to move forward
+     *
+     * @return
+     */
     public String nextPage() {
         Integer i = (Integer) session.get(WebConstants.SESSION_PRINT_START);
         Integer count = (Integer) session.get(WebConstants.SESSION_PRINT_COUNT);
@@ -84,7 +87,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    // todo some problems still there in UI
+    /**
+     * Used in Pagination to move backward
+     *
+     * @return
+     */
     public String previousPage() {
         Integer i = (Integer) session.get(WebConstants.SESSION_PRINT_START);
         if (i != null && i != 0) {
@@ -102,7 +109,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getDistricts(language, user);
-        //todo district id hardcoded for the moment
+        // TODO district id hardcoded for the moment
         divisionList = bdDivisionDAO.getDivisions(language, 11, user);
     }
 
