@@ -10,6 +10,10 @@ import lk.rgd.crs.api.dao.CountryDAO;
 import lk.rgd.crs.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.model.ChildInfo;
+import lk.rgd.crs.web.model.ParentInfo;
+import lk.rgd.crs.web.model.OtherInfo;
+import lk.rgd.crs.web.model.NotifyingAuthorityInfo;
 import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.common.api.domain.User;
 import org.apache.struts2.interceptor.SessionAware;
@@ -44,12 +48,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final BDDivisionDAO bdDivisionDAO;
 
     private BirthDeclaration birthRegister;
+    private ChildInfo child;
+    private ParentInfo parent;
+    private OtherInfo other;
+    private NotifyingAuthorityInfo notifyingAuthority;
 
     /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
-    private String childDOB;
-    private String motherDOB;
-    private String fatherDOB;
     private List<Person> myList;
     private Map session;
 
@@ -58,6 +63,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> divisionList;
+    private String childDOB;
+    private String motherDOB;
+    private String fatherDOB;
 
     public String welcome() {
         return "success";
@@ -81,34 +89,27 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String birthRegistration() {
         logger.debug("Step {} of 4 ", pageNo);
-        if (pageNo > 4) {
+        if ((pageNo > 4) || (pageNo < 0)) {
             return "error";
-        } else if (pageNo == 4) {
-            // all pages captured, proceed to persist after validations
-            BirthDeclaration register = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-            // todo business validations and persiatance
-            logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
-            logger.debug("Birth Register : {}.", register.getMotherFullName());
-            return "success";
         }
 
         populate();
-        if (pageNo == 0) {
-            initForm();
-        } else {
-            if (pageNo == 1) {
-                //birthRegister.setDateOfBirth(new EPopDate().getDate(childDOB));
-            } else if (pageNo == 2) {
-                birthRegister.setFatherDOB(new EPopDate().getDate(fatherDOB));
-                birthRegister.setMotherDOB(new EPopDate().getDate(motherDOB));
+        try {
+            switch (pageNo) {
+                case 0: initForm(); break;
+                case 1: beanMerge(child); break;
+                case 2: beanMerge(parent); break;
+                case 3: beanMerge(other); break;
+                case 4: BirthDeclaration register = beanMerge(notifyingAuthority);
+                        // all pages captured, proceed to persist after validations
+                        // todo business validations and persiatance
+                        logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
+                        logger.debug("Birth Register : {}.", register.getMotherFullName());
+                        return "success";
             }
-
-            try {
-                beanMerge();
-            } catch (Exception e) {
-                handleErrors(e);
-                return "error";
-            }
+        } catch (Exception e) {
+            handleErrors(e);
+            return "error";
         }
 
         return "form" + pageNo;
@@ -117,30 +118,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     /**
      * update the bean in session with the values of local bean
      */
-    private void beanMerge() throws Exception {
+    private BirthDeclaration beanMerge(Object o) throws Exception {
         BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-        BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
+        BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
 
-        // Iterate over all the attributes of form bean
+        // Iterate over all the attributes of form bean and copy them into the target
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object originalValue = descriptor.getReadMethod().invoke(birthRegister);
-            logger.debug("processing : {}, value was : {}", descriptor.getReadMethod(), originalValue);
+            Object newValue = descriptor.getReadMethod().invoke(o);
+            logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
 
-            // Only copy values where the form value is not null or empty (do not replace already set
-            // values in the session with empty form values, b'cos the form has proper values only for
-            //  the current submitting page)
-            if ((originalValue != null) && (!(originalValue.equals("") ||
-                    originalValue.equals("0") || originalValue.equals("0.0")))) {
-                if (descriptor.getWriteMethod() != null) {
-                    logger.debug("field merged");
-                    descriptor.getWriteMethod().invoke(target, originalValue);
-                }
+            if (descriptor.getWriteMethod() != null) {
+                logger.debug("field merged");
+                descriptor.getWriteMethod().invoke(target, newValue);
             } else {
                 logger.debug("field not merged");
             }
         }
 
         session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
+
+        return target;
     }
 
     private void handleErrors(Exception e) {
