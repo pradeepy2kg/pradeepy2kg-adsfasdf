@@ -6,10 +6,10 @@
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
         <s:form action="eprGetExpiredList" name="birth_register_approval_head" method="POST">
-            <s:label><span>District:</span><s:select list="districtList" name="district"/></s:label>
-            <s:label><span>Division:</span><s:select list="divisionList"
+            <s:label><span><s:label name="district" value= "%{getText('district.label')}" /></span><s:select list="districtList" name="district"/></s:label>
+            <s:label><span><s:label name="division" value= "%{getText('division.label')}" /></span><s:select list="divisionList"
                                                      name="division" headerKey="0"/></s:label>
-            <s:label><span>Show Expired:</span><s:checkbox name="expired"/></s:label>
+            <s:label><span><s:label name="show_expired" value= "%{getText('show_expired.label')}" /></span><s:checkbox name="expired" /></s:label>
             <s:submit name="refresh" value="refresh"></s:submit>
         </s:form>
     </div>
@@ -19,12 +19,11 @@
             <table>
                 <tr>
                     <th></th>
-                    <th></th>
-                    <th>Serial</th>
-                    <th>Name</th>
-                    <th>Changes</th>
-                    <th>Received</th>
-                    <th>Actions</th>
+                    <th><s:label name="serial" value= "%{getText('serial.label')}" /></th>
+                    <th><s:label name="name" value= "%{getText('name.label')}" /></th>
+                    <th><s:label name="changes" value= "%{getText('changes.label')}" /></th>
+                    <th><s:label name="received" value= "%{getText('received.label')}" /></th>
+                    <th><s:label name="actions" value= "%{getText('actions.label')}" /></th>
                 </tr>
                 <s:if test="#session.approvalStart == null">
                     <s:set name="approvalStart" value="0" scope="session"/>
@@ -50,9 +49,11 @@
                 </s:subset>
                 <tr></tr>
             </table>
-            <s:label><span>Select All</span><s:checkbox name="allCheck"
-                                                        onclick="javascript:selectallMe('birth_register_approval_body')"/></s:label>
+            <s:label><span><s:label name="select_all" value= "%{getText('select_all.label')}" /></span><s:checkbox name="allCheck"
+                                 onclick="javascript:selectallMe('birth_register_approval_body')"/></s:label>
             <br/>
+            <s:property value="%{#session.ApprovelData.size}" /><s:label name="items_found" value=" %{getText('items_found.label')} " />
+            <s:property value="%{#session.ApprovelData.size}" /><s:a href="#" name="next" > Next</s:a>
 
             <s:url id="previousUrl" action="eprApprovalPrevious.do"/>
             <s:url id="nextUrl" action="eprApprovalNext.do"/>
@@ -66,7 +67,7 @@
             <s:if test="#session.flag==1 && #session.ApprovalData.size>10"><s:a href="%{nextUrl}">
                 <s:label value="Next>"/></s:a></s:if>
             <br/><br/>
-            <s:submit name="approve" value="Approve"/>
+            <s:submit name="approve" value="%{getText('approve.label')}"/>
         </s:form>
     </div>
     <div id="birth-register-approval-footer">
