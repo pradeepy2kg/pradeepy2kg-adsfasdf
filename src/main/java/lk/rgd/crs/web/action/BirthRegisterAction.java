@@ -107,7 +107,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         }
 
-        session.put("page_title", "birth registration form : " + (pageNo + 1));
         return "form" + pageNo;
     }
 
@@ -121,15 +120,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         // Iterate over all the attributes of form bean
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
             Object originalValue = descriptor.getReadMethod().invoke(birthRegister);
+            logger.debug("processing : {}, value was : {}", descriptor.getReadMethod(), originalValue);
 
             // Only copy values where the form value is not null or empty (do not replace already set
             // values in the session with empty form values, b'cos the form has proper values only for
             //  the current submitting page)
             if ((originalValue != null) && (!(originalValue.equals("") ||
-                    originalValue.equals("0") || originalValue.equals("0.0")))) {
-                descriptor.getWriteMethod().invoke(target, originalValue);
+                    originalValue.equals("0") || originalValue.equals("0.0") ))) {
+                if (descriptor.getWriteMethod() != null) {
+                    logger.debug("field merged");
+                    descriptor.getWriteMethod().invoke(target, originalValue);
+                }
             } else {
-                logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
+                logger.debug("field not merged");
             }
         }
 
@@ -137,7 +140,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error("{} : {}", e.getMessage(), e);
+        logger.error("{} : {}", e.getMessage(),e.toString());
         //todo pass the error to the error.jsp page
     }
 

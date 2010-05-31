@@ -20,14 +20,6 @@
         <div id="district">
             <s:select name="birthRegister.childBirthDistrict" list="districtList" headerKey="0"
                 headerValue="%{getText('select_district.label')}"/>
-            <%--<s:if test="#session.user_lang == 'si_LK'"> <s:select name="birthRegister.childBirthDistrict"--%>
-                                                                  <%--list="districtList"--%>
-                                                                  <%--headerKey="0"--%>
-                                                                  <%--headerValue="-දිස්ත්‍රික්කය තෝරන්න-"/></s:if>--%>
-            <%--<s:if test="#session.user_lang == 'ta_LK'"> <s:select name="birthRegister.childBirthDistrict"--%>
-                                                                  <%--list="districtList"--%>
-                                                                  <%--headerKey="0"--%>
-                                                                  <%--headerValue="-In Tamil-"/></s:if>--%>
         </div>
         <div id="division"><s:textfield name="birthRegister.birthDivision"/></div>
         <div id="place"><s:textfield name="birthRegister.placeOfBirth"/></div>
