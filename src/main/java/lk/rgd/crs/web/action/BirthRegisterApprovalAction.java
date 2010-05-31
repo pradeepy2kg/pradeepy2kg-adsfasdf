@@ -9,13 +9,12 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.List;
-import java.sql.Date;
 
-import lk.rgd.crs.api.domain.BirthRegisterApproval;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.ApprovalBD;
 import lk.rgd.common.api.domain.User;
 
 
@@ -31,28 +30,23 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
+    private final BirthDeclarationDAO birthDeclarationDAO;
     private Map<Integer, String> divisionList;
     private Map<Integer, String> districtList;
 
     private boolean expired;
     private Map session;
-    private List<BirthRegisterApproval> birthRegisterApproval;
+    private List<BirthDeclaration> birthRegisterApproval;
 
-    public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO) {
+    public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
-        this.createArrayList();
-    }
-
-    /**
-     * calls to the backend for filling tempory data
-     */
-    private void createArrayList() {
-        birthRegisterApproval = new ApprovalBD().createArrayList();
+        this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
     public String birthRegisterApproval() {
         populate();
+        birthRegisterApproval = (ArrayList<BirthDeclaration>) birthDeclarationDAO.getBirthRegistrationPending(11, 1, false);
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
     }
@@ -82,11 +76,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String getExpiredList() {
         populate();
-        if (isExpired()) {
+        if (expired) {
             logger.debug("insid getExpiredList: checked {} ", expired);
-            birthRegisterApproval = (ArrayList<BirthRegisterApproval>) session.get("ApprovalData");
-            /** send the birthRegisterApproval for filtering */
-            birthRegisterApproval = new ApprovalBD().getExpiredData((ArrayList<BirthRegisterApproval>) birthRegisterApproval);
+            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(11, 1, true);
             /** here it replacess the session variable ApprovalData with the expiredApprovalData */
             session.put("ApprovalData", birthRegisterApproval);
             if (birthRegisterApproval.size() < 10) {
@@ -111,7 +103,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String nextPage() {
         Integer i = (Integer) session.get("approvalStart");
         Integer counter = (Integer) session.get("counter");
-        birthRegisterApproval = (ArrayList<BirthRegisterApproval>) session.get("ApprovalData");
+        birthRegisterApproval = (ArrayList<BirthDeclaration>) session.get("ApprovalData");
 
         logger.debug("Next Page: Count {} , ApprovalArrayList Size {}", counter, birthRegisterApproval.size());
         int boundary = birthRegisterApproval.size();
@@ -144,11 +136,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         return "success";
     }
 
-    public void setBirthRegisterApproval(ArrayList<BirthRegisterApproval> birthRegisterApproval) {
+    public void setBirthRegisterApproval(ArrayList<BirthDeclaration> birthRegisterApproval) {
         this.birthRegisterApproval = birthRegisterApproval;
     }
 
-    public List<BirthRegisterApproval> getBirthRegisterApproval() {
+    public List<BirthDeclaration> getBirthRegisterApproval() {
         return birthRegisterApproval;
     }
 
@@ -178,5 +170,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setExpired(boolean expired) {
         this.expired = expired;
+    }
+
+    public BirthDeclarationDAO getBirthDeclarationDAO() {
+        return birthDeclarationDAO;
     }
 }

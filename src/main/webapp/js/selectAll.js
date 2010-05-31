@@ -1,4 +1,4 @@
-/** @author Indunil Moremda
+/** @author Indunil Moremada
  *
  * javascript to select all the check boxes
  * when clicking on one check box  */

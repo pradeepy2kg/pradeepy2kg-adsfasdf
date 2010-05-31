@@ -24,4 +24,8 @@ public interface BirthDeclarationDAO {
      * @return
      */
     public List<BirthDeclaration> getConfirmationPrintPending(int birthDistrict, int birthDivision, boolean includeAlreadyPrinted);
+
+    public List<BirthDeclaration> getBirthRegistrationPending(int birthDistrict,int birthDivision,boolean isExpired);
+    
 }
+
