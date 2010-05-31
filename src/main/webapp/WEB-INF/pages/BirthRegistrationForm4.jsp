@@ -25,5 +25,5 @@
         <div id="authority"><s:textfield name="birthRegister.notifyingAuthorityName"/></div>
     </div>
     <s:hidden name="pageNo" value="4"/>
-    <div class="button"><s:submit value="NEXT"/></div>
+    <div class="button"><s:submit value="%{getText('nextButton.label')}"/></div>
 </s:form>

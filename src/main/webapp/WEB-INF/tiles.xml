@@ -8,8 +8,7 @@
         <put-attribute name="header" value="/WEB-INF/pages/template/header.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/pages/template/menu.jsp"/>
         <put-attribute name="body" value="/WEB-INF/pages/login/login.jsp"/>
-        <put-attribute name="title" value=""/>
-        <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
+           <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
         <put-attribute name="title-text" value=""/>
     </definition>
 
@@ -73,5 +72,6 @@
 
     <definition name="epr.birthConfirmationPrint" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmPrint.jsp"/>
+         <put-attribute name="title" value="BirthConfirmPrint.title"/> 
     </definition>
 </tiles-definitions>
