@@ -185,6 +185,6 @@ public class DAOImplTest extends TestCase {
         Assert.assertEquals(2, r.size());
 
         r = dao.getConfirmationPrintPending(11, 1, true);
-        Assert.assertEquals(3, r.size());
+        Assert.assertEquals(1, r.size());
     }
 }

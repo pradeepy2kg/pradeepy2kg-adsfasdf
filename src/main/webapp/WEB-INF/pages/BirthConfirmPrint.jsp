@@ -41,8 +41,8 @@
                             <td><s:property value="childFullNameOfficialLang"/></td>
                             <td><s:property value="dateOfRegistration"/></td>
                             <td align="right">
-                                <s:if test="confirmationPrinted"><s:label value="Not Printed"/></s:if>
-                                <s:else><s:label value="Already printed"/></s:else>
+                                <s:if test="status == 1"><s:label value="Not Printed"/></s:if>
+                                <s:elseif test="status == 2"><s:label value="Already printed"/></s:elseif>
                             </td>
                             <td align="right">
                                 <s:submit value="Print"/>
@@ -72,7 +72,8 @@
                             <s:label value="<<Previous"/></s:a></s:if>
                     </td>
                     <td width="10">
-                        <s:if test="#session.printCount != 28"><s:a href="%{nextUrl}">
+                        <%--todo size>10--%>
+                        <s:if test="%{#session.printList.size > 10 & #session.printCount >=10 }"><s:a href="%{nextUrl}">
                             <s:label value="Next>>"/></s:a></s:if>
                     </td>
                 </tr>

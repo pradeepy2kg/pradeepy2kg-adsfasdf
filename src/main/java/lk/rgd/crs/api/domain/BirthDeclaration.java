@@ -14,10 +14,10 @@ import java.util.Date;
             "WHERE bdf.birthDistrict = :birthDistrict and bdf.birthDivision = :birthDivision and bdf.status = 1 " +
             "ORDER BY bdf.dateOfRegistration desc"),
 
-    @NamedQuery(name = "confirmation.printed.and.pending", query =
+    @NamedQuery(name = "confirmation.printed", query =
             "SELECT bdf FROM BirthDeclaration bdf " +
             "WHERE bdf.birthDistrict = :birthDistrict and bdf.birthDivision = :birthDivision " +
-            "and (bdf.status = 1 or bdf.status = 2) " +
+            "and bdf.status = 2 " +
             "ORDER BY bdf.dateOfRegistration desc")
 })
 public class BirthDeclaration {
