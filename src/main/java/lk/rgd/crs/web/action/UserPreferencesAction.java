@@ -12,11 +12,8 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
 
 /**
- * Created by IntelliJ IDEA.
- * User: duminda
- * Date: May 20, 2010
- * Time: 11:44:33 AM
- * To change this template use File | Settings | File Templates.
+ * @author Duminda
+ * 
  */
 public class UserPreferencesAction extends ActionSupport implements SessionAware {
 
@@ -26,7 +23,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
     /**
-     * Set the Language that the user preffered to work.
+     * Set the Language that the user preffered to work
      * And set preffered language to the session
      */
     public String selectLanguage() {
