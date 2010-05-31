@@ -3,6 +3,7 @@ package lk.rgd.crs.core.dao;
 import lk.rgd.AppConstants;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -19,6 +20,7 @@ import java.util.Map;
  */
 public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, PreloadableDAO {
 
+    private final Map<Integer, Map<Integer, BDDivision>> divisions = new HashMap<Integer, Map<Integer, BDDivision>>();
     private final Map<Integer, Map<Integer, String>> siDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> enDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> taDivisions = new HashMap<Integer, Map<Integer, String>>();
@@ -43,6 +45,19 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         return result;
     }
 
+    public BDDivision getBDDivision(int districtId, int bdDivisionId) {
+        Map<Integer, BDDivision> divMap = divisions.get(districtId);
+        if (divMap != null) {
+            return divMap.get(bdDivisionId);
+        }
+        return null;
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public BDDivision find(int districtId, int divisionId) {
+        return em.find(BDDivision.class, new BDDivision.BDDivisionPK(districtId, divisionId));
+    }
+
     /**
      * Loads all values from the database table into a cache
      */
@@ -54,6 +69,13 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
 
         for (BDDivision r : results) {
             final int districtId = r.getDistrict().getDistrictId();
+
+            Map<Integer, BDDivision> divMap = divisions.get(districtId);
+            if (divMap == null) {
+                divMap = new HashMap<Integer, BDDivision>();
+                divisions.put(districtId, divMap);
+            }
+            divMap.put(r.getDivisionId(), r);
 
             Map<Integer, String> districtMap = siDivisions.get(districtId);
             if (districtMap == null) {

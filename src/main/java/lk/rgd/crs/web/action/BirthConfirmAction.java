@@ -1,22 +1,20 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.RequestAware;
-import lk.rgd.crs.api.domain.Race;
 import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.dao.RaceDAO;
-import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Locale;
 import java.beans.PropertyDescriptor;

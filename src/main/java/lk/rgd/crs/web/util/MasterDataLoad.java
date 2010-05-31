@@ -1,13 +1,10 @@
 package lk.rgd.crs.web.util;
 
-import lk.rgd.crs.api.domain.District;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.domain.PrintData;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.io.UnsupportedEncodingException;
 
 /**
  * @author Chathuranga

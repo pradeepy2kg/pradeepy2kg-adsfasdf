@@ -10,22 +10,26 @@ import java.util.Set;
  * @author asankha
  */
 @Entity
-@Table(name = "roles")
+@Table(name = "ROLES", schema = "COMMON")
 public class Role {
 
     @Id
+    @Column(updatable = false)
     private String roleId;
-    /** Is the role active? - 0 : active, 1 - inactive */
+    /** Is the role status? - 0 : active, 1 - inactive */
+    @Column(nullable = false, name="STATUS", columnDefinition="smallint not null default 1")
     private int status;
     /** Role name */
+    @Column(nullable = false, length = 30, unique = true)
     private String name;
 
     @Transient
     /** The permission BitSet used at runtime - loaded from the permissions byte[] */
     private BitSet permBitSet;
 
-    @Lob
     /** Used to persist the permission BitSet */
+    @Lob
+    @Column (length = 128)
     @Basic (fetch = FetchType.EAGER)
     private byte[] permissions;
 

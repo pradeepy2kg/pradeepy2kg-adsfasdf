@@ -1,8 +1,7 @@
-package lk.rgd.crs.core.dao;
+package lk.rgd.common.core.dao;
 
-import lk.rgd.common.core.dao.BaseDAO;
-import lk.rgd.crs.api.domain.AppParameter;
-import lk.rgd.crs.api.dao.AppParametersDAO;
+import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.AppParameter;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

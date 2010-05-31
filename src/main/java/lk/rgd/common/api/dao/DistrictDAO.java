@@ -1,6 +1,7 @@
-package lk.rgd.crs.api.dao;
+package lk.rgd.common.api.dao;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 
 import java.util.Map;
 
@@ -16,4 +17,11 @@ public interface DistrictDAO {
      * @return a Map of known districts for the given language along with the ID
      */
     public Map<Integer, String> getDistricts(String language, User user);
+
+    /**
+     * Return District by id
+     * @param id the District ID
+     * @return the District
+     */
+    public District getDistrict(int id);
 }

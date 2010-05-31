@@ -1,5 +1,6 @@
-package lk.rgd.crs.api.domain;
+package lk.rgd.common.api.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,14 +13,19 @@ import java.io.Serializable;
  * @author asankha
  */
 @Entity
-@Table(name = "races")
+@Table(name = "RACES", schema = "COMMON")
 public class Race implements Serializable {
 
     @Id
+    @Column(updatable = false)
     private int raceId;
+    @Column(nullable = false, unique = true, updatable = false)
     private String siRaceName;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String enRaceName;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String taRaceName;
+    @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
 
     public Race() {}

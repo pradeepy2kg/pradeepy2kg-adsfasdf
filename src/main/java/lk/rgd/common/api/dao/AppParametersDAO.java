@@ -1,4 +1,4 @@
-package lk.rgd.crs.api.dao;
+package lk.rgd.common.api.dao;
 
 /**
  * Stores application configuration parameters such as the number of days between the birth and submission date to

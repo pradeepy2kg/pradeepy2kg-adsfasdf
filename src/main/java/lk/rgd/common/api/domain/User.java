@@ -12,38 +12,50 @@ import java.util.Set;
  * @author asankha
  */
 @Entity
-@Table(name = "users")
+@Table(name = "USERS", schema = "COMMON")
 public class User {
 
     @Id
+    @Column(updatable = false)
     private String userId;
     /** The simple name of the user */
+    @Column(nullable = false, length = 30, updatable = false)
     private String userName;
     /** This is the PIN of the actual user in the PRS */
+    @Column(nullable = false, length = 10)
     private String pin;
     /** The SHA-1 hash of the password */
+    @Column(length = 60)
     private String passwordHash;
     /** The preferred language */
+    @Column(length = 2, nullable = false)
     private String prefLanguage;
 
     /** The preferred district */
-    private String prefDistrict;
+    @Column(nullable = true)
+    private Integer prefDistrict;
     /** The preferred Birth & Death registration division */
-    private String prefBDDivision;
+    @Column(nullable = true)
+    private Integer prefBDDivision;
     /** The preferred Marriage registration division */
-    private String prefMRDivision;
+    @Column(nullable = true)
+    private Integer prefMRDivision;
 
     /** The assigned district - if not null, the user can only work within this district */
-    private String assignedDistrict;
+    @Column(nullable = true)
+    private Integer assignedDistrict;
     /** The assigned Birth & Death registration division - if not null, the user can only work within this division */
-    private String assignedBDDivision;
+    @Column(nullable = true)
+    private Integer assignedBDDivision;
     /** The assigned Marriage registration division - if not null, the user can only work within this division */
-    private String assignedMRDivision;
+    @Column(nullable = true)
+    private Integer assignedMRDivision;
     /** Is the user account active - 0 : active, 1 - inactive, 2 - locked out */
+    @Column(nullable = false, name="STATUS", columnDefinition="smallint not null default 1")
     private int status;
 
     @ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "USER_ROLES",
+	@JoinTable(schema = "COMMON", name = "USER_ROLES",
         joinColumns = @JoinColumn(name="userId"),
         inverseJoinColumns = @JoinColumn(name="roleId"))
     private Set<Role> roles;
@@ -107,51 +119,51 @@ public class User {
         this.prefLanguage = prefLanguage;
     }
 
-    public String getPrefDistrict() {
+    public int getPrefDistrict() {
         return prefDistrict;
     }
 
-    public void setPrefDistrict(String prefDistrict) {
+    public void setPrefDistrict(int prefDistrict) {
         this.prefDistrict = prefDistrict;
     }
 
-    public String getPrefBDDivision() {
+    public int getPrefBDDivision() {
         return prefBDDivision;
     }
 
-    public void setPrefBDDivision(String prefBDDivision) {
+    public void setPrefBDDivision(int prefBDDivision) {
         this.prefBDDivision = prefBDDivision;
     }
 
-    public String getPrefMRDivision() {
+    public int getPrefMRDivision() {
         return prefMRDivision;
     }
 
-    public void setPrefMRDivision(String prefMRDivision) {
+    public void setPrefMRDivision(int prefMRDivision) {
         this.prefMRDivision = prefMRDivision;
     }
 
-    public String getAssignedDistrict() {
+    public int getAssignedDistrict() {
         return assignedDistrict;
     }
 
-    public void setAssignedDistrict(String assignedDistrict) {
+    public void setAssignedDistrict(int assignedDistrict) {
         this.assignedDistrict = assignedDistrict;
     }
 
-    public String getAssignedBDDivision() {
+    public int getAssignedBDDivision() {
         return assignedBDDivision;
     }
 
-    public void setAssignedBDDivision(String assignedBDDivision) {
+    public void setAssignedBDDivision(int assignedBDDivision) {
         this.assignedBDDivision = assignedBDDivision;
     }
 
-    public String getAssignedMRDivision() {
+    public int getAssignedMRDivision() {
         return assignedMRDivision;
     }
 
-    public void setAssignedMRDivision(String assignedMRDivision) {
+    public void setAssignedMRDivision(int assignedMRDivision) {
         this.assignedMRDivision = assignedMRDivision;
     }
 

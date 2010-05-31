@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DistrictDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -13,7 +14,6 @@ import lk.rgd.crs.web.util.MasterDataLoad;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.PrintData;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.common.api.domain.User;
@@ -54,12 +54,12 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, true);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), true);
             } else {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), false);
             }
         } else {
-            printList = birthDeclarationDAO.getConfirmationPrintPending(11, 1, false);
+            printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), false);
         }
 
         session.put(WebConstants.SESSION_PRINT_LIST, printList);

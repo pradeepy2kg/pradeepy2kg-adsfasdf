@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.District;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,19 +14,75 @@ import java.io.Serializable;
  * @author asankha
  */
 @Entity
-@Table(name = "bd_divisions")
+@Table(name = "BD_DIVISIONS", schema = "CRS")
+@IdClass (BDDivision.BDDivisionPK.class)
 public class BDDivision implements Serializable {
 
-    //@Id
     @ManyToOne
-    @JoinColumn(name = "districtId")
+    @JoinColumn(name = "districtId", nullable = false, updatable = false)
     private District district;
     @Id
+    private int districtId;
+    @Id
+    @Column(updatable = false)
     private int divisionId;
+    @Column(nullable = false, length = 60, updatable = false)
     private String siDivisionName;
+    @Column(nullable = false, length = 60, updatable = false)
     private String enDivisionName;
+    @Column(nullable = false, length = 60, updatable = false)
     private String taDivisionName;
+    @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
+
+    public static class BDDivisionPK implements Serializable {
+        private int districtId;
+        private int divisionId;
+
+        public BDDivisionPK() {
+        }
+
+        public BDDivisionPK(int districtId, int divisionId) {
+            this.districtId = districtId;
+            this.divisionId = divisionId;
+        }
+
+        public int getDistrictId() {
+            return districtId;
+        }
+
+        public void setDistrictId(int districtId) {
+            this.districtId = districtId;
+        }
+
+        public int getDivisionId() {
+            return divisionId;
+        }
+
+        public void setDivisionId(int divisionId) {
+            this.divisionId = divisionId;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            BDDivisionPK that = (BDDivisionPK) o;
+
+            if (districtId != that.districtId) return false;
+            if (divisionId != that.divisionId) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = districtId;
+            result = 31 * result + divisionId;
+            return result;
+        }
+    }
 
     public BDDivision() {}
 
@@ -84,5 +142,13 @@ public class BDDivision implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
     }
 }

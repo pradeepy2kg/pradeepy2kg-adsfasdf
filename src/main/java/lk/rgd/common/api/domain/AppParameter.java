@@ -1,5 +1,6 @@
-package lk.rgd.crs.api.domain;
+package lk.rgd.common.api.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,11 +13,13 @@ import java.io.Serializable;
  * @author asankha
  */
 @Entity
-@Table(name = "app_parameters")
+@Table(name = "APP_PARAMETERS", schema = "COMMON")
 public class AppParameter implements Serializable {
 
     @Id
+    @Column(length = 30)
     private String name;
+    @Column(nullable = false, length = 80)
     private String value;
 
     public AppParameter() {}

@@ -6,9 +6,11 @@
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+    default-init-method="init" default-destroy-method="destroy">
 
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.42.104.105/epopulation"/>
         <property name="username" value="epop"/>
@@ -24,6 +26,12 @@
                 <property name="showSql" value="true"/>
             </bean>
         </property>
+    </bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
+        <property name="url" value="jdbc:derby://localhost:1527/unit-testing-jpa;create=true;"/>
+        <property name="username" value="epop"/>
+        <property name="password" value="epop"/>
     </bean>-->
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -52,18 +60,16 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!--A special bean that initializes the in-memory test database with test_database.sql-->
+    <!--A special bean that initializes the in-memory test database with populate_database.sql-->
     <bean id="dbInit" class="lk.rgd.crs.core.DatabaseInitializer">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!--A special bean that pre-loads all DAOs implementing the PreloadableDAO interface-->
-    <bean id="preloader" class="lk.rgd.crs.core.dao.PreloadableDAOInitializer"/>
 
     <!--DAO Beans - These allow access to the lower levels of the application data-->
-    <bean id="appParametersDAOImpl" class="lk.rgd.crs.core.dao.AppParametersDAOImpl"/>
-    <bean id="districtDAOImpl" class="lk.rgd.crs.core.dao.DistrictDAOImpl"/>
-    <bean id="countryDAOImpl" class="lk.rgd.crs.core.dao.CountryDAOImpl"/>
-    <bean id="raceDAOImpl" class="lk.rgd.crs.core.dao.RaceDAOImpl"/>
+    <bean id="appParametersDAOImpl" class="lk.rgd.common.core.dao.AppParametersDAOImpl"/>
+    <bean id="districtDAOImpl" class="lk.rgd.common.core.dao.DistrictDAOImpl"/>
+    <bean id="countryDAOImpl" class="lk.rgd.common.core.dao.CountryDAOImpl"/>
+    <bean id="raceDAOImpl" class="lk.rgd.common.core.dao.RaceDAOImpl"/>
     <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
     <bean id="userDAOImpl" class="lk.rgd.common.core.dao.UserDAOImpl"/>
     <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl"/>

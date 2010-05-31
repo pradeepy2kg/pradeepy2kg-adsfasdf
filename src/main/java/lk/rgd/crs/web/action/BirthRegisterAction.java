@@ -2,19 +2,18 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.dao.DistrictDAO;
-import lk.rgd.crs.api.dao.CountryDAO;
-import lk.rgd.crs.api.dao.RaceDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.model.ChildInfo;
 import lk.rgd.crs.web.model.ParentInfo;
 import lk.rgd.crs.web.model.OtherInfo;
 import lk.rgd.crs.web.model.NotifyingAuthorityInfo;
-import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.common.api.domain.User;
 import org.apache.struts2.interceptor.SessionAware;
 

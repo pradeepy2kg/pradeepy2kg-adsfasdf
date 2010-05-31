@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.domain.BDDivision;
 
 import java.util.Map;
 
@@ -21,4 +22,14 @@ public interface BDDivisionDAO {
      * @return a Map of the list of known Birth and Death Registration divisions for the given language - with the ID
      */
     public Map<Integer, String> getDivisions(String language, int districtId, User user);
+
+    /**
+     * Return BDDivision by Id
+     * @param  districtId Birth Death district ID
+     * @param  bdDivisionId Birth Death division ID
+     * @return BDDivision
+     */
+    public BDDivision getBDDivision(int districtId, int bdDivisionId);
+
+    public BDDivision find(int districtId, int divisionId);
 }

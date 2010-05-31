@@ -1,4 +1,4 @@
-package lk.rgd.crs.api.dao;
+package lk.rgd.common.api.dao;
 
 import java.util.Map;
 

@@ -6,17 +6,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import lk.rgd.AppConstants;
 import lk.rgd.Permission;
-import lk.rgd.common.api.dao.RoleDAO;
-import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.Country;
-import lk.rgd.crs.api.domain.District;
-import lk.rgd.crs.api.domain.Race;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +74,7 @@ public class DAOImplTest extends TestCase {
                 try {
                     ctx = new GenericApplicationContext();
                     XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
-                    xmlReader.loadBeanDefinitions(new ClassPathResource("unit-test-spring.xml"));
+                    xmlReader.loadBeanDefinitions(new ClassPathResource("applicationContext.xml"));
                     ctx.refresh();
                 } catch (Exception e) {
                     handleException("Exception starting Spring for unit-test backend", e);
@@ -180,11 +176,12 @@ public class DAOImplTest extends TestCase {
 
     public void testBirthDeclaration() throws Exception {
         BirthDeclarationDAO dao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+        BDDivisionDAO bdDao = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
 
-        List<BirthDeclaration> r = dao.getConfirmationPrintPending(11, 1, false);
+        List<BirthDeclaration> r = dao.getConfirmationPrintPending(bdDao.getBDDivision(11, 1), false);
         Assert.assertEquals(2, r.size());
-
-        r = dao.getConfirmationPrintPending(11, 1, true);
+        
+        r = dao.getConfirmationPrintPending(bdDao.getBDDivision(11, 1), true);
         Assert.assertEquals(1, r.size());
     }
 }

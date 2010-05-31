@@ -1,10 +1,9 @@
-package lk.rgd.crs.core.dao;
+package lk.rgd.common.core.dao;
 
 import lk.rgd.AppConstants;
-import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.api.domain.Country;
 import lk.rgd.crs.ErrorCodes;
-import lk.rgd.crs.api.dao.CountryDAO;
-import lk.rgd.crs.api.domain.Country;
+import lk.rgd.common.api.dao.CountryDAO;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,11 +1,10 @@
-package lk.rgd.crs.core.dao;
+package lk.rgd.common.core.dao;
 
 import lk.rgd.AppConstants;
-import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.ErrorCodes;
-import lk.rgd.crs.api.dao.DistrictDAO;
-import lk.rgd.crs.api.domain.District;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +18,7 @@ import java.util.Map;
  */
 public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, PreloadableDAO {
 
+    private final Map<Integer, District> districts = new HashMap<Integer, District>();
     private final Map<Integer, String> siDistricts = new HashMap<Integer, String>();
     private final Map<Integer, String> enDistricts = new HashMap<Integer, String>();
     private final Map<Integer, String> taDistricts = new HashMap<Integer, String>();
@@ -39,6 +39,10 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         return null;
     }
 
+    public District getDistrict(int id) {
+        return districts.get(id);   
+    }
+
     /**
      * Loads all values from the database table into a cache
      */
@@ -49,6 +53,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         List<District> results = query.getResultList();
 
         for (District d : results) {
+            districts.put(d.getDistrictId(), d);
             siDistricts.put(d.getDistrictId(), d.getSiDistrictName());
             enDistricts.put(d.getDistrictId(), d.getEnDistrictName());
             taDistricts.put(d.getDistrictId(), d.getTaDistrictName());

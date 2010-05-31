@@ -1,11 +1,9 @@
-package lk.rgd.crs.api.domain;
+package lk.rgd.common.api.domain;
 
 import lk.rgd.AppConstants;
+import lk.rgd.crs.api.domain.BDDivision;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,16 +15,21 @@ import java.util.Set;
  * @author chathuranga
  */
 @Entity
-@Table(name = "districts")
+@Table(name = "DISTRICTS", schema = "COMMON")
 public class District implements Serializable {
 
     @Id
+    @Column(updatable = false)
     private int districtId;
+    @Column(nullable = false, unique = true, updatable = false)
     private String siDistrictName;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String enDistrictName;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String taDistrictName;
+    @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
-    @OneToMany(mappedBy = "district")
+    @OneToMany(mappedBy = "district", targetEntity = BDDivision.class)
     private Set<BDDivision> bdDivisions = new HashSet<BDDivision>();
 
     public District() {}

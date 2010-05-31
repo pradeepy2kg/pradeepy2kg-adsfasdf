@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DistrictDAO;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import java.util.Locale;
 import java.util.List;
 
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.web.WebConstants;
@@ -46,7 +46,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public String birthRegisterApproval() {
         populate();
-        birthRegisterApproval = (ArrayList<BirthDeclaration>) birthDeclarationDAO.getBirthRegistrationPending(11, 1, false);
+        birthRegisterApproval = (ArrayList<BirthDeclaration>) birthDeclarationDAO.getBirthRegistrationPending(bdDivisionDAO.getBDDivision(11, 1), false);
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
     }
@@ -78,7 +78,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         populate();
         if (expired) {
             logger.debug("insid getExpiredList: checked {} ", expired);
-            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(11, 1, true);
+            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(bdDivisionDAO.getBDDivision(11, 1), true);
             /** here it replacess the session variable ApprovalData with the expiredApprovalData */
             session.put("ApprovalData", birthRegisterApproval);
             if (birthRegisterApproval.size() < 10) {

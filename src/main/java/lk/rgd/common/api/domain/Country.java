@@ -1,5 +1,6 @@
-package lk.rgd.crs.api.domain;
+package lk.rgd.common.api.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,14 +12,19 @@ import javax.persistence.Table;
  * @author asankha
  */
 @Entity
-@Table(name = "countries")
+@Table(name = "COUNTRIES", schema = "COMMON")
 public class Country {
 
     @Id
+    @Column(updatable = false)
     private int countryId;
+    @Column(nullable = false, unique = true, updatable = false)
     private String siCountryName;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String enCountryName;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String taCountryName;
+    @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
 
     public Country() {}
