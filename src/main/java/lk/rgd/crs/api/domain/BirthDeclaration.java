@@ -35,7 +35,6 @@ public class BirthDeclaration {
     private int birthDivision;
     /** This is the serial number captured from the BDF */
     private String bdfSerialNo;
-
     /** The date of the birth */
     private Date dateOfBirth;
     /** The date when the birth declaration was submitted to the medical registrar or the DS office */
@@ -48,7 +47,6 @@ public class BirthDeclaration {
     private int status;
     /** Status comment - e.g. reason for rejection due to duplicate */
     private String comments;
-
     /** The place of birth - usually the village or hospital name */
     private String placeOfBirth;
     /** Name in Sinhala or Tamil */
@@ -83,6 +81,7 @@ public class BirthDeclaration {
     private String fatherPlaceOfBirth;
     /** Race of father */
     private int    fatherRace;
+
     //----------------------------------------------------
     /** NIC or PIN of mother */
     private String motherNICorPIN;
@@ -120,11 +119,13 @@ public class BirthDeclaration {
     private boolean motherSigned;
     /** If parents are unmarried - Has the father signed to include fathers details? */
     private boolean fatherSigned;
+
     //-----------------------------------------------------
     // If grandfather of the child born in Sri Lanka, grandfather's details
     private String grandFatherFullName;
     private int grandFatherBirthYear;
     private String grandFatherBirthPlace;
+
     //-----------------------------------------------------
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
     private String greatGrandFatherFullName;
@@ -139,6 +140,7 @@ public class BirthDeclaration {
     private String informantPhoneNo;
     private String informantEmail;
     private Date   informantSignDate;
+
     //-----------------------------------------------------
     /** The notifying authority PIN */
     private String notifyingAuthorityPIN;
