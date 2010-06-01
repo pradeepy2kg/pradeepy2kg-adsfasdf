@@ -10,7 +10,7 @@
             <s:label><span><s:label name="division" value= "%{getText('division.label')}" /></span><s:select list="divisionList"
                                                      name="division" headerKey="0"/></s:label>
             <s:label><span><s:label name="show_expired" value= "%{getText('show_expired.label')}" /></span><s:checkbox name="expired"/></s:label>
-            <s:submit name="refresh" value="refresh"></s:submit>
+            <s:submit name="refresh" value="%{getText('refresh.label')}"></s:submit>
         </s:form>
     </div>
     <div id="birth-register-approval-body">
