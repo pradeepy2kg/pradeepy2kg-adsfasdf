@@ -13,8 +13,6 @@ public interface BirthDeclarationDAO {
 
     public void addBirthDeclaration(BirthDeclaration bdf);
 
-    public BirthDeclaration getBirthDeclaration(BDDivision birthDivision, String bdfSerialNo);
-
     /**
      * Returns a limited set of BirthDeclarations for which the confirmation form is not yet printed. The
      * results are ordered on the descending dateOfRegistration and optionally already printed records may
@@ -26,6 +24,13 @@ public interface BirthDeclarationDAO {
      */
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed);
 
-    public List<BirthDeclaration> getBirthRegistrationPending(int division, boolean isExpired);
+    /**
+     * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
+     * by an ADR. Results are ordered on the descending confirmationReceiveDate
+     *
+     * @param birthDivision the birth division
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision);
 }
 
