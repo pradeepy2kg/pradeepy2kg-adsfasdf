@@ -101,16 +101,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         populate();
         try {
             switch (pageNo) {
-                case 0: initForm(); break;
-                case 1: beanMerge(getChild()); break;
-                case 2: beanMerge(getParent()); break;
-                case 3: beanMerge(getOther()); break;
-                case 4: BirthDeclaration register = beanMerge(getNotifyingAuthority());
-                        // all pages captured, proceed to persist after validations
-                        // todo business validations and persiatance
-                        logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
-                        logger.debug("Birth Register : {}.", register.getMotherFullName());
-                        return "success";
+                case 0:
+                    initForm();
+                    break;
+                case 1:
+                    beanMerge(getChild());
+                    break;
+                case 2:
+                    beanMerge(getParent());
+                    break;
+                case 3:
+                    beanMerge(getOther());
+                    break;
+                case 4:
+                    BirthDeclaration register = beanMerge(getNotifyingAuthority());
+                    // all pages captured, proceed to persist after validations
+                    // todo business validations and persiatance
+                    logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
+                    logger.debug("Birth Register : {}.", register.getMotherFullName());
+                    return "success";
             }
         } catch (Exception e) {
             handleErrors(e);

@@ -42,7 +42,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
-    public List<BirthDeclaration> getBirthRegistrationPending(User user, boolean isExpired) {
+    public List<BirthDeclaration> getBirthRegistrationPending(int division, boolean isExpired) {
         //sample record for testing
         BirthDeclaration bd = new BirthDeclaration();
         bd.setChildFullNameEnglish("kamal");
