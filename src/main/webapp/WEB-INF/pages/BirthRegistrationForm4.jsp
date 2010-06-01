@@ -16,24 +16,31 @@
         <div id="notifier-nic" class="font-9">
             <label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள
                 அட்டை இல.<br>PIN / NIC of the Notifying Authority</label>
-            <s:textfield name=""/>
+            <s:textfield name="notifyingAuthority.notifyingAuthorityPIN"/>
         </div>
         <div id="notifier-name" class="font-9">
             <label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label>
-            <s:textarea name=""/>
+            <s:textarea name="notifyingAuthority.notifyingAuthorityName"/>
         </div>
         <div id="notifier-address" class="font-9">
             <label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
-            <s:textarea name=""/>
+            <s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/>
         </div>
         <div id="notifier-signature" class="font-9">
             <label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and Official Seal (if available) of the
                 Notifying Authority</label>
-            <s:checkbox name=""/>
+            <s:checkbox name="notifyingAuthority.notifyingAuthoritySigned"/>
         </div>
         <div id="notified-date" class="font-9">
             <label>දිනය <br>*in tamil <br>Date</label>
-            <s:textfield name=""/>
+            <s:select list="{'2009','2010','2011'}" name="" id="fatherYear"
+                      onchange="javascript:setDate('fatherYear','2')"/>
+            <s:select list="{'01','02','03'}" name="" id="fatherMonth"
+                      onchange="javascript:setDate('fatherMonth','2')"/>
+            <s:select list="{'01','02','03'}" name="" id="fatherDay"
+                      onchange="javascript:setDate('fatherDay','2')"/>
+            <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
+                              displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
         <s:submit value="SUBMIT"/>
     </s:form>
