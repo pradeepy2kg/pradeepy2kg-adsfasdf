@@ -15,6 +15,7 @@ import lk.rgd.crs.web.model.ChildInfo;
 import lk.rgd.crs.web.model.ParentInfo;
 import lk.rgd.crs.web.model.OtherInfo;
 import lk.rgd.crs.web.model.NotifyingAuthorityInfo;
+import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.common.api.domain.User;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -27,6 +28,7 @@ import java.util.Locale;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 
 
 /**
@@ -119,20 +121,31 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * update the bean in session with the values of local bean
      */
     private BirthDeclaration beanMerge(Object o) throws Exception {
-        logger.debug("calss {} received.", o.getClass());
         BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
         BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
+        BeanInfo targetInfo = Introspector.getBeanInfo(BirthDeclaration.class);
+        PropertyDescriptor[] targetDescriptors = targetInfo.getPropertyDescriptors();
 
         // Iterate over all the attributes of form bean and copy them into the target
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
             Object newValue = descriptor.getReadMethod().invoke(o);
             logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
 
-            if (descriptor.getWriteMethod() != null) {
-                logger.debug("field merged");
-                descriptor.getWriteMethod().invoke(target, newValue);
-            } else {
-                logger.debug("field not merged");
+            Method beanMethod = descriptor.getWriteMethod();
+            if (beanMethod != null) {
+                String methodName = descriptor.getWriteMethod().getName();
+                for (PropertyDescriptor targetDescriptor : targetDescriptors) {
+                    Method targetMethod = targetDescriptor.getWriteMethod();
+                    if (targetMethod == null) {
+                        continue;
+                    }
+                    logger.debug("looking for a match with target method {}", targetMethod);
+                    if (methodName.equals(targetMethod.getName())) {
+                        targetMethod.invoke(target, newValue);
+                        logger.debug("field merged ");
+                        break;
+                    }
+                }
             }
         }
 
