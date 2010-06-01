@@ -77,6 +77,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String dateOfMarriage;
     private int fatherCountry;
     private int motherCountry;
+    private String informantSignDate;
 
     public String welcome() {
         return "success";
@@ -149,7 +150,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         // Iterate over all the attributes of form bean and copy them into the target
         for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
             Object newValue = descriptor.getReadMethod().invoke(o);
-            logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
+            //logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
 
             Method beanMethod = descriptor.getWriteMethod();
             if (beanMethod != null) {
@@ -342,14 +343,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.parent = parent;
     }
 
-    public GrandFatherInfo getOther() {
-        return grandFather;
-    }
-
-    public void setOther(GrandFatherInfo grandFather) {
-        this.grandFather = grandFather;
-    }
-
     public NotifyingAuthorityInfo getNotifyingAuthority() {
         return notifyingAuthority;
     }
@@ -418,8 +411,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void setFatherCountry(int fatherCountry) {
-        this.fatherCountry = fatherCountry;
-        parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
+        if (parent != null) {
+            this.fatherCountry = fatherCountry;
+            //TODO use countryDAO to get Country when id given
+            parent.setFatherCountry(new Country());
+        }
     }
 
     public int getMotherCountry() {
@@ -427,7 +423,45 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void setMotherCountry(int motherCountry) {
-        this.motherCountry = motherCountry;
-        parent.setMotherCountry(countryDAO.getCountry(motherCountry));
+        if (parent != null) {
+            this.motherCountry = motherCountry;
+            //TODO use countryDAO to get Country when id given
+            parent.setMotherCountry(countryDAO.getCountry(motherCountry));
+        }
+    }
+
+    public MarriageInfo getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(MarriageInfo marriage) {
+        this.marriage = marriage;
+    }
+
+    public InformantInfo getInformant() {
+        return informant;
+    }
+
+    public void setInformant(InformantInfo informant) {
+        this.informant = informant;
+    }
+
+    public String getInformantSignDate() {
+        return informantSignDate;
+    }
+
+    public void setInformantSignDate(String informantSignDate) {
+        if (informant != null) {
+            this.informantSignDate = informantSignDate;
+            informant.setInformantSignDate(EPopDate.getDate(informantSignDate));
+        }
+    }
+
+    public GrandFatherInfo getGrandFather() {
+        return grandFather;
+    }
+
+    public void setGrandFather(GrandFatherInfo grandFather) {
+        this.grandFather = grandFather;
     }
 }

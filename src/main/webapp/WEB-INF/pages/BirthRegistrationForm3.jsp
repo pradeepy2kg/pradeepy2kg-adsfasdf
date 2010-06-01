@@ -33,7 +33,7 @@
                 <label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label>
 
                 <div>
-                    <s:textfield name="other.placeOfMarriage"/>
+                    <s:textfield name="marriage.placeOfMarriage"/>
                 </div>
             </div>
             <div id="date-of-marriage">
@@ -63,7 +63,7 @@
                     <label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label>
                 </div>
                 <div>
-                    <s:checkbox name="other.motherSigned"/>
+                    <s:checkbox name="marriage.motherSigned"/>
                 </div>
             </div>
             <div id="father-signature" class="font-9">
@@ -71,7 +71,7 @@
                     <label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label>
                 </div>
                 <div>
-                    <s:checkbox name="other.fatherSigned"/>
+                    <s:checkbox name="marriage.fatherSigned"/>
                 </div>
             </div>
         </div>
@@ -85,15 +85,15 @@
         <div id="grand-father-info">
             <div id="grand-father-name" class="font-9">
                 <label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label>
-                <s:textarea name="other.grandFatherFullName"/>
+                <s:textarea name="grandFather.grandFatherFullName"/>
             </div>
             <div id="grand-father-yob" class="font-9">
                 <label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label>
-                <s:textfield name="other.grandFatherBirthYear"/>
+                <s:textfield name="grandFather.grandFatherBirthYear"/>
             </div>
             <div id="grand-father-pob" class="font-9">
                 <label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label>
-                <s:textfield name="other.grandFatherBirthPlace"/>
+                <s:textfield name="grandFather.grandFatherBirthPlace"/>
             </div>
         </div>
         <div id="great-grand-father-in-sri-lanka" class="font-9">
@@ -104,15 +104,15 @@
         <div id="great-grand-father-info">
             <div id="great-grand-father-name" class="font-9">
                 <label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label>
-                <s:textarea name="other.greatGrandFatherFullName"/>
+                <s:textarea name="grandFather.greatGrandFatherFullName"/>
             </div>
             <div id="great-grand-father-yob" class="font-9">
                 <label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label>
-                <s:textfield name="other.greatGrandFatherBirthYear"/>
+                <s:textfield name="grandFather.greatGrandFatherBirthYear"/>
             </div>
             <div id="great-grand-father-pob" class="font-9">
                 <label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label>
-                <s:textfield name="other.greatGrandFatherBirthPlace"/>
+                <s:textfield name="grandFather.greatGrandFatherBirthPlace"/>
             </div>
         </div>
         <div id="birth-registration-form-informant-info-sub-title" class="form-sub-title">
@@ -137,28 +137,28 @@
         </div>
         <div id="informant-name" class="font-9">
             <label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label>
-            <s:textarea name="other.informantName"/>
+            <s:textarea name="informant.informantName"/>
         </div>
         <div id="informant-nic" class="font-9">
             <label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல் கொடுப்பவரின் தனிநபர்
                 அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label>
-            <s:textfield name="other.informantNICorPIN"/>
+            <s:textfield name="informant.informantNICorPIN"/>
         </div>
         <div id="informant-address" class="font-9">
             <label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
-            <s:textarea name="other.informantAddress"/>
+            <s:textarea name="informant.informantAddress"/>
         </div>
         <div id="informant-telephone" class="font-9">
             <label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label>
-            <s:textfield name="other.informantPhoneNo"/>
+            <s:textfield name="informant.informantPhoneNo"/>
         </div>
         <div id="informant-email" class="font-9">
             <label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label>
-            <s:textfield name="other.informantEmail"/>
+            <s:textfield name="informant.informantEmail"/>
         </div>
         <div id="informant-signature" class="font-9">
             <label>(32) අත්සන<br>தகவல் ... <br>Signature</label>
-            <s:checkbox name="other.informantSigned"/>
+            <s:checkbox name="informant.informantSigned"/>
         </div>
         <div id="informed-date" class="font-9">
             <label>දිනය <br>*in tamil<br>Date</label>
@@ -168,7 +168,7 @@
                       onchange="javascript:setDate('informedMonth','2')"/>
             <s:select list="{'01','02','03'}" name="" id="informedDay"
                       onchange="javascript:setDate('informedDay','2')"/>
-            <s:datetimepicker id="informedDatePicker" name="other.informantSignDate" label="Format (yyyy-MM-dd)"
+            <s:datetimepicker id="informedDatePicker" name="informantSignDate" label="Format (yyyy-MM-dd)"
                               displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('informedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="3"/>

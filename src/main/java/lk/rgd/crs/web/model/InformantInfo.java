@@ -5,7 +5,9 @@ import java.util.Date;
 public class InformantInfo {
     private String informantAddress;
 
-    /** 0 - father, 1 - mother, 2 - guardian */
+    /**
+     * 0 - father, 1 - mother, 2 - guardian
+     */
     private int informantType;
 
     private String informantName;
@@ -13,6 +15,7 @@ public class InformantInfo {
     private String informantPhoneNo;
     private String informantEmail;
     private Date informantSignDate;
+    private boolean informantSigned;
 
     public int getInformantType() {
         return informantType;
@@ -70,4 +73,11 @@ public class InformantInfo {
         this.informantSignDate = informantSignDate;
     }
 
+    public boolean isInformantSigned() {
+        return informantSigned;
+    }
+
+    public void setInformantSigned(boolean informantSigned) {
+        this.informantSigned = informantSigned;
+    }
 }
