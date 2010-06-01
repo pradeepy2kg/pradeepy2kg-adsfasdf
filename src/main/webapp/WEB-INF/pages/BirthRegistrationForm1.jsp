@@ -88,7 +88,7 @@
                         <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
                     </div>
                     <div>
-                        <s:select name="child.birthDistrict" list="districtList" headerKey="0"
+                        <s:select name="birthDistrict" list="districtList" headerKey="0"
                                   headerValue="%{getText('select_district.label')}"/>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                         <label>කොට්ඨාශය பிரிவு Division</label>
                     </div>
                     <div>
-                        <s:select name="child.birthDivision" list="divisionList" headerKey="0"
+                        <s:select name="birthDivision" list="divisionList" headerKey="0"
                                   headerValue="%{getText('select_division.label')}"/>
                     </div>
                 </div>
