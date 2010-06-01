@@ -39,7 +39,7 @@ public class BirthDeclaration {
         @JoinColumn (name = "birthDistrict"),
         @JoinColumn (name = "birthDivision")
     })
-    private int birthDivision;
+    private BDDivision birthDivision;
     /** This is the serial number captured from the BDF */
     @Column (nullable = false)
     private String bdfSerialNo;
@@ -251,15 +251,15 @@ public class BirthDeclaration {
     @Column (nullable = true)
     private int   originalBCPlaceOfIssue;
 
-    public int getBirthDistrict() {
+    public District getBirthDistrict() {
+        return birthDivision.getDistrict();
+    }
+
+    public BDDivision getBirthDivision() {
         return birthDivision;
     }
 
-    public int getBirthDivision() {
-        return birthDivision;
-    }
-
-    public void setBirthDivision(int birthDivision) {
+    public void setBirthDivision(BDDivision birthDivision) {
         this.birthDivision = birthDivision;
     }
 
