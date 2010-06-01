@@ -1,10 +1,10 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.BirthRegisterApproval;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,20 +42,15 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
-    public List<BirthDeclaration> getBirthRegistrationPending(BDDivision birthDivision, boolean isExpired) {
+    public List<BirthDeclaration> getBirthRegistrationPending(User user, boolean isExpired) {
         //sample record for testing
         BirthDeclaration bd = new BirthDeclaration();
         bd.setChildFullNameEnglish("kamal");
-        BDDivision div = new BDDivision();
-        div.setDistrictId(11);
-        div.setDivisionId(1);
-        bd.setBirthDivision(div);
         bd.setBdfSerialNo("A25");
         bd.setStatus(4);
 
         BirthDeclaration bd1 = new BirthDeclaration();
         bd1.setChildFullNameEnglish("Nimal");
-        bd1.setBirthDivision(div);
         bd1.setBdfSerialNo("A458");
         bd1.setStatus(5);
         List<BirthDeclaration> a = new ArrayList<BirthDeclaration>();

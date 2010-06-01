@@ -43,6 +43,7 @@
                             <td><s:if test="status==4"><s:label value="%{getText('yes.label')}"/></s:if><s:else><s:label
                                     value="%{getText('no.label')}"/></s:else></td>
                             <td><s:property value="confirmationReceiveDate"/></td>
+                            <%--todo following status should be clarified here its only for testing--%>
                             <td><s:if test="status==3 || status==4"><s:label value="%{getText('approve.label')}"/></s:if>
                             <s:elseif test="status==5"><s:label value="%{getText('expired.label')}" /></s:elseif> </td>
                         </tr>

@@ -44,9 +44,17 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
+    /**
+     * gets the BirthRegisterApproval data which is to be displayed
+     * and store them in the session to get later in the jsp
+     *
+     * @return String
+     */
     public String birthRegisterApproval() {
         populate();
-        birthRegisterApproval = (ArrayList<BirthDeclaration>) birthDeclarationDAO.getBirthRegistrationPending(bdDivisionDAO.getBDDivision(11, 1), false);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        //todo if it wants to get the user selected district this has to be modified
+        birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user, false);
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
     }
@@ -58,7 +66,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
-
+        //todo division id should be the user selection division
         divisionList = bdDivisionDAO.getDivisions(language, 11, user);
         districtList = districtDAO.getDistricts(language, user);
         logger.debug("inside populte : districts , countries and races populated.");
@@ -78,7 +86,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         populate();
         if (expired) {
             logger.debug("insid getExpiredList: checked {} ", expired);
-            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(bdDivisionDAO.getBDDivision(11, 1), true);
+            User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user, true);
             /** here it replacess the session variable ApprovalData with the expiredApprovalData */
             session.put("ApprovalData", birthRegisterApproval);
             if (birthRegisterApproval.size() < 10) {
