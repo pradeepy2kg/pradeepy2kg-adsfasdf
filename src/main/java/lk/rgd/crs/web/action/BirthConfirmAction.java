@@ -37,7 +37,11 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     private final RaceDAO raceDao;
     private final DistrictDAO districtDAO;
-
+    /**
+     * approveSelected is from BirhRegisterApproval.jsp
+     * if it is populated redirected to BirthApprovalAction
+     */
+    private String approveSelected;
     private int pageNo;
     private String language;
     private Map<Integer, String> districtList;
@@ -62,35 +66,40 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      * This will have no performace impact as they will be cached in the backend.
      */
     public String birthConfirmation() {
-        logger.debug("Step {} of 2.", pageNo);
-        if (pageNo > 2) {
-            return "error";
-        } else if (pageNo == 2) {
-            // all pages captured, proceed to persist after validations
-            // todo business validations and persiatance
-            BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
-
-            logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
-            logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
-            return "success";
-        }
-
-        populate();
-        if (pageNo == 0) {
-            initForm();
+        logger.debug("inside birthConfirmation {} was selected", approveSelected);
+        if (approveSelected != null) {
+            return "re-direct";
         } else {
-            // submissions of pages 1 - 2
-            BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
-            logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
-            try {
-                beanMerge();
-            } catch (Exception e) {
-                handleErrors(e);
+            logger.debug("Step {} of 2.", pageNo);
+            if (pageNo > 2) {
                 return "error";
-            }
-        }
+            } else if (pageNo == 2) {
+                // all pages captured, proceed to persist after validations
+                // todo business validations and persiatance
+                BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 
-        return "form" + pageNo;
+                logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+                logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+                return "success";
+            }
+
+            populate();
+            if (pageNo == 0) {
+                initForm();
+            } else {
+                // submissions of pages 1 - 2
+                BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
+                logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+                try {
+                    beanMerge();
+                } catch (Exception e) {
+                    handleErrors(e);
+                    return "error";
+                }
+            }
+
+            return "form" + pageNo;
+        }
     }
 
     /**
@@ -284,5 +293,13 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     public void setRequest(Map map) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public String getApproveSelected() {
+        return approveSelected;
+    }
+
+    public void setApproveSelected(String approveSelected) {
+        this.approveSelected = approveSelected;
     }
 }

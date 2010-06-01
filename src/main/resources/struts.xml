@@ -65,6 +65,7 @@
             <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
             <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
             <result type="tiles" name="success">epr.welcome</result>
+            <result type="redirect-action" name="re-direct">eprApproveSelected</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -81,18 +82,21 @@
             <result type="tiles" name="error">epr.welcome</result>
         </action>
 
-        <action name="eprGetExpiredList" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="getExpiredList">
-            <result type="tiles" name="success">epr.birthRegisterApproval</result>
-            <result type="redirect-action" name="redirect">eprBirthRegisterApproval</result>
-        </action>
-
         <action name="eprApprovalNext" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="nextPage">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprApprovalPrevious" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="previousPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="filter">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApproveSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="ApproveSelected">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
