@@ -24,38 +24,19 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         em.persist(bdf);
     }
 
-    public BirthDeclaration getBirthDeclaration(BDDivision birthDivision, String bdfSerialNo) {
-        //em.find(BirthDeclaration.class, )
-        return null;
-    }
-
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed) {
 
-        Query q = null;
-        if (printed) {
-            q = em.createNamedQuery("confirmation.print.completed");
-        } else {
-            q = em.createNamedQuery("confirmation.print.pending");
-        }
+        Query q = em.createNamedQuery("filter.by.division.and.status");
         q.setParameter("birthDivision", birthDivision);
+        q.setParameter("status", printed ? 2 : 1);
         return q.getResultList();
     }
 
-    public List<BirthDeclaration> getBirthRegistrationPending(int division, boolean isExpired) {
-        //sample record for testing
-        BirthDeclaration bd = new BirthDeclaration();
-        bd.setChildFullNameEnglish("kamal");
-        bd.setBdfSerialNo("A25");
-        bd.setStatus(4);
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision) {
 
-        BirthDeclaration bd1 = new BirthDeclaration();
-        bd1.setChildFullNameEnglish("Nimal");
-        bd1.setBdfSerialNo("A458");
-        bd1.setStatus(5);
-        List<BirthDeclaration> a = new ArrayList<BirthDeclaration>();
-        a.add(bd);
-        a.add(bd1);
-        return a;
+        Query q = em.createNamedQuery("confirmation.pending.approval");
+        q.setParameter("birthDivision", birthDivision);
+        return q.getResultList();
     }
 }

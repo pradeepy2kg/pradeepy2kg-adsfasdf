@@ -158,6 +158,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.setInformantName("The name of the informant");
             bdf.setNotifyingAuthorityPIN("1222233453");
             bdf.setNotifyingAuthorityName("The name of the NA");
+            bdf.setConfirmationReceiveDate(dfm.parse("2010-02-17"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
@@ -172,6 +173,21 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.setInformantName("The name of the informant");
             bdf.setNotifyingAuthorityPIN("1222233453");
             bdf.setNotifyingAuthorityName("The name of the NA");
+            birthDeclarationdao.addBirthDeclaration(bdf);
+
+            bdf = new BirthDeclaration();
+            bdf.setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.setBdfSerialNo("A116");
+            bdf.setChildFullNameEnglish("Baby A116 name in English");
+            bdf.setChildFullNameOfficialLang("A116 බබාගේ නම සිංහලෙන්");
+            bdf.setDateOfBirth(dfm.parse("2010-02-12"));
+            bdf.setDateOfRegistration(dfm.parse("2010-02-13"));
+            bdf.setChildGender(AppConstants.GENDER_MALE);
+            bdf.setStatus(5);
+            bdf.setInformantName("The name of the informant");
+            bdf.setNotifyingAuthorityPIN("1222233453");
+            bdf.setNotifyingAuthorityName("The name of the NA");
+            bdf.setConfirmationReceiveDate(dfm.parse("2010-02-16"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
         } catch (Exception e) {
