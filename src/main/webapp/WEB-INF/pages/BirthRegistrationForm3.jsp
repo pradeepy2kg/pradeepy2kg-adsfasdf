@@ -189,6 +189,7 @@
             <label>දිනය <br>*in tamil<br>Date</label>
             <input type="text" name=""/>
         </div>
-        <input type="submit" value="next"/>
+         <div class="button"><s:submit type="submit" value="%{getText('nextButton.label')}"/></div>
+        
     </form>
 </div>
