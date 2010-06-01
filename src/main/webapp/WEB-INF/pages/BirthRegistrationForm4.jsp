@@ -42,6 +42,7 @@
             <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
                               displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
+        <s:hidden name="pageNo" value="4"/>
         <s:submit value="SUBMIT"/>
     </s:form>
 </div>

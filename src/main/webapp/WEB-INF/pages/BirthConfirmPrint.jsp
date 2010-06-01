@@ -38,7 +38,7 @@
                     <s:iterator status="printStatus">
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                             <td><s:property value="%{#printStatus.count+#session.printStart}"/></td>
-                            <td><s:checkbox name="index_" onclick="javascript:selectall()"/></td>
+                            <td><s:checkbox name="index" onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
                             <td align=" center"><s:property value="bdfSerialNo"/></td>
                             <td><s:property value="childFullNameOfficialLang"/></td>
                             <td><s:property value="dateOfRegistration"/></td>
@@ -74,14 +74,14 @@
                             <s:label value="<<Previous"/></s:a></s:if>
                     </td>
                     <td width="10">
-                        <s:if test="#session.printCount != 28"><s:a href="%{nextUrl}">
+                        <s:if test="#session.printCount >10"><s:a href="%{nextUrl}">
                             <s:label value="Next>>"/></s:a></s:if>
                     </td>
                 </tr>
             </table>
 
             <br/><br/>
-            <s:label><s:checkbox name="allCheck" onclick="javascript:selectallMe()"/>
+            <s:label><s:checkbox name="allCheck" onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
                 <span><s:label name="select_all" value= "%{getText('select_all.label')}" /></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
             <s:label><span><s:label name="print_selected" value= "%{getText('print_selected.label')}" /></span><s:submit value="%{getText('print.label')}"/></s:label>
         </s:form>
