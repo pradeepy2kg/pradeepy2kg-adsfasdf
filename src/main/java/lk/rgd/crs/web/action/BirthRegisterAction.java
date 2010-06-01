@@ -6,6 +6,7 @@ import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.Person;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -49,7 +50,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
 
-    private BirthDeclaration birthRegister;
     private ChildInfo child;
     private ParentInfo parent;
     private OtherInfo other;
@@ -65,6 +65,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> divisionList;
+
+    private int birthDistrict;
+    private int birthDivision;
     private String childDOB;
     private String motherDOB;
     private String fatherDOB;
@@ -165,7 +168,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * store it in session
      */
     private void initForm() {
-        birthRegister = new BirthDeclaration();
+        BirthDeclaration birthRegister = new BirthDeclaration();
         //todo set fields to proper initial values based on user and date
         session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, birthRegister);
     }
@@ -178,7 +181,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String birthRegisterFinalizer() {
-        birthRegister = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+        //birthRegister = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
         //birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
         return "success";
     }
@@ -198,14 +201,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         divisionList = bdDivisionDAO.getDivisions(language, 11, user);
 
         logger.debug("inside populte : districts , countries and races populated.");
-    }
-
-    public BirthDeclaration getBirthRegister() {
-        return birthRegister;
-    }
-
-    public void setBirthRegister(BirthDeclaration birthRegister) {
-        this.birthRegister = birthRegister;
     }
 
     public int getPageNo() {
@@ -230,14 +225,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public Map getSession() {
         return session;
-    }
-
-    public void setModel(BirthDeclaration o) {
-        birthRegister = o;
-    }
-
-    public BirthDeclaration getModel() {
-        return birthRegister;
     }
 
     public void setScopeKey(String s) {
@@ -337,5 +324,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setNotifyingAuthority(NotifyingAuthorityInfo notifyingAuthority) {
         this.notifyingAuthority = notifyingAuthority;
+    }
+
+    public int getBirthDistrict() {
+        return birthDistrict;
+    }
+
+    public void setBirthDistrict(int birthDistrict) {
+        this.birthDistrict = birthDistrict;
+        child.setBirthDistrict(districtDAO.getDistrict(birthDistrict));
+    }
+
+    public int getBirthDivision() {
+        return birthDivision;
+    }
+
+    public void setBirthDivision(int birthDivision) {
+        this.birthDivision = birthDivision;
+        child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrict, birthDivision));
     }
 }

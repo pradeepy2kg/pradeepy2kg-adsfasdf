@@ -1,5 +1,8 @@
 package lk.rgd.crs.web.model;
 
+import lk.rgd.common.api.domain.District;
+import lk.rgd.crs.api.domain.BDDivision;
+
 import java.util.Date;
 
 /**
@@ -8,10 +11,10 @@ import java.util.Date;
  */
 public class ChildInfo {
     /** The district code where the birth is registered */
-    private int birthDistrict;
+    private District birthDistrict;
 
     /** The Birth/Death registration division where the birth is registered */
-    private int birthDivision;
+    private BDDivision birthDivision;
 
     /** This is the serial number captured from the BDF */
     private String bdfSerialNo;
@@ -59,19 +62,19 @@ public class ChildInfo {
     /** Grama Niladhari code */
     private String gnCode;
 
-    public int getBirthDistrict() {
+    public District getBirthDistrict() {
         return birthDistrict;
     }
 
-    public void setBirthDistrict(int birthDistrict) {
+    public void setBirthDistrict(District birthDistrict) {
         this.birthDistrict = birthDistrict;
     }
 
-    public int getBirthDivision() {
+    public BDDivision getBirthDivision() {
         return birthDivision;
     }
 
-    public void setBirthDivision(int birthDivision) {
+    public void setBirthDivision(BDDivision birthDivision) {
         this.birthDivision = birthDivision;
     }
 
