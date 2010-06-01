@@ -6,17 +6,12 @@ import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.EPopDate;
-import lk.rgd.crs.web.model.ChildInfo;
-import lk.rgd.crs.web.model.ParentInfo;
-import lk.rgd.crs.web.model.OtherInfo;
-import lk.rgd.crs.web.model.NotifyingAuthorityInfo;
-import lk.rgd.crs.web.util.EPopDate;
+import lk.rgd.crs.web.model.*;
 import lk.rgd.common.api.domain.User;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -50,22 +45,27 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
 
-    private ChildInfo child;
-    private ParentInfo parent;
-    private OtherInfo other;
-    private NotifyingAuthorityInfo notifyingAuthority;
-
-    /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
-    private int pageNo;
-    private List<Person> myList;
-    private Map session;
-
-    private String scopeKey;
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> divisionList;
 
+    private String scopeKey;
+    private Map session;
+
+    private List<Person> myList;
+
+    private ChildInfo child;
+    private ParentInfo parent;
+    private GrandFatherInfo grandFather;
+    private MarriageInfo marriage;
+    private InformantInfo informant;
+    private NotifyingAuthorityInfo notifyingAuthority;
+
+    /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
+    private int pageNo;
+
+    /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrict;
     private int birthDivision;
     private String childDOB;
@@ -105,16 +105,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     initForm();
                     break;
                 case 1:
-                    beanMerge(getChild());
+                    beanMerge(child);
                     break;
                 case 2:
-                    beanMerge(getParent());
+                    beanMerge(parent);
                     break;
                 case 3:
-                    beanMerge(getOther());
+                    beanMerge(marriage);
+                    beanMerge(grandFather);
+                    beanMerge(informant);
                     break;
                 case 4:
-                    BirthDeclaration register = beanMerge(getNotifyingAuthority());
+                    BirthDeclaration register = beanMerge(notifyingAuthority);
                     // all pages captured, proceed to persist after validations
                     // todo business validations and persiatance
                     logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
@@ -151,7 +153,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     if (targetMethod == null) {
                         continue;
                     }
-                    logger.debug("looking for a match with target method {}", targetMethod);
+                    //logger.debug("looking for a match with target method {}", targetMethod);
                     if (methodName.equals(targetMethod.getName())) {
                         targetMethod.invoke(target, newValue);
                         logger.debug("field merged ");
@@ -319,12 +321,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.parent = parent;
     }
 
-    public OtherInfo getOther() {
-        return other;
+    public GrandFatherInfo getOther() {
+        return grandFather;
     }
 
-    public void setOther(OtherInfo other) {
-        this.other = other;
+    public void setOther(GrandFatherInfo grandFather) {
+        this.grandFather = grandFather;
     }
 
     public NotifyingAuthorityInfo getNotifyingAuthority() {
