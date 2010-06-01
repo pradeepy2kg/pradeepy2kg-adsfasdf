@@ -9,7 +9,7 @@
           onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
             <div id="birth-registration-form-header-logo">
-                <img src="../../images/official-logo.png" alt=""/>
+                <img src="<s:url value="./images/official-logo.png"/>" alt=""/>
             </div>
             <div id="birth-registration-form-header-title" class="font-12">
                 <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
@@ -71,9 +71,11 @@
                 <div>
                     <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
                 </div>
-                <s:datetimepicker id="datePicker" name="child.dateOfBirth" label="Format (yyyy-MM-dd)"
+                <div id="datePicker">
+                    <s:datetimepicker id="datePicker" name="child.dateOfBirth" label="Format (yyyy-MM-dd)"
                                   displayFormat="yyyy-MM-dd" value="2010-05-27"
                                   onmouseover="javascript:splitDate('datePicker')"/>
+                </div>
             </div>
         </div>
         <div id="child-pob" class="font-9">
@@ -178,6 +180,6 @@
         </div>
         <%--<input type="submit" value="next" />--%>
         <s:hidden name="pageNo" value="1"/>
-        <div class="button"><s:submit value="NEXT"/></div>
+        <s:submit value="NEXT"/>
     </form>
 </div>

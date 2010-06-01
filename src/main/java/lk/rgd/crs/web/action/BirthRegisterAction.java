@@ -97,9 +97,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         try {
             switch (pageNo) {
                 case 0: initForm(); break;
-                case 1: beanMerge(child); break;
+                /*case 1: beanMerge(child); break;
                 case 2: beanMerge(parent); break;
-                case 3: beanMerge(other); break;
+                case 3: beanMerge(other); break;                                            */
                 case 4: BirthDeclaration register = beanMerge(notifyingAuthority);
                         // all pages captured, proceed to persist after validations
                         // todo business validations and persiatance

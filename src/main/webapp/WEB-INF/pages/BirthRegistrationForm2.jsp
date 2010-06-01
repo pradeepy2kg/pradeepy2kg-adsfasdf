@@ -273,7 +273,8 @@
             <div>
                 <input type="text" name=""/>
             </div>
+        </div>
             <s:hidden name="pageNo" value="2"/>
-            <div class="button"><s:submit type="submit" value="NEXT"/></div>
+            <s:submit type="submit" value="NEXT"/>
     </form>
 </div>
