@@ -15,11 +15,8 @@ import org.apache.log4j.Logger;
  * @author indunil moremada.
  */
 public class EPopDate {
-
-    private Date date;
-    private String dateInString;
-    private Logger log = Logger.getLogger(this.getClass().getName());
-    private DateFormat df;
+    private static Logger log = Logger.getLogger(EPopDate.class.getName());
+    private static DateFormat df = new SimpleDateFormat(WebConstants.DATEFORMAT);
 
     /**
      * convert a String into java.util.Date format
@@ -27,14 +24,14 @@ public class EPopDate {
      * @param dateString is a String which is converted to required Date Format
      * @return date is a java.util.Date instance*
      */
-    public Date getDate(String dateString) {
-        df = new SimpleDateFormat(WebConstants.DATEFORMAT);
+    public static Date getDate(String dateString) {
         try {
-            date = df.parse(dateString);
+            return df.parse(dateString);
         } catch (Exception e) {
-            log.error("Date format Exception" + e);
+            log.error("Date format Exception " + e);
         }
-        return date;
+
+        return null;
     }
 
     /**
@@ -43,9 +40,7 @@ public class EPopDate {
      * @param date is a java.util.Date instance which is Converted to String
      * @return dateInString is a String
      */
-    public String getDateInString(Date date) {
-        df = new SimpleDateFormat(WebConstants.DATEFORMAT);
-        dateInString = df.format(date);
-        return dateInString;
+    public static String getDateInString(Date date) {
+        return df.format(date);
     }
 }
