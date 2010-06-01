@@ -198,4 +198,20 @@ public class User {
         }
         return permissions.get(permission);
     }
+
+    public int getInitialDistrict() {
+        if (assignedDistrict == null) {
+            return prefDistrict == null ? 1 : prefDistrict;
+        } else {
+            return assignedDistrict;
+        }
+    }
+
+    public int getInitialBDDivision() {
+        if (assignedBDDivision == null) {
+            return prefBDDivision == null ? 1 : prefBDDivision;
+        } else {
+            return assignedBDDivision;
+        }
+    }
 }

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.List;
 
@@ -33,12 +32,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private final BirthDeclarationDAO birthDeclarationDAO;
     private Map<Integer, String> divisionList;
     private Map<Integer, String> districtList;
-
-    private boolean expired;
+    private int division;
+    private int district;
     private Map session;
     private List<BirthDeclaration> birthRegisterApproval;
 
     private User user;
+
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -53,10 +53,40 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String birthRegisterApproval() {
         populate();
-        //todo if it wants to get the user selected district this has to be modified
-        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(null /** TODO FIX ME*/);
+        int selectedDistrict = user.getInitialDistrict();
+        int selectedDivision = user.getInitialBDDivision();
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
+            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision));
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
+    }
+
+    /**
+     * filters birth register approval data
+     * by user selected district and division
+     *
+     * @return String
+     */
+    public String filter() {
+        logger.debug("inside filter : district {} and division {} observed", district, division);
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(district, division));
+        session.put("ApprovalData", birthRegisterApproval);
+        populate();
+        return "success";
+    }
+
+    /**
+     * All the selected Birth Registration Approval data
+     * will be persisted without directing to the birth
+     * confirmation
+     *
+     * @return String
+     */
+    public String ApproveSelected() {
+        //todo this has to be implemented
+        logger.debug("inside ApprovalSelected :");
+        populate();
+        return "success";
     }
 
     /**
@@ -66,38 +96,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
-        //todo division id should be the user selection division
-        divisionList = bdDivisionDAO.getDivisions(language, 11, user);
+        int selectedDistrict = user.getInitialDistrict();
         districtList = districtDAO.getDistricts(language, user);
-        logger.debug("inside populte : districts , countries and races populated.");
-    }
+        divisionList = bdDivisionDAO.getDivisions(language, selectedDistrict, user);
 
-    /**
-     * getExpiredList method is used to get expired
-     * BR approval data then store them in the session
-     * for further usage
-     *
-     * @return success is returned if expired checkbox
-     *         is selected by the user else redirect is returned
-     *         redirect causes to redirect the action to the
-     *         birthRegisterApproval() action
-     */
-    public String getExpiredList() {
-        populate();
-        if (expired) {
-            logger.debug("insid getExpiredList: checked {} ", expired);
-            //TODO Remove this section birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user.getAssignedBDDivision(), true);
-            /** here it replacess the session variable ApprovalData with the expiredApprovalData */
-            session.put("ApprovalData", birthRegisterApproval);
-            if (birthRegisterApproval.size() < 10) {
-                session.put("flag", 0);
-            }
-            return "success";
-        } else {
-            session.put("flag", 1);
-            birthRegisterApproval();
-            return "redirect";
-        }
+        logger.debug("inside populate : districts , countries and races populated.");
     }
 
     /**
@@ -111,7 +114,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String nextPage() {
         Integer i = (Integer) session.get("approvalStart");
         Integer counter = (Integer) session.get("counter");
-        birthRegisterApproval = (ArrayList<BirthDeclaration>) session.get("ApprovalData");
+        birthRegisterApproval = (List<BirthDeclaration>) session.get("ApprovalData");
 
         logger.debug("Next Page: Count {} , ApprovalArrayList Size {}", counter, birthRegisterApproval.size());
         int boundary = birthRegisterApproval.size();
@@ -144,7 +147,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         return "success";
     }
 
-    public void setBirthRegisterApproval(ArrayList<BirthDeclaration> birthRegisterApproval) {
+    public void setBirthRegisterApproval(List<BirthDeclaration> birthRegisterApproval) {
         this.birthRegisterApproval = birthRegisterApproval;
     }
 
@@ -172,15 +175,23 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.divisionList = divisionList;
     }
 
-    public boolean isExpired() {
-        return expired;
-    }
-
-    public void setExpired(boolean expired) {
-        this.expired = expired;
-    }
-
     public BirthDeclarationDAO getBirthDeclarationDAO() {
         return birthDeclarationDAO;
+    }
+
+    public int getDivision() {
+        return division;
+    }
+
+    public void setDivision(int division) {
+        this.division = division;
+    }
+
+    public int getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(int district) {
+        this.district = district;
     }
 }

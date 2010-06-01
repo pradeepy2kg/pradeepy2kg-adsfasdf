@@ -6,6 +6,7 @@
 var fieldName = 'index';
 
 function selectall(form, allCheck) {
+    var i = form.elements.length;
     var e = form.elements;
     var name = new Array();
     var value = new Array();
@@ -43,7 +44,7 @@ function selectallMe(form, allCheck)
     }
     else
     {
-        selectCheck(false, form);
+        selectCheck(false, form, allCheck);
     }
 }
 function checkSelect(form, allCheck)
@@ -63,12 +64,10 @@ function checkSelect(form, allCheck)
     }
     if (berror == false)
     {
-        alert("hello");
-        document.birth_register_approval_body.allCheck.checked = false;//allCheck.checked = false;
+        allCheck.checked = false;
     }
     else
     {
-        alert("hello1");
-        document.birth_register_approval_body.allCheck.checked = true;
+        allCheck.checked = true;
     }
 }
