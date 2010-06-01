@@ -1,28 +1,36 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 
 public class ConfirmantInfo {
     /** This represents a system generated serial number for the confirmation by parents  */
+    @Column(nullable = true)
     private String confirmationSerialNumber;
 
-    /** Has the confirmation for parents been printed ?  */
+    /** Has the confirmation for parents been printed ? */
+    @Column(nullable = true)
     private boolean confirmationPrinted;
 
-    /** The last date for confirmation - set as 14 days from confirmation print date  */
+    /** The last date for confirmation - set as 14 days from confirmation print date */
+    @Column(nullable = true)
     private Date lastDateForConfirmation;
 
     /** PIN or NIC of person confirming BDF details */
+    @Column(nullable = true)
     private String confirmantNICorPIN;
 
-    /** Name of person confirming BDF details */
+    /** Name of person confirming BDF details  */
+    @Column(nullable = true)
     private String confirmantFullName;
 
-    /** Date of the confirmation  */
+    /** Date of the confirmation */
+    @Column(nullable = true)
     private Date confirmantSignDate;
 
     /** Date confirmation is received */
+    @Column(nullable = true)
     private Date confirmationReceiveDate;
 
     public String getConfirmationSerialNumber() {

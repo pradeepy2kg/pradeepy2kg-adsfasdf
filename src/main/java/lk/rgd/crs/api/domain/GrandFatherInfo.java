@@ -1,5 +1,6 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 /**
@@ -8,13 +9,23 @@ import java.util.Date;
  */
 public class GrandFatherInfo {
     // If grandfather of the child born in Sri Lanka, grandfather's details
+    @Column(nullable = true)
     private String grandFatherFullName;
+
+    @Column(nullable = true)
+
     private int grandFatherBirthYear;
+    @Column(nullable = true)
     private String grandFatherBirthPlace;
 
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
+    @Column(nullable = true)
     private String greatGrandFatherFullName;
+
+    @Column(nullable = true)
     private String greatGrandFatherBirthYear;
+
+    @Column(nullable = true)
     private String greatGrandFatherBirthPlace;
 
     public String getGrandFatherFullName() {
