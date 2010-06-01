@@ -54,7 +54,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String birthRegisterApproval() {
         populate();
         //todo if it wants to get the user selected district this has to be modified
-        birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user.getAssignedBDDivision(), false);
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(null /** TODO FIX ME*/);
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
     }
@@ -86,7 +86,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         populate();
         if (expired) {
             logger.debug("insid getExpiredList: checked {} ", expired);
-            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user.getAssignedBDDivision(), true);
+            //TODO Remove this section birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user.getAssignedBDDivision(), true);
             /** here it replacess the session variable ApprovalData with the expiredApprovalData */
             session.put("ApprovalData", birthRegisterApproval);
             if (birthRegisterApproval.size() < 10) {

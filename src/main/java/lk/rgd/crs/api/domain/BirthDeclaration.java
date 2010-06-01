@@ -15,14 +15,19 @@ import java.util.Date;
                 @UniqueConstraint(columnNames = {"birthDistrict", "birthDivision", "bdfSerialNo", "status"})})
 
 @NamedQueries({
-        @NamedQuery(name = "confirmation.print.pending", query =
+        @NamedQuery(name = "filter.by.division.and.status", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.birthDivision = :birthDivision AND bdf.status = 1 " +
+                        "WHERE bdf.birthDivision = :birthDivision AND bdf.status = :status " +
                         "ORDER BY bdf.dateOfRegistration desc"),
-        @NamedQuery(name = "confirmation.print.completed", query =
+        @NamedQuery(name = "confirmation.pending.approval.expired", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
                         "WHERE bdf.birthDivision = :birthDivision AND bdf.status = 2 " +
-                        "ORDER BY bdf.dateOfRegistration desc")
+                        "AND bdf.lastDateForConfirmation < :today " +
+                        "ORDER BY bdf.dateOfRegistration desc"),
+        @NamedQuery(name = "confirmation.pending.approval", query =
+                "SELECT bdf FROM BirthDeclaration bdf " +
+                        "WHERE bdf.birthDivision = :birthDivision AND bdf.status = 5 " +
+                        "ORDER BY bdf.confirmationReceiveDate desc")
 })
 public class BirthDeclaration {
 
