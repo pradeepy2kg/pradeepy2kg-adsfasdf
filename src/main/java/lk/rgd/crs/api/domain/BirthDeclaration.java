@@ -251,15 +251,15 @@ public class BirthDeclaration {
     @Column (nullable = true)
     private int   originalBCPlaceOfIssue;
 
-    public District getBirthDistrict() {
-        return birthDivision.getDistrict();
-    }
-
-    public BDDivision getBirthDivision() {
+    public int getBirthDistrict() {
         return birthDivision;
     }
 
-    public void setBirthDivision(BDDivision birthDivision) {
+    public int getBirthDivision() {
+        return birthDivision;
+    }
+
+    public void setBirthDivision(int birthDivision) {
         this.birthDivision = birthDivision;
     }
 
