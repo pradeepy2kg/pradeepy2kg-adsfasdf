@@ -1,21 +1,27 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 public class MarriageInfo {
-    /** Place of marriage     */
-    private String placeOfMarriage;
-
-    /** Were parents married at birth - 0 - no, 1 - yes, 2 - no but married later */
+    /** Were parents married at birth - 0 - no, 1 - yes, 2 - no but married later  */
+    @Column(nullable = true)
     private int parentsMarried;
 
+    /** Place of marriage */
+    @Column(nullable = true)
+    private String placeOfMarriage;
+
     /** Date of marriage */
+    @Column(nullable = true)
     private Date dateOfMarriage;
 
-    /** If parents are unmarried - Has the mother signed to include fathers details? */
+    /** If parents are unmarried - Has the mother signed to include fathers details?  */
+    @Column(nullable = true)
     private boolean motherSigned;
 
     /** If parents are unmarried - Has the father signed to include fathers details? */
+    @Column(nullable = true)
     private boolean fatherSigned;
 
     public int getParentsMarried() {

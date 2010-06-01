@@ -1,72 +1,97 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import java.util.Date;
 
 /**
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
  */
 public class ParentInfo {
-    /** NIC or PIN of father */
+    /** NIC or PIN of father  */
+    @Column(nullable = true)
     private String fatherNICorPIN;
 
     /** Passport number if a foreigner */
+    @Column(nullable = true)
     private String fatherPassportNo;
 
     /** Country if a foreigner */
+    @ManyToOne
+    @JoinColumn(name = "fatherCountryId")
     private Country fatherCountry;
 
-    /** Name of father */
+    /** Name of father  */
+    @Column(nullable = true)
     private String fatherFullName;
 
-    /** DOB of father */
+    /** DOB of father  */
+    @Column(nullable = true)
     private Date fatherDOB;
 
     /** Place of birth of father */
+    @Column(nullable = true)
     private String fatherPlaceOfBirth;
 
     /** Race of father */
-    private int    fatherRace;
+    @Column(nullable = true)
+    private int fatherRace;
 
     /** NIC or PIN of mother */
+    @Column(nullable = true)
     private String motherNICorPIN;
 
     /** Passport number if a foreigner */
+    @Column(nullable = true)
     private String motherPassportNo;
 
     /** Country if a foreigner */
+    @ManyToOne
+    @JoinColumn(name = "motherCountryId")
     private Country motherCountry;
 
-    /** Hospital admission no for mother */
-    private String motherAdmissionNo;
-
-    /** Hospital admission date for mother */
-    private Date motherAdmissionDate;
-
     /** Full name of mother */
+    @Column(nullable = true)
     private String motherFullName;
 
-    /** DOB of mother */
-    private Date   motherDOB;
+    /** DOB of mother  */
+    @Column(nullable = true)
+    private Date motherDOB;
 
     /** Place of birth for mother */
+    @Column(nullable = true)
     private String motherPlaceOfBirth;
 
     /** Race for mother */
-    private int    motherRace;
+    @Column(nullable = true)
+    private int motherRace;
 
     /** Age of mother at birth */
-    private int    motherAgeAtBirth;
+    @Column(nullable = true)
+    private int motherAgeAtBirth;
 
     /** Address of mother */
+    @Column(nullable = true)
     private String motherAddress;
 
     /** Phone number of mother */
+    @Column(nullable = true)
     private String motherPhoneNo;
 
     /** Email of mother */
+    @Column(nullable = true)
     private String motherEmail;
+
+    /** Mothers admission number to the hospital */
+    @Column(nullable = true)
+    private String motherAdmissionNo;
+
+    /** Date the mother admitted that she was pregnant. */
+    @Column(nullable = true)
+    private Date motherAdmissionDate;
 
     public String getFatherNICorPIN() {
         return fatherNICorPIN;
