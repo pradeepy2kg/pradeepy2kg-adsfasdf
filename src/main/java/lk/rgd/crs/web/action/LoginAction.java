@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Locale;
 
+import lk.rgd.crs.web.util.LoginBD;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.domain.User;
@@ -25,6 +26,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private Map session;
     private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private UserPreferencesAction userPreferencesAction = new UserPreferencesAction();
 
     public LoginAction(UserManager userManager) {
         this.userManager = userManager;

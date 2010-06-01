@@ -1,25 +1,27 @@
-.font-8 {
-    font-size: 8pt;
-}
+/*
+* @author Duminda Dharmakeerthi.
+* ------------------------------
+* Styles fot the Web forms in the E-Population Register system is done by the styles defined in this code..
+* It includes styles for the,
+*       1. Birth Registration Form (4 pages)
+*       2. Birth Confirmation Form (3 pages)
+* To change the styles in those web forms, use the styles that are applied in this css.
+* Styles for each page are done in a seperate area of the css file.
+*/
 
-.font-9{
-    font-size: 9pt;
-    font-family:BhashitaComplex;
-}
+/* Common FONT-SIZES are defined here */
+.font-7{font-size:7pt;font-family:BhashitaComplex;}
+.font-8 {font-size: 8pt;font-family:BhashitaComplex;}
+.font-9{font-size: 9pt; font-family:BhashitaComplex;}
+.font-12 {font-size: 12pt; font-family:BhashitaComplex;}
 
-.font-10 {
-    font-size: 10pt;
-    font-family:BhashitaComplex;
-}
+/*
+* Styles for the Birth Registration Form Begins here.
+* Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
+*/
 
-.font-12 {
-    font-size: 12pt;
-    font-family:BhashitaComplex;
-}
-
-/* Styles for the Birth Registration Form */
-.birth-registration-form-outer {
-    width: 1035px;
+.birth-registration-form-outer, .birth-confirmation-form-outer  {
+    width: 1030px;
     background: #ffffff;
     padding: 10px;
 }
@@ -58,7 +60,6 @@
 
 #serial-no label input, #submit-date label input {
     margin: 10px;
-    padding: 2px;
 }
 
 .form-sub-title {
@@ -75,19 +76,20 @@
 #child-dob .form-label, #child-pob .form-label, #child-name .form-label, #child-name-in-english .form-label, #child-gender .form-label, #child-birth-order-no .form-label {float: left; width: 200px;}
 #child-weight .form-label, #multiple-birth .form-label { float: left; width: 225px;}
 #child-dob-year, #child-dob-month, #child-dob-day { width: auto;}
-#child-dob-year div label, #child-dob-month div label, #child-dob-day div label {float: left; width: 120px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
-#child-dob-year div input, #child-dob-month div input, #child-dob-day div input {float: left; margin: 12px 15px 12px 10px; width: 120px;}
+#child-dob-year div label, #child-dob-month div label, #child-dob-day div label {float: left; width: 100px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
+#child-dob-year div select, #child-dob-month div select, #child-dob-day div select {float: left; margin: 12px 15px 12px 10px; width: 70px;}
+#datePicker{margin:5px 10px;float:right;}
 #child-pob .form-label {padding: 35px 0;}
 
 #child-birth-order-no {padding-bottom: 1px;}
 
-#child-pob-district div label { float: left; border-right:1px solid #000; padding:6px 5px; width: 200px;}
-#child-pob-district div input { float: left; margin: 2px 7px; width: 170px;}
+#child-pob-district div label { float: left; border-right:1px solid #000; padding:6px 5px; width: 190px;}
+#child-pob-district div select { float: left; margin: 2px 7px; width: 186px;}
 #child-pob-division div label { float: left; border: 1px solid #000; border-top: none; border-bottom: none; padding:6px 5px; width:213px;}
-#child-pob-division div input { float: left; margin: 2px 7px; width: 170px;}
+#child-pob-division div select { float: left; margin: 2px 7px; width: 170px;}
 #child-pob-place { float: left; border: 1px solid #000; width: 822px; border-left: none; border-right: none;}
-#child-pob-place div label { float: left; width: 200px; border-right: 1px solid #000; padding:6px 5px;}
-#child-pob-place div input { float: left; margin: 2px 7px; width: 580px;}
+#child-pob-place div label { float: left; width: 190px; border-right: 1px solid #000; padding:6px 5px;}
+#child-pob-place div input { float: left; margin: 2px 7px; width: 590px;}
 #child-pob-hospitalcode { float: left; width: 822px;}
 #child-pob-hospitalcode div label { float: left; width: 350px; border-right: 1px solid #000; padding: 4px;}
 #child-pob-hospitalcode div input { float: left; margin: 17px 7px; width: 430px;}
@@ -109,7 +111,7 @@
 #father-nic .form-label, #foreign-father .form-label, #father-name .form-label, #father-dob .form-label, #father-pob .form-label, #father-race .form-label, #mother-nic .form-label, #foreign-mother .form-label, #mother-name .form-label, #mother-dob .form-label, #mother-pob .form-label, #mother-race .form-label, #mother-age .form-label, #hospital-admision-no .form-label, #hospital-admision-date .form-label, #mother-address .form-label, #mother-contact-details label{float:left; border-right:1px solid #000; width:150px;}
 #mother-contact-details .form-label{float:left; width:150px; padding:26px 5px; border-right:1px solid #000;}
 #mother-contact-details .form-label label{border:none;}
-#mother-contact-details div input{float:left; width:260px; margin:38px 5px;}
+#mother-contact-details div input{float:left; width:255px; margin:38px 5px;}
 #mother-email{border-left:1px solid #000;}
 #mother-age .form-label{width:350px;}
 #father-nic .form-label, #mother-nic .form-label{padding-top:2px; padding-bottom:2px;}
@@ -118,14 +120,14 @@
 #father-country .form-label, #father-passport-no .form-label, #mother-country .form-label, #mother-passport-no .form-label{width:150px; float:left; padding:0 5px;}
 #father-country .form-label, #mother-country .form-label{padding-top:1px; padding-bottom:1px;}
 #father-passport-no .form-label, #mother-passport-no .form-label{padding:1px 5px;}
-#father-country input, #father-passport-no input, #mother-country input, #mother-passport-no input{width:300px; margin:15px 5px 14px 5px;}
+#father-country input, #father-passport-no input, #mother-country input, #mother-passport-no input{width:290px; margin:15px 5px 14px 5px;}
 #father-name .form-label, #mother-name .form-label{padding-top:5px; padding-bottom:5px;}
-#father-name textarea, #mother-name textarea{margin:5px; width:855px;}
-#father-dob input, #father-pob input, #mother-dob input, #mother-pob input, #mother-race input, #mother-age input, #hospital-admision-no input, #hospital-admision-date input{margin:12px 5px; width:340px;}
+#father-name textarea, #mother-name textarea{margin:5px; width:850px;}
+#father-dob input, #father-pob input, #mother-dob input, #mother-pob input, #mother-race input, #mother-age input, #hospital-admision-no input, #hospital-admision-date input{margin:12px 5px; width:335px;}
 #hospital-admision-no input, #hospital-admision-date input{margin-top:30px;}
-#mother-age input{width:140px;}
-#father-race input{margin:12px 5px; width:855px;}
-#mother-address textarea{margin:15px 5px; width:855px;}
+#mother-age input{width:135px;}
+#father-race input{margin:12px 5px; width:850px;}
+#mother-address textarea{margin:15px 5px; width:850px;}
 
 #birth-registration-form-mother-info-sub-title{margin-top:290px;}
 
@@ -199,3 +201,75 @@
 #recipt-child-name textarea, #recipt-father-name textarea, #recipt-mother-name textarea{margin:5px; width:750px;}
 #recipt-child-dob input, #recipt-child-gender input{margin:18px 5px; width:750px;}
 #birth-form-serial-no input, #notify-autority-name-and-signature input{margin:40px 5px; width:750px;}
+
+
+/**
+* Styles for the Birth Confirmation Form begins here.
+*/
+
+.no{float:left; width:20px; padding:20px 10px;}
+
+/*
+* Styles for the Birth Confirmation Form page 1 (Form 1) begins here.
+*/
+#birth-confirmation-form-header {margin-bottom: 10px;}
+#birth-confirmation-form-header-logo {text-align: center;}
+#birth-confirmation-form-header-title {text-align: center;}
+#bcf-serial-no{display: block; border: 1px solid #000000; margin: 5px 0 90px 730px;}
+#bcf-serial-no {margin-top: -130px;}
+#bcf-serial-no label span{float: left; margin-left: 5px;}
+#bcf-serial-no label input{margin: 10px;}
+#birth-confirmation-form-header-info{text-align:justify;}
+
+#civil-confirmation-info-sub-title{margin-top:20px;}
+#title-head{border:1px solid #000; border-top:none; padding:5px; height:52px;}
+#particulars label{float:left; width:200px; border-right:1px solid #000; padding:5px; margin-top:-5px;}
+#current-info label{border-right:1px solid #000;}
+#current-info label, #new-info label{float:left; width:393px; padding:5px; margin-top:-5px;}
+
+#brf-serial-no-and-date, #last-date{border:1px solid #000; height:79px;}
+#last-date{border-top:none; height:60px;}
+#brf-serial-no-and-date label, #last-date label{float:left; border-left:1px solid #000; border-right:1px solid #000; width:613px; padding:5px;}
+#brf-serial-no-and-date input, #last-date input{margin:7px 5px; width:340px;}
+#last-date input{margin:15px 5px;}
+
+#bcf-dob, #bcf-gender, #bcf-district, #bcf-division, #bcf-place, #bcf-father-pin, #bcf-father-race, #bcf-mother-pin, #bcf-mother-race, #bcf-marital-status{border:1px solid #000; height:57px; border-top:none;}
+#bcf-father-pin, #bcf-mother-pin, #bcf-marital-status{height:75px;}
+#bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-division label, #bcf-place label, #bcf-father-pin label, #bcf-father-race label, #bcf-mother-pin label, #bcf-mother-race label, #bcf-marital-status label{float:left; width:170px; border-left:1px solid #000; border-right:1px solid #000; padding:0 0 5px 4px;}
+#bcf-pob{border:1px solid #000; border-top:none; height:26px;}
+#bcf-pob .no{padding:5px 10px;}
+#bcf-pob label{padding:10px 5px; border-left:1px solid #000;}
+.current{float:left; border-right:1px solid #000; width:393px; height:50px; padding:4px 5px;}
+#bcf-father-pin .current, #bcf-mother-pin .current, #bcf-marital-status .current{padding:13px 5px;}
+#current-year label, #current-month label, #current-day label, #new-year label, #new-month label, #new-day label{float:left; width:57px; padding:10px 0 9px 0; margin:-5px 0 0 0; }
+#new-year label, #new-month label, #new-day label{margin-top:0;}
+#current-year label, #new-year label{border-left:none;}
+#current-year input, #current-month input, #current-day input, #new-year input, #new-month input, #new-day input{float:left; width:62px; margin:15px 2px;}
+
+/*
+* Page 2 (Form 2) of the Birth Confirmation Form.
+*/
+#bcf-child-current-name, #bcf-child-new-name, #bcf-child-current-name-in-english, #bcf-child-new-name-in-english, #bcf-father-current-name, #bcf-father-new-name, #bcf-mother-current-name, #bcf-mother-new-name{border:1px solid #000; border-top:none; height:61px;}
+#bcf-child-current-name{height:95px;}
+#bcf-child-current-name label, #bcf-child-new-name label, #bcf-child-current-name-in-english label, #bcf-child-new-name-in-english label, #bcf-father-current-name label, #bcf-father-new-name label, #bcf-mother-current-name label, #bcf-mother-new-name label{float:left; width:200px;border-left:1px solid #000; border-right:1px solid #000; padding:5px;}
+#bcf-child-current-name textarea, #bcf-child-new-name textarea, #bcf-child-current-name-in-english textarea, #bcf-child-new-name-in-english textarea, #bcf-father-current-name textarea, #bcf-father-new-name textarea, #bcf-mother-current-name textarea, #bcf-mother-new-name textarea{width:750px; margin:5px;}
+#bcf-child-current-name textarea{margin-top:20px;}
+
+/*
+* Page 3 (Form 3) of the Birth Confirmation Form.
+*/
+#office-use-only{margin-top:20px;}
+.birth-confirmation-form-outer #breaker{margin-top:15px;}
+#bcf-confirm-person-nic, #bcf-confirm-person-name, #bcf-confirm-person-certify, #bcf-added-to-civil-registration{border:1px solid #000; border-top:none; height:107px;}
+#bcf-confirm-person-nic{height:56px;}
+#bcf-confirm-person-nic label, #bcf-confirm-person-name label{float:left; border-left:1px solid #000; border-right:1px solid #000; width:200px; padding:2px 5px;}
+#bcf-confirm-person-nic label{width:600px;}
+#bcf-confirm-person-nic input{width:350px; margin:15px 5px;}
+#bcf-confirm-person-name textarea{width:750px; margin:30px 5px;}
+#bcf-confirm-person-certify{height:126px;}
+#bcf-added-to-civil-registration{height:247px;}
+#bcf-confirm-person-certify label, #bcf-added-to-civil-registration label{float:left; border-left:1px solid #000; border-right:1px solid #000; width:200px; padding:2px 5px;}
+#bcf-confirm-person-certify-date label, #bcf-confirm-person-certify-signature label, #bcf-added-to-civil-registration-date label{border-left:none; border-right:1px solid #000; width:200px; padding:6px 5px 5px 5px;;}
+#bcf-confirm-person-certify-date, #bcf-added-to-civil-registration-date{border-bottom:1px solid #000; margin-left:252px;height:62px;}
+#bcf-added-to-civil-registration-signature label{padding-bottom:130px; border-left:none;}
+#bcf-confirm-person-certify-date input, #bcf-added-to-civil-registration-date input, #bcf-confirm-person-certify-signature input, #bcf-added-to-civil-registration-signature input{width:540px; margin:15px 5px;}
