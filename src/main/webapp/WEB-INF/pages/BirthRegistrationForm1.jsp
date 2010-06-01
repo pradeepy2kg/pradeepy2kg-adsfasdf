@@ -23,7 +23,15 @@
             </div>
             <div id="submit-date">
                 <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span>
-                    <s:textfield name="child.dateOfRegistration"/>
+                    <s:select list="{'2009','2010','2011'}" name="" id="submitYear"
+                              onchange="javascript:setDate('submitYear','2')"/>
+                    <s:select list="{'01','02','03'}" name="" id="submitMonth"
+                              onchange="javascript:setDate('submitMonth','2')"/>
+                    <s:select list="{'01','02','03'}" name="" id="submitDay"
+                              onchange="javascript:setDate('submitDay','2')"/>
+                    <s:datetimepicker id="submitDatePicker" name="dateOfRegistration" label="Format (yyyy-MM-dd)"
+                                      displayFormat="yyyy-MM-dd"
+                                      onmouseover="javascript:splitDate('submitDatePicker')"/>
                 </label>
             </div>
             <div id="birth-registration-form-header-info" class="font-9">
@@ -122,6 +130,7 @@
                     </div>
                     <div>
                         <s:textfield name="child.hospitalCode"/>
+                        <s:textfield name="child.gnCode"/>
                     </div>
                 </div>
             </div>
@@ -178,8 +187,7 @@
                 <s:textfield name="child.numberOfChildrenBorn"/>
             </div>
         </div>
-        <%--<input type="submit" value="next" />--%>
         <s:hidden name="pageNo" value="1"/>
-        <div class="button"><s:submit value="%{getText('next.label')}"/></div>
+        <s:submit value="%{getText('next.label')}"/>
     </s:form>
 </div>

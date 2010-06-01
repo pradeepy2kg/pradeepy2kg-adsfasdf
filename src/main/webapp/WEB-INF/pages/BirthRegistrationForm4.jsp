@@ -8,22 +8,33 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<s:form action="eprBirthRegistration.do" name="birthRegistrationForm4">
-    <div id="birth-registration-form-4-body">
-        <div id="serial-no"><s:textfield name="birthRegister.serialNumber"
-                                         value="%{#session.birthRegister.bdfSerialNo}" disabled="true"/></div>
-        <div id="child-name"><s:textfield name="birthRegister.childFullNameEnglish"
-                                          value="%{#session.birthRegister.childFullNameEnglish}" disabled="true"/></div>
-        <div id="child-dob"><s:textfield name="birthRegister.childDOB" value="%{#session.birthRegister.dateOfBirth}"
-                                         disabled="true"/></div>
-        <div id="child-gender"><s:textfield name="birthRegister.childGender"
-                                            value="%{#session.birthRegister.childGender}" disabled="true"/></div>
-        <div id="child-father"><s:textfield name="birthRegister.fatherFullName"
-                                            value="%{#session.birthRegister.fatherFullName}" disabled="true"/></div>
-        <div id="child-mother"><s:textfield name="birthRegister.motherFullName"
-                                            value="%{#session.birthRegister.motherFullName}" disabled="true"/></div>
-        <div id="authority"><s:textfield name="birthRegister.notifyingAuthorityName"/></div>
-    </div>
-    <s:hidden name="pageNo" value="4"/>
-    <div class="button"><s:submit value="%{getText('nextButton.label')}"/></div>
-</s:form>
+<div class="birth-registration-form-outer">
+    <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST">
+        <div id="birth-registration-form-notify-autority-sub-title" class="form-sub-title">
+            *in Sinhala<br>*in Tamil<br>Notifying Authority
+        </div>
+        <div id="notifier-nic" class="font-9">
+            <label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள
+                அட்டை இல.<br>PIN / NIC of the Notifying Authority</label>
+            <s:textfield name=""/>
+        </div>
+        <div id="notifier-name" class="font-9">
+            <label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label>
+            <s:textarea name=""/>
+        </div>
+        <div id="notifier-address" class="font-9">
+            <label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
+            <s:textarea name=""/>
+        </div>
+        <div id="notifier-signature" class="font-9">
+            <label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and Official Seal (if available) of the
+                Notifying Authority</label>
+            <s:checkbox name=""/>
+        </div>
+        <div id="notified-date" class="font-9">
+            <label>දිනය <br>*in tamil <br>Date</label>
+            <s:textfield name=""/>
+        </div>
+        <s:submit value="SUBMIT"/>
+    </s:form>
+</div>

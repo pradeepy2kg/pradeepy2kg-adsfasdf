@@ -52,6 +52,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
         session.remove(WebConstants.SESSION_PRINT_START);
 
+        // TODO district and division hard coded for the moment
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
                 printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), true);

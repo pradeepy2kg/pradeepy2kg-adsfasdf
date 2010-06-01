@@ -4,16 +4,14 @@ import java.util.Date;
 
 /**
  * Java bean instance to capture Other information such as Marriage, GrandFather/Great Grand Father  and the Informant
- *  as entered by page 3 of the birth declaration form 
+ * as entered by page 3 of the birth declaration form
  */
 public class GrandFatherInfo {
-    //-----------------------------------------------------
     // If grandfather of the child born in Sri Lanka, grandfather's details
     private String grandFatherFullName;
     private int grandFatherBirthYear;
     private String grandFatherBirthPlace;
 
-    //-----------------------------------------------------
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
     private String greatGrandFatherFullName;
     private String greatGrandFatherBirthYear;

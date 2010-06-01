@@ -13,6 +13,7 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.crs.web.model.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Country;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,8 @@ import java.lang.reflect.Method;
  */
 
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
-
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+
     private final BirthRegistrationService service;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
@@ -71,6 +72,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String childDOB;
     private String motherDOB;
     private String fatherDOB;
+  	private String motherAdmissionDate;
+    private String dateOfRegistration;
+    private String dateOfMarriage;
+    private int fatherCountry;
+    private int motherCountry;
 
     public String welcome() {
         return "success";
@@ -169,7 +175,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error("{} : {}", e.getMessage(), e.toString());
+        logger.error("Handle Error {} : {}", e.getMessage(), e);
         //todo pass the error to the error.jsp page
     }
 
@@ -276,7 +282,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setChildDOB(String childDOB) {
         this.childDOB = childDOB;
+        logger.debug("Child DOB String: {}", childDOB);
+//        logger.debug("Child DOB Date: {}", EPopDate.getDate(childDOB));
         child.setDateOfBirth(EPopDate.getDate(childDOB));
+        logger.debug("ChildDOB in ChildInfo : {}", child.getDateOfBirth());
     }
 
     public String getMotherDOB() {
@@ -284,8 +293,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void setMotherDOB(String motherDOB) {
-        this.motherDOB = motherDOB;
-        child.setDateOfBirth(EPopDate.getDate(motherDOB));
+        if (parent != null) {
+            this.motherDOB = motherDOB;
+            logger.debug("Mother DOB String: {}", motherDOB);
+            logger.debug("Mother DOB Date: {}", EPopDate.getDate(motherDOB));
+            parent.setMotherDOB(EPopDate.getDate(motherDOB));
+            logger.debug("Mother DOB in Parent: {}", parent.getMotherDOB());
+            logger.error("Mother DOB in Parent: {}", parent.getMotherDOB());
+        }
     }
 
     public String getFatherDOB() {
@@ -293,8 +308,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void setFatherDOB(String fatherDOB) {
-        this.fatherDOB = fatherDOB;
-        child.setDateOfBirth(EPopDate.getDate(fatherDOB));
+        if (parent != null) {
+            this.fatherDOB = fatherDOB;
+            logger.debug("Father DOB String: {} {}", fatherDOB, parent);
+            logger.debug("Father DOB Date: {}", EPopDate.getDate(fatherDOB));
+            parent.setFatherDOB(EPopDate.getDate(fatherDOB));
+            //logger.debug("Father DOB in Parent: {}", parent.getFatherDOB());
+            //logger.error("Father DOB in Parent: {}", parent.getFatherDOB());
+        }
     }
 
     public Map<Integer, String> getDivisionList() {
@@ -337,6 +358,43 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.notifyingAuthority = notifyingAuthority;
     }
 
+    public String getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(String dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+        child.setDateOfRegistration(EPopDate.getDate(dateOfRegistration));
+        logger.debug("Child Registration in Child: {}", child.getDateOfRegistration());
+    }
+
+    public String getMotherAdmissionDate() {
+        return motherAdmissionDate;
+    }
+
+    public void setMotherAdmissionDate(String motherAdmissionDate) {
+        if (parent != null) {
+            this.motherAdmissionDate = motherAdmissionDate;
+            logger.debug("Mother Admission String: {}", motherAdmissionDate);
+            logger.debug("Mother Admission Date: {}", EPopDate.getDate(motherAdmissionDate));
+            parent.setMotherAdmissionDate(EPopDate.getDate(motherAdmissionDate));
+            logger.debug("Mother Admission in Parent: {}", parent.getMotherAdmissionDate());
+            logger.error("Mother Admission in Parent: {}", parent.getMotherAdmissionDate());
+        }
+    }
+
+    public String getDateOfMarriage() {
+        return dateOfMarriage;
+    }
+
+    public void setDateOfMarriage(String dateOfMarriage) {
+        if (marriage != null) {
+            this.dateOfMarriage = dateOfMarriage;
+            marriage.setDateOfMarriage(EPopDate.getDate(dateOfMarriage));
+            logger.debug("DateOfMarriage : {}", marriage.getDateOfMarriage());
+        }
+    }
+
     public int getBirthDistrict() {
         return birthDistrict;
     }
@@ -353,5 +411,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setBirthDivision(int birthDivision) {
         this.birthDivision = birthDivision;
         child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrict, birthDivision));
+    }
+
+    public int getFatherCountry() {
+        return fatherCountry;
+    }
+
+    public void setFatherCountry(int fatherCountry) {
+        this.fatherCountry = fatherCountry;
+        parent.setFatherCountry(new Country());
+    }
+
+    public int getMotherCountry() {
+        return motherCountry;
+    }
+
+    public void setMotherCountry(int motherCountry) {
+        this.motherCountry = motherCountry;
+        parent.setMotherCountry(new Country());
     }
 }
