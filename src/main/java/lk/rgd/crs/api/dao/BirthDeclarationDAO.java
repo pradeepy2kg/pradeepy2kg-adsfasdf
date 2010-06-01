@@ -21,11 +21,11 @@ public interface BirthDeclarationDAO {
      * again be requested for re-print
      *
      * @param birthDivision the birth division
-     * @param printed return already printed items if true, or items pending printing if false
+     * @param printed       return already printed items if true, or items pending printing if false
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed);
 
-    public List<BirthDeclaration> getBirthRegistrationPending(User user, boolean isExpired);
+    public List<BirthDeclaration> getBirthRegistrationPending(int division, boolean isExpired);
 }
 

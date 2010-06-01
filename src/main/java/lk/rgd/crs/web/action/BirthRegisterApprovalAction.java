@@ -38,6 +38,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private Map session;
     private List<BirthDeclaration> birthRegisterApproval;
 
+    private User user;
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -52,9 +53,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String birthRegisterApproval() {
         populate();
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         //todo if it wants to get the user selected district this has to be modified
-        birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user, false);
+        birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user.getAssignedBDDivision(), false);
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
     }
@@ -64,7 +64,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
         //todo division id should be the user selection division
         divisionList = bdDivisionDAO.getDivisions(language, 11, user);
@@ -86,8 +86,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         populate();
         if (expired) {
             logger.debug("insid getExpiredList: checked {} ", expired);
-            User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user, true);
+            birthRegisterApproval = birthDeclarationDAO.getBirthRegistrationPending(user.getAssignedBDDivision(), true);
             /** here it replacess the session variable ApprovalData with the expiredApprovalData */
             session.put("ApprovalData", birthRegisterApproval);
             if (birthRegisterApproval.size() < 10) {
