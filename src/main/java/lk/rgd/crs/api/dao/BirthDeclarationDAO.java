@@ -2,6 +2,7 @@ package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.common.api.domain.User;
 
 import java.util.List;
 
@@ -25,6 +26,6 @@ public interface BirthDeclarationDAO {
      */
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed);
 
-    public List<BirthDeclaration> getBirthRegistrationPending(BDDivision birthDivision, boolean isExpired);
+    public List<BirthDeclaration> getBirthRegistrationPending(User user, boolean isExpired);
 }
 
