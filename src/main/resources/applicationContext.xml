@@ -68,6 +68,8 @@
     <!--DAO Beans - These allow access to the lower levels of the application data-->
     <bean id="appParametersDAOImpl" class="lk.rgd.common.core.dao.AppParametersDAOImpl"/>
     <bean id="districtDAOImpl" class="lk.rgd.common.core.dao.DistrictDAOImpl"/>
+    <bean id="dsDivisionDAOImpl" class="lk.rgd.common.core.dao.DSDivisionDAOImpl"/>
+    <bean id="gnDivisionDAOImpl" class="lk.rgd.common.core.dao.GNDivisionDAOImpl"/>
     <bean id="countryDAOImpl" class="lk.rgd.common.core.dao.CountryDAOImpl"/>
     <bean id="raceDAOImpl" class="lk.rgd.common.core.dao.RaceDAOImpl"/>
     <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
