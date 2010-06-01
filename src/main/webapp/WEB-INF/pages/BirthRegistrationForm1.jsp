@@ -178,6 +178,6 @@
         </div>
         <%--<input type="submit" value="next" />--%>
         <s:hidden name="pageNo" value="1"/>
-        <div class="button"><s:submit value="NEXT"/></div>
+        <div class="button"><s:submit value="%{getText('next.label')}"/></div>
     </form>
 </div>
