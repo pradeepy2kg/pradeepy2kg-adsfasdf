@@ -1,5 +1,7 @@
 package lk.rgd.crs.web.model;
 
+import lk.rgd.common.api.domain.Country;
+
 import java.util.Date;
 
 /**
@@ -13,7 +15,7 @@ public class ParentInfo {
     private String fatherPassportNo;
 
     /** Country if a foreigner */
-    private String fatherCountry;
+    private Country fatherCountry;
 
     /** Name of father */
     private String fatherFullName;
@@ -34,10 +36,13 @@ public class ParentInfo {
     private String motherPassportNo;
 
     /** Country if a foreigner */
-    private String motherCountry;
+    private Country motherCountry;
 
-    /** Hospital admission and date for mother */
-    private String motherAdmissionNoAndDate;
+    /** Hospital admission no for mother */
+    private String motherAdmissionNo;
+
+    /** Hospital admission date for mother */
+    private Date motherAdmissionDate;
 
     /** Full name of mother */
     private String motherFullName;
@@ -79,11 +84,11 @@ public class ParentInfo {
         this.fatherPassportNo = fatherPassportNo;
     }
 
-    public String getFatherCountry() {
+    public Country getFatherCountry() {
         return fatherCountry;
     }
 
-    public void setFatherCountry(String fatherCountry) {
+    public void setFatherCountry(Country fatherCountry) {
         this.fatherCountry = fatherCountry;
     }
 
@@ -135,20 +140,12 @@ public class ParentInfo {
         this.motherPassportNo = motherPassportNo;
     }
 
-    public String getMotherCountry() {
+    public Country getMotherCountry() {
         return motherCountry;
     }
 
-    public void setMotherCountry(String motherCountry) {
+    public void setMotherCountry(Country motherCountry) {
         this.motherCountry = motherCountry;
-    }
-
-    public String getMotherAdmissionNoAndDate() {
-        return motherAdmissionNoAndDate;
-    }
-
-    public void setMotherAdmissionNoAndDate(String motherAdmissionNoAndDate) {
-        this.motherAdmissionNoAndDate = motherAdmissionNoAndDate;
     }
 
     public String getMotherFullName() {
@@ -213,5 +210,21 @@ public class ParentInfo {
 
     public void setMotherEmail(String motherEmail) {
         this.motherEmail = motherEmail;
+    }
+
+    public String getMotherAdmissionNo() {
+        return motherAdmissionNo;
+    }
+
+    public void setMotherAdmissionNo(String motherAdmissionNo) {
+        this.motherAdmissionNo = motherAdmissionNo;
+    }
+
+    public Date getMotherAdmissionDate() {
+        return motherAdmissionDate;
+    }
+
+    public void setMotherAdmissionDate(Date motherAdmissionDate) {
+        this.motherAdmissionDate = motherAdmissionDate;
     }
 }
