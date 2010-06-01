@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
-    <form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
+    <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
           onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
             <div id="birth-registration-form-header-logo">
@@ -180,6 +180,6 @@
         </div>
         <%--<input type="submit" value="next" />--%>
         <s:hidden name="pageNo" value="1"/>
-        <s:submit value="NEXT"/>
-    </form>
+        <div class="button"><s:submit value="%{getText('next.label')}"/></div>
+    </s:form>
 </div>
