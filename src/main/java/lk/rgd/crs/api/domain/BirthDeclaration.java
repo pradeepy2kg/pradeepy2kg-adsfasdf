@@ -39,7 +39,7 @@ public class BirthDeclaration {
         @JoinColumn (name = "birthDistrict"),
         @JoinColumn (name = "birthDivision")
     })
-    private BDDivision birthDivision;
+    private int birthDivision;
     /** This is the serial number captured from the BDF */
     @Column (nullable = false)
     private String bdfSerialNo;

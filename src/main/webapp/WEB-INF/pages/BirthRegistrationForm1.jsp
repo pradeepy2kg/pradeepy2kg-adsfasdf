@@ -72,7 +72,7 @@
                     <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
                 </div>
                 <div id="datePicker">
-                    <s:datetimepicker id="datePicker" name="child.dateOfBirth" label="Format (yyyy-MM-dd)"
+                    <s:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)"
                                   displayFormat="yyyy-MM-dd" value="2010-05-27"
                                   onmouseover="javascript:splitDate('datePicker')"/>
                 </div>
@@ -121,7 +121,7 @@
                             இலக்கம்<br>Hospital Code or GN area code</label>
                     </div>
                     <div>
-                        <s:textfield name="child.hospitalOrGNCode"/>
+                        <s:textfield name="child.hospitalCode"/>
                     </div>
                 </div>
             </div>
