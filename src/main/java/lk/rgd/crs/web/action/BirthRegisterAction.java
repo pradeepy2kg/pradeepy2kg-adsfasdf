@@ -10,6 +10,7 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.EPopDate;
 import lk.rgd.crs.web.model.ChildInfo;
 import lk.rgd.crs.web.model.ParentInfo;
 import lk.rgd.crs.web.model.OtherInfo;
@@ -96,10 +97,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         try {
             switch (pageNo) {
                 case 0: initForm(); break;
-                case 1: beanMerge(child); break;
-                case 2: beanMerge(parent); break;
-                case 3: beanMerge(other); break;
-                case 4: BirthDeclaration register = beanMerge(notifyingAuthority);
+                case 1: beanMerge(getChild()); break;
+                case 2: beanMerge(getParent()); break;
+                case 3: beanMerge(getOther()); break;
+                case 4: BirthDeclaration register = beanMerge(getNotifyingAuthority());
                         // all pages captured, proceed to persist after validations
                         // todo business validations and persiatance
                         logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
@@ -118,6 +119,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * update the bean in session with the values of local bean
      */
     private BirthDeclaration beanMerge(Object o) throws Exception {
+        logger.debug("calss {} received.", o.getClass());
         BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
         BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
 
@@ -263,6 +265,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setChildDOB(String childDOB) {
         this.childDOB = childDOB;
+        child.setDateOfBirth(EPopDate.getDate(childDOB));
     }
 
     public String getMotherDOB() {
@@ -271,6 +274,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherDOB(String motherDOB) {
         this.motherDOB = motherDOB;
+        child.setDateOfBirth(EPopDate.getDate(motherDOB));
     }
 
     public String getFatherDOB() {
@@ -279,6 +283,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setFatherDOB(String fatherDOB) {
         this.fatherDOB = fatherDOB;
+        child.setDateOfBirth(EPopDate.getDate(fatherDOB));
     }
 
     public Map<Integer, String> getDivisionList() {
@@ -287,5 +292,37 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDivisionList(Map<Integer, String> divisionList) {
         this.divisionList = divisionList;
+    }
+
+    public ChildInfo getChild() {
+        return child;
+    }
+
+    public void setChild(ChildInfo child) {
+        this.child = child;
+    }
+
+    public ParentInfo getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentInfo parent) {
+        this.parent = parent;
+    }
+
+    public OtherInfo getOther() {
+        return other;
+    }
+
+    public void setOther(OtherInfo other) {
+        this.other = other;
+    }
+
+    public NotifyingAuthorityInfo getNotifyingAuthority() {
+        return notifyingAuthority;
+    }
+
+    public void setNotifyingAuthority(NotifyingAuthorityInfo notifyingAuthority) {
+        this.notifyingAuthority = notifyingAuthority;
     }
 }
