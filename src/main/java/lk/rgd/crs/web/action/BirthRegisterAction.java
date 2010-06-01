@@ -419,7 +419,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setFatherCountry(int fatherCountry) {
         this.fatherCountry = fatherCountry;
-        parent.setFatherCountry(new Country());
+        parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
     }
 
     public int getMotherCountry() {
@@ -428,6 +428,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherCountry(int motherCountry) {
         this.motherCountry = motherCountry;
-        parent.setMotherCountry(new Country());
+        parent.setMotherCountry(countryDAO.getCountry(motherCountry));
     }
 }

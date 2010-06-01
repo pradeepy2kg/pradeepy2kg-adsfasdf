@@ -20,6 +20,7 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
     private final Map<Integer, String> siCountries = new HashMap<Integer, String>();
     private final Map<Integer, String> enCountries = new HashMap<Integer, String>();
     private final Map<Integer, String> taCountries = new HashMap<Integer, String>();
+    private final Map<Integer, Country> countries = new HashMap<Integer, Country>();
 
     /**
      * @inheritDoc
@@ -37,6 +38,16 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
         return null;
     }
 
+    public Country getCountry(int id) {
+        Country c = countries.get(id);
+
+        if (c==null) {
+            handleException("Country not found for id : " + id, ErrorCodes.COUNTRY_NOT_FOUND);
+        }
+
+        return c;
+    }
+
     /**
      * Loads all values from the database table into a cache
      */
@@ -50,6 +61,7 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
             siCountries.put(c.getCountryId(), c.getSiCountryName());
             enCountries.put(c.getCountryId(), c.getEnCountryName());
             taCountries.put(c.getCountryId(), c.getTaCountryName());
+            countries.put(c.getCountryId(), c);
         }
 
         logger.debug("Loaded : {} countries from the database", results.size());

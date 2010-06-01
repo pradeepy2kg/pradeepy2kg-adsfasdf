@@ -13,4 +13,6 @@ public class ErrorCodes {
     public static final int INVALID_LANGUAGE = 1000;
     /** Data requested for a non-existent district */
     public static final int INVALID_DISTRICT = 1001;
+    /** Data requested for a non existant country id */
+    public static final int COUNTRY_NOT_FOUND = 1002;
 }
