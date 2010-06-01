@@ -274,6 +274,6 @@
                 <input type="text" name=""/>
             </div>
             <s:hidden name="pageNo" value="2"/>
-            <div class="button"><s:submit type="submit" value="NEXT"/></div>
+            <div class="button"><s:submit type="submit" value="%{getText('nextButton.label')}"/></div>
     </form>
 </div>

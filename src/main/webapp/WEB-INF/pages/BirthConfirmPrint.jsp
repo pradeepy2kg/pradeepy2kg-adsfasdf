@@ -13,7 +13,7 @@
             
             <s:radio name="selectOption" list="{getText('all.label'), getText('not_printed.label'),
              getText('already_printed.label')}"/>
-            <s:submit value="View"></s:submit>
+            <s:submit value= "%{getText('view.label')}" ></s:submit>
         </s:form>
     </div>
     <div id="birth-register-approval-body">
