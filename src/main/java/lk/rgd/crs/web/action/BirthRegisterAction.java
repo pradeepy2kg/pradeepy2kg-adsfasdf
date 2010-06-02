@@ -59,7 +59,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private MarriageInfo marriage;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
-    private BirthDeclaration bdf;
 
     /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
@@ -101,39 +100,42 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("Step {} of 4 ", pageNo);
         if ((pageNo > 4) || (pageNo < 0)) {
             return "error";
-        }
+        } else {
+            if (pageNo > 0) {
+                BirthDeclaration bdf;
+                Object o = session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+                if (o==null) {
+                    bdf = new BirthDeclaration();
+                } else {
+                    bdf = (BirthDeclaration) o;
+                }
 
-        populate();
-        try {
-            switch (pageNo) {
-                case 0:
-                    initForm();
-                    break;
-                case 1:
-                    bdf.setChild(child);
-                    break;
-                case 2:
-                    bdf.setParent(parent);
-                    break;
-                case 3:
-                    bdf.setMarriage(marriage);
-                    bdf.setGrandFather(grandFather);
-                    bdf.setInformant(informant);
-                    break;
-                case 4:
-                    BirthDeclaration register = beanMerge(notifyingAuthority);
-                    // all pages captured, proceed to persist after validations
-                    // todo business validations and persiatance
-                    logger.debug("Birth Register : {},{}", register.getChild().getChildFullNameEnglish(), register.getParent().getFatherFullName());
-                    logger.debug("Birth Register : {}.", register.getParent().getMotherFullName());
-                    return "success";
+                switch (pageNo) {
+                    case 1:
+                        bdf.setChild(child);
+                        break;
+                    case 2:
+                        bdf.setParent(parent);
+                        break;
+                    case 3:
+                        bdf.setMarriage(marriage);
+                        bdf.setGrandFather(grandFather);
+                        bdf.setInformant(informant);
+                        break;
+                    case 4:
+                        bdf.setNotifyingAuthority(notifyingAuthority);
+                        // all pages captured, proceed to persist after validations
+                        // todo business validations and persiatance
+                        logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
+                        logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
+                }
+
+                session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, bdf);
             }
-        } catch (Exception e) {
-            handleErrors(e);
-            return "error";
-        }
 
-        return "form" + pageNo;
+            populate();
+            return "form" + pageNo;
+        }
     }
 
     /**
@@ -176,30 +178,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
         //todo pass the error to the error.jsp page
-    }
-
-
-    /**
-     * initialises the birthRegister bean with proper initial values (depending on user, date etc) and
-     * store it in session
-     */
-    private void initForm() {
-        BirthDeclaration birthRegister = new BirthDeclaration();
-        //todo set fields to proper initial values based on user and date
-        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, birthRegister);
-    }
-
-    /**
-     * birthRegisterFinalizer is called by the fourth jsp page of the Birth
-     * Registration Form it finalize the birthRegister Entity bean and send
-     * it to the Business delegate
-     *
-     * @return String
-     */
-    public String birthRegisterFinalizer() {
-        //birthRegister = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-        //birthRegister.setChildDOB(new EPopDate().getDate(childDOB));
-        return "success";
     }
 
     /**
