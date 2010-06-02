@@ -99,8 +99,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
                 // todo business validations and persiatance
                 BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 
-                logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
-                logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+                //logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+                //logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
                 return "success";
             }
 
@@ -110,7 +110,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
             } else {
                 // submissions of pages 1 - 2
                 BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
-                logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+                //logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
                 try {
                     beanMerge();
                 } catch (Exception e) {
