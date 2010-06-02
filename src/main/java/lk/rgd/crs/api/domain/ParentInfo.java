@@ -5,11 +5,13 @@ import lk.rgd.common.api.domain.Country;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.Embeddable;
 import java.util.Date;
 
 /**
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
  */
+@Embeddable
 public class ParentInfo {
     /** NIC or PIN of father  */
     @Column(nullable = true)

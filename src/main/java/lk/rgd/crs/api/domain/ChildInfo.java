@@ -3,16 +3,13 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.domain.BDDivision;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinColumn;
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
- *
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
  */
+@Embeddable
 public class ChildInfo {
     /**
      * The Birth/Death registration division where the birth is registered (Includes District)

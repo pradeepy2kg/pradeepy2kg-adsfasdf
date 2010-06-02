@@ -1,8 +1,10 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.util.Date;
 
+@Embeddable
 public class InformantInfo {
     /** 0 - father, 1 - mother, 2 - guardian */
     @Column(nullable = false)
