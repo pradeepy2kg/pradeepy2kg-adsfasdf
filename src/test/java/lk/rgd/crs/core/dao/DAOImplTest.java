@@ -39,16 +39,11 @@ public class DAOImplTest extends TestCase {
 
     private static GenericApplicationContext ctx = null;
 
-    private static Set<String> sinhalaDistricts = new HashSet<String>();
     private static Set<String> sinhalaCountries = new HashSet<String>();
     private static Set<String> sinhalaRaces = new HashSet<String>();
     private static Set<String> sinhalaBDDivisions = new HashSet<String>();
 
     static {
-        sinhalaDistricts.add("කොළඹ");
-        sinhalaDistricts.add("ගාල්ල");
-        sinhalaDistricts.add("මහනුවර");
-
         sinhalaCountries.add("ශ්‍රී ලංකාව");
         sinhalaCountries.add("ජපානය");
         sinhalaCountries.add("ඉන්දියාව");
@@ -108,10 +103,7 @@ public class DAOImplTest extends TestCase {
         DistrictDAO bean = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
         // TODO User should be added
         Map<Integer, String> districts = bean.getDistricts(AppConstants.SINHALA, null);
-        Assert.assertEquals(3, districts.size());
-        for (String d : districts.values()) {
-            Assert.assertTrue(sinhalaDistricts.contains(d));
-        }
+        Assert.assertEquals(25, districts.size());
     }
 
     public void testCountries() throws Exception {

@@ -15,8 +15,8 @@ public class GNDivision implements Serializable {
 
     @ManyToOne
     @JoinColumns({
-        @JoinColumn(name = "dsDivisionId", nullable = false, updatable = false),
-        @JoinColumn(name = "districtId", nullable = false, updatable = false)
+        @JoinColumn(name = "districtId", nullable = false, updatable = false),
+        @JoinColumn(name = "dsDivisionId", nullable = false, updatable = false)
     })
     private DSDivision dsDivision;
     @Id
