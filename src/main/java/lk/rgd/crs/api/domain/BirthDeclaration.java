@@ -14,17 +14,17 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "filter.by.division.and.status", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.birthDivision = :birthDivision AND bdf.status = :status " +
-                        "ORDER BY bdf.dateOfRegistration desc"),
+                        "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = :status " +
+                        "ORDER BY bdf.child.dateOfRegistration desc"),
         @NamedQuery(name = "confirmation.pending.approval.expired", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.birthDivision = :birthDivision AND bdf.status = 2 " +
-                        "AND bdf.lastDateForConfirmation < :today " +
-                        "ORDER BY bdf.dateOfRegistration desc"),
+                        "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = 2 " +
+                        "AND bdf.confirmant.lastDateForConfirmation < :today " +
+                        "ORDER BY bdf.child.dateOfRegistration desc"),
         @NamedQuery(name = "confirmation.pending.approval", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.birthDivision = :birthDivision AND bdf.status = 5 " +
-                        "ORDER BY bdf.confirmationReceiveDate desc")
+                        "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = 5 " +
+                        "ORDER BY bdf.confirmant.confirmationReceiveDate desc")
 })
 public class BirthDeclaration {
     /** This is an auto generated unique row identifier  */
