@@ -56,8 +56,8 @@
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.birthRegistration_form4</result>
-            <!--<result name="success" type="redirect-action">eprBirthConfirmationReport</result>-->
-            <result  type="tiles" name="success">epr.welcome</result>
+            <result type="redirect-action" name="form5">eprBirthConfirmationReport</result>
+            <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

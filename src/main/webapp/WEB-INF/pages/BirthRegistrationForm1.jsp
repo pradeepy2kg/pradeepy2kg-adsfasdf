@@ -157,7 +157,7 @@
                 <label>(5)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
             </div>
             <div>
-                <s:select list="#{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                <s:select list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                           name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
             </div>
         </div>
