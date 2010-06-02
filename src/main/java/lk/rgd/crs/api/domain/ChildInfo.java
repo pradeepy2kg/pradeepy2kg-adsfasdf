@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.domain.BDDivision;
 
@@ -20,6 +21,16 @@ public class ChildInfo {
             @JoinColumn(name = "birthDivision")
     })
     private BDDivision birthDivision;
+
+    /**
+     * The D.S. division where the birth is registered (Includes District)
+     */
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "birthDistrict"),
+            @JoinColumn(name = "dsDivision")
+    })
+    private DSDivision dsDivision;
 
     /**
      * This is the serial number captured from the BDF
@@ -112,6 +123,14 @@ public class ChildInfo {
 
     public void setBirthDivision(BDDivision birthDivision) {
         this.birthDivision = birthDivision;
+    }
+
+    public DSDivision getDsDivision() {
+        return dsDivision;
+    }
+
+    public void setDsDivision(DSDivision dsDivision) {
+        this.dsDivision = dsDivision;
     }
 
     public String getBdfSerialNo() {
