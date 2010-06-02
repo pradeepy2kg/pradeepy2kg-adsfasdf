@@ -10,6 +10,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.RequestAware;
 import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.model.ChildInfo;
+import lk.rgd.crs.web.model.ParentInfo;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.User;
 
@@ -48,6 +50,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     private Map<Integer, String> raceList;
     private Map session;
     private HttpServletRequest request;
+    private ChildInfo child;
+    private ParentInfo parent;
 
     private BirthDeclaration birthConfirm;
 
@@ -66,9 +70,24 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      * This will have no performace impact as they will be cached in the backend.
      */
     public String birthConfirmation() {
-        logger.debug("inside birthConfirmation {} was selected", approveSelected);
-        if (approveSelected != null) {
-            return "re-direct";
+        logger.debug("Step {} of 2.", pageNo);
+        if (pageNo > 2) {
+            return "error";
+        } else if (pageNo == 2) {
+            logger.debug("submitted value {} {} {}", child.getChildFullNameOfficialLang(),
+                    child.getChildFullNameEnglish());
+            // all pages captured, proceed to persist after validations
+            // todo business validations and persiatance
+//            BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
+//
+//            logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+//            logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+            return "success";
+        }
+
+        populate();
+        if (pageNo == 0) {
+            initForm();
         } else {
             logger.debug("Step {} of 2.", pageNo);
             if (pageNo > 2) {
@@ -160,7 +179,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      */
     private void initForm() {
         setBirthConfirm(new BirthDeclaration());
-        session.put("birthConfirm", getBirthConfirm());
+        //session.put("birthConfirm", getBirthConfirm());
         //todo set fields to proper initial values based on user and date
     }
 
@@ -295,11 +314,19 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public String getApproveSelected() {
-        return approveSelected;
+    public ChildInfo getChild() {
+        return child;
     }
 
-    public void setApproveSelected(String approveSelected) {
-        this.approveSelected = approveSelected;
+    public void setChild(ChildInfo child) {
+        this.child = child;
+    }
+
+    public ParentInfo getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentInfo parent) {
+        this.parent = parent;
     }
 }
