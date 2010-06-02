@@ -74,10 +74,15 @@ public class DatabaseInitializer implements ApplicationContextAware {
             new FileSystemResource(fileName), false);
         logger.info("Created tables using generated script : " + fileName);
 
-        // populate with initial / sample data
+        // populate with initial data
         SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
             new ClassPathResource("populate_database.sql"), false);
         logger.info("Populated the tables with initial data from : populate_database.sql");
+
+        // populate with sample data
+        SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+            new ClassPathResource("populate_sample_data.sql"), false);
+        logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
         for (PreloadableDAO dao : preloadableDaos.values()) {
