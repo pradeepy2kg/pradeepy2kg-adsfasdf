@@ -7,9 +7,9 @@ import java.util.Date;
  * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
  */
 @Entity
-@Table(name = "BIRTH_REGISTER", schema = "CRS",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"birthDistrict", "birthDivision", "bdfSerialNo", "status"})})
+@Table(name = "BIRTH_REGISTER", schema = "CRS")
+        //uniqueConstraints = {
+        //        @UniqueConstraint(columnNames = {"birthDistrict", "birthDivision", "bdfSerialNo", "status"})})
 
 @NamedQueries({
         @NamedQuery(name = "filter.by.division.and.status", query =
@@ -45,25 +45,25 @@ public class BirthDeclaration {
     private int originalBCPlaceOfIssue;
 
     @Embedded
-    private ChildInfo child;
+    private ChildInfo child = new ChildInfo();
 
     @Embedded
-    private ParentInfo parent;
+    private ParentInfo parent = new ParentInfo();
 
     @Embedded
-    private MarriageInfo marriage;
+    private MarriageInfo marriage = new MarriageInfo();
 
     @Embedded
-    private GrandFatherInfo grandFather;
+    private GrandFatherInfo grandFather = new GrandFatherInfo();
 
     @Embedded
-    private NotifyingAuthorityInfo notifyingAuthority;
+    private NotifyingAuthorityInfo notifyingAuthority = new NotifyingAuthorityInfo();
 
     @Embedded
-    private InformantInfo informant;
+    private InformantInfo informant = new InformantInfo();
 
     @Embedded
-    private ConfirmantInfo confirmant;
+    private ConfirmantInfo confirmant = new ConfirmantInfo();
 
     public Date getOriginalBCDateOfIssue() {
         return originalBCDateOfIssue;
