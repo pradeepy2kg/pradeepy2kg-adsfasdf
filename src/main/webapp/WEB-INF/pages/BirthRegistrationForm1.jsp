@@ -29,9 +29,11 @@
                               onchange="javascript:setDate('submitMonth','2')"/>
                     <s:select list="{'01','02','03'}" name="" id="submitDay"
                               onchange="javascript:setDate('submitDay','2')"/>
-                    <s:datetimepicker id="submitDatePicker" name="dateOfRegistration" label="Format (yyyy-MM-dd)"
-                                      displayFormat="yyyy-MM-dd"
-                                      onmouseover="javascript:splitDate('submitDatePicker')"/>
+                    <div></div>
+                        <s:datetimepicker id="submitDatePicker" name="dateOfRegistration" label="Format (yyyy-MM-dd)"
+                                          displayFormat="yyyy-MM-dd"
+                                          onmouseover="javascript:splitDate('submitDatePicker')"/>
+
                 </label>
             </div>
             <div id="birth-registration-form-header-info" class="font-9">
@@ -123,16 +125,12 @@
                 </div>
             </div>
             <div id="child-pob-hospitalcode">
-                <div class="form-sub-label">
-                    <div>
-                        <label>රෝහල් කේත අංකය හෝ ග්‍රාම නිලධාරි කේත අංකය<br>வைத்தியசாலை எண் அல்லது கிராம சேவகர் குறி
-                            இலக்கம்<br>Hospital Code or GN area code</label>
-                    </div>
-                    <div>
-                        <s:textfield name="child.hospitalCode"/>
-                        <s:textfield name="child.gnCode"/>
-                    </div>
-                </div>
+                <label>*in Sinhala<br>* in Tamil<br>Hospital Code</label>
+                <s:textfield name="child.hospitalCode"/>
+            </div>
+            <div id="child-pob-gncode">
+                <label> *in Sinhala <br>*in Tamil<br>GN Code</label>
+                <s:textfield name="child.gnCode"/>
             </div>
         </div>
         <div id="child-name" class="font-9">
