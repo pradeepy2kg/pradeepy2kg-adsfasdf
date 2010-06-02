@@ -12,8 +12,6 @@ import lk.rgd.crs.api.domain.Person;
 import lk.rgd.crs.api.domain.ChildInfo;
 import lk.rgd.crs.api.domain.ParentInfo;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.model.ChildInfo;
-import lk.rgd.crs.web.model.ParentInfo;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.User;
 
@@ -118,9 +116,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
                     return "error";
                 }
             }
-
-            return "form" + pageNo;
         }
+        return "form" + pageNo;
     }
 
     /**
