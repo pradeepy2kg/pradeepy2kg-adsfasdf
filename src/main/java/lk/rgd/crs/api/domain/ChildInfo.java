@@ -1,8 +1,12 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
 import lk.rgd.crs.api.domain.BDDivision;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinColumn;
+import javax.persistence.Column;
 import java.util.Date;
 
 /**
@@ -10,64 +14,99 @@ import java.util.Date;
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
  */
 public class ChildInfo {
-    /** The district code where the birth is registered */
-    private District birthDistrict;
-
-    /** The Birth/Death registration division where the birth is registered */
+    /**
+     * The Birth/Death registration division where the birth is registered (Includes District)
+     */
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "birthDistrict"),
+            @JoinColumn(name = "birthDivision")
+    })
     private BDDivision birthDivision;
 
-    /** This is the serial number captured from the BDF */
+    /**
+     * This is the serial number captured from the BDF
+     */
+    @Column(nullable = false)
     private String bdfSerialNo;
 
-    /** The date of the birth */
+    /**
+     * The date of the birth
+     */
+    @Column(nullable = false)
     private Date dateOfBirth;
 
-    /** The date when the birth declaration was submitted to the medical registrar or the DS office */
+    /**
+     * The date when the birth declaration was submitted to the medical registrar or the DS office
+     */
+    @Column(nullable = false)
     private Date dateOfRegistration;
 
     /**
      * 0 - BDF added, 1 - ADR approved, 2 - Confirmation printed
-     * 3 - confirmed, 4 - corrected (i.e. during the confirmation by parents), 5 - rejected
-     * 6 - record updated
+     * 3 - confirmed without changes, 14 - Record archived and corrected (i.e. during the confirmation by parents),
+     * 5 - confirmation changes captured, 6 - confirmation changes approved
+     * 10 - rejected and archived
      */
+    @Column(nullable = false)
     private int status;
 
-    /** Status comment - e.g. reason for rejection due to duplicate */
-    private String comments;
-
-    /** The place of birth - usually the village or hospital name */
+    /**
+     * The place of birth - usually the village or hospital name
+     */
+    @Column(nullable = true)
     private String placeOfBirth;
 
-    /** Name in Sinhala or Tamil */
+    /**
+     * Name in Sinhala or Tamil
+     */
+    @Column(nullable = true)
     private String childFullNameOfficialLang;
 
-    /** Name in English */
+    /**
+     * Name in English
+     */
+    @Column(nullable = true)
     private String childFullNameEnglish;
 
-    /** Gender 0 - male, 1 - female, 2 - unknown */
+    /**
+     * Gender 0 - male, 1 - female, 2 - unknown
+     */
+    @Column(nullable = false)
     private int childGender;
 
-    /** Wight in kilogrammes */
+    /**
+     * Wight in kilogrammes
+     */
+    @Column(nullable = true)
     private float childBirthWeight;
 
-    /** Child rank according to the order of live births */
+    /**
+     * Child rank according to the order of live births
+     */
+    @Column(nullable = true)
     private int childRank;
 
-    /** Number of children born along with the child being registered */
+    /**
+     * Number of children born along with the child being registered
+     */
+    @Column(nullable = true)
     private int numberOfChildrenBorn;
 
-    /** Hospial code */
+    /**
+     * Hospial code
+     */
+    @Column(nullable = true)
     private String hospitalCode;
 
-    /** Grama Niladhari code */
+    /**
+     * Grama Niladhari code
+     */
+    @Column(nullable = true)
     private String gnCode;
 
     public District getBirthDistrict() {
-        return birthDistrict;
-    }
-
-    public void setBirthDistrict(District birthDistrict) {
-        this.birthDistrict = birthDistrict;
+        return birthDivision.getDistrict();
     }
 
     public BDDivision getBirthDivision() {
@@ -108,14 +147,6 @@ public class ChildInfo {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 
     public String getPlaceOfBirth() {

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.RequestAware;
 import lk.rgd.crs.api.domain.Person;
+import lk.rgd.crs.api.domain.ChildInfo;
+import lk.rgd.crs.api.domain.ParentInfo;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.model.ChildInfo;
 import lk.rgd.crs.web.model.ParentInfo;

@@ -1,5 +1,6 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 /**
@@ -7,10 +8,20 @@ import java.util.Date;
  */
 public class NotifyingAuthorityInfo {
     /** The notifying authority PIN */
+    @Column(nullable = false)
     private String notifyingAuthorityPIN;
 
     /** The notifying authority Name */
+    @Column(nullable = false)
     private String notifyingAuthorityName;
+
+    /** The PIN of the ADR approving the BDF  */
+    @Column(nullable = true)
+    private String approvePIN;
+
+    /** The date when an ADR or higher approves the BDF  */
+    @Column(nullable = true)
+    private Date approveDate;
 
     /** The notifying authority Address */
     private String notifyingAuthorityAddress;
