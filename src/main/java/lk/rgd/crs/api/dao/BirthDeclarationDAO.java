@@ -31,6 +31,6 @@ public interface BirthDeclarationDAO {
      * @param birthDivision the birth division
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision);
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows);
 }
 

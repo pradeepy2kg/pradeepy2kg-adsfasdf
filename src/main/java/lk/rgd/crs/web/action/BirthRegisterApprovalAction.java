@@ -48,6 +48,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     /**
      * gets the BirthRegisterApproval data which is to be displayed
      * and store them in the session to get later in the jsp
+     * page naviagation can be done only if previousFlag is set to 1
+     * or nextFlag is set to 1  selectedFlag is to capture whether
+     * user selects a particular district or division if district
+     * or division is selected selectedFlag is set to 1 else it
+     * is set to 0
      *
      * @return String
      */
@@ -56,7 +61,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         int selectedDistrict = user.getInitialDistrict();
         int selectedDivision = user.getInitialBDDivision();
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision));
+            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), 1, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+        session.put("pageNo", 1);
+        paginationHandler(birthRegisterApproval.size());
+        session.put("previousFlag", 0);
+        session.put("selectedFlag", 0);
         session.put("ApprovalData", birthRegisterApproval);
         return "pageLoad";
     }
@@ -68,9 +77,22 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String filter() {
-        logger.debug("inside filter : district {} and division {} observed", district, division);
-        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(district, division));
+        //todo pagination should be checked
+        Integer pageNo = (Integer) session.get("pageNo");
+        if (logger.isDebugEnabled()) {
+            logger.debug("inside filter : district {} division {} observed ", district, division + " Page number " + pageNo.toString());
+        }
+        /**
+         * following session variables are assigned for
+         * pagination purposes  
+         */
+        session.put("selectedDistrict", district);
+        session.put("selectedDivision", division);
+        session.put("selectedFlag", 1);
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
+            district, division), pageNo, WebConstants.BR_APPROVAL_NO_OF_ROWS);
         session.put("ApprovalData", birthRegisterApproval);
+        paginationHandler(birthRegisterApproval.size());
         populate();
         return "success";
     }
@@ -106,28 +128,35 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     /**
      * handles pagination of birth registration approval data
      * sets the session variable to load the next ten records
-     * flag variable is decide whether to display the Next link
-     * or not.
      *
      * @return String
      */
     public String nextPage() {
-        Integer i = (Integer) session.get("approvalStart");
-        Integer counter = (Integer) session.get("counter");
-        birthRegisterApproval = (List<BirthDeclaration>) session.get("ApprovalData");
-
-        logger.debug("Next Page: Count {} , ApprovalArrayList Size {}", counter, birthRegisterApproval.size());
-        int boundary = birthRegisterApproval.size();
-        if (i != null && boundary > counter) {
-            if (boundary > (counter + 10)) {
-                i = i + 10;
-                session.put("flag", 1);
-            } else {
-                i = counter;
-                session.put("flag", 0);
-            }
-            session.put("approvalStart", i);
+        //todo pagination should be handled
+        Integer pageNo = (Integer) session.get("pageNo");
+        Integer selectedFlag = (Integer) session.get("selectedFlag");
+        logger.debug("inside nextPage : pageNo {} and selectedFlag {} observed", pageNo, selectedFlag);
+        if (selectedFlag == 1) {
+            district = (Integer) session.get("selectedDistrict");
+            division = (Integer) session.get("selectedDivision");
+            session.put("selectedFlag", 0);
+        } else {
+            user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+            district = user.getInitialDistrict();
+            division = user.getInitialBDDivision();
         }
+        pageNo++;
+        session.put("pageNo", pageNo);
+        /**
+         * gets the user selected district to get the records
+         * variable nextFlag is used to handle the pagination link
+         * in the jsp page 
+         */
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
+            bdDivisionDAO.getBDDivision(district, division), pageNo, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+        session.put("ApprovalData", birthRegisterApproval);
+        paginationHandler(birthRegisterApproval.size());
+        session.put("previousFlag", 1);
         populate();
         return "success";
     }
@@ -138,13 +167,59 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String previousPage() {
-        Integer i = (Integer) session.get("approvalStart");
-        if (i != null && i != 0) {
-            session.put("approvalStart", i - 10);
-            session.put("flag", 1);
+        //todo check pagination previous
+        Integer pageNo = (Integer) session.get("pageNo");
+        Integer selectedFlag = (Integer) session.get("selectedFlag");
+        if (logger.isDebugEnabled()) {
+            logger.debug("inside filter : district {} division {} observed ", district, division + " Page number " + pageNo.toString() + " selectedFlag " + selectedFlag.toString());
         }
+        /**
+         * UI related handle whether to display the
+         * next link and previous link
+         */
+        if (pageNo == 1) {
+            session.put("previousFlag", 0);
+        } else {
+            session.put("previousFlag", 1);
+        }
+        session.put("nextFlag", 1);
+        if (pageNo != 0) {
+            pageNo--;
+        }
+        session.put("pageNo", pageNo);
+        /**
+         * decides district and division whether it is
+         * user selected or not
+         */
+        if (selectedFlag == 1) {
+            district = (Integer) session.get("selectedDistrict");
+            division = (Integer) session.get("selectedDivision");
+            session.put("selectedFlag", 1);
+        } else {
+            user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+            district = user.getInitialDistrict();
+            division = user.getInitialBDDivision();
+        }
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
+            district, division), pageNo, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+        session.put("ApprovalData", birthRegisterApproval);
         populate();
         return "success";
+    }
+
+    /**
+     * responsible for whether to display the next link in
+     * the birthRegisterApproval jsp or not
+     *
+     * @param recordsFound no of birth register approval pending
+     *                     records found
+     */
+    public void paginationHandler(int recordsFound) {
+        if (recordsFound == WebConstants.BR_APPROVAL_NO_OF_ROWS) {
+            session.put("nextFlag", 1);
+        } else {
+            session.put("nextFlag", 0);
+        }
     }
 
     public void setBirthRegisterApproval(List<BirthDeclaration> birthRegisterApproval) {

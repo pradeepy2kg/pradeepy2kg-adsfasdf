@@ -67,7 +67,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                 new ClassPathResource("create_schemas.sql"), false);
             logger.info("Created the schemas : COMMON, CRS, PRS");
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
 
         String fileName = generateSchemaFromHibernate(Dialect.DERBY);
         SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
@@ -195,6 +196,37 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-02-16"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
+            bdf = new BirthDeclaration();
+            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setBdfSerialNo("A117");
+            bdf.getChild().setChildFullNameEnglish("Baby A117 name in English");
+            bdf.getChild().setChildFullNameOfficialLang("A117 බබාගේ නම සිංහලෙන්");
+            bdf.getChild().setDateOfBirth(dfm.parse("2010-02-11"));
+            bdf.getChild().setDateOfRegistration(dfm.parse("2010-02-12"));
+            bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
+            bdf.getChild().setStatus(5);
+            bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233445");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-02-15"));
+            birthDeclarationdao.addBirthDeclaration(bdf);
+
+            bdf = new BirthDeclaration();
+            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setBdfSerialNo("A118");
+            bdf.getChild().setChildFullNameEnglish("Baby A118 name in English");
+            bdf.getChild().setChildFullNameOfficialLang("A118 බබාගේ නම සිංහලෙන්");
+            bdf.getChild().setDateOfBirth(dfm.parse("2010-05-11"));
+            bdf.getChild().setDateOfRegistration(dfm.parse("2010-05-12"));
+            bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
+            bdf.getChild().setStatus(5);
+            bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222234545");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-05-15"));
+            birthDeclarationdao.addBirthDeclaration(bdf);
+
+
         } catch (Exception e) {
             logger.error("Error populating database with sample BDFs", e);
         }
@@ -218,7 +250,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         SchemaExport export = new SchemaExport(cfg);
         export.setDelimiter(";");
         export.setFormat(true);
-        String fileName = System.getProperty("java.io.tmpdir")  + File.separator + dialect.name().toLowerCase() + ".sql";
+        String fileName = System.getProperty("java.io.tmpdir") + File.separator + dialect.name().toLowerCase() + ".sql";
         export.setOutputFile(fileName);
         export.execute(false, false, false, true /* Set to false to create drop table DDL*/);
         return fileName;

@@ -25,4 +25,9 @@ public class WebConstants {
     public static final String DATEFORMAT = "yyyy-MM-dd";
 
     public static final String RADIO_ALREADY_PRINT = "Printed";
+    /**
+     * no of rows per page in birth registration
+     * approval pending
+     */
+    public static final int BR_APPROVAL_NO_OF_ROWS=10;
 }
