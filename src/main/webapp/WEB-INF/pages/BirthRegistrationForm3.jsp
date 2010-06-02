@@ -46,7 +46,7 @@
                               onchange="javascript:setDate('marriageMonth','2')"/>
                     <s:select list="{'01','02','03'}" name="" id="marriageDay"
                               onchange="javascript:setDate('marriageDay','2')"/>
-                    <s:datetimepicker id="marriageDatePicker" name="dateOfMarriage" label="Format (yyyy-MM-dd)"
+                    <sx:datetimepicker id="marriageDatePicker" name="dateOfMarriage" label="Format (yyyy-MM-dd)"
                                       displayFormat="yyyy-MM-dd"
                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>
                 </div>
@@ -168,7 +168,7 @@
                       onchange="javascript:setDate('informedMonth','2')"/>
             <s:select list="{'01','02','03'}" name="" id="informedDay"
                       onchange="javascript:setDate('informedDay','2')"/>
-            <s:datetimepicker id="informedDatePicker" name="informantSignDate" label="Format (yyyy-MM-dd)"
+            <sx:datetimepicker id="informedDatePicker" name="informantSignDate" label="Format (yyyy-MM-dd)"
                               displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('informedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="3"/>
