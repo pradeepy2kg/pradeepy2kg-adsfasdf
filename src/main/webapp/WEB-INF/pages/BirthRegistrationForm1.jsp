@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
-    <s:form action="eprBirthRegistration" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
+    <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
           onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
             <div id="birth-registration-form-header-logo">

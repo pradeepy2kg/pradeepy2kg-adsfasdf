@@ -7,6 +7,7 @@
  @author chathuranga
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
 <s:form name="birthConfirmationForm2" action="eprBirthConfirmation.do" method="POST">
     <div id="birth-confirmation-form-2-body">
 
@@ -56,7 +57,7 @@
         </div>
 
         <s:hidden name="pageNo" value="2"/>
-        <s:submit value="%{getText('next.label')}"/>
+        <div class="button"><input type="%{getText('nextButton.label')}" value="SUBMIT"/></div>
     </div>
 </s:form>
 <s:form id="print_2">

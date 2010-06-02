@@ -53,7 +53,7 @@
 
 
 <div class="birth-confirmation-form-outer">
-    <form action="eprBirthConfirmation.do" name="#" id="birth-confirmation-form-1" method="POST">
+    <form action="#" name="#" id="birth-confirmation-form-1" method="POST">
         <div id="birth-confirmation-form-header">
             <div id="birth-confirmation-form-header-logo">
                 <img src="<s:url value="./images/official-logo.png" />" alt=""/>
@@ -203,10 +203,6 @@
             <div class="current"></div>
             <div class="new"></div>
         </div>
-           <s:hidden name="pageNo" value="1"/>
         <input type="submit" value="next" />
     </form>
 </div>
-
-
-
