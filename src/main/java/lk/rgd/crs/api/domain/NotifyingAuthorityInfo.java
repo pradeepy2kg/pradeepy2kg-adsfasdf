@@ -1,11 +1,13 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.util.Date;
 
 /**
  * Java bean instance to contain notifying authority information enterd by page 4 of birth declaration form
  */
+@Embeddable
 public class NotifyingAuthorityInfo {
     /** The notifying authority PIN */
     @Column(nullable = false)

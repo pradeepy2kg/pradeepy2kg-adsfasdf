@@ -1,8 +1,10 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.util.Date;
 
+@Embeddable
 public class MarriageInfo {
     /** Were parents married at birth - 0 - no, 1 - yes, 2 - no but married later  */
     @Column(nullable = true)

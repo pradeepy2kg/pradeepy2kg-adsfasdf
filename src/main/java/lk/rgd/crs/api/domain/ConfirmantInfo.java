@@ -1,9 +1,10 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.util.Date;
 
-
+@Embeddable
 public class ConfirmantInfo {
     /** This represents a system generated serial number for the confirmation by parents  */
     @Column(nullable = true)
