@@ -1,61 +1,61 @@
-/** @author Indunil Moremda
+/** @author Indunil Moremada
+ *
  * javascript to select all the check boxes
  * when clicking on one check box  */
 
+var fieldName = 'index_';
 
-var fieldName = 'index';
-
-function selectall(form, allCheck) {
-    var i = form.elements.length;
-    var e = form.elements;
+function selectall() {
+    var i = document.birth_confirm_print.elements.length;
+    var e = document.birth_confirm_print.elements;
     var name = new Array();
     var value = new Array();
     var j = 0;
     for (var k = 0; k < i; k++)
     {
-        if (form.elements[k].name == fieldName)
+        if (document.birth_confirm_print.elements[k].name == fieldName)
         {
-            if (form.elements[k].checked == true) {
-                value[j] = form.elements[k].value;
+            if (document.birth_confirm_print.elements[k].checked == true) {
+                value[j] = document.birth_confirm_print.elements[k].value;
                 j++;
             }
         }
     }
-    checkSelect(form, allCheck);
+    checkSelect();
 }
-function selectCheck(obj, form, allCheck)
+function selectCheck(obj)
 {
-    var i = form.elements.length;
+    var i = document.birth_confirm_print.elements.length;
     for (var k = 0; k < i; k++)
     {
-        if (form.elements[k].name == fieldName)
+        if (document.birth_confirm_print.elements[k].name == fieldName)
         {
-            form.elements[k].checked = obj;
+            document.birth_confirm_print.elements[k].checked = obj;
         }
     }
-    selectall(form, allCheck);
+    selectall();
 }
 
-function selectallMe(form, allCheck)
+function selectallMe()
 {
-    if (allCheck.checked == true)
+    if (document.birth_confirm_print.allCheck.checked == true)
     {
-        selectCheck(true, form, allCheck);
+        selectCheck(true);
     }
     else
     {
-        selectCheck(false, form, allCheck);
+        selectCheck(false);
     }
 }
-function checkSelect(form, allCheck)
+function checkSelect()
 {
-    var i = form.elements.length;
+    var i = document.birth_confirm_print.elements.length;
     var berror = true;
     for (var k = 0; k < i; k++)
     {
-        if (form.elements[k].name == fieldName)
+        if (document.birth_confirm_print.elements[k].name == fieldName)
         {
-            if (form.elements[k].checked == false)
+            if (document.birth_confirm_print.elements[k].checked == false)
             {
                 berror = false;
                 break;
@@ -64,10 +64,10 @@ function checkSelect(form, allCheck)
     }
     if (berror == false)
     {
-        allCheck.checked = false;
+        document.birth_confirm_print.allCheck.checked = false;
     }
     else
     {
-        allCheck.checked = true;
+        document.birth_confirm_print.allCheck.checked = true;
     }
 }
