@@ -8,6 +8,7 @@
   Birth Registration Confirmation Page 1
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <%-- <s:form name="birthConfirmationForm1" action="eprBirthConfirmation.do" method="POST">-%>
     <div id="birth-confirmation-form-1-body">
