@@ -27,8 +27,8 @@ public class ChildInfo {
      */
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "birthDistrict"),
-            @JoinColumn(name = "dsDivision")
+            @JoinColumn(name = "birthDistrict", updatable = false, insertable = false),
+            @JoinColumn(name = "dsDivision",updatable = false, insertable = false)
     })
     private DSDivision dsDivision;
 
