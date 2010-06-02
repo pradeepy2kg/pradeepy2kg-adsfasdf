@@ -33,8 +33,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision) {
-
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows) {
+        //todo pagination
         Query q = em.createNamedQuery("confirmation.pending.approval");
         q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
