@@ -2,6 +2,7 @@
   @author duminda
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
@@ -29,7 +30,7 @@
                               onchange="javascript:setDate('submitMonth','2')"/>
                     <s:select list="{'01','02','03'}" name="" id="submitDay"
                               onchange="javascript:setDate('submitDay','2')"/>
-                    <s:datetimepicker id="submitDatePicker" name="dateOfRegistration" label="Format (yyyy-MM-dd)"
+                    <sx:datetimepicker id="submitDatePicker" name="dateOfRegistration" label="Format (yyyy-MM-dd)"
                                       displayFormat="yyyy-MM-dd"
                                       onmouseover="javascript:splitDate('submitDatePicker')"/>
                 </label>
@@ -80,7 +81,7 @@
                     <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
                 </div>
                 <div id="datePicker">
-                    <s:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)"
+                    <sx:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)"
                                   displayFormat="yyyy-MM-dd" value="2010-05-27"
                                   onmouseover="javascript:splitDate('datePicker')"/>
                 </div>

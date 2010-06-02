@@ -39,7 +39,7 @@
                       onchange="javascript:setDate('fatherMonth','2')"/>
             <s:select list="{'01','02','03'}" name="" id="fatherDay"
                       onchange="javascript:setDate('fatherDay','2')"/>
-            <s:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
+            <sx:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
                               displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="4"/>
