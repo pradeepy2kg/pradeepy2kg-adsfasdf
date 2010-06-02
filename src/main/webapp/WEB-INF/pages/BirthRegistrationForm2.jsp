@@ -209,6 +209,7 @@
     <div>
         <s:textfield name="parent.motherEmail"/>
     </div>
+</div>
     <s:hidden name="pageNo" value="2"/>
     <s:submit type="submit" value="NEXT"/>
     </s:form>

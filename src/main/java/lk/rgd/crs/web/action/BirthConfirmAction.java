@@ -3,14 +3,11 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.RequestAware;
-import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.domain.ChildInfo;
-import lk.rgd.crs.api.domain.ParentInfo;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.User;
@@ -47,11 +44,13 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     private int pageNo;
     private String language;
     private Map<Integer, String> districtList;
+    private Map<Integer, String> divisionList;
     private Map<Integer, String> raceList;
     private Map session;
     private HttpServletRequest request;
     private ChildInfo child;
     private ParentInfo parent;
+    private MarriageInfo marriage;
 
     private BirthDeclaration birthConfirm;
 
@@ -321,11 +320,27 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         this.child = child;
     }
 
+    public Map<Integer, String> getDivisionList() {
+        return divisionList;
+    }
+
+    public void setDivisionList(Map<Integer, String> divisionList) {
+        this.divisionList = divisionList;
+    }
+
     public ParentInfo getParent() {
         return parent;
     }
 
     public void setParent(ParentInfo parent) {
         this.parent = parent;
+    }
+
+    public MarriageInfo getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(MarriageInfo marriage) {
+        this.marriage = marriage;
     }
 }
