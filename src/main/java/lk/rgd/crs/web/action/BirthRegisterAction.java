@@ -2,18 +2,6 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.common.api.dao.CountryDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.Person;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.EPopDate;
-import lk.rgd.crs.web.model.*;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Country;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -27,16 +15,25 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.domain.User;
+
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.EPopDate;
+
+
+
 
 /**
- * EntryAction is a struts action class
- *
- * @author indunil Moremada
- * @author Chathranga
- * @author Amith
- * @author Duminda
+ * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
+ * Data capture forms (4) will be kept in session until persistance at the end of 4th page.
  */
-
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
@@ -62,6 +59,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private MarriageInfo marriage;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
+    private BirthDeclaration bdf;
 
     /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
     private int pageNo;
@@ -112,22 +110,22 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     initForm();
                     break;
                 case 1:
-                    beanMerge(child);
+                    bdf.setChild(child);
                     break;
                 case 2:
-                    beanMerge(parent);
+                    bdf.setParent(parent);
                     break;
                 case 3:
-                    beanMerge(marriage);
-                    beanMerge(grandFather);
-                    beanMerge(informant);
+                    bdf.setMarriage(marriage);
+                    bdf.setGrandFather(grandFather);
+                    bdf.setInformant(informant);
                     break;
                 case 4:
                     BirthDeclaration register = beanMerge(notifyingAuthority);
                     // all pages captured, proceed to persist after validations
                     // todo business validations and persiatance
-                    logger.debug("Birth Register : {},{}", register.getChildFullNameEnglish(), register.getFatherFullName());
-                    logger.debug("Birth Register : {}.", register.getMotherFullName());
+                    logger.debug("Birth Register : {},{}", register.getChild().getChildFullNameEnglish(), register.getParent().getFatherFullName());
+                    logger.debug("Birth Register : {}.", register.getParent().getMotherFullName());
                     return "success";
             }
         } catch (Exception e) {
@@ -394,7 +392,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setBirthDistrict(int birthDistrict) {
         this.birthDistrict = birthDistrict;
-        child.setBirthDistrict(districtDAO.getDistrict(birthDistrict));
     }
 
     public int getBirthDivision() {
@@ -413,8 +410,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setFatherCountry(int fatherCountry) {
         if (parent != null) {
             this.fatherCountry = fatherCountry;
-            //TODO use countryDAO to get Country when id given
-            parent.setFatherCountry(new Country());
+            parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
         }
     }
 

@@ -1,19 +1,29 @@
-package lk.rgd.crs.web.model;
+package lk.rgd.crs.api.domain;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 public class InformantInfo {
-    private String informantAddress;
-
-    /**
-     * 0 - father, 1 - mother, 2 - guardian
-     */
+    /** 0 - father, 1 - mother, 2 - guardian */
+    @Column(nullable = false)
     private int informantType;
 
+    @Column(nullable = false)
     private String informantName;
+
+    @Column(nullable = true)
     private String informantNICorPIN;
+
+    @Column(nullable = true)
+    private String informantAddress;
+
+    @Column(nullable = true)
     private String informantPhoneNo;
+
+    @Column(nullable = true)
     private String informantEmail;
+
+    @Column(nullable = true)
     private Date informantSignDate;
     private boolean informantSigned;
 
