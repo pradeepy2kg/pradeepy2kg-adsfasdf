@@ -70,34 +70,34 @@
 
 /* Page one (Form 1 ) of the Birth Registration form */
 #child-dob, #child-pob, #child-name, #child-name-in-english { display: block; border: 1px solid #000; border-top: none; float: left; width: 1023px; padding-left: 5px;}
-#child-pob .form-label, #child-name .form-label, #child-name-in-english .form-label, #child-gender .form-label, #child-weight .form-label, #child-birth-order-no .form-label, #multiple-birth .form-label {border-right: 1px solid #000;}
+#child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-weight label, #child-birth-order-no label, #multiple-birth label {border-right: 1px solid #000;}
 #child-gender, #child-weight, #child-birth-order-no, #multiple-birth {display: block; border: 1px solid #000; border-top: none; float: left; width: 508px; padding-left: 5px;}
 #child-weight, #multiple-birth {border-left: none; padding-left: 6px;}
-#child-dob .form-label, #child-pob .form-label, #child-name .form-label, #child-name-in-english .form-label, #child-gender .form-label, #child-birth-order-no .form-label {float: left; width: 200px;}
-#child-weight .form-label, #multiple-birth .form-label { float: left; width: 225px;}
+#child-dob label, #child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-birth-order-no label {float: left; width: 200px;}
+#child-weight label, #multiple-birth label { float: left; width: 225px;}
 #child-dob-year, #child-dob-month, #child-dob-day { width: auto;}
-#child-dob-year div label, #child-dob-month div label, #child-dob-day div label {float: left; width: 100px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
-#child-dob-year div select, #child-dob-month div select, #child-dob-day div select {float: left; margin: 12px 15px 12px 10px; width: 70px;}
+#child-dob-year label, #child-dob-month label, #child-dob-day label {float: left; width: 100px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
+#child-dob-year select, #child-dob-month select, #child-dob-day select {float: left; margin: 12px 15px 12px 10px; width: 70px;}
 #datePicker{margin:5px 10px;float:right;}
-#child-pob .form-label {padding: 35px 0;}
+#child-pob label {padding: 66px 0;}
 
 #child-birth-order-no {padding-bottom: 1px;}
 
-#child-pob-district div label, #child-pob-hospitalcode label { float: left; border-right:1px solid #000; padding:6px 5px; width: 190px;}
-#child-pob-district div select, #child-pob-hospitalcode input { float: left; margin: 2px 7px; width: 186px;}
+#child-pob-hospitalcode label { float: left; border-right:1px solid #000; padding:6px 5px; width: 190px;}
+#child-pob-hospitalcode input { float: left; margin: 2px 7px; width: 186px;}
 #child-pob-hospitalcode input{width:180px; margin:15px 7px;}
-#child-pob-division div label, #child-pob-gncode label { float: left; border: 1px solid #000; border-top: none; border-bottom: none; padding:6px 5px; width:213px;}
-#child-pob-division div select, #child-pob-gncode input { float: left; margin: 2px 7px; width: 170px;}
+#child-pob-gncode label { float: left; border: 1px solid #000; border-top: none; border-bottom: none; padding:6px 5px; width:213px;}
+#child-pob-gncode input { float: left; margin: 2px 7px; width: 170px;}
 #child-pob-gncode input{width:165px; margin:15px 7px;}
-#child-pob-place { float: left; border: 1px solid #000; width: 822px; border-left: none; border-right: none;}
-#child-pob-place div label { float: left; width: 190px; border-right: 1px solid #000; padding:6px 5px;}
-#child-pob-place div input { float: left; margin: 2px 7px; width: 590px;}
- #child-pob-hospitalcode label, #child-pob-gncode label{padding:5px 5px 4px 5px;}
-#child-name div textarea{float:left; margin:25px 5px; width:800px;}
-#child-name-in-english div textarea{float:left; margin:5px; width:800px;}
-#child-name-in-english .form-label{padding:5px 0;}
-#child-gender div select, #child-weight div input{float:left; margin:10px 5px; width:260px;}
-#child-birth-order-no div input, #multiple-birth div input{float:left; margin:25px 5px; width:260px;}
+#child-pob-place, #child-pob-district, #child-pob-division, #child-pob-ds-division { float: left; border-bottom: 1px solid #000; width: 822px;}
+#child-pob-place label, #child-pob-district label, #child-pob-division label, #child-pob-ds-division label { float: left; width: 230px; border-right: 1px solid #000; padding:6px 5px;}
+#child-pob-place input, #child-pob-district select, #child-pob-division select, #child-pob-ds-division select { float: left; margin: 2px 7px; width: 550px;}
+#child-pob-hospitalcode label, #child-pob-gncode label{padding:5px 5px 4px 5px;}
+#child-name textarea{float:left; margin:25px 5px; width:800px;}
+#child-name-in-english textarea{float:left; margin:5px; width:800px;}
+#child-name-in-english label{padding:5px 0;}
+#child-gender select, #child-weight input{float:left; margin:10px 5px; width:260px;}
+#child-birth-order-no input, #multiple-birth input{float:left; margin:25px 5px; width:260px;}
 
 
 /* Page two (Form 2) of  the Birth Registration Form  */
@@ -218,7 +218,6 @@
 #bcf-serial-no {margin-top: -130px;}
 #bcf-serial-no label span{float: left; margin-left: 5px;}
 #bcf-serial-no label input{margin: 10px;}
-#birth-confirmation-form-header-info{text-align:justify;}
 
 #civil-confirmation-info-sub-title{margin-top:20px;}
 #title-head{border:1px solid #000; border-top:none; padding:5px; height:52px;}

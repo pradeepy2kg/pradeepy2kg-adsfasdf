@@ -44,8 +44,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
 
     private Map<Integer, String> districtList;
-    private Map<Integer, String> dsdivisionList;
     private Map<Integer, String> countryList;
+    private Map<Integer, String> dsdivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> divisionList;
 

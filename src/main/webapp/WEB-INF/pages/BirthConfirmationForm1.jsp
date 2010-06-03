@@ -70,26 +70,6 @@
             <div id="bcf-serial-no">
                 <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span><s:textfield name="" /></label>
             </div>
-            <div id="birth-confirmation-form-header-info" class="font-9">
-                උපත තහවුරු කිරීම පිළිබද මෙම ලියවිල්ල, සකස් වී ඇත්තේ ළමයාගේ උපත ලියාපදිංචි කිරීම සඳහා ඔබ විසින් ඉදිරිපත්
-                කරන ලද "උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර" අකෘති පත්‍රය අනුවය. එම තොරතුරු සිවිල් ලියාපදිංචි කිරීමේ
-                පද්ධතියට ඇතුලත් කර ඇත. එසේ ඇතුලත් කර ඇති තොරතුරු වල යම් අක්ෂර දෝෂයක් නිවැරදි කළ යුතු නම්, එම තොරතුරු
-                අදාල ස්ථානයෙහි සදහන් කර දින 14 ක් තුල මා වෙත ලැබෙන්න සලස්වන්න. එම කාලය තුල දී මෙම අකෘති පත්‍රය මා වෙත
-                නොලැබුනහොත්, සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුලත් කර ඇති තොරතුරු නිවැරදි බවට සහතික කර උපත ලියාපදිංචි
-                කරනු ලැබේ.<br>
-                பிறப்பை பதிவு செய்வதற்காக தங்களால் சமர்ப்பிக்கப்பட்ட "பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும்
-                படவத்தின்படியே இப்படிவம் தயாரிக்கப்பட்டுள்ளது. அதில் தரப்பட்டுள்ள தகவல்கள் ‘சிவில் பதிவு அமைப்பில்’
-                உள்ளடக்கப்பட்டுள்ளது. அவ்வாறு உள்ளடக்கப்பட்டுள்ள பின்வரும் தகவல்களில் ஏதாவது பிழைகள் இருப்பின் அது
-                திருத்தப்பட வேண்டுமாயின், அது தொடர்பான விபரங்களை உரிய இடங்களில் குறிப்பிட்டு 14 நாட்களுக்குள் எனக்கு
-                கிடைக்கக் சுடியதாக அனுப்பி வைக்கவும். உரிய காலத்துள் இப்படிவம் எனக்கு கிடைக்காதுவிடின், ‘சிவில் பதிவு
-                அமைப்பில்’ உள்ளடக்கப்பட்ட விபரம் சரியானதெனக் கருதி பிறப்புப் பதிவு செய்யப்படும். <br>
-                Particulars appearing in this form are based on the information provided by you in the ‘Particulars for
-                Registration of a Birth’ form. These particulars are included in the Civil Registration System. If there
-                are any errors appearing in the given details, make the necessary corrections in the relevant place and
-                submit to me within 14 days. If I do not receive this form within the specified period, the birth
-                particulars in the Civil Registration System will be confirmed as accurate and the birth will be
-                registered.
-            </div>
         </div>
         <div id="brf-serial-no-and-date" class="font-9">
             <div class="no">1</div>
@@ -101,7 +81,7 @@
             <s:textfield name="" disabled="true" value=""/>
             <s:textfield name="" disabled="true" value=""/>
         </div>
-        <div id="  " class="font-9">
+        <div id="last-date" class="font-9">
             <div class="no">2</div>
             <label>
                 *in Sinhala
