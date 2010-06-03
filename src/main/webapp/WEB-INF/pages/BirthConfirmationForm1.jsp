@@ -101,7 +101,7 @@
             <s:textfield name="" disabled="true" value=""/>
             <s:textfield name="" disabled="true" value=""/>
         </div>
-        <div id="last-date" class="font-9">
+        <div id="  " class="font-9">
             <div class="no">2</div>
             <label>
                 *in Sinhala
@@ -165,8 +165,7 @@
             </div>
         </div>
         <div id="new-dob">
-            <sx:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)"
-                displayFormat="yyyy-MM-dd" value="2010-05-27"
+            <sx:datetimepicker id="datePicker" name="childDOB" displayFormat="yyyy-MM-dd" value="2010-05-27"
                 onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="bcf-gender" class="font-9">
@@ -280,7 +279,14 @@
             <div class="current">
                 <s:textfield name="" disabled="true"/>
             </div>
-            <div class="new"></div>
+            <div class="new">
+                <label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label>
+                <s:radio name="marriage.parentsMarried" list="#{'1':''}"/>
+                <label class="label">*in sinhala<br>*in tamil<br>No</label>
+                <s:radio name="marriage.parentsMarried" list="#{'0':''}"/>
+                <label class="label">*in sinhala<br>*in tamil<br>Since Married</label>
+                <s:radio name="marriage.parentsMarried" list="#{'2':''}"/>
+            </div>
         </div>
         <s:submit value="%{getText('nextButton.label')}" />
     </s:form>
