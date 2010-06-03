@@ -1,6 +1,6 @@
 target
-epopulation-register.ipr
-epopulation-register.iws
-epopulation-register.iml
+popreg.ipr
+popreg.iws
+popreg.iml
 derby.log
 epopulation.log
