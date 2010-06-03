@@ -181,8 +181,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
                     case 1:
-                        bdf.setChild(child);
-                        bdf.setParent(parent);
+                        bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
+                        bdf.getChild().setDateOfRegistration(child.getDateOfRegistration());
+                        bdf.getChild().setDateOfBirth(child.getDateOfBirth());
+                        bdf.getChild().setChildGender(child.getChildGender());
+                        bdf.getChild().setGnDivision(child.getGnDivision());
+                        bdf.getChild().setBirthDivision(child.getBirthDivision());
+                        bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
+
+                        bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
+                        bdf.getParent().setFatherRace(parent.getFatherRace());
+                        bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
+                        bdf.getParent().setMotherRace(parent.getMotherRace());
+
+                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
                         bdf.setChild(child);    //todo merge needed
