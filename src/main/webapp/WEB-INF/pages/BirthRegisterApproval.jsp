@@ -35,13 +35,13 @@
                         <td><s:property value="child.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                        <s:url id="approveSelected" action="eprBirthConfirmation" value="">
-                            <s:param name="Serial" value="child.bdfSerialNo"/>
+                        <s:url id="approveSelected" action="eprApproveSelected.do" value="">
+                            <s:param name="key" value="idUKey"/>
                         </s:url>
                         <td><s:a href="%{approveSelected}"><img
-                                src="<s:url value='/images/approve.png'/>" alt=""/></s:a></td>
+                                src="<s:url value='/images/approve.png'/>"/></s:a></td>
                         <s:url id="editSelected" action="eprApproveSelected.do">
-                            <s:param name="bdId" value="child.bdfSerialNo"/>
+                            <s:param name="key" value="idUKey"/>
                         </s:url>
                         <td><s:a href="%{editSelected}">
                             <s:label value="%{getText('edit.label')}"/></s:a></td>
