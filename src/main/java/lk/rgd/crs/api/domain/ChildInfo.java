@@ -126,10 +126,6 @@ public class ChildInfo implements Serializable {
         return gnDivision.getDsDivision();
     }
 
-    public void setDsDivision(DSDivision dsDivision) {
-        this.gnDivision.setDsDivision(dsDivision);
-    }
-
     public String getBdfSerialNo() {
         return bdfSerialNo;
     }
