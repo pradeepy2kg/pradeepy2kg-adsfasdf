@@ -87,22 +87,22 @@ public class ChildInfo implements Serializable {
     private int childGender;
 
     /**
-     * Wight in kilogrammes
+     * Weight in kilogrammes
      */
     @Column(nullable = true)
-    private float childBirthWeight;
+    private Float childBirthWeight;
 
     /**
      * Child rank according to the order of live births
      */
     @Column(nullable = true)
-    private int childRank;
+    private Integer childRank;
 
     /**
      * Number of children born along with the child being registered
      */
     @Column(nullable = true)
-    private int numberOfChildrenBorn;
+    private Integer numberOfChildrenBorn;
 
     /**
      * Hospial code
@@ -190,27 +190,27 @@ public class ChildInfo implements Serializable {
         this.childGender = childGender;
     }
 
-    public float getChildBirthWeight() {
+    public Float getChildBirthWeight() {
         return childBirthWeight;
     }
 
-    public void setChildBirthWeight(float childBirthWeight) {
+    public void setChildBirthWeight(Float childBirthWeight) {
         this.childBirthWeight = childBirthWeight;
     }
 
-    public int getChildRank() {
+    public Integer getChildRank() {
         return childRank;
     }
 
-    public void setChildRank(int childRank) {
+    public void setChildRank(Integer childRank) {
         this.childRank = childRank;
     }
 
-    public int getNumberOfChildrenBorn() {
+    public Integer getNumberOfChildrenBorn() {
         return numberOfChildrenBorn;
     }
 
-    public void setNumberOfChildrenBorn(int numberOfChildrenBorn) {
+    public void setNumberOfChildrenBorn(Integer numberOfChildrenBorn) {
         this.numberOfChildrenBorn = numberOfChildrenBorn;
     }
 

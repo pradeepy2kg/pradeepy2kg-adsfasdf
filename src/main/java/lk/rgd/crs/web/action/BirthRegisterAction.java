@@ -10,10 +10,6 @@ import org.slf4j.Logger;
 import java.util.List;
 import java.util.Map;
 import java.util.Locale;
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
 
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -26,7 +22,6 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.EPopDate;
 
 
 /**
@@ -60,6 +55,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private MarriageInfo marriage;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
+    private ConfirmantInfo confirmant;
+
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
 
@@ -206,6 +203,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setMotherFullName(parent.getMotherFullName());
                         break;
                     case 3:
+                        logger.debug("Birth Confirmation  : {} , {} .", confirmant.getConfirmantNICorPIN(),
+                                confirmant.getConfirmantFullName());
                         bdf.setInformant(informant);
                         break;
                 }
@@ -400,5 +399,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsdivisionList(Map<Integer, String> dsdivisionList) {
         this.dsdivisionList = dsdivisionList;
+    }
+
+    public ConfirmantInfo getConfirmant() {
+        return confirmant;
+    }
+
+    public void setConfirmant(ConfirmantInfo confirmant) {
+        this.confirmant = confirmant;
     }
 }

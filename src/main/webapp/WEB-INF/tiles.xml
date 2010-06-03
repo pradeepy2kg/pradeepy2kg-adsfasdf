@@ -53,6 +53,11 @@
         <put-attribute name="title" value="BirthConfirmationForm2.title"/>
     </definition>
 
+     <definition name="epr.birthConfirmation_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationForm3.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm3.title"/>
+    </definition>
+
 	<definition name="epr.home" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/home.jsp"/>
         <put-attribute name="title" value="home.title"/>

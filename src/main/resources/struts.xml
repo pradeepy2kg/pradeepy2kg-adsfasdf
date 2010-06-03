@@ -56,6 +56,9 @@
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.birthRegistration_form4</result>
             <result type="redirectAction" name="form4">eprBirthConfirmationReport</result>
+            <result type="tiles" name="confirm0">epr.birthConfirmation_form1</result>
+            <result type="tiles" name="confirm1">epr.birthConfirmation_form2</result>
+            <result type="tiles" name="confirm2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -66,6 +69,7 @@
             <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="success">epr.welcome</result>
+            <result type="redirectAction" name="re-direct">eprApproveSelected</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
