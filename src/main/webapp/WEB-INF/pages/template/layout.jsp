@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <s:head theme="xhtml"/>
+    <sx:head/>
     <title>E-Population System</title>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
@@ -39,7 +39,7 @@
         ;
     </style>
     <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
-    <script type="text/javascript" src="<s:url value="/js/SelectAll.js"/>"></script>
+    <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
 </head>
