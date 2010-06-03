@@ -1,5 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="lk.rgd.crs.api.domain.BirthRegisterApproval" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
@@ -37,8 +35,16 @@
                         <td><s:property value="child.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                        <td><s:submit value="%{getText('approve.label')}" name="bdfSerialNo"/></td>
-                        <td><s:submit value="%{getText('edit.label')}" name="edit"/></td>
+                        <s:url id="approveSelected" action="eprBirthConfirmation" value="">
+                            <s:param name="Serial" value="child.bdfSerialNo"/>
+                        </s:url>
+                        <td><s:a href="%{approveSelected}"><img
+                                src="<s:url value='/images/approve.png'/>" alt=""/></s:a></td>
+                        <s:url id="editSelected" action="eprApproveSelected.do">
+                            <s:param name="bdId" value="child.bdfSerialNo"/>
+                        </s:url>
+                        <td><s:a href="%{editSelected}">
+                            <s:label value="%{getText('edit.label')}"/></s:a></td>
                     </tr>
                     <%--select_all checkbox is visible only if
                 counter is greater than one--%>
@@ -55,7 +61,7 @@
             </s:if>
             <br/>
             <s:url id="previousUrl" action="eprApprovalPrevious.do"/>
-            <s:url id="nextUrl" action="eprApprovalNext.do?district=22&division=1"/>
+            <s:url id="nextUrl" action="eprApprovalNext.do"/>
 
             <br/><br/>
             <s:if test="#session.previousFlag==1"><s:a href="%{previousUrl}">
@@ -64,6 +70,7 @@
             <s:if test="#session.nextFlag==1"><s:a href="%{nextUrl}">
                 <s:label value="Next>"/></s:a></s:if>
         </s:form>
+
     </div>
     <div id="birth-register-approval-footer">
     </div>

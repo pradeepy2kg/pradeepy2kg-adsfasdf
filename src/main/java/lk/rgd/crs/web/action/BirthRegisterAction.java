@@ -26,6 +26,8 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.EPopDate;
+
 
 /**
  * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
@@ -42,8 +44,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
 
     private Map<Integer, String> districtList;
-    private Map<Integer, String> countryList;
     private Map<Integer, String> dsdivisionList;
+    private Map<Integer, String> countryList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> divisionList;
 
@@ -103,7 +105,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else {
                     bdf = new BirthDeclaration();
                     //todo replace with get a new BD by id
-                    //bdf = BirthDeclarionDAO.getById(bdId); 
+                    //bdf = BirthDeclarionDAO.getById(bdId);
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -112,18 +114,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setChild(child);
                         if (logger.isDebugEnabled()) {
                             logger.debug("BRF 1: serial=" + bdf.getChild().getBdfSerialNo() + ",submitDate=" + bdf.getChild().getDateOfRegistration() + ",dob=" + bdf.getChild().getDateOfBirth() + ",district=******" +
-                                    ",division=******" + ",hospCode=" + bdf.getChild().getHospitalCode() + ",gnCode=" + bdf.getChild().getGnDivision() + ",name=" + bdf.getChild().getChildFullNameOfficialLang() + "," +
-                                    bdf.getChild().getChildFullNameEnglish() + ",gender=" + bdf.getChild().getChildGender() + ",weight=" + bdf.getChild().getChildBirthWeight() + ",rank=" + bdf.getChild().getChildRank() + ",children=" + bdf.getChild().getNumberOfChildrenBorn());
+                                ",division=******" + ",hospCode=" + bdf.getChild().getHospitalCode() + ",gnCode=" + bdf.getChild().getGnDivision() + ",name=" + bdf.getChild().getChildFullNameOfficialLang() + "," +
+                                bdf.getChild().getChildFullNameEnglish() + ",gender=" + bdf.getChild().getChildGender() + ",weight=" + bdf.getChild().getChildBirthWeight() + ",rank=" + bdf.getChild().getChildRank() + ",children=" + bdf.getChild().getNumberOfChildrenBorn());
                         }
                         break;
                     case 2:
                         bdf.setParent(parent);
                         if (logger.isDebugEnabled()) {
                             logger.debug("BRF 2: father- nic=" + bdf.getParent().getFatherNICorPIN() + ",country=" + bdf.getParent().getFatherCountry() + ",passport" + bdf.getParent().getFatherPassportNo() + ",name=" +
-                                    bdf.getParent().getFatherFullName() + ",dob=" + bdf.getParent().getFatherDOB() + ",place=" + bdf.getParent().getFatherPlaceOfBirth() + ",race=" + bdf.getParent().getFatherRace());
+                                bdf.getParent().getFatherFullName() + ",dob=" + bdf.getParent().getFatherDOB() + ",place=" + bdf.getParent().getFatherPlaceOfBirth() + ",race=" + bdf.getParent().getFatherRace());
                             logger.debug("BRF 2: mother- nic=" + bdf.getParent().getMotherNICorPIN() + ",country=" + bdf.getParent().getMotherCountry() + ",passport" + bdf.getParent().getMotherPassportNo() + ",name=" +
-                                    bdf.getParent().getMotherFullName() + ",dob=" + bdf.getParent().getMotherDOB() + ",place=" + bdf.getParent().getMotherPlaceOfBirth() + ",race=" + bdf.getParent().getMotherRace() + ",age=" + bdf.getParent().getMotherAgeAtBirth() +
-                                    ",address=" + bdf.getParent().getMotherAddress() + ",admitted=" + bdf.getParent().getMotherAdmissionNo() + "," + bdf.getParent().getMotherAdmissionDate() + ",tel=" + bdf.getParent().getMotherPhoneNo() + ",email=" + bdf.getParent().getMotherEmail());
+                                bdf.getParent().getMotherFullName() + ",dob=" + bdf.getParent().getMotherDOB() + ",place=" + bdf.getParent().getMotherPlaceOfBirth() + ",race=" + bdf.getParent().getMotherRace() + ",age=" + bdf.getParent().getMotherAgeAtBirth() +
+                                ",address=" + bdf.getParent().getMotherAddress() + ",admitted=" + bdf.getParent().getMotherAdmissionNo() + "," + bdf.getParent().getMotherAdmissionDate() + ",tel=" + bdf.getParent().getMotherPhoneNo() + ",email=" + bdf.getParent().getMotherEmail());
 
                         }
                         break;
@@ -133,11 +135,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setInformant(informant);
                         if (logger.isDebugEnabled()) {
                             logger.debug("BRF 3: married=" + bdf.getMarriage().getParentsMarried() + ", place=" + bdf.getMarriage().getPlaceOfMarriage() + ", date=" +
-                                    bdf.getMarriage().getDateOfMarriage() + ", motherSign=" + bdf.getMarriage().isMotherSigned() + " ,fatherSign=" + bdf.getMarriage().isFatherSigned() +
-                                    ", grandFather=" + bdf.getGrandFather().getGrandFatherFullName() + "," + bdf.getGrandFather().getGrandFatherBirthYear() + "," + bdf.getGrandFather().getGrandFatherBirthPlace() +
-                                    ", GreatGrand=" + bdf.getGrandFather().getGreatGrandFatherFullName() + "," + bdf.getGrandFather().getGreatGrandFatherBirthYear() + "," + bdf.getGrandFather().getGreatGrandFatherBirthPlace() +
-                                    ", InformantType" + bdf.getInformant().getInformantType() + ", InfoName=" + bdf.getInformant().getInformantName() + ", infoId=" + bdf.getInformant().getInformantNICorPIN() + ", infoAdd=" +
-                                    bdf.getInformant().getInformantAddress() + ", infoTel=" + bdf.getInformant().getInformantPhoneNo() + ", infoEmail=" + bdf.getInformant().getInformantEmail() + " ,infoSingnDate=" + bdf.getInformant().getInformantSignDate());
+                                bdf.getMarriage().getDateOfMarriage() + ", motherSign=" + bdf.getMarriage().isMotherSigned() + " ,fatherSign=" + bdf.getMarriage().isFatherSigned() +
+                                ", grandFather=" + bdf.getGrandFather().getGrandFatherFullName() + "," + bdf.getGrandFather().getGrandFatherBirthYear() + "," + bdf.getGrandFather().getGrandFatherBirthPlace() +
+                                ", GreatGrand=" + bdf.getGrandFather().getGreatGrandFatherFullName() + "," + bdf.getGrandFather().getGreatGrandFatherBirthYear() + "," + bdf.getGrandFather().getGreatGrandFatherBirthPlace() +
+                                ", InformantType" + bdf.getInformant().getInformantType() + ", InfoName=" + bdf.getInformant().getInformantName() + ", infoId=" + bdf.getInformant().getInformantNICorPIN() + ", infoAdd=" +
+                                bdf.getInformant().getInformantAddress() + ", infoTel=" + bdf.getInformant().getInformantPhoneNo() + ", infoEmail=" + bdf.getInformant().getInformantEmail() + " ,infoSingnDate=" + bdf.getInformant().getInformantSignDate());
                         }
 
                         break;
@@ -150,12 +152,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         if (logger.isDebugEnabled()) {
                             logger.debug("BRF 4: authName=" + bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() + " ," + bdf.getNotifyingAuthority().getNotifyingAuthorityName() + " ," +
-                                    bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+                                bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
                         }
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-               
+
             populate();
             return "form" + pageNo;
         }
@@ -211,6 +213,43 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate();
             return "form" + pageNo;
         }
+    }
+
+    /**
+     * update the bean in session with the values of local bean
+     */
+    private BirthDeclaration beanMerge(Object o) throws Exception {
+        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
+        BeanInfo targetInfo = Introspector.getBeanInfo(BirthDeclaration.class);
+        PropertyDescriptor[] targetDescriptors = targetInfo.getPropertyDescriptors();
+
+        // Iterate over all the attributes of form bean and copy them into the target
+        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+            Object newValue = descriptor.getReadMethod().invoke(o);
+            //logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
+
+            Method beanMethod = descriptor.getWriteMethod();
+            if (beanMethod != null) {
+                String methodName = descriptor.getWriteMethod().getName();
+                for (PropertyDescriptor targetDescriptor : targetDescriptors) {
+                    Method targetMethod = targetDescriptor.getWriteMethod();
+                    if (targetMethod == null) {
+                        continue;
+                    }
+                    //logger.debug("looking for a match with target method {}", targetMethod);
+                    if (methodName.equals(targetMethod.getName())) {
+                        targetMethod.invoke(target, newValue);
+                        logger.debug("field merged ");
+                        break;
+                    }
+                }
+            }
+        }
+
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
+
+        return target;
     }
 
     private void handleErrors(Exception e) {

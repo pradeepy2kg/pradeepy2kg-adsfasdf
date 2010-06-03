@@ -100,6 +100,7 @@
     <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
     </bean>
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.PrintAction">
         <constructor-arg ref="districtDAOImpl"/>

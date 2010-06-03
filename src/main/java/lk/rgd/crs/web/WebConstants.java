@@ -30,5 +30,5 @@ public class WebConstants {
      * no of rows per page in birth registration
      * approval pending
      */
-    public static final int BR_APPROVAL_NO_OF_ROWS=10;
+    public static final int BR_APPROVAL_NO_OF_ROWS=4;
 }

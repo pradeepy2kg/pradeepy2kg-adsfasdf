@@ -5,7 +5,8 @@
 
 var fieldName = 'index';
 
-function selectall(form, allCheck) {
+function
+        selectall(form, allCheck) {
     var i = form.elements.length;
     var e = form.elements;
     var name = new Array();

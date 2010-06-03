@@ -65,7 +65,6 @@
             <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
             <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
-            <result type="redirectAction" name="form3">eprApproveSelected</result>
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -106,7 +105,7 @@
 
         <action name="eprApproveSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="ApproveSelected">
-            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+            <result type="tiles" name="success">epr.birthConfirmation_form1</result>
         </action>
 
         <!--PrintAction related actions-->
