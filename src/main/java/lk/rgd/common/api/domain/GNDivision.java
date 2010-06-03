@@ -9,92 +9,44 @@ import java.io.Serializable;
  * @author asankha
  */
 @Entity
-@Table(name = "GN_DIVISIONS", schema = "COMMON")
-@IdClass(GNDivision.GNDivisionPK.class)
+@Table(name = "GN_DIVISIONS", schema = "COMMON",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
 public class GNDivision implements Serializable {
 
-    @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "districtId", nullable = false, updatable = false),
-        @JoinColumn(name = "dsDivisionId", nullable = false, updatable = false)
-    })
-    private DSDivision dsDivision;
+    /**
+     * This is a system generated unique key
+     */
     @Id
-    private int dsDivisionId;
-    @Id
-    private int districtId;
-    @Id
-    @Column(updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int gnDivisionUKey;
+
+    /**
+     * This is the standard G.N. Division ID as per the location code database
+     */
+    @Column(updatable = false, unique = true)
     private int divisionId;
+
+    /**
+     * The relationship to D.S. Division to which this G.N. Division belongs
+     */
+    @ManyToOne
+    @JoinColumn(name = "dsDivisionUKey")
+    private DSDivision dsDivision;
+
     @Column(nullable = false, length = 60, updatable = false)
     private String siDivisionName;
     @Column(nullable = false, length = 60, updatable = false)
     private String enDivisionName;
     @Column(nullable = false, length = 60, updatable = false)
     private String taDivisionName;
+
+    /**
+     * A G.N. Division maybe marked as inactive if one is split into two, or amalgamated to create a new one
+     * The UI will only show G.N. Divisions that are currently active for every data entry form
+     */
     @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
-
-    public static class GNDivisionPK implements Serializable {
-        private int districtId;
-        private int dsDivisionId;
-        private int divisionId;
-
-        public GNDivisionPK() {
-        }
-
-        public GNDivisionPK(int districtId, int dsDivisionId, int divisionId) {
-            this.districtId = districtId;
-            this.dsDivisionId = dsDivisionId;
-            this.divisionId = divisionId;
-        }
-
-        public int getDistrictId() {
-            return districtId;
-        }
-
-        public void setDistrictId(int districtId) {
-            this.districtId = districtId;
-        }
-
-        public int getDsDivisionId() {
-            return dsDivisionId;
-        }
-
-        public void setDsDivisionId(int dsDivisionId) {
-            this.dsDivisionId = dsDivisionId;
-        }
-
-        public int getDivisionId() {
-            return divisionId;
-        }
-
-        public void setDivisionId(int divisionId) {
-            this.divisionId = divisionId;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            GNDivisionPK that = (GNDivisionPK) o;
-
-            if (districtId != that.districtId) return false;
-            if (divisionId != that.divisionId) return false;
-            if (dsDivisionId != that.dsDivisionId) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = districtId;
-            result = 31 * result + dsDivisionId;
-            result = 31 * result + divisionId;
-            return result;
-        }
-    }
 
     public GNDivision() {}
 
@@ -156,18 +108,26 @@ public class GNDivision implements Serializable {
     }
 
     public int getDsDivisionId() {
-        return dsDivisionId;
+        return dsDivision.getDivisionId();
     }
 
     public void setDsDivisionId(int dsDivisionId) {
-        this.dsDivisionId = dsDivisionId;
+        this.dsDivision.setDivisionId(dsDivisionId);
     }
 
     public int getDistrictId() {
-        return districtId;
+        return dsDivision.getDistrictId();
     }
 
     public void setDistrictId(int districtId) {
-        this.districtId = districtId;
+        this.dsDivision.setDistrictId(districtId);
+    }
+
+    public int getGnDivisionUKey() {
+        return gnDivisionUKey;
+    }
+
+    public void setGnDivisionUKey(int gnDivisionUKey) {
+        this.gnDivisionUKey = gnDivisionUKey;
     }
 }

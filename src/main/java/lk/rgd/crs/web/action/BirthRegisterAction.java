@@ -112,7 +112,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setChild(child);
                         if (logger.isDebugEnabled()) {
                             logger.debug("BRF 1: serial=" + bdf.getChild().getBdfSerialNo() + ",submitDate=" + bdf.getChild().getDateOfRegistration() + ",dob=" + bdf.getChild().getDateOfBirth() + ",district=******" +
-                                    ",division=******" + ",hospCode=" + bdf.getChild().getHospitalCode() + ",gnCode=" + bdf.getChild().getGnCode() + ",name=" + bdf.getChild().getChildFullNameOfficialLang() + "," +
+                                    ",division=******" + ",hospCode=" + bdf.getChild().getHospitalCode() + ",gnCode=" + bdf.getChild().getGnDivision() + ",name=" + bdf.getChild().getChildFullNameOfficialLang() + "," +
                                     bdf.getChild().getChildFullNameEnglish() + ",gender=" + bdf.getChild().getChildGender() + ",weight=" + bdf.getChild().getChildBirthWeight() + ",rank=" + bdf.getChild().getChildRank() + ",children=" + bdf.getChild().getNumberOfChildrenBorn());
                         }
                         break;

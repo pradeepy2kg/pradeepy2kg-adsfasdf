@@ -2,13 +2,14 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  * Java bean instance to capture Other information such as Marriage, GrandFather/Great Grand Father  and the Informant
  * as entered by page 3 of the birth declaration form
  */
 @Embeddable
-public class GrandFatherInfo {
+public class GrandFatherInfo implements Serializable {
     // If grandfather of the child born in Sri Lanka, grandfather's details
     @Column(nullable = true, length = 600)
     private String grandFatherFullName;

@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, PreloadableDAO {
 
-    private final Map<DSDivision.DSDivisionPK, DSDivision> dsDivisions = new HashMap<DSDivision.DSDivisionPK, DSDivision>();
+    private final Map<Integer, DSDivision> dsDivisions = new HashMap<Integer, DSDivision>();
     private final Map<Integer, Map<Integer,String>> siNames = new HashMap<Integer, Map<Integer,String>>();
     private final Map<Integer, Map<Integer,String>> enNames = new HashMap<Integer, Map<Integer,String>>();
     private final Map<Integer, Map<Integer,String>> taNames = new HashMap<Integer, Map<Integer,String>>();
@@ -50,8 +50,8 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         return Collections.emptyMap();
     }
 
-    public DSDivision getDSDivision(int districtId, int divisionId) {
-        return dsDivisions.get(new DSDivision.DSDivisionPK(districtId, divisionId));
+    public DSDivision getDSDivisionByPK(int dsDivisionUKey) {
+        return dsDivisions.get(dsDivisionUKey);
     }
 
     /**
@@ -69,7 +69,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
             int districtId = d.getDistrictId();
             int divisionId = d.getDivisionId();
 
-            dsDivisions.put(new DSDivision.DSDivisionPK(districtId, divisionId) , d);
+            dsDivisions.put(d.getDsDivisionUKey() , d);
 
             subMap = siNames.get(districtId);
             if (subMap == null) {

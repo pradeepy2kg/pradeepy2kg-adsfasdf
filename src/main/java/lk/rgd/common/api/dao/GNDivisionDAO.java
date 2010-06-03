@@ -21,10 +21,8 @@ public interface GNDivisionDAO {
 
     /**
      * Return GNDivision by id
-     * @param districtId the District ID
-     * @param dsDivisionId the DS Division ID
-     * @param gnDivisionId the G.N. Division ID
+     * @param gnDivisionUKey the unique internal PK of a GN Division
      * @return the GNDivision
      */
-    public GNDivision getGNDivision(int districtId, int dsDivisionId, int gnDivisionId);
+    public GNDivision getGNDivisionByPK(int gnDivisionUKey);
 }

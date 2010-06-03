@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "BIRTH_REGISTER", schema = "CRS",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"birthDistrict", "birthDivision", "bdfSerialNo", "status"})})
+                @UniqueConstraint(columnNames = {"bdDivisionUKey", "bdfSerialNo", "status"})})
 
 @NamedQueries({
         @NamedQuery(name = "filter.by.division.and.status", query =
@@ -26,11 +27,11 @@ import java.util.Date;
                         "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = 5 " +
                         "ORDER BY bdf.confirmant.confirmationReceiveDate desc")
 })
-public class BirthDeclaration {
+public class BirthDeclaration implements Serializable {
     /** This is an auto generated unique row identifier  */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long idUKey;
 
     /** Status comment - e.g. reason for rejection due to duplicate  */
     @Column(nullable = true)
@@ -82,12 +83,12 @@ public class BirthDeclaration {
         this.originalBCPlaceOfIssue = originalBCPlaceOfIssue;
     }
 
-    public long getId() {
-        return id;
+    public long getIdUKey() {
+        return idUKey;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
     }
 
     public String getComments() {

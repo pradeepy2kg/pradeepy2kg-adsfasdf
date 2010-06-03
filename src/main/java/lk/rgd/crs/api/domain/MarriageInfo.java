@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-public class MarriageInfo {
+public class MarriageInfo implements Serializable {
     /** Were parents married at birth - 0 - no, 1 - yes, 2 - no but married later  */
     @Column(nullable = true)
     private int parentsMarried;

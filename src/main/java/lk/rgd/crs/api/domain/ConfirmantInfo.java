@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-public class ConfirmantInfo {
+public class ConfirmantInfo implements Serializable {
     /** This represents a system generated serial number for the confirmation by parents  */
     @Column(nullable = true)
     private int confirmationSerialNumber;

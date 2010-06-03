@@ -19,8 +19,7 @@ import java.util.Map;
 public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, PreloadableDAO {
 
     /** A cache of all GNDivisions by PK */
-    private final Map<GNDivision.GNDivisionPK, GNDivision> gnDivisions =
-        new HashMap<GNDivision.GNDivisionPK, GNDivision>();
+    private final Map<Integer, GNDivision> gnDivisions = new HashMap<Integer, GNDivision>();
     //-- A cache of G.N. Division names in the supported languages --
     private final Map<Integer, Map<Integer, Map<Integer, String>>> siNames =
         new HashMap<Integer, Map<Integer, Map<Integer, String>>>();
@@ -59,8 +58,8 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
         return Collections.emptyMap();
     }
 
-    public GNDivision getGNDivision(int districtId, int dsDivisionId, int divisionId) {
-        return gnDivisions.get(new GNDivision.GNDivisionPK(districtId, dsDivisionId, divisionId));
+    public GNDivision getGNDivisionByPK(int gnDivisionUKey) {
+        return gnDivisions.get(gnDivisionUKey);
     }
 
     /**
@@ -80,7 +79,7 @@ public class GNDivisionDAOImpl extends BaseDAO implements GNDivisionDAO, Preload
             int dsDivisionId = g.getDsDivisionId();
             int gsDivisionId = g.getDivisionId();
 
-            gnDivisions.put(new GNDivision.GNDivisionPK(districtId, dsDivisionId, gsDivisionId), g);
+            gnDivisions.put(g.getGnDivisionUKey(), g);
             processForLanguage(districtId, dsDivisionId, gsDivisionId, siNames, g.getSiDivisionName());
             processForLanguage(districtId, dsDivisionId, gsDivisionId, enNames, g.getEnDivisionName());
             processForLanguage(districtId, dsDivisionId, gsDivisionId, taNames, g.getTaDivisionName());
