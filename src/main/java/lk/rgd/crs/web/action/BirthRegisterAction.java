@@ -60,6 +60,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private MarriageInfo marriage;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
+    private ConfirmantInfo confirmar;
+       private boolean confirmantSign;
+    
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
 
@@ -204,6 +207,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setMarriage(marriage);
                         break;
                     case 3:
+                        logger.debug("Birth Confirmation  : {} , {} .", getConfirmar().getConfirmantNICorPIN(), getConfirmar().getConfirmantFullName());
                         bdf.setInformant(informant);
                         break;
                 }
@@ -428,12 +432,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setGrandFather(GrandFatherInfo grandFather) {
         this.grandFather = grandFather;
     }
-
-    public Map<Integer, String> getDsdivisionList() {
-        return dsdivisionList;
+     public ConfirmantInfo getConfirmar() {
+        return confirmar;
     }
 
-    public void setDsdivisionList(Map<Integer, String> dsdivisionList) {
-        this.dsdivisionList = dsdivisionList;
+    public void setConfirmar(ConfirmantInfo confirmar) {
+        this.confirmar = confirmar;
+    }
+
+    public boolean isConfirmantSign() {
+        return confirmantSign;
+    }
+
+    public void setConfirmantSign(boolean confirmantSign) {
+        this.confirmantSign = confirmantSign;
     }
 }
