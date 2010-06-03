@@ -50,27 +50,33 @@
         </action>
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
-                method="birthRegistration">
-            <!--<interceptor-ref name="scopedModelDriven"/>-->
+                method="birthDeclaration">
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.birthRegistration_form4</result>
             <result type="redirectAction" name="form4">eprBirthConfirmationReport</result>
-            <result type="tiles" name="confirm0">epr.birthConfirmation_form1</result>
-            <result type="tiles" name="confirm1">epr.birthConfirmation_form2</result>
-            <result type="tiles" name="confirm2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthConfirmAction" method="birthConfirmation">
+        <action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthConfirmation">
             <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
             <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
+            <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
+            <result type="redirectAction" name="form3">eprApproveSelected</result>
             <result type="tiles" name="success">epr.welcome</result>
-            <result type="redirectAction" name="re-direct">eprApproveSelected</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
+        <!--<action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthConfirmAction" method="birthConfirmation">-->
+            <!--<result type="tiles" name="form0">epr.birthConfirmation_form1</result>-->
+            <!--<result type="tiles" name="form1">epr.birthConfirmation_form2</result>-->
+            <!--<result type="tiles" name="success">epr.welcome</result>-->
+            <!--<result type="redirectAction" name="re-direct">eprApproveSelected</result>-->
+            <!--<result type="tiles" name="error">epr.error</result>-->
+        <!--</action>-->
 
         <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"
                 method="getBirthConfirmationReport">
