@@ -95,6 +95,7 @@
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl" />
     </bean>
     <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
         <constructor-arg ref="raceDAOImpl"/>

@@ -10,7 +10,7 @@
             onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
             <div id="birth-registration-form-header-logo">
-                <img src="<s:url value="./images/official-logo.png"/>" alt=""/>
+                <img src="<s:url value="/images/official-logo.png"/>" alt=""/>
             </div>
             <div id="birth-registration-form-header-title" class="font-12">
                 <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
