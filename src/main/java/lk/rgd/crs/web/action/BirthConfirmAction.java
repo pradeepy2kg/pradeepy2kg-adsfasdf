@@ -75,9 +75,9 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      */
     public String birthConfirmation() {
         logger.debug("Step {} of 2.", pageNo);
-        if (pageNo > 3) {
+        if (pageNo > 2) {
             return "error";
-        } else if (pageNo == 3) {
+        } else if (pageNo == 2) {
             //logger.debug("submitted value {} {} {}", child.getChildFullNameOfficialLang(),
             //        child.getChildFullNameEnglish());
             // all pages captured, proceed to persist after validations
