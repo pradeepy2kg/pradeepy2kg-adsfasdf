@@ -166,7 +166,7 @@ public class DAOImplTest extends TestCase {
         Assert.assertFalse(user.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
     }
 
-    public void testBirthDeclaration() throws Exception {
+    /*public void testBirthDeclaration() throws Exception {
         BirthDeclarationDAO dao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
         BDDivisionDAO bdDao = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
 
@@ -175,5 +175,5 @@ public class DAOImplTest extends TestCase {
         
         r = dao.getConfirmationPrintPending(bdDao.getBDDivision(11, 1), true);
         Assert.assertEquals(1, r.size());
-    }
+    }*/
 }
