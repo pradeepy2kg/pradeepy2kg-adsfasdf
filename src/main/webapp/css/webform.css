@@ -232,6 +232,8 @@
 #brf-serial-no-and-date input, #last-date input{margin:7px 5px; width:340px;}
 #last-date input{margin:15px 5px;}
 
+.current input, .new input, .new select{width:380px; margin:15px 5px;}
+
 #bcf-dob, #bcf-gender, #bcf-district, #bcf-ds-division, #bcf-division, #bcf-place, #bcf-gncode, #bcf-father-pin, #bcf-father-race, #bcf-mother-pin, #bcf-mother-race, #bcf-marital-status{border:1px solid #000; height:57px; border-top:none;}
 #bcf-father-pin, #bcf-mother-pin, #bcf-marital-status{height:75px;}
 #bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-ds-division label, #bcf-division label, #bcf-place label, #bcf-gncode label, #bcf-father-pin label, #bcf-father-race label, #bcf-mother-pin label, #bcf-mother-race label, #bcf-marital-status label{float:left; width:170px; border-left:1px solid #000; border-right:1px solid #000; padding:0 0 5px 4px;}
@@ -248,8 +250,12 @@
 
 #bcf-gender{border-top:1px solid #000;}
 #new-dob{border-left:1px solid #000; border-right:1px solid #000; margin-left:620px; height:35px;}
+#bcf-marital-status .new label{display:none;}
+#bcf-marital-status .new .label{float:left; display:block; width:100px; padding:12px 0;}
+#bcf-marital-status .new #yes{border-left:none;}
+#bcf-marital-status .new input{float:left; width:50px; margin:25px 10px; }
 
-
+.current input, #brf-serial-no-and-date input, #last-date input{background:none; border:none;}
 
 /*
 * Page 2 (Form 2) of the Birth Confirmation Form.

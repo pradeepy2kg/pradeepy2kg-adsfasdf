@@ -258,7 +258,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         // TODO division hard coded for the moment
         divisionList = bdDivisionDAO.getDivisions(language, 11, user);
 
-        logger.debug("inside populte : districts , countries and races populated.");
+        logger.debug("inside populte : districts , dsdivisions, countries and races populated.");
     }
 
     public int getPageNo() {
