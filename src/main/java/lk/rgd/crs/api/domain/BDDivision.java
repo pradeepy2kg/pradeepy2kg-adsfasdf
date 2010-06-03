@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "BD_DIVISIONS", schema = "CRS",
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
+        @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
 public class BDDivision implements Serializable {
 
     /**
@@ -33,8 +34,8 @@ public class BDDivision implements Serializable {
     private int divisionId;
 
     @ManyToOne
-    @JoinColumn(name = "districtUKey", nullable = false, updatable = false)
-    private District district;
+    @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
+    private DSDivision dsDivision;
 
     @Column(nullable = false, length = 60, updatable = false)
     private String siDivisionName;
@@ -52,9 +53,9 @@ public class BDDivision implements Serializable {
 
     public BDDivision() {}
 
-    public BDDivision(District district, int divisionId,
+    public BDDivision(DSDivision dsDivision, int divisionId,
         String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
-        this.district = district;
+        this.dsDivision = dsDivision;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;
         this.enDivisionName = enDivisionName;
@@ -63,11 +64,15 @@ public class BDDivision implements Serializable {
     }
 
     public District getDistrict() {
-        return district;
+        return dsDivision.getDistrict();
     }
 
-    public void setDistrict(District district) {
-        this.district = district;
+    public DSDivision getDsDivision() {
+        return dsDivision;
+    }
+
+    public void setDsDivision(DSDivision dsDivision) {
+        this.dsDivision = dsDivision;
     }
 
     public int getDivisionId() {
@@ -108,13 +113,5 @@ public class BDDivision implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public int getDistrictId() {
-        return district.getDistrictId();
-    }
-
-    public void setDistrictId(int districtId) {
-        this.district.setDistrictId(districtId);
     }
 }
