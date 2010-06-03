@@ -60,8 +60,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
 
-    /*pageNo is used to decide the current pageNo of the Birth Registration Form*/
-    private int pageNo;
+    private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
+
+    private int bdId;   // If present, it should used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrict;
@@ -96,20 +97,22 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * to limit DB writes. Masterdata population will be done before displaying every page.
      * This will have no performace impact as they will be cached in the backend.
      */
-    public String birthRegistration() {
+    public String birthDeclararion() {
         logger.debug("Step {} of 4 ", pageNo);
         if ((pageNo > 4) || (pageNo < 0)) {
             return "error";
         } else {
-            if (pageNo > 0) {
-                BirthDeclaration bdf;
-                Object o = session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
-                if (o==null) {
+            BirthDeclaration bdf;
+            if (pageNo == 0) {
+                if (bdId==0) {
                     bdf = new BirthDeclaration();
                 } else {
-                    bdf = (BirthDeclaration) o;
+                    bdf = new BirthDeclaration();
+                    //todo replace with get a new BD by id
+                    //bdf = BirthDeclarionDAO.getById(bdId); 
                 }
-
+            } else {
+                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 switch (pageNo) {
                     case 1:
                         bdf.setChild(child);
@@ -129,9 +132,48 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
                         logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
                 }
-
-                session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, bdf);
             }
+            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+
+            populate();
+            return "form" + pageNo;
+        }
+    }
+
+    /**
+     * This method is responsible for loading and capture data for all 3 BDC pages as well
+     * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
+     * very first form page) is used to decide which state of the process we are in. bdId field should be used to
+     * determoine the particular birth declarion entity on the initial visit to action. (after then it will be kept in the session)
+     */
+    public String birthConfirmation () {
+        logger.debug("Step {} of 3 ", pageNo);
+        if ((pageNo > 3) || (pageNo < 0)) {
+            return "error";
+        } else {
+            BirthDeclaration bdf;
+            if (pageNo == 0) {
+                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                //todo replace with get a new BD by id
+                //bdf = BirthDeclarionDAO.getById(bdId);
+            } else {
+                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+                switch (pageNo) {
+                    case 1:
+                        bdf.setChild(child);
+                        bdf.setParent(parent);
+                        break;
+                    case 2:
+                        bdf.setChild(child);    //todo merge needed
+                        bdf.setParent(parent);  //todo merge needed
+                        bdf.setMarriage(marriage);
+                        break;
+                    case 3:
+                        bdf.setInformant(informant);
+                        break;
+                }
+            }
+            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
 
             populate();
             return "form" + pageNo;
@@ -142,7 +184,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * update the bean in session with the values of local bean
      */
     private BirthDeclaration beanMerge(Object o) throws Exception {
-        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_REGISTER_BEAN);
+        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
         BeanInfo targetInfo = Introspector.getBeanInfo(BirthDeclaration.class);
         PropertyDescriptor[] targetDescriptors = targetInfo.getPropertyDescriptors();
@@ -170,7 +212,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         }
 
-        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
 
         return target;
     }

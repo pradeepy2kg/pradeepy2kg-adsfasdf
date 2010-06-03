@@ -145,7 +145,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
             }
         }
 
-        session.put(WebConstants.SESSION_BIRTH_REGISTER_BEAN, target);
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
     }
 
     private void handleErrors(Exception e) {
