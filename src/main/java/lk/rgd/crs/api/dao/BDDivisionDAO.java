@@ -31,5 +31,5 @@ public interface BDDivisionDAO {
      */
     public BDDivision getBDDivision(int districtId, int bdDivisionId);
 
-    public BDDivision find(int districtId, int divisionId);
+    public BDDivision getBDDivisionByPK(int bdDivisionUKey);
 }

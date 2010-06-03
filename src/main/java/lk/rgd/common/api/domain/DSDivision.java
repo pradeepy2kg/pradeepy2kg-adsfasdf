@@ -9,75 +9,41 @@ import java.io.Serializable;
  * @author asankha
  */
 @Entity
-@Table(name = "DS_DIVISIONS", schema = "COMMON")
-@IdClass(DSDivision.DSDivisionPK.class)
+@Table(name = "DS_DIVISIONS", schema = "COMMON",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
 public class DSDivision implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name = "districtId", nullable = false, updatable = false)
-    private District district;
+    /**
+     * This is a system generated unique key
+     */
     @Id
-    private int districtId;
-    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int dsDivisionUKey;
+
+    /**
+     * This is the standard G.N. Division ID as per the location code database
+     */
     @Column(updatable = false)
     private int divisionId;
+
+    @ManyToOne
+    @JoinColumn(name = "districtUKey", nullable = false, updatable = false)
+    private District district;
+
     @Column(nullable = false, length = 60, updatable = false)
     private String siDivisionName;
     @Column(nullable = false, length = 60, updatable = false)
     private String enDivisionName;
     @Column(nullable = false, length = 60, updatable = false)
     private String taDivisionName;
+
+    /**
+     * A D.S. Division maybe marked as inactive if one is split into two, or amalgamated to create a new one
+     * The UI will only show D.S. Divisions that are currently active for every data entry form
+     */
     @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
-
-    public static class DSDivisionPK implements Serializable {
-        private int districtId;
-        private int divisionId;
-
-        public DSDivisionPK() {
-        }
-
-        public DSDivisionPK(int districtId, int divisionId) {
-            this.districtId = districtId;
-            this.divisionId = divisionId;
-        }
-
-        public int getDistrictId() {
-            return districtId;
-        }
-
-        public void setDistrictId(int districtId) {
-            this.districtId = districtId;
-        }
-
-        public int getDivisionId() {
-            return divisionId;
-        }
-
-        public void setDivisionId(int divisionId) {
-            this.divisionId = divisionId;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            DSDivisionPK that = (DSDivisionPK) o;
-
-            if (districtId != that.districtId) return false;
-            if (divisionId != that.divisionId) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = districtId;
-            result = 31 * result + divisionId;
-            return result;
-        }
-    }
 
     public DSDivision() {}
 
@@ -140,10 +106,18 @@ public class DSDivision implements Serializable {
     }
 
     public int getDistrictId() {
-        return districtId;
+        return district.getDistrictId();
     }
 
     public void setDistrictId(int districtId) {
-        this.districtId = districtId;
+        this.district.setDistrictId(districtId);
+    }
+
+    public int getDsDivisionUKey() {
+        return dsDivisionUKey;
+    }
+
+    public void setDsDivisionUKey(int dsDivisionUKey) {
+        this.dsDivisionUKey = dsDivisionUKey;
     }
 }

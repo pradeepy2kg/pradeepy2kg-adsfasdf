@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 @Embeddable
-public class InformantInfo {
+public class InformantInfo implements Serializable {
     /**
      * 0 - father, 1 - mother, 2 - guardian
      */

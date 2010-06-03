@@ -21,9 +21,8 @@ public interface DSDivisionDAO {
 
     /**
      * Return DSDivision by id
-     * @param districtId the District ID
-     * @param divisionId the DSDivision ID
+     * @param dsDivisionUKey the unique internal ID (PK)
      * @return the DSDivision
      */
-    public DSDivision getDSDivision(int districtId, int divisionId);
+    public DSDivision getDSDivisionByPK(int dsDivisionUKey);
 }

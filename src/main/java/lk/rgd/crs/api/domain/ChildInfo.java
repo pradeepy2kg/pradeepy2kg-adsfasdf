@@ -5,38 +5,39 @@ import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.GNDivision;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
  */
 @Embeddable
-public class ChildInfo {
+public class ChildInfo implements Serializable {
     /**
      * The Birth/Death registration division where the birth is registered (Includes District)
      */
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "birthDistrict"),
-            @JoinColumn(name = "birthDivision")
-    })
+    @JoinColumn(name = "bdDivisionUKey", nullable = false)
     private BDDivision birthDivision;
 
     /**
-     * The D.S. division where the birth is registered (Includes District)
+     * Grama Niladhari division
      */
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "birthDistrict", updatable = false, insertable = false),
-            @JoinColumn(name = "dsDivision", updatable = false, insertable = false)
-    })
-    private DSDivision dsDivision;
+    @JoinColumn(name = "gnDivisionUKey", nullable = false)
+    private GNDivision gnDivision;
 
     /**
      * This is the serial number captured from the BDF
      */
     @Column(nullable = false, updatable = false)
     private String bdfSerialNo;
+
+    /**
+     * This is the PIN number generated to the child
+     */
+    @Column(nullable = true, length = 10)
+    private String pin;
 
     /**
      * The date of the birth
@@ -109,17 +110,6 @@ public class ChildInfo {
     @Column(nullable = true, length = 15)
     private String hospitalCode;
 
-    /**
-     * Grama Niladhari division
-     */
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "birthDistrict", updatable = false, insertable = false),
-            @JoinColumn(name = "dsDivision", updatable = false, insertable = false),
-            @JoinColumn(name = "gnCode", updatable = false, insertable = false)
-    })
-    private GNDivision gnCode;
-
     public District getBirthDistrict() {
         return birthDivision.getDistrict();
     }
@@ -133,11 +123,11 @@ public class ChildInfo {
     }
 
     public DSDivision getDsDivision() {
-        return dsDivision;
+        return gnDivision.getDsDivision();
     }
 
     public void setDsDivision(DSDivision dsDivision) {
-        this.dsDivision = dsDivision;
+        this.gnDivision.setDsDivision(dsDivision);
     }
 
     public String getBdfSerialNo() {
@@ -236,11 +226,11 @@ public class ChildInfo {
         this.hospitalCode = hospitalCode;
     }
 
-    public GNDivision getGnCode() {
-        return gnCode;
+    public GNDivision getGnDivision() {
+        return gnDivision;
     }
 
-    public void setGnCode(GNDivision gnCode) {
-        this.gnCode = gnCode;
+    public void setGnDivision(GNDivision gnDivision) {
+        this.gnDivision = gnDivision;
     }
 }

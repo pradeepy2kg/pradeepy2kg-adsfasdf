@@ -4,13 +4,14 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Java bean instance to capture parent information as given by page 2 of birth declaration form
  */
 @Embeddable
-public class ParentInfo {
+public class ParentInfo implements Serializable {
     /** NIC or PIN of father  */
     @Column(nullable = true, length = 10)
     private String fatherNICorPIN;

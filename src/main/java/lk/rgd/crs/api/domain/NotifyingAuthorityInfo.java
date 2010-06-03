@@ -4,13 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Java bean instance to contain notifying authority information enterd by page 4 of birth declaration form
  */
 @Embeddable
-public class NotifyingAuthorityInfo {
+public class NotifyingAuthorityInfo implements Serializable {
     /** The notifying authority PIN */
     @Column(nullable = false, length = 10)
     private String notifyingAuthorityPIN;

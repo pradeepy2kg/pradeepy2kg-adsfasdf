@@ -18,19 +18,32 @@ import java.util.Set;
 @Table(name = "DISTRICTS", schema = "COMMON")
 public class District implements Serializable {
 
+    /**
+     * This is a system generated unique key
+     */
     @Id
-    @Column(updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int districtUKey;
+
+    /**
+     * This is the standard District ID as per the location code database
+     */
+    @Column(updatable = false, unique = true)
     private int districtId;
-    @Column(nullable = false, unique = true, updatable = false)
+
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String siDistrictName;
     @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String enDistrictName;
     @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String taDistrictName;
+
+    /**
+     * A District maybe marked as inactive if one is split into two, or amalgamated to create a new one
+     * The UI will only show Districts that are currently active for every data entry form
+     */
     @Column(name="active", columnDefinition="smallint not null default 1")
     private boolean active;
-    @OneToMany(mappedBy = "district", targetEntity = BDDivision.class)
-    private Set<BDDivision> bdDivisions = new HashSet<BDDivision>();
 
     public District() {}
 
@@ -80,9 +93,5 @@ public class District implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Set<BDDivision> getBdDivisions() {
-        return bdDivisions;
     }
 }

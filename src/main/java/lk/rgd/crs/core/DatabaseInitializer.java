@@ -3,6 +3,7 @@ package lk.rgd.crs.core;
 import lk.rgd.AppConstants;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.GNDivisionDAO;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
@@ -123,12 +124,12 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // ---------------- populate sample BDFs ---------------------
         BirthDeclarationDAO birthDeclarationdao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
         BDDivisionDAO bdDivisionDao = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
-        DSDivisionDAO dsDivisionDao = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
+        GNDivisionDAO gnDivisionDao = (GNDivisionDAO) ctx.getBean("gnDivisionDAOImpl", GNDivisionDAO.class);
 
         try {
             BirthDeclaration bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivision(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A112");
             bdf.getChild().setChildFullNameEnglish("Amith Sampath Jayasekara");
             bdf.getChild().setChildFullNameOfficialLang("අමිත් සමිපත් ජයසේකර");
@@ -146,8 +147,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A113");
             bdf.getChild().setChildFullNameEnglish("Baby A113 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A113 බබාගේ නම සිංහලෙන්");
@@ -165,8 +166,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A114");
             bdf.getChild().setChildFullNameEnglish("Baby A114 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A114 බබාගේ නම සිංහලෙන්");
@@ -185,8 +186,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A115");
             bdf.getChild().setChildFullNameEnglish("Chathuranaga Gihan Chandimal Withana");
             bdf.getChild().setChildFullNameOfficialLang("චතුරංග ගිහාන් චන්දිමාල් විතාන");
@@ -204,8 +205,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A116");
             bdf.getChild().setChildFullNameEnglish("Baby A116 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A116 බබාගේ නම සිංහලෙන්");
@@ -224,8 +225,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A117");
             bdf.getChild().setChildFullNameEnglish("Baby A117 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A117 බබාගේ නම සිංහලෙන්");
@@ -244,8 +245,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
-            bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
-            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
+            bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivisionByPK(1));
+            bdf.getChild().setGnDivision(gnDivisionDao.getGNDivisionByPK(1));
             bdf.getChild().setBdfSerialNo("A118");
             bdf.getChild().setChildFullNameEnglish("Baby A118 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A118 බබාගේ නම සිංහලෙන්");
