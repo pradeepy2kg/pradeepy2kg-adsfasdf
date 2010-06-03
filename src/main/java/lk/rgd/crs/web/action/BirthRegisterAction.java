@@ -180,10 +180,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf;
             if (pageNo == 0) {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                 logger.debug("Step error {} of 3 ", pageNo);
                 //todo replace with get a new BD by id
                 //bdf = BirthDeclarionDAO.getById(bdId);
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+                logger.debug("Step is error {} of 3 ", pageNo);
                 switch (pageNo) {
                     case 1:
                         bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
@@ -194,17 +196,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getChild().setBirthDivision(child.getBirthDivision());
                         bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
 
-                        bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
-                        bdf.getParent().setFatherRace(parent.getFatherRace());
-                        bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
-                        bdf.getParent().setMotherRace(parent.getMotherRace());
-
-                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
+                        logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
+                        
                         bdf.setChild(child);    //todo merge needed
                         bdf.setParent(parent);  //todo merge needed
                         bdf.setMarriage(marriage);
+                        //logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
                         break;
                     case 3:
                         logger.debug("Birth Confirmation  : {} , {} .", getConfirmar().getConfirmantNICorPIN(), getConfirmar().getConfirmantFullName());
@@ -215,6 +214,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
 
             populate();
+             logger.debug("Step error happen {} of 3 ", pageNo);
             return "form" + pageNo;
         }
     }
