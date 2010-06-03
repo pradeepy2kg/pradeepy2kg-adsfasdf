@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -36,6 +37,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     private final RaceDAO raceDao;
     private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
+
     /**
      * approveSelected is from BirhRegisterApproval.jsp
      * if it is populated redirected to BirthApprovalAction
@@ -44,7 +47,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     private int pageNo;
     private String language;
     private Map<Integer, String> districtList;
-    private Map<Integer, String> divisionList;
+    private Map<Integer, String> dsdivisionList;
+    private Map<Integer, String> bddivisionList;
     private Map<Integer, String> raceList;
     private Map session;
     private HttpServletRequest request;
@@ -54,9 +58,10 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     private BirthDeclaration birthConfirm;
 
-    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO) {
+    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         this.raceDao = raceDao;
         this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
         logger.debug("inside birth register action constructor");
     }
 
@@ -189,7 +194,9 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
 
+
         districtList = districtDAO.getDistricts(language, user);
+        dsdivisionList = dsDivisionDAO.getDSDivisionNames(user.getInitialDistrict(), language);
         raceList = raceDao.getRaces(language);
 
         //todo temporary solution until use a method to show Map in UI
@@ -320,12 +327,12 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         this.child = child;
     }
 
-    public Map<Integer, String> getDivisionList() {
-        return divisionList;
+    public Map<Integer, String> getDsdivisionList() {
+        return dsdivisionList;
     }
 
-    public void setDivisionList(Map<Integer, String> divisionList) {
-        this.divisionList = divisionList;
+    public void setDsdivisionList(Map<Integer, String> dsdivisionList) {
+        this.dsdivisionList = dsdivisionList;
     }
 
     public ParentInfo getParent() {

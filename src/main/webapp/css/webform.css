@@ -232,9 +232,9 @@
 #brf-serial-no-and-date input, #last-date input{margin:7px 5px; width:340px;}
 #last-date input{margin:15px 5px;}
 
-#bcf-dob, #bcf-gender, #bcf-district, #bcf-division, #bcf-place, #bcf-father-pin, #bcf-father-race, #bcf-mother-pin, #bcf-mother-race, #bcf-marital-status{border:1px solid #000; height:57px; border-top:none;}
+#bcf-dob, #bcf-gender, #bcf-district, #bcf-ds-division, #bcf-division, #bcf-place, #bcf-father-pin, #bcf-father-race, #bcf-mother-pin, #bcf-mother-race, #bcf-marital-status{border:1px solid #000; height:57px; border-top:none;}
 #bcf-father-pin, #bcf-mother-pin, #bcf-marital-status{height:75px;}
-#bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-division label, #bcf-place label, #bcf-father-pin label, #bcf-father-race label, #bcf-mother-pin label, #bcf-mother-race label, #bcf-marital-status label{float:left; width:170px; border-left:1px solid #000; border-right:1px solid #000; padding:0 0 5px 4px;}
+#bcf-dob label, #bcf-gender label, #bcf-district label, #bcf-ds-division label, #bcf-division label, #bcf-place label, #bcf-father-pin label, #bcf-father-race label, #bcf-mother-pin label, #bcf-mother-race label, #bcf-marital-status label{float:left; width:170px; border-left:1px solid #000; border-right:1px solid #000; padding:0 0 5px 4px;}
 #bcf-pob{border:1px solid #000; border-top:none; height:26px;}
 #bcf-pob .no{padding:5px 10px;}
 #bcf-pob label{padding:10px 5px; border-left:1px solid #000;}
