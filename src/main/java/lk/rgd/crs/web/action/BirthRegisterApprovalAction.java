@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
+    private static final String BR_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
+
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final BirthDeclarationDAO birthDeclarationDAO;
+    private final AppParametersDAO appParametersDAO;
     private Map<Integer, String> divisionList;
     private Map<Integer, String> districtList;
     private int division;
@@ -40,10 +44,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private User user;
     private String bdId;
 
-    public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO) {
+    public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO,
+        BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
+        this.appParametersDAO = appParametersDAO;
     }
 
     /**
@@ -62,7 +68,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         int selectedDistrict = user.getInitialDistrict();
         int selectedDivision = user.getInitialBDDivision();
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), 1, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), 1, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         /**
          * initially pageNo is set to 1
          */
@@ -93,7 +99,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         session.put("selectedDivision", division);
         session.put("selectedFlag", 1);
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+            district, division), pageNo,appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size(), pageNo);
         session.put("previousFlag", 0);
@@ -154,7 +160,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * in the jsp page 
          */
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(district, division), pageNo, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+            bdDivisionDAO.getBDDivision(district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size(), pageNo);
         session.put("previousFlag", 1);
@@ -206,7 +212,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             division = user.getInitialBDDivision();
         }
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, WebConstants.BR_APPROVAL_NO_OF_ROWS);
+            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         populate();
         return "success";
@@ -221,7 +227,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @param pageNo       requested page number(previous page number)
      */
     public void paginationHandler(int recordsFound, int pageNo) {
-        if (recordsFound == WebConstants.BR_APPROVAL_NO_OF_ROWS) {
+        if (recordsFound ==appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE)) {
             session.put("nextFlag", 1);
             session.put("pageNo", pageNo++);
         } else {
