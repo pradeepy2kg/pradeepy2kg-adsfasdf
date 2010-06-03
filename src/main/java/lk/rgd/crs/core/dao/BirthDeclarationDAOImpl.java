@@ -39,7 +39,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     }
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("confirmation.pending.approval").setFirstResult(pageNo*noOfRows).setMaxResults(noOfRows);
+        Query q = em.createNamedQuery("confirmation.pending.approval").setFirstResult((pageNo-1)*noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
     }
