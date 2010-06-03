@@ -201,43 +201,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    /**
-     * update the bean in session with the values of local bean
-     */
-    private BirthDeclaration beanMerge(Object o) throws Exception {
-        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
-        BeanInfo targetInfo = Introspector.getBeanInfo(BirthDeclaration.class);
-        PropertyDescriptor[] targetDescriptors = targetInfo.getPropertyDescriptors();
-
-        // Iterate over all the attributes of form bean and copy them into the target
-        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object newValue = descriptor.getReadMethod().invoke(o);
-            //logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
-
-            Method beanMethod = descriptor.getWriteMethod();
-            if (beanMethod != null) {
-                String methodName = descriptor.getWriteMethod().getName();
-                for (PropertyDescriptor targetDescriptor : targetDescriptors) {
-                    Method targetMethod = targetDescriptor.getWriteMethod();
-                    if (targetMethod == null) {
-                        continue;
-                    }
-                    //logger.debug("looking for a match with target method {}", targetMethod);
-                    if (methodName.equals(targetMethod.getName())) {
-                        targetMethod.invoke(target, newValue);
-                        logger.debug("field merged ");
-                        break;
-                    }
-                }
-            }
-        }
-
-        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
-
-        return target;
-    }
-
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
         //todo pass the error to the error.jsp page
