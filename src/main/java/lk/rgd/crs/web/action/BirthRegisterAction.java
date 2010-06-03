@@ -10,10 +10,6 @@ import org.slf4j.Logger;
 import java.util.List;
 import java.util.Map;
 import java.util.Locale;
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
 
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -26,7 +22,6 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.EPopDate;
 
 
 /**
@@ -60,9 +55,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private MarriageInfo marriage;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
-    private ConfirmantInfo confirmar;
-       private boolean confirmantSign;
-    
+    private ConfirmantInfo confirmant;
+
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
 
@@ -180,12 +174,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf;
             if (pageNo == 0) {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                 logger.debug("Step error {} of 3 ", pageNo);
                 //todo replace with get a new BD by id
                 //bdf = BirthDeclarionDAO.getById(bdId);
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-                logger.debug("Step is error {} of 3 ", pageNo);
                 switch (pageNo) {
                     case 1:
                         bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
@@ -196,64 +188,32 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getChild().setBirthDivision(child.getBirthDivision());
                         bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
 
+                        bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
+                        bdf.getParent().setFatherRace(parent.getFatherRace());
+                        bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
+                        bdf.getParent().setMotherRace(parent.getMotherRace());
+
+                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
-                        logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
-                        
-                        bdf.setChild(child);    //todo merge needed
-                        bdf.setParent(parent);  //todo merge needed
-                        bdf.setMarriage(marriage);
-                        //logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
+                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+
+                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
                         break;
                     case 3:
-                        logger.debug("Birth Confirmation  : {} , {} .", getConfirmar().getConfirmantNICorPIN(), getConfirmar().getConfirmantFullName());
-                        bdf.setInformant(informant);
+                        bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
+                        bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
+                        bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
                         break;
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
 
             populate();
-             logger.debug("Step error happen {} of 3 ", pageNo);
             return "form" + pageNo;
         }
-    }
-
-    /**
-     * update the bean in session with the values of local bean
-     */
-    private BirthDeclaration beanMerge(Object o) throws Exception {
-        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
-        BeanInfo targetInfo = Introspector.getBeanInfo(BirthDeclaration.class);
-        PropertyDescriptor[] targetDescriptors = targetInfo.getPropertyDescriptors();
-
-        // Iterate over all the attributes of form bean and copy them into the target
-        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object newValue = descriptor.getReadMethod().invoke(o);
-            //logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
-
-            Method beanMethod = descriptor.getWriteMethod();
-            if (beanMethod != null) {
-                String methodName = descriptor.getWriteMethod().getName();
-                for (PropertyDescriptor targetDescriptor : targetDescriptors) {
-                    Method targetMethod = targetDescriptor.getWriteMethod();
-                    if (targetMethod == null) {
-                        continue;
-                    }
-                    //logger.debug("looking for a match with target method {}", targetMethod);
-                    if (methodName.equals(targetMethod.getName())) {
-                        targetMethod.invoke(target, newValue);
-                        logger.debug("field merged ");
-                        break;
-                    }
-                }
-            }
-        }
-
-        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
-
-        return target;
     }
 
     private void handleErrors(Exception e) {
@@ -432,19 +392,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setGrandFather(GrandFatherInfo grandFather) {
         this.grandFather = grandFather;
     }
-     public ConfirmantInfo getConfirmar() {
-        return confirmar;
+
+    public Map<Integer, String> getDsdivisionList() {
+        return dsdivisionList;
     }
 
-    public void setConfirmar(ConfirmantInfo confirmar) {
-        this.confirmar = confirmar;
+    public void setDsdivisionList(Map<Integer, String> dsdivisionList) {
+        this.dsdivisionList = dsdivisionList;
     }
 
-    public boolean isConfirmantSign() {
-        return confirmantSign;
+    public ConfirmantInfo getConfirmant() {
+        return confirmant;
     }
 
-    public void setConfirmantSign(boolean confirmantSign) {
-        this.confirmantSign = confirmantSign;
+    public void setConfirmant(ConfirmantInfo confirmant) {
+        this.confirmant = confirmant;
     }
 }
