@@ -44,7 +44,7 @@ public class BirthDeclaration implements Serializable {
 
     /** The place of issue for the original birth certificate - free copy (Stores the DS Division ID) */
     @Column(nullable = true, updatable = false)
-    private int originalBCPlaceOfIssue;
+    private Integer originalBCPlaceOfIssue;
 
     @Embedded
     private ChildInfo child = new ChildInfo();
@@ -75,11 +75,11 @@ public class BirthDeclaration implements Serializable {
         this.originalBCDateOfIssue = originalBCDateOfIssue;
     }
 
-    public int getOriginalBCPlaceOfIssue() {
+    public Integer getOriginalBCPlaceOfIssue() {
         return originalBCPlaceOfIssue;
     }
 
-    public void setOriginalBCPlaceOfIssue(int originalBCPlaceOfIssue) {
+    public void setOriginalBCPlaceOfIssue(Integer originalBCPlaceOfIssue) {
         this.originalBCPlaceOfIssue = originalBCPlaceOfIssue;
     }
 
