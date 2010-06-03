@@ -10,6 +10,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.RequestAware;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.domain.ChildInfo;
+import lk.rgd.crs.api.domain.ParentInfo;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.User;
 
@@ -52,6 +54,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     private ChildInfo child;
     private ParentInfo parent;
     private MarriageInfo marriage;
+    private ConfirmantInfo confirmar;
+    private boolean confirmantSign;
 
     private BirthDeclaration birthConfirm;
 
@@ -71,17 +75,18 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
      */
     public String birthConfirmation() {
         logger.debug("Step {} of 2.", pageNo);
-        if (pageNo > 2) {
+        if (pageNo > 3) {
             return "error";
-        } else if (pageNo == 2) {
-            logger.debug("submitted value {} {} {}", child.getChildFullNameOfficialLang(),
-                    child.getChildFullNameEnglish());
+        } else if (pageNo == 3) {
+            //logger.debug("submitted value {} {} {}", child.getChildFullNameOfficialLang(),
+            //        child.getChildFullNameEnglish());
             // all pages captured, proceed to persist after validations
             // todo business validations and persiatance
-//            BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
+          // BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 //
 //            logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
-//            logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+          // logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+            logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
             return "success";
         }
 
@@ -95,10 +100,9 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
             } else if (pageNo == 2) {
                 // all pages captured, proceed to persist after validations
                 // todo business validations and persiatance
-                BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
+               // BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 
-                //logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
-                //logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+                logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
                 return "success";
             }
 
@@ -107,8 +111,11 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
                 initForm();
             } else {
                 // submissions of pages 1 - 2
-                BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
+                //BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
+
                 //logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+//logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
+
                 try {
                     beanMerge();
                 } catch (Exception e) {
@@ -116,8 +123,10 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
                     return "error";
                 }
             }
+
+          
         }
-        return "form" + pageNo;
+    return "form" + pageNo;
     }
 
     /**
@@ -336,5 +345,20 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     public void setMarriage(MarriageInfo marriage) {
         this.marriage = marriage;
+    }
+     public ConfirmantInfo getConfirmar() {
+        return confirmar;
+    }
+
+    public void setConfirmar(ConfirmantInfo confirmar) {
+        this.confirmar = confirmar;
+    }
+
+    public boolean isConfirmantSign() {
+        return confirmantSign;
+    }
+
+    public void setConfirmantSign(boolean confirmantSign) {
+        this.confirmantSign = confirmantSign;
     }
 }

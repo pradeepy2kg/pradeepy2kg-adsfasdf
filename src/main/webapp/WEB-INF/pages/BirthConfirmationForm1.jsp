@@ -210,6 +210,26 @@
                 <s:textfield name="" disabled="true"/>
             </div>
             <div class="new">
+                <s:select list="dsdivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
+            </div>
+        </div>
+        <div id="bcf-ds-division" class="font-9">
+            <div class="no"></div>
+            <label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label>
+            <div class="current">
+                <s:textfield name="" disabled="true"/>
+            </div>
+            <div class="new">
+                <s:select list="dsdivisionList" name="child.dsDivision" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
+            </div>
+        </div>
+        <div id="bcf-division" class="font-9">
+            <div class="no"></div>
+            <label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label>
+            <div class="current">
+                <s:textfield name="" disabled="true"/>
+            </div>
+            <div class="new">
                 <s:select name="birthDivision" list="divisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
             </div>
         </div>
