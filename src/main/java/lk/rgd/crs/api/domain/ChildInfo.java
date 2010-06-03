@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
-import lk.rgd.crs.api.domain.BDDivision;
 
 import javax.persistence.*;
 import java.util.Date;

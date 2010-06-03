@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
@@ -33,14 +34,15 @@
         </div>
         <div id="notified-date" class="font-9">
             <label>දිනය <br>*in tamil <br>Date</label>
-            <s:select list="{'2009','2010','2011'}" name="" id="fatherYear"
-                      onchange="javascript:setDate('fatherYear','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="fatherMonth"
-                      onchange="javascript:setDate('fatherMonth','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="fatherDay"
-                      onchange="javascript:setDate('fatherDay','2')"/>
-            <sx:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
-                              displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
+            <s:select list="{'2009','2010','2011'}" name="" id="notifyYear"
+                      onchange="javascript:setDate('notifyYear','2')"/>
+            <s:select list="{'01','02','03'}" name="" id="notifyMonth"
+                      onchange="javascript:setDate('notifyMonth','2')"/>
+            <s:select list="{'01','02','03'}" name="" id="notifyDay"
+                      onchange="javascript:setDate('notifyDay','2')"/>
+            <sx:datetimepicker id="fatherDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+                               displayFormat="yyyy-MM-dd"
+                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="4"/>
         <s:submit value="SUBMIT"/>

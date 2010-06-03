@@ -7,7 +7,7 @@
 
 <div class="birth-registration-form-outer">
     <s:form action="eprBirthRegistration" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
-          onsubmit="javascript:return birthRegistrationValidator()">
+            onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
             <div id="birth-registration-form-header-logo">
                 <img src="<s:url value="./images/official-logo.png"/>" alt=""/>
@@ -30,9 +30,8 @@
                               onchange="javascript:setDate('submitMonth','2')"/>
                     <s:select list="{'01','02','03'}" name="" id="submitDay"
                               onchange="javascript:setDate('submitDay','2')"/>
-                    <sx:datetimepicker id="submitDatePicker" name="dateOfRegistration" label="Format (yyyy-MM-dd)"
-                                      displayFormat="yyyy-MM-dd"
-                                      onmouseover="javascript:splitDate('submitDatePicker')"/>
+                    <sx:datetimepicker id="submitDatePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('submitDatePicker')"/>
                 </label>
             </div>
             <div id="birth-registration-form-header-info" class="font-9">
@@ -81,9 +80,8 @@
                     <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
                 </div>
                 <div id="datePicker">
-                    <sx:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)"
-                                  displayFormat="yyyy-MM-dd" value="2010-05-27"
-                                  onmouseover="javascript:splitDate('datePicker')"/>
+                    <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('datePicker')"/>
                 </div>
             </div>
         </div>
@@ -97,7 +95,8 @@
                         <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
                     </div>
                     <div>
-                        <s:select name="birthDistrict" list="districtList" headerKey="0"
+                            <%--TODO birthDistrict should be filled--%>
+                        <s:select name="" list="districtList" headerKey="0"
                                   headerValue="%{getText('select_district.label')}"/>
                     </div>
                 </div>
@@ -108,7 +107,8 @@
                         <label>කොට්ඨාශය பிரிவு Division</label>
                     </div>
                     <div>
-                        <s:select name="birthDivision" list="divisionList" headerKey="0"
+                            <%--TODO birthDivision should be filled--%>
+                        <s:select name="" list="divisionList" headerKey="0"
                                   headerValue="%{getText('select_division.label')}"/>
                     </div>
                 </div>
@@ -154,8 +154,9 @@
                 <label>(5)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
             </div>
             <div>
-                <s:select list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                          name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
+                <s:select
+                        list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                        name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
             </div>
         </div>
         <div id="child-weight" class="font-9">

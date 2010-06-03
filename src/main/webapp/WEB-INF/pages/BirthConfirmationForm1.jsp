@@ -165,6 +165,9 @@
                 </div>
             </div>
         </div>
+        <div id="new-dob">
+            jgjfjh
+        </div>
         <div id="bcf-gender" class="font-9">
             <div class="no">4</div>
             <label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label>

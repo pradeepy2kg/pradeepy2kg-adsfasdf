@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.util.Date;
 
 /**
  * Java bean instance to capture Other information such as Marriage, GrandFather/Great Grand Father  and the Informant

@@ -1,7 +1,10 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--
   @author duminda
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="birth-registration-form-outer">
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3" method="POST">
@@ -16,17 +19,17 @@
                 <label>*in sinhala<br>*in tamil<br>Yes</label>
 
                 <div>
-                    <s:checkbox name=""/>
+                    <s:radio name="marriage.parentsMarried" list="#{'1':''}"/>
                 </div>
                 <label>*in sinhala<br>*in tamil<br>No</label>
 
                 <div>
-                    <s:checkbox name=""/>
+                    <s:radio name="marriage.parentsMarried" list="#{'0':''}"/>
                 </div>
                 <label>*in sinhala<br>*in tamil<br>Since Married</label>
 
                 <div>
-                    <s:checkbox name=""/>
+                    <s:radio name="marriage.parentsMarried" list="#{'2':''}"/>
                 </div>
             </div>
             <div id="place-of-marriage">
@@ -46,12 +49,12 @@
                               onchange="javascript:setDate('marriageMonth','2')"/>
                     <s:select list="{'01','02','03'}" name="" id="marriageDay"
                               onchange="javascript:setDate('marriageDay','2')"/>
-                    <sx:datetimepicker id="marriageDatePicker" name="dateOfMarriage" label="Format (yyyy-MM-dd)"
-                                      displayFormat="yyyy-MM-dd"
-                                      onmouseover="javascript:splitDate('marriageDatePicker')"/>
+                    <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage" displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>
                 </div>
             </div>
         </div>
+
         <div id="parent-not-married" class="font-9">
             <div class="form-label">
                 <label>(26)මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව සහ පියාගේ අත්සන් <br>பெற்றோர்
@@ -124,15 +127,15 @@
             </div>
             <div id="informant-mother">
                 <label>මව <br>மாதா <br>Mother</label>
-                <s:checkbox name=""/>
+                <s:radio name="informant.informantType" list="#{'1':''}"/>
             </div>
             <div id="informant-father">
                 <label>පියා<br> பிதா <br>Father</label>
-                <s:checkbox name=""/>
+                <s:radio name="informant.informantType" list="#{'0':''}"/>
             </div>
             <div id="informant-gardian">
                 <label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label>
-                <s:checkbox name=""/>
+                <s:radio name="informant.informantType" list="#{'2':''}"/>
             </div>
         </div>
         <div id="informant-name" class="font-9">
@@ -168,8 +171,8 @@
                       onchange="javascript:setDate('informedMonth','2')"/>
             <s:select list="{'01','02','03'}" name="" id="informedDay"
                       onchange="javascript:setDate('informedDay','2')"/>
-            <sx:datetimepicker id="informedDatePicker" name="informantSignDate" label="Format (yyyy-MM-dd)"
-                              displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('informedDatePicker')"/>
+            <sx:datetimepicker id="informedDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
+                               onmouseover="javascript:splitDate('informedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="3"/>
         <s:submit value="NEXT"/>
