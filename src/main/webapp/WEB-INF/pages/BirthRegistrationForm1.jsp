@@ -76,7 +76,7 @@
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
                     <%--TODO birthDistrict should be filled     birthDistrict--%>
-                <s:select name="" list="districtList" headerKey="0" headerValue="%{getText('select_district.label')}"/>
+                <s:select name="child.getBirthDistrict()" list="districtList" headerKey="0" headerValue="%{getText('select_district.label')}"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>

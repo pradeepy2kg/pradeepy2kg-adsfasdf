@@ -183,33 +183,34 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
                     case 1:
-//                        bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
-//                        bdf.getChild().setDateOfRegistration(child.getDateOfRegistration());
-//                        bdf.getChild().setDateOfBirth(child.getDateOfBirth());
-//                        bdf.getChild().setChildGender(child.getChildGender());
-//                        bdf.getChild().setGnDivision(child.getGnDivision());
-//                        bdf.getChild().setBirthDivision(child.getBirthDivision());
-//                        bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
-//
-//                        bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
-//                        bdf.getParent().setFatherRace(parent.getFatherRace());
-//                        bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
-//                        bdf.getParent().setMotherRace(parent.getMotherRace());
-//
-//                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
+                        bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
+                        bdf.getChild().setDateOfRegistration(child.getDateOfRegistration());
+                        bdf.getChild().setDateOfBirth(child.getDateOfBirth());
+                        bdf.getChild().setChildGender(child.getChildGender());
+                        bdf.getChild().setGnDivision(child.getGnDivision());
+                        bdf.getChild().setBirthDivision(child.getBirthDivision());
+                        bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
+
+                        bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
+                        bdf.getParent().setFatherRace(parent.getFatherRace());
+                        bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
+                        bdf.getParent().setMotherRace(parent.getMotherRace());
+
+                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
-//                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
-//                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
-//
-//                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
-//                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+
+                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                          //logger.debug("check parent name ,{},{}.",bdf.getParent().getFatherFullName());
                         break;
                     case 3:
-//                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
-//                        bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
-//                        bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
-//                        bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
+                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
+                        bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
+                        bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
+                        bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
                         break;
                 }
             }
@@ -238,6 +239,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 getDsDivision().getDivisionId();
 
         logger.debug("inside populate : {} observed.", language);
+        districtList = districtDAO.getDistricts(language, user);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language);
+
         districtList = districtDAO.getDistricts(language, user);
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language);
 
