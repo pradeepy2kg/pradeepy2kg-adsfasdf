@@ -97,7 +97,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * to limit DB writes. Masterdata population will be done before displaying every page.
      * This will have no performace impact as they will be cached in the backend.
      */
-    public String birthDeclararion() {
+    public String birthDeclaration() {
         logger.debug("Step {} of 4 ", pageNo);
         if ((pageNo > 4) || (pageNo < 0)) {
             return "error";
