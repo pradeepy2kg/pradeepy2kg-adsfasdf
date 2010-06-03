@@ -10,23 +10,22 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class GrandFatherInfo {
     // If grandfather of the child born in Sri Lanka, grandfather's details
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String grandFatherFullName;
 
     @Column(nullable = true)
-
     private int grandFatherBirthYear;
-    @Column(nullable = true)
+    @Column(nullable = true, length = 60)
     private String grandFatherBirthPlace;
 
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String greatGrandFatherFullName;
 
     @Column(nullable = true)
     private String greatGrandFatherBirthYear;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 60)
     private String greatGrandFatherBirthPlace;
 
     public String getGrandFatherFullName() {

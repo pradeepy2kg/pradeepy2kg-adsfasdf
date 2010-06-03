@@ -2,6 +2,8 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
@@ -10,28 +12,29 @@ import java.util.Date;
 @Embeddable
 public class NotifyingAuthorityInfo {
     /** The notifying authority PIN */
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String notifyingAuthorityPIN;
 
     /** The notifying authority Name */
-    @Column(nullable = false)
+    @Column(nullable = false, length = 120)
     private String notifyingAuthorityName;
 
     /** The PIN of the ADR approving the BDF  */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String approvePIN;
 
     /** The date when an ADR or higher approves the BDF  */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date approveDate;
 
     /** The notifying authority Address */
+    @Column(nullable = false, length = 255)
     private String notifyingAuthorityAddress;
 
-    /** Notifying authority. has he/she signed? */
-    private boolean notifyingAuthoritySigned;
-
     /** date the signature has been put. */
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date notifyingAuthoritySignDate;
 
     public String getNotifyingAuthorityPIN() {
@@ -56,14 +59,6 @@ public class NotifyingAuthorityInfo {
 
     public void setNotifyingAuthorityAddress(String notifyingAuthorityAddress) {
         this.notifyingAuthorityAddress = notifyingAuthorityAddress;
-    }
-
-    public boolean isNotifyingAuthoritySigned() {
-        return notifyingAuthoritySigned;
-    }
-
-    public void setNotifyingAuthoritySigned(boolean notifyingAuthoritySigned) {
-        this.notifyingAuthoritySigned = notifyingAuthoritySigned;
     }
 
     public Date getNotifyingAuthoritySignDate() {

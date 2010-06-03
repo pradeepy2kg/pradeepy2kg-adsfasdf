@@ -2,6 +2,8 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Embeddable
@@ -11,11 +13,12 @@ public class MarriageInfo {
     private int parentsMarried;
 
     /** Place of marriage */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 60)
     private String placeOfMarriage;
 
     /** Date of marriage */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfMarriage;
 
     /** If parents are unmarried - Has the mother signed to include fathers details?  */

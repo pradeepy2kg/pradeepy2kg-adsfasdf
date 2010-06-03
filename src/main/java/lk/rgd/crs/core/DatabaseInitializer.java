@@ -2,6 +2,7 @@ package lk.rgd.crs.core;
 
 import lk.rgd.AppConstants;
 import lk.rgd.Permission;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
@@ -122,10 +123,12 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // ---------------- populate sample BDFs ---------------------
         BirthDeclarationDAO birthDeclarationdao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
         BDDivisionDAO bdDivisionDao = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+        DSDivisionDAO dsDivisionDao = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
 
         try {
             BirthDeclaration bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.getBDDivision(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A112");
             bdf.getChild().setChildFullNameEnglish("Amith Sampath Jayasekara");
             bdf.getChild().setChildFullNameOfficialLang("අමිත් සමිපත් ජයසේකර");
@@ -134,12 +137,17 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_FEMALE);
             bdf.getChild().setStatus(1);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233453");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A113");
             bdf.getChild().setChildFullNameEnglish("Baby A113 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A113 බබාගේ නම සිංහලෙන්");
@@ -148,12 +156,17 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
             bdf.getChild().setStatus(1);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233453");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A114");
             bdf.getChild().setChildFullNameEnglish("Baby A114 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A114 බබාගේ නම සිංහලෙන්");
@@ -162,13 +175,18 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
             bdf.getChild().setStatus(5);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233453");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-02-17"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A115");
             bdf.getChild().setChildFullNameEnglish("Chathuranaga Gihan Chandimal Withana");
             bdf.getChild().setChildFullNameOfficialLang("චතුරංග ගිහාන් චන්දිමාල් විතාන");
@@ -177,12 +195,17 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
             bdf.getChild().setStatus(2);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233453");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A116");
             bdf.getChild().setChildFullNameEnglish("Baby A116 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A116 බබාගේ නම සිංහලෙන්");
@@ -191,13 +214,18 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
             bdf.getChild().setStatus(5);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233453");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-02-16"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A117");
             bdf.getChild().setChildFullNameEnglish("Baby A117 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A117 බබාගේ නම සිංහලෙන්");
@@ -206,13 +234,18 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
             bdf.getChild().setStatus(5);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222233445");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-02-15"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 
             bdf = new BirthDeclaration();
             bdf.getChild().setBirthDivision(bdDivisionDao.find(11, 1));
+            bdf.getChild().setDsDivision(dsDivisionDao.getDSDivision(11, 3));
             bdf.getChild().setBdfSerialNo("A118");
             bdf.getChild().setChildFullNameEnglish("Baby A118 name in English");
             bdf.getChild().setChildFullNameOfficialLang("A118 බබාගේ නම සිංහලෙන්");
@@ -221,8 +254,12 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bdf.getChild().setChildGender(AppConstants.GENDER_MALE);
             bdf.getChild().setStatus(5);
             bdf.getInformant().setInformantName("The name of the informant");
+            bdf.getInformant().setInformantAddress("The address of the informant");
+            bdf.getInformant().setInformantSignDate(dfm.parse("2010-05-12"));
             bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("1222234545");
             bdf.getNotifyingAuthority().setNotifyingAuthorityName("The name of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the NA");
+            bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(dfm.parse("2010-05-15"));
             bdf.getConfirmant().setConfirmationReceiveDate(dfm.parse("2010-05-15"));
             birthDeclarationdao.addBirthDeclaration(bdf);
 

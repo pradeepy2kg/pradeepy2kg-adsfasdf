@@ -2,13 +2,15 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Embeddable
 public class ConfirmantInfo {
     /** This represents a system generated serial number for the confirmation by parents  */
     @Column(nullable = true)
-    private String confirmationSerialNumber;
+    private int confirmationSerialNumber;
 
     /** Has the confirmation for parents been printed ? */
     @Column(nullable = true)
@@ -16,29 +18,32 @@ public class ConfirmantInfo {
 
     /** The last date for confirmation - set as 14 days from confirmation print date */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date lastDateForConfirmation;
 
     /** PIN or NIC of person confirming BDF details */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String confirmantNICorPIN;
 
     /** Name of person confirming BDF details  */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String confirmantFullName;
 
     /** Date of the confirmation */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date confirmantSignDate;
 
     /** Date confirmation is received */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date confirmationReceiveDate;
 
-    public String getConfirmationSerialNumber() {
+    public int getConfirmationSerialNumber() {
         return confirmationSerialNumber;
     }
 
-    public void setConfirmationSerialNumber(String confirmationSerialNumber) {
+    public void setConfirmationSerialNumber(int confirmationSerialNumber) {
         this.confirmationSerialNumber = confirmationSerialNumber;
     }
 

@@ -2,6 +2,8 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Embeddable
@@ -12,26 +14,24 @@ public class InformantInfo {
     @Column(nullable = false)
     private int informantType;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 600)
     private String informantName;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String informantNICorPIN;
 
-    @Column(nullable = true)
+    @Column(nullable = false, length = 255)
     private String informantAddress;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 30)
     private String informantPhoneNo;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 30)
     private String informantEmail;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date informantSignDate;
-
-    @Column(nullable = true)
-    private boolean informantSigned;
 
     public int getInformantType() {
         return informantType;
@@ -87,13 +87,5 @@ public class InformantInfo {
 
     public void setInformantSignDate(Date informantSignDate) {
         this.informantSignDate = informantSignDate;
-    }
-
-    public boolean isInformantSigned() {
-        return informantSigned;
-    }
-
-    public void setInformantSigned(boolean informantSigned) {
-        this.informantSigned = informantSigned;
     }
 }

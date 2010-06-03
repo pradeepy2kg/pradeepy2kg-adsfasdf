@@ -133,8 +133,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                                     ", grandFather=" + bdf.getGrandFather().getGrandFatherFullName() + "," + bdf.getGrandFather().getGrandFatherBirthYear() + "," + bdf.getGrandFather().getGrandFatherBirthPlace() +
                                     ", GreatGrand=" + bdf.getGrandFather().getGreatGrandFatherFullName() + "," + bdf.getGrandFather().getGreatGrandFatherBirthYear() + "," + bdf.getGrandFather().getGreatGrandFatherBirthPlace() +
                                     ", InformantType" + bdf.getInformant().getInformantType() + ", InfoName=" + bdf.getInformant().getInformantName() + ", infoId=" + bdf.getInformant().getInformantNICorPIN() + ", infoAdd=" +
-                                    bdf.getInformant().getInformantAddress() + ", infoTel=" + bdf.getInformant().getInformantPhoneNo() + ", infoEmail=" + bdf.getInformant().getInformantEmail() + " ,infoSign=" +
-                                    bdf.getInformant().isInformantSigned() + " ,infoSingnDate=" + bdf.getInformant().getInformantSignDate());
+                                    bdf.getInformant().getInformantAddress() + ", infoTel=" + bdf.getInformant().getInformantPhoneNo() + ", infoEmail=" + bdf.getInformant().getInformantEmail() + " ,infoSingnDate=" + bdf.getInformant().getInformantSignDate());
                         }
 
                         break;
@@ -147,7 +146,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         if (logger.isDebugEnabled()) {
                             logger.debug("BRF 4: authName=" + bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() + " ," + bdf.getNotifyingAuthority().getNotifyingAuthorityName() + " ," +
-                                    bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " , signed=" + bdf.getNotifyingAuthority().isNotifyingAuthoritySigned() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+                                    bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
                         }
                 }
             }

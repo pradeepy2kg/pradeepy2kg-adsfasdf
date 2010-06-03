@@ -1,11 +1,9 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,11 +12,11 @@ import java.util.Date;
 @Embeddable
 public class ParentInfo {
     /** NIC or PIN of father  */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String fatherNICorPIN;
 
     /** Passport number if a foreigner */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String fatherPassportNo;
 
     /** Country if a foreigner */
@@ -27,27 +25,29 @@ public class ParentInfo {
     private Country fatherCountry;
 
     /** Name of father  */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String fatherFullName;
 
     /** DOB of father  */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date fatherDOB;
 
     /** Place of birth of father */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 60)
     private String fatherPlaceOfBirth;
 
     /** Race of father */
     @Column(nullable = true)
-    private int fatherRace;
+    @JoinColumn (name = "fatherRace")
+    private Race fatherRace;
 
     /** NIC or PIN of mother */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String motherNICorPIN;
 
     /** Passport number if a foreigner */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 10)
     private String motherPassportNo;
 
     /** Country if a foreigner */
@@ -56,43 +56,46 @@ public class ParentInfo {
     private Country motherCountry;
 
     /** Full name of mother */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String motherFullName;
 
     /** DOB of mother  */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date motherDOB;
 
     /** Place of birth for mother */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 60)
     private String motherPlaceOfBirth;
 
     /** Race for mother */
     @Column(nullable = true)
-    private int motherRace;
+    @JoinColumn (name = "motherRace")
+    private Race motherRace;
 
     /** Age of mother at birth */
     @Column(nullable = true)
     private int motherAgeAtBirth;
 
     /** Address of mother */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 255)
     private String motherAddress;
 
     /** Phone number of mother */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 30)
     private String motherPhoneNo;
 
     /** Email of mother */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 30)
     private String motherEmail;
 
     /** Mothers admission number to the hospital */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 15)
     private String motherAdmissionNo;
 
     /** Date the mother admitted that she was pregnant. */
     @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date motherAdmissionDate;
 
     public String getFatherNICorPIN() {
@@ -143,11 +146,11 @@ public class ParentInfo {
         this.fatherPlaceOfBirth = fatherPlaceOfBirth;
     }
 
-    public int getFatherRace() {
+    public Race getFatherRace() {
         return fatherRace;
     }
 
-    public void setFatherRace(int fatherRace) {
+    public void setFatherRace(Race fatherRace) {
         this.fatherRace = fatherRace;
     }
 
@@ -199,11 +202,11 @@ public class ParentInfo {
         this.motherPlaceOfBirth = motherPlaceOfBirth;
     }
 
-    public int getMotherRace() {
+    public Race getMotherRace() {
         return motherRace;
     }
 
-    public void setMotherRace(int motherRace) {
+    public void setMotherRace(Race motherRace) {
         this.motherRace = motherRace;
     }
 

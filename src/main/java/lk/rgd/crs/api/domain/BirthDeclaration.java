@@ -7,9 +7,9 @@ import java.util.Date;
  * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
  */
 @Entity
-@Table(name = "BIRTH_REGISTER", schema = "CRS")
-        //uniqueConstraints = {
-        //        @UniqueConstraint(columnNames = {"birthDistrict", "birthDivision", "bdfSerialNo", "status"})})
+@Table(name = "BIRTH_REGISTER", schema = "CRS",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"birthDistrict", "birthDivision", "bdfSerialNo", "status"})})
 
 @NamedQueries({
         @NamedQuery(name = "filter.by.division.and.status", query =
@@ -37,11 +37,12 @@ public class BirthDeclaration {
     private String comments;
 
     /** The date of issue for the original birth certificate - free copy */
-    @Column(nullable = true)
+    @Column(nullable = true, updatable = false)
+    @Temporal (value = TemporalType.DATE)
     private Date originalBCDateOfIssue;
 
     /** The place of issue for the original birth certificate - free copy (Stores the DS Division ID) */
-    @Column(nullable = true)
+    @Column(nullable = true, updatable = false)
     private int originalBCPlaceOfIssue;
 
     @Embedded

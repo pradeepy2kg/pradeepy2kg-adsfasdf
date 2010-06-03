@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.GNDivision;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,26 +28,28 @@ public class ChildInfo {
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "birthDistrict", updatable = false, insertable = false),
-            @JoinColumn(name = "dsDivision",updatable = false, insertable = false)
+            @JoinColumn(name = "dsDivision", updatable = false, insertable = false)
     })
     private DSDivision dsDivision;
 
     /**
      * This is the serial number captured from the BDF
      */
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String bdfSerialNo;
 
     /**
      * The date of the birth
      */
     @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfBirth;
 
     /**
      * The date when the birth declaration was submitted to the medical registrar or the DS office
      */
     @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfRegistration;
 
     /**
@@ -61,19 +64,19 @@ public class ChildInfo {
     /**
      * The place of birth - usually the village or hospital name
      */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 255)
     private String placeOfBirth;
 
     /**
      * Name in Sinhala or Tamil
      */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String childFullNameOfficialLang;
 
     /**
      * Name in English
      */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 600)
     private String childFullNameEnglish;
 
     /**
@@ -103,14 +106,19 @@ public class ChildInfo {
     /**
      * Hospial code
      */
-    @Column(nullable = true)
+    @Column(nullable = true, length = 15)
     private String hospitalCode;
 
     /**
-     * Grama Niladhari code
+     * Grama Niladhari division
      */
-    @Column(nullable = true)
-    private String gnCode;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "birthDistrict", updatable = false, insertable = false),
+            @JoinColumn(name = "dsDivision", updatable = false, insertable = false),
+            @JoinColumn(name = "gnCode", updatable = false, insertable = false)
+    })
+    private GNDivision gnCode;
 
     public District getBirthDistrict() {
         return birthDivision.getDistrict();
@@ -228,11 +236,11 @@ public class ChildInfo {
         this.hospitalCode = hospitalCode;
     }
 
-    public String getGnCode() {
+    public GNDivision getGnCode() {
         return gnCode;
     }
 
-    public void setGnCode(String gnCode) {
+    public void setGnCode(GNDivision gnCode) {
         this.gnCode = gnCode;
     }
 }
