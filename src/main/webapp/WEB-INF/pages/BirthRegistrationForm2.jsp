@@ -2,6 +2,7 @@
   @author duminda
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
@@ -60,8 +61,8 @@
                   onchange="javascript:setDate('fatherMonth','2')"/>
         <s:select list="{'01','02','03'}" name="" id="fatherDay"
                   onchange="javascript:setDate('fatherDay','2')"/>
-        <sx:datetimepicker id="fatherDatePicker" name="fatherDOB" label="Format (yyyy-MM-dd)"
-                          displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
+        <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
+                           displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
     </div>
 </div>
 <div id="father-pob" class="font-9">
@@ -133,8 +134,9 @@
                   onchange="javascript:setDate('motherMonth','2')"/>
         <s:select list="{'01','02','03'}" name="" id="motherDay"
                   onchange="javascript:setDate('motherDay','2')"/>
-        <sx:datetimepicker id="motherDatePicker" name="motherDOB" label="Format (yyyy-MM-dd)"
-                          displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('motherDatePicker')"/>
+        <sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
+                           onmouseover="javascript:splitDate('motherDatePicker')"/>
+
     </div>
 </div>
 <div id="mother-pob" class="font-9">
@@ -189,8 +191,8 @@
                   onchange="javascript:setDate('admitMonth','2')"/>
         <s:select list="{'01','02','03'}" name="" id="admitDay"
                   onchange="javascript:setDate('admitDay','2')"/>
-        <sx:datetimepicker id="admitDatePicker" name="motherAdmissionDate" label="Format (yyyy-MM-dd)"
-                          displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('admitDatePicker')"/>
+        <sx:datetimepicker id="admitDatePicker" name="parent.motherAdmissionDate"
+                           displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('admitDatePicker')"/>
     </div>
 </div>
 <div id="mother-contact-details" class="font-9">
@@ -210,7 +212,8 @@
         <s:textfield name="parent.motherEmail"/>
     </div>
 </div>
-    <s:hidden name="pageNo" value="2"/>
-    <s:submit type="submit" value="NEXT"/>
-    </s:form>
+<s:hidden name="pageNo" value="2"/>
+<s:submit type="submit" value="NEXT"/>
+</s:form>
+</div>
 </div>

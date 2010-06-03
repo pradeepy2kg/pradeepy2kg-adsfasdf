@@ -6,7 +6,9 @@ import java.util.Date;
 
 @Embeddable
 public class InformantInfo {
-    /** 0 - father, 1 - mother, 2 - guardian */
+    /**
+     * 0 - father, 1 - mother, 2 - guardian
+     */
     @Column(nullable = false)
     private int informantType;
 
@@ -27,6 +29,8 @@ public class InformantInfo {
 
     @Column(nullable = true)
     private Date informantSignDate;
+
+    @Column(nullable = true)
     private boolean informantSigned;
 
     public int getInformantType() {

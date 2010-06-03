@@ -25,10 +25,6 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.util.EPopDate;
-
-
-
 
 /**
  * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
@@ -65,17 +61,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int bdId;   // If present, it should used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
-    private int birthDistrict;
-    private int birthDivision;
-    private String childDOB;
-    private String motherDOB;
-    private String fatherDOB;
-  	private String motherAdmissionDate;
-    private String dateOfRegistration;
-    private String dateOfMarriage;
+    // TODO country,district,division not populating
+    //private int birthDistrict;
+    //private int birthDivision;
     private int fatherCountry;
     private int motherCountry;
-    private String informantSignDate;
 
     public String welcome() {
         return "success";
@@ -104,7 +94,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (bdId==0) {
+                if (bdId == 0) {
                     bdf = new BirthDeclaration();
                 } else {
                     bdf = new BirthDeclaration();
@@ -116,14 +106,37 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 switch (pageNo) {
                     case 1:
                         bdf.setChild(child);
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 1: serial=" + bdf.getChild().getBdfSerialNo() + ",submitDate=" + bdf.getChild().getDateOfRegistration() + ",dob=" + bdf.getChild().getDateOfBirth() + ",district=******" +
+                                    ",division=******" + ",hospCode=" + bdf.getChild().getHospitalCode() + ",gnCode=" + bdf.getChild().getGnCode() + ",name=" + bdf.getChild().getChildFullNameOfficialLang() + "," +
+                                    bdf.getChild().getChildFullNameEnglish() + ",gender=" + bdf.getChild().getChildGender() + ",weight=" + bdf.getChild().getChildBirthWeight() + ",rank=" + bdf.getChild().getChildRank() + ",children=" + bdf.getChild().getNumberOfChildrenBorn());
+                        }
                         break;
                     case 2:
                         bdf.setParent(parent);
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 2: father- nic=" + bdf.getParent().getFatherNICorPIN() + ",country=" + bdf.getParent().getFatherCountry() + ",passport" + bdf.getParent().getFatherPassportNo() + ",name=" +
+                                    bdf.getParent().getFatherFullName() + ",dob=" + bdf.getParent().getFatherDOB() + ",place=" + bdf.getParent().getFatherPlaceOfBirth() + ",race=" + bdf.getParent().getFatherRace());
+                            logger.debug("BRF 2: mother- nic=" + bdf.getParent().getMotherNICorPIN() + ",country=" + bdf.getParent().getMotherCountry() + ",passport" + bdf.getParent().getMotherPassportNo() + ",name=" +
+                                    bdf.getParent().getMotherFullName() + ",dob=" + bdf.getParent().getMotherDOB() + ",place=" + bdf.getParent().getMotherPlaceOfBirth() + ",race=" + bdf.getParent().getMotherRace() + ",age=" + bdf.getParent().getMotherAgeAtBirth() +
+                                    ",address=" + bdf.getParent().getMotherAddress() + ",admitted=" + bdf.getParent().getMotherAdmissionNo() + "," + bdf.getParent().getMotherAdmissionDate() + ",tel=" + bdf.getParent().getMotherPhoneNo() + ",email=" + bdf.getParent().getMotherEmail());
+
+                        }
                         break;
                     case 3:
                         bdf.setMarriage(marriage);
                         bdf.setGrandFather(grandFather);
                         bdf.setInformant(informant);
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 3: married=" + bdf.getMarriage().getParentsMarried() + ", place=" + bdf.getMarriage().getPlaceOfMarriage() + ", date=" +
+                                    bdf.getMarriage().getDateOfMarriage() + ", motherSign=" + bdf.getMarriage().isMotherSigned() + " ,fatherSign=" + bdf.getMarriage().isFatherSigned() +
+                                    ", grandFather=" + bdf.getGrandFather().getGrandFatherFullName() + "," + bdf.getGrandFather().getGrandFatherBirthYear() + "," + bdf.getGrandFather().getGrandFatherBirthPlace() +
+                                    ", GreatGrand=" + bdf.getGrandFather().getGreatGrandFatherFullName() + "," + bdf.getGrandFather().getGreatGrandFatherBirthYear() + "," + bdf.getGrandFather().getGreatGrandFatherBirthPlace() +
+                                    ", InformantType" + bdf.getInformant().getInformantType() + ", InfoName=" + bdf.getInformant().getInformantName() + ", infoId=" + bdf.getInformant().getInformantNICorPIN() + ", infoAdd=" +
+                                    bdf.getInformant().getInformantAddress() + ", infoTel=" + bdf.getInformant().getInformantPhoneNo() + ", infoEmail=" + bdf.getInformant().getInformantEmail() + " ,infoSign=" +
+                                    bdf.getInformant().isInformantSigned() + " ,infoSingnDate=" + bdf.getInformant().getInformantSignDate());
+                        }
+
                         break;
                     case 4:
                         bdf.setNotifyingAuthority(notifyingAuthority);
@@ -131,6 +144,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         // todo business validations and persiatance
                         logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
                         logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
+
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 4: authName=" + bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() + " ," + bdf.getNotifyingAuthority().getNotifyingAuthorityName() + " ," +
+                                    bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " , signed=" + bdf.getNotifyingAuthority().isNotifyingAuthoritySigned() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+                        }
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
@@ -146,7 +164,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * very first form page) is used to decide which state of the process we are in. bdId field should be used to
      * determoine the particular birth declarion entity on the initial visit to action. (after then it will be kept in the session)
      */
-    public String birthConfirmation () {
+    public String birthConfirmation() {
         logger.debug("Step {} of 3 ", pageNo);
         if ((pageNo > 3) || (pageNo < 0)) {
             return "error";
@@ -295,48 +313,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.raceList = raceList;
     }
 
-    public String getChildDOB() {
-        return childDOB;
-    }
-
-    public void setChildDOB(String childDOB) {
-        this.childDOB = childDOB;
-        logger.debug("Child DOB String: {}", childDOB);
-//        logger.debug("Child DOB Date: {}", EPopDate.getDate(childDOB));
-        child.setDateOfBirth(EPopDate.getDate(childDOB));
-        logger.debug("ChildDOB in ChildInfo : {}", child.getDateOfBirth());
-    }
-
-    public String getMotherDOB() {
-        return motherDOB;
-    }
-
-    public void setMotherDOB(String motherDOB) {
-        if (parent != null) {
-            this.motherDOB = motherDOB;
-            logger.debug("Mother DOB String: {}", motherDOB);
-            logger.debug("Mother DOB Date: {}", EPopDate.getDate(motherDOB));
-            parent.setMotherDOB(EPopDate.getDate(motherDOB));
-            logger.debug("Mother DOB in Parent: {}", parent.getMotherDOB());
-            logger.error("Mother DOB in Parent: {}", parent.getMotherDOB());
-        }
-    }
-
-    public String getFatherDOB() {
-        return fatherDOB;
-    }
-
-    public void setFatherDOB(String fatherDOB) {
-        if (parent != null) {
-            this.fatherDOB = fatherDOB;
-            logger.debug("Father DOB String: {} {}", fatherDOB, parent);
-            logger.debug("Father DOB Date: {}", EPopDate.getDate(fatherDOB));
-            parent.setFatherDOB(EPopDate.getDate(fatherDOB));
-            //logger.debug("Father DOB in Parent: {}", parent.getFatherDOB());
-            //logger.error("Father DOB in Parent: {}", parent.getFatherDOB());
-        }
-    }
-
     public Map<Integer, String> getDivisionList() {
         return divisionList;
     }
@@ -369,59 +345,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.notifyingAuthority = notifyingAuthority;
     }
 
-    public String getDateOfRegistration() {
-        return dateOfRegistration;
-    }
-
-    public void setDateOfRegistration(String dateOfRegistration) {
-        this.dateOfRegistration = dateOfRegistration;
-        child.setDateOfRegistration(EPopDate.getDate(dateOfRegistration));
-        logger.debug("Child Registration in Child: {}", child.getDateOfRegistration());
-    }
-
-    public String getMotherAdmissionDate() {
-        return motherAdmissionDate;
-    }
-
-    public void setMotherAdmissionDate(String motherAdmissionDate) {
-        if (parent != null) {
-            this.motherAdmissionDate = motherAdmissionDate;
-            logger.debug("Mother Admission String: {}", motherAdmissionDate);
-            logger.debug("Mother Admission Date: {}", EPopDate.getDate(motherAdmissionDate));
-            parent.setMotherAdmissionDate(EPopDate.getDate(motherAdmissionDate));
-            logger.debug("Mother Admission in Parent: {}", parent.getMotherAdmissionDate());
-            logger.error("Mother Admission in Parent: {}", parent.getMotherAdmissionDate());
-        }
-    }
-
-    public String getDateOfMarriage() {
-        return dateOfMarriage;
-    }
-
-    public void setDateOfMarriage(String dateOfMarriage) {
-        if (marriage != null) {
-            this.dateOfMarriage = dateOfMarriage;
-            marriage.setDateOfMarriage(EPopDate.getDate(dateOfMarriage));
-            logger.debug("DateOfMarriage : {}", marriage.getDateOfMarriage());
-        }
-    }
-
-    public int getBirthDistrict() {
-        return birthDistrict;
-    }
-
-    public void setBirthDistrict(int birthDistrict) {
-        this.birthDistrict = birthDistrict;
-    }
-
-    public int getBirthDivision() {
-        return birthDivision;
-    }
-
-    public void setBirthDivision(int birthDivision) {
-        this.birthDivision = birthDivision;
-        child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrict, birthDivision));
-    }
+//    TODO district and division retrieval should be done
+//    public int getBirthDistrict() {
+//        return birthDistrict;
+//    }
+//
+//    public void setBirthDistrict(int birthDistrict) {
+//        this.birthDistrict = birthDistrict;
+//    }
+//
+//    public int getBirthDivision() {
+//        return birthDivision;
+//    }
+//
+//    public void setBirthDivision(int birthDivision) {
+//        this.birthDivision = birthDivision;
+//        child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrict, birthDivision));
+//    }
 
     public int getFatherCountry() {
         return fatherCountry;
@@ -441,6 +381,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setMotherCountry(int motherCountry) {
         if (parent != null) {
             this.motherCountry = motherCountry;
+            logger.debug("Mother Country:{}", motherCountry);
             //TODO use countryDAO to get Country when id given
             parent.setMotherCountry(countryDAO.getCountry(motherCountry));
         }
@@ -460,17 +401,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setInformant(InformantInfo informant) {
         this.informant = informant;
-    }
-
-    public String getInformantSignDate() {
-        return informantSignDate;
-    }
-
-    public void setInformantSignDate(String informantSignDate) {
-        if (informant != null) {
-            this.informantSignDate = informantSignDate;
-            informant.setInformantSignDate(EPopDate.getDate(informantSignDate));
-        }
     }
 
     public GrandFatherInfo getGrandFather() {
