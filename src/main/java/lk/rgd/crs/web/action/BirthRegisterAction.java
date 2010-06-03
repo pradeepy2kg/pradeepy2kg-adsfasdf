@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.User;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -38,9 +39,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
+    private final DSDivisionDAO dsDivisionDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
+    private Map<Integer, String> dsdivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> divisionList;
 
@@ -71,12 +74,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO) {
+    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
     }
 
     /**
@@ -151,7 +155,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-
+               
             populate();
             return "form" + pageNo;
         }
@@ -248,6 +252,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         logger.debug("inside populate : {} observed.", language);
 
         districtList = districtDAO.getDistricts(language, user);
+        dsdivisionList = dsDivisionDAO.getDSDivisionNames(user.getPrefDistrict(), language);
         countryList = countryDAO.getCountries(language);
         raceList = raceDAO.getRaces(language);
         // TODO division hard coded for the moment
@@ -408,5 +413,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setGrandFather(GrandFatherInfo grandFather) {
         this.grandFather = grandFather;
+    }
+
+    public Map<Integer, String> getDsdivisionList() {
+        return dsdivisionList;
+    }
+
+    public void setDsdivisionList(Map<Integer, String> dsdivisionList) {
+        this.dsdivisionList = dsdivisionList;
     }
 }

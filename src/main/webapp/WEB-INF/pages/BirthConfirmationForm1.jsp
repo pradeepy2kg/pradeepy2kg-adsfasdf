@@ -54,10 +54,10 @@
 
 
 <div class="birth-confirmation-form-outer">
-    <form action="#" name="#" id="birth-confirmation-form-1" method="POST">
+    <s:form action="birthConfirmationForm1" name="eprBirthConfirmation.do" id="birth-confirmation-form-1" method="POST">
         <div id="birth-confirmation-form-header">
             <div id="birth-confirmation-form-header-logo">
-                <img src="<s:url value="./images/official-logo.png" />" alt=""/>
+                <img src="<s:url value="/images/official-logo.png" />" alt=""/>
             </div>
             <div id="birth-confirmation-form-header-title" class="font-12">
                 <label>
@@ -68,8 +68,7 @@
                 </label>
             </div>
             <div id="bcf-serial-no">
-                <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span><input type="text"
-                                                                                                           name="serial-no"/></label>
+                <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span><s:textfield name="" /></label>
             </div>
             <div id="birth-confirmation-form-header-info" class="font-9">
                 උපත තහවුරු කිරීම පිළිබද මෙම ලියවිල්ල, සකස් වී ඇත්තේ ළමයාගේ උපත ලියාපදිංචි කිරීම සඳහා ඔබ විසින් ඉදිරිපත්
@@ -166,7 +165,9 @@
             </div>
         </div>
         <div id="new-dob">
-            jgjfjh
+            <sx:datetimepicker id="datePicker" name="childDOB" label="Format (yyyy-MM-dd)"
+                displayFormat="yyyy-MM-dd" value="2010-05-27"
+                onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="bcf-gender" class="font-9">
             <div class="no">4</div>
@@ -174,7 +175,10 @@
             <div class="current">                
                 <s:textfield name="" disabled="true"/>
             </div>
-            <div class="new"></div>
+            <div class="new">
+                <s:select list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                          name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
+            </div>
         </div>
         <div id="bcf-pob" class="font-9">
             <div class="no">5</div>
@@ -187,17 +191,7 @@
                 <s:textfield name="" disabled="true"/>
             </div>
             <div class="new">
-                <s:select name="child.birthDistrict" list="districtList" headerKey="0" headerValue="%{getText('select_district.label')}"/>
-            </div>
-        </div>
-        <div id="bcf-division" class="font-9">
-            <div class="no"></div>
-            <label>කොට්ඨාශය<br>பிரிவு <br>Division</label>
-            <div class="current">
-                <s:textfield name="" disabled="true"/>
-            </div>
-            <div class="new">
-                <s:select list="dsdivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
+                <s:select list="districtList" name="birthDistrict" headerKey="0" headerValue="%{getText('select_district.label')}" />
             </div>
         </div>
         <div id="bcf-ds-division" class="font-9">
@@ -207,17 +201,37 @@
                 <s:textfield name="" disabled="true"/>
             </div>
             <div class="new">
-                <s:select list="dsdivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
+                <s:select list="dsdivisionList" name="child.dsDivision" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
             </div>
         </div>
-        <div id="bcf-place" class="font-9">
+        <div id="bcf-division" class="font-9">
             <div class="no"></div>
             <label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label>
             <div class="current">
                 <s:textfield name="" disabled="true"/>
             </div>
             <div class="new">
+                <s:select name="birthDivision" list="divisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
+            </div>
+        </div>
+        <div id="bcf-place" class="font-9">
+            <div class="no"></div>
+            <label>ස්ථානය  <br>பிறந்த இடம் <br>Place</label>
+            <div class="current">
+                <s:textfield name="" disabled="true"/>
+            </div>
+            <div class="new">
                 <s:textfield name="child.placeOfBirth"/>
+            </div>
+        </div>
+        <div id="bcf-gncode" class="font-9">
+            <div class="no"></div>
+            <label>*in Sinhala<br>*in Tamil<br>GN area code</label>
+            <div class="current">
+                <s:textfield name="child.gnCode" disabled="true"/>
+            </div>
+            <div class="new">
+                <s:textfield name=""/>
             </div>
         </div>
         <div id="bcf-father-pin" class="font-9">
@@ -268,6 +282,6 @@
             </div>
             <div class="new"></div>
         </div>
-        <input type="submit" value="next"/>
-    </form>
+        <s:submit value="%{getText('nextButton.label')}" />
+    </s:form>
 </div>
