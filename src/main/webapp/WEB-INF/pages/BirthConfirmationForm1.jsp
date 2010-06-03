@@ -54,7 +54,7 @@
 
 
 <div class="birth-confirmation-form-outer">
-    <s:form action="birthConfirmationForm1" name="eprBirthConfirmation.do" id="birth-confirmation-form-1" method="POST">
+    <s:form action="eprBirthConfirmation" name="birthConfirmationForm1" id="birth-confirmation-form-1" method="POST">
         <div id="birth-confirmation-form-header">
             <div id="birth-confirmation-form-header-logo">
                 <img src="<s:url value="/images/official-logo.png" />" alt=""/>
@@ -288,6 +288,7 @@
                 <s:radio name="marriage.parentsMarried" list="#{'2':''}"/>
             </div>
         </div>
+        <s:hidden name="pageNo" value="1"/>
         <s:submit value="%{getText('nextButton.label')}" />
     </s:form>
 </div>
