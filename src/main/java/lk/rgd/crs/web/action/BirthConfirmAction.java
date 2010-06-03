@@ -3,7 +3,6 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -86,7 +85,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
             // todo business validations and persiatance
           // BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 //
-//            logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+//            logger.debug("Birth Confirmation Persist : {} , {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrictId());
           // logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
             logger.debug("Birth Confirmation Persist : {} , {} .",getParent().getFatherFullName(), getParent().getMotherFullName());
             return "success";
@@ -115,7 +114,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
                 // submissions of pages 1 - 2
                 //BirthDeclaration confirm = (BirthDeclaration) session.get("birthConfirm");
 
-                //logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrict());
+                //logger.debug("Birth Confirmation : District {} .", confirm.getBdfSerialNo(), confirm.getBirthDistrictId());
 //logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
 
                 try {
