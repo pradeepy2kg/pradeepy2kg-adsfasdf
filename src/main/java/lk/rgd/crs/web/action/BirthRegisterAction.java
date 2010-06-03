@@ -199,9 +199,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
-                        bdf.setChild(child);    //todo merge needed
-                        bdf.setParent(parent);  //todo merge needed
-                        bdf.setMarriage(marriage);
+                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+
+                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
                         break;
                     case 3:
                         bdf.setInformant(informant);
@@ -213,43 +215,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate();
             return "form" + pageNo;
         }
-    }
-
-    /**
-     * update the bean in session with the values of local bean
-     */
-    private BirthDeclaration beanMerge(Object o) throws Exception {
-        BirthDeclaration target = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
-        BeanInfo targetInfo = Introspector.getBeanInfo(BirthDeclaration.class);
-        PropertyDescriptor[] targetDescriptors = targetInfo.getPropertyDescriptors();
-
-        // Iterate over all the attributes of form bean and copy them into the target
-        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object newValue = descriptor.getReadMethod().invoke(o);
-            //logger.debug("processing : {}, value is : {}", descriptor.getReadMethod(), newValue);
-
-            Method beanMethod = descriptor.getWriteMethod();
-            if (beanMethod != null) {
-                String methodName = descriptor.getWriteMethod().getName();
-                for (PropertyDescriptor targetDescriptor : targetDescriptors) {
-                    Method targetMethod = targetDescriptor.getWriteMethod();
-                    if (targetMethod == null) {
-                        continue;
-                    }
-                    //logger.debug("looking for a match with target method {}", targetMethod);
-                    if (methodName.equals(targetMethod.getName())) {
-                        targetMethod.invoke(target, newValue);
-                        logger.debug("field merged ");
-                        break;
-                    }
-                }
-            }
-        }
-
-        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
-
-        return target;
     }
 
     private void handleErrors(Exception e) {
