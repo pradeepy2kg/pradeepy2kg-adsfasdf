@@ -14,6 +14,7 @@ import lk.rgd.crs.api.domain.ChildInfo;
 import lk.rgd.crs.api.domain.ParentInfo;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.core.dao.DSDivisionDAOImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -34,11 +35,11 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
  * @author amith
  */
 public class BirthConfirmAction extends ActionSupport implements SessionAware, RequestAware {
-
-    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(BirthConfirmAction.class);
 
     private final RaceDAO raceDao;
     private final DistrictDAO districtDAO;
+    private final DSDivisionDAOImpl dsDivisionDAOImpl;
 
     /**
      * approveSelected is from BirhRegisterApproval.jsp
@@ -59,9 +60,10 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     private BirthDeclaration birthConfirm;
 
-    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO) {
+    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO, DSDivisionDAOImpl dsDivisionDAOImpl) {
         this.raceDao = raceDao;
         this.districtDAO = districtDAO;
+        this.dsDivisionDAOImpl = dsDivisionDAOImpl;
         logger.debug("inside birth register action constructor");
     }
 

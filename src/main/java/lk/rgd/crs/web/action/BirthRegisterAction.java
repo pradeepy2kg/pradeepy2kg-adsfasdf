@@ -70,6 +70,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int dsDivision;
     private int gnDivision;
 
+    private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
+
 
     public String welcome() {
         return "success";
@@ -103,9 +105,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (bdId == 0) {
                     bdf = new BirthDeclaration();
                 } else {
-                    bdf = new BirthDeclaration();
-                    //todo replace with get a new BD by id
-                    //bdf = BirthDeclarionDAO.getById(bdId);
+                    bdf = service.getById(bdId);
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -149,6 +149,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
                         logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
 
+                        service.registerNormalBirth(bdf, true);
+
                         /*if (logger.isDebugEnabled()) {
                             logger.debug("BRF 4: authName=" + bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() + " ," + bdf.getNotifyingAuthority().getNotifyingAuthorityName() + " ," +
                                     bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
@@ -158,7 +160,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
 
             populate();
-            logger.debug("Birth Declaration: PageNo=" + pageNo);
             return "form" + pageNo;
         }
     }
@@ -176,9 +177,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                //todo replace with get a new BD by id
-                //bdf = BirthDeclarionDAO.getById(bdId);
+                if (bdId != 0) {
+                    bdf = service.getById(bdId);
+                } else if ( (serialNo != null) && !(serialNo.equals("")) ) {
+                    bdf = service.getBySerialNo(serialNo);
+                } else {
+                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+                }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
@@ -456,5 +461,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setConfirmant(ConfirmantInfo confirmant) {
         this.confirmant = confirmant;
+    }
+
+    public String getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
     }
 }

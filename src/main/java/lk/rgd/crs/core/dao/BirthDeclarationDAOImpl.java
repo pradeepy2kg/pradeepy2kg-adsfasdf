@@ -43,4 +43,26 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
     }
+
+    /**
+     * Returns the Birth Declaration object for a given Id
+     * @param bdfidUKey Birth Declarion Id for the given declaration
+     * @Return BirthDeclaration
+     */
+    public BirthDeclaration getById(long bdfidUKey) {
+        Query q = em.createNamedQuery("get.by.id.pending.approval");
+        q.setParameter("bdfidUKey", bdfidUKey);
+        return (BirthDeclaration) q.getSingleResult();
+    }
+
+    /**
+     * Returns the Birth Declaration object for a given bdf serialNo
+     * @param  bdfSerialNo bdfSerialNo given to the Birth Declarion
+     * @Return BirthDeclaration
+     */
+    public BirthDeclaration getBySerialNo(String bdfSerialNo) {
+        Query q = em.createNamedQuery("get.by.serialNo.pending.approval");
+        q.setParameter("bdfSerialNo", bdfSerialNo);
+        return (BirthDeclaration) q.getSingleResult();
+    }
 }
