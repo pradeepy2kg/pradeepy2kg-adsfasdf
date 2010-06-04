@@ -39,24 +39,6 @@ public class DAOImplTest extends TestCase {
 
     private static GenericApplicationContext ctx = null;
 
-    private static Set<String> sinhalaCountries = new HashSet<String>();
-    private static Set<String> sinhalaRaces = new HashSet<String>();
-    private static Set<String> sinhalaBDDivisions = new HashSet<String>();
-
-    static {
-        sinhalaCountries.add("ශ්‍රී ලංකාව");
-        sinhalaCountries.add("ජපානය");
-        sinhalaCountries.add("ඉන්දියාව");
-
-        sinhalaRaces.add("සිංහල");
-        sinhalaRaces.add("ශ්‍රී ලංකික දෙමල");
-        sinhalaRaces.add("ඉන්දියානු දෙමල");
-
-        sinhalaBDDivisions.add("කොළඹ කොටුව (Medical)");
-        sinhalaBDDivisions.add("කොම්පන්න වීදීය (Medical)");
-        sinhalaBDDivisions.add("අලුත් කඩේ (Medical)");
-    }
-
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(DAOImplTest.class)) {
 
@@ -106,7 +88,7 @@ public class DAOImplTest extends TestCase {
         Assert.assertEquals(25, districts.size());
     }
 
-    public void testCountries() throws Exception {
+    /*public void testCountries() throws Exception {
         CountryDAO bean = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
         Map<Integer, String> countries = bean.getCountries(AppConstants.SINHALA);
         Assert.assertEquals(3, countries.size());
@@ -122,9 +104,9 @@ public class DAOImplTest extends TestCase {
         for (String r : races.values()) {
             Assert.assertTrue(sinhalaRaces.contains(r));
         }
-    }
+    }*/
 
-    public void testBDDivisions() throws Exception {
+    /*public void testBDDivisions() throws Exception {
         BDDivisionDAO bean = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         // TODO User should be added
         Map<Integer, String> bdDivisions = bean.getDivisions(AppConstants.SINHALA, 11, null);
@@ -132,7 +114,7 @@ public class DAOImplTest extends TestCase {
         for (String bd : bdDivisions.values()) {
             Assert.assertTrue(sinhalaBDDivisions.contains(bd));
         }
-    }
+    }*/
 
     public void testUsersAndRoles() throws Exception {
         UserManager bean = (UserManager) ctx.getBean("userManagerService", UserManager.class);
