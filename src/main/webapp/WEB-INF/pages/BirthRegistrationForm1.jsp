@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
-    <s:form action="eprBirthRegistration" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
+    <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
             onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
             <div id="birth-registration-form-header-logo">
@@ -33,6 +33,16 @@
                     <sx:datetimepicker id="submitDatePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('submitDatePicker')"/>
                 </label>
+            </div>
+            <div id="birth-registration-form-header-info" class="font-9">
+                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය යුතුය. මෙම
+                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
+                forwarded
+                to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
+                information provided in this form.
             </div>
         </div>
         <div id="birth-registration-form-child-info-sub-title" class="form-sub-title">
@@ -65,30 +75,33 @@
 
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
-                    <%--TODO birthDistrict should be filled--%>
+                    <%--TODO birthDistrict should be filled     birthDistrict--%>
                 <s:select name="" list="districtList" headerKey="0" headerValue="%{getText('select_district.label')}"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
-                <s:select list="dsdivisionList" name="child.dsDivision" headerKey="0"
+                <%--TODO birthDistrict should be filled     dsDivision--%>
+                <s:select list="dsDivisionList" name="" headerKey="0"
                           headerValue="%{getText('select_ds_division.label')}"/>
             </div>
             <div id="child-pob-division">
                 <label>කොට්ඨාශය பிரிவு Division</label>
-                    <%--TODO birthDivision should be filled--%>
-                <s:select name="" list="divisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
+                    <%--TODO birthDivision should be filled     birthDivision--%>
+                <s:select name="" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
             </div>
             <div id="child-pob-place">
                 <label>ස්ථානය பிறந்த இடம் Place</label>
                 <s:textfield name="child.placeOfBirth"/>
             </div>
-            <div id="child-pob-hospitalcode">
-                <label>*in Sinhala<br>* in Tamil<br>Hospital Code</label>
-                <s:textfield name="child.hospitalCode"/>
-            </div>
+            <%--<div id="child-pob-hospitalcode">--%>
+                <%--<label>*in Sinhala<br>* in Tamil<br>Hospital Code</label>--%>
+                <%--<s:textfield name="child.hospitalCode"/>--%>
+            <%--</div>--%>
             <div id="child-pob-gncode">
-                <label> *in Sinhala <br>*in Tamil<br>GN Code</label>
-                <s:textfield name="child.gnCode"/>
+                <label> *in Sinhala <br>*in Tamil<br>GN Division</label>
+                    <%--TODO name field should be filled        gnDivision--%>
+                <s:select name="" list="gnDivisionList" headerKey="0"
+                          headerValue="%{getText('select_gn_division.label')}"/>
             </div>
         </div>
         <div id="child-name" class="font-9">
