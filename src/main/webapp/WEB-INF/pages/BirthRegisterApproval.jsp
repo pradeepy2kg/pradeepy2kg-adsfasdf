@@ -15,7 +15,7 @@
     <div id="birth-register-approval-body">
         <%--todo following should be re-directed to page 3 of 3 Birth Conformation--%>
         <%--todo edit has to be implemented--%>
-        <s:form action="eprBirthConfirmation" name="birth_register_approval_body" method="POST">
+        <s:form action="eprApproveAllSelected" name="birth_register_approval_body" method="POST">
             <table>
                 <tr>
                     <th></th>
@@ -32,17 +32,20 @@
                     <tr>
                         <td><s:property value="%{#approvalStatus.count}"/></td>
                         <td><s:checkbox name="index"
-                                        onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/></td>
+                                        onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
+                                        title="%{getText('select.label')}"/></td>
                         <td><s:property value="child.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                        <s:url id="editSelected" action="eprApproveSelected.do">
-                            <s:param name="key" value="idUKey"/>
+                        <s:url id="editSelected" action="eprBirthConfirmation.do">
+                            <s:param name="bdKey" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
                             <img src="<s:url value='/images/edit.png'/>" width="25"  height="25" border="none"/></s:a></td>
-                        <s:url id="approveSelected" action="eprApproveSelected.do" value="">
-                            <s:param name="key" value="idUKey"/>
+                        <s:url id="approveSelected" action="eprBirthConfirmation.do">
+                            <s:param name="bdKey" value="idUKey"/>
+                            <s:param name="pageNo"  value="2"/>
+                            <s:param name="confirmationFlag" value="1"/>
                         </s:url>
                         <td align="center"><s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}"><img
                                 src="<s:url value='/images/approve.png'/>" width="25"  height="25" border="none"/></s:a></td>
@@ -55,9 +58,10 @@
             </table>
             <br/>
             <s:if test="#request.counter>1">
-                <s:label><span><s:label name="select_all" value="%{getText('select_all.label')}"/></span><s:checkbox
+                <s:label><s:checkbox
                         name="allCheck"
-                        onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/></s:label>
+                        onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
+                    <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
                 <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
             </s:if>
             <br/>
