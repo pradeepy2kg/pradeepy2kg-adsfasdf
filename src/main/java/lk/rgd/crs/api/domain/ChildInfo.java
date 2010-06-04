@@ -21,13 +21,6 @@ public class ChildInfo implements Serializable {
     private BDDivision birthDivision;
 
     /**
-     * Grama Niladhari division
-     */
-    @ManyToOne
-    @JoinColumn(name = "gnDivisionUKey", nullable = false)
-    private GNDivision gnDivision;
-
-    /**
      * This is the serial number captured from the BDF
      */
     @Column(nullable = false, updatable = false)
@@ -123,7 +116,7 @@ public class ChildInfo implements Serializable {
     }
 
     public DSDivision getDsDivision() {
-        return gnDivision.getDsDivision();
+        return birthDivision.getDsDivision();
     }
 
     public String getBdfSerialNo() {
@@ -220,13 +213,5 @@ public class ChildInfo implements Serializable {
 
     public void setHospitalCode(String hospitalCode) {
         this.hospitalCode = hospitalCode;
-    }
-
-    public GNDivision getGnDivision() {
-        return gnDivision;
-    }
-
-    public void setGnDivision(GNDivision gnDivision) {
-        this.gnDivision = gnDivision;
     }
 }
