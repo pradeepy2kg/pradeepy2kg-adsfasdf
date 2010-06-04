@@ -1,6 +1,18 @@
+-- Configurable Application Parameters
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.late_reg_days', '90');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '10');
 
+-- Countries
+INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(1, 'ශ්‍රී ලංකාව', 'Sri Lanka', 'ஸ்ரீ லங்கா');
+INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(2, 'ජපානය', 'Japan', 'ஜப்பான்');
+INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(3, 'ඉන්දියාව', 'India', 'இந்திய');
+
+-- Races
+INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(1, 'සිංහල', 'Sinhalese', 'சின்ஹலேசே');
+INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(2, 'ශ්‍රී ලංකික දෙමල', 'Sri Lankan Tamil', 'ஸ்ரீ லங்கன் தமிழ்');
+INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(3, 'ඉන්දියානු දෙමල', 'Indian Tamil', 'இந்தியன் தமிழ்');
+
+-- Districts
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(11, 'කොළඹ', 'Colombo', '‎கொழும்பு');
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(12, 'ගම්පහ', 'Gampaha', 'கம்‍‍‎ப‍‍ஹ');
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(13, 'කළුතර', 'Kalutara', 'களுத்து‍றை');
@@ -27,6 +39,7 @@ INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDist
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(91, 'රත්නපුර', 'Ratnapura', 'இரத்திணபுரி');
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(92, 'කෑගල්ල', 'Kegalle', '‍‎‍‍‍கேகா‍லை');
 
+-- districtUKey = 1 is DistrictID 11 - Colombo
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 3, 'කොළඹ', 'Colombo', 'கொழும்பு');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 6, 'කොළොන්නාව', 'Kolonnawa', 'கொ‎லொண்ணா‍வை');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 9, 'කඩුවෙළ', 'Kaduwela', 'கடு‎வெ‍லை');
@@ -40,45 +53,65 @@ INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivi
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 31, 'රත්මලාන', 'Ratmalana', 'இரத்மழா‍ணை');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 33, 'මොරටුව', 'Moratuwa', 'மொரட்டு‍வை');
 INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 36, 'කැස්බෑව', 'Kesbewa', '‎கெஸ்‍‍பே‍வை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 3, 'මීගමුව', 'Negombo', 'நீர்கொழும்பு');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 6, 'කටාන', 'Katana', 'கடா‍ணை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 9, 'දිවුලපිටිය', 'Divulapitiya', 'திவுலப்பிட்டிய');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 12, 'මීරිගම', 'Mirigama', 'மீரிகமை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 15, 'මිනුවන්ගොඩ', 'Minuwangoda', 'மிணுவாங்‎‎கொ‍டை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 18, 'වත්තල', 'Wattala', 'வத்தளை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 21, 'ජා-ඇල', 'Ja-Ela', 'ஜா-எல');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 24, 'ගම්පහ', 'Gampaha', 'கம்பஹ');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 27, 'අත්තනගල්ල', 'Attanagalla', 'அத்தணகல்‍லை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 30, 'දොම්පෙ', 'Dompe', '‎தொம்‍பே');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 33, 'මහර', 'Mahara', 'மஹற');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 36, 'කැළණිය', 'Kelaniya', 'களணி');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 39, 'බියගම', 'Biyagama', 'பியக‍மை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 3, 'පානදුර', 'Panadura', 'பாணத்து‍றை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 6, 'බණ්ඩාරගම', 'Bandaragama', 'பண்டாரக‍மை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 9, 'හොරණ', 'Horana', '‎ஹொற‍ணை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 10, 'ඉංගිරිය', 'Ingiriya', 'இங்கிரிய');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 12, 'බුලත්සිංහල', 'Bulathsinhala', 'புழத்சிங்கள');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 15, 'මදුරාවල', 'Madurawela', 'மதுரா‎வெள');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 18, 'මිල්ලනිය', 'Millaniya', 'மில்லணிய');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 21, 'කළුතර', 'Kalutara', 'களுத்து‍றை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 24, 'බේරුවල', 'Beruwala', '‍‍பேறுவ‍ளை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 27, 'දොඩම්ගොඩ', 'Dodangoda', '‎தொடந்தூவை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 30, 'මතුගම', 'Mathugama', 'மத்துக‍மை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 33, 'අගලවත්ත', 'Agalawatta', 'அகளவத்‍தை');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 36, 'පාලින්ද නුවර', 'Palindanuwara', 'பாலிந்தநுவர');
-INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(1, 39, 'වලල්ලාවිට', 'Walallavita', 'வளள்ளாவிட்ட');
+-- districtUKey = 2 is DistrictID 12 - Gampaha
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 3, 'මීගමුව', 'Negombo', 'நீர்கொழும்பு');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 6, 'කටාන', 'Katana', 'கடா‍ணை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 9, 'දිවුලපිටිය', 'Divulapitiya', 'திவுலப்பிட்டிய');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 12, 'මීරිගම', 'Mirigama', 'மீரிகமை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 15, 'මිනුවන්ගොඩ', 'Minuwangoda', 'மிணுவாங்‎‎கொ‍டை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 18, 'වත්තල', 'Wattala', 'வத்தளை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 21, 'ජා-ඇල', 'Ja-Ela', 'ஜா-எல');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 24, 'ගම්පහ', 'Gampaha', 'கம்பஹ');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 27, 'අත්තනගල්ල', 'Attanagalla', 'அத்தணகல்‍லை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 30, 'දොම්පෙ', 'Dompe', '‎தொம்‍பே');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 33, 'මහර', 'Mahara', 'மஹற');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 36, 'කැළණිය', 'Kelaniya', 'களணி');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(2, 39, 'බියගම', 'Biyagama', 'பியக‍மை');
+-- districtUKey = 3 is DistrictID 13 - Kalutara
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 3, 'පානදුර', 'Panadura', 'பாணத்து‍றை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 6, 'බණ්ඩාරගම', 'Bandaragama', 'பண்டாரக‍மை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 9, 'හොරණ', 'Horana', '‎ஹொற‍ணை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 10, 'ඉංගිරිය', 'Ingiriya', 'இங்கிரிய');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 12, 'බුලත්සිංහල', 'Bulathsinhala', 'புழத்சிங்கள');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 15, 'මදුරාවල', 'Madurawela', 'மதுரா‎வெள');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 18, 'මිල්ලනිය', 'Millaniya', 'மில்லணிய');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 21, 'කළුතර', 'Kalutara', 'களுத்து‍றை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 24, 'බේරුවල', 'Beruwala', '‍‍பேறுவ‍ளை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 27, 'දොඩම්ගොඩ', 'Dodangoda', '‎தொடந்தூவை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 30, 'මතුගම', 'Mathugama', 'மத்துக‍மை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 33, 'අගලවත්ත', 'Agalawatta', 'அகளவத்‍தை');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 36, 'පාලින්ද නුවර', 'Palindanuwara', 'பாலிந்தநுவர');
+INSERT INTO COMMON.DS_DIVISIONS(districtUKey, divisionId, siDivisionName, enDivisionName, taDivisionName) VALUES(3, 39, 'වලල්ලාවිට', 'Walallavita', 'வளள்ளாவிட்ட');
 
-INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(1, 'ශ්‍රී ලංකාව', 'Sri Lanka', 'ஸ்ரீ லங்கா');
-INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(2, 'ජපානය', 'Japan', 'ஜப்பான்');
-INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(3, 'ඉන්දියාව', 'India', 'இந்திய');
+-- Birth Death Declaration Divisions
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 1, 'කොළඹ කොටුව (Medical)', 'Colombo Fort (Medical)', 'கொலோம்போ போர');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 2, 'කොම්පන්න වීදීය (Medical)', 'Slave Island (Medical)', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 3, 'අලුත් කඩේ (Medical)', 'New Bazzar (Medical)', 'அழுத் கடி');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(2, 8, 'කොලොන්නාව (Medical)', 'Kolonnawa (Medical)', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(2, 9, 'අම්බතලෙන් පහල', 'Ambathalen Pahala', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(2, 10, 'අංගොඩ', 'Angoda', 'அழுத் கடி (MEDICAL)');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(3, 12, 'රණාල  / නවගමුව', 'Ranala / Nawagamuwa', 'கொலோம்போ போர்');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(3, 13, 'බත්තරමුල්ල', 'Battaramulla', 'ச்லவே இச்லாந்து');
 
-INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(1, 'සිංහල', 'Sinhalese', 'சின்ஹலேசே');
-INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(2, 'ශ්‍රී ලංකික දෙමල', 'Sri Lankan Tamil', 'ஸ்ரீ லங்கன் தமிழ்');
-INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(3, 'ඉන්දියානු දෙමල', 'Indian Tamil', 'இந்தியன் தமிழ்');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(14, 1, 'මීගමුව රෝහල(Medical)', 'Negombo Hospital (Medical)', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(14, 2, 'මීගමුව නගරය', 'Negombo Town', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(14, 3, 'තලාහේන', 'Talahena', 'அழுத் கடி');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(15, 5, 'ඔටාර බටහිර', 'Otara West', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(15, 3, 'ආඬිඅම්බලම', 'Andiambalama', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(15, 7, 'කටුනායක සීදුව', 'Katunayaka-Seeduwa', 'அழுத் கடி');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(16, 9, 'ඔටාර  නැගෙනහිර', 'Otara East', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(16, 10, 'යටිගහ  උතුර', 'Yatigaha North', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(16, 11, 'ගොඩකහ', 'Godakaha', 'அழுத் கடி');
 
-INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 1, 'කොළඹ කොටුව (Medical)', 'Colombo Fort (Medical)', 'கொலோம்போ போர்ட் (MEDICAL)');
-INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 2, 'කොම්පන්න වීදීය (Medical)', 'Colombo Fort (Medical)', 'ச்லவே இச்லாந்து (MEDICAL)');
-INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 3, 'අලුත් කඩේ (Medical)', 'Colombo Fort (Medical)', 'அழுத் கடி (MEDICAL)');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(27, 1, 'පානදුර  (Medical)', 'Panadura (Medical)', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(27, 2, 'වාද්දුව', 'Wadduwa', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(27, 3, 'ගොරකපොල', 'Gorakapola', 'அழுத் கடி');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(28, 5, 'බණ්ඩාරගම ', 'Bandaragama', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(28, 3, 'රයිගම', 'Raigama', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(29, 0, 'ප්‍රාදේශීය ලේකම් කොට්ටාශය', 'Divisional Secretarial', 'கொலோம்போ போர்ட');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(29, 7, 'හොරණ නගරය (Medical)', 'Horana Town (Medical)', 'ச்லவே இச்லாந்து');
+INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(29, 8, 'කුඹුක', 'Kumbuka', 'அழுத் கடி');
+
 
 INSERT INTO COMMON.ROLES (ROLEID, NAME) VALUES('RG', 'Registrar General');
 INSERT INTO COMMON.ROLES (ROLEID, NAME) VALUES('ARG', 'Additional Registrar General');
@@ -100,6 +133,20 @@ INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASS
 INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('amith', '205', 'Amith - ADR Colombo / Colombo Fort (Medical)', 'RI/xsIJu3GrYsfWr2sLPf88I+Ks=', 'SI', 11, 3);
 INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('chathuranga', '206', 'Chathuranga - ADR Colombo / Colombo Fort (Medical)', 'hEFeb6UFV1Kxst3H0N9p/Ics/dI=', 'SI', 11, 3);
 
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT) VALUES('dr-colombo', '301', 'District Registrar - Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 11);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT) VALUES('dr-gampaha', '302', 'District Registrar - Gampaha', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 12);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT) VALUES('dr-kalutara', '302', 'District Registrar - Kalutara', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 13);
+
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-colombo-colombo', '303', 'ARG - Colombo/Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 11, 3);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-colombo-kolonnawa', '304', 'ARG - Colombo/Kolonnawa', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 11, 6);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-colombo-kaduwela', '305', 'ARG - Colombo/Kaduwela', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 11, 9);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-gampaha-negambo', '306', 'ARG - Gampaha/Negambo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 12, 3);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-gampaha-katana', '307', 'ARG - Gampaha/Katana', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 12, 6);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-gampaha-divulapitiya', '308', 'ARG - Gampaha/Divulapitiya', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 12, 9);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-kalutara-panadura', '309', 'ARG - Kalutara/Panadura', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 13, 3);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-kalutara-bandaragama', '310', 'ARG - Kalutara/Bandaragama', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 13, 6);
+INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, ASSIGNEDDISTRICT, ASSIGNEDBDDIVISION) VALUES('adr-kalutara-horana', '311', 'ARG - Kalutara/Horana', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 13, 9);
+
 INSERT INTO COMMON.USER_ROLES VALUES('user', 'DEO');
 INSERT INTO COMMON.USER_ROLES VALUES('adr', 'ADR');
 INSERT INTO COMMON.USER_ROLES VALUES('dr', 'DR');
@@ -113,6 +160,20 @@ INSERT INTO COMMON.USER_ROLES VALUES('duminda', 'ADR');
 INSERT INTO COMMON.USER_ROLES VALUES('indunil', 'ADR');
 INSERT INTO COMMON.USER_ROLES VALUES('amith', 'ADR');
 INSERT INTO COMMON.USER_ROLES VALUES('chathuranga', 'ADR');
+
+INSERT INTO COMMON.USER_ROLES VALUES('dr-colombo', 'DR');
+INSERT INTO COMMON.USER_ROLES VALUES('dr-gampaha', 'DR');
+INSERT INTO COMMON.USER_ROLES VALUES('dr-kalutara', 'DR');
+
+INSERT INTO COMMON.USER_ROLES VALUES('adr-colombo-colombo', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-colombo-kolonnawa', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-colombo-kaduwela', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-gampaha-negambo', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-gampaha-katana', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-gampaha-divulapitiya', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-kalutara-panadura', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-kalutara-bandaragama', 'ADR');
+INSERT INTO COMMON.USER_ROLES VALUES('adr-kalutara-horana', 'ADR');
 
 
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
