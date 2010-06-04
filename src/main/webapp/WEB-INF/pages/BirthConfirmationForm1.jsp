@@ -197,7 +197,7 @@
                 <s:textfield value="%{#session.birthRegister.child.birthDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
-                <s:select name="" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>  
+                <s:select name="birthDivision" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>  
             </div>
         </div>
         <div id="bcf-place" class="font-9">
@@ -208,16 +208,6 @@
             </div>
             <div class="new">
                 <s:textfield name="child.placeOfBirth"/>
-            </div>
-        </div>
-        <div id="bcf-gncode" class="font-9">
-            <div class="no"></div>
-            <label>*in Sinhala<br>*in Tamil<br>GN area code</label>
-            <div class="current">
-                <s:textfield value="%{#session.birthRegister.child.gnDivision.divisionId}" cssClass="disable" disabled="true"/>
-            </div>
-            <div class="new">
-                <s:textfield name=""/>
             </div>
         </div>
         <div id="bcf-father-pin" class="font-9">
