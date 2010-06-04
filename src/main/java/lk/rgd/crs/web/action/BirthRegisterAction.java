@@ -183,7 +183,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
                     case 1:
-                        bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
+                       /* bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
                         bdf.getChild().setDateOfRegistration(child.getDateOfRegistration());
                         bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                         bdf.getChild().setChildGender(child.getChildGender());
@@ -196,7 +196,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
                         bdf.getParent().setMotherRace(parent.getMotherRace());
 
-                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
+                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());*/
                         break;
                     case 2:
                         bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
