@@ -25,7 +25,13 @@ import java.util.Date;
         @NamedQuery(name = "confirmation.pending.approval", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
                         "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = 5 " +
-                        "ORDER BY bdf.confirmant.confirmationReceiveDate desc")
+                        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+        @NamedQuery(name = "get.by.id.pending.approval", query =
+                "SELECT bdf FROM BirthDeclaration bdf " +
+                        "WHERE bdf.idUKey = :bdfidUKey AND bdf.child.status = 5 "),
+        @NamedQuery(name = "get.by.serialNo.pending.approval", query =
+                "SELECT bdf FROM BirthDeclaration bdf " +
+                        "WHERE bdf.child.bdfSerialNo = :bdfSerialNo AND bdf.child.status = 5 ")
 })
 public class BirthDeclaration implements Serializable {
     /** This is an auto generated unique row identifier  */
