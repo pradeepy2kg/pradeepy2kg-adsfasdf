@@ -173,6 +173,6 @@
                                onmouseover="javascript:splitDate('informedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="3"/>
-        <s:submit value="NEXT"/>
+        <s:submit value="%{getText('next.label')}"/>
     </s:form>
 </div>
