@@ -45,7 +45,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private String bdId;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO,
-        BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
+                                       BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
@@ -67,15 +67,17 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         populate();
         int selectedDistrict = user.getInitialDistrict();
         int selectedDivision = user.getInitialBDDivision();
-        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), 1, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         /**
          * initially pageNo is set to 1
          */
-        paginationHandler(birthRegisterApproval.size(), 1);
+        int pageNo = 1;
+        birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
+            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 0);
         session.put("selectedFlag", 0);
         session.put("ApprovalData", birthRegisterApproval);
+        session.put("pageNo", pageNo);
         return "pageLoad";
     }
 
@@ -86,10 +88,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String filter() {
-        //todo pagination should be checked
+        //todo pagination for the filtering
         Integer pageNo = (Integer) session.get("pageNo");
         if (logger.isDebugEnabled()) {
-            logger.debug("inside filter : district {} division {} observed ", district, division + " Page number " + pageNo.toString());
+            logger.debug("inside filter : district {} division {} observed ", district, division + " Page number " + pageNo);
         }
         /**
          * following session variables are assigned for
@@ -99,9 +101,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         session.put("selectedDivision", division);
         session.put("selectedFlag", 1);
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo,appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
-        paginationHandler(birthRegisterApproval.size(), pageNo);
+        paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 0);
         populate();
         return "success";
@@ -145,6 +147,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         Integer pageNo = (Integer) session.get("pageNo");
         Integer selectedFlag = (Integer) session.get("selectedFlag");
         logger.debug("inside nextPage : pageNo {} and selectedFlag {} observed", pageNo, selectedFlag);
+        pageNo++;
         if (selectedFlag == 1) {
             district = (Integer) session.get("selectedDistrict");
             division = (Integer) session.get("selectedDivision");
@@ -162,8 +165,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
             bdDivisionDAO.getBDDivision(district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
-        paginationHandler(birthRegisterApproval.size(), pageNo);
+        paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 1);
+        session.put("pageNo", pageNo);
         populate();
         return "success";
     }
@@ -184,10 +188,18 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * UI related handle whether to display the
          * next link and previous link
          */
-        if (pageNo == 1) {
+        Integer previousFlag = (Integer) session.get("previousFlag");
+        if (previousFlag == 1 && pageNo == 2) {
             /**
-             * if requested pageNo is 1 then it shouldn't
-             * display the previous link in the next page
+             * request is comming backword(calls previous
+             * to load the very first page
+             */
+            session.put("previousFlag", 0);
+        } else if (pageNo == 1) {
+            /**
+             * if request is from page one
+             * in the next page previous link
+             * should be displayed
              */
             session.put("previousFlag", 0);
         } else {
@@ -220,19 +232,17 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     /**
      * responsible for whether to display the next link in
-     * the birthRegisterApproval jsp or not
+     * the birthRegisterApproval jsp or not and handles the
+     * page number
      *
      * @param recordsFound no of birth register approval pending
      *                     records found
-     * @param pageNo       requested page number(previous page number)
      */
-    public void paginationHandler(int recordsFound, int pageNo) {
-        if (recordsFound ==appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE)) {
+    public void paginationHandler(int recordsFound) {
+        if (recordsFound == appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE)) {
             session.put("nextFlag", 1);
-            session.put("pageNo", pageNo++);
         } else {
             session.put("nextFlag", 0);
-            session.put("pageNo", pageNo);
         }
     }
 
