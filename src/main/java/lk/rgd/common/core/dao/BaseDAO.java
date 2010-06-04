@@ -14,6 +14,8 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class BaseDAO {
 
+    protected static final String SPACER = " : ";
+
     /** Make subclasses pick up the correct logger */
     protected final Logger logger;
     /** The EntityManager instance injected by Spring */

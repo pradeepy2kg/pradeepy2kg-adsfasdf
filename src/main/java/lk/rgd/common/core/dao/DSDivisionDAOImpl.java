@@ -76,21 +76,21 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
                 subMap = new HashMap<Integer, String>();
                 siNames.put(districtId, subMap);
             }
-            subMap.put(divisionId, d.getSiDivisionName());
+            subMap.put(divisionId, divisionId + SPACER + d.getSiDivisionName());
 
             subMap = enNames.get(districtId);
             if (subMap == null) {
                 subMap = new HashMap<Integer, String>();
                 enNames.put(districtId, subMap);
             }
-            subMap.put(divisionId, d.getEnDivisionName());
+            subMap.put(divisionId, divisionId + SPACER + d.getEnDivisionName());
 
             subMap = taNames.get(districtId);
             if (subMap == null) {
                 subMap = new HashMap<Integer, String>();
                 taNames.put(districtId, subMap);
             }
-            subMap.put(divisionId, d.getTaDivisionName());
+            subMap.put(divisionId, divisionId + SPACER + d.getTaDivisionName());
         }
 
         logger.debug("Loaded : {} DSDivisions from the database", results.size());

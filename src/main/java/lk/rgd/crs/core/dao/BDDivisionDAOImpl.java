@@ -69,6 +69,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
 
         for (BDDivision r : results) {
             final int districtId = r.getDistrict().getDistrictId();
+            final int divisionId = r.getDivisionId();
 
             Map<Integer, BDDivision> divMap = divisions.get(districtId);
             if (divMap == null) {
@@ -82,21 +83,21 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
                 districtMap = new HashMap<Integer, String>();
                 siDivisions.put(districtId, districtMap);
             }
-            districtMap.put(r.getDivisionId(), r.getSiDivisionName());
+            districtMap.put(divisionId, divisionId + ": " + r.getSiDivisionName());
 
             districtMap = enDivisions.get(districtId);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
                 enDivisions.put(districtId, districtMap);
             }
-            districtMap.put(r.getDivisionId(), r.getEnDivisionName());
+            districtMap.put(divisionId, divisionId + SPACER + r.getEnDivisionName());
 
             districtMap = taDivisions.get(districtId);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
                 taDivisions.put(districtId, districtMap);
             }
-            districtMap.put(r.getDivisionId(), r.getTaDivisionName());
+            districtMap.put(divisionId, divisionId + SPACER + r.getTaDivisionName());
         }
 
         logger.debug("Loaded : {} birth and death registration divisions from the database", results.size());

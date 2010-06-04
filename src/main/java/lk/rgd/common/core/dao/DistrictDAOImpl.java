@@ -53,10 +53,11 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         List<District> results = query.getResultList();
 
         for (District d : results) {
-            districts.put(d.getDistrictId(), d);
-            siDistricts.put(d.getDistrictId(), d.getSiDistrictName());
-            enDistricts.put(d.getDistrictId(), d.getEnDistrictName());
-            taDistricts.put(d.getDistrictId(), d.getTaDistrictName());
+            final int districtId = d.getDistrictId();
+            districts.put(districtId, d);
+            siDistricts.put(districtId, districtId + SPACER + d.getSiDistrictName());
+            enDistricts.put(districtId, districtId + SPACER + d.getEnDistrictName());
+            taDistricts.put(districtId, districtId + SPACER + d.getTaDistrictName());
         }
 
         logger.debug("Loaded : {} districts from the database", results.size());
