@@ -203,6 +203,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setMotherFullName(parent.getMotherFullName());
                         break;
                     case 3:
+                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
                         bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                         bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
