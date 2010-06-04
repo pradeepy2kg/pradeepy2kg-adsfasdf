@@ -19,7 +19,7 @@ import lk.rgd.common.api.domain.User;
 
 
 /**
- * @author Duminda Dharmakeerthi.
+ * @author Duminda Dharmakeerthi
  * @author Indunil Moremada
  *         struts action class which is used for the birth registration approval purposes
  */

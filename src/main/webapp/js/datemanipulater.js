@@ -63,7 +63,7 @@ function ePopGetValue(val) {
     return  sel.options[sel.selectedIndex].value;
 }
 /**
- *this return the curren status of the list boxes when the selected list box is year
+ *this return the current status of the list boxes when the selected list box is year
  * other entries are kept as it is
  * **/
 function getDateWhenYearIsGiven(y, m, d) {
@@ -74,7 +74,7 @@ function getDateWhenYearIsGiven(y, m, d) {
     return selectedDate = year + "-" + Selectedmonth + "-" + day;
 }
 /**
- *this return the curren status of the list boxes when the selected list box is Month
+ *this return the current status of the list boxes when the selected list box is Month
  * other entries are kept as it is
  * **/
 function getDateWhenMonthIsGiven(y, m, d) {
@@ -85,7 +85,7 @@ function getDateWhenMonthIsGiven(y, m, d) {
     return selectedDate = year + "-" + Selectedmonth + "-" + day;
 }
 /**
- *this return the curren status of the list boxes when the selected list box is day
+ *this return the current status of the list boxes when the selected list box is day
  * other entries are kept as it is
  * **/
 function getDateWhenDayIsGiven(y, m, d) {
@@ -100,5 +100,5 @@ function getDateWhenDayIsGiven(y, m, d) {
  * @param id used to identify the request
  */
 function splitDate(id) {
-    //to do this
+    //todo has to be implemented
 }

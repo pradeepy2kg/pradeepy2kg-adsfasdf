@@ -23,7 +23,8 @@
                     <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
-                    <th><s:label name="actions" value="%{getText('actions.label')}"/></th>
+                    <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
+                    <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
                 </tr>
                     <%-- Next link to visible next records will only visible if nextFlag is
                      set to 1--%>
@@ -35,16 +36,16 @@
                         <td><s:property value="child.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                        <s:url id="approveSelected" action="eprApproveSelected.do" value="">
-                            <s:param name="key" value="idUKey"/>
-                        </s:url>
-                        <td><s:a href="%{approveSelected}"><img
-                                src="<s:url value='/images/approve.png'/>"/></s:a></td>
                         <s:url id="editSelected" action="eprApproveSelected.do">
                             <s:param name="key" value="idUKey"/>
                         </s:url>
-                        <td><s:a href="%{editSelected}">
-                            <s:label value="%{getText('edit.label')}"/></s:a></td>
+                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
+                            <img src="<s:url value='/images/edit.png'/>" width="25"  height="25" border="none"/></s:a></td>
+                        <s:url id="approveSelected" action="eprApproveSelected.do" value="">
+                            <s:param name="key" value="idUKey"/>
+                        </s:url>
+                        <td align="center"><s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}"><img
+                                src="<s:url value='/images/approve.png'/>" width="25"  height="25" border="none"/></s:a></td>
                     </tr>
                     <%--select_all checkbox is visible only if
                 counter is greater than one--%>
@@ -65,10 +66,10 @@
 
             <br/><br/>
             <s:if test="#session.previousFlag==1"><s:a href="%{previousUrl}">
-                <s:label value="<Previous"/></s:a></s:if>
+                <s:label value="%{getText('previous.label')}"/></s:a></s:if>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <s:if test="#session.nextFlag==1"><s:a href="%{nextUrl}">
-                <s:label value="Next>"/></s:a></s:if>
+                <s:label value="%{getText('next.label')}"/></s:a></s:if>
         </s:form>
 
     </div>
