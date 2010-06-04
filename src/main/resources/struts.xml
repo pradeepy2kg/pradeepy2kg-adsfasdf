@@ -74,11 +74,11 @@
         </action>
 
         <!--<action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthConfirmAction" method="birthConfirmation">-->
-            <!--<result type="tiles" name="form0">epr.birthConfirmation_form1</result>-->
-            <!--<result type="tiles" name="form1">epr.birthConfirmation_form2</result>-->
-            <!--<result type="tiles" name="success">epr.welcome</result>-->
-            <!--<result type="redirectAction" name="re-direct">eprApproveSelected</result>-->
-            <!--<result type="tiles" name="error">epr.error</result>-->
+        <!--<result type="tiles" name="form0">epr.birthConfirmation_form1</result>-->
+        <!--<result type="tiles" name="form1">epr.birthConfirmation_form2</result>-->
+        <!--<result type="tiles" name="success">epr.welcome</result>-->
+        <!--<result type="redirectAction" name="re-direct">eprApproveSelected</result>-->
+        <!--<result type="tiles" name="error">epr.error</result>-->
         <!--</action>-->
 
         <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"

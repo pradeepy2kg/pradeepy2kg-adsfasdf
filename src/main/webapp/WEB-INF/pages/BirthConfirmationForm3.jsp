@@ -34,15 +34,15 @@
 
         <div id="bcf-confirm-person-certify-date">
             <label>දිනය<br>திகதி <br>Date</label>
-            <s:select list="{'2009','2010','2011'}" name="" id="submitYear"
-                      onchange="javascript:setDate('submitYear','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="submitMonth"
-                      onchange="javascript:setDate('submitMonth','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="submitDay"
-                      onchange="javascript:setDate('submitDay','2')"/>
-            <sx:datetimepicker id="submitDatePicker" name="confirmant.confirmantSignDate"
+            <s:select list="{'2009','2010','2011'}" name="" id="year"
+                      onchange="javascript:setDate('year','1')"/>
+            <s:select list="{'01','02','03','06'}" name="" id="month"
+                      onchange="javascript:setDate('month','1')"/>
+            <s:select list="{'01','02','03'}" name="" id="day"
+                      onchange="javascript:setDate('day','1')"/>
+            <sx:datetimepicker id="datePicker" name="confirmant.confirmantSignDate"
                                displayFormat="yyyy-MM-dd"
-                               onmouseover="javascript:splitDate('submitDatePicker')"
+                               onmouseover="javascript:splitDate('datePicker')"
                                value="%{'today'}"/>
         </div>
     </div>
