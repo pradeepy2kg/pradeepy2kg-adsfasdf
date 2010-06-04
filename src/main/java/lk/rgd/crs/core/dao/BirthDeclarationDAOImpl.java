@@ -21,11 +21,6 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthDeclaration(BirthDeclaration bdf) {
-        if (bdf.getChild().getBirthDistrict().getDistrictId() !=
-            bdf.getChild().getDsDivision().getDistrict().getDistrictId()) {
-            throw new IllegalArgumentException(
-                "The District for the Birth Registration Division and the D.S. Division are different");
-        }
         em.persist(bdf);
     }
 

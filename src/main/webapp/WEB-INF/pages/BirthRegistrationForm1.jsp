@@ -76,18 +76,18 @@
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
                     <%--TODO birthDistrict should be filled     birthDistrict--%>
-                <s:select name="child.getBirthDistrict()" list="districtList" headerKey="0" headerValue="%{getText('select_district.label')}"/>
+                <s:select name="birthDistrict" list="districtList" headerKey="0" headerValue="%{getText('select_district.label')}"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
                 <%--TODO birthDistrict should be filled     dsDivision--%>
-                <s:select list="dsDivisionList" name="" headerKey="0"
+                <s:select list="dsDivisionList" name="dsDivision" headerKey="0"
                           headerValue="%{getText('select_ds_division.label')}"/>
             </div>
             <div id="child-pob-division">
                 <label>කොට්ඨාශය பிரிவு Division</label>
                     <%--TODO birthDivision should be filled     birthDivision--%>
-                <s:select name="" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
+                <s:select name="birthDivision" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
             </div>
             <div id="child-pob-place">
                 <label>ස්ථානය பிறந்த இடம் Place</label>
