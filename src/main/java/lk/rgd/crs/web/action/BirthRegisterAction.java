@@ -70,7 +70,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int dsDivision;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
-
+    /**
+     * confirmationFlag is set to 1 if
+     * request is from birth registration
+     * approval jsp else it is set to 0
+     */
+    private int confirmationFlag;
+    /**
+     * key is used to identify a particular
+     * entity of BirthDeclaration bean
+     */
+    private long bdKey;
 
     public String welcome() {
         return "success";
@@ -178,16 +188,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (pageNo == 0) {
                 if (bdId != 0) {
                     bdf = service.getById(bdId);
-                } else if ( (serialNo != null) && !(serialNo.equals("")) ) {
+                } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
+                    logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
                     case 1:
-                       /* bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
+                        /* bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
                         bdf.getChild().setDateOfRegistration(child.getDateOfRegistration());
                         bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                         bdf.getChild().setChildGender(child.getChildGender());
@@ -203,15 +214,22 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());*/
                         break;
                     case 2:
-                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
-                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+                        /**
+                         * if confirmationFlag is set to 1 request is from
+                         * birth registration confirmation jsp
+                         */
+                        logger.debug("inside birthConfirmation : confiramationFlag {}", confirmationFlag);
+                        if (confirmationFlag != 1) {
+                            bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                            bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
 
-                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
-                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
-                          //logger.debug("check parent name ,{},{}.",bdf.getParent().getFatherFullName());
+                            bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                            bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                            //logger.debug("check parent name ,{},{}.",bdf.getParent().getFatherFullName());
+                        }
                         break;
                     case 3:
-                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
+                        logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
                         bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                         bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
@@ -240,7 +258,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         int selectedDistrictId = user.getInitialDistrict();
         int selectedBDDivisionId = user.getInitialBDDivision();
         int selectedDSDivisionId = bdDivisionDAO.getBDDivision(selectedDistrictId, selectedBDDivisionId).
-                getDsDivision().getDivisionId();
+            getDsDivision().getDivisionId();
 
         logger.debug("inside populate : {} observed.", language);
         districtList = districtDAO.getDistricts(language, user);
@@ -458,5 +476,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSerialNo(String serialNo) {
         this.serialNo = serialNo;
+    }
+
+    public int getConfirmationFlag() {
+        return confirmationFlag;
+    }
+
+    public void setConfirmationFlag(int confirmationFlag) {
+        this.confirmationFlag = confirmationFlag;
+    }
+
+    public long getBdKey() {
+        return bdKey;
+    }
+
+    public void setBdKey(long bdKey) {
+        this.bdKey = bdKey;
     }
 }

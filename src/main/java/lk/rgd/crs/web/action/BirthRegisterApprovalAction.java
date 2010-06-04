@@ -19,7 +19,6 @@ import lk.rgd.common.api.domain.User;
 
 
 /**
- * @author Duminda Dharmakeerthi
  * @author Indunil Moremada
  *         struts action class which is used for the birth registration approval purposes
  */
@@ -42,7 +41,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private List<BirthDeclaration> birthRegisterApproval;
 
     private User user;
-    private String bdId;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO,
                                        BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
@@ -110,16 +108,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * All the selected Birth Registration Approval data
-     * will be persisted without directing to the birth
-     * confirmation
-     *
-     * @return String
+     * 
+     * @return String which desides the next page
      */
-    public String ApproveSelected() {
-        //todo this has to be implemented
-        logger.debug("inside ApprovalSelected :", session.get("index"));
-        populate();
+    public String approveAllSelected(){
+        //todo has to be implemented
+        logger.debug("inside approveAllSelected :");
         return "success";
     }
 
@@ -292,13 +286,5 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setDistrict(int district) {
         this.district = district;
-    }
-
-    public String getBdId() {
-        return bdId;
-    }
-
-    public void setBdId(String bdId) {
-        this.bdId = bdId;
     }
 }

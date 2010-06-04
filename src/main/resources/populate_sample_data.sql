@@ -1,5 +1,5 @@
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.late_reg_days', '90');
-INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '11');
+INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '10');
 
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(11, 'කොළඹ', 'Colombo', '‎கொழும்பு');
 INSERT INTO COMMON.DISTRICTS (districtId, siDistrictName, enDistrictName, taDistrictName)  VALUES(12, 'ගම්පහ', 'Gampaha', 'கம்‍‍‎ப‍‍ஹ');
