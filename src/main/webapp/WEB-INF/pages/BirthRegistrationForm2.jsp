@@ -14,18 +14,12 @@
     <br>Details of the Father
 </div>
 <div id="father-nic" class="font-9">
-    <div class="form-label">
-        <label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
+    <label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label>
-    </div>
-    <div>
-        <s:textfield name="parent.fatherNICorPIN"/>
-    </div>
+    <s:textfield name="parent.fatherNICorPIN"/>
 </div>
 <div id="foreign-father" class="font-9">
-    <div class="form-label">
-        <label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
-    </div>
+    <label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
     <div id="father-country" class="font-9">
         <div class="form-label">
             <label>රට<br>நாடு <br>Country</label>

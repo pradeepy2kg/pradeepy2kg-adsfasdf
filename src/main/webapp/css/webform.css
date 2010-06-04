@@ -107,20 +107,20 @@
 #father-nic input, #mother-nic input{width:230px; margin:40px 5px;}
 #foreign-father, #foreign-mother{width:616px;}
 #father-dob, #father-pob, #mother-dob, #mother-pob, #mother-race, #mother-age, #hospital-admision-no, #hospital-admision-date{ width:508px;}
-#father-nic .form-label, #foreign-father .form-label, #father-name .form-label, #father-dob .form-label, #father-pob .form-label, #father-race .form-label, #mother-nic .form-label, #foreign-mother .form-label, #mother-name .form-label, #mother-dob .form-label, #mother-pob .form-label, #mother-race .form-label, #mother-age .form-label, #hospital-admision-no .form-label, #hospital-admision-date .form-label, #mother-address .form-label, #mother-contact-details label{float:left; border-right:1px solid #000; width:150px;}
+#father-nic label, #foreign-father label, #father-name label, #father-dob label, #father-pob label, #father-race label, #mother-nic .form-label, #foreign-mother .form-label, #mother-name .form-label, #mother-dob .form-label, #mother-pob .form-label, #mother-race .form-label, #mother-age .form-label, #hospital-admision-no .form-label, #hospital-admision-date .form-label, #mother-address .form-label, #mother-contact-details label{float:left; border-right:1px solid #000; width:150px;}
 #mother-contact-details .form-label{float:left; width:150px; padding:26px 5px; border-right:1px solid #000;}
 #mother-contact-details .form-label label{border:none;}
 #mother-contact-details div input{float:left; width:255px; margin:38px 5px;}
 #mother-email{border-left:1px solid #000;}
 #mother-age .form-label{width:350px;}
-#father-nic .form-label, #mother-nic .form-label{padding-top:2px; padding-bottom:2px;}
-#foreign-father .form-label, #foreign-mother .form-label{width:140px; padding:28px 0 29px 0;}
+#father-nic label, #mother-nic .form-label{padding-top:2px; padding-bottom:2px;}
+#foreign-father label, #foreign-mother .form-label{width:140px; padding:28px 0 29px 0;}
 #father-country, #mother-country{border-bottom:1px solid #000; margin-left:140px;}
-#father-country .form-label, #father-passport-no .form-label, #mother-country .form-label, #mother-passport-no .form-label{width:150px; float:left; padding:0 5px;}
-#father-country .form-label, #mother-country .form-label{padding-top:1px; padding-bottom:1px;}
-#father-passport-no .form-label, #mother-passport-no .form-label{padding:1px 5px;}
-#father-country select, #father-passport-no input, #mother-country select, #mother-passport-no input{width:290px; margin:15px 5px 14px 5px;}
-#father-name .form-label, #mother-name .form-label{padding-top:5px; padding-bottom:5px;}
+#father-country label, #father-passport-no label, #mother-country .form-label, #mother-passport-no .form-label{width:150px; float:left; padding:0 5px;}
+#father-country label, #mother-country .form-label{padding-top:1px; padding-bottom:1px;}
+#father-passport-no label, #mother-passport-no .form-label{padding:1px 5px;}
+#father-country select, #father-passport-no input, #mother-country select, #mother-passport-no input{width:290px; margin:14px 5px;}
+#father-name label, #mother-name .form-label{padding-top:5px; padding-bottom:5px;}
 #father-name textarea, #mother-name textarea{margin:5px; width:850px;}
 #father-dob input, #father-pob input, #father-race select, #mother-dob input, #mother-pob input, #mother-race select, #mother-age input, #hospital-admision-no input{margin:12px 5px; width:335px;}
 #hospital-admision-no input, #hospital-admision-date select{margin-top:30px;}
