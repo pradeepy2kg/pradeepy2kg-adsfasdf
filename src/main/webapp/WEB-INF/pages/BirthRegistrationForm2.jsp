@@ -78,7 +78,8 @@
         <label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label>
     </div>
     <div>
-        <s:select list="raceList" name="parent.fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
+        <%--TODO name should be filled--%>
+        <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
 <br>
@@ -152,7 +153,8 @@
         <label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label>
     </div>
     <div>
-        <s:select list="raceList" name="parent.motherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
+        <%--TODO name should be filled--%>
+        <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
 <div id="mother-age" class="font-9">

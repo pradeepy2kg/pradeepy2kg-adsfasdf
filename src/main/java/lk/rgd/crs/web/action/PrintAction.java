@@ -37,6 +37,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private Map session;
     private String selectOption;
 
+    private User user;
+
     public PrintAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -49,22 +51,23 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * @return list of PrintData
      */
     public String filterPrintList() {
-        MasterDataLoad masterDataLoad = MasterDataLoad.getInstance();
+        populate();
         session.remove(WebConstants.SESSION_PRINT_START);
+        int selectedDistrict = user.getInitialDistrict();
+        int selectedDivision = user.getInitialBDDivision();
 
-        // TODO district and division hard coded for the moment
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), true);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), true);
             } else {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), false);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), false);
             }
         } else {
-            printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(11, 1), false);
+            printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), false);
         }
 
+        logger.debug("Confirm Print List : items=" + printList.size());
         session.put(WebConstants.SESSION_PRINT_LIST, printList);
-        populate();
         return "success";
     }
 
@@ -108,7 +111,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getDistricts(language, user);
         // TODO district id hardcoded for the moment
         divisionList = bdDivisionDAO.getDivisions(language, 11, user);
@@ -152,5 +155,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public void setSelectOption(String selectOption) {
         this.selectOption = selectOption;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
