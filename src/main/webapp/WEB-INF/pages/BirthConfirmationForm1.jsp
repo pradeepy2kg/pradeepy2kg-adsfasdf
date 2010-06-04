@@ -372,7 +372,7 @@
     </div>
     <div class="new">
             <%--TODO name field should be filled        birthDistrict--%>
-        <s:select list="districtList" name="" headerKey="0" headerValue="%{getText('select_district.label')}"/>
+        <s:select list="districtList" name="birthDistrictId" headerKey="0" headerValue="%{getText('select_district.label')}"/>
     </div>
 </div>
 <div id="bcf-ds-division" class="font-9">
@@ -384,7 +384,7 @@
     </div>
     <div class="new">
             <%--TODO name field should be filled        child.birthDivision.dsDivision--%>
-        <s:select list="dsDivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}"/>
+        <s:select list="dsDivisionList" name="dsDivisionId" headerKey="0" headerValue="%{getText('select_ds_division.label')}"/>
     </div>
 </div>
 <div id="bcf-division" class="font-9">
@@ -396,7 +396,7 @@
     </div>
     <div class="new">
             <%--TODO name field should be filled        birthDivision--%>
-        <s:select name="" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
+        <s:select name="birthDivisionId" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>
     </div>
 </div>
 <div id="bcf-place" class="font-9">
@@ -408,17 +408,6 @@
     </div>
     <div class="new">
         <s:textfield name="child.placeOfBirth"/>
-    </div>
-</div>
-<div id="bcf-gncode" class="font-9">
-    <div class="no"></div>
-    <label>*in Sinhala<br>*in Tamil<br>GN area code</label>
-
-    <div class="current">
-            <%--<s:textfield value="%{#session.birthregister.child.gnDivision}" disabled="true"/>--%>
-    </div>
-    <div class="new">
-        <s:select name="" list="gnDivisionList" headerKey="0" headerValue="%{getText('select_gn_division.label')}"/>
     </div>
 </div>
 <div id="bcf-father-pin" class="font-9">

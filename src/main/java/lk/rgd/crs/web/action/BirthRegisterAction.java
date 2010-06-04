@@ -41,7 +41,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> bdDivisionList;
-    private Map<Integer, String> gnDivisionList;
 
     private String scopeKey;
     private Map session;
