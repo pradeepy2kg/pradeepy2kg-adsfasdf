@@ -93,16 +93,6 @@
                 <label>ස්ථානය பிறந்த இடம் Place</label>
                 <s:textfield name="child.placeOfBirth"/>
             </div>
-            <%--<div id="child-pob-hospitalcode">--%>
-                <%--<label>*in Sinhala<br>* in Tamil<br>Hospital Code</label>--%>
-                <%--<s:textfield name="child.hospitalCode"/>--%>
-            <%--</div>--%>
-            <div id="child-pob-gncode">
-                <label> *in Sinhala <br>*in Tamil<br>GN Division</label>
-                    <%--TODO name field should be filled        gnDivision--%>
-                <s:select name="" list="gnDivisionList" headerKey="0"
-                          headerValue="%{getText('select_gn_division.label')}"/>
-            </div>
         </div>
         <div id="child-name" class="font-9">
             <label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>Name in

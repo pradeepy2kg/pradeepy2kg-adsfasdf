@@ -68,7 +68,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int fatherCountry;
     private int motherCountry;
     private int dsDivision;
-    private int gnDivision;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
 
@@ -442,16 +441,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setDsDivision(int dsDivision) {
         this.dsDivision = dsDivision;
         logger.debug("DS Division: {}", dsDivision);
-        // TODO
-    }
-
-    public int getGnDivision() {
-        return gnDivision;
-    }
-
-    public void setGnDivision(int gnDivision) {
-        this.gnDivision = gnDivision;
-        logger.debug("GN Division: {}", gnDivision);
         // TODO
     }
 
