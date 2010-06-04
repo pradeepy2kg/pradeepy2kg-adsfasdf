@@ -213,7 +213,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         break;
                 }
             }
-            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+            session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
 
             populate();
             return "form" + pageNo;
