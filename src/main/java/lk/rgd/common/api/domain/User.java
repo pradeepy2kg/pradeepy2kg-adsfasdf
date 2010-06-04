@@ -16,10 +16,10 @@ import java.util.Set;
 public class User {
 
     @Id
-    @Column(updatable = false)
+    @Column(updatable = false, length = 15)
     private String userId;
     /** The simple name of the user */
-    @Column(nullable = false, length = 30, updatable = false)
+    @Column(nullable = false, length = 60)
     private String userName;
     /** This is the PIN of the actual user in the PRS */
     @Column(nullable = false, length = 10)
