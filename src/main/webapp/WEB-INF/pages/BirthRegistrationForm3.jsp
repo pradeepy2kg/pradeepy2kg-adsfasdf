@@ -41,14 +41,18 @@
                 <label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label>
 
                 <div>
-                    <s:select list="{'2009','2010','2011'}" name="" id="marriageYear"
-                              onchange="javascript:setDate('marriageYear','2')"/>
-                    <s:select list="{'01','02','03'}" name="" id="marriageMonth"
-                              onchange="javascript:setDate('marriageMonth','2')"/>
-                    <s:select list="{'01','02','03'}" name="" id="marriageDay"
-                              onchange="javascript:setDate('marriageDay','2')"/>
-                    <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage" displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>
+                   <s:select list="{'2009','2010','2011'}" name="" id="year"
+                      onchange="javascript:setDate('year','1')"/>
+            <s:select list="{'01','02','03','06'}" name="" id="month"
+                      onchange="javascript:setDate('month','1')"/>
+            <s:select list="{'01','02','03'}" name="" id="day"
+                      onchange="javascript:setDate('day','1')"/> <%--
+                    <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
+                                       displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>  --%>            
+            <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
+                               displayFormat="yyyy-MM-dd"
+                               onmouseover="javascript:splitDate('marriageDatePickerr')"/>
                 </div>
             </div>
         </div>

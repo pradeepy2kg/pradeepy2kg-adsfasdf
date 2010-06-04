@@ -24,12 +24,12 @@
             </div>
             <div id="submit-date">
                 <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span>
-                    <s:select list="{'2009','2010','2011'}" name="" id="submitYear"
-                              onchange="javascript:setDate('submitYear','2')"/>
-                    <s:select list="{'01','02','03'}" name="" id="submitMonth"
-                              onchange="javascript:setDate('submitMonth','2')"/>
-                    <s:select list="{'01','02','03'}" name="" id="submitDay"
-                              onchange="javascript:setDate('submitDay','2')"/>
+                     <s:select list="{'2009','2010','2011'}" name="" id="year"
+                               onchange="javascript:setDate('year','1')"/>
+                   <s:select list="{'01','02','03'}" name="" id="month"
+                             onchange="javascript:setDate('month','1')"/>
+                     <s:select list="{'01','02','03'}" name="" id="month"
+                               onchange="javascript:setDate('month','1')"/>
                     <sx:datetimepicker id="submitDatePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('submitDatePicker')"/>
                 </label>
@@ -55,17 +55,21 @@
 
             <div id="child-dob-year">
                 <label>*in sinhala<br>*in tamil<br>Year</label>
-                <s:select list="{'2009','2010','2011'}" name="" id="year" onchange="javascript:setDate('year','1')"/>
+                <s:select list="{'2009','2010','2011'}" name="" id="year"
+                          onchange="javascript:setDate('year','1')"/>
             </div>
             <div id="child-dob-month">
                 <label>*in sinhala<br>*in tamil<br>Month</label>
-                <s:select list="{'01','02','03'}" name="" id="month" onchange="javascript:setDate('month','1')"/>
+                <s:select list="{'01','02','03'}" name="" id="month"
+                          onchange="javascript:setDate('month','1')"/>
             </div>
             <div id="child-dob-day">
                 <label>*in sinhala<br>*in tamil<br>Day</label>
-                <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
+                <s:select list="{'01','02','03'}" name="" id="day"
+                          onchange="javascript:setDate('day','1')"/>
                 <div id="datePicker">
-                    <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
+                    <sx:datetimepicker id="datePicker" name="child.dateOfBirth"
+                                       displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('datePicker')"/>
                 </div>
             </div>

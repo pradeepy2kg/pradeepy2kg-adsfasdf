@@ -15,17 +15,18 @@
 </div>
 <div id="father-nic" class="font-9">
     <label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</label>
+        இலக்கம்<br>PIN / NIC Number</label>
     <s:textfield name="parent.fatherNICorPIN"/>
 </div>
 <div id="foreign-father" class="font-9">
     <label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
+
     <div id="father-country" class="font-9">
         <div class="form-label">
             <label>රට<br>நாடு <br>Country</label>
         </div>
         <div>
-            <s:select name="fatherCountry" list="countryList" headerKey="0"
+            <s:select list="countryList" name="fatherCountry" headerKey="0"
                       headerValue="%{getText('select_country.label')}"/>
         </div>
     </div>
@@ -50,9 +51,9 @@
     </div>
     <div>
         <s:select list="{'2009','2010','2011'}" name="" id="fatherYear"
-                  onchange="javascript:setDate('fatherYear','2')"/>
+                  onchange="javascript:setDate('year','2')"/>
         <s:select list="{'01','02','03'}" name="" id="fatherMonth"
-                  onchange="javascript:setDate('fatherMonth','2')"/>
+                  onchange="javascript:setDate('month','2')"/>
         <s:select list="{'01','02','03'}" name="" id="fatherDay"
                   onchange="javascript:setDate('fatherDay','2')"/>
         <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
@@ -72,8 +73,8 @@
         <label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label>
     </div>
     <div>
-        <%--TODO name should be filled--%>
-        <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
+            <%--TODO name should be filled--%>
+        <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
 <br>
@@ -124,11 +125,11 @@
     </div>
     <div>
         <s:select list="{'2009','2010','2011'}" name="" id="motherYear"
-                  onchange="javascript:setDate('motherYear','2')"/>
+                  onchange="javascript:setDate('year','3')"/>
         <s:select list="{'01','02','03'}" name="" id="motherMonth"
-                  onchange="javascript:setDate('motherMonth','2')"/>
+                  onchange="javascript:setDate('month','3')"/>
         <s:select list="{'01','02','03'}" name="" id="motherDay"
-                  onchange="javascript:setDate('motherDay','2')"/>
+                  onchange="javascript:setDate('day','3')"/>
         <sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                            onmouseover="javascript:splitDate('motherDatePicker')"/>
 
@@ -147,7 +148,7 @@
         <label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label>
     </div>
     <div>
-        <%--TODO name should be filled--%>
+            <%--TODO name should be filled--%>
         <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
