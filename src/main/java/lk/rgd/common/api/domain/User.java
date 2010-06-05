@@ -1,9 +1,10 @@
 package lk.rgd.common.api.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.*;
 import java.util.BitSet;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Set;
 @Entity
 @Table(name = "USERS", schema = "COMMON")
 public class User {
+
+    private static final Logger logger = LoggerFactory.getLogger(User.class);
 
     @Id
     @Column(updatable = false, length = 30)
@@ -31,25 +34,29 @@ public class User {
     @Column(length = 2, nullable = false)
     private String prefLanguage;
 
-    /** The preferred district */
-    @Column(nullable = true)
-    private Integer prefDistrict;
-    /** The preferred Birth & Death registration division */
-    @Column(nullable = true)
-    private Integer prefBDDivision;
-    /** The preferred Marriage registration division */
-    @Column(nullable = true)
-    private Integer prefMRDivision;
+    /** The preferred District - when multi-district authorization is available */
+    @OneToOne
+    @JoinColumn(name = "prefDistrictUKey")
+    private District prefDistrict;
+    /** The preferred DS division - when multi-DS-Division authorization is available */
+    @OneToOne
+    @JoinColumn(name = "prefDSDivisionUKey")
+    private DSDivision prefDSDivision;
 
-    /** The assigned district - if not null, the user can only work within this district */
-    @Column(nullable = true)
-    private Integer assignedDistrict;
-    /** The assigned Birth & Death registration division - if not null, the user can only work within this division */
-    @Column(nullable = true)
-    private Integer assignedBDDivision;
-    /** The assigned Marriage registration division - if not null, the user can only work within this division */
-    @Column(nullable = true)
-    private Integer assignedMRDivision;
+    /** The assigned districts */
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(schema = "COMMON", name = "USER_DISTRICTS",
+        joinColumns = @JoinColumn(name="userId"),
+        inverseJoinColumns = @JoinColumn(name="districtUKey"))
+    private Set<District> assignedDistricts;
+
+    /** The assigned DS Divisions */
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(schema = "COMMON", name = "USER_DSDIVISIONS",
+        joinColumns = @JoinColumn(name="userId"),
+        inverseJoinColumns = @JoinColumn(name="dsDivisionUKey"))
+    private Set<DSDivision> assignedDSDivisions;
+
     /** Is the user account active - 0 : active, 1 - inactive, 2 - locked out */
     @Column(nullable = false, name="STATUS", columnDefinition="smallint not null default 1")
     private int status;
@@ -119,54 +126,6 @@ public class User {
         this.prefLanguage = prefLanguage;
     }
 
-    public int getPrefDistrict() {
-        return prefDistrict;
-    }
-
-    public void setPrefDistrict(int prefDistrict) {
-        this.prefDistrict = prefDistrict;
-    }
-
-    public int getPrefBDDivision() {
-        return prefBDDivision;
-    }
-
-    public void setPrefBDDivision(int prefBDDivision) {
-        this.prefBDDivision = prefBDDivision;
-    }
-
-    public int getPrefMRDivision() {
-        return prefMRDivision;
-    }
-
-    public void setPrefMRDivision(int prefMRDivision) {
-        this.prefMRDivision = prefMRDivision;
-    }
-
-    public int getAssignedDistrict() {
-        return assignedDistrict;
-    }
-
-    public void setAssignedDistrict(int assignedDistrict) {
-        this.assignedDistrict = assignedDistrict;
-    }
-
-    public int getAssignedBDDivision() {
-        return assignedBDDivision;
-    }
-
-    public void setAssignedBDDivision(int assignedBDDivision) {
-        this.assignedBDDivision = assignedBDDivision;
-    }
-
-    public int getAssignedMRDivision() {
-        return assignedMRDivision;
-    }
-
-    public void setAssignedMRDivision(int assignedMRDivision) {
-        this.assignedMRDivision = assignedMRDivision;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -187,6 +146,38 @@ public class User {
         this.permissions = permissions;
     }
 
+    public District getPrefDistrict() {
+        return prefDistrict;
+    }
+
+    public void setPrefDistrict(District prefDistrict) {
+        this.prefDistrict = prefDistrict;
+    }
+
+    public DSDivision getPrefDSDivision() {
+        return prefDSDivision;
+    }
+
+    public void setPrefDSDivision(DSDivision prefDSDivision) {
+        this.prefDSDivision = prefDSDivision;
+    }
+
+    public Set<District> getAssignedDistricts() {
+        return assignedDistricts;
+    }
+
+    public void setAssignedDistricts(Set<District> assignedDistricts) {
+        this.assignedDistricts = assignedDistricts;
+    }
+
+    public Set<DSDivision> getAssignedDSDivisions() {
+        return assignedDSDivisions;
+    }
+
+    public void setAssignedDSDivisions(Set<DSDivision> assignedDSDivisions) {
+        this.assignedDSDivisions = assignedDSDivisions;
+    }
+
     public boolean isAuthorized(int permission) {
         if (permissions == null) {
             permissions = new BitSet();
@@ -200,18 +191,63 @@ public class User {
     }
 
     public int getInitialDistrict() {
-        if (assignedDistrict == null) {
-            return prefDistrict == null ? 1 : prefDistrict;
-        } else {
-            return assignedDistrict;
+        if (prefDistrict != null) {
+            return prefDistrict.getDistrictId();
+        } else if (assignedDistricts != null) {
+            District d = assignedDistricts.iterator().next();
+            if (d != null) {
+                return d.getDistrictId();
+            }
         }
+        logger.error("User {} : does not have access to any District!", userId);
+        return -1;
     }
 
     public int getInitialBDDivision() {
-        if (assignedBDDivision == null) {
-            return prefBDDivision == null ? 1 : prefBDDivision;
-        } else {
-            return assignedBDDivision;
+        if (prefDSDivision != null) {
+            return prefDSDivision.getDivisionId();
+        } else if (assignedDSDivisions != null) {
+            DSDivision d = assignedDSDivisions.iterator().next();
+            if (d != null) {
+                return d.getDivisionId();
+            }
         }
+        logger.error("User {} : does not have access to any DS Division!", userId);
+        return -1;
+    }
+
+    public boolean isPlayingRole(String role) {
+        for (Role r : roles) {
+            if (role.equals(r.getRoleId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAllowedAccessToDistrict(int id) {
+        if (assignedDistricts == null) {
+            return false;
+        }
+
+        for (District d : assignedDistricts) {
+            if (d.getDistrictId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAllowedAccessToDSDivision(int id) {
+        if (assignedDSDivisions == null) {
+            return false;
+        }
+
+        for (DSDivision d : assignedDSDivisions) {
+            if (d.getDivisionId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

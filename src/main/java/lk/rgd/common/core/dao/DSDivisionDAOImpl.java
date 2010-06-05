@@ -3,6 +3,8 @@ package lk.rgd.common.core.dao;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,16 +28,34 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getDSDivisionNames(int districtId, String language) {
+    public Map<Integer, String> getDSDivisionNames(int districtId, String language, User user) {
+
+        Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
-            return getDSDivisionNamesImpl(siNames, districtId);
+            result = getDSDivisionNamesImpl(siNames, districtId);
         } else if (AppConstants.ENGLISH.equals(language)) {
-            return getDSDivisionNamesImpl(enNames, districtId);
+            result = getDSDivisionNamesImpl(enNames, districtId);
         } else if (AppConstants.TAMIL.equals(language)) {
-            return getDSDivisionNamesImpl(taNames, districtId);
+            result = getDSDivisionNamesImpl(taNames, districtId);
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
-            return null;
+        }
+        
+        if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
+            // Admin, RG and has full access
+            return result;
+        } else if ((user.isPlayingRole(Role.ROLE_ARG) || user.isPlayingRole(Role.ROLE_DR)) && user.isAllowedAccessToDistrict(districtId)) {
+            // the ARG, or DR who has been assigned to this district has full access
+            return result;
+        } else {
+            Map<Integer, String> filteredResult = new HashMap<Integer, String>();
+
+            for (Map.Entry<Integer, String> e : result.entrySet()) {
+                if (user.isAllowedAccessToDSDivision(e.getKey())) {
+                    filteredResult.put(e.getKey(), e.getValue());
+                }
+            }
+            return filteredResult;
         }
     }
 

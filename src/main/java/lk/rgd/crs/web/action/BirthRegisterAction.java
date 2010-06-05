@@ -260,7 +260,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getDistricts(language, user);
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, user);
         bdDivisionList = bdDivisionDAO.getDivisions(language, selectedDistrictId, user);
         raceList = raceDAO.getRaces(language);
 
@@ -434,14 +434,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public DSDivisionDAO getDsDivisionDAO() {
         return dsDivisionDAO;
-    }
-
-    public Map<Integer, String> getGnDivisionList() {
-        return gnDivisionList;
-    }
-
-    public void setGnDivisionList(Map<Integer, String> gnDivisionList) {
-        this.gnDivisionList = gnDivisionList;
     }
 
     public int getDsDivisionId() {
