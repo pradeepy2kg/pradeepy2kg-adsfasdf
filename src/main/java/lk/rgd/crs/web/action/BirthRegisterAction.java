@@ -251,20 +251,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
 
-        int selectedDistrictId = user.getInitialDistrict();
-        int selectedBDDivisionId = user.getInitialBDDivision();
-        int selectedDSDivisionId = bdDivisionDAO.getBDDivision(selectedDistrictId, selectedBDDivisionId).
-            getDsDivision().getDivisionId();
-
         logger.debug("inside populate : {} observed.", language);
 
         countryList = countryDAO.getCountries(language);
-        districtList = districtDAO.getDistricts(language, user);
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, user);
-        bdDivisionList = bdDivisionDAO.getDivisions(language, selectedDistrictId, user);
-        raceList = raceDAO.getRaces(language);
-
-        logger.debug("inside populte : districts , dsdivisions, countries and races populated.");
+        districtList = districtDAO.getDistrictNames(language, user);
+        if (!districtList.isEmpty()) {
+            int selectedDistrictId = districtList.keySet().iterator().next();
+            dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, user);
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(selectedDistrictId, language, user);
+            raceList = raceDAO.getRaces(language);
+            logger.debug("inside populate : districts , dsdivisions, countries and races populated.");
+        }
     }
 
     public int getPageNo() {

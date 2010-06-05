@@ -46,7 +46,7 @@
         <s:hidden name="pageNo" value="1"/>
         <div class="button"><s:submit type="submit" value="%{getText('next.label')}"/></div>
     </div>
-</s:form>
+<%--</s:form> --%>
 <s:form id="print">
     <div class="button_print">
         <s:submit type="button" value="%{getText('print.label')}" onclick="print()"/></div>
@@ -474,5 +474,5 @@
 </div>
 <s:hidden name="pageNo" value="1"/>
 <s:submit value="%{getText('next.label')}"/>
-</s:form>
+<%-- </s:form> --%>
 </div>

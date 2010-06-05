@@ -125,8 +125,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
         int selectedDistrict = user.getInitialDistrict();
-        districtList = districtDAO.getDistricts(language, user);
-        divisionList = bdDivisionDAO.getDivisions(language, selectedDistrict, user);
+        districtList = districtDAO.getDistrictNames(language, user);
+        divisionList = bdDivisionDAO.getBDDivisionNames(selectedDistrict, language, user);
 
         logger.debug("inside populate : districts , countries and races populated.");
     }

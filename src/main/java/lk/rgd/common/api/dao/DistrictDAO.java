@@ -16,7 +16,7 @@ public interface DistrictDAO {
      * @param language the language ID (see AppConstants)
      * @return a Map of known districts for the given language along with the ID
      */
-    public Map<Integer, String> getDistricts(String language, User user);
+    public Map<Integer, String> getDistrictNames(String language, User user);
 
     /**
      * Return District by id
