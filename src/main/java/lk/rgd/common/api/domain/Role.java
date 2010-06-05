@@ -12,6 +12,18 @@ import java.util.Set;
 @Entity
 @Table(name = "ROLES", schema = "COMMON")
 public class Role {
+    /** The System Administrator */
+    public static final String ROLE_ADMIN = "ADMIN";
+    /** The Registrar General */
+    public static final String ROLE_RG = "RG";
+    /** The Provincial Registrars */
+    public static final String ROLE_ARG = "ARG";
+    /** The District Registrars */
+    public static final String ROLE_DR  = "DR";
+    /** The Additional Divisional Registrars */
+    public static final String ROLE_ADR = "ADR";
+    /** The Data Entry Operators */
+    public static final String ROLE_DEO = "DEO";
 
     @Id
     @Column(updatable = false)
@@ -20,7 +32,7 @@ public class Role {
     @Column(nullable = false, name="STATUS", columnDefinition="smallint not null default 1")
     private int status;
     /** Role name */
-    @Column(nullable = false, length = 30, unique = true)
+    @Column(nullable = false, length = 60, unique = true)
     private String name;
 
     @Transient

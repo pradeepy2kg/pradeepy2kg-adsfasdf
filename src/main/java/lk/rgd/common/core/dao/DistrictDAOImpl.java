@@ -3,6 +3,7 @@ package lk.rgd.common.core.dao;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,6 +13,7 @@ import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author asankha
@@ -27,16 +29,31 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
      * @inheritDoc
      */
     public Map<Integer, String> getDistricts(String language, User user) {
+
+        Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
-            return siDistricts;
+            result = siDistricts;
         } else if (AppConstants.ENGLISH.equals(language)) {
-            return enDistricts;
+            result = enDistricts;
         } else if (AppConstants.TAMIL.equals(language)) {
-            return taDistricts;
+            result = taDistricts;
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
-        return null;
+
+        if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
+            // admins and RG has full access
+            return result;
+        } else {
+            Map<Integer, String> filteredResult = new HashMap<Integer, String>();
+
+            for (Map.Entry<Integer, String> e : result.entrySet()) {
+                if (user.isAllowedAccessToDistrict(e.getKey())) {
+                    filteredResult.put(e.getKey(), e.getValue());
+                }
+            }
+            return filteredResult;
+        }
     }
 
     public District getDistrict(int id) {

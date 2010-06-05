@@ -22,10 +22,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Tests various low level DAOs
@@ -81,40 +79,62 @@ public class DAOImplTest extends TestCase {
         Assert.assertEquals(bean.getStringParameter("test_string"), "hello");
     }
 
-    public void testDistricts() throws Exception {
-        DistrictDAO bean = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
-        // TODO User should be added
-        Map<Integer, String> districts = bean.getDistricts(AppConstants.SINHALA, null);
-        Assert.assertEquals(25, districts.size());
+    public void testDistrictsAndBDDivisionListsReturnedForUsers() throws Exception {
+        DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
+        DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
+        BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+        UserDAO userDAO = (UserDAO) ctx.getBean("userDAOImpl", UserDAO.class);
+
+        // RG must see all districts and all BDDivisions for a selected district
+        User rg = userDAO.getUser("rg");
+        Map<Integer, String> districts = districtDAO.getDistricts(AppConstants.SINHALA, rg);
+        Assert.assertTrue(districts.size() == 25);
+        Map<Integer, String> dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, rg);
+        Assert.assertTrue(dsDivisions.size() > 1);
+        Map<Integer, String> bdDivisions = bdDivisionDAO.getDivisions(AppConstants.SINHALA, 11, rg);
+        Assert.assertTrue(bdDivisions.size() > 1);
+
+        // ARG-Western Province sees all 3 districts in province
+        User arg = userDAO.getUser("arg-western");
+        districts = districtDAO.getDistricts(AppConstants.SINHALA, arg);
+        Assert.assertTrue(districts.size() == 3);
+        dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, arg);
+        Assert.assertTrue(dsDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getDivisions(AppConstants.SINHALA, 11, arg);
+        Assert.assertTrue(bdDivisions.size() > 1);
+
+        // DR-colombo must see only colombo, but all BDDivisions within it
+        User dr = userDAO.getUser("dr-colombo");
+        districts = districtDAO.getDistricts(AppConstants.SINHALA, dr);
+        Assert.assertTrue(districts.size() == 1);
+        Assert.assertTrue("11 : කොළඹ".equals(districts.values().iterator().next()));
+        dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, dr);
+        Assert.assertTrue(dsDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getDivisions(AppConstants.SINHALA, 11, dr);
+        Assert.assertTrue(bdDivisions.size() > 1);
+
+        // ADR-colombo must see only colombo, and fort BD division
+        User adr = userDAO.getUser("adr-colombo-colombo");
+        districts = districtDAO.getDistricts(AppConstants.SINHALA, adr);
+        Assert.assertTrue(districts.size() == 1);
+        Assert.assertTrue("11 : කොළඹ".equals(districts.values().iterator().next()));
+        dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, adr);
+        Assert.assertTrue(dsDivisions.size() == 1);
+        bdDivisions = bdDivisionDAO.getDivisions(AppConstants.SINHALA, 11, adr);
+        Assert.assertTrue(bdDivisions.size() > 1);
     }
 
-    /*public void testCountries() throws Exception {
+    public void testCountries() throws Exception {
         CountryDAO bean = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
         Map<Integer, String> countries = bean.getCountries(AppConstants.SINHALA);
-        Assert.assertEquals(3, countries.size());
-        for (String d : countries.values()) {
-            Assert.assertTrue(sinhalaCountries.contains(d));
-        }
+        Assert.assertTrue(countries.size() > 0);
     }
 
     public void testRaces() throws Exception {
         RaceDAO bean = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
         Map<Integer, String> races = bean.getRaces(AppConstants.SINHALA);
-        Assert.assertEquals(3, races.size());
-        for (String r : races.values()) {
-            Assert.assertTrue(sinhalaRaces.contains(r));
-        }
-    }*/
-
-    /*public void testBDDivisions() throws Exception {
-        BDDivisionDAO bean = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
-        // TODO User should be added
-        Map<Integer, String> bdDivisions = bean.getDivisions(AppConstants.SINHALA, 11, null);
-        Assert.assertEquals(3, bdDivisions.size());
-        for (String bd : bdDivisions.values()) {
-            Assert.assertTrue(sinhalaBDDivisions.contains(bd));
-        }
-    }*/
+        Assert.assertTrue(races.size() > 0);
+    }
 
     public void testUsersAndRoles() throws Exception {
         UserManager bean = (UserManager) ctx.getBean("userManagerService", UserManager.class);
@@ -131,21 +151,21 @@ public class DAOImplTest extends TestCase {
         } catch (AuthorizationException e) {
         }
 
-        RoleDAO role = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
+        RoleDAO roleDAO = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
-        user = bean.authenticateUser("rg", "password");
-        Assert.assertTrue(user.getRoles().contains(role.getRole("RG")));
-        Assert.assertTrue(user.getRoles().contains(role.getRole("ADR")));
-        Assert.assertFalse(user.getRoles().contains(role.getRole("DEO")));
-        Assert.assertTrue(user.isAuthorized(Permission.APPROVE_BDF));
-        Assert.assertTrue(user.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
+        User rg = bean.authenticateUser("rg", "password");
+        Assert.assertTrue(rg.getRoles().contains(roleDAO.getRole("RG")));
+        Assert.assertFalse(rg.getRoles().contains(roleDAO.getRole("ADR")));
+        Assert.assertFalse(rg.getRoles().contains(roleDAO.getRole("DEO")));
+        Assert.assertTrue(rg.isAuthorized(Permission.APPROVE_BDF));
+        Assert.assertTrue(rg.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
 
-        user = bean.authenticateUser("asankha", "asankha");
-        Assert.assertFalse(user.getRoles().contains(role.getRole("RG")));
-        Assert.assertTrue(user.getRoles().contains(role.getRole("ADR")));
-        Assert.assertFalse(user.getRoles().contains(role.getRole("DEO")));
-        Assert.assertTrue(user.isAuthorized(Permission.APPROVE_BDF));
-        Assert.assertFalse(user.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
+        User asankha = bean.authenticateUser("asankha", "asankha");
+        Assert.assertFalse(asankha.getRoles().contains(roleDAO.getRole("RG")));
+        Assert.assertTrue(asankha.getRoles().contains(roleDAO.getRole("ADR")));
+        Assert.assertFalse(asankha.getRoles().contains(roleDAO.getRole("DEO")));
+        Assert.assertTrue(asankha.isAuthorized(Permission.APPROVE_BDF));
+        Assert.assertFalse(asankha.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
     }
 
     public void testBirthDeclaration() throws Exception {
