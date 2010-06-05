@@ -17,11 +17,11 @@ public interface BDDivisionDAO {
     /**
      * Returns the list of Birth & Death Registration Divisions within a selected district for the given language
      *
-     * @param language   the language ID (see AppConstants)
      * @param districtId the district ID
+     * @param language   the language ID (see AppConstants)
      * @return a Map of the list of known Birth and Death Registration divisions for the given language - with the ID
      */
-    public Map<Integer, String> getDivisions(String language, int districtId, User user);
+    public Map<Integer, String> getBDDivisionNames(int districtId, String language, User user);
 
     /**
      * Return BDDivision by Id

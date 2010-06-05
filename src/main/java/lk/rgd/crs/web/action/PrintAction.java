@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 
-import lk.rgd.crs.web.util.MasterDataLoad;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.PrintData;
 import lk.rgd.crs.api.domain.BirthDeclaration;
@@ -112,9 +111,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        districtList = districtDAO.getDistricts(language, user);
+        districtList = districtDAO.getDistrictNames(language, user);
         // TODO district id hardcoded for the moment
-        divisionList = bdDivisionDAO.getDivisions(language, 11, user);
+        divisionList = bdDivisionDAO.getBDDivisionNames(11, language, user);
     }
 
     public List<BirthDeclaration> getPrintList() {

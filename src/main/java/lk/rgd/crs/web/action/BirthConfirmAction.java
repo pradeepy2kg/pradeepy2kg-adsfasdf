@@ -201,7 +201,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         logger.debug("inside populate : {} observed.", language);
 
 
-        districtList = districtDAO.getDistricts(language, user);
+        districtList = districtDAO.getDistrictNames(language, user);
         raceList = raceDao.getRaces(language);
 
         //todo temporary solution until use a method to show Map in UI

@@ -28,7 +28,8 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getDivisions(String language, int districtId, User user) {
+    public Map<Integer, String> getBDDivisionNames(int districtId, String language, User user) {
+
         Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
             result = siDivisions.get(districtId);

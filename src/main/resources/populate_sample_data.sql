@@ -3,9 +3,9 @@ INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.late_reg_days',
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '10');
 
 -- Countries
-INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(1, 'ශ්‍රී ලංකාව', 'Sri Lanka', 'ஸ்ரீ லங்கா');
-INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(2, 'ජපානය', 'Japan', 'ஜப்பான்');
-INSERT INTO COMMON.COUNTRIES (COUNTRYID, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(3, 'ඉන්දියාව', 'India', 'இந்திய');
+INSERT INTO COMMON.COUNTRIES (COUNTRYID, COUNTRYCODE, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(1, 'LK', 'ශ්‍රී ලංකාව', 'Sri Lanka', 'ஸ்ரீ லங்கா');
+INSERT INTO COMMON.COUNTRIES (COUNTRYID, COUNTRYCODE, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(2, 'JP', 'ජපානය', 'Japan', 'ஜப்பான்');
+INSERT INTO COMMON.COUNTRIES (COUNTRYID, COUNTRYCODE, SICOUNTRYNAME, ENCOUNTRYNAME, TACOUNTRYNAME) VALUES(3, 'IN', 'ඉන්දියාව', 'India', 'இந்திய');
 
 -- Races
 INSERT INTO COMMON.RACES (RACEID, SIRACENAME, ENRACENAME, TARACENAME) VALUES(1, 'සිංහල', 'Sinhalese', 'சின்ஹலேசே');
@@ -177,6 +177,13 @@ INSERT INTO COMMON.USER_DISTRICTS VALUES('deo-colombo-colombo', 1);
 INSERT INTO COMMON.USER_DISTRICTS VALUES('deo-gampaha-negambo', 2);
 INSERT INTO COMMON.USER_DISTRICTS VALUES('deo-kalutara-panadura', 2);
 
+INSERT INTO COMMON.USER_DISTRICTS VALUES('ashoka', 1);
+INSERT INTO COMMON.USER_DISTRICTS VALUES('asankha', 1);
+INSERT INTO COMMON.USER_DISTRICTS VALUES('duminda', 1);
+INSERT INTO COMMON.USER_DISTRICTS VALUES('indunil', 1);
+INSERT INTO COMMON.USER_DISTRICTS VALUES('amith', 1);
+INSERT INTO COMMON.USER_DISTRICTS VALUES('chathuranga', 1);
+
 -- ADR Colombo/Colombo has access to Colombo district/Colombo DS Division, similarly other ADRs and DEOs..
 INSERT INTO COMMON.USER_DSDIVISIONS VALUES('adr-colombo-colombo', 1);
 INSERT INTO COMMON.USER_DSDIVISIONS VALUES('adr-gampaha-negambo', 14);
@@ -184,6 +191,14 @@ INSERT INTO COMMON.USER_DSDIVISIONS VALUES('adr-kalutara-panadura', 27);
 INSERT INTO COMMON.USER_DSDIVISIONS VALUES('deo-colombo-colombo', 1);
 INSERT INTO COMMON.USER_DSDIVISIONS VALUES('deo-gampaha-negambo', 14);
 INSERT INTO COMMON.USER_DSDIVISIONS VALUES('deo-kalutara-panadura', 27);
+
+INSERT INTO COMMON.USER_DSDIVISIONS VALUES('ashoka', 1);
+INSERT INTO COMMON.USER_DSDIVISIONS VALUES('asankha', 1);
+INSERT INTO COMMON.USER_DSDIVISIONS VALUES('duminda', 1);
+INSERT INTO COMMON.USER_DSDIVISIONS VALUES('indunil', 1);
+INSERT INTO COMMON.USER_DSDIVISIONS VALUES('amith', 1);
+INSERT INTO COMMON.USER_DSDIVISIONS VALUES('chathuranga', 1);
+
 
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (1, 'A1000', 'A1000 Baby name in English', 'A1000 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 1, 1,'Informant name for A1000', 'Informant address for A1000', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');

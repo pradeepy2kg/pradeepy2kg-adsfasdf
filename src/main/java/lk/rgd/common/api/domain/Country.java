@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Represents a Country maintained by the system. A country has a unique ID, and multiple names in
@@ -13,12 +14,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "COUNTRIES", schema = "COMMON")
-public class Country {
+public class Country implements Serializable {
 
     @Id
     @Column(updatable = false)
     private int countryId;
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(nullable = false, length = 2, unique = true, updatable = false)
+    private String countryCode;
+    @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String siCountryName;
     @Column(nullable = false, length = 30, unique = true, updatable = false)
     private String enCountryName;
@@ -75,5 +78,13 @@ public class Country {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 }

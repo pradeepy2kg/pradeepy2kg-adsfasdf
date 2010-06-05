@@ -58,9 +58,9 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
         List<Country> results = query.getResultList();
 
         for (Country c : results) {
-            siCountries.put(c.getCountryId(), c.getSiCountryName());
-            enCountries.put(c.getCountryId(), c.getEnCountryName());
-            taCountries.put(c.getCountryId(), c.getTaCountryName());
+            siCountries.put(c.getCountryId(), c.getCountryCode() + SPACER + c.getSiCountryName());
+            enCountries.put(c.getCountryId(), c.getCountryCode() + SPACER + c.getEnCountryName());
+            taCountries.put(c.getCountryId(), c.getCountryCode() + SPACER + c.getTaCountryName());
             countries.put(c.getCountryId(), c);
         }
 

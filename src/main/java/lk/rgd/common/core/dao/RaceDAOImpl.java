@@ -47,9 +47,9 @@ public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
         List<Race> results = query.getResultList();
 
         for (Race r : results) {
-            siRaces.put(r.getRaceId(), r.getSiRaceName());
-            enRaces.put(r.getRaceId(), r.getEnRaceName());
-            taRraces.put(r.getRaceId(), r.getTaRaceName());
+            siRaces.put(r.getRaceId(),  r.getRaceId() + SPACER + r.getSiRaceName());
+            enRaces.put(r.getRaceId(),  r.getRaceId() + SPACER + r.getEnRaceName());
+            taRraces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getTaRaceName());
         }
 
         logger.debug("Loaded : {} races from the database", results.size());

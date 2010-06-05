@@ -28,7 +28,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getDistricts(String language, User user) {
+    public Map<Integer, String> getDistrictNames(String language, User user) {
 
         Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
