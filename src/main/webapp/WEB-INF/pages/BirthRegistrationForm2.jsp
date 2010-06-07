@@ -165,6 +165,14 @@
         <label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>
     </div>
     <div>
+        <div id="mother-district">
+            <label>*in Sinhala/*in English/District</label>
+            <s:textfield />
+        </div>
+        <div id="mother-ds-division">
+            <label>*in Sinhala/*in English/D.S Division</label>
+            <s:textfield />
+        </div>
         <s:textarea name="parent.motherAddress"/>
     </div>
 </div>

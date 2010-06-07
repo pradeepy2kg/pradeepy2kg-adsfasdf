@@ -99,6 +99,17 @@
                 <label>ස්ථානය பிறந்த இடம் Place</label>
                 <s:textfield name="child.placeOfBirth"/>
             </div>
+            <div id="child-pob-in-hospital">
+                <label>*in Sinhala/*in Tamil/In a Hospital</label>
+                <div>
+                    <label>ඔව් / *in  Tamil  / Yes </label>
+                    <input type="radio" name="y"/>
+                </div>
+                <div>
+                    <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
+                    <input type="radio" name="y" />
+                </div>
+            </div>
         </div>
         <div id="child-name" class="font-9">
             <label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>Name in
