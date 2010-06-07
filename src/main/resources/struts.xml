@@ -65,7 +65,6 @@
             <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="form3">epr.welcome</result>
-            <result type="redirectAction" name="re-direct">eprApproveSelected</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -99,6 +98,11 @@
         <action name="eprApprovalPrevious" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="previousPage">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprDeleteApprovalPending" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="deleteApprovalPending">
+            <result type="tiles" name="success">epr.home</result>
         </action>
 
         <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="filter">

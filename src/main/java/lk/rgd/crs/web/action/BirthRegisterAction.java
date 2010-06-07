@@ -20,6 +20,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
@@ -39,6 +40,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final BirthDeclarationDAO birthDeclarationDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -91,13 +93,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO) {
+    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,BirthDeclarationDAO birthDeclarationDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
+        this.birthDeclarationDAO=birthDeclarationDAO;
         child = new ChildInfo();
         parent = new ParentInfo();
     }
@@ -200,8 +203,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
-                    logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
-                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+                    logger.debug("inside birthConfirmation : bdKey {} observed", bdKey);
+                    bdf=new BirthDeclaration(); // just go to the confirmation 1 page
+                    if (bdKey != 0) {
+                        /**
+                         * request is from Birth registration approval 
+                         */
+                        bdf = birthDeclarationDAO.getById(bdKey);
+                        session.put("birthRegister", bdf);
+                    }
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);

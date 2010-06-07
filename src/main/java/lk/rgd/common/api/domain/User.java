@@ -193,7 +193,7 @@ public class User {
     public int getInitialDistrict() {
         if (prefDistrict != null) {
             return prefDistrict.getDistrictId();
-        } else if (assignedDistricts != null) {
+        } else if (assignedDistricts != null && !assignedDistricts.isEmpty()) {
             District d = assignedDistricts.iterator().next();
             if (d != null) {
                 return d.getDistrictId();
@@ -206,7 +206,7 @@ public class User {
     public int getInitialBDDivision() {
         if (prefDSDivision != null) {
             return prefDSDivision.getDivisionId();
-        } else if (assignedDSDivisions != null) {
+        } else if (assignedDSDivisions != null && !assignedDSDivisions.isEmpty()) {
             DSDivision d = assignedDSDivisions.iterator().next();
             if (d != null) {
                 return d.getDivisionId();
