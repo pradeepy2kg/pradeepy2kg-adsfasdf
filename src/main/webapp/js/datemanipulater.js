@@ -8,54 +8,35 @@
 var year;
 var Selectedmonth;
 var day;
-var selectedDate;
+var selectedDate,secondSelectedDate,thirdSelectedDate;
 var sel;
 function setDate(id, flag) {
     var datePicker = dojo.widget.byId('datePicker');
-    var fatherDatePicker = dojo.widget.byId('fatherDatePicker');
-    var motherDatePicker = dojo.widget.byId('motherdatePicker');
-    if (flag == 1) {
-        if (id == "year") {
-            selectedDate = getDateWhenYearIsGiven("year", "month", "day");
-            datePicker.setValue(selectedDate);
-        }
-        else if (id == "month") {
-            selectedDate = getDateWhenMonthIsGiven("year", "month", "day");
-            datePicker.setValue(selectedDate);
-        }
-        else {
-            selectedDate = getDateWhenDayIsGiven("year", "month", "day");
-            datePicker.setValue(selectedDate);
-        }
+    var secondDatePicker = dojo.widget.byId('secondDatePicker');
+    var thirdDatePicker = dojo.widget.byId('thirdDatePicker');
+
+
+    if (flag == 1)
+    {
+        selectedDate = getDateWhenYearIsGiven("year", "month", "day");
+        datePicker.setValue(selectedDate);
+
+
     }
-    else if (flag == 2) {
-        if (id == "fatherYear") {
-            selectedDate = getDateWhenYearIsGiven("fatherYear", "fatherMonth", "fatherDay");
-            fatherDatePicker.setValue(selectedDate);
-        }
-        else if (id == "fatherMonth") {
-            selectedDate = getDateWhenMonthIsGiven("fatherYear", "fatherMonth", "fatherDay");
-            fatherDatePicker.setValue(selectedDate);
-        }
-        else {
-            selectedDate = getDateWhenDayIsGiven("fatherYear", "fatherMonth", "fatherDay");
-            fatherDatePicker.setValue(selectedDate);
-        }
+    else if (flag == 2)
+    {
+        secondSelectedDate = getDateWhenYearIsGiven("secondYear", "secondMonth", "secondDay");
+        secondDatePicker.setValue(secondSelectedDate);
     }
-    else {
-        if (id == "motherYear") {
-            selectedDate = getDateWhenYearIsGiven("motherYear", "motherMonth", "motherDay");
-            motherDatePicker.setValue(selectedDate);
+    else if (flag == 3)
+        {
+
+            thirdSelectedDate = getDateWhenYearIsGiven("thirdYear", "thirdMonth", "thirdDay");
+            thirdDatePicker.setValue(thirdSelectedDate);
+
         }
-        else if (id == "motherMonth") {
-            selectedDate = getDateWhenMonthIsGiven("motherYear", "motherMonth", "motherDay");
-            motherDatePicker.setValue(selectedDate);
-        }
-        else {
-            selectedDate = getDateWhenDayIsGiven("motherYear", "motherMonth", "motherDay");
-            motherDatePicker.setValue(selectedDate);
-        }
-    }
+
+
 }
 
 function ePopGetValue(val) {
