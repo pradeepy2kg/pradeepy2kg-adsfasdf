@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
 
+    private final Map<Integer, Race> races = new HashMap<Integer, Race>();
     private final Map<Integer, String> siRaces = new HashMap<Integer, String>();
     private final Map<Integer, String> enRaces = new HashMap<Integer, String>();
     private final Map<Integer, String> taRraces = new HashMap<Integer, String>();
@@ -37,6 +38,10 @@ public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
         return null;
     }
 
+    public Race getRace(int id) {
+        return races.get(id);
+    }
+
     /**
      * Loads all values from the database table into a cache
      */
@@ -47,8 +52,9 @@ public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
         List<Race> results = query.getResultList();
 
         for (Race r : results) {
-            siRaces.put(r.getRaceId(),  r.getRaceId() + SPACER + r.getSiRaceName());
-            enRaces.put(r.getRaceId(),  r.getRaceId() + SPACER + r.getEnRaceName());
+            races.put(r.getRaceId(), r);
+            siRaces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getSiRaceName());
+            enRaces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getEnRaceName());
             taRraces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getTaRaceName());
         }
 

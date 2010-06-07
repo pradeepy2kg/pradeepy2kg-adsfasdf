@@ -7,7 +7,7 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
-    default-init-method="init" default-destroy-method="destroy">
+       default-init-method="init" default-destroy-method="destroy">
 
     <!--
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -88,7 +88,7 @@
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
     <bean id="manageBirthService" class="lk.rgd.crs.core.service.BirthRegistrationServiceImpl">
-        <constructor-arg ref="birthDeclarationDAOImpl" />
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">
@@ -97,8 +97,7 @@
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
-        <constructor-arg ref="dsDivisionDAOImpl" />
-        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
     </bean>
     <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
         <constructor-arg ref="raceDAOImpl"/>
@@ -111,9 +110,9 @@
         <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
     <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction">
-        <constructor-arg ref="appParametersDAOImpl" />
+        <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
-        <constructor-arg ref="birthDeclarationDAOImpl" />
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="manageBirthService"/>
     </bean>

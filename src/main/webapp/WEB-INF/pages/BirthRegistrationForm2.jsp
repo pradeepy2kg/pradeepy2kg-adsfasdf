@@ -149,7 +149,7 @@
     </div>
     <div>
             <%--TODO name should be filled--%>
-        <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
+        <s:select list="raceList" name="motherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
 <div id="mother-age" class="font-9">
@@ -168,11 +168,12 @@
     <div>
         <div id="mother-district">
             <label>*in Sinhala/*in English/District</label>
-            <s:textfield/>
+            <s:select name="motherDistrictId" list="districtList"/>
         </div>
         <div id="mother-ds-division">
             <label>*in Sinhala/*in English/D.S Division</label>
-            <s:textfield/>
+            <%--TODO name field should be filled    motherDSDivisionId--%>
+            <s:select name="motherDSDivisionId" list="dsDivisionList"/>
         </div>
         <s:textarea name="parent.motherAddress"/>
     </div>
@@ -183,7 +184,7 @@
     </div>
     <div>
         <s:textfield name="parent.motherAdmissionNo"/>
-    </div>
+    </div>                                
 </div>
 <div id="hospital-admision-date" class="font-9">
     <div class="form-label">
