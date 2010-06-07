@@ -33,7 +33,8 @@
                         <td><s:property value="%{#approvalStatus.count}"/></td>
                         <td><s:checkbox name="index"
                                         onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
-                                        title="%{getText('select.label')}" value="%{#index}" fieldValue="%{#approvalList.idUKey}"/></td>
+                                        title="%{getText('select.label')}" value="%{#index}"
+                                        fieldValue="%{#approvalList.idUKey}"/></td>
                         <td><s:property value="child.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>

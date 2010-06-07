@@ -20,12 +20,19 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final BirthDeclarationDAO birthDeclarationDAO;
 
     public BirthRegistrationServiceImpl(BirthDeclarationDAO dao) {
-        birthDeclarationDAO = dao;    
+        birthDeclarationDAO = dao;
     }
 
     public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         validateAccessOfUser(user, bdf);
         birthDeclarationDAO.addBirthDeclaration(bdf);
+        return Collections.emptyList();
+    }
+
+    public List<UserWarning> approveAllBirthDeclaration(long[] approvalDataList, boolean ignoreWarnings, User user) {
+        //todo has to be implemented
+        /*validateAccessOfUser(user, bdf);
+        birthDeclarationDAO.addBirthDeclaration(bdf);*/
         return Collections.emptyList();
     }
 
@@ -64,7 +71,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     /**
      * Returns the Birth Declaration object for a given Id
-     * @param  bdId Birth Declarion Id for the given declaration
+     *
+     * @param bdId Birth Declarion Id for the given declaration
      * @Return BirthDeclaration
      */
     public BirthDeclaration getById(long bdId) {
@@ -73,7 +81,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     /**
      * Returns the Birth Declaration object for a given bdf serialNo
-     * @param  serialNo bdfSerialNo given to the Birth Declarion
+     *
+     * @param serialNo bdfSerialNo given to the Birth Declarion
      * @Return BirthDeclaration
      */
     public BirthDeclaration getBySerialNo(String serialNo) {
