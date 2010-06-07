@@ -71,20 +71,25 @@ public class DatabaseInitializer implements ApplicationContextAware {
         } catch (Exception ignore) {
         }
 
-        String fileName = generateSchemaFromHibernate(Dialect.DERBY);
-        SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-            new FileSystemResource(fileName), false);
-        logger.info("Created tables using generated script : " + fileName);
+        try {
+            String fileName = generateSchemaFromHibernate(Dialect.DERBY);
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new FileSystemResource(fileName), false);
+            logger.info("Created tables using generated script : " + fileName);
 
-        // populate with initial data
-        //SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-        //    new ClassPathResource("populate_database.sql"), false);
-        //logger.info("Populated the tables with initial data from : populate_database.sql");
 
-        // populate with sample data
-        SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-            new ClassPathResource("populate_sample_data.sql"), false);
-        logger.info("Populated the tables with sample data from : populate_sample_data.sql");
+            // populate with initial data
+            //SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+            //    new ClassPathResource("populate_database.sql"), false);
+            //logger.info("Populated the tables with initial data from : populate_database.sql");
+
+            // populate with sample data
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new ClassPathResource("populate_sample_data.sql"), false);
+            logger.info("Populated the tables with sample data from : populate_sample_data.sql");
+        } catch (Exception ignore) {
+            logger.info("Skipped creation and population of the database as it exists..");
+        }
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
         for (PreloadableDAO dao : preloadableDaos.values()) {
@@ -97,30 +102,32 @@ public class DatabaseInitializer implements ApplicationContextAware {
     }
 
     private void additionalInitialization(ApplicationContext ctx) {
-        // ---------------- populate permissions ---------------------
-        RoleDAO roleDao = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
+        try {
+            // ---------------- populate permissions ---------------------
+            RoleDAO roleDao = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
-        Role adrRole = roleDao.getRole("ADR");
-        BitSet bs = new BitSet();
-        bs.set(Permission.APPROVE_BDF);
-        adrRole.setPermBitSet(bs);
-        roleDao.save(adrRole);
+            Role adrRole = roleDao.getRole("ADR");
+            BitSet bs = new BitSet();
+            bs.set(Permission.APPROVE_BDF);
+            adrRole.setPermBitSet(bs);
+            roleDao.save(adrRole);
 
-        Role drRole = roleDao.getRole("DR");
-        bs = new BitSet();
-        bs.or(adrRole.getPermBitSet());
-        bs.set(Permission.DISTRICT_WIDE_ACCESS);
-        drRole.setPermBitSet(bs);
-        roleDao.save(drRole);
+            Role drRole = roleDao.getRole("DR");
+            bs = new BitSet();
+            bs.or(adrRole.getPermBitSet());
+            bs.set(Permission.DISTRICT_WIDE_ACCESS);
+            drRole.setPermBitSet(bs);
+            roleDao.save(drRole);
 
-        Role rgRole = roleDao.getRole("RG");
-        bs = new BitSet();
-        bs.or(drRole.getPermBitSet());
-        bs.set(Permission.DISTRICT_WIDE_ACCESS);
-        rgRole.setPermBitSet(bs);
-        roleDao.save(rgRole);
+            Role rgRole = roleDao.getRole("RG");
+            bs = new BitSet();
+            bs.or(drRole.getPermBitSet());
+            bs.set(Permission.DISTRICT_WIDE_ACCESS);
+            rgRole.setPermBitSet(bs);
+            roleDao.save(rgRole);
 
-        logger.info("Initialized the test database by creating the schema and executing populate_database.sql");
+            logger.info("Initialized the test database by creating the schema and executing populate_database.sql");
+        } catch (Exception ignore) {}
     }
 
     // for testing
