@@ -34,15 +34,19 @@
         </div>
         <div id="notified-date" class="font-9">
             <label>දිනය <br>*in tamil <br>Date</label>
-            <s:select list="{'2009','2010','2011'}" name="" id="notifyYear"
-                      onchange="javascript:setDate('notifyYear','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="notifyMonth"
-                      onchange="javascript:setDate('notifyMonth','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="notifyDay"
-                      onchange="javascript:setDate('notifyDay','2')"/>
-            <sx:datetimepicker id="fatherDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+
+
+            <s:select list="{'2009','2010','2011'}" name="" id="year"
+                      onchange="javascript:setDate('year','1')"/>
+            <s:select list="{'01','02','03','06'}" name="" id="month"
+                      onchange="javascript:setDate('month','1')"/>
+            <s:select list="{'01','02','03'}" name="" id="day"
+                      onchange="javascript:setDate('day','1')"/>
+            <sx:datetimepicker id="datePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
                                displayFormat="yyyy-MM-dd"
-                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
+                               onmouseover="javascript:splitDate('datePicker')"/>
+
+
         </div>
         <s:hidden name="pageNo" value="4"/>
         <s:submit value="SUBMIT"/>
