@@ -26,7 +26,8 @@
             <label>රට<br>நாடு <br>Country</label>
         </div>
         <div>
-            <s:select name="fatherCountry" list="countryList" headerKey="0" headerValue="%{getText('select_country.label')}"/>
+            <s:select name="fatherCountry" list="countryList" headerKey="0"
+                      headerValue="%{getText('select_country.label')}"/>
         </div>
     </div>
     <div id="father-passport-no" class="font-9">
@@ -49,14 +50,14 @@
         <label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label>
     </div>
     <div>
-        <s:select list="{'2009','2010','2011'}" name="" id="fatherYear"
-                  onchange="javascript:setDate('year','2')"/>
-        <s:select list="{'01','02','03'}" name="" id="fatherMonth"
-                  onchange="javascript:setDate('month','2')"/>
-        <s:select list="{'01','02','03'}" name="" id="fatherDay"
-                  onchange="javascript:setDate('fatherDay','2')"/>
-        <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
-                           displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
+        <s:select list="{'2009','2010','2011'}" name="" id="year"
+                  onchange="javascript:setDate('year','1')"/>
+        <s:select list="{'01','02','03'}" name="" id="month"
+                  onchange="javascript:setDate('month','1')"/>
+        <s:select list="{'01','02','03'}" name="" id="day"
+                  onchange="javascript:setDate('fatherDay','1')"/>
+        <sx:datetimepicker id="datePicker" name="parent.fatherDOB"
+                           displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('datePicker')"/>
     </div>
 </div>
 <div id="father-pob" class="font-9">
@@ -123,14 +124,14 @@
         <label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label>
     </div>
     <div>
-        <s:select list="{'2009','2010','2011'}" name="" id="motherYear"
-                  onchange="javascript:setDate('year','3')"/>
-        <s:select list="{'01','02','03'}" name="" id="motherMonth"
-                  onchange="javascript:setDate('month','3')"/>
-        <s:select list="{'01','02','03'}" name="" id="motherDay"
-                  onchange="javascript:setDate('day','3')"/>
-        <sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
-                           onmouseover="javascript:splitDate('motherDatePicker')"/>
+        <s:select list="{'2009','2010','2011'}" name="" id="secondYear"
+                  onchange="javascript:setDate('year','2')"/>
+        <s:select list="{'01','02','03'}" name="" id="secondMonth"
+                  onchange="javascript:setDate('month','2')"/>
+        <s:select list="{'01','02','03'}" name="" id="secondDay"
+                  onchange="javascript:setDate('day','2')"/>
+        <sx:datetimepicker id="secondDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
+                           onmouseover="javascript:splitDate('secondDatePicker')"/>
 
     </div>
 </div>
@@ -147,7 +148,7 @@
         <label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label>
     </div>
     <div>
-        <%--TODO name should be filled--%>
+            <%--TODO name should be filled--%>
         <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
@@ -167,11 +168,11 @@
     <div>
         <div id="mother-district">
             <label>*in Sinhala/*in English/District</label>
-            <s:textfield />
+            <s:textfield/>
         </div>
         <div id="mother-ds-division">
             <label>*in Sinhala/*in English/D.S Division</label>
-            <s:textfield />
+            <s:textfield/>
         </div>
         <s:textarea name="parent.motherAddress"/>
     </div>
@@ -189,14 +190,14 @@
         <label>(23)රෝහලට ඇතුලත් කිරිමේ දිනය<br>*in tamil<br>Hospital Admission Date</label>
     </div>
     <div>
-        <s:select list="{'2009','2010','2011'}" name="" id="admitYear"
-                  onchange="javascript:setDate('admitYear','2')"/>
-        <s:select list="{'01','02','03'}" name="" id="admitMonth"
-                  onchange="javascript:setDate('admitMonth','2')"/>
-        <s:select list="{'01','02','03'}" name="" id="admitDay"
-                  onchange="javascript:setDate('admitDay','2')"/>
-        <sx:datetimepicker id="admitDatePicker" name="parent.motherAdmissionDate"
-                           displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('admitDatePicker')"/>
+        <s:select list="{'2009','2010','2011'}" name="" id="thirdYear"
+                  onchange="javascript:setDate('admitYear','3')"/>
+        <s:select list="{'01','02','03'}" name="" id="thirdMonth"
+                  onchange="javascript:setDate('admitMonth','3')"/>
+        <s:select list="{'01','02','03'}" name="" id="thirdDay"
+                  onchange="javascript:setDate('admitDay','3')"/>
+        <sx:datetimepicker id="thirdDatePicker" name="parent.motherAdmissionDate"
+                           displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('thirdDatePicker')"/>
     </div>
 </div>
 <div id="mother-contact-details" class="font-9">
