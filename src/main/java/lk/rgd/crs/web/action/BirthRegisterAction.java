@@ -59,7 +59,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
 
-    private int bdId;   // If present, it should used to fetch a new BD instead of creating a new one (we are in edit mode)
+    private int bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     // TODO country,district,division not populating
@@ -95,6 +95,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.raceDAO = raceDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
+        child = new ChildInfo();
+        parent = new ParentInfo();
     }
 
     /**
@@ -354,7 +356,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.notifyingAuthority = notifyingAuthority;
     }
 
-    //    TODO district and division retrieval should be done
     public int getBirthDistrictId() {
         return birthDistrictId;
     }
@@ -371,7 +372,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.birthDivisionId = birthDivisionId;
         logger.debug("BirthDivision : {}, district {}", birthDivisionId, birthDistrictId);
         child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrictId, birthDivisionId));
-        logger.debug("BirthDivision object : {}", child.getBirthDivision());
+        logger.debug("BirthDivision object : {}", child.getBirthDivision().getEnDivisionName());
     }
 
     public int getFatherCountry() {
@@ -440,8 +441,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
-        logger.debug("DS Division: {}", dsDivisionId);
-        //child.setBirthDivision(bdDivisionDAO.get);
     }
 
     public ConfirmantInfo getConfirmant() {
