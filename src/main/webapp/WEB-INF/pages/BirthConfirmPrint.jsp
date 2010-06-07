@@ -75,7 +75,7 @@
                             <s:label value="<<Previous"/></s:a></s:if>
                     </td>
                     <td width="10">
-                        <s:if test="#session.printCount >10"><s:a href="%{nextUrl}">
+                        <s:if test="#session.printCount >= 10"><s:a href="%{nextUrl}">
                             <s:label value="Next>>"/></s:a></s:if>
                     </td>
                 </tr>

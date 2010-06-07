@@ -41,14 +41,17 @@
                             <s:param name="bdKey" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{editSelected}" title="%{getText('editToolTip.label')}">
-                            <img src="<s:url value='/images/edit.png'/>" width="25"  height="25" border="none"/></s:a></td>
+                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
                         <s:url id="approveSelected" action="eprBirthConfirmation.do">
                             <s:param name="bdKey" value="idUKey"/>
-                            <s:param name="pageNo"  value="2"/>
+                            <s:param name="pageNo" value="2"/>
                             <s:param name="confirmationFlag" value="1"/>
                         </s:url>
-                        <td align="center"><s:a href="%{approveSelected}" title="%{getText('approveToolTip.label')}"><img
-                                src="<s:url value='/images/approve.png'/>" width="25"  height="25" border="none"/></s:a></td>
+                        <td align="center"><s:a href="%{approveSelected}"
+                                                title="%{getText('approveToolTip.label')}"><img
+                                src="<s:url value='/images/approve.png'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
                     </tr>
                     <%--select_all checkbox is visible only if
                 counter is greater than one--%>

@@ -70,7 +70,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          */
         int pageNo = 1;
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 0);
         session.put("selectedFlag", 0);
@@ -99,7 +99,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         session.put("selectedDivision", division);
         session.put("selectedFlag", 1);
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 0);
@@ -108,10 +108,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * 
      * @return String which desides the next page
      */
-    public String approveAllSelected(){
+    public String approveAllSelected() {
         //todo has to be implemented
         logger.debug("inside approveAllSelected :");
         return "success";
@@ -157,7 +156,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * in the jsp page 
          */
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                bdDivisionDAO.getBDDivision(district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 1);
@@ -176,7 +175,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         Integer selectedFlag = (Integer) session.get("selectedFlag");
         if (logger.isDebugEnabled()) {
             logger.debug("inside filter : district {} division {} observed ", district, division +
-                " Page number " + pageNo.toString() + " selectedFlag " + selectedFlag.toString());
+                    " Page number " + pageNo.toString() + " selectedFlag " + selectedFlag.toString());
         }
         /**
          * UI related handle whether to display the
@@ -218,7 +217,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             division = user.getInitialBDDivision();
         }
         birthRegisterApproval = birthDeclarationDAO.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         populate();
         return "success";

@@ -26,8 +26,7 @@
             <label>රට<br>நாடு <br>Country</label>
         </div>
         <div>
-            <s:select list="countryList" name="fatherCountry" headerKey="0"
-                      headerValue="%{getText('select_country.label')}"/>
+            <s:select name="fatherCountry" list="countryList" headerKey="0" headerValue="%{getText('select_country.label')}"/>
         </div>
     </div>
     <div id="father-passport-no" class="font-9">
@@ -148,7 +147,7 @@
         <label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label>
     </div>
     <div>
-            <%--TODO name should be filled--%>
+        <%--TODO name should be filled--%>
         <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>

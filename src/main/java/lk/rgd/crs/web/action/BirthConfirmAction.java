@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action;
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -38,7 +39,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     private final RaceDAO raceDao;
     private final DistrictDAO districtDAO;
-    private final DSDivisionDAOImpl dsDivisionDAOImpl;
+    private final DSDivisionDAO dsDivisionDAO;
 
     /**
      * approveSelected is from BirhRegisterApproval.jsp
@@ -59,10 +60,10 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 
     private BirthDeclaration birthConfirm;
 
-    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO, DSDivisionDAOImpl dsDivisionDAOImpl) {
+    public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         this.raceDao = raceDao;
         this.districtDAO = districtDAO;
-        this.dsDivisionDAOImpl = dsDivisionDAOImpl;
+        this.dsDivisionDAO = dsDivisionDAO;
         logger.debug("inside birth register action constructor");
     }
 
