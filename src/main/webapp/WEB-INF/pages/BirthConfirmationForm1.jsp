@@ -94,16 +94,19 @@
                 </div>
                 <div id="new-month" class="font-7">
                     <label>*in Sinhala<br>*in Tamil<br>Month</label>
-                    <s:select list="{'01','02','03'}" name="" id="month" onchange="javascript:setDate('month','1')"/>
+                    <s:select list="{'01','02','03'}" name="" id="month"
+                              onchange="javascript:setDate('month','1')"/>
                 </div>
                 <div id="new-day" class="font-7">
                     <label>*in Sinhala<br>*in Tamil<br>Day</label>
-                    <s:select list="{'01','02','03'}" name="" id="day" onchange="javascript:setDate('day','1')"/>
+                    <s:select list="{'01','02','03'}" name="" id="day"
+                              onchange="javascript:setDate('day','1')"/>
                 </div>
             </div>
         </div>
         <div id="new-dob">
-            <sx:datetimepicker id="datePicker" name="childDOB" displayFormat="yyyy-MM-dd" value="2010-05-27"
+            <sx:datetimepicker id="datePicker" name="childDOB" displayFormat="yyyy-MM-dd"
+                               value="2010-05-27"
                 onmouseover="javascript:splitDate('datePicker')"/>
         </div>
         <div id="bcf-gender" class="font-9">

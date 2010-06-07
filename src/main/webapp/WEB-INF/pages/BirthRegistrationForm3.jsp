@@ -41,18 +41,18 @@
                 <label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label>
 
                 <div>
-                   <s:select list="{'2009','2010','2011'}" name="" id="year"
-                      onchange="javascript:setDate('year','1')"/>
-            <s:select list="{'01','02','03','06'}" name="" id="month"
-                      onchange="javascript:setDate('month','1')"/>
-            <s:select list="{'01','02','03'}" name="" id="day"
-                      onchange="javascript:setDate('day','1')"/> <%--
+                    <s:select list="{'2009','2010','2011'}" name="" id="year"
+                              onchange="javascript:setDate('year','1')"/>
+                    <s:select list="{'01','02','03','06'}" name="" id="month"
+                              onchange="javascript:setDate('month','1')"/>
+                    <s:select list="{'01','02','03'}" name="" id="day"
+                              onchange="javascript:setDate('day','1')"/> <%--
                     <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
                                        displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>  --%>            
-            <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
-                               displayFormat="yyyy-MM-dd"
-                               onmouseover="javascript:splitDate('marriageDatePickerr')"/>
+                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>  --%>
+                    <sx:datetimepicker id="datePicker" name="marriage.dateOfMarriage"
+                                       displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('datePickerr')"/>
                 </div>
             </div>
         </div>
@@ -167,14 +167,14 @@
         </div>
         <div id="informed-date" class="font-9">
             <label>දිනය <br>*in tamil<br>Date</label>
-            <s:select list="{'2009','2010','2011'}" name="" id="informedYear"
+            <s:select list="{'2009','2010','2011'}" name="" id="secondYear"
                       onchange="javascript:setDate('informedYear','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="informedMonth"
+            <s:select list="{'01','02','03'}" name="" id="secondMonth"
                       onchange="javascript:setDate('informedMonth','2')"/>
-            <s:select list="{'01','02','03'}" name="" id="informedDay"
+            <s:select list="{'01','02','03'}" name="" id="secondDay"
                       onchange="javascript:setDate('informedDay','2')"/>
-            <sx:datetimepicker id="informedDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
-                               onmouseover="javascript:splitDate('informedDatePicker')"/>
+            <sx:datetimepicker id="secondDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
+                               onmouseover="javascript:splitDate('secondDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="3"/>
         <s:submit value="%{getText('next.label')}"/>

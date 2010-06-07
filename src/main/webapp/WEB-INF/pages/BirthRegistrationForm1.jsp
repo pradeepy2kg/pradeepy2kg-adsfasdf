@@ -28,10 +28,10 @@
                               onchange="javascript:setDate('year','1')"/>
                     <s:select list="{'01','02','03'}" name="" id="month"
                               onchange="javascript:setDate('month','1')"/>
-                    <s:select list="{'01','02','03'}" name="" id="month"
-                              onchange="javascript:setDate('month','1')"/>
-                    <sx:datetimepicker id="submitDatePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('submitDatePicker')"/>
+                    <s:select list="{'01','02','03'}" name="" id="day"
+                              onchange="javascript:setDate('day','1')"/>
+                    <sx:datetimepicker id="datePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('datePicker')"/>
                 </label>
             </div>
             <div id="birth-registration-form-header-info" class="font-9">
@@ -53,24 +53,25 @@
         <div id="child-dob" class="font-9">
             <label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
 
+
             <div id="child-dob-year">
                 <label>*in sinhala<br>*in tamil<br>Year</label>
-                <s:select list="{'2009','2010','2011'}" name="" id="year"
-                          onchange="javascript:setDate('year','1')"/>
+                <s:select list="{'2009','2010','2011'}" name="" id="secondYear"
+                          onchange="javascript:setDate('secondYear','2')"/>
             </div>
             <div id="child-dob-month">
                 <label>*in sinhala<br>*in tamil<br>Month</label>
-                <s:select list="{'01','02','03'}" name="" id="month"
-                          onchange="javascript:setDate('month','1')"/>
+                <s:select list="{'01','02','03','06'}" name="" id="secondMonth"
+                          onchange="javascript:setDate('secondMonth','2')"/>
             </div>
             <div id="child-dob-day">
                 <label>*in sinhala<br>*in tamil<br>Day</label>
-                <s:select list="{'01','02','03'}" name="" id="day"
-                          onchange="javascript:setDate('day','1')"/>
+                <s:select list="{'01','02','03'}" name="" id="secondDay"
+                          onchange="javascript:setDate('secondDay','2')"/>
                 <div id="datePicker">
-                    <sx:datetimepicker id="datePicker" name="child.dateOfBirth"
+                    <sx:datetimepicker id="secondDatePicker" name="child.dateOfBirth"
                                        displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('datePicker')"/>
+                                       onmouseover="javascript:splitDate('secondDatePicker')"/>
                 </div>
             </div>
         </div>
@@ -81,7 +82,7 @@
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
                     <%--TODO birthDistrict should be filled     birthDistrict--%>
                 <s:select name="birthDistrictId" list="districtList" headerKey="0"
-                          headerValue="%{getText('select_district.label')}" />
+                          headerValue="%{getText('select_district.label')}"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
