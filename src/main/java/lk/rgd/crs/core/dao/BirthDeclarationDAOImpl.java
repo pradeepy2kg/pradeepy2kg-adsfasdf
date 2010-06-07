@@ -24,6 +24,16 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         em.persist(bdf);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateBirthDeclaration(BirthDeclaration bdf) {
+        em.merge(bdf);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteBirthDeclaration(long idUKey) {
+        em.remove(getById(idUKey));
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed) {
 

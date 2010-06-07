@@ -163,7 +163,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
                         logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
 
-                        service.registerNormalBirth(bdf, true);
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
 
                         /*if (logger.isDebugEnabled()) {
                             logger.debug("BRF 4: authName=" + bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() + " ," + bdf.getNotifyingAuthority().getNotifyingAuthorityName() + " ," +

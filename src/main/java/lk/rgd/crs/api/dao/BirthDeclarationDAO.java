@@ -10,7 +10,24 @@ import java.util.List;
  * @author asankha
  */
 public interface BirthDeclarationDAO {
+
+    /**
+     * Add a birth declaration
+     * @param bdf the BDF to be added
+     */
     public void addBirthDeclaration(BirthDeclaration bdf);
+
+    /**
+     * Update a birth declaration
+     * @param bdf the updated BDF
+     */
+    public void updateBirthDeclaration(BirthDeclaration bdf);
+
+    /**
+     * Remove a birth declaration
+     * @param idUKey the unique ID of the BDF to remove
+     */
+    public void deleteBirthDeclaration(long idUKey);
 
     /**
      * Returns a limited set of BirthDeclarations for which the confirmation form is not yet printed. The

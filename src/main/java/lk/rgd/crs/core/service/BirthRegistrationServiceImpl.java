@@ -1,6 +1,8 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
@@ -8,6 +10,8 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BirthRegistrationServiceImpl implements BirthRegistrationService {
@@ -19,14 +23,43 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         birthDeclarationDAO = dao;    
     }
 
-    public List<UserWarning> registerNormalBirth(BirthDeclaration bdf, boolean ignoreWarnings) {
+    public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        validateAccessOfUser(user, bdf);
         birthDeclarationDAO.addBirthDeclaration(bdf);
-        return null; //todo handle warnings
+        return Collections.emptyList();
     }
 
-    public List<UserWarning> lateRegistrationOfBirth(BirthDeclaration bdf, boolean ignoreWarnings) {
-        // TODO
-        throw new UnsupportedOperationException("Not yet implemented");
+    public List<UserWarning> updateNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        validateAccessOfUser(user, bdf);
+        // a BDF can be edited by a DEO or ADR only before being approved
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        birthDeclarationDAO.updateBirthDeclaration(bdf);
+        return Collections.emptyList();
+    }
+
+    public List<UserWarning> deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        validateAccessOfUser(user, bdf);
+        birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
+        return Collections.emptyList();
+    }
+
+    private void validateAccessOfUser(User user, BirthDeclaration bdf) {
+        BDDivision bdDivision = bdf.getChild().getBirthDivision();
+        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
+            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
+
+        } else {
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                bdDivision.getDsDivision().getDivisionId());
+        }
+    }
+
+    private List<UserWarning> handleException(String message) {
+        logger.warn(message);
+        List<UserWarning> warnings = new ArrayList<UserWarning>();
+        warnings.add(new UserWarning(message));
+        return warnings;
     }
 
     /**
