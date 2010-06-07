@@ -79,19 +79,18 @@
 #child-dob-year label, #child-dob-month label, #child-dob-day label {float: left; width: 100px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
 #child-dob-year select, #child-dob-month select, #child-dob-day select {float: left; margin: 12px 15px 12px 10px; width: 70px;}
 #datePicker{margin:5px 10px;float:right;}
-#child-pob label {padding: 69px 0;}
+#child-pob label {padding:50px 0 51px 0;}
 
 #child-birth-order-no {padding-bottom: 1px;}
 
-#child-pob-hospitalcode label { float: left; border-right:1px solid #000; padding:6px 5px; width: 190px;}
-#child-pob-hospitalcode input { float: left; margin: 2px 7px; width: 186px;}
-#child-pob-hospitalcode input{width:180px; margin:15px 7px;}
 
-#child-pob-place, #child-pob-district, #child-pob-division, #child-pob-ds-division { float: left; border-bottom: 1px solid #000; width: 822px;}
-#child-pob-gncode label, #child-pob-place label, #child-pob-district label, #child-pob-division label, #child-pob-ds-division label { float: left; width: 230px; border-right: 1px solid #000; padding:6px 5px;}
-#child-pob-gncode select, #child-pob-place input, #child-pob-district select, #child-pob-division select, #child-pob-ds-division select { float: left; margin: 2px 7px; width: 550px;}
-#child-pob-gncode select{margin:15px 5px;}
-#child-pob-hospitalcode label{padding:5px 5px 4px 5px;}
+#child-pob-district, #child-pob-division, #child-pob-ds-division, #child-pob-place  { float: left; border-bottom: 1px solid #000; width: 822px;}
+#child-pob-place label, #child-pob-district label, #child-pob-division label, #child-pob-ds-division label, #child-pob-in-hospital label { float: left; width: 230px; border-right: 1px solid #000; padding:6px 5px;}
+#child-pob-place input, #child-pob-district select, #child-pob-division select, #child-pob-ds-division select, #child-pob-in-hospital input { float: left; margin: 2px 7px; width: 550px;}
+#child-pob-in-hospital label {width:250px;}
+#child-pob-in-hospital input {width:500px;}
+#child-pob-in-hospital div label{width:200px; border-right:1px solid #000; padding:6px;}
+#child-pob-in-hospital div input{margin:7px 25px;}
 #child-name textarea{float:left; margin:25px 5px; width:800px;}
 #child-name-in-english textarea{float:left; margin:5px; width:800px;}
 #child-name-in-english label{padding:5px 0;}
@@ -126,9 +125,11 @@
 #hospital-admision-no input, #hospital-admision-date select{margin-top:30px;}
 #mother-age input{width:135px;}
 #mother-address textarea{margin:15px 5px; width:850px;}
-
+#mother-address .form-label{padding:30px 0;}
 #birth-registration-form-mother-info-sub-title{margin-top:290px;}
-
+#mother-district, #mother-ds-division{border-bottom:1px solid #000; width:872px; float:left;}
+#mother-district label, #mother-ds-division label{float:left; padding:7px 5px; border-right:1px solid #000; width:250px;}
+#mother-district input, #mother-ds-division input{float:left; width:590px; margin:2px 5px;}
 
 /* Page three (Form 3) of the Birth Registration Form */
 #birth-registration-form-marriage-info-sub-title{margin-top:0;}
