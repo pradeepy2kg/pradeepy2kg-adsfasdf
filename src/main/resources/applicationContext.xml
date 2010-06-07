@@ -98,6 +98,7 @@
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl" />
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
     </bean>
     <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
         <constructor-arg ref="raceDAOImpl"/>
@@ -114,6 +115,7 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="birthDeclarationDAOImpl" />
         <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="manageBirthService"/>
     </bean>
 
     <bean id="loginAction" class="lk.rgd.crs.web.action.LoginAction">
