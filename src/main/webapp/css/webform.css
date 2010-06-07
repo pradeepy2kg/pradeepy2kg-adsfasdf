@@ -129,7 +129,7 @@
 #birth-registration-form-mother-info-sub-title{margin-top:290px;}
 #mother-district, #mother-ds-division{border-bottom:1px solid #000; width:872px; float:left;}
 #mother-district label, #mother-ds-division label{float:left; padding:7px 5px; border-right:1px solid #000; width:250px;}
-#mother-district input, #mother-ds-division input{float:left; width:590px; margin:2px 5px;}
+#mother-district select, #mother-ds-division select{float:left; width:590px; margin:2px 5px;}
 
 /* Page three (Form 3) of the Birth Registration Form */
 #birth-registration-form-marriage-info-sub-title{margin-top:0;}

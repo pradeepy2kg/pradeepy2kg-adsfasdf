@@ -80,13 +80,11 @@
 
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
-                    <%--TODO birthDistrict should be filled     birthDistrict--%>
                 <s:select name="birthDistrictId" list="districtList" headerKey="0"
                           headerValue="%{getText('select_district.label')}"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
-                    <%--TODO birthDistrict should be filled     dsDivision--%>
                 <s:select name="dsDivisionId" list="dsDivisionList" headerKey="0"
                           headerValue="%{getText('select_ds_division.label')}"/>
             </div>
@@ -104,11 +102,11 @@
                 <label>*in Sinhala/*in Tamil/In a Hospital</label>
                 <div>
                     <label>ඔව් / *in  Tamil  / Yes </label>
-                    <input type="radio" name="y"/>
+                    <s:radio name="child.birthAtHospital" list="#{'0':''}"/>
                 </div>
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
-                    <input type="radio" name="y" />
+                    <s:radio name="child.birthAtHospital" list="#{'1':''}"/>
                 </div>
             </div>
         </div>

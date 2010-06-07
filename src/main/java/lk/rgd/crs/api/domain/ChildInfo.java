@@ -62,6 +62,12 @@ public class ChildInfo implements Serializable {
     private String placeOfBirth;
 
     /**
+     * 0-Yes, 1-No
+     */
+    @Column(nullable = true)
+    private Integer birthAtHospital;
+
+    /**
      * Name in Sinhala or Tamil
      */
     @Column(nullable = true, length = 600)
@@ -96,12 +102,6 @@ public class ChildInfo implements Serializable {
      */
     @Column(nullable = true)
     private Integer numberOfChildrenBorn;
-
-    /**
-     * Hospial code
-     */
-    @Column(nullable = true, length = 15)
-    private String hospitalCode;
 
     public District getBirthDistrict() {
         return birthDivision.getDistrict();
@@ -207,11 +207,11 @@ public class ChildInfo implements Serializable {
         this.numberOfChildrenBorn = numberOfChildrenBorn;
     }
 
-    public String getHospitalCode() {
-        return hospitalCode;
+    public Integer getBirthAtHospital() {
+        return birthAtHospital;
     }
 
-    public void setHospitalCode(String hospitalCode) {
-        this.hospitalCode = hospitalCode;
+    public void setBirthAtHospital(Integer birthAtHospital) {
+        this.birthAtHospital = birthAtHospital;
     }
 }

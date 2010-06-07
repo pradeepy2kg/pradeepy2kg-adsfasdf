@@ -40,8 +40,10 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
-        
-        if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
+
+        if (user == null) {
+            return result;
+        } else if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
             // Admin, RG and has full access
             return result;
         } else if ((user.isPlayingRole(Role.ROLE_ARG) || user.isPlayingRole(Role.ROLE_DR)) && user.isAllowedAccessToDistrict(districtId)) {

@@ -41,7 +41,9 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
 
-        if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
+        if (user == null) {
+            return result;
+        } else if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
             // admins and RG has full access
             return result;
         } else {

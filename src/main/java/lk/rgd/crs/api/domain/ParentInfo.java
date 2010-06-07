@@ -2,6 +2,8 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.DSDivision;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,89 +14,141 @@ import java.util.Date;
  */
 @Embeddable
 public class ParentInfo implements Serializable {
-    /** NIC or PIN of father  */
+    /**
+     * NIC or PIN of father
+     */
     @Column(nullable = true, length = 10)
     private String fatherNICorPIN;
 
-    /** Passport number if a foreigner */
+    /**
+     * Passport number if a foreigner
+     */
     @Column(nullable = true, length = 10)
     private String fatherPassportNo;
 
-    /** Country if a foreigner */
+    /**
+     * Country if a foreigner
+     */
     @ManyToOne
     @JoinColumn(name = "fatherCountryId")
     private Country fatherCountry;
 
-    /** Name of father  */
+    /**
+     * Name of father
+     */
     @Column(nullable = true, length = 600)
     private String fatherFullName;
 
-    /** DOB of father  */
+    /**
+     * DOB of father
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date fatherDOB;
 
-    /** Place of birth of father */
+    /**
+     * Place of birth of father
+     */
     @Column(nullable = true, length = 60)
     private String fatherPlaceOfBirth;
 
-    /** Race of father */
-    @Column(nullable = true)
-    @JoinColumn (name = "fatherRace")
+    /**
+     * Race of father
+     */
+    @ManyToOne
+    @JoinColumn(name = "fatherRace")
     private Race fatherRace;
 
-    /** NIC or PIN of mother */
+    /**
+     * NIC or PIN of mother
+     */
     @Column(nullable = true, length = 10)
     private String motherNICorPIN;
 
-    /** Passport number if a foreigner */
+    /**
+     * Passport number if a foreigner
+     */
     @Column(nullable = true, length = 10)
     private String motherPassportNo;
 
-    /** Country if a foreigner */
+    /**
+     * Country if a foreigner
+     */
     @ManyToOne
     @JoinColumn(name = "motherCountryId")
     private Country motherCountry;
 
-    /** Full name of mother */
+    /**
+     * Full name of mother
+     */
     @Column(nullable = true, length = 600)
     private String motherFullName;
 
-    /** DOB of mother  */
+    /**
+     * DOB of mother
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date motherDOB;
 
-    /** Place of birth for mother */
+    /**
+     * Place of birth for mother
+     */
     @Column(nullable = true, length = 60)
     private String motherPlaceOfBirth;
 
-    /** Race for mother */
-    @Column(nullable = true)
-    @JoinColumn (name = "motherRace")
+    /**
+     * Race for mother
+     */
+    @ManyToOne
+    @JoinColumn(name = "motherRace")
     private Race motherRace;
 
-    /** Age of mother at birth */
+    /**
+     * Age of mother at birth
+     */
     @Column(nullable = true)
     private int motherAgeAtBirth;
 
-    /** Address of mother */
+    /**
+     * Mother's District Id
+     */
+    @OneToOne
+    private District motherDistrict;
+
+    /**
+     * Mother's DS division ID
+     */
+    @OneToOne
+    private DSDivision motherDSDivision;
+
+    /**
+     * Address of mother
+     */
     @Column(nullable = true, length = 255)
     private String motherAddress;
 
-    /** Phone number of mother */
+    /**
+     * Phone number of mother
+     */
     @Column(nullable = true, length = 30)
     private String motherPhoneNo;
 
-    /** Email of mother */
+    /**
+     * Email of mother
+     */
     @Column(nullable = true, length = 30)
     private String motherEmail;
 
-    /** Mothers admission number to the hospital */
+    /**
+     * Mothers admission number to the hospital
+     */
     @Column(nullable = true, length = 15)
     private String motherAdmissionNo;
 
-    /** Date the mother admitted that she was pregnant. */
+    /**
+     * Date the mother admitted that she was pregnant.
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date motherAdmissionDate;
@@ -257,5 +311,21 @@ public class ParentInfo implements Serializable {
 
     public void setMotherAdmissionDate(Date motherAdmissionDate) {
         this.motherAdmissionDate = motherAdmissionDate;
+    }
+
+    public District getMotherDistrict() {
+        return motherDistrict;
+    }
+
+    public void setMotherDistrict(District motherDistrict) {
+        this.motherDistrict = motherDistrict;
+    }
+
+    public DSDivision getMotherDSDivision() {
+        return motherDSDivision;
+    }
+
+    public void setMotherDSDivision(DSDivision motherDSDivision) {
+        this.motherDSDivision = motherDSDivision;
     }
 }
