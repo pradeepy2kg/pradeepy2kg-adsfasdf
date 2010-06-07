@@ -370,9 +370,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
-        logger.debug("BirthDivision : {}, district {}", birthDivisionId, birthDistrictId);
         child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrictId, birthDivisionId));
-        logger.debug("BirthDivision object : {}", child.getBirthDivision().getEnDivisionName());
+        logger.debug("BirthDivision : {}", child.getBirthDivision().getEnDivisionName());
     }
 
     public int getFatherCountry() {
@@ -380,11 +379,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void setFatherCountry(int fatherCountry) {
-        if (parent != null) {
-            this.fatherCountry = fatherCountry;
-            logger.debug("Father Country: {} From DAO :{}", fatherCountry, countryDAO.getCountry(fatherCountry));
-            parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
-        }
+        this.fatherCountry = fatherCountry;
+        parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
+        logger.debug("Father Country: {} From DAO :{}", parent.getFatherCountry().getEnCountryName());
     }
 
     public int getMotherCountry() {
@@ -392,11 +389,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void setMotherCountry(int motherCountry) {
-        if (parent != null) {
-            this.motherCountry = motherCountry;
-            logger.debug("Mother Country: {} From DAO :{}", motherCountry, countryDAO.getCountry(motherCountry));
-            parent.setMotherCountry(countryDAO.getCountry(motherCountry));
-        }
+        this.motherCountry = motherCountry;
+        parent.setMotherCountry(countryDAO.getCountry(motherCountry));
+        logger.debug("Mother Country: {}", parent.getMotherCountry().getEnCountryName());
     }
 
     public MarriageInfo getMarriage() {
