@@ -55,11 +55,7 @@
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.birthRegistration_form4</result>
-            <result type="redirectAction" name="form4">eprBirthConfirmationReport</result>
-            <result type="tiles" name="confirm0">epr.birthConfirmation_form1</result>
-            <result type="tiles" name="confirm1">epr.birthConfirmation_form2</result>
-            <result type="tiles" name="confirm2">epr.birthConfirmation_form3</result>
-            <result type="tiles" name="success">epr.welcome</result>
+            <result type="tiles" name="form4">epr.birthRegistration_success</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -73,13 +69,15 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <!--<action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthConfirmAction" method="birthConfirmation">-->
-        <!--<result type="tiles" name="form0">epr.birthConfirmation_form1</result>-->
-        <!--<result type="tiles" name="form1">epr.birthConfirmation_form2</result>-->
-        <!--<result type="tiles" name="success">epr.welcome</result>-->
-        <!--<result type="redirectAction" name="re-direct">eprApproveSelected</result>-->
-        <!--<result type="tiles" name="error">epr.error</result>-->
-        <!--</action>-->
+        <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthConfirmationPrint">
+            <result type="tiles" name="form0">epr.birthConfirmationPrint_form1</result>
+            <result type="tiles" name="form1">epr.birthConfirmationPrint_form2</result>
+            <result type="tiles" name="form2">epr.birthConfirmationPrint_form3</result>
+            <result type="tiles" name="form3">epr.welcome</result>
+            <result type="redirectAction" name="re-direct">eprApproveSelected</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
 
         <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"
                 method="getBirthConfirmationReport">
@@ -107,7 +105,8 @@
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
-        <action name="eprApproveAllSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="approveAllSelected">
+        <action name="eprApproveAllSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveAllSelected">
             <result type="tiles" name="success">epr.home</result>
         </action>
 

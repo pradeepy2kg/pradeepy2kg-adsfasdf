@@ -1,3 +1,7 @@
+/*@author
+* amith jayasekara
+* chathuranga
+* */
 package lk.rgd.crs.web.action;
 
 
@@ -13,7 +17,6 @@ import java.util.Locale;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.GNDivision;
 import lk.rgd.common.api.domain.DSDivision;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -59,7 +62,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
 
-    private int bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
+    private int bdId;   // If present, it should used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     // TODO country,district,division not populating
@@ -243,6 +246,32 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
+    public String birthConfirmationPrint() {
+
+        logger.debug("Step {} of 3 ", pageNo);
+        if ((pageNo > 3) || (pageNo < 0)) {
+            return "error";
+        } else {
+            BirthDeclaration bdf;
+            if (pageNo == 0) {
+                if (bdId != 0) {
+                    bdf = service.getById(bdId);
+                } else if ((serialNo != null) && !(serialNo.equals(""))) {
+                    bdf = service.getBySerialNo(serialNo);
+                } else {
+                    logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
+                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+                }
+            } else {
+                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+            }
+            session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
+            populate();
+            return "form" + pageNo;
+        }
+
+    }
+
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
         //todo pass the error to the error.jsp page
@@ -356,6 +385,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.notifyingAuthority = notifyingAuthority;
     }
 
+    //    TODO district and division retrieval should be done
     public int getBirthDistrictId() {
         return birthDistrictId;
     }
@@ -370,8 +400,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
+        logger.debug("BirthDivision : {}, district {}", birthDivisionId, birthDistrictId);
         child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrictId, birthDivisionId));
-        logger.debug("BirthDivision : {}", child.getBirthDivision().getEnDivisionName());
+        logger.debug("BirthDivision object : {}", child.getBirthDivision());
     }
 
     public int getFatherCountry() {
@@ -436,6 +467,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
+        logger.debug("DS Division: {}", dsDivisionId);
+        // TODO
     }
 
     public ConfirmantInfo getConfirmant() {
