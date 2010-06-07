@@ -8,13 +8,13 @@
         <put-attribute name="header" value="/WEB-INF/pages/template/header.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/pages/template/menu.jsp"/>
         <put-attribute name="body" value="/WEB-INF/pages/login/login.jsp"/>
-           <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp"/>
         <put-attribute name="title-text" value=""/>
     </definition>
 
     <definition name="epr.welcome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/Welcome.jsp"/>
-          <put-attribute name="title" value="welcome.title"/>
+        <put-attribute name="title" value="welcome.title"/>
     </definition>
 
     <definition name="epr.newBirthCertificate" extends="epr.template">
@@ -48,17 +48,37 @@
         <put-attribute name="title" value="BirthConfirmationForm1.title"/>
     </definition>
 
+    <definition name="epr.birthRegistration_success" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthDeclarationSuccess.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm1.title"/>
+    </definition>
+
     <definition name="epr.birthConfirmation_form2" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationForm2.jsp"/>
         <put-attribute name="title" value="BirthConfirmationForm2.title"/>
     </definition>
 
-     <definition name="epr.birthConfirmation_form3" extends="epr.template">
+    <definition name="epr.birthConfirmation_form3" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationForm3.jsp"/>
         <put-attribute name="title" value="BirthConfirmationForm3.title"/>
     </definition>
 
-	<definition name="epr.home" extends="epr.template">
+    <definition name="epr.birthConfirmationPrint_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationPrintForm1.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm1.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmationPrint_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationPrintForm2.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm2.title"/>
+    </definition>
+
+    <definition name="epr.birthConfirmationPrint_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationPrintForm3.jsp"/>
+        <put-attribute name="title" value="BirthConfirmationForm3.title"/>
+    </definition>
+
+    <definition name="epr.home" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/home.jsp"/>
         <put-attribute name="title" value="home.title"/>
     </definition>
@@ -71,12 +91,12 @@
 
     <definition name="epr.birthRegisterApproval" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegisterApproval.jsp"/>
-        <put-attribute name="title" value="BirthRegisterApproval.title"/>        
+        <put-attribute name="title" value="BirthRegisterApproval.title"/>
 
     </definition>
 
     <definition name="epr.birthConfirmationPrint" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmPrint.jsp"/>
-         <put-attribute name="title" value="BirthConfirmPrint.title"/> 
+        <put-attribute name="title" value="BirthConfirmPrint.title"/>
     </definition>
 </tiles-definitions>

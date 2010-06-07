@@ -282,3 +282,12 @@
 #bcf-confirm-person-certify-date, #bcf-added-to-civil-registration-date{border-bottom:1px solid #000; margin-left:252px;height:62px;}
 #bcf-added-to-civil-registration-signature label{padding-bottom:130px; border-left:none;}
 #bcf-confirm-person-certify-date input, #bcf-added-to-civil-registration-date input, #bcf-confirm-person-certify-signature input, #bcf-added-to-civil-registration-signature input{width:540px; margin:15px 5px;}
+
+/*
+*css for birth confirmation print
+*/
+#current-info-print label {
+border-right:0px solid #000000;
+}
+
+.current-print{border:none;}

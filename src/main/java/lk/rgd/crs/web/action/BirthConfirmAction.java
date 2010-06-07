@@ -31,8 +31,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 /**
  * Birth Confirmation related actions.
  *
+ * @author amith jayasekara
  * @author chathuranga
- * @author amith
  */
 public class BirthConfirmAction extends ActionSupport implements SessionAware, RequestAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthConfirmAction.class);
@@ -119,7 +119,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
 //logger.debug("Birth Confirmation Persist : {} , {}.", confirm.getFatherFullName(), confirm.getMotherFullName());
 
                 try {
-                    beanMerge();
+
                 } catch (Exception e) {
                     handleErrors(e);
                     return "error";
@@ -131,57 +131,13 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     return "form" + pageNo;
     }
 
-    /**
-     * update the bean in session with the values of local bean
-     */
-    private void beanMerge() throws Exception {
-        BirthDeclaration target = (BirthDeclaration) session.get("birthConfirm");
-        BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
 
-        // Iterate over all the attributes
-        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            Object originalValue = descriptor.getReadMethod().invoke(target);
-
-            // Only copy values where the session value is null or empty (do not replace already set
-            // values in the session)
-            if ((originalValue == null) || (originalValue.equals(""))) {
-                Object defaultValue = descriptor.getReadMethod().invoke(birthConfirm);
-                descriptor.getWriteMethod().invoke(target, defaultValue);
-            } else {
-                logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue);
-            }
-        }
-
-        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, target);
-    }
 
     private void handleErrors(Exception e) {
         logger.error(e.getLocalizedMessage());
         //todo pass the error to the error.jsp page
     }
 
-    /**
-     *  update the bean in session with the values of local bean
-     */
-//   private void beanMerge() throws Exception {
-//       BirthDeclaration target = (BirthDeclaration) session.get("birthRegister");
-//       BeanInfo beanInfo = Introspector.getBeanInfo(BirthDeclaration.class);
-//
-//       // Iterate over all the attributes
-//       for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-//           Object originalValue = descriptor.getReadMethod().invoke(target);
-//
-//           // Only copy values values where the destination values is null
-//           if (originalValue == null) {
-//               Object defaultValue = descriptor.getReadMethod().invoke(birthRegister);
-//               descriptor.getWriteMethod().invoke(target, defaultValue);
-//           } else {
-//               logger.debug("field {} not merged, value was {}", descriptor.getReadMethod(), originalValue );
-//           }
-//       }
-//
-//       session.put("birthRegister", target);
-//   }
 
     /**
      * initialises the birthRegister bean with proper initial values (depending on user, date etc) and
@@ -212,6 +168,8 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         logger.debug("inside populte : districts , countries and races populated.");
     }
 
+
+    /*
     public String getBirthConfirmationReport() {
         try {
             logger.info(AppConstants.HOME_DIRECTORY);
@@ -230,18 +188,21 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         session.put("page_title", "birth confirm report");
         return "success";
     }
+    */
 
     /*creating a pojo data source*/
+    /*
     private JRDataSource createReportDataSource() {
         JRBeanArrayDataSource dataSource;
         Person[] reportRows = initializeBeanArray();
         dataSource = new JRBeanArrayDataSource(reportRows);
         return dataSource;
     }
-
+     */
     /*
     * init data
     * */
+    /*
     private Person[] initializeBeanArray() {
         //test data
         String uniName = "\u0DBD\u0DD2\u0DBA\u0DCF\u0DB4\u0DAF\u0DD2\u0D82\u0DA0\u0DD2 \u0DAF\u0DD2\u0DB1\u0DBA";
@@ -259,8 +220,9 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         reportRows[0] = p;
         return reportRows;
     }
-
+    */
     /*convert a unicode sequance to a String*/
+    /*
     private String convertToString(String unicodeSequance) {
         String converted = null;
         try {
@@ -271,7 +233,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
         }
         return converted;
     }
-
+     */
     public int getPageNo() {
         return pageNo;
     }
