@@ -34,8 +34,6 @@
         </div>
         <div id="notified-date" class="font-9">
             <label>දිනය <br>*in tamil <br>Date</label>
-
-
             <s:select list="{'2009','2010','2011'}" name="" id="year"
                       onchange="javascript:setDate('year','1')"/>
             <s:select list="{'01','02','03','06'}" name="" id="month"
@@ -45,8 +43,6 @@
             <sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
                                displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('datePicker')"/>
-
-
         </div>
         <s:hidden name="pageNo" value="4"/>
         <s:submit value="SUBMIT"/>

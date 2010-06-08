@@ -55,7 +55,7 @@
             <br>
             <%if (((User) session.getAttribute(WebConstants.SESSION_USER_BEAN)).getUserName() != null) { %>
             <s:form action="eprLogout.do" method="POST" name="eprLogout">
-                <s:submit name="submit" value="logout"></s:submit>
+                <s:submit name="submit" value="%{getText('logout.label')}"></s:submit>
             </s:form>
             <% } %>
         </div>
