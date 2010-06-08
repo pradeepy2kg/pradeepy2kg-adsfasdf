@@ -102,7 +102,7 @@
 
         <action name="eprDeleteApprovalPending" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="deleteApprovalPending">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="filter">

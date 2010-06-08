@@ -55,7 +55,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private ConfirmantInfo confirmant;
     private BirthRegisterInfo register;
 
+
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
+
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
@@ -77,11 +79,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * approval jsp else it is set to 0
      */
     private int confirmationFlag;
-    /**
-     * key is used to identify a particular
-     * entity of BirthDeclaration bean
-     */
-    private long bdKey;
 
     public String welcome() {
         return "success";
@@ -128,6 +125,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         break;
                     case 2:
                         bdf.setParent(parent);
+                        logger.debug("Father Country: {}", fatherCountry);
                         logger.debug("father new country  {} ", parent.getFatherCountry());
                         /*if (logger.isDebugEnabled()) {
                             logger.debug("BRF 2: father- nic=" + bdf.getParent().getFatherNICorPIN() + ",country=" + bdf.getParent().getFatherCountry() + ",passport" + bdf.getParent().getFatherPassportNo() + ",name=" +
@@ -155,6 +153,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setNotifyingAuthority(notifyingAuthority);
                         // all pages captured, proceed to persist after validations
                         // todo business validations and persiatance
+                        logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
+                        logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
 
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
 
@@ -185,12 +185,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (getBdId() != 0) {
-                    bdf = service.getById(getBdId());
+                if (bdId != 0) {
+                    logger.debug("inside birthConfirmation : bdId {} recieved from BirthRegisterApproval ", bdId);
+                    bdf = service.getById(bdId);
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
-                    logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
             } else {
@@ -231,6 +231,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
+            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN,bdf);
 
             populate();
             return "form" + pageNo;
@@ -250,7 +251,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
-                    logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
+                    logger.debug("inside birthConfirmation : bdId {}", getBdId());
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
             } else {
@@ -483,14 +484,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.confirmationFlag = confirmationFlag;
     }
 
-    public long getBdKey() {
-        return bdKey;
-    }
-
-    public void setBdKey(long bdKey) {
-        this.bdKey = bdKey;
-    }
-
     public int getFatherRace() {
         return fatherRace;
     }
@@ -526,7 +519,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherDSDivisionId(int motherDSDivisionId) {
         // TODO total list should be available
-        this.motherDSDivisionId = motherDSDivisionId;        
+        this.motherDSDivisionId = motherDSDivisionId;
         // TODO get dsDivision by id and set it in parent
     }
 

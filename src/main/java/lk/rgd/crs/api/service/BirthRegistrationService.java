@@ -3,6 +3,7 @@ package lk.rgd.crs.api.service;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.BDDivision;
 
 import java.util.List;
 
@@ -45,4 +46,15 @@ public interface BirthRegistrationService {
      * @Return BirthDeclaration
      */
     public BirthDeclaration getBySerialNo(String serialNo);
+
+    /**
+        * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
+        * by an ADR. Results are ordered on the descending confirmationReceiveDate
+        *
+        * @param birthDivision the birth division
+        * @return the birth declaration results
+        */
+       public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows);
+    
 }
+

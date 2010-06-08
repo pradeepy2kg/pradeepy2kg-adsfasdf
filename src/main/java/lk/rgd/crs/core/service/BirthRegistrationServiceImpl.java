@@ -183,4 +183,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public BirthDeclaration getBySerialNo(String serialNo) {
         return birthDeclarationDAO.getBySerialNo(serialNo);
     }
+
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
+        return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision,pageNo,noOfRows);  
+    }
+
+
 }

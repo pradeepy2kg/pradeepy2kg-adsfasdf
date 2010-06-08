@@ -13,8 +13,12 @@
         </div>
     </s:form>
     <div id="birth-register-approval-body">
-        <%--todo following should be re-directed to page 3 of 3 Birth Conformation--%>
         <%--todo edit has to be implemented--%>
+       <%-- <s:if test="request.warning !=null">
+            <s:iterator value="#request.warning">
+            <s:property value="message"/>
+            </s:iterator>
+        </s:if>--%>
         <s:form action="eprApproveAllSelected" name="birth_register_approval_body" method="POST">
             <table>
                 <tr>
@@ -26,11 +30,13 @@
                     <th><s:label name="editAndApprove" value="%{getText('editOrApprove.label')}"/></th>
                     <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
                 </tr>
-                    <%-- Next link to visible next records will only visible if nextFlag is
-                     set to 1--%>
+                    <%--following code used for pagination--%>
+                <s:if test="#session.ApprovalStart == null">
+                    <s:set name="ApprovalStart" value="0" scope="session"/>
+                </s:if>
                 <s:iterator status="approvalStatus" value="#session.ApprovalData" id="approvalList">
                     <tr>
-                        <td><s:property value="%{#approvalStatus.count}"/></td>
+                        <td><s:property value="%{#approvalStatus.count + #session.ApprovalStart}"/></td>
                         <td><s:checkbox name="index"
                                         onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                         title="%{getText('select.label')}" value="%{#index}"
@@ -39,14 +45,13 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
                         <s:url id="editSelected" action="eprBirthConfirmation.do">
-                            <s:param name="bdKey" value="idUKey"/>
+                            <s:param name="bdId" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{editSelected}" title="%{getText('editOrApproveToolTip.label')}">
                             <img src="<s:url value='/images/approve.png'/>" width="25" height="25" border="none"/></s:a>
                         </td>
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
-                            <%--todo change following parameters after finalizing--%>
-                            <s:param name="bdKey" value="idUKey"/>
+                            <s:param name="bdId" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
@@ -55,12 +60,12 @@
                     </tr>
                     <%--select_all checkbox is visible only if
                 counter is greater than one--%>
-                    <s:set name="counter" scope="session" value="#approvalStatus.count"/>
+                    <s:set name="counter" scope="request" value="#approvalStatus.count"/>
                 </s:iterator>
                 <tr></tr>
             </table>
             <br/>
-            <s:if test="#session.counter>1">
+            <s:if test="#request.counter>1">
                 <s:label><s:checkbox
                         name="allCheck"
                         onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
@@ -68,6 +73,8 @@
                 <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
             </s:if>
             <br/>
+            <%-- Next link to visible next records will only visible if nextFlag is
+          set to 1--%>
             <s:url id="previousUrl" action="eprApprovalPrevious.do"/>
             <s:url id="nextUrl" action="eprApprovalNext.do"/>
 
