@@ -103,13 +103,13 @@
                 <div>
                     <label>ඔව් / *in  Tamil  / Yes </label>
                     <div>
-                        <s:radio name="child.birthAtHospital" list="#{'0':''}"/>
+                        <s:radio name="child.birthAtHospital" list="#@java.uti.HashMap@{'0':''}"/>
                     </div>
                 </div>
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
                     <div>
-                        <s:radio name="child.birthAtHospital" list="#{'1':''}"/>
+                        <s:radio name="child.birthAtHospital" list="##@java.uti.HashMap@{'1':''}"/>
                     </div>
                 </div>
             </div>

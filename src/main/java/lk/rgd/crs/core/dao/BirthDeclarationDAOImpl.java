@@ -54,7 +54,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     public BirthDeclaration getById(long bdfidUKey) {
         logger.debug("Get BDF by ID : {}", bdfidUKey);
-        Query q = em.createNamedQuery("get.by.id.pending.approval");
+        Query q = em.createNamedQuery("get.by.id");
         q.setParameter("bdfidUKey", bdfidUKey);
         return (BirthDeclaration) q.getSingleResult();
     }
