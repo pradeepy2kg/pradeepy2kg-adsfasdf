@@ -135,7 +135,7 @@
             <div class="no"></div>
             <label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label>
             <div class="current">
-                <s:textfield value="%{#session.birthRegister.child.birthDivision.dsDivision.district.districtId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{getDistrictList().get(#session.birthRegister.child.birthDivision.dsDivision.district.districtId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select list="districtList" name="" headerKey="0" headerValue="%{getText('select_district.label')}" />
@@ -145,7 +145,7 @@
             <div class="no"></div>
             <label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label>
             <div class="current">
-                <s:textfield value="%{#session.birthRegister.child.birthDivision.dsDivision.divisionId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{getDsDivisionList().get(#session.birthRegister.child.birthDivision.dsDivision.divisionId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select list="dsDivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
@@ -155,7 +155,7 @@
             <div class="no"></div>
             <label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label>
             <div class="current">
-                <s:textfield value="%{#session.birthRegister.child.birthDivision.divisionId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{getBdDivisionList().get(#session.birthRegister.child.birthDivision.divisionId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select name="birthDivision" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>  
@@ -185,7 +185,7 @@
             <div class="no">7</div>
             <label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label>
             <div class="current">
-                <s:textfield value="%{#session.birthRegister.parent.fatherRace.raceId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{getRaceList().get(#session.birthRegister.parent.fatherRace.raceId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/> 
@@ -205,7 +205,7 @@
             <div class="no">9</div>
             <label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label>
             <div class="current">
-                <s:textfield value="%{#session.birthRegister.parent.motherRace}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{getRaceList().get(#session.birthRegister.parent.motherRace.raceId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/> 

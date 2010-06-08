@@ -11,7 +11,7 @@ var day;
 var selectedDate,secondSelectedDate,thirdSelectedDate;
 var sel;
 function setDate(id, flag) {
-    var datePicker = dojo.widget.byId('datePicker');
+    var datePicker = dojo.widget.byId('submitDatePicker');
     var secondDatePicker = dojo.widget.byId('secondDatePicker');
     var thirdDatePicker = dojo.widget.byId('thirdDatePicker');
 

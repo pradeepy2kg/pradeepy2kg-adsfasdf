@@ -50,7 +50,7 @@
                     <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
                                        displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('marriageDatePicker')"/>  --%>
-                    <sx:datetimepicker id="datePicker" name="marriage.dateOfMarriage"
+                    <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
                                        displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('datePickerr')"/>
                 </div>
@@ -173,7 +173,7 @@
                       onchange="javascript:setDate('informedMonth','2')"/>
             <s:select list="{'01','02','03'}" name="" id="secondDay"
                       onchange="javascript:setDate('informedDay','2')"/>
-            <sx:datetimepicker id="secondDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
+            <sx:datetimepicker id="informDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('secondDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="3"/>
