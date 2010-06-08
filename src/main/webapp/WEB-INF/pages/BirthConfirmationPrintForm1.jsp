@@ -31,8 +31,8 @@
                 හා දිනය
                 <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
                 <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form</label>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.child.bdfSerialNo}"/>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.child.dateOfRegistration}"/>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.register.bdfSerialNo}"/>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.register.dateOfRegistration}"/>
         </div>
         <div id="last-date" class="font-9">
             <div class="no">2</div>
@@ -101,14 +101,14 @@
             <div class="no"></div>
             <label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label>
             <div class="current-print">
-                <s:textfield value="%{#session.birthRegister.child.birthDivision.dsDivision.district.districtId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{#session.birthRegister.register.birthDivision.dsDivision.district.districtId}" cssClass="disable" disabled="true"/>
             </div>
         </div>
         <div id="bcf-ds-division" class="font-9">
             <div class="no"></div>
             <label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label>
             <div class="current-print">
-                <s:textfield value="%{#session.birthRegister.child.birthDivision.dsDivision.divisionId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{#session.birthRegister.register.birthDivision.dsDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
 
         </div>
@@ -116,7 +116,7 @@
             <div class="no"></div>
             <label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label>
             <div class="current-print">
-                <s:textfield value="%{#session.birthRegister.child.birthDivision.divisionId}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{#session.birthRegister.register.birthDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
         </div>
         <div id="bcf-place" class="font-9">

@@ -15,23 +15,23 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "filter.by.division.and.status", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = :status " +
-                        "ORDER BY bdf.child.dateOfRegistration desc"),
+                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+                        "ORDER BY bdf.register.dateOfRegistration desc"),
         @NamedQuery(name = "confirmation.pending.approval.expired", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = 2 " +
+                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 2 " +
                         "AND bdf.confirmant.lastDateForConfirmation < :today " +
-                        "ORDER BY bdf.child.dateOfRegistration desc"),
+                        "ORDER BY bdf.register.dateOfRegistration desc"),
         @NamedQuery(name = "confirmation.pending.approval", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.child.birthDivision = :birthDivision AND bdf.child.status = 5 " +
+                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 5 " +
                         "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
         @NamedQuery(name = "get.by.id.pending.approval", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.idUKey = :bdfidUKey AND bdf.child.status = 5 "),
+                        "WHERE bdf.idUKey = :bdfidUKey AND bdf.register.status = 5 "),
         @NamedQuery(name = "get.by.serialNo.pending.approval", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.child.bdfSerialNo = :bdfSerialNo AND bdf.child.status = 5 ")
+                        "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 5 ")
 })
 public class BirthDeclaration implements Serializable {
     /** This is an auto generated unique row identifier  */
@@ -39,21 +39,11 @@ public class BirthDeclaration implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    /** Status comment - e.g. reason for rejection due to duplicate  */
-    @Column(nullable = true)
-    private String comments;
-
-    /** The date of issue for the original birth certificate - free copy */
-    @Column(nullable = true, updatable = false)
-    @Temporal (value = TemporalType.DATE)
-    private Date originalBCDateOfIssue;
-
-    /** The place of issue for the original birth certificate - free copy (Stores the DS Division ID) */
-    @Column(nullable = true, updatable = false)
-    private Integer originalBCPlaceOfIssue;
-
     @Embedded
     private ChildInfo child = new ChildInfo();
+
+    @Embedded
+    private BirthRegisterInfo register = new BirthRegisterInfo();
 
     @Embedded
     private ParentInfo parent = new ParentInfo();
@@ -73,36 +63,12 @@ public class BirthDeclaration implements Serializable {
     @Embedded
     private ConfirmantInfo confirmant = new ConfirmantInfo();
 
-    public Date getOriginalBCDateOfIssue() {
-        return originalBCDateOfIssue;
-    }
-
-    public void setOriginalBCDateOfIssue(Date originalBCDateOfIssue) {
-        this.originalBCDateOfIssue = originalBCDateOfIssue;
-    }
-
-    public Integer getOriginalBCPlaceOfIssue() {
-        return originalBCPlaceOfIssue;
-    }
-
-    public void setOriginalBCPlaceOfIssue(Integer originalBCPlaceOfIssue) {
-        this.originalBCPlaceOfIssue = originalBCPlaceOfIssue;
-    }
-
     public long getIdUKey() {
         return idUKey;
     }
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 
     public ChildInfo getChild() {
@@ -159,5 +125,13 @@ public class BirthDeclaration implements Serializable {
 
     public void setConfirmant(ConfirmantInfo confirmant) {
         this.confirmant = confirmant;
+    }
+
+    public BirthRegisterInfo getRegister() {
+        return register;
+    }
+
+    public void setRegister(BirthRegisterInfo register) {
+        this.register = register;
     }
 }

@@ -14,19 +14,6 @@ import java.util.Date;
 @Embeddable
 public class ChildInfo implements Serializable {
     /**
-     * The Birth/Death registration division where the birth is registered (Includes District)
-     */
-    @ManyToOne
-    @JoinColumn(name = "bdDivisionUKey", nullable = false)
-    private BDDivision birthDivision;
-
-    /**
-     * This is the serial number captured from the BDF
-     */
-    @Column(nullable = false, updatable = false)
-    private String bdfSerialNo;
-
-    /**
      * This is the PIN number generated to the child
      */
     @Column(nullable = true, length = 10)
@@ -38,22 +25,6 @@ public class ChildInfo implements Serializable {
     @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirth;
-
-    /**
-     * The date when the birth declaration was submitted to the medical registrar or the DS office
-     */
-    @Column(nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfRegistration;
-
-    /**
-     * 0 - BDF added, 1 - ADR approved, 2 - Confirmation printed
-     * 3 - confirmed without changes, 14 - Record archived and corrected (i.e. during the confirmation by parents),
-     * 5 - confirmation changes captured, 6 - confirmation changes approved
-     * 10 - rejected and archived
-     */
-    @Column(nullable = false)
-    private int status;
 
     /**
      * The place of birth - usually the village or hospital name
@@ -103,52 +74,12 @@ public class ChildInfo implements Serializable {
     @Column(nullable = true)
     private Integer numberOfChildrenBorn;
 
-    public District getBirthDistrict() {
-        return birthDivision.getDistrict();
-    }
-
-    public BDDivision getBirthDivision() {
-        return birthDivision;
-    }
-
-    public void setBirthDivision(BDDivision birthDivision) {
-        this.birthDivision = birthDivision;
-    }
-
-    public DSDivision getDsDivision() {
-        return birthDivision.getDsDivision();
-    }
-
-    public String getBdfSerialNo() {
-        return bdfSerialNo;
-    }
-
-    public void setBdfSerialNo(String bdfSerialNo) {
-        this.bdfSerialNo = bdfSerialNo;
-    }
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Date getDateOfRegistration() {
-        return dateOfRegistration;
-    }
-
-    public void setDateOfRegistration(Date dateOfRegistration) {
-        this.dateOfRegistration = dateOfRegistration;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getPlaceOfBirth() {
@@ -213,5 +144,13 @@ public class ChildInfo implements Serializable {
 
     public void setBirthAtHospital(Integer birthAtHospital) {
         this.birthAtHospital = birthAtHospital;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 }

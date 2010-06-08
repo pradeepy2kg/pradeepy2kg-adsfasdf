@@ -37,8 +37,8 @@
                 හා දිනය
                 <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
                 <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form</label>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.child.bdfSerialNo}"/>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.child.dateOfRegistration}"/>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.register.bdfSerialNo}"/>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.register.dateOfRegistration}"/>
         </div>
         <div id="last-date" class="font-9">
             <div class="no">2</div>
@@ -137,7 +137,7 @@
             <div class="no"></div>
             <label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label>
             <div class="current">
-                <s:textfield value="%{getDistrictList().get(#session.birthRegister.child.birthDivision.dsDivision.district.districtId)}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{#session.birthRegister.register.birthDivision.dsDivision.district.districtId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select list="districtList" name="" headerKey="0" headerValue="%{getText('select_district.label')}" />
@@ -147,7 +147,7 @@
             <div class="no"></div>
             <label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label>
             <div class="current">
-                <s:textfield value="%{getDsDivisionList().get(#session.birthRegister.child.birthDivision.dsDivision.divisionId)}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{#session.birthRegister.register.birthDivision.dsDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select list="dsDivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
@@ -157,7 +157,7 @@
             <div class="no"></div>
             <label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label>
             <div class="current">
-                <s:textfield value="%{getBdDivisionList().get(#session.birthRegister.child.birthDivision.divisionId)}" cssClass="disable" disabled="true"/>
+                <s:textfield value="%{#session.birthRegister.register.birthDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
                 <s:select name="birthDivision" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>  
@@ -221,11 +221,11 @@
             </div>
             <div class="new">
                 <label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label>
-                <s:radio name="marriage.parentsMarried" list="#{'1':''}"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/>
                 <label class="label">*in sinhala<br>*in tamil<br>No</label>
-                <s:radio name="marriage.parentsMarried" list="#{'0':''}"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/>
                 <label class="label">*in sinhala<br>*in tamil<br>Since Married</label>
-                <s:radio name="marriage.parentsMarried" list="#{'2':''}"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/>
             </div>
         </div>
         <s:hidden name="pageNo" value="1"/>

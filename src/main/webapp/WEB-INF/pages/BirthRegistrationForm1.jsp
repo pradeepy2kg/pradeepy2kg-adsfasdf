@@ -19,7 +19,7 @@
             </div>
             <div id="serial-no">
                 <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
-                    <s:textfield name="child.bdfSerialNo"/>
+                    <s:textfield name="register.bdfSerialNo"/>
                 </label>
             </div>
             <div id="submit-date">
@@ -30,7 +30,7 @@
                               onchange="javascript:setDate('month','1')"/>
                     <s:select list="{'01','02','03'}" name="" id="day"
                               onchange="javascript:setDate('day','1')"/>
-                    <sx:datetimepicker id="submitDatePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
+                    <sx:datetimepicker id="submitDatePicker" name="register.dateOfRegistration" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('datePicker')"/>
                 </label>
             </div>
