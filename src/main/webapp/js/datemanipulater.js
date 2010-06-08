@@ -11,31 +11,31 @@ var day;
 var selectedDate,secondSelectedDate,thirdSelectedDate;
 var sel;
 function setDate(id, flag) {
-    var datePicker = dojo.widget.byId('submitDatePicker');
-    var secondDatePicker = dojo.widget.byId('secondDatePicker');
-    var thirdDatePicker = dojo.widget.byId('thirdDatePicker');
+    var submitDatePicker = dojo.widget.byId('submitDatePicker');
+    var datePicker = dojo.widget.byId('datePicker');
+    var fatherDatePicker = dojo.widget.byId('fatherDatePicker');
+    var motherDatePicker = dojo.widget.byId('motherDatePicker');
+    var admitDatePicker= dojo.widget.byId('admitDatePicker');
+     var marriageDatePicker= dojo.widget.byId('marriageDatePicker');
+       var modifiedDatePicker= dojo.widget.byId('modifiedDatePicker');
 
+    if (flag == 1) submitDatePicker.setValue(getDateWhenYearIsGiven
+            ("submitYear", "submitMonth", "submitDay"));
 
-    if (flag == 1)
-    {
-        selectedDate = getDateWhenYearIsGiven("year", "month", "day");
-        datePicker.setValue(selectedDate);
+    else if (flag == 2)  datePicker.setValue(getDateWhenYearIsGiven
+            ("year", "month", "day"));
 
+    else if (flag == 3) fatherDatePicker.setValue(getDateWhenYearIsGiven
+                ("fatherYear", "fatherMonth", "fatherDay"));
 
-    }
-    else if (flag == 2)
-    {
-        secondSelectedDate = getDateWhenYearIsGiven("secondYear", "secondMonth", "secondDay");
-        secondDatePicker.setValue(secondSelectedDate);
-    }
-    else if (flag == 3)
-        {
-
-            thirdSelectedDate = getDateWhenYearIsGiven("thirdYear", "thirdMonth", "thirdDay");
-            thirdDatePicker.setValue(thirdSelectedDate);
-
-        }
-
+    else if (flag == 4) motherDatePicker.setValue(getDateWhenYearIsGiven
+                    ("motherYear", "motherMonth", "motherDay"));
+     else if (flag == 5) admitDatePicker.setValue(getDateWhenYearIsGiven
+                    ("admitYear", "admitMonth", "admitDay"));
+       else if (flag == 6)marriageDatePicker.setValue(getDateWhenYearIsGiven
+                    ("marrigeYear", "marrigeMonth", "marrigeDay"));
+    else if (flag == 7)modifiedDatePicker.setValue(getDateWhenYearIsGiven
+                    ("modifiedYear", "modifiedMonth", "modifiedDay"));
 
 }
 
@@ -82,4 +82,6 @@ function getDateWhenDayIsGiven(y, m, d) {
  */
 function splitDate(id) {
     //todo has to be implemented
+    //var stringValue = submitDatePicker.getValue();
+    document.write("dddd");
 }
