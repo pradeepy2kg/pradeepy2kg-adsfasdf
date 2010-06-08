@@ -109,7 +109,7 @@
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
                     <div>
-                        <s:radio name="child.birthAtHospital" list="##@java.uti.HashMap@{'1':''}"/>
+                        <s:radio name="child.birthAtHospital" list="#@java.uti.HashMap@{'1':''}"/>
                     </div>
                 </div>
             </div>
