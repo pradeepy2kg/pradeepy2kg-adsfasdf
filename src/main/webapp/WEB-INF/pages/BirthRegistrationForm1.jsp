@@ -30,7 +30,7 @@
                               onchange="javascript:setDate('month','1')"/>
                     <s:select list="{'01','02','03'}" name="" id="day"
                               onchange="javascript:setDate('day','1')"/>
-                    <sx:datetimepicker id="datePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
+                    <sx:datetimepicker id="submitDatePicker" name="child.dateOfRegistration" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('datePicker')"/>
                 </label>
             </div>
@@ -69,7 +69,7 @@
                 <s:select list="{'01','02','03'}" name="" id="secondDay"
                           onchange="javascript:setDate('secondDay','2')"/>
                 <div id="datePicker">
-                    <sx:datetimepicker id="secondDatePicker" name="child.dateOfBirth"
+                    <sx:datetimepicker id="datePicker" name="child.dateOfBirth"
                                        displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('secondDatePicker')"/>
                 </div>
@@ -102,11 +102,15 @@
                 <label>*in Sinhala/*in Tamil/In a Hospital</label>
                 <div>
                     <label>ඔව් / *in  Tamil  / Yes </label>
-                    <s:radio name="child.birthAtHospital" list="#{'0':''}"/>
+                    <div>
+                        <s:radio name="child.birthAtHospital" list="#{'0':''}"/>
+                    </div>
                 </div>
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
-                    <s:radio name="child.birthAtHospital" list="#{'1':''}"/>
+                    <div>
+                        <s:radio name="child.birthAtHospital" list="#{'1':''}"/>
+                    </div>
                 </div>
             </div>
         </div>

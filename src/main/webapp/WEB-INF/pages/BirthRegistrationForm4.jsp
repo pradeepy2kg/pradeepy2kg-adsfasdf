@@ -42,7 +42,7 @@
                       onchange="javascript:setDate('month','1')"/>
             <s:select list="{'01','02','03'}" name="" id="day"
                       onchange="javascript:setDate('day','1')"/>
-            <sx:datetimepicker id="datePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+            <sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
                                displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('datePicker')"/>
 

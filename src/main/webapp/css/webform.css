@@ -90,7 +90,8 @@
 #child-pob-in-hospital label {width:250px;}
 #child-pob-in-hospital input {width:500px;}
 #child-pob-in-hospital div label{width:200px; border-right:1px solid #000; padding:6px;}
-#child-pob-in-hospital div input{margin:7px 25px;}
+#child-pob-in-hospital div div input{margin:7px 25px;}
+#child-pob-in-hospital div div label{display:none;}
 #child-name textarea{float:left; margin:25px 5px; width:800px;}
 #child-name-in-english textarea{float:left; margin:5px; width:800px;}
 #child-name-in-english label{padding:5px 0;}

@@ -56,7 +56,7 @@
                   onchange="javascript:setDate('month','1')"/>
         <s:select list="{'01','02','03'}" name="" id="day"
                   onchange="javascript:setDate('fatherDay','1')"/>
-        <sx:datetimepicker id="datePicker" name="parent.fatherDOB"
+        <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
                            displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('datePicker')"/>
     </div>
 </div>
@@ -130,7 +130,7 @@
                   onchange="javascript:setDate('month','2')"/>
         <s:select list="{'01','02','03'}" name="" id="secondDay"
                   onchange="javascript:setDate('day','2')"/>
-        <sx:datetimepicker id="secondDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
+        <sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                            onmouseover="javascript:splitDate('secondDatePicker')"/>
 
     </div>
@@ -197,7 +197,7 @@
                   onchange="javascript:setDate('admitMonth','3')"/>
         <s:select list="{'01','02','03'}" name="" id="thirdDay"
                   onchange="javascript:setDate('admitDay','3')"/>
-        <sx:datetimepicker id="thirdDatePicker" name="parent.motherAdmissionDate"
+        <sx:datetimepicker id="admitDatePicker" name="parent.motherAdmissionDate"
                            displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('thirdDatePicker')"/>
     </div>
 </div>

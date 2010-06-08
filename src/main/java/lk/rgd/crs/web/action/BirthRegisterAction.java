@@ -13,6 +13,8 @@ import java.util.Locale;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.GNDivision;
+import lk.rgd.common.api.domain.DSDivision;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -134,11 +136,27 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setParent(parent);
                         logger.debug("Father Country: {}", fatherCountry);
                         logger.debug("father new country  {} ", parent.getFatherCountry());
+                        /*if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 2: father- nic=" + bdf.getParent().getFatherNICorPIN() + ",country=" + bdf.getParent().getFatherCountry() + ",passport" + bdf.getParent().getFatherPassportNo() + ",name=" +
+                                    bdf.getParent().getFatherFullName() + ",dob=" + bdf.getParent().getFatherDOB() + ",place=" + bdf.getParent().getFatherPlaceOfBirth() + ",race=" + bdf.getParent().getFatherRace());
+                            logger.debug("BRF 2: mother- nic=" + bdf.getParent().getMotherNICorPIN() + ",country=" + bdf.getParent().getMotherCountry() + ",passport" + bdf.getParent().getMotherPassportNo() + ",name=" +
+                                    bdf.getParent().getMotherFullName() + ",dob=" + bdf.getParent().getMotherDOB() + ",place=" + bdf.getParent().getMotherPlaceOfBirth() + ",race=" + bdf.getParent().getMotherRace() + ",age=" + bdf.getParent().getMotherAgeAtBirth() +
+                                    ",address=" + bdf.getParent().getMotherAddress() + ",admitted=" + bdf.getParent().getMotherAdmissionNo() + "," + bdf.getParent().getMotherAdmissionDate() + ",tel=" + bdf.getParent().getMotherPhoneNo() + ",email=" + bdf.getParent().getMotherEmail());
+                        }*/
                         break;
                     case 3:
                         bdf.setMarriage(marriage);
                         bdf.setGrandFather(grandFather);
                         bdf.setInformant(informant);
+                        /*if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 3: married=" + bdf.getMarriage().getParentsMarried() + ", place=" + bdf.getMarriage().getPlaceOfMarriage() + ", date=" +
+                                    bdf.getMarriage().getDateOfMarriage() + ", motherSign=" + bdf.getMarriage().isMotherSigned() + " ,fatherSign=" + bdf.getMarriage().isFatherSigned() +
+                                    ", grandFather=" + bdf.getGrandFather().getGrandFatherFullName() + "," + bdf.getGrandFather().getGrandFatherBirthYear() + "," + bdf.getGrandFather().getGrandFatherBirthPlace() +
+                                    ", GreatGrand=" + bdf.getGrandFather().getGreatGrandFatherFullName() + "," + bdf.getGrandFather().getGreatGrandFatherBirthYear() + "," + bdf.getGrandFather().getGreatGrandFatherBirthPlace() +
+                                    ", InformantType" + bdf.getInformant().getInformantType() + ", InfoName=" + bdf.getInformant().getInformantName() + ", infoId=" + bdf.getInformant().getInformantNICorPIN() + ", infoAdd=" +
+                                    bdf.getInformant().getInformantAddress() + ", infoTel=" + bdf.getInformant().getInformantPhoneNo() + ", infoEmail=" + bdf.getInformant().getInformantEmail() + " ,infoSingnDate=" + bdf.getInformant().getInformantSignDate());
+                        }*/
+
                         break;
                     case 4:
                         bdf.setNotifyingAuthority(notifyingAuthority);
@@ -148,6 +166,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
 
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
+
+                        /*if (logger.isDebugEnabled()) {
+                            logger.debug("BRF 4: authName=" + bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() + " ," + bdf.getNotifyingAuthority().getNotifyingAuthorityName() + " ," +
+                                    bdf.getNotifyingAuthority().getNotifyingAuthorityAddress() + " ,signDate=" + bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+                        }*/
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
@@ -195,7 +218,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
                         bdf.getParent().setMotherRace(parent.getMotherRace());
 
-                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
+                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried()); 
                         break;
                     case 2:
                         logger.debug("inside birthConfirmation : confiramationFlag {}", confirmationFlag);
