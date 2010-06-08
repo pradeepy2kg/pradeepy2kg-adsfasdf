@@ -8,11 +8,9 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NamedQuery;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
-import java.sql.Date;
 
 /**
  * @author asankha
@@ -59,6 +57,13 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         Query q = em.createNamedQuery("get.by.id.pending.approval");
         q.setParameter("bdfidUKey", bdfidUKey);
         return (BirthDeclaration) q.getSingleResult();
+    }
+
+    public List<BirthDeclaration> getByDOBandMotherNICorPIN(Date dateOfBirth, String motherNICorPIN) {
+        Query q = em.createNamedQuery("get.by.dateOfBirth.and.motherNICorPIN");
+        q.setParameter("dateOfBirth", dateOfBirth);
+        q.setParameter("motherNICorPIN", motherNICorPIN);
+        return q.getResultList();
     }
 
     /**

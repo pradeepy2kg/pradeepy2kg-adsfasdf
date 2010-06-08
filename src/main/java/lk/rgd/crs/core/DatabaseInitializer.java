@@ -115,16 +115,30 @@ public class DatabaseInitializer implements ApplicationContextAware {
             Role drRole = roleDao.getRole("DR");
             bs = new BitSet();
             bs.or(adrRole.getPermBitSet());
-            bs.set(Permission.DISTRICT_WIDE_ACCESS);
+            // TODO add any DR specific permissions
             drRole.setPermBitSet(bs);
             roleDao.save(drRole);
 
-            Role rgRole = roleDao.getRole("RG");
+            Role argRole = roleDao.getRole("ARG");
             bs = new BitSet();
             bs.or(drRole.getPermBitSet());
-            bs.set(Permission.DISTRICT_WIDE_ACCESS);
+            // TODO add any ARG specific permissions
+            argRole.setPermBitSet(bs);
+            roleDao.save(argRole);
+
+            Role rgRole = roleDao.getRole("RG");
+            bs = new BitSet();
+            bs.or(argRole.getPermBitSet());
+            // TODO add any RG specific permissions
             rgRole.setPermBitSet(bs);
             roleDao.save(rgRole);
+
+            Role adminRole = roleDao.getRole("ADMIN");
+            bs = new BitSet();
+            bs.or(rgRole.getPermBitSet());
+            // TODO add any ADMIN specific permissions
+            adminRole.setPermBitSet(bs);
+            roleDao.save(adminRole);
 
             logger.info("Initialized the test database by creating the schema and executing populate_database.sql");
         } catch (Exception ignore) {}

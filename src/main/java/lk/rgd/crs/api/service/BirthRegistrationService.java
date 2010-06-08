@@ -13,27 +13,24 @@ public interface BirthRegistrationService {
      * @param bdf the BDF to be added
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user the user initiating the action
-     * @return a list of warnings
      */
-    public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Update an existing BDF by a DEO or ADR before approval
      * @param bdf the BDF to be updated
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user the user initiating the action
-     * @return a list of warnings
      */
-    public List<UserWarning> updateNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public void updateNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Remove an existing BDF by a DEO or ADR before approval
      * @param bdf the BDF to be added
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user the user initiating the action
-     * @return a list of warnings
      */
-    public List<UserWarning> deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public void deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Returns the Birth Declaration object for a given Id

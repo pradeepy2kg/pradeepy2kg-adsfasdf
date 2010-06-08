@@ -158,14 +158,12 @@ public class DAOImplTest extends TestCase {
         Assert.assertFalse(rg.getRoles().contains(roleDAO.getRole("ADR")));
         Assert.assertFalse(rg.getRoles().contains(roleDAO.getRole("DEO")));
         Assert.assertTrue(rg.isAuthorized(Permission.APPROVE_BDF));
-        Assert.assertTrue(rg.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
 
         User asankha = bean.authenticateUser("asankha", "asankha");
         Assert.assertFalse(asankha.getRoles().contains(roleDAO.getRole("RG")));
         Assert.assertTrue(asankha.getRoles().contains(roleDAO.getRole("ADR")));
         Assert.assertFalse(asankha.getRoles().contains(roleDAO.getRole("DEO")));
         Assert.assertTrue(asankha.isAuthorized(Permission.APPROVE_BDF));
-        Assert.assertFalse(asankha.isAuthorized(Permission.DISTRICT_WIDE_ACCESS));
     }
 
     public void testBirthDeclaration() throws Exception {
