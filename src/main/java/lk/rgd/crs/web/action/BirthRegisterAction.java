@@ -20,7 +20,6 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
 
-
 /**
  * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
  * Data capture forms (4) will be kept in session until persistance at the end of 4th page.
@@ -55,9 +54,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private ConfirmantInfo confirmant;
     private BirthRegisterInfo register;
 
-
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
-
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
@@ -73,12 +70,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDSDivisionId;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
-    /**
-     * confirmationFlag is set to 1 if
-     * request is from birth registration
-     * approval jsp else it is set to 0
-     */
-    private int confirmationFlag;
 
     public String welcome() {
         return "success";
@@ -111,10 +102,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (getBdId() == 0) {
+                if (bdId == 0) {
                     bdf = new BirthDeclaration();
+                    bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
-                    bdf = service.getById(getBdId());
+                    bdf = service.getById(bdId);
+                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                        return "error";   // todo pass error info
+                    }
+                    //todo check permissions to operate on this birthdivision 
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -125,7 +121,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         break;
                     case 2:
                         bdf.setParent(parent);
-                        logger.debug("Father Country: {}", fatherCountry);
                         logger.debug("father new country  {} ", parent.getFatherCountry());
                         /*if (logger.isDebugEnabled()) {
                             logger.debug("BRF 2: father- nic=" + bdf.getParent().getFatherNICorPIN() + ",country=" + bdf.getParent().getFatherCountry() + ",passport" + bdf.getParent().getFatherPassportNo() + ",name=" +
@@ -153,8 +148,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setNotifyingAuthority(notifyingAuthority);
                         // all pages captured, proceed to persist after validations
                         // todo business validations and persiatance
-                        logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
-                        logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
 
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
 
@@ -185,13 +178,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (bdId != 0) {
-                    logger.debug("inside birthConfirmation : bdId {} recieved from BirthRegisterApproval ", bdId);
-                    bdf = service.getById(bdId);
+                if (getBdId() != 0) {
+                    bdf = service.getById(getBdId());
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
-                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page to search for a BD
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
@@ -212,14 +204,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getMarriage().setParentsMarried(marriage.getParentsMarried()); 
                         break;
                     case 2:
-                        logger.debug("inside birthConfirmation : confiramationFlag {}", confirmationFlag);
-                        if (confirmationFlag != 1) {
-                            bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
-                            bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
 
-                            bdf.getParent().setFatherFullName(parent.getFatherFullName());
-                            bdf.getParent().setMotherFullName(parent.getMotherFullName());
-                        }
+                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
                         break;
                     case 3:
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
@@ -231,7 +220,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
-            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN,bdf);
 
             populate();
             return "form" + pageNo;
@@ -239,7 +227,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String birthConfirmationPrint() {
-
         logger.debug("Step {} of 3 ", pageNo);
         if ((pageNo > 3) || (pageNo < 0)) {
             return "error";
@@ -251,7 +238,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
-                    logger.debug("inside birthConfirmation : bdId {}", getBdId());
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
             } else {
@@ -476,14 +462,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.serialNo = serialNo;
     }
 
-    public int getConfirmationFlag() {
-        return confirmationFlag;
-    }
-
-    public void setConfirmationFlag(int confirmationFlag) {
-        this.confirmationFlag = confirmationFlag;
-    }
-
     public int getFatherRace() {
         return fatherRace;
     }
@@ -519,7 +497,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherDSDivisionId(int motherDSDivisionId) {
         // TODO total list should be available
-        this.motherDSDivisionId = motherDSDivisionId;
+        this.motherDSDivisionId = motherDSDivisionId;        
         // TODO get dsDivision by id and set it in parent
     }
 
