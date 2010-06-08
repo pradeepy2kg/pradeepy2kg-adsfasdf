@@ -41,18 +41,18 @@
                 <label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label>
 
                 <div>
-                    <s:select list="{'2009','2010','2011'}" name="" id="year"
-                              onchange="javascript:setDate('year','1')"/>
-                    <s:select list="{'01','02','03','06'}" name="" id="month"
-                              onchange="javascript:setDate('month','1')"/>
-                    <s:select list="{'01','02','03'}" name="" id="day"
-                              onchange="javascript:setDate('day','1')"/> <%--
+                    <s:select list="{'2009','2010','2011'}" name="" id="marrigeYear"
+                              onchange="javascript:setDate('year','6')"/>
+                    <s:select list="{'01','02','03','06'}" name="" id="marrigeMonth"
+                              onchange="javascript:setDate('month','6')"/>
+                    <s:select list="{'01','02','03'}" name="" id="marrigeDay"
+                              onchange="javascript:setDate('day','6')"/> <%--
                     <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
                                        displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('marriageDatePicker')"/>  --%>
                     <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
                                        displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('datePickerr')"/>
+                                       onmouseover="javascript:splitDate('marriageDatePicker')"/>
                 </div>
             </div>
         </div>
@@ -142,7 +142,8 @@
         </div>
         <div id="informant-name" class="font-9">
             <label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label>
-            <s:textarea name="informant.informantName"/>
+
+            <s:textarea name="informant.informantName" value="3sess"/>
         </div>
         <div id="informant-nic" class="font-9">
             <label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல் கொடுப்பவரின் தனிநபர்
