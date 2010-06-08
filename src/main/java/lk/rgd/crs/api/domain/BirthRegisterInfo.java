@@ -33,13 +33,10 @@ public class BirthRegisterInfo {
     private Date dateOfRegistration;
 
     /**
-     * 0 - BDF added, 1 - ADR approved, 2 - Confirmation printed
-     * 3 - confirmed without changes, 14 - Record archived and corrected (i.e. during the confirmation by parents),
-     * 5 - confirmation changes captured, 6 - confirmation changes approved
-     * 10 - rejected and archived
+     * @see lk.rgd.crs.api.domain.BirthDeclaration.State
      */
-    @Column(nullable = false)
-    private int status;
+    @Enumerated
+    private BirthDeclaration.State status;
 
     /** Status comment - e.g. reason for rejection due to duplicate  */
     @Column(nullable = true)
@@ -110,11 +107,11 @@ public class BirthRegisterInfo {
         this.dateOfRegistration = dateOfRegistration;
     }
 
-    public int getStatus() {
+    public BirthDeclaration.State getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(BirthDeclaration.State status) {
         this.status = status;
     }
 }

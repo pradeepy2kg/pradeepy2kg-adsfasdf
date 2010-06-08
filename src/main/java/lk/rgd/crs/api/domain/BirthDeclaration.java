@@ -31,9 +31,29 @@ import java.util.Date;
                         "WHERE bdf.idUKey = :bdfidUKey AND bdf.register.status = 5 "),
         @NamedQuery(name = "get.by.serialNo.pending.approval", query =
                 "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 5 ")
+                        "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 5 "),
+        @NamedQuery(name = "get.by.dateOfBirth.and.motherNICorPIN", query =
+                "SELECT bdf FROM BirthDeclaration bdf " +
+                        "WHERE bdf.child.dateOfBirth = :dateOfBirth AND bdf.parent.motherNICorPIN = :motherNICorPIN ")
 })
 public class BirthDeclaration implements Serializable {
+
+    public enum State {
+        DATA_ENTRY,                     /** A newly entered BDF - can be edited by DEO or ADR */
+        APPROVED,                       /** An ADR or higher approved BDF - ready for confirmation or auto BC generation */
+        CONFIRMATION_PRINTED,           /** A BDF for which the parent confirmation form was printed */
+        CONFIRMED_WITHOUT_CHANGES,      /** A BDF with no changes during confirmation by parents */
+        ARCHIVED_CORRECTED,             /** A BDF archived due to corrections by parents. This is the State of the old
+                                            record. A new record is added with State as CONFIRMATION_CHANGES_CAPTURED */
+        CONFIRMATION_CHANGES_CAPTURED,  /** A BDF for which the parent confirmation changes has been captured */
+        CONFIRMATION_CHANGES_APPROVED,  /** A BDF for which the parent confirmation changes has been approved */
+        ARCHIVED_REJECTED,              /** A BDF rejected [e.g. as a duplicate] at any stage during processing */
+        /** Normal states after initial BC printing */
+        ARCHIVED_BC_GENERATED,          /** A BDF for which [a PIN is generated and] the BC is printed */
+        ARCHIVED_ALTERED                /** A BDF archived after an alteration is performed after initial BC. New
+                                            record is captured as ARCHIVED_BC_GENERATED */
+    }    
+
     /** This is an auto generated unique row identifier  */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.common.api.domain.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,6 +57,14 @@ public interface BirthDeclarationDAO {
      */
     public BirthDeclaration getById(long bdId);
 
+    /**
+     * Get existing records for the same mother and date of birth of the child
+     * @param dateOfBirth the date of birth of the child
+     * @param motherNICorPIN mothers NIC or PIN
+     * @return existing records if any
+     */
+    public List<BirthDeclaration> getByDOBandMotherNICorPIN(Date dateOfBirth, String motherNICorPIN);
+    
     /**
      * Returns the Birth Declaration object for a given bdf serialNo
      * @param  serailNo bdfSerialNo given to the Birth Declarion
