@@ -114,13 +114,15 @@
             <div class="no">4</div>
             <label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label>
             <div class="current">
-                <% switch (((BirthDeclaration)(session.getAttribute("birthRegister"))).getChild().getChildGender()){case 0:%>
-                <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
-                <% break;case 1: %>
-                <s:textfield value="%{getText('female.label')}" cssClass="disable" disabled="true"/>
-                <% break;case 2: %>
-                <s:textfield value="%{getText('unknown.label')}" cssClass="disable" disabled="true"/>
-                <% }%>
+                <s:if test="#session.birthRegister.child.childGender == 0" >
+                    <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
+                </s:if>
+                <s:elseif test="#session.birthRegister.child.childGender == 1">
+                    <s:textfield value="%{getText('female.label')}" cssClass="disable" disabled="true"/>
+                </s:elseif>
+                <s:elseif test="#session.birthRegister.child.childGender == 2">
+                    <s:textfield value="%{getText('unknown.label')}" cssClass="disable" disabled="true"/>
+                </s:elseif>
             </div>
             <div class="new">
                 <s:select list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
