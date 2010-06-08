@@ -13,8 +13,6 @@ import java.util.Locale;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.GNDivision;
-import lk.rgd.common.api.domain.DSDivision;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -55,10 +53,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
     private ConfirmantInfo confirmant;
-
+    private BirthRegisterInfo register;
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
-
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
@@ -99,6 +96,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.dsDivisionDAO = dsDivisionDAO;
         child = new ChildInfo();
         parent = new ParentInfo();
+        register = new BirthRegisterInfo();
     }
 
     /**
@@ -116,25 +114,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (bdId == 0) {
+                if (getBdId() == 0) {
                     bdf = new BirthDeclaration();
                 } else {
-                    bdf = service.getById(bdId);
+                    bdf = service.getById(getBdId());
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 switch (pageNo) {
                     case 1:
                         bdf.setChild(child);
-                        /*if (logger.isDebugEnabled()) {
-                            logger.debug("BRF 1: serial=" + bdf.getChild().getBdfSerialNo() + ",submitDate=" + bdf.getChild().getDateOfRegistration() + ",dob=" + bdf.getChild().getDateOfBirth() + ",district=" + bdf.getChild().getBirthDistrict().getSiDistrictName() +
-                                    ",DSDivision=" + bdf.getChild().getDsDivision().getSiDivisionName() + ",birthDivision=" + bdf.getChild().getBirthDivision().getSiDivisionName() + ",place=" + bdf.getChild().getPlaceOfBirth() + ",GNDivision=" + bdf.getChild().getGnDivision().getSiDivisionName() + ",name=" + bdf.getChild().getChildFullNameOfficialLang() + "," +
-                                    bdf.getChild().getChildFullNameEnglish() + ",gender=" + bdf.getChild().getChildGender() + ",weight=" + bdf.getChild().getChildBirthWeight() + ",rank=" + bdf.getChild().getChildRank() + ",children=" + bdf.getChild().getNumberOfChildrenBorn());
-                        }*/
+                        bdf.setRegister(register);
                         break;
                     case 2:
                         bdf.setParent(parent);
-                        logger.debug("Father Country: {}", fatherCountry);
                         logger.debug("father new country  {} ", parent.getFatherCountry());
                         /*if (logger.isDebugEnabled()) {
                             logger.debug("BRF 2: father- nic=" + bdf.getParent().getFatherNICorPIN() + ",country=" + bdf.getParent().getFatherCountry() + ",passport" + bdf.getParent().getFatherPassportNo() + ",name=" +
@@ -162,8 +155,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setNotifyingAuthority(notifyingAuthority);
                         // all pages captured, proceed to persist after validations
                         // todo business validations and persiatance
-                        logger.debug("Birth Register : {},{}", bdf.getChild().getChildFullNameEnglish(), bdf.getParent().getFatherFullName());
-                        logger.debug("Birth Register : {}.", bdf.getParent().getMotherFullName());
 
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
 
@@ -194,8 +185,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (bdId != 0) {
-                    bdf = service.getById(bdId);
+                if (getBdId() != 0) {
+                    bdf = service.getById(getBdId());
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
@@ -206,11 +197,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
                     case 1:
-                        bdf.getChild().setBdfSerialNo(child.getBdfSerialNo());
-                        bdf.getChild().setDateOfRegistration(child.getDateOfRegistration());
+                        bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
+                        bdf.getRegister().setDateOfRegistration(register.getDateOfRegistration());
                         bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                         bdf.getChild().setChildGender(child.getChildGender());
-                        bdf.getChild().setBirthDivision(child.getBirthDivision());
+                        bdf.getRegister().setBirthDivision(register.getBirthDivision());
                         bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
 
                         bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
@@ -254,8 +245,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
-                if (bdId != 0) {
-                    bdf = service.getById(bdId);
+                if (getBdId() != 0) {
+                    bdf = service.getById(getBdId());
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
@@ -399,8 +390,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
-        child.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrictId, birthDivisionId));
-        logger.debug("setting BirthDivision : {}", child.getBirthDivision().getEnDivisionName());
+        register.setBirthDivision(bdDivisionDAO.getBDDivision(birthDistrictId, birthDivisionId));
+        logger.debug("setting BirthDivision : {}", register.getBirthDivision().getEnDivisionName());
     }
 
     public int getFatherCountry() {
@@ -537,5 +528,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         // TODO total list should be available
         this.motherDSDivisionId = motherDSDivisionId;        
         // TODO get dsDivision by id and set it in parent
+    }
+
+    public BirthRegisterInfo getRegister() {
+        return register;
+    }
+
+    public void setRegister(BirthRegisterInfo register) {
+        this.register = register;
+    }
+
+    public long getBdId() {
+        return bdId;
+    }
+
+    public void setBdId(long bdId) {
+        this.bdId = bdId;
     }
 }

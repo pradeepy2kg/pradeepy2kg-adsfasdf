@@ -40,9 +40,9 @@
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                             <td><s:property value="%{#printStatus.count+#session.printStart}"/></td>
                             <td><s:checkbox name="index" onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
-                            <td align=" center"><s:property value="child.bdfSerialNo"/></td>
+                            <td align=" center"><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="child.childFullNameOfficialLang"/></td>
-                            <td><s:property value="child.dateOfRegistration"/></td>
+                            <td><s:property value="register.dateOfRegistration"/></td>
                             <td align="right">
                                 <s:if test="confirmant.confirmationPrinted == 2"><s:label value="%{getText('already_printed.label')}"/></s:if>
                                 <s:else><s:label value="%{getText('not_printed.label')}"/></s:else>
