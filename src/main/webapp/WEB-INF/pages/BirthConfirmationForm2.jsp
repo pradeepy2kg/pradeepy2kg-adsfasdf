@@ -11,7 +11,7 @@
         <div id="bcf-child-current-name" class="font-9">
             <div class="no">11</div>
             <label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் / தமிழ்) <br>Childs name in the official languages (Sinhala / Tamil)</label>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.child.childFullNameOfficialLang}" ></s:textfield>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthConfirmation.child.childFullNameOfficialLang}" ></s:textfield>
         </div>
         <div id="bcf-child-new-name" class="font-9">
             <div class="no"></div>
@@ -21,7 +21,7 @@
         <div id="bcf-child-current-name-in-english" class="font-9">
             <div class="no">12</div>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ...   <br>Childs name in English</label>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.child.childFullNameEnglish}" ></s:textfield>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthConfirmation.child.childFullNameEnglish}" ></s:textfield>
         </div>
         <div id="bcf-child-new-name-in-english" class="font-9">
             <div class="no"></div>
@@ -31,7 +31,7 @@
         <div id="bcf-father-current-name" class="font-9">
             <div class="no">13</div>
             <label>පියාගේ සම්පුර්ණ නම  <br>தந்நையின் முழுப் பெயர்<br>Father's Full Name</label>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.parent.fatherFullName}" ></s:textfield>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthConfirmation.parent.fatherFullName}" ></s:textfield>
         </div>
         <div id="bcf-father-new-name" class="font-9">
             <div class="no"></div>
@@ -41,7 +41,7 @@
         <div id="bcf-mother-current-name" class="font-9">
             <div class="no">14</div>
             <label>මවගේ සම්පූර්ණ නම <br>தாயின் முழுப் பெயர்<br>Mother's Full Name</label>
-            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthRegister.parent.motherFullName}" ></s:textfield>
+            <s:textfield cssClass="disable" disabled="true" value="%{#session.birthConfirmation.parent.motherFullName}" ></s:textfield>
         </div>
         <div id="bcf-mother-new-name" class="font-9">
             <div class="no"></div>

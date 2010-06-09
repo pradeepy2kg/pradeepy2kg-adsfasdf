@@ -20,7 +20,7 @@
 * Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, .birth-confirmation-form-outer  {
+.birth-registration-form-outer, .birth-confirmation-form-outer, #bdaw-outer {
     width: 1030px;
     background: #ffffff;
     padding: 10px;
@@ -292,3 +292,8 @@ border-right:0px solid #000000;
 }
 
 .current-print{border:none;}
+
+/* Styles for the BirthDeclarationApprovalWarnings. */
+#bdaw-outer{background:none;}
+#bdaw-content{text-align:justify; color:red; }
+#bdaw-action{}

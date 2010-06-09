@@ -101,8 +101,14 @@
         </action>
 
         <action name="eprDeleteApprovalPending" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="deleteApprovalPending">
+                method="deleteBirthDeclaration">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveBirthDeclaration">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+            <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
         </action>
 
         <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="filter">
@@ -114,6 +120,10 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
+        <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveIgnoringWorning">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
         <!--PrintAction related actions-->
         <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="filterPrintList">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>

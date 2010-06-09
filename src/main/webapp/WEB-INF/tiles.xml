@@ -92,7 +92,11 @@
     <definition name="epr.birthRegisterApproval" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegisterApproval.jsp"/>
         <put-attribute name="title" value="BirthRegisterApproval.title"/>
+    </definition>
 
+    <definition name="epr.approvalWorning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthDeclarationApprovalWarning.jsp"/>
+        <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
     </definition>
 
     <definition name="epr.birthConfirmationPrint" extends="epr.template">

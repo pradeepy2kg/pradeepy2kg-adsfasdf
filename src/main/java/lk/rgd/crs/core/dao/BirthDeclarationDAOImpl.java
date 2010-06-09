@@ -42,13 +42,20 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     }
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("confirmation.pending.approval").setFirstResult((pageNo-1)*noOfRows).setMaxResults(noOfRows);
+        Query q = em.createNamedQuery("confirmation.pending.approval").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("birthDivision", birthDivision);
+        return q.getResultList();
+    }
+
+    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("declaration.pending.approval").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
     }
 
     /**
      * Returns the Birth Declaration object for a given Id
+     *
      * @param bdfidUKey Birth Declarion Id for the given declaration
      * @Return BirthDeclaration
      */
@@ -68,7 +75,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
 
     /**
      * Returns the Birth Declaration object for a given bdf serialNo
-     * @param  bdfSerialNo bdfSerialNo given to the Birth Declarion
+     *
+     * @param bdfSerialNo bdfSerialNo given to the Birth Declarion
      * @Return BirthDeclaration
      */
     public BirthDeclaration getBySerialNo(String bdfSerialNo) {

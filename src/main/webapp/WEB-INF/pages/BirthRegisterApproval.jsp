@@ -27,7 +27,9 @@
                     <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
-                    <th><s:label name="editAndApprove" value="%{getText('editOrApprove.label')}"/></th>
+                    <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
+                    <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
+                    <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
                     <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
                 </tr>
                     <%--following code used for pagination--%>
@@ -45,10 +47,23 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
                         <s:url id="editSelected" action="eprBirthConfirmation.do">
+                          <s:param name="bdId" value="idUKey"/>
+                        </s:url>
+                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
+                        <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
                             <s:param name="bdId" value="idUKey"/>
                         </s:url>
-                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editOrApproveToolTip.label')}">
+                        <td align="center"><s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                             <img src="<s:url value='/images/approve.png'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
+                        <s:url id="rejectSelected" action="">
+                            <s:param name="bdId" value="idUKey"/>
+                        </s:url>
+                        <td align="center"><s:a href="%{rejectSelected}"
+                                                title="%{getText('rejectTooltip.label')}"><img
+                                src="<s:url value='/images/reject.png'/>" width="25" height="25" border="none"/></s:a>
                         </td>
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
                             <s:param name="bdId" value="idUKey"/>
