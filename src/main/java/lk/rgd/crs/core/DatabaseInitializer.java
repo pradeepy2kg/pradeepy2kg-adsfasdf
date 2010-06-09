@@ -109,6 +109,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             Role adrRole = roleDao.getRole("ADR");
             BitSet bs = new BitSet();
             bs.set(Permission.APPROVE_BDF);
+            bs.set(Permission.EDIT_BDF);
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 

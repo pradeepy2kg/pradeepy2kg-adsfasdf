@@ -12,31 +12,49 @@
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
         </div>
     </s:form>
+    <s:if test="#request.errorCode>1">
+    <div id="birth-register-approval-message" class="font-9" align="center">
+        Error ! ! ! 
+    <s:label value="%{#request.errorCode}"/>
+    </div>
+    </s:if>
     <div id="birth-register-approval-body">
         <%--todo edit has to be implemented--%>
-       <%-- <s:if test="request.warning !=null">
+        <%--todo permission handling--%>
+            <%--todo warining handling--%>
+        <%-- <s:if test="request.warning !=null">
             <s:iterator value="#request.warning">
             <s:property value="message"/>
             </s:iterator>
         </s:if>--%>
         <s:form action="eprApproveAllSelected" name="birth_register_approval_body" method="POST">
             <table>
+
+                <s:set name="allowApprove" value="#session.allowApproveBDF"/>
+                <s:set name="allowEdit" value="#session.allowEditBDF"/>
+                <s:set name="allowReject" value="#session.allowReject"/>
                 <tr>
                     <th></th>
                     <th></th>
                     <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
-                    <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
-                    <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
-                    <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
+                      <s:if test="#allowEdit==true">
+                        <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
+                    </s:if>
+                    <s:if test="#allowApprove==true">
+                        <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
+                    </s:if>
+                    <s:if test="#allowReject==ture">
+                        <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
+                    </s:if>
                     <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
                 </tr>
                     <%--following code used for pagination--%>
                 <s:if test="#session.ApprovalStart == null">
                     <s:set name="ApprovalStart" value="0" scope="session"/>
                 </s:if>
-                <s:iterator  status="approvalStatus" value="#session.ApprovalData" id="approvalList">
+                <s:iterator status="approvalStatus" value="#session.BirthDeclarationApprovalPending" id="approvalList">
                     <tr>
                         <td><s:property value="%{#approvalStatus.count + #session.ApprovalStart}"/></td>
                         <td><s:checkbox name="index"
@@ -46,28 +64,37 @@
                         <td><s:property value="register.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                        <s:url id="editSelected" action="eprBirthConfirmation.do">
-                          <s:param name="bdId" value="idUKey"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                            <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25" border="none"/></s:a>
-                        </td>
-                        <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
-                            <s:param name="bdId" value="idUKey"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
-                            <img src="<s:url value='/images/approve.png'/>" width="25" height="25" border="none"/></s:a>
-                        </td>
-                        <s:url id="rejectSelected" action="">
+                        <s:if test="#allowEdit==true">
+                            <s:url id="editSelected" action="eprBirthRegistration.do">
+                                <s:param name="bdId" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
+                        </s:if>
+                        <s:if test="#allowApprove==true">
+                            <s:url id="approveSelected" action="eprApproveBirthDeclaration.do"> 
+                                <s:param name="bdId" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{approveSelected}"
+                                                    title="%{getText('approveTooltip.label')}">
+                                <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
+                        </s:if>
+                        <s:if test="#allowReject==ture">
+                        <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
                             <s:param name="bdId" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{rejectSelected}"
                                                 title="%{getText('rejectTooltip.label')}"><img
                                 src="<s:url value='/images/reject.png'/>" width="25" height="25" border="none"/></s:a>
                         </td>
+                    </s:if>
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
                             <s:param name="bdId" value="idUKey"/>
-                        </s:url>
+                        </s:url>                                                        
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
                                 src="<s:url value='/images/delete.png'/>" width="25" height="25" border="none"/></s:a>

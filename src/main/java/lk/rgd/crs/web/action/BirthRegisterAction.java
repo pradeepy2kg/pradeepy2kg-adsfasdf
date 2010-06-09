@@ -171,7 +171,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
-                    //logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
             } else {
