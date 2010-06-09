@@ -180,9 +180,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     case 1:
                         bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
                         bdf.getRegister().setDateOfRegistration(register.getDateOfRegistration());
+                        bdf.getRegister().setBirthDivision(register.getBirthDivision());
+
                         bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                         bdf.getChild().setChildGender(child.getChildGender());
-                        bdf.getRegister().setBirthDivision(register.getBirthDivision());
                         bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
 
                         bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
@@ -200,10 +201,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setMotherFullName(parent.getMotherFullName());
                         break;
                     case 3:
-                        logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
                         bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                         bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
+
+                        logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
                         break;
                 }
@@ -282,20 +284,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         confirmant = bdf.getConfirmant();
         register = bdf.getRegister();
 
-        if (register != null) {
-            birthDistrictId = register.getBirthDistrict().getDistrictId();
-            birthDivisionId = register.getBirthDivision().getDivisionId();
-            dsDivisionId = register.getDsDivision().getDivisionId();
-        }
-
-        if (parent != null) {
-            fatherCountry = parent.getFatherCountry().getCountryId();
-            motherCountry = parent.getMotherCountry().getCountryId();
-            fatherRace = parent.getFatherRace().getRaceId();
-            motherRace = parent.getMotherRace().getRaceId();
-            motherDistrictId = parent.getMotherDSDivision().getDistrictId();
-            motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
-        }
+//        if (register != null) {
+//            birthDistrictId = register.getBirthDistrict().getDistrictId();
+//            birthDivisionId = register.getBirthDivision().getDivisionId();
+//            dsDivisionId = register.getDsDivision().getDivisionId();
+//        }
+//
+//        if (parent != null) {
+//            fatherCountry = parent.getFatherCountry().getCountryId();
+//            motherCountry = parent.getMotherCountry().getCountryId();
+//            fatherRace = parent.getFatherRace().getRaceId();
+//            motherRace = parent.getMotherRace().getRaceId();
+//            motherDistrictId = parent.getMotherDSDivision().getDistrictId();
+//            motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
+//        }
     }
 
     public int getPageNo() {
