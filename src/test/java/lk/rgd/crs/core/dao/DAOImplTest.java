@@ -23,7 +23,6 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -155,15 +154,15 @@ public class DAOImplTest extends TestCase {
         RoleDAO roleDAO = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
         User rg = bean.authenticateUser("rg", "password");
-        Assert.assertTrue(rg.getRoles().contains(roleDAO.getRole("RG")));
-        Assert.assertFalse(rg.getRoles().contains(roleDAO.getRole("ADR")));
-        Assert.assertFalse(rg.getRoles().contains(roleDAO.getRole("DEO")));
+        Assert.assertTrue(rg.getRole().equals(roleDAO.getRole("RG")));
+        Assert.assertFalse(rg.getRole().equals(roleDAO.getRole("ADR")));
+        Assert.assertFalse(rg.getRole().equals(roleDAO.getRole("DEO")));
         Assert.assertTrue(rg.isAuthorized(Permission.APPROVE_BDF));
 
         User asankha = bean.authenticateUser("asankha", "asankha");
-        Assert.assertFalse(asankha.getRoles().contains(roleDAO.getRole("RG")));
-        Assert.assertTrue(asankha.getRoles().contains(roleDAO.getRole("ADR")));
-        Assert.assertFalse(asankha.getRoles().contains(roleDAO.getRole("DEO")));
+        Assert.assertFalse(asankha.getRole().equals(roleDAO.getRole("RG")));
+        Assert.assertTrue(asankha.getRole().equals(roleDAO.getRole("ADR")));
+        Assert.assertFalse(asankha.getRole().equals(roleDAO.getRole("DEO")));
         Assert.assertTrue(asankha.isAuthorized(Permission.APPROVE_BDF));
     }
 
