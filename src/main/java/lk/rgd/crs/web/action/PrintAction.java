@@ -52,7 +52,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String filterPrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_START);
-        int selectedDivision = user.getInitialBDDivision();
+        int selectedDivision=-1;
+            if(!divisionList.isEmpty()){
+                selectedDivision=divisionList.keySet().iterator().next();
+            }
 
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {

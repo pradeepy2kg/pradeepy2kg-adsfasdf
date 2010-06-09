@@ -173,38 +173,6 @@ public class User {
         return role.getPermBitSet().get(permission);
     }
 
-    // TODO changed by chathuranga
-    public int getInitialDistrict() {
-        if (prefDistrict != null) {
-            //return prefDistrict.getDistrictId();
-            return prefDistrict.getDistrictUKey();
-        } else if (assignedDistricts != null && !assignedDistricts.isEmpty()) {
-            District d = assignedDistricts.iterator().next();
-            if (d != null) {
-                //return d.getDistrictId();
-                return d.getDistrictUKey();
-            }
-        }
-        logger.error("User {} : does not have access to any District!", userId);
-        return -1;
-    }
-
-    // TODO changed by chathuranga
-    public int getInitialBDDivision() {
-        if (prefDSDivision != null) {
-            //return prefDSDivision.getDivisionId();
-            return prefDSDivision.getDsDivisionUKey();
-        } else if (assignedDSDivisions != null && !assignedDSDivisions.isEmpty()) {
-            DSDivision d = assignedDSDivisions.iterator().next();
-            if (d != null) {
-                //return d.getDivisionId();
-                return d.getDsDivisionUKey();
-            }
-        }
-        logger.error("User {} : does not have access to any DS Division!", userId);
-        return -1;
-    }
-
     public boolean isAllowedAccessToDistrict(int id) {
         if (assignedDistricts == null) {
             return false;
