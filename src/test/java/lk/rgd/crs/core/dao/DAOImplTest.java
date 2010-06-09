@@ -89,18 +89,18 @@ public class DAOImplTest extends TestCase {
         User rg = userDAO.getUser("rg");
         Map<Integer, String> districts = districtDAO.getDistrictNames(AppConstants.SINHALA, rg);
         Assert.assertTrue(districts.size() == 25);
-        Map<Integer, String> dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, rg);
+        Map<Integer, String> dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, rg);
         Assert.assertTrue(dsDivisions.size() > 1);
-        Map<Integer, String> bdDivisions = bdDivisionDAO.getBDDivisionNames(11, AppConstants.SINHALA, rg);
+        Map<Integer, String> bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, rg);
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // ARG-Western Province sees all 3 districts in province
         User arg = userDAO.getUser("arg-western");
         districts = districtDAO.getDistrictNames(AppConstants.SINHALA, arg);
         Assert.assertTrue(districts.size() == 3);
-        dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, arg);
+        dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, arg);
         Assert.assertTrue(dsDivisions.size() > 1);
-        bdDivisions = bdDivisionDAO.getBDDivisionNames(11, AppConstants.SINHALA, arg);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, arg);
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // DR-colombo must see only colombo, but all BDDivisions within it
@@ -108,9 +108,9 @@ public class DAOImplTest extends TestCase {
         districts = districtDAO.getDistrictNames(AppConstants.SINHALA, dr);
         Assert.assertTrue(districts.size() == 1);
         Assert.assertTrue("11 : කොළඹ".equals(districts.values().iterator().next()));
-        dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, dr);
+        dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, dr);
         Assert.assertTrue(dsDivisions.size() > 1);
-        bdDivisions = bdDivisionDAO.getBDDivisionNames(11, AppConstants.SINHALA, dr);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, dr);
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // ADR-colombo must see only colombo, and fort BD division
@@ -118,9 +118,9 @@ public class DAOImplTest extends TestCase {
         districts = districtDAO.getDistrictNames(AppConstants.SINHALA, adr);
         Assert.assertTrue(districts.size() == 1);
         Assert.assertTrue("11 : කොළඹ".equals(districts.values().iterator().next()));
-        dsDivisions = dsDivisionDAO.getDSDivisionNames(11, AppConstants.SINHALA, adr);
+        dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, adr);
         Assert.assertTrue(dsDivisions.size() == 1);
-        bdDivisions = bdDivisionDAO.getBDDivisionNames(11, AppConstants.SINHALA, adr);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, adr);
         Assert.assertTrue(bdDivisions.size() > 1);
     }
 
@@ -176,7 +176,8 @@ public class DAOImplTest extends TestCase {
         //r = dao.getConfirmationPrintPending(bdDao.getBDDivision(11, 1), true);
         //Assert.assertEquals(1, r.size());
 
-        List<BirthDeclaration> r = dao.getConfirmationApprovalPending(bdDao.getBDDivision(11, 1), 1, 10);
-        Assert.assertEquals(10, r.size());
+        //List<BirthDeclaration> r = dao.getConfirmationApprovalPending(bdDao.getBDDivision(11, 1), 1, 10);
+//        List<BirthDeclaration> r = dao.getConfirmationApprovalPending(bdDao.getBDDivisionByPK(11), 1, 10);
+//        Assert.assertEquals(10, r.size());
     }
 }

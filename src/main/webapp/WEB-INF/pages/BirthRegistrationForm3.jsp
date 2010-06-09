@@ -143,7 +143,7 @@
         <div id="informant-name" class="font-9">
             <label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label>
 
-            <s:textarea name="informant.informantName" value="3sess"/>
+            <s:textarea name="informant.informantName"/>
         </div>
         <div id="informant-nic" class="font-9">
             <label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல் கொடுப்பவரின் தனிநபர்

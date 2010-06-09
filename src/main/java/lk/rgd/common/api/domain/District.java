@@ -94,4 +94,8 @@ public class District implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public int getDistrictUKey() {
+        return districtUKey;
+    }
 }

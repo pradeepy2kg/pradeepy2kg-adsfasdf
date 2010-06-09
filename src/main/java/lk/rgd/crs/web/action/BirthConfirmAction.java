@@ -59,7 +59,7 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     private boolean confirmantSign;
 
     private BirthDeclaration birthConfirm;
-
+    
     public BirthConfirmAction(RaceDAO raceDao, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         this.raceDao = raceDao;
         this.districtDAO = districtDAO;

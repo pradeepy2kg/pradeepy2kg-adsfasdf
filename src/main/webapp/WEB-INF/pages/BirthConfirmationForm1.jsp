@@ -106,7 +106,7 @@
             </div>
         </div>
         <div id="new-dob">
-            <sx:datetimepicker id="submitDatePicker" name="childDOB" displayFormat="yyyy-MM-dd"
+            <sx:datetimepicker id="submitDatePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
                                value="2010-05-27"
                 onmouseover="javascript:splitDate('submitDatePicker')"/>
         </div>
@@ -140,7 +140,7 @@
                 <s:textfield value="%{#session.birthConfirmation.register.birthDivision.dsDivision.district.districtId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
-                <s:select list="districtList" name="" headerKey="0" headerValue="%{getText('select_district.label')}" />
+                <s:select list="districtList" name="birthDistrictId" headerKey="0" headerValue="%{getText('select_district.label')}" />
             </div>
         </div>
         <div id="bcf-ds-division" class="font-9">
@@ -150,7 +150,7 @@
                 <s:textfield value="%{#session.birthConfirmation.register.birthDivision.dsDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
-                <s:select list="dsDivisionList" name="" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
+                <s:select list="dsDivisionList" name="dsDivisionId" headerKey="0" headerValue="%{getText('select_ds_division.label')}" />
             </div>
         </div>
         <div id="bcf-division" class="font-9">
@@ -160,7 +160,7 @@
                 <s:textfield value="%{#session.birthConfirmation.register.birthDivision.divisionId}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
-                <s:select name="birthDivision" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>  
+                <s:select name="birthDivisionId" list="bdDivisionList" headerKey="0" headerValue="%{getText('select_division.label')}"/>  
             </div>
         </div>
         <div id="bcf-place" class="font-9">
@@ -190,7 +190,7 @@
                 <s:textfield value="%{getRaceList().get(#session.birthConfirmation.parent.fatherRace.raceId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
-                <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/> 
+                <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/> 
             </div>
         </div>
         <div id="bcf-mother-pin" class="font-9">
@@ -210,7 +210,7 @@
                 <s:textfield value="%{getRaceList().get(#session.birthConfirmation.parent.motherRace.raceId)}" cssClass="disable" disabled="true"/>
             </div>
             <div class="new">
-                <s:select list="raceList" name="" headerKey="0" headerValue="%{getText('select_race.label')}"/> 
+                <s:select list="raceList" name="motherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/> 
             </div>
         </div>
         <div id="bcf-marital-status" class="font-9">

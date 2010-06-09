@@ -111,12 +111,6 @@ public class ParentInfo implements Serializable {
     private int motherAgeAtBirth;
 
     /**
-     * Mother's District Id
-     */
-    @OneToOne
-    private District motherDistrict;
-
-    /**
      * Mother's DS division ID
      */
     @OneToOne
@@ -311,14 +305,6 @@ public class ParentInfo implements Serializable {
 
     public void setMotherAdmissionDate(Date motherAdmissionDate) {
         this.motherAdmissionDate = motherAdmissionDate;
-    }
-
-    public District getMotherDistrict() {
-        return motherDistrict;
-    }
-
-    public void setMotherDistrict(District motherDistrict) {
-        this.motherDistrict = motherDistrict;
     }
 
     public DSDivision getMotherDSDivision() {

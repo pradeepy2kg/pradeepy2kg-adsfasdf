@@ -190,26 +190,32 @@ public class User {
         return permissions.get(permission);
     }
 
+    // TODO changed by chathuranga
     public int getInitialDistrict() {
         if (prefDistrict != null) {
-            return prefDistrict.getDistrictId();
+            //return prefDistrict.getDistrictId();
+            return prefDistrict.getDistrictUKey();
         } else if (assignedDistricts != null && !assignedDistricts.isEmpty()) {
             District d = assignedDistricts.iterator().next();
             if (d != null) {
-                return d.getDistrictId();
+                //return d.getDistrictId();
+                return d.getDistrictUKey();
             }
         }
         logger.error("User {} : does not have access to any District!", userId);
         return -1;
     }
 
+    // TODO changed by chathuranga
     public int getInitialBDDivision() {
         if (prefDSDivision != null) {
-            return prefDSDivision.getDivisionId();
+            //return prefDSDivision.getDivisionId();
+            return prefDSDivision.getDsDivisionUKey();
         } else if (assignedDSDivisions != null && !assignedDSDivisions.isEmpty()) {
             DSDivision d = assignedDSDivisions.iterator().next();
             if (d != null) {
-                return d.getDivisionId();
+                //return d.getDivisionId();
+                return d.getDsDivisionUKey();
             }
         }
         logger.error("User {} : does not have access to any DS Division!", userId);
@@ -231,7 +237,7 @@ public class User {
         }
 
         for (District d : assignedDistricts) {
-            if (d.getDistrictId() == id) {
+            if (d.getDistrictUKey() == id) {
                 return true;
             }
         }
@@ -244,7 +250,7 @@ public class User {
         }
 
         for (DSDivision d : assignedDSDivisions) {
-            if (d.getDivisionId() == id) {
+            if (d.getDsDivisionUKey() == id) {
                 return true;
             }
         }

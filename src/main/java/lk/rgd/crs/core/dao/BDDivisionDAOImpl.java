@@ -41,17 +41,9 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
         if (result == null) {
-            handleException("Invalid district id : " + language, ErrorCodes.INVALID_DISTRICT);
+            handleException("Invalid district id : " + districtId, ErrorCodes.INVALID_DISTRICT);
         }
         return result;
-    }
-
-    public BDDivision getBDDivision(int districtId, int bdDivisionId) {
-        Map<Integer, BDDivision> divMap = divisions.get(districtId);
-        if (divMap != null) {
-            return divMap.get(bdDivisionId);
-        }
-        return null;
     }
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -69,36 +61,37 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         List<BDDivision> results = query.getResultList();
 
         for (BDDivision r : results) {
-            final int districtId = r.getDistrict().getDistrictId();
+            final int districtUKey = r.getDistrict().getDistrictUKey();
             final int divisionId = r.getDivisionId();
+            final int divisionUKey = r.getBdDivisionUKey();
 
-            Map<Integer, BDDivision> divMap = divisions.get(districtId);
+            Map<Integer, BDDivision> divMap = divisions.get(districtUKey);
             if (divMap == null) {
                 divMap = new HashMap<Integer, BDDivision>();
-                divisions.put(districtId, divMap);
+                divisions.put(districtUKey, divMap);
             }
-            divMap.put(r.getDivisionId(), r);
+            divMap.put(divisionUKey, r);
 
-            Map<Integer, String> districtMap = siDivisions.get(districtId);
+            Map<Integer, String> districtMap = siDivisions.get(districtUKey);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                siDivisions.put(districtId, districtMap);
+                siDivisions.put(districtUKey, districtMap);
             }
-            districtMap.put(divisionId, divisionId + ": " + r.getSiDivisionName());
+            districtMap.put(divisionUKey, divisionId + ": " + r.getSiDivisionName());
 
-            districtMap = enDivisions.get(districtId);
+            districtMap = enDivisions.get(districtUKey);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                enDivisions.put(districtId, districtMap);
+                enDivisions.put(districtUKey, districtMap);
             }
-            districtMap.put(divisionId, divisionId + SPACER + r.getEnDivisionName());
+            districtMap.put(divisionUKey, divisionId + SPACER + r.getEnDivisionName());
 
-            districtMap = taDivisions.get(districtId);
+            districtMap = taDivisions.get(districtUKey);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                taDivisions.put(districtId, districtMap);
+                taDivisions.put(districtUKey, districtMap);
             }
-            districtMap.put(divisionId, divisionId + SPACER + r.getTaDivisionName());
+            districtMap.put(divisionUKey, divisionId + SPACER + r.getTaDivisionName());
         }
 
         logger.debug("Loaded : {} birth and death registration divisions from the database", results.size());

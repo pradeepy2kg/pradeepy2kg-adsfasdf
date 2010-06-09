@@ -149,13 +149,23 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         BDDivision bdDivision = bdf.getRegister().getBirthDivision();
-        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
-            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
+
+//        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
+//            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
+//
+//        } else {
+//            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+//                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+//                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+//        }
+        // TODO changed by chathuranga
+        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictUKey()) &&
+            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())) {
 
         } else {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+                bdDivision.getDistrict().getDistrictUKey() + " and/or DS Division : " +
+                bdDivision.getDsDivision().getDsDivisionUKey(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 

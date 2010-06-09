@@ -83,7 +83,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          */
         int pageNo = 1;
         birthRegisterApproval = service.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                bdDivisionDAO.getBDDivisionByPK(selectedDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthRegisterApproval.size());
         session.put("previousFlag", 0);
         session.put("selectedFlag", 0);
@@ -112,8 +112,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         session.put("selectedDistrict", district);
         session.put("selectedDivision", division);
         session.put("selectedFlag", 1);
-        birthRegisterApproval = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        birthRegisterApproval = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size());
         session.put("ApprovalStart", 0);
@@ -192,8 +191,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         Integer pageNo = (Integer) session.get("pageNo");
         district = (Integer) session.get("selectedDistrict");
         division = (Integer) session.get("selectedDivision");
-        birthRegisterApproval = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        birthRegisterApproval = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size());
         populate();
@@ -234,7 +232,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * in the jsp page 
          */
         birthRegisterApproval = service.getConfirmationApprovalPending(
-            bdDivisionDAO.getBDDivision(district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         paginationHandler(birthRegisterApproval.size());
         /**
@@ -265,7 +263,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         division = (Integer) session.get("selectedDivision");
         if (logger.isDebugEnabled()) {
             logger.debug("inside filter : district {} division {} observed ", district, division +
-                " Page number " + pageNo.toString() + " selectedFlag " + selectedFlag.toString());
+                    " Page number " + pageNo.toString() + " selectedFlag " + selectedFlag.toString());
         }
         /**
          * UI related handle whether to display the
@@ -293,8 +291,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             pageNo--;
         }
         session.put("pageNo", pageNo);
-        birthRegisterApproval = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        birthRegisterApproval = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("ApprovalData", birthRegisterApproval);
         Integer approvalStart = (Integer) session.get("ApprovalStart");
         if (approvalStart > 0) {

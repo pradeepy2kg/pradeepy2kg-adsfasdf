@@ -114,4 +114,8 @@ public class BDDivision implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public int getBdDivisionUKey() {
+        return bdDivisionUKey;
+    }
 }

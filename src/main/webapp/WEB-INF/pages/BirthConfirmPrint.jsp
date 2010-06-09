@@ -1,6 +1,4 @@
 <%--@author Chathuranga Withana--%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="lk.rgd.crs.api.domain.PrintData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="birth-register-approval">
@@ -44,8 +42,8 @@
                             <td><s:property value="child.childFullNameOfficialLang"/></td>
                             <td><s:property value="register.dateOfRegistration"/></td>
                             <td align="right">
-                                <s:if test="confirmant.confirmationPrinted == 2"><s:label value="%{getText('already_printed.label')}"/></s:if>
-                                <s:else><s:label value="%{getText('not_printed.label')}"/></s:else>
+                                <%--<s:if test="confirmant.confirmationPrinted"><s:label value="%{getText('already_printed.label')}"/></s:if>--%>
+                                <%--<s:else><s:label value="%{getText('not_printed.label')}"/></s:else>--%>
                             </td>
                             <td align="right">
                                 <s:submit value="%{getText('print.label')}"/>

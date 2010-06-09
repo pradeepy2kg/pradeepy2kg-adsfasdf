@@ -52,17 +52,17 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String filterPrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_START);
-        int selectedDistrict = user.getInitialDistrict();
         int selectedDivision = user.getInitialBDDivision();
 
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), true);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(selectedDivision), true);
             } else {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), false);
+                printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(selectedDivision), false);
             }
         } else {
-            printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivision(selectedDistrict, selectedDivision), false);
+            // TODO
+            //printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(selectedDivision), false);
         }
 
         logger.debug("Confirm Print List : items=" + printList.size());
@@ -113,7 +113,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getDistrictNames(language, user);
         // TODO district id hardcoded for the moment
-        divisionList = bdDivisionDAO.getBDDivisionNames(11, language, user);
+        if (!districtList.isEmpty()) {
+            int selectedDistrictId = districtList.keySet().iterator().next();
+            divisionList = bdDivisionDAO.getBDDivisionNames(selectedDistrictId, language, user);
+        }
     }
 
     public List<BirthDeclaration> getPrintList() {

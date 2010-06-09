@@ -21,6 +21,8 @@ import java.util.Map;
 public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, PreloadableDAO {
 
     private final Map<Integer, DSDivision> dsDivisions = new HashMap<Integer, DSDivision>();
+    private final Map<Integer, Map<Integer,DSDivision>> dsDivisionsByDistrictAndDiv =
+        new HashMap<Integer, Map<Integer,DSDivision>>();
     private final Map<Integer, Map<Integer,String>> siNames = new HashMap<Integer, Map<Integer,String>>();
     private final Map<Integer, Map<Integer,String>> enNames = new HashMap<Integer, Map<Integer,String>>();
     private final Map<Integer, Map<Integer,String>> taNames = new HashMap<Integer, Map<Integer,String>>();
@@ -68,7 +70,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         if (dsDivisionNames != null) {
             return dsDivisionNames;
         }
-        logger.warn("No GN Divisions found for District : {}", districtId);
+        logger.warn("No DS Divisions found for District : {}", districtId);
         return Collections.emptyMap();
     }
 
@@ -88,31 +90,39 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         Map<Integer, String> subMap = null;
 
         for (DSDivision d : results) {
-            int districtId = d.getDistrictId();
-            int divisionId = d.getDivisionId();
+            int districtUKey = d.getDistrict().getDistrictUKey();
+            int divisionId   = d.getDivisionId();
+            int divisionUKey = d.getDsDivisionUKey();
 
             dsDivisions.put(d.getDsDivisionUKey() , d);
 
-            subMap = siNames.get(districtId);
-            if (subMap == null) {
-                subMap = new HashMap<Integer, String>();
-                siNames.put(districtId, subMap);
+            Map<Integer, DSDivision> divisionMap = dsDivisionsByDistrictAndDiv.get(districtUKey);
+            if (divisionMap == null) {
+                divisionMap = new HashMap<Integer, DSDivision>();
+                dsDivisionsByDistrictAndDiv.put(districtUKey, divisionMap);
             }
-            subMap.put(divisionId, divisionId + SPACER + d.getSiDivisionName());
+            divisionMap.put(divisionUKey, d);
 
-            subMap = enNames.get(districtId);
+            subMap = siNames.get(districtUKey);
             if (subMap == null) {
                 subMap = new HashMap<Integer, String>();
-                enNames.put(districtId, subMap);
+                siNames.put(districtUKey, subMap);
             }
-            subMap.put(divisionId, divisionId + SPACER + d.getEnDivisionName());
+            subMap.put(divisionUKey, divisionId + SPACER + d.getSiDivisionName());
 
-            subMap = taNames.get(districtId);
+            subMap = enNames.get(districtUKey);
             if (subMap == null) {
                 subMap = new HashMap<Integer, String>();
-                taNames.put(districtId, subMap);
+                enNames.put(districtUKey, subMap);
             }
-            subMap.put(divisionId, divisionId + SPACER + d.getTaDivisionName());
+            subMap.put(divisionUKey, divisionId + SPACER + d.getEnDivisionName());
+
+            subMap = taNames.get(districtUKey);
+            if (subMap == null) {
+                subMap = new HashMap<Integer, String>();
+                taNames.put(districtUKey, subMap);
+            }
+            subMap.put(divisionUKey, divisionId + SPACER + d.getTaDivisionName());
         }
 
         logger.debug("Loaded : {} DSDivisions from the database", results.size());

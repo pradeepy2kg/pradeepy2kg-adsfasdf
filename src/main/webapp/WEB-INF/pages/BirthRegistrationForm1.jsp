@@ -80,19 +80,15 @@
 
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
-                <s:select name="birthDistrictId" list="districtList" headerKey="0"
-                          headerValue="%{getText('select_district.label')}"/>
+                <s:select name="birthDistrictId" list="districtList"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
-                <s:select name="dsDivisionId" list="dsDivisionList" headerKey="0"
-                          headerValue="%{getText('select_ds_division.label')}"/>
+                <s:select name="dsDivisionId" list="dsDivisionList"/>
             </div>
             <div id="child-pob-division">
                 <label>කොට්ඨාශය பிரிவு Division</label>
-                    <%--TODO birthDivision should be filled     birthDivision--%>
-                <s:select name="birthDivisionId" list="bdDivisionList" headerKey="0"
-                          headerValue="%{getText('select_division.label')}"/>
+                <s:select name="birthDivisionId" list="bdDivisionList"/>
             </div>
             <div id="child-pob-place">
                 <label>ස්ථානය பிறந்த இடம் Place</label>
@@ -101,15 +97,17 @@
             <div id="child-pob-in-hospital">
                 <label>*in Sinhala/*in Tamil/In a Hospital</label>
                 <div>
-                    <label>ඔව් / *in  Tamil  / Yes </label>
+                    <label>ඔව් / *in Tamil / Yes </label>
                     <div>
                         <s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/>
+                        <%--<s:radio name="child.birthAtHospital" list="#{'0':''}"/>--%>
                     </div>
                 </div>
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
                     <div>
                         <s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/>
+                        <%--<s:radio name="child.birthAtHospital" list="#{'1':''}"/>--%>
                     </div>
                 </div>
             </div>
