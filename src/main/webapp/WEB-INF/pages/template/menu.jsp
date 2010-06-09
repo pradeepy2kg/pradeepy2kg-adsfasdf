@@ -6,5 +6,4 @@
     <a href="eprBirthConfirmation.do"><s:label value="%{getText('birth_confirmation.label')}" /></a>
     <a href="eprBirthRegisterApproval.do"><s:label value="%{getText('birth_register_approval.label')}" /></a>
     <a href="eprFilterBirthConfirmPrint.do"><s:label value="%{getText('birth_confirmation_print.label')}" /></a>
-
 </div>
