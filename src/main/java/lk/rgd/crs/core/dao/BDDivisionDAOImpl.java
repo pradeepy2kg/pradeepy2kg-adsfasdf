@@ -20,7 +20,9 @@ import java.util.Map;
  */
 public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, PreloadableDAO {
 
-    private final Map<Integer, Map<Integer, BDDivision>> divisions = new HashMap<Integer, Map<Integer, BDDivision>>();
+    // direct cache of objects by PK - bdDivisionUKey
+    private final Map<Integer, BDDivision> bdDivisionsByPK = new HashMap<Integer, BDDivision>();
+    // local caches indexed by districtUKey and bdDivisionUKey
     private final Map<Integer, Map<Integer, String>> siDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> enDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> taDivisions = new HashMap<Integer, Map<Integer, String>>();
@@ -46,6 +48,19 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         return result;
     }
 
+    public String getNameByPK(int bdDivisionUKey, String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return bdDivisionsByPK.get(bdDivisionUKey).getSiDivisionName();
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return bdDivisionsByPK.get(bdDivisionUKey).getEnDivisionName();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return bdDivisionsByPK.get(bdDivisionUKey).getTaDivisionName();
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public BDDivision getBDDivisionByPK(int bdDivision) {
         return em.find(BDDivision.class, bdDivision);
@@ -65,12 +80,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
             final int divisionId = r.getDivisionId();
             final int divisionUKey = r.getBdDivisionUKey();
 
-            Map<Integer, BDDivision> divMap = divisions.get(districtUKey);
-            if (divMap == null) {
-                divMap = new HashMap<Integer, BDDivision>();
-                divisions.put(districtUKey, divMap);
-            }
-            divMap.put(divisionUKey, r);
+            bdDivisionsByPK.put(divisionUKey, r);
 
             Map<Integer, String> districtMap = siDivisions.get(districtUKey);
             if (districtMap == null) {

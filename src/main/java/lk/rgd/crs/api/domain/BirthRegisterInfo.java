@@ -12,6 +12,13 @@ import java.util.Date;
  */
 @Embeddable
 public class BirthRegisterInfo {
+
+    /**
+     * The preferred language of for the record
+     */
+    @Column (nullable = false, columnDefinition="char(2) default 'si'")
+    private String preferredLanguage;
+
     /**
      * This is the serial number captured from the BDF
      */
@@ -24,6 +31,24 @@ public class BirthRegisterInfo {
     @ManyToOne
     @JoinColumn(name = "bdDivisionUKey", nullable = false)
     private BDDivision birthDivision;
+
+    /**
+     * The name of the Birth/Death registration division in the preferred language
+     */
+    @Transient
+    private String bdDivisionPrint;
+
+    /**
+     * The name of the DS division in the preferred language
+     */
+    @Transient
+    private String dsDivisionPrint;
+
+    /**
+     * The name of the District in the preferred language
+     */
+    @Transient
+    private String districtPrint;
 
     /**
      * The date when the birth declaration was submitted to the medical registrar or the DS office
@@ -50,6 +75,12 @@ public class BirthRegisterInfo {
     /** The place of issue for the original birth certificate - free copy (Stores the DS Division ID) */
     @Column(nullable = true, updatable = false)
     private Integer originalBCPlaceOfIssue;
+
+    /**
+     * The original BC place of issue as a String in the preferred language
+     */
+    @Transient
+    private String originalBCPlaceOfIssuePrint;
 
     public String getComments() {
         return comments;
@@ -113,5 +144,45 @@ public class BirthRegisterInfo {
 
     public void setStatus(BirthDeclaration.State status) {
         this.status = status;
+    }
+
+    public String getPreferredLanguage() {
+        return preferredLanguage;
+    }
+
+    public void setPreferredLanguage(String preferredLanguage) {
+        this.preferredLanguage = preferredLanguage;
+    }
+
+    public String getOriginalBCPlaceOfIssuePrint() {
+        return originalBCPlaceOfIssuePrint;
+    }
+
+    public void setOriginalBCPlaceOfIssuePrint(String originalBCPlaceOfIssuePrint) {
+        this.originalBCPlaceOfIssuePrint = originalBCPlaceOfIssuePrint;
+    }
+
+    public String getBdDivisionPrint() {
+        return bdDivisionPrint;
+    }
+
+    public void setBdDivisionPrint(String bdDivisionPrint) {
+        this.bdDivisionPrint = bdDivisionPrint;
+    }
+
+    public String getDsDivisionPrint() {
+        return dsDivisionPrint;
+    }
+
+    public void setDsDivisionPrint(String dsDivisionPrint) {
+        this.dsDivisionPrint = dsDivisionPrint;
+    }
+
+    public String getDistrictPrint() {
+        return districtPrint;
+    }
+
+    public void setDistrictPrint(String districtPrint) {
+        this.districtPrint = districtPrint;
     }
 }

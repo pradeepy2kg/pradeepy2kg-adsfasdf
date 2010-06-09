@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
 
-    private final Map<Integer, Race> races = new HashMap<Integer, Race>();
+    private final Map<Integer, Race> racesByPK = new HashMap<Integer, Race>();
     private final Map<Integer, String> siRaces = new HashMap<Integer, String>();
     private final Map<Integer, String> enRaces = new HashMap<Integer, String>();
     private final Map<Integer, String> taRraces = new HashMap<Integer, String>();
@@ -38,8 +38,21 @@ public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
         return null;
     }
 
+    public String getNameByPK(int raceId, String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return racesByPK.get(raceId).getSiRaceName();
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return racesByPK.get(raceId).getEnRaceName();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return racesByPK.get(raceId).getTaRaceName();
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
+    }
+
     public Race getRace(int id) {
-        return races.get(id);
+        return racesByPK.get(id);
     }
 
     /**
@@ -52,7 +65,7 @@ public class RaceDAOImpl extends BaseDAO implements RaceDAO, PreloadableDAO {
         List<Race> results = query.getResultList();
 
         for (Race r : results) {
-            races.put(r.getRaceId(), r);
+            racesByPK.put(r.getRaceId(), r);
             siRaces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getSiRaceName());
             enRaces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getEnRaceName());
             taRraces.put(r.getRaceId(), r.getRaceId() + SPACER + r.getTaRaceName());

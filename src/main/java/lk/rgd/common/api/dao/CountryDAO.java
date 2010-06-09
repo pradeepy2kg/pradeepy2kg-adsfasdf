@@ -16,6 +16,14 @@ public interface CountryDAO {
     public Map<Integer, String> getCountries(String language);
 
     /**
+     * Return the name of the country in the given language
+     * @param countryUKey the country unique id
+     * @param language language selected
+     * @return name of the country in the selected language
+     */
+    public String getNameByPK(int countryUKey, String language);
+
+    /**
      * Returns the Country for given Id
      * @param id the country ID (see AppConstants)
      * @return a Country 
