@@ -34,6 +34,24 @@ public interface BirthRegistrationService {
     public void deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
+     * Approve a list of BDF forms. Will only approve those that triggers no warnings. The result will contain
+     * information on the warnings returned.
+     * @param approvalDataList a list of the unique BDF IDs to be approved in batch
+     * @param user the user approving the BDFs
+     * @return a list of warnings for those that trigger warnings during approval
+     */
+    public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user);
+
+    /**
+     * Approve a single BDF by an ADR or higher authority
+     * @param bdf the BDF to be approved
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param user the user initiating the action
+     * @return a list of warnings, if ignoreWarnings is false
+     */
+    public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
      * Returns the Birth Declaration object for a given Id
      * @param  bdId Birth Declarion Id for the given declaration
      * @Return BirthDeclaration
@@ -55,6 +73,15 @@ public interface BirthRegistrationService {
         * @return the birth declaration results
         */
        public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows);
+
+    /**
+        * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
+        * by an ADR. Results are ordered on the descending confirmationReceiveDate
+        *
+        * @param birthDivision the birth division
+        * @return the birth declaration results
+        */
+       public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows);
     
 }
 

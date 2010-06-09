@@ -26,6 +26,10 @@ import java.util.Date;
                         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
                         "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
+        @NamedQuery(name = "declaration.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
+                    "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
+                    "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+
         @NamedQuery(name = "get.by.id", query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.idUKey = :bdfidUKey"),
 
         @NamedQuery(name = "get.by.serialNo.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +

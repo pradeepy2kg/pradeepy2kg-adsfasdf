@@ -99,7 +99,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
         } else {
             handleException("Cannot delete birth declaration " + existing.getIdUKey() +
-                "after its approved", ErrorCodes.ILLEGAL_STATE);
+                " after its approved", ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -186,6 +186,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision,pageNo,noOfRows);  
+    }
+
+    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows){
+        return birthDeclarationDAO.getDeclarationApprovalPending(birthDivision,pageNo,noOfRows);
     }
 
 
