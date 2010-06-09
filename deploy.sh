@@ -9,9 +9,12 @@ rm -rf $CATALINA_HOME/webapps/pop*
 cp target/*.war $CATALINA_HOME/webapps
 
 if [ "$2" = "freshdb" ] ; then
-    $JAVA_HOME/db/bin/stopNetworkServer &
-    rm -rf $JAVA_HOME/db/bin/unit-testing-jpa/
-    $JAVA_HOME/db/bin/startNetworkServer &
+    pushd .
+    cd $JAVA_HOME/db/bin
+    ./stopNetworkServer &
+    rm -rf unit-testing-jpa/
+    ./startNetworkServer &
+    pushd
 fi
 
 sh $CATALINA_HOME/bin/catalina.sh start
