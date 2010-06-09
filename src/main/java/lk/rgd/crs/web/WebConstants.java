@@ -1,5 +1,7 @@
 package lk.rgd.crs.web;
 
+import java.util.List;
+
 /**
  * This class defines all constants used in the Web modules
  *
@@ -13,6 +15,7 @@ public class WebConstants {
      */
     public static final String SESSION_USER_LANG = "WW_TRANS_I18N_LOCALE";
     public static final String SESSION_USER_BEAN = "user_bean";
+    public static final List  SESSION_USER_MENUE_LIST=null;
 
     public static final String SESSION_PRINT_START = "printStart";
     public static final String SESSION_PRINT_COUNT = "printCount";

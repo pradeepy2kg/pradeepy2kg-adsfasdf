@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div id="main-menu">
-    <a href="eprBirthConfirmationReport.do">Birth Comformation Report </a>
-    <a href="eprBirthRegistration.do">Birth Registration</a>
-    <a href="eprBirthConfirmation.do">Birth Confirmation</a>
-    <a href="eprBirthRegisterApproval.do">Birth Register Approval</a>
-    <a href="eprFilterBirthConfirmPrint.do">Birth Confirmation Print</a>
-    <a href="eprUserPreferencesInit.do">User Preferences</a>
 
+<div id="main-menu">
+    <a href="eprBirthConfirmationReport.do"><s:label value="%{getText('birth_conformation_report.label')}"/></a>
+    <a href="eprBirthRegistration.do"><s:label value="%{getText('birth_registration.label')}"/></a>
+    <a href="eprBirthConfirmation.do"><s:label value="%{getText('birth_confirmation.label')}"/></a>
+    <a href="eprBirthRegisterApproval.do"><s:label value="%{getText('birth_register_approval.label')}"/></a>
+    <a href="eprFilterBirthConfirmPrint.do"><s:label value="%{getText('birth_confirmation_print.label')}"/></a>
+    <a href="eprUserCreation.do"><s:label value="%{getText('creat_user.label')}"/></a>
 </div>

@@ -223,6 +223,7 @@
 </div>
 <s:hidden name="pageNo" value="2"/>
 <s:submit value="%{getText('next.label')}"/>
+<s:submit value="%{getText('print.label')}" onclick="printPage()" type="button"/>
 </s:form>
 </div>
 </div>

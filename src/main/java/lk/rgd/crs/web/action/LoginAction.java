@@ -5,21 +5,24 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Locale;
+import java.util.*;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.Link;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.core.AuthorizationException;
 
 /**
  * @author Indunil Moremada
+ *         amith jayasekara
  *         action class which handles the login and logout actions
  *         of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
-
+    public static Map<Integer, Link> linkPermission = new HashMap<Integer, Link>();
+    private List userRoles;
     private String userName;
     private String password;
     private Map session;
@@ -60,6 +63,26 @@ public class LoginAction extends ActionSupport implements SessionAware {
     }
 
     /**
+     * @param user
+     * @return
+     */
+    private Map<Integer, Link> allowedLinks(User user) {
+        Map<Integer, Link> allowed = new HashMap<Integer, Link>();
+        Set keySet = linkPermission.keySet();
+        Iterator itr = keySet.iterator();
+        while (itr.hasNext()) {
+            int key = (Integer) itr.next();
+            // chek permission to link
+            if (user.isAuthorized(key)) {
+                Link link = (Link) linkPermission.get(key);
+                allowed.put(key, link);
+                return allowed;
+            }
+        }
+        return null;
+    }
+
+    /**
      * logout action whch invalidate the session of
      * the user
      *
@@ -67,7 +90,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
      */
     public String logout() {
         if (session.containsKey(WebConstants.SESSION_USER_BEAN)) {
-            logger.debug("Inside logout : {} is going to logout.", ((User)session.get(WebConstants.SESSION_USER_BEAN)).getUserName());
+            logger.debug("Inside logout : {} is going to logout.", ((User) session.get(WebConstants.SESSION_USER_BEAN)).getUserName());
             session.remove(WebConstants.SESSION_USER_BEAN);
             return "success";
         }
@@ -92,5 +115,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
+    }
+
+    static {
+        linkPermission.put(6, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp"));
     }
 }

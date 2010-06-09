@@ -41,6 +41,7 @@
     <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+     <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 </head>
 <body>
 <div id="wrapper">
