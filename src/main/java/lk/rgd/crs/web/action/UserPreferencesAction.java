@@ -35,7 +35,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
 
     public UserPreferencesAction(DistrictDAO districtDAO,DSDivisionDAO dsDivisionDAO) {
-        this.districtDAO = districtDAO;
+       this.districtDAO = districtDAO;
        this.dsDivisionDAO = dsDivisionDAO;
     }
 
