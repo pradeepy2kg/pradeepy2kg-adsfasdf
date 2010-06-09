@@ -134,5 +134,17 @@
         <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="previousPage">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
+
+        <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                       method="userPreferenceInit">
+                   <result type="tiles" name="pageload">epr.UserPreferences</result>
+               </action>
+        
+        <action name="eprUserPreferencesAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                method="selectUserPreference">
+            <result type="tiles" name="success">epr.welcome</result>
+        </action>
+
+        
     </package>
 </struts>

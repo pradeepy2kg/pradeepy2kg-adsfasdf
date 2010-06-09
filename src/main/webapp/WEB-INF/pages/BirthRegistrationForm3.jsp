@@ -140,6 +140,9 @@
                 <s:radio name="informant.informantType" list="#{'2':''}"/>
             </div>
         </div>
+
+        
+        
         <div id="informant-name" class="font-9">
             <label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label>
 

@@ -25,7 +25,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private Map session;
     private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
-    private UserPreferencesAction userPreferencesAction = new UserPreferencesAction();
+    //private UserPreferencesAction userPreferencesAction = new UserPreferencesAction();
 
     public LoginAction(UserManager userManager) {
         this.userManager = userManager;

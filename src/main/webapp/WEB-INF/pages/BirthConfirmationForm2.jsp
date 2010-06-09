@@ -1,8 +1,16 @@
+<%--<html>   --%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%--
  @author chathuranga
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
+
+
+
 <div class="birth-confirmation-form-outer">
     <s:form action="eprBirthConfirmation" name="birthConfirmation_form2" id="birth-confirmation-form-2" method="POST">
         <div id="civil-confirmation-info-sub-title" class="form-sub-title">
