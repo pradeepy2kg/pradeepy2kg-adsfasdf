@@ -45,9 +45,6 @@ public class Role {
     @Basic (fetch = FetchType.EAGER)
     private byte[] permissions;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> roles;
-
     public Role() {}
 
     @Override

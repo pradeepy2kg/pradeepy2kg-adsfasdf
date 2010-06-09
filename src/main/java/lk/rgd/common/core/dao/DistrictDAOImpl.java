@@ -42,7 +42,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
 
         if (user == null) {
             return result;
-        } else if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
+        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // admins and RG has full access
             return result;
         } else {

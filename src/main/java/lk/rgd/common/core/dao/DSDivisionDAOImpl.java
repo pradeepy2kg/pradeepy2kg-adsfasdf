@@ -45,10 +45,12 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
 
         if (user == null) {
             return result;
-        } else if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
+        } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // Admin, RG and has full access
             return result;
-        } else if ((user.isPlayingRole(Role.ROLE_ARG) || user.isPlayingRole(Role.ROLE_DR)) && user.isAllowedAccessToDistrict(districtUKey)) {
+        } else if (
+            (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
+                && user.isAllowedAccessToDistrict(districtUKey)) {
             // the ARG, or DR who has been assigned to this district has full access
             return result;
         } else {
