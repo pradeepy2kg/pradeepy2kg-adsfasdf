@@ -34,7 +34,7 @@
 
                 <%--TODO remove subset after complete pagination --%>
                 <s:subset source="#session.printList" count="10" start="#session.printStart">
-                    <s:iterator status="printStatus">
+                    <s:iterator status="printStatus" >
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                             <td><s:property value="%{#printStatus.count+#session.printStart}"/></td>
                             <td><s:checkbox name="index" onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>

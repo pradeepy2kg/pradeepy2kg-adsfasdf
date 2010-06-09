@@ -36,7 +36,7 @@
                 <s:if test="#session.ApprovalStart == null">
                     <s:set name="ApprovalStart" value="0" scope="session"/>
                 </s:if>
-                <s:iterator status="approvalStatus" value="#session.ApprovalData" id="approvalList">
+                <s:iterator  status="approvalStatus" value="#session.ApprovalData" id="approvalList">
                     <tr>
                         <td><s:property value="%{#approvalStatus.count + #session.ApprovalStart}"/></td>
                         <td><s:checkbox name="index"
