@@ -275,6 +275,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             raceList = raceDAO.getRaces(language);
             logger.debug("inside populate : districts , dsdivisions, countries and races populated.");
         }
+
         child = bdf.getChild();
         parent = bdf.getParent();
         grandFather = bdf.getGrandFather();
@@ -282,15 +283,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         informant = bdf.getInformant();
         confirmant = bdf.getConfirmant();
         register = bdf.getRegister();
-        birthDistrictId = register.getBirthDistrict().getDistrictId();
-        birthDivisionId = register.getBirthDivision().getDivisionId();
-        fatherCountry = parent.getFatherCountry().getCountryId();
-        motherCountry = parent.getMotherCountry().getCountryId();
-        fatherRace = parent.getFatherRace().getRaceId();
-        motherRace = parent.getMotherRace().getRaceId();
-        dsDivisionId = register.getDsDivision().getDivisionId();
-        motherDistrictId = parent.getMotherDSDivision().getDistrictId();
-        motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
+
+        if (register != null) {
+            birthDistrictId = register.getBirthDistrict().getDistrictId();
+            birthDivisionId = register.getBirthDivision().getDivisionId();
+            dsDivisionId = register.getDsDivision().getDivisionId();
+        }
+
+        if (parent != null) {
+            fatherCountry = parent.getFatherCountry().getCountryId();
+            motherCountry = parent.getMotherCountry().getCountryId();
+            fatherRace = parent.getFatherRace().getRaceId();
+            motherRace = parent.getMotherRace().getRaceId();
+            motherDistrictId = parent.getMotherDSDivision().getDistrictId();
+            motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
+        }
     }
 
     public int getPageNo() {
