@@ -95,8 +95,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         child = new ChildInfo();
-        parent = new ParentInfo();
-        register = new BirthRegisterInfo();
     }
 
     /**
@@ -402,6 +400,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
+        if (register == null) {
+            register = new BirthRegisterInfo();
+        }
         register.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         logger.debug("setting BirthDivision : {}", register.getBirthDivision().getEnDivisionName());
     }
@@ -412,6 +413,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setFatherCountry(int fatherCountry) {
         this.fatherCountry = fatherCountry;
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
         parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
         logger.debug("setting Father Country: {} From DAO: {}", parent.getFatherCountry().getEnCountryName());
     }
@@ -422,6 +426,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherCountry(int motherCountry) {
         this.motherCountry = motherCountry;
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
         parent.setMotherCountry(countryDAO.getCountry(motherCountry));
         logger.debug("setting Mother Country: {}", parent.getMotherCountry().getEnCountryName());
     }
@@ -493,6 +500,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setFatherRace(int fatherRace) {
         this.fatherRace = fatherRace;
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
         parent.setFatherRace(raceDAO.getRace(fatherRace));
     }
 
@@ -502,6 +512,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherRace(int motherRace) {
         this.motherRace = motherRace;
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
         parent.setMotherRace(raceDAO.getRace(motherRace));
     }
 
@@ -511,6 +524,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherDSDivisionId(int motherDSDivisionId) {
         this.motherDSDivisionId = motherDSDivisionId;
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
         parent.setMotherDSDivision(dsDivisionDAO.getDSDivisionByPK(motherDSDivisionId));
     }
 
