@@ -20,9 +20,9 @@ import java.util.Map;
  */
 public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, PreloadableDAO {
 
-    private final Map<Integer, DSDivision> dsDivisions = new HashMap<Integer, DSDivision>();
-    private final Map<Integer, Map<Integer,DSDivision>> dsDivisionsByDistrictAndDiv =
-        new HashMap<Integer, Map<Integer,DSDivision>>();
+    // direct cache of objects by PK - dsDivisionUKey
+    private final Map<Integer, DSDivision> dsDivisionsByPK = new HashMap<Integer, DSDivision>();
+    // local caches indexed by districtUKey and dsDivisionUKey
     private final Map<Integer, Map<Integer,String>> siNames = new HashMap<Integer, Map<Integer,String>>();
     private final Map<Integer, Map<Integer,String>> enNames = new HashMap<Integer, Map<Integer,String>>();
     private final Map<Integer, Map<Integer,String>> taNames = new HashMap<Integer, Map<Integer,String>>();
@@ -30,15 +30,15 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getDSDivisionNames(int districtId, String language, User user) {
+    public Map<Integer, String> getDSDivisionNames(int districtUKey, String language, User user) {
 
         Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
-            result = getDSDivisionNamesImpl(siNames, districtId);
+            result = getDSDivisionNamesImpl(siNames, districtUKey);
         } else if (AppConstants.ENGLISH.equals(language)) {
-            result = getDSDivisionNamesImpl(enNames, districtId);
+            result = getDSDivisionNamesImpl(enNames, districtUKey);
         } else if (AppConstants.TAMIL.equals(language)) {
-            result = getDSDivisionNamesImpl(taNames, districtId);
+            result = getDSDivisionNamesImpl(taNames, districtUKey);
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
@@ -48,7 +48,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         } else if (user.isPlayingRole(Role.ROLE_ADMIN) || user.isPlayingRole(Role.ROLE_RG)) {
             // Admin, RG and has full access
             return result;
-        } else if ((user.isPlayingRole(Role.ROLE_ARG) || user.isPlayingRole(Role.ROLE_DR)) && user.isAllowedAccessToDistrict(districtId)) {
+        } else if ((user.isPlayingRole(Role.ROLE_ARG) || user.isPlayingRole(Role.ROLE_DR)) && user.isAllowedAccessToDistrict(districtUKey)) {
             // the ARG, or DR who has been assigned to this district has full access
             return result;
         } else {
@@ -63,19 +63,32 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         }
     }
 
-    private Map<Integer, String> getDSDivisionNamesImpl(
-        Map<Integer, Map<Integer,String>> namesByDistrict, int districtId) {
+    public String getNameByPK(int dsDivisionUKey, String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return dsDivisionsByPK.get(dsDivisionUKey).getSiDivisionName();
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return dsDivisionsByPK.get(dsDivisionUKey).getEnDivisionName();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return dsDivisionsByPK.get(dsDivisionUKey).getTaDivisionName();
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
+    }
 
-        Map<Integer, String> dsDivisionNames = namesByDistrict.get(districtId);
+    private Map<Integer, String> getDSDivisionNamesImpl(
+        Map<Integer, Map<Integer,String>> namesByDistrict, int districtUKey) {
+
+        Map<Integer, String> dsDivisionNames = namesByDistrict.get(districtUKey);
         if (dsDivisionNames != null) {
             return dsDivisionNames;
         }
-        logger.warn("No DS Divisions found for District : {}", districtId);
+        logger.warn("No DS Divisions found for District : {}", districtUKey);
         return Collections.emptyMap();
     }
 
     public DSDivision getDSDivisionByPK(int dsDivisionUKey) {
-        return dsDivisions.get(dsDivisionUKey);
+        return dsDivisionsByPK.get(dsDivisionUKey);
     }
 
     /**
@@ -94,14 +107,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
             int divisionId   = d.getDivisionId();
             int divisionUKey = d.getDsDivisionUKey();
 
-            dsDivisions.put(d.getDsDivisionUKey() , d);
-
-            Map<Integer, DSDivision> divisionMap = dsDivisionsByDistrictAndDiv.get(districtUKey);
-            if (divisionMap == null) {
-                divisionMap = new HashMap<Integer, DSDivision>();
-                dsDivisionsByDistrictAndDiv.put(districtUKey, divisionMap);
-            }
-            divisionMap.put(divisionUKey, d);
+            dsDivisionsByPK.put(d.getDsDivisionUKey() , d);
 
             subMap = siNames.get(districtUKey);
             if (subMap == null) {

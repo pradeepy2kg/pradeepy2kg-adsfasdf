@@ -1,12 +1,17 @@
 package lk.rgd.crs.core.service;
 
 import lk.rgd.Permission;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 
@@ -16,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +29,21 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegistrationServiceImpl.class);
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     private final BirthDeclarationDAO birthDeclarationDAO;
+    private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
+    private final BDDivisionDAO bdDivisionDAO;
+    private final CountryDAO countryDAO;
+    private final RaceDAO raceDAO;
 
-    public BirthRegistrationServiceImpl(BirthDeclarationDAO dao) {
-        birthDeclarationDAO = dao;
+    public BirthRegistrationServiceImpl(
+        BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+        this.birthDeclarationDAO = birthDeclarationDAO;
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.bdDivisionDAO = bdDivisionDAO;
+        this.countryDAO = countryDAO;
+        this.raceDAO = raceDAO;
     }
 
     /**
@@ -99,7 +115,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
         } else {
             handleException("Cannot delete birth declaration " + existing.getIdUKey() +
-                " after its approved", ErrorCodes.ILLEGAL_STATE);
+                "after its approved", ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -149,23 +165,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         BDDivision bdDivision = bdf.getRegister().getBirthDivision();
-
-//        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
-//            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
-//
-//        } else {
-//            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-//                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-//                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
-//        }
-        // TODO changed by chathuranga
-        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictUKey()) &&
-            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())) {
+        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
+            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
 
         } else {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                bdDivision.getDistrict().getDistrictUKey() + " and/or DS Division : " +
-                bdDivision.getDsDivision().getDsDivisionUKey(), ErrorCodes.PERMISSION_DENIED);
+                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 
@@ -195,12 +201,61 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision,pageNo,noOfRows);  
+        return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision,pageNo,noOfRows);
     }
 
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows){
         return birthDeclarationDAO.getDeclarationApprovalPending(birthDivision,pageNo,noOfRows);
     }
 
+    /**
+     * Populates transient string values for Country, Race, District, Division etc
+     * @param bdf the BirthDeclaration to populate transient values
+     * @return populated BDF
+     */
+    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf) {
+        String prefLanguage = bdf.getRegister().getPreferredLanguage();
 
+        ChildInfo child = bdf.getChild();
+        child.setChildGenderPrint(GenderUtil.getGender(bdf.getChild().getChildGender(), prefLanguage));
+
+        BirthRegisterInfo brInfo = bdf.getRegister();
+        if (brInfo.getOriginalBCPlaceOfIssue() != null) {
+            brInfo.setOriginalBCPlaceOfIssuePrint(dsDivisionDAO.getNameByPK(brInfo.getOriginalBCPlaceOfIssue(), prefLanguage));
+        }
+        if (brInfo.getBirthDivision() != null) {
+            brInfo.setDistrictPrint(districtDAO.getNameByPK(brInfo.getBirthDistrict().getDistrictUKey(), prefLanguage));
+            brInfo.setDsDivisionPrint(dsDivisionDAO.getNameByPK(brInfo.getDsDivision().getDsDivisionUKey(), prefLanguage));
+            brInfo.setBdDivisionPrint(bdDivisionDAO.getNameByPK(brInfo.getBirthDivision().getBdDivisionUKey(), prefLanguage));
+        }
+
+        ParentInfo parent = bdf.getParent();
+        if (parent != null) {
+            if (parent.getFatherCountry() != null) {
+                parent.setFatherCountryPrint(
+                    countryDAO.getNameByPK(parent.getFatherCountry().getCountryId(), prefLanguage));
+            }
+            if (parent.getMotherCountry() != null) {
+                parent.setMotherCountryPrint(
+                    countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), prefLanguage));
+            }
+            if (parent.getFatherRace() != null) {
+                parent.setFatherRacePrint(
+                    raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), prefLanguage));
+            }
+            if (parent.getMotherRace() != null) {
+                parent.setMotherRacePrint(
+                    raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), prefLanguage));
+            }
+
+            if (parent.getMotherDSDivision() != null) {
+                parent.setMotherDistrictPrint(
+                    districtDAO.getNameByPK(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), prefLanguage));
+                parent.setMotherDsDivisionPrint(
+                    dsDivisionDAO.getNameByPK(parent.getMotherDSDivision().getDsDivisionUKey(), prefLanguage));
+            }
+        }
+
+        return bdf;
+    }
 }

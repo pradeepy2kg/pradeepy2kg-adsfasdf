@@ -34,6 +34,12 @@ public class ParentInfo implements Serializable {
     private Country fatherCountry;
 
     /**
+     * Fathers country name as a String in the preferred language
+     */
+    @Transient
+    private String fatherCountryPrint;
+
+    /**
      * Name of father
      */
     @Column(nullable = true, length = 600)
@@ -60,6 +66,12 @@ public class ParentInfo implements Serializable {
     private Race fatherRace;
 
     /**
+     * Fathers race name as a String in the preferred language
+     */
+    @Transient
+    private String fatherRacePrint;
+
+    /**
      * NIC or PIN of mother
      */
     @Column(nullable = true, length = 10)
@@ -77,6 +89,12 @@ public class ParentInfo implements Serializable {
     @ManyToOne
     @JoinColumn(name = "motherCountryId")
     private Country motherCountry;
+
+    /**
+     * Mothers country name as a String in the preferred language
+     */
+    @Transient
+    private String motherCountryPrint;
 
     /**
      * Full name of mother
@@ -105,6 +123,12 @@ public class ParentInfo implements Serializable {
     private Race motherRace;
 
     /**
+     * Mothers race name as a String in the preferred language
+     */
+    @Transient
+    private String motherRacePrint;
+
+    /**
      * Age of mother at birth
      */
     @Column(nullable = true)
@@ -115,6 +139,18 @@ public class ParentInfo implements Serializable {
      */
     @OneToOne
     private DSDivision motherDSDivision;
+
+    /**
+     * Mothers DS Division name as a String in the preferred language
+     */
+    @Transient
+    private String motherDsDivisionPrint;
+
+    /**
+     * Mothers district name as a String in the preferred language
+     */
+    @Transient
+    private String motherDistrictPrint;
 
     /**
      * Address of mother
@@ -313,5 +349,53 @@ public class ParentInfo implements Serializable {
 
     public void setMotherDSDivision(DSDivision motherDSDivision) {
         this.motherDSDivision = motherDSDivision;
+    }
+
+    public String getFatherCountryPrint() {
+        return fatherCountryPrint;
+    }
+
+    public void setFatherCountryPrint(String fatherCountryPrint) {
+        this.fatherCountryPrint = fatherCountryPrint;
+    }
+
+    public String getMotherRacePrint() {
+        return motherRacePrint;
+    }
+
+    public void setMotherRacePrint(String motherRacePrint) {
+        this.motherRacePrint = motherRacePrint;
+    }
+
+    public String getFatherRacePrint() {
+        return fatherRacePrint;
+    }
+
+    public void setFatherRacePrint(String fatherRacePrint) {
+        this.fatherRacePrint = fatherRacePrint;
+    }
+
+    public String getMotherCountryPrint() {
+        return motherCountryPrint;
+    }
+
+    public void setMotherCountryPrint(String motherCountryPrint) {
+        this.motherCountryPrint = motherCountryPrint;
+    }
+
+    public String getMotherDsDivisionPrint() {
+        return motherDsDivisionPrint;
+    }
+
+    public void setMotherDsDivisionPrint(String motherDsDivisionPrint) {
+        this.motherDsDivisionPrint = motherDsDivisionPrint;
+    }
+
+    public String getMotherDistrictPrint() {
+        return motherDistrictPrint;
+    }
+
+    public void setMotherDistrictPrint(String motherDistrictPrint) {
+        this.motherDistrictPrint = motherDistrictPrint;
     }
 }

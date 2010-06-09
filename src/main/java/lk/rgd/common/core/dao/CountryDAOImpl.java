@@ -20,7 +20,7 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
     private final Map<Integer, String> siCountries = new HashMap<Integer, String>();
     private final Map<Integer, String> enCountries = new HashMap<Integer, String>();
     private final Map<Integer, String> taCountries = new HashMap<Integer, String>();
-    private final Map<Integer, Country> countries = new HashMap<Integer, Country>();
+    private final Map<Integer, Country> countriesByPK = new HashMap<Integer, Country>();
 
     /**
      * @inheritDoc
@@ -38,8 +38,21 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
         return null;
     }
 
+    public String getNameByPK(int countryUKey, String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return countriesByPK.get(countryUKey).getSiCountryName();
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return countriesByPK.get(countryUKey).getEnCountryName();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return countriesByPK.get(countryUKey).getTaCountryName();
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
+    }
+
     public Country getCountry(int id) {
-        Country c = countries.get(id);
+        Country c = countriesByPK.get(id);
 
         if (c==null) {
             handleException("Country not found for id : " + id, ErrorCodes.COUNTRY_NOT_FOUND);
@@ -61,7 +74,7 @@ public class CountryDAOImpl extends BaseDAO implements CountryDAO, PreloadableDA
             siCountries.put(c.getCountryId(), c.getCountryCode() + SPACER + c.getSiCountryName());
             enCountries.put(c.getCountryId(), c.getCountryCode() + SPACER + c.getEnCountryName());
             taCountries.put(c.getCountryId(), c.getCountryCode() + SPACER + c.getTaCountryName());
-            countries.put(c.getCountryId(), c);
+            countriesByPK.put(c.getCountryId(), c);
         }
 
         logger.debug("Loaded : {} countries from the database", results.size());

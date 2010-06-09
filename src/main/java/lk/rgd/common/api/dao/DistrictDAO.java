@@ -19,6 +19,14 @@ public interface DistrictDAO {
     public Map<Integer, String> getDistrictNames(String language, User user);
 
     /**
+     * Return the name of the district in the selected language
+     * @param districtUKey the district unique key
+     * @param language the selected language
+     * @return the name of the district in the selected language
+     */
+    public String getNameByPK(int districtUKey, String language);
+
+    /**
      * Return District by id
      * @param id the District ID
      * @return the District

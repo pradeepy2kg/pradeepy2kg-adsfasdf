@@ -13,14 +13,13 @@ import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author asankha
  */
 public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, PreloadableDAO {
 
-    private final Map<Integer, District> districts = new HashMap<Integer, District>();
+    private final Map<Integer, District> districtsByPK = new HashMap<Integer, District>();
     private final Map<Integer, String> siDistricts = new HashMap<Integer, String>();
     private final Map<Integer, String> enDistricts = new HashMap<Integer, String>();
     private final Map<Integer, String> taDistricts = new HashMap<Integer, String>();
@@ -58,8 +57,21 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         }
     }
 
+    public String getNameByPK(int districtUKey, String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return districtsByPK.get(districtUKey).getSiDistrictName();
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            return districtsByPK.get(districtUKey).getEnDistrictName();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return districtsByPK.get(districtUKey).getTaDistrictName();
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return AppConstants.EMPTY_STRING;
+    }
+
     public District getDistrict(int id) {
-        return districts.get(id);   
+        return districtsByPK.get(id);
     }
 
     /**
@@ -74,7 +86,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         for (District d : results) {
             final int districtId = d.getDistrictId();
             final int districtUKey = d.getDistrictUKey();
-            districts.put(districtUKey, d);
+            districtsByPK.put(districtUKey, d);
             siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
             enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
             taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());

@@ -18,6 +18,14 @@ public interface RaceDAO {
     public Map<Integer, String> getRaces(String language);
 
     /**
+     * Return the name of the Race in the selected language
+     * @param raceId the race id
+     * @param language the language
+     * @return the name of the race in the specified language
+     */
+    public String getNameByPK(int raceId, String language);
+
+    /**
      * Returns the Race for given Id
      *
      * @param id the race ID

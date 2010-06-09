@@ -1,9 +1,5 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.GNDivision;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -55,6 +51,12 @@ public class ChildInfo implements Serializable {
      */
     @Column(nullable = false)
     private int childGender;
+
+    /**
+     * The child gender as a String in the preferred language
+     */
+    @Transient
+    private String childGenderPrint;
 
     /**
      * Weight in kilogrammes
@@ -176,5 +178,13 @@ public class ChildInfo implements Serializable {
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public String getChildGenderPrint() {
+        return childGenderPrint;
+    }
+
+    public void setChildGenderPrint(String childGenderPrint) {
+        this.childGenderPrint = childGenderPrint;
     }
 }

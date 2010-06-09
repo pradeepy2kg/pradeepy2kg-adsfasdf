@@ -88,7 +88,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
                 new ClassPathResource("populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
         } catch (Exception ignore) {
-            logger.info("Skipped creation and population of the database as it exists..");
+            logger.info("Skipped creation and population of the database as it exists..", ignore);
         }
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);

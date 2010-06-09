@@ -34,13 +34,6 @@
         <property name="password" value="epop"/>
     </bean>
 
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>-->
-        <!--<property name="url" value="jdbc:derby:memory:unit-testing-jpa;create=true"/>-->
-        <!--<property name="username" value="epop"/>-->
-        <!--<property name="password" value="epop"/>-->
-    <!--</bean>-->
-
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
@@ -89,6 +82,11 @@
     the web interface as well as a Web Services interface -->
     <bean id="manageBirthService" class="lk.rgd.crs.core.service.BirthRegistrationServiceImpl">
         <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
     </bean>
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">

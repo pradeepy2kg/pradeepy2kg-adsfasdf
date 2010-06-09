@@ -23,5 +23,13 @@ public interface BDDivisionDAO {
      */
     public Map<Integer, String> getBDDivisionNames(int districtIdUKey, String language, User user);
 
+    /**
+     * Return the name of the B.D. Division in the given language
+     * @param bdDivisionUKey the unique BD Division ID
+     * @param language selected language to return the name
+     * @return the name of the BD division in the selected language
+     */
+    public String getNameByPK(int bdDivisionUKey, String language);
+
     public BDDivision getBDDivisionByPK(int bdDivisionUKey);
 }

@@ -13,6 +13,7 @@ import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.*;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -167,8 +168,12 @@ public class DAOImplTest extends TestCase {
     }
 
     public void testBirthDeclaration() throws Exception {
-        BirthDeclarationDAO dao = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
-        BDDivisionDAO bdDao = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+        BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+        BirthDeclarationDAO birthDeclarationDAO = (BirthDeclarationDAO) ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+//        BDDivisionDAO bdDao = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+
+        BirthDeclaration disp = birthRegistrationService.loadValuesForPrint(birthDeclarationDAO.getById(1));
+        Assert.assertTrue("කොළඹ".equals(disp.getRegister().getDistrictPrint()));
 
         //List<BirthDeclaration> r = dao.getConfirmationPrintPending(bdDao.getBDDivision(11, 1), false);
         //Assert.assertEquals(2, r.size());
