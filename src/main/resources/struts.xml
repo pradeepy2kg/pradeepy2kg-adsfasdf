@@ -86,8 +86,7 @@
         </action>
 
         <!-- user creation related-->
-        <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="creatUser">
+        <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction" method="creatUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.welcome</result>

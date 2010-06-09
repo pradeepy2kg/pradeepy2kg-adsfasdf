@@ -296,3 +296,16 @@ border-right:0px solid #000000;
 /* Styles for the BirthDeclarationApprovalWarnings. */
 #bdaw-outer{background:none;}
 #bdaw-content{text-align:justify; color:red; }
+
+
+/* Styles for the User Creation web form begins here. */
+#create-user-outer{
+    width:1080px;
+    padding:10px;
+}
+
+#create-user-outer div{width:1060px; }
+#create-user-outer div label{float:left;  }
+#create-user-outer div input, #create-user-outer div select{ }
+
+/* Styles for the User Creation web form ends here. */
