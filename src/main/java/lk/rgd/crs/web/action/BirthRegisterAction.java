@@ -149,7 +149,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
 
-            populate();
+            populate(bdf);
             logger.debug("Birth Declaration: PageNo=" + pageNo);
             return "form" + pageNo;
         }
@@ -209,10 +209,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
                         break;
                 }
-            }
+            }  
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
 
-            populate();
+            populate(bdf);
             return "form" + pageNo;
         }
     }
@@ -236,7 +236,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
-            populate();
+            populate(bdf);
             return "form" + pageNo;
         }
 
@@ -250,7 +250,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     /**
      * Populate master data to the UIs
      */
-    private void populate() {
+    private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
 
@@ -275,6 +275,22 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             raceList = raceDAO.getRaces(language);
             logger.debug("inside populate : districts , dsdivisions, countries and races populated.");
         }
+        child = bdf.getChild();
+        parent = bdf.getParent();
+        grandFather = bdf.getGrandFather();
+        marriage = bdf.getMarriage();
+        informant = bdf.getInformant();
+        confirmant = bdf.getConfirmant();
+        register = bdf.getRegister();
+        birthDistrictId = register.getBirthDistrict().getDistrictId();
+        birthDivisionId = register.getBirthDivision().getDivisionId();
+        fatherCountry = parent.getFatherCountry().getCountryId();
+        motherCountry = parent.getMotherCountry().getCountryId();
+        fatherRace = parent.getFatherRace().getRaceId();
+        motherRace = parent.getMotherRace().getRaceId();
+        dsDivisionId = register.getDsDivision().getDivisionId();
+        motherDistrictId = parent.getMotherDSDivision().getDistrictId();
+        motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
     }
 
     public int getPageNo() {
