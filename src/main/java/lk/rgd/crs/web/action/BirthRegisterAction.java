@@ -181,7 +181,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setFatherRace(parent.getFatherRace());
                         bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
                         bdf.getParent().setMotherRace(parent.getMotherRace());
-
                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
