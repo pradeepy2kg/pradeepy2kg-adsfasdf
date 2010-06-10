@@ -121,6 +121,10 @@
             <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English </label>
             <s:textarea name="child.childFullNameEnglish"/>
         </div>
+        <div id="birth-certificate-preferred-language" class="font-9">
+            <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
+            <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="register.preferredLanguage"></s:select>
+        </div>
         <div id="child-gender" class="font-9">
             <label>(5)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
             <s:select

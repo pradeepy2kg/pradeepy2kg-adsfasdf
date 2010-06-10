@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='main-menu']/a[2]/label</td>
+	<td>link=උප්පැන්න ලියාපදිංචි කිරීම</td>
 	<td></td>
 </tr>
 <tr>
