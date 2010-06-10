@@ -24,12 +24,7 @@
                           headerValue="-Select district-"/>
 </td>
 </tr>
-<tr>
-    <td> <div id="user-district" class="font-12">
-                <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></div></td>
-    <td> <s:select name="prefDSDivisionId" list="dsDivisionList" headerKey="0"
-                          headerValue="-Select DS Division-"/></td>
-</tr>              
+             
 </table> 
 
   <br>
