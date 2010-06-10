@@ -226,7 +226,7 @@
 <div id="informed-date" class="font-9">
     <label>දිනය <br>*in tamil<br>Date</label>
     <s:select list="{'2009','2010','2011'}" name="" id="informYear"
-              onchange="javascript:setDate('informedYear','8')"/>
+              onchange="javascript:setDate('informedYear','8')" />
     <s:select list="{'01','02','03'}" name="" id="informMonth"
               onchange="javascript:setDate('informedMonth','8')"/>
     <s:select list="{'01','02','03'}" name="" id="informDay"
