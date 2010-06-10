@@ -71,6 +71,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDSDivisionId;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
+    /**
+     * confirmationFlag is set to 1 if
+     * request is from birth registration
+     * approval jsp else it is set to 0
+     */
+    private int confirmationFlag;
+    /**
+     * key is used to identify a particular
+     * entity of BirthDeclaration bean
+     */
+    private long bdKey;
 
     public String welcome() {
         return "success";
@@ -118,6 +129,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 switch (pageNo) {
                     case 1:
                         bdf.setChild(child);
+                        register.setStatus(bdf.getRegister().getStatus());
                         bdf.setRegister(register);
                         break;
                     case 2:
@@ -199,7 +211,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
                         break;
                 }
-            }
+            }  
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
 
             populate(bdf);
@@ -251,14 +263,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         /** getting full district list */
         allDistrictList = districtDAO.getDistrictNames(language, null);
         /** getting full DSDivision list */
-        // TODO currently getting DSDivision by hard coding district id
+        // TODO currently getting DSDivision by first district id
         if (!allDistrictList.isEmpty()) {
             int selectedDistrictId = allDistrictList.keySet().iterator().next();
             allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
         }
 
         if (!districtList.isEmpty()) {
-            // int selectedDistrictId = districtList.keySet().iterator().next();
+           // int selectedDistrictId = districtList.keySet().iterator().next();
             int birthDistrictId = districtList.keySet().iterator().next();
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(birthDistrictId, language, user);

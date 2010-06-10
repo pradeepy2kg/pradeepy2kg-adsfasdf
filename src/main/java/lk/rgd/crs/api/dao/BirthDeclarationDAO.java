@@ -39,10 +39,12 @@ public interface BirthDeclarationDAO {
      * again be requested for re-print
      *
      * @param birthDivision the birth division
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
      * @param printed       return already printed items if true, or items pending printing if false
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed);
+    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval

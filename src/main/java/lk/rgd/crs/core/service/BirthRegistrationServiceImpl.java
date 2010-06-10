@@ -73,7 +73,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("The user : " + user.getUserId() +
-                " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
         }
 
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -82,7 +82,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             List<UserWarning> w = approveBirthDeclaration(bdf, false, user);
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration ID : " + id +
-                    " must be approved after validating warnings"));
+                        " must be approved after validating warnings"));
             }
         }
         return warnings;
@@ -100,7 +100,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.updateBirthDeclaration(bdf);
         } else {
             handleException("Cannot modify birth declaration " + existing.getIdUKey() +
-                "after its approved", ErrorCodes.ILLEGAL_STATE);
+                    "after its approved", ErrorCodes.ILLEGAL_STATE);
         }
     }
 
