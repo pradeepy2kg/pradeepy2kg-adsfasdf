@@ -12,24 +12,22 @@
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
         </div>
     </s:form>
-    <s:if test="#request.errorCode>1">
-    <div id="birth-register-approval-message" class="font-9" align="center">
-        Error ! ! ! 
-    <s:label value="%{#request.errorCode}"/>
-    </div>
+    <s:actionerror/>
+    <s:if test="#request.warnings != null">
+        <div id="birth-register-approval-message" class="font-9" align="center">
+            <table>
+                <s:iterator value="#request.warnings">
+                    <tr>
+                        <td><s:property value="message"/></td>
+                    </tr>
+                </s:iterator>
+            </table>
+        </div>
     </s:if>
     <div id="birth-register-approval-body">
-        <%--todo edit has to be implemented--%>
         <%--todo permission handling--%>
-            <%--todo warining handling--%>
-        <%-- <s:if test="request.warning !=null">
-            <s:iterator value="#request.warning">
-            <s:property value="message"/>
-            </s:iterator>
-        </s:if>--%>
         <s:form action="eprApproveAllSelected" name="birth_register_approval_body" method="POST">
             <table>
-
                 <s:set name="allowApprove" value="#session.allowApproveBDF"/>
                 <s:set name="allowEdit" value="#session.allowEditBDF"/>
                 <s:set name="allowReject" value="#session.allowReject"/>
@@ -39,7 +37,7 @@
                     <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
-                      <s:if test="#allowEdit==true">
+                    <s:if test="#allowEdit==true">
                         <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
                     </s:if>
                     <s:if test="#allowApprove==true">
@@ -74,7 +72,7 @@
                             </td>
                         </s:if>
                         <s:if test="#allowApprove==true">
-                            <s:url id="approveSelected" action="eprApproveBirthDeclaration.do"> 
+                            <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <td align="center"><s:a href="%{approveSelected}"
@@ -84,17 +82,18 @@
                             </td>
                         </s:if>
                         <s:if test="#allowReject==ture">
-                        <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
-                            <s:param name="bdId" value="idUKey"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{rejectSelected}"
-                                                title="%{getText('rejectTooltip.label')}"><img
-                                src="<s:url value='/images/reject.png'/>" width="25" height="25" border="none"/></s:a>
-                        </td>
-                    </s:if>
+                            <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
+                                <s:param name="bdId" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{rejectSelected}"
+                                                    title="%{getText('rejectTooltip.label')}"><img
+                                    src="<s:url value='/images/reject.png'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
+                        </s:if>
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
                             <s:param name="bdId" value="idUKey"/>
-                        </s:url>                                                        
+                        </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
                                 src="<s:url value='/images/delete.png'/>" width="25" height="25" border="none"/></s:a>
