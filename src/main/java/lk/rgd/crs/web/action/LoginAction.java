@@ -22,6 +22,7 @@ import lk.rgd.common.core.AuthorizationException;
  */
 public class LoginAction extends ActionSupport implements SessionAware {
     public static Map<Integer, Link> linkPermission = new HashMap<Integer, Link>();
+    public Map<Integer, Link> allowed = new HashMap<Integer, Link>();
     private List userRoles;
     private String userName;
     private String password;
@@ -51,6 +52,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (language.equals("en")) {
                 country = "US";
             }
+            HashMap map = (HashMap) allowedLinks(user);
+            if (map != null) {
+                session.put(WebConstants.SESSION_USER_MENUE_LIST, map);
+            } else {
+                return "error";
+            }
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
             session.put(WebConstants.SESSION_USER_BEAN, user);
             session.put("page_title", "home");
@@ -67,19 +74,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return
      */
     private Map<Integer, Link> allowedLinks(User user) {
-        Map<Integer, Link> allowed = new HashMap<Integer, Link>();
-        Set keySet = linkPermission.keySet();
-        Iterator itr = keySet.iterator();
-        while (itr.hasNext()) {
-            int key = (Integer) itr.next();
-            // chek permission to link
-            if (user.isAuthorized(key)) {
-                Link link = (Link) linkPermission.get(key);
-                allowed.put(key, link);
-                return allowed;
+
+
+        for (Map.Entry<Integer, Link> e : linkPermission.entrySet()) {
+            if (user.isAuthorized(e.getKey())) {
+                allowed.put(e.getKey(), e.getValue());
             }
         }
-        return null;
+        return allowed;
     }
 
     /**
@@ -117,7 +119,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.session = map;
     }
 
-    static {
-        linkPermission.put(6, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp"));
+    static {                                                                              //prpertyKey,link,action
+        linkPermission.put(6, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp", "eprUserCreation.do"));
+        linkPermission.put(7, new Link("birth_registration.label", "/WEB-INF/pages/BirthRegistrationForm1.jsp", "eprBirthRegistration.do"));
+        linkPermission.put(8, new Link("birth_conformation_report.label", "/WEB-INF/pages/Welcome.jsp", "eprBirthConfirmationReport.do"));
+        linkPermission.put(9, new Link("birth_confirmation_print.label", "/WEB-INF/pages/BirthConfirmationPrintForm1.jsp", "eprFilterBirthConfirmPrint.do"));
+        linkPermission.put(10, new Link("birth_confirmation.label", "/WEB-INF/pages/BirthConfirmationForm1.jsp", "eprBirthConfirmation.do"));
+        linkPermission.put(11, new Link("birth_register_approval.label", "/WEB-INF/pages/BirthRegisterApproval.jsp", "eprBirthRegisterApproval.do"));
+        linkPermission.put(12, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
     }
 }
