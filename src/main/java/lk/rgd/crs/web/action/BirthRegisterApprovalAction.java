@@ -15,6 +15,7 @@ import java.util.List;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
@@ -133,39 +134,39 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String approveBirthDeclaration() {
         //todo set status of the Declaration
-        /* logger.debug("inside approveBirthDeclaration : bdId {} observed ", bdId);
-    BirthDeclaration bd = service.getById(bdId);
-    User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-    List<UserWarning> warnings = service.approveBirthDeclaration(bd, false, user);
-    if (warnings != null) {
-        Integer pageNo = (Integer) session.get("pageNo");
-        district = (Integer) session.get("selectedDistrict");
-        division = (Integer) session.get("selectedDivision");
-        birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivision(
-            district, division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("bdDeclarationApprovalPending", birthDeclarationPendingList);
-        paginationHandler(birthDeclarationPendingList.size());
-        populate();
-        return "success";
-    } else {
-        request.put("bdId",bdId);
-        request.put("warnings",warnings);
-        populate();*/
-        request.put("bdId", bdId);//for testing
-        return "approvalRejected";
+        logger.debug("inside approveBirthDeclaration : bdId {} observed ", bdId);
+        BirthDeclaration bd = service.getById(bdId);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        List<UserWarning> warnings = service.approveBirthDeclaration(bd, false, user);
+        if (warnings != null) {
+            Integer pageNo = (Integer) session.get("pageNo");
+            district = (Integer) session.get("selectedDistrict");
+            division = (Integer) session.get("selectedDivision");
+            birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+                pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            session.put("bdDeclarationApprovalPending", birthDeclarationPendingList);
+            paginationHandler(birthDeclarationPendingList.size());
+            populate();
+            return "success";
+        } else {
+            request.put("bdId", bdId);
+            request.put("warnings", warnings);
+            populate();
+            request.put("bdId", bdId);//for testing
+            return "approvalRejected";
+        }
     }
-//    }
 
     public String approveIgnoringWorning() {
         //todo
         logger.debug("inside approveIgnoringWorning bdId {} received ignoreWarning is {}  ", bdId, ignoreWarning);
-        /*if (ignoreWarning) {
+        if (ignoreWarning) {
             BirthDeclaration bd = service.getById(bdId);
             User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
             service.approveBirthDeclaration(bd, true, user);
         } else {
 
-        }*/
+        }
         populate();
         return "success";
     }
@@ -175,9 +176,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String approveAllSelectedBirthDeclaration() {
         //todo warning handling
-        logger.debug("inside approveAllSelectedBirthDeclaration : {} Declarations is/are requested to remove ",index.length);
-        User user=(User)session.get(WebConstants.SESSION_USER_BEAN);
-        service.approveBirthDeclarationIdList(index,user);
+        logger.debug("inside approveAllSelectedBirthDeclaration : {} Declarations is/are requested to remove ", index.length);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        service.approveBirthDeclarationIdList(index, user);
         Integer pageNo = (Integer) session.get("pageNo");
         district = (Integer) session.get("selectedDistrict");
         division = (Integer) session.get("selectedDivision");

@@ -131,7 +131,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (!ignoreWarnings) {
             // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
-            if (bdf.getParent().getMotherNICorPIN() != null) {
+            if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
                 List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBandMotherNICorPIN(
                     bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
 
@@ -165,10 +165,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         BDDivision bdDivision = bdf.getRegister().getBirthDivision();
-        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
-            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
-
-        } else {
+        if (!user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictUKey()) ||
+            !user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())) {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
                 bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
