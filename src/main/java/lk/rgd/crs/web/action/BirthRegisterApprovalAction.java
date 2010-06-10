@@ -138,14 +138,21 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         BirthDeclaration bd = service.getById(bdId);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         List<UserWarning> warnings = service.approveBirthDeclaration(bd, false, user);
-        if (warnings != null) {
+        logger.debug("inside approveBirthDeclaration warnings {} ", !warnings.isEmpty());
+        if (warnings.isEmpty()) {
             Integer pageNo = (Integer) session.get("pageNo");
             district = (Integer) session.get("selectedDistrict");
             division = (Integer) session.get("selectedDivision");
             birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-            session.put("bdDeclarationApprovalPending", birthDeclarationPendingList);
-            paginationHandler(birthDeclarationPendingList.size());
+            session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+            if (birthDeclarationPendingList.size() > 0) {
+                paginationHandler(birthDeclarationPendingList.size());
+            }
+            else{
+                pageNo--;
+                session.put("pageNo",pageNo);
+            }
             populate();
             return "success";
         } else {
