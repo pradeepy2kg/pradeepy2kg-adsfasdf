@@ -51,9 +51,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * are performed at this stage. The [ADR] Approval will trigger a manual / human approval after validating any
      * warnings by an ADR or higher level authority
      *
-     * @param bdf the BDF to be added
+     * @param bdf            the BDF to be added
      * @param ignoreWarnings an explicit switch to disable optional validations
-     * @param user the user initiating the action
+     * @param user           the user initiating the action
      */
     public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // does the user have access to the BDF being added (i.e. check district and DS division)
@@ -64,15 +64,16 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * Approve a list of BDF forms. Will only approve those that triggers no warnings. The result will contain
      * information on the warnings returned.
+     *
      * @param approvalDataList a list of the unique BDF IDs to be approved in batch
-     * @param user the user approving the BDFs
+     * @param user             the user approving the BDFs
      * @return a list of warnings for those that trigger warnings during approval
      */
     public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user) {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("The user : " + user.getUserId() +
-                " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);    
+                " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
         }
 
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -157,7 +158,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
             bdf.getRegister().setComments(sb.toString());
         }
-        
+
         bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
         birthDeclarationDAO.updateBirthDeclaration(bdf);
         return warnings;
@@ -199,15 +200,16 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision,pageNo,noOfRows);
+        return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision, pageNo, noOfRows);
     }
 
-    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision,int pageNo,int noOfRows){
-        return birthDeclarationDAO.getDeclarationApprovalPending(birthDivision,pageNo,noOfRows);
+    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
+        return birthDeclarationDAO.getDeclarationApprovalPending(birthDivision, pageNo, noOfRows);
     }
 
     /**
      * Populates transient string values for Country, Race, District, Division etc
+     *
      * @param bdf the BirthDeclaration to populate transient values
      * @return populated BDF
      */
