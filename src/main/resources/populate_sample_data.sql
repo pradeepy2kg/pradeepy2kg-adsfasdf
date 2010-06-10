@@ -1,5 +1,6 @@
 -- Configurable Application Parameters
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.late_reg_days', '90');
+INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.belated_reg_days', '365');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '10');
 
 -- Countries
