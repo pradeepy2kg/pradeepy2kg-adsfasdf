@@ -147,5 +147,5 @@
         </div>
         <s:hidden name="pageNo" value="1"/>
         <s:submit value="%{getText('next.label')}"/>
-            </s:form>
+    </s:form>
 </div>
