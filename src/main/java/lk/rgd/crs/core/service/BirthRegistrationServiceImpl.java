@@ -70,7 +70,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user) {
 
-        if (user.isAuthorized(Permission.APPROVE_BDF)) {
+        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("The user : " + user.getUserId() +
                 " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);    
         }

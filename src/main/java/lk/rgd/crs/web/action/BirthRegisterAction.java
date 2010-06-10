@@ -71,17 +71,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDSDivisionId;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
-    /**
-     * confirmationFlag is set to 1 if
-     * request is from birth registration
-     * approval jsp else it is set to 0
-     */
-    private int confirmationFlag;
-    /**
-     * key is used to identify a particular
-     * entity of BirthDeclaration bean
-     */
-    private long bdKey;
 
     public String welcome() {
         return "success";
@@ -117,7 +106,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
                     bdf = service.getById(bdId);
-                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                    BirthDeclaration.State status = bdf.getRegister().getStatus();
+                    logger.debug("inside birthDeclaration - bdId : {}, status : {} ", bdId, status);
+                    if (status != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                         return "error";   // todo pass error info
                     }
                     //todo check permissions to operate on this birthdivision 
@@ -208,7 +199,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
                         break;
                 }
-            }  
+            }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
 
             populate(bdf);
@@ -267,7 +258,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
 
         if (!districtList.isEmpty()) {
-           // int selectedDistrictId = districtList.keySet().iterator().next();
+            // int selectedDistrictId = districtList.keySet().iterator().next();
             int birthDistrictId = districtList.keySet().iterator().next();
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(birthDistrictId, language, user);
