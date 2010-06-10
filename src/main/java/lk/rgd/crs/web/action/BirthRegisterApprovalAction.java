@@ -59,10 +59,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * confirmed yet by the parents and set them in the
      * session to get later in the jsp page naviagation
      * can be done only if previousFlag is set to 1 or
-     * nextFlag is set to 1  districtSelectedFlag is to
-     * capture whether user selects a particular district
-     * or division if district or division is selected
-     * districtSelectedFlag is set to 1 else it is set to 0
+     * nextFlag is set to 1 initial data are loaded based
+     * on the first district of the allowed district
+     * and the first division of the allowed division
      *
      * @return String
      */
@@ -74,7 +73,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             selectedDistrict = districtList.keySet().iterator().next();
         }
         int selectedDivision = -1;
-        if (divisionList.isEmpty()) {
+        if (!divisionList.isEmpty()) {
             selectedDivision = divisionList.keySet().iterator().next();
         }
         boolean allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
@@ -175,10 +174,18 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String which desides the next page
      */
     public String approveAllSelectedBirthDeclaration() {
-        //todo
-        logger.debug("inside approveAllSelectedBirthDeclaration :");
-        /*User user=(User)session.get(WebConstants.SESSION_USER_BEAN);
-        service.approveBirthDeclarationIdList(index,user);*/
+        //todo warning handling
+        logger.debug("inside approveAllSelectedBirthDeclaration : {} Declarations is/are requested to remove ",index.length);
+        User user=(User)session.get(WebConstants.SESSION_USER_BEAN);
+        service.approveBirthDeclarationIdList(index,user);
+        Integer pageNo = (Integer) session.get("pageNo");
+        district = (Integer) session.get("selectedDistrict");
+        division = (Integer) session.get("selectedDivision");
+        birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+            pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        paginationHandler(birthDeclarationPendingList.size());
+        populate();
         return "success";
     }
 
