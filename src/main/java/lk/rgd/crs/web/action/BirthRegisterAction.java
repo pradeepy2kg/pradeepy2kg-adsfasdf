@@ -124,6 +124,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setParent(parent);
                         break;
                     case 3:
+                       logger.debug("Postal Address of informent  :" + informant.getInformantAddress());
                         bdf.setMarriage(marriage);
                         bdf.setGrandFather(grandFather);
                         bdf.setInformant(informant);

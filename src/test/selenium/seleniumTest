@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Birth Registration</td>
+	<td>//div[@id='main-menu']/a[2]/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,24 +42,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//span[@id='datePicker']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[4]/td[6]</td>
-	<td></td>
+	<td>select</td>
+	<td>year</td>
+	<td>label=2010</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-1_child_placeOfBirth</td>
 	<td>In Hospital</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-1_child_birthAtHospital0</td>
-	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -69,7 +59,7 @@
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-1_child_childFullNameEnglish</td>
-	<td>Saman Kumara</td>
+	<td>saman Kumara</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -79,7 +69,7 @@
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-1_child_childBirthWeight</td>
-	<td>2.5</td>
+	<td>2.2</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -99,22 +89,27 @@
 <tr>
 	<td>select</td>
 	<td>birth-registration-form-2_fatherCountry</td>
-	<td>label=LK : ශ්‍රී ලංකාව</td>
+	<td>label=JP : ජපානය</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_fatherPassportNo</td>
-	<td>120025</td>
+	<td>255202</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_fatherFullName</td>
-	<td>Sarath sumanaweera</td>
+	<td>Sarath Sumanaweera</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>fatherYear</td>
-	<td>label=2010</td>
+	<td>click</td>
+	<td>//img[@alt='Select a date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[1]/td[5]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -139,17 +134,22 @@
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_motherPassportNo</td>
-	<td>120056</td>
+	<td>2252523</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_motherFullName</td>
-	<td>Sumana Rathnaweera</td>
+	<td>Kalyani Sumanaweera</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>motherYear</td>
-	<td>label=2010</td>
+	<td>click</td>
+	<td>//span[@id='motherDatePicker']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[1]/td[6]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -157,14 +157,9 @@
 	<td>Gampaha</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>birth-registration-form-2_motherRace</td>
-	<td>label=1 : සිංහල</td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_motherAgeAtBirth</td>
-	<td>27</td>
+	<td>26</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -174,7 +169,7 @@
 <tr>
 	<td>select</td>
 	<td>birth-registration-form-2_motherDSDivisionId</td>
-	<td>label=21 : මහරගම</td>
+	<td>label=6 : කොළොන්නාව</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -187,9 +182,14 @@
 	<td>1125</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>admitYear</td>
-	<td>label=2010</td>
+	<td>click</td>
+	<td>//span[@id='admitDatePicker']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//span[3]/div/table/tbody/tr/td/table/tbody/tr[4]/td[5]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -263,12 +263,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType0</td>
+	<td>birth-registration-form-3_informant_informantType1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-registration-form-3_informant_informantSigned</td>
+	<td>birth-registration-form-3_informant_informantType0</td>
 	<td></td>
 </tr>
 <tr>
@@ -278,7 +278,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[4]/td[5]</td>
+	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[5]/td[5]</td>
 	<td></td>
 </tr>
 <tr>
@@ -289,7 +289,7 @@
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-4_notifyingAuthority_notifyingAuthorityPIN</td>
-	<td>58462569V</td>
+	<td>852790393V</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -299,7 +299,7 @@
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-4_notifyingAuthority_notifyingAuthorityAddress</td>
-	<td>50/1 Morawaththa,Ruwanwella</td>
+	<td>50/1 Morawaththa Ruwanwella</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -307,15 +307,21 @@
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>modifiedYear</td>
-	<td>label=2010</td>
+	<td>click</td>
+	<td>//img[@alt='Select a date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//tbody/tr[1]/td[4]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-registration-form-4_0</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>
