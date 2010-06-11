@@ -78,8 +78,8 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
         <!--BirthRegistration Approval Related-->
-        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="birthRegisterApproval">
+        <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="birthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.welcome</result>
@@ -90,6 +90,10 @@
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.welcome</result>
+        </action>
+
+        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="birthDeclarationApproval">
+            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprApprovalNext" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="nextPage">
@@ -106,6 +110,12 @@
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
+        <action name="eprRejectBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="rejectBirthDeclaration">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <!--BirthDeclaration Approval related actions-->
         <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclaration">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
@@ -117,8 +127,8 @@
         </action>
 
         <action name="eprApproveAllSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="approveAllSelected">
-            <result type="tiles" name="success">epr.home</result>
+                method="approveAllSelectedBirthDeclaration">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"

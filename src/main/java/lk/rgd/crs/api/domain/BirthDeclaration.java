@@ -18,22 +18,22 @@ import java.util.Date;
                         "ORDER BY bdf.register.dateOfRegistration desc"),
 
         @NamedQuery(name = "confirmation.pending.approval.expired", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 2 " +
+                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
                         "AND bdf.confirmant.lastDateForConfirmation < :today " +
                         "ORDER BY bdf.register.dateOfRegistration desc"),
 
         @NamedQuery(name = "confirmation.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
+                        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 0 " +
                         "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
         @NamedQuery(name = "declaration.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                    "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
+                    "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 0 " +
                     "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
         @NamedQuery(name = "get.by.id", query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.idUKey = :bdfidUKey"),
 
         @NamedQuery(name = "get.by.serialNo.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 1 "),
+                        "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 0 "),
 
         @NamedQuery(name = "get.by.dateOfBirth.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
                         "WHERE bdf.child.dateOfBirth = :dateOfBirth AND bdf.parent.motherNICorPIN = :motherNICorPIN ")

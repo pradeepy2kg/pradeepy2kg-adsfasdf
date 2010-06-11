@@ -162,29 +162,33 @@
         informantPhoneNo.value = phonoNo;
         informantEmail.value = email;
 
-        informantName.disabled = false;
-        informantNICorPIN.disabled = false;
-        informantAddress.disabled = false;
-        informantPhoneNo.disabled = false;
-        informantEmail.disabled = false;
+
+        informantName.readOnly = false;
+        informantNICorPIN.readOnly = false;
+        informantAddress.readOnly = false;
+        informantPhoneNo.readOnly = false;
+        informantEmail.readOnly = false;
 
 
         if (id == 0)
         {
-            informantName.disabled = true;
-            informantNICorPIN.disabled = true;
-            informantAddress.disabled = true;
-            informantPhoneNo.disabled = true;
-            informantEmail.disabled = true;
+            informantName.readOnly = true;
+            informantNICorPIN.readOnly = true;
+            informantAddress.readOnly = true;
+
+
+            informantPhoneNo.readOnly = true;
+            informantEmail.readOnly = true;
 
         }
         else if (id == 1)
         {
-            informantName.disabled = true;
-            informantNICorPIN.disabled = true;
+            informantName.readOnly = true;
+            informantNICorPIN.readOnly = true;
 
 
         }
+
 
     }
 
@@ -221,14 +225,14 @@
 </div>
 <div id="informed-date" class="font-9">
     <label>දිනය <br>*in tamil<br>Date</label>
-    <s:select list="{'2009','2010','2011'}" name="" id="secondYear"
-              onchange="javascript:setDate('informedYear','2')"/>
-    <s:select list="{'01','02','03'}" name="" id="secondMonth"
-              onchange="javascript:setDate('informedMonth','2')"/>
-    <s:select list="{'01','02','03'}" name="" id="secondDay"
-              onchange="javascript:setDate('informedDay','2')"/>
+    <s:select list="{'2009','2010','2011'}" name="" id="informYear"
+              onchange="javascript:setDate('informedYear','8')"  onselect="javascript:splitDate()"/>
+    <s:select list="{'01','02','03'}" name="" id="informMonth"
+              onchange="javascript:setDate('informedMonth','8')"/>
+    <s:select list="{'01','02','03'}" name="" id="informDay"
+              onchange="javascript:setDate('informedDay','8')"/>
     <sx:datetimepicker id="informDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
-                       onmouseover="javascript:splitDate('secondDatePicker')"/>
+                       onmouseover="javascript:splitDate('informDatePicker')"/>
 </div>
 <s:hidden name="pageNo" value="3"/>
 <s:submit value="%{getText('next.label')}"/>
