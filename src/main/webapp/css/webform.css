@@ -306,6 +306,6 @@ border-right:0px solid #000000;
 
 #create-user-outer div{width:1060px; }
 #create-user-outer div label{float:left;  }
-#create-user-outer div input, #create-user-outer div select{ }
+#create-user-outer div input, #create-user-outer div select{ width:400px;}
 
 /* Styles for the User Creation web form ends here. */

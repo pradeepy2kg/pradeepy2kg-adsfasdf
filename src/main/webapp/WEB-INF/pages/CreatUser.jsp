@@ -12,6 +12,9 @@
 <div id="create-user-outer">
     <s:form name="userCreationForm" action="eprUserCreation" method="POST">
         <div>
+            <s:label value="%{getText('user_id.label')}" />
+            <s:textfield name="user.userId"/>
+        </div><div>
             <s:label value="%{getText('user_name.label')}" />
             <s:textfield name="user.userName"/>
         </div>
@@ -23,13 +26,11 @@
             <s:label value="%{getText('preffered_language.label')}" />
             <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="user.prefLanguage" ></s:select> 
         </div>
+        
         <div>
             <s:label value="%{getText('preffered_district.label')}" />
-
-        </div>
-        <div>
-            <s:label value="%{getText('preffered_division.label')}" />
-            
+            <s:select list="districtList" name="prefferedDistricts" multiple="true" size="10" onclick="javascript:displaySelectedDistricts(this.value)" />
+            <s:textarea disabled="true" id="selectedDistricts" />
         </div>
         <s:hidden name="pageNo" value="1" />
         <s:submit value="%{getText('create_user.label')}"  />
