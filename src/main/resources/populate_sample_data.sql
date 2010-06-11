@@ -1,5 +1,6 @@
 -- Configurable Application Parameters
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.late_reg_days', '90');
+INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.belated_reg_days', '365');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '10');
 
 -- Countries
@@ -119,47 +120,28 @@ INSERT INTO COMMON.ROLES (ROLEID, NAME) VALUES('DR',  'Additional Registrar Gene
 INSERT INTO COMMON.ROLES (ROLEID, NAME) VALUES('ADR', 'Additional District Registrar');
 INSERT INTO COMMON.ROLES (ROLEID, NAME) VALUES('DEO', 'Data Entry Operator / Clerk');
 
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, PREFDISTRICTUKEY, PREFDSDIVISIONUKEY) VALUES('admin', '105', 'System Administrator', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 1, 1);
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, PREFDISTRICTUKEY, PREFDSDIVISIONUKEY) VALUES('rg', '104', 'Registrar General Sri Lanka', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 1, 1);
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, PREFDISTRICTUKEY, PREFDSDIVISIONUKEY) VALUES('arg-western', '103', 'Western Province Registrar', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 1, 1);
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, PREFDISTRICTUKEY, PREFDSDIVISIONUKEY) VALUES('admin', 'ADMIN', '105', 'System Administrator', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 1, 1);
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, PREFDISTRICTUKEY, PREFDSDIVISIONUKEY) VALUES('rg', 'RG','104', 'Registrar General Sri Lanka', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 1, 1);
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE, PREFDISTRICTUKEY, PREFDSDIVISIONUKEY) VALUES('arg-western', 'ARG','103', 'Western Province Registrar', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI', 1, 1);
 
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('dr-colombo', '301', 'District Registrar - Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('dr-gampaha', '302', 'District Registrar - Gampaha', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('dr-kalutara', '302', 'District Registrar - Kalutara', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('dr-colombo', 'DR', '301', 'District Registrar - Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('dr-gampaha', 'DR','302', 'District Registrar - Gampaha', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('dr-kalutara', 'DR','302', 'District Registrar - Kalutara', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
 
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('adr-colombo-colombo', '303', 'ADR - Colombo/Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('adr-gampaha-negambo', '306', 'ADR - Gampaha/Negambo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('adr-kalutara-panadura', '309', 'ADR  - Kalutara/Panadura', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('adr-colombo-colombo', 'ADR', '303', 'ADR - Colombo/Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('adr-gampaha-negambo', 'ADR', '306', 'ADR - Gampaha/Negambo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('adr-kalutara-panadura', 'ADR', '309', 'ADR  - Kalutara/Panadura', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
 
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('deo-colombo-colombo', '103', 'Data Entry Operator Colombo/Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('deo-gampaha-negambo', '103', 'Data Entry Operator Gampaha/Negambo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('deo-kalutara-panadura', '103', 'Data Entry Operator Kalutara/Panadura', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('deo-colombo-colombo', 'DEO', '103', 'Data Entry Operator Colombo/Colombo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('deo-gampaha-negambo', 'DEO', '103', 'Data Entry Operator Gampaha/Negambo', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('deo-kalutara-panadura', 'DEO', '103', 'Data Entry Operator Kalutara/Panadura', 'W6ph5Mm5Pz8GgiULbPgzG37mj9g=', 'SI');
 
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('ashoka', '201', 'Ashoka Ekanayake - ADR Colombo / Colombo Fort (Medical)', 'XJRyDE28JvEY2IGylnz+w5CnnTA=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('asankha', '202', 'Asankha Perera - ADR Colombo / Colombo Fort (Medical)', 'JZiuu/n4ImMnYfxJ+ttGR9LyYmo=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('duminda', '203', 'Duminda - ADR Colombo / Colombo Fort (Medical)', '8OYuek4Vs7ebel1Trtm4sy8tB8w=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('indunil', '204', 'Indunil - ADR Colombo / Colombo Fort (Medical)', 'JZEs/79kaLxs0n4DOER6fN1vKLY=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('amith', '205', 'Amith - ADR Colombo / Colombo Fort (Medical)', 'RI/xsIJu3GrYsfWr2sLPf88I+Ks=', 'SI');
-INSERT INTO COMMON.USERS (USERID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('chathuranga', '206', 'Chathuranga - ADR Colombo / Colombo Fort (Medical)', 'hEFeb6UFV1Kxst3H0N9p/Ics/dI=', 'SI');
-
-INSERT INTO COMMON.USER_ROLES VALUES('rg', 'RG');
-INSERT INTO COMMON.USER_ROLES VALUES('arg-western', 'ARG');
-INSERT INTO COMMON.USER_ROLES VALUES('dr-colombo', 'DR');
-INSERT INTO COMMON.USER_ROLES VALUES('dr-gampaha', 'DR');
-INSERT INTO COMMON.USER_ROLES VALUES('dr-kalutara', 'DR');
-INSERT INTO COMMON.USER_ROLES VALUES('adr-colombo-colombo', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('adr-gampaha-negambo', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('adr-kalutara-panadura', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('deo-colombo-colombo', 'DEO');
-INSERT INTO COMMON.USER_ROLES VALUES('deo-gampaha-negambo', 'DEO');
-INSERT INTO COMMON.USER_ROLES VALUES('deo-kalutara-panadura', 'DEO');
-
-INSERT INTO COMMON.USER_ROLES VALUES('ashoka', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('asankha', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('duminda', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('indunil', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('amith', 'ADR');
-INSERT INTO COMMON.USER_ROLES VALUES('chathuranga', 'ADR');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('ashoka', 'ADR', '201', 'Ashoka Ekanayake - ADR Colombo / Colombo Fort (Medical)', 'XJRyDE28JvEY2IGylnz+w5CnnTA=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('asankha', 'ADR', '202', 'Asankha Perera - ADR Colombo / Colombo Fort (Medical)', 'JZiuu/n4ImMnYfxJ+ttGR9LyYmo=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('duminda', 'ADR', '203', 'Duminda - ADR Colombo / Colombo Fort (Medical)', '8OYuek4Vs7ebel1Trtm4sy8tB8w=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('indunil', 'ADR', '204', 'Indunil - ADR Colombo / Colombo Fort (Medical)', 'JZEs/79kaLxs0n4DOER6fN1vKLY=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('amith', 'ADR', '205', 'Amith - ADR Colombo / Colombo Fort (Medical)', 'RI/xsIJu3GrYsfWr2sLPf88I+Ks=', 'SI');
+INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('chathuranga', 'ADR', '206', 'Chathuranga - ADR Colombo / Colombo Fort (Medical)', 'hEFeb6UFV1Kxst3H0N9p/Ics/dI=', 'SI');
 
 -- ARG western province has access to all districts
 INSERT INTO COMMON.USER_DISTRICTS VALUES('arg-western', 1);
@@ -270,19 +252,19 @@ INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglis
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1001', 'B1001 Baby name in English', 'B1001 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 1, 0,'Informant name for B1001', 'Informant address for B1001', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1002', 'B1002 Baby name in English', 'B1002 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 5, 1,'Informant name for B1002', 'Informant address for B1002', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1002', 'B1002 Baby name in English', 'B1002 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 1, 1,'Informant name for B1002', 'Informant address for B1002', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1003', 'B1003 Baby name in English', 'B1003 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 2, 0,'Informant name for B1003', 'Informant address for B1003', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1003', 'B1003 Baby name in English', 'B1003 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 1, 0,'Informant name for B1003', 'Informant address for B1003', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1004', 'B1004 Baby name in English', 'B1004 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 5, 1,'Informant name for B1004', 'Informant address for B1004', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1004', 'B1004 Baby name in English', 'B1004 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 1, 1,'Informant name for B1004', 'Informant address for B1004', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1005', 'B1005 Baby name in English', 'B1005 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 1, 0,'Informant name for B1005', 'Informant address for B1005', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1006', 'B1006 Baby name in English', 'B1006 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 5, 1,'Informant name for B1006', 'Informant address for B1006', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1006', 'B1006 Baby name in English', 'B1006 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 1, 1,'Informant name for B1006', 'Informant address for B1006', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1007', 'B1007 Baby name in English', 'B1007 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 2, 0,'Informant name for B1007', 'Informant address for B1007', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1007', 'B1007 Baby name in English', 'B1007 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 1, 0,'Informant name for B1007', 'Informant address for B1007', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1008', 'B1008 Baby name in English', 'B1008 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 2, 1,'Informant name for B1008', 'Informant address for B1008', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1008', 'B1008 Baby name in English', 'B1008 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 0, 1, 1,'Informant name for B1008', 'Informant address for B1008', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1009', 'B1009 Baby name in English', 'B1009 බබාගේ නම සිංහලෙන්', '2010-02-26', '2010-03-01', 1, 1, 0,'Informant name for B1009', 'Informant address for B1009', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 
@@ -291,19 +273,19 @@ INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglis
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1011', 'B1011 Baby name in English', 'B1011 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 1, 1, 0,'Informant name for B1011', 'Informant address for B1011', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1012', 'B1012 Baby name in English', 'B1012 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 0, 5, 1,'Informant name for B1012', 'Informant address for B1012', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1012', 'B1012 Baby name in English', 'B1012 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 0, 1, 1,'Informant name for B1012', 'Informant address for B1012', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1013', 'B1013 Baby name in English', 'B1013 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 1, 2, 0,'Informant name for B1013', 'Informant address for B1013', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1013', 'B1013 Baby name in English', 'B1013 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 1, 1, 0,'Informant name for B1013', 'Informant address for B1013', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1014', 'B1014 Baby name in English', 'B1014 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 0, 5, 1,'Informant name for B1014', 'Informant address for B1014', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1014', 'B1014 Baby name in English', 'B1014 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 0, 1, 1,'Informant name for B1014', 'Informant address for B1014', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1015', 'B1015 Baby name in English', 'B1015 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 1, 1, 0,'Informant name for B1015', 'Informant address for B1015', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1016', 'B1016 Baby name in English', 'B1016 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 0, 5, 1,'Informant name for B1016', 'Informant address for B1016', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1016', 'B1016 Baby name in English', 'B1016 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 0, 1, 1,'Informant name for B1016', 'Informant address for B1016', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1017', 'B1017 Baby name in English', 'B1017 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 1, 2, 0,'Informant name for B1017', 'Informant address for B1017', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1017', 'B1017 Baby name in English', 'B1017 බබාගේ නම සිංහලෙන්', '2010-02-27', '2010-03-01', 1, 1, 0,'Informant name for B1017', 'Informant address for B1017', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1018', 'B1018 Baby name in English', 'B1018 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 0, 2, 1,'Informant name for B1018', 'Informant address for B1018', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1018', 'B1018 Baby name in English', 'B1018 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 0, 1, 1,'Informant name for B1018', 'Informant address for B1018', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1019', 'B1019 Baby name in English', 'B1019 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 1, 1, 0,'Informant name for B1019', 'Informant address for B1019', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 
@@ -312,11 +294,11 @@ INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglis
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1021', 'B1021 Baby name in English', 'B1021 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 1, 1, 0,'Informant name for B1021', 'Informant address for B1021', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1022', 'B1022 Baby name in English', 'B1022 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 0, 5, 1,'Informant name for B1022', 'Informant address for B1022', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1022', 'B1022 Baby name in English', 'B1022 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 0, 1, 1,'Informant name for B1022', 'Informant address for B1022', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1023', 'B1023 Baby name in English', 'B1023 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 1, 2, 0,'Informant name for B1023', 'Informant address for B1023', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1023', 'B1023 Baby name in English', 'B1023 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 1, 1, 0,'Informant name for B1023', 'Informant address for B1023', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
- values (2, 'B1024', 'B1024 Baby name in English', 'B1024 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 0, 5, 1,'Informant name for B1024', 'Informant address for B1024', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
+ values (2, 'B1024', 'B1024 Baby name in English', 'B1024 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-01', 0, 1, 1,'Informant name for B1024', 'Informant address for B1024', '2010-03-01', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-01');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)
  values (2, 'B1025', 'B1025 Baby name in English', 'B1025 බබාගේ නම සිංහලෙන්', '2010-02-28', '2010-03-02', 1, 1, 0,'Informant name for B1025', 'Informant address for B1025', '2010-03-02', '1222233453', 'Notifying Authority 1 Name', 'Notifying Authority 1 Address', '2010-03-02');
 INSERT INTO CRS.BIRTH_REGISTER (bdDivisionUKey, bdfSerialNo, childFullNameEnglish, childFullNameOfficialLang, dateOfBirth, dateOfRegistration, childGender, status, informantType, informantName, informantAddress, informantSignDate, notifyingAuthorityPIN, notifyingAuthorityName, notifyingAuthorityAddress, notifyingAuthoritySignDate)

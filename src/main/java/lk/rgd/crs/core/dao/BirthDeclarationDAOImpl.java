@@ -32,12 +32,12 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         em.remove(getById(idUKey));
     }
 
+    // TODO move to service class
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, boolean printed) {
-
-        Query q = em.createNamedQuery("filter.by.division.and.status");
+    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
+        Query q = em.createNamedQuery("filter.by.division.and.status").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
-        q.setParameter("status", printed ? 2 : 1);
+        q.setParameter("status", printed ? BirthDeclaration.State.APPROVED : BirthDeclaration.State.DATA_ENTRY);
         return q.getResultList();
     }
 

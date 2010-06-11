@@ -1,13 +1,9 @@
 package lk.rgd.crs.core;
 
-import lk.rgd.AppConstants;
 import lk.rgd.Permission;
-import lk.rgd.common.api.dao.GNDivisionDAO;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -66,7 +62,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // create schemas
         try {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                new ClassPathResource("create_schemas.sql"), false);
+                    new ClassPathResource("create_schemas.sql"), false);
             logger.info("Created the schemas : COMMON, CRS, PRS");
         } catch (Exception ignore) {
         }
@@ -74,7 +70,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         try {
             String fileName = generateSchemaFromHibernate(Dialect.DERBY);
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                new FileSystemResource(fileName), false);
+                    new FileSystemResource(fileName), false);
             logger.info("Created tables using generated script : " + fileName);
 
 
@@ -85,7 +81,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             // populate with sample data
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                new ClassPathResource("populate_sample_data.sql"), false);
+                    new ClassPathResource("populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
         } catch (Exception ignore) {
             logger.info("Skipped creation and population of the database as it exists..", ignore);
@@ -109,6 +105,14 @@ public class DatabaseInitializer implements ApplicationContextAware {
             Role adrRole = roleDao.getRole("ADR");
             BitSet bs = new BitSet();
             bs.set(Permission.APPROVE_BDF);
+            bs.set(Permission.EDIT_BDF);
+            bs.set(Permission.BIRTH_CONFIRMATION_PAGE);
+            bs.set(Permission.BIRTH_CONFIRMATION_PRINT_PAGE);
+            bs.set(Permission.BIRTH_CONFIRMATION_REPORT_PAGE);
+            bs.set(Permission.BIRTH_REGISTRATION_APPROVAL_PAGE);
+            bs.set(Permission.BIRTH_REGISTRATON_PAGE);
+            bs.set(Permission.USER_PREFERANCE_SELECT_PAGE);
+
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 
@@ -136,12 +140,14 @@ public class DatabaseInitializer implements ApplicationContextAware {
             Role adminRole = roleDao.getRole("ADMIN");
             bs = new BitSet();
             bs.or(rgRole.getPermBitSet());
+            bs.set(Permission.CREATE_USER_PAGE);
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);
 
             logger.info("Initialized the test database by creating the schema and executing populate_database.sql");
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
     // for testing

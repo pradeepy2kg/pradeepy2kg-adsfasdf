@@ -61,14 +61,9 @@ public class User {
     @Column(nullable = false, name="STATUS", columnDefinition="smallint not null default 1")
     private int status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(schema = "COMMON", name = "USER_ROLES",
-        joinColumns = @JoinColumn(name="userId"),
-        inverseJoinColumns = @JoinColumn(name="roleId"))
-    private Set<Role> roles;
-
-    @Transient
-    private BitSet permissions = null;
+    @ManyToOne (optional = false)
+    @JoinColumn(name = "roleId")
+    private Role role;
 
     public User() {}
 
@@ -134,16 +129,12 @@ public class User {
         this.status = status;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setPermissions(BitSet permissions) {
-        this.permissions = permissions;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public District getPrefDistrict() {
@@ -179,56 +170,7 @@ public class User {
     }
 
     public boolean isAuthorized(int permission) {
-        if (permissions == null) {
-            permissions = new BitSet();
-            for (Role r : roles) {
-                if (r.getPermBitSet() != null) {
-                    permissions.or(r.getPermBitSet());
-                }
-            }
-        }
-        return permissions.get(permission);
-    }
-
-    // TODO changed by chathuranga
-    public int getInitialDistrict() {
-        if (prefDistrict != null) {
-            //return prefDistrict.getDistrictId();
-            return prefDistrict.getDistrictUKey();
-        } else if (assignedDistricts != null && !assignedDistricts.isEmpty()) {
-            District d = assignedDistricts.iterator().next();
-            if (d != null) {
-                //return d.getDistrictId();
-                return d.getDistrictUKey();
-            }
-        }
-        logger.error("User {} : does not have access to any District!", userId);
-        return -1;
-    }
-
-    // TODO changed by chathuranga
-    public int getInitialBDDivision() {
-        if (prefDSDivision != null) {
-            //return prefDSDivision.getDivisionId();
-            return prefDSDivision.getDsDivisionUKey();
-        } else if (assignedDSDivisions != null && !assignedDSDivisions.isEmpty()) {
-            DSDivision d = assignedDSDivisions.iterator().next();
-            if (d != null) {
-                //return d.getDivisionId();
-                return d.getDsDivisionUKey();
-            }
-        }
-        logger.error("User {} : does not have access to any DS Division!", userId);
-        return -1;
-    }
-
-    public boolean isPlayingRole(String role) {
-        for (Role r : roles) {
-            if (role.equals(r.getRoleId())) {
-                return true;
-            }
-        }
-        return false;
+        return role.getPermBitSet().get(permission);
     }
 
     public boolean isAllowedAccessToDistrict(int id) {
