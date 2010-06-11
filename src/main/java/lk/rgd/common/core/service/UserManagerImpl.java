@@ -66,14 +66,13 @@ public class UserManagerImpl implements UserManager {
         //persisting data
         try {
             userDao.addUser(user);
+            logger.info(user.getUserName() + ": inserted to data base by" + authanticatedUser.getUserName());
+            logger.info("new user " + user.getUserName() + "created by :" + authanticatedUser.getUserName());
         }
         catch (Exception e) {
-            SQLException sql = (SQLException) e.getCause();
-            handleRGDRuntimeException("persistance exception catched", ErrorCodes.PERSISTING_EXCEPTION_COMMON);
-
+            // just re throw Exception
+            throw new RGDRuntimeException("persistance exception catched", ErrorCodes.PERSISTING_EXCEPTION_COMMON);
         }
-        logger.info(user.getUserName() + ": inserted to data base by" + authanticatedUser.getUserName());
-        logger.info("new user " + user.getUserName() + "created by :" + authanticatedUser.getUserName());
     }
 
 

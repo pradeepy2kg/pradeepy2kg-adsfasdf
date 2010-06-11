@@ -28,18 +28,8 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DataAccessException.class)
     public void addUser(User user) {
         logger.info("Persisting a new user.......");
-        try {
-            em.persist(user);
-        }
-        catch (DataIntegrityViolationException e) {
-            logger.info("-------------exception-----------");
-        }
-
+        em.persist(user);
     }
 
-    private void handleRGDRuntimeException(String message, int code) {
-        logger.error(message);
-        throw new RGDRuntimeException(message, code);
-    }
 }
 
