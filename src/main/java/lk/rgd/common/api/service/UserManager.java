@@ -14,5 +14,5 @@ import java.util.Set;
 public interface UserManager {
     User authenticateUser(String userName, String password) throws AuthorizationException;
 
-    void creatUser(User user, User authanticatedUser) throws AuthorizationException;
+    void creatUser(User user, User authanticatedUser);
 }

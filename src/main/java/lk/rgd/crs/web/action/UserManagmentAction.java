@@ -19,6 +19,7 @@ import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.core.service.UserManagerImpl;
+import lk.rgd.common.RGDException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 
 
@@ -50,9 +51,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         //testing
 
         User usr = new User();
-        usr.setUserName("testAmith");
-        usr.setPin("testPin");
-        usr.setUserId("testID");
+        usr.setUserName("testAmith2");
+        usr.setPin("testPin2");
+        usr.setUserId("testID2");
         usr.setPrefLanguage("SI");
         Role role = new Role();
         role.setRoleId("ADR");
