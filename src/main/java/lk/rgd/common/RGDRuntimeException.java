@@ -24,4 +24,5 @@ public class RGDRuntimeException extends RuntimeException {
     public int getErrorCode() {
         return errorCode;
     }
+   
 }

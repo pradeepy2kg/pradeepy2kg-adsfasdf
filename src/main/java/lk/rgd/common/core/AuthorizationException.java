@@ -20,4 +20,5 @@ public class AuthorizationException extends RGDException {
     }
 
     public static final int INVALID_USER_OR_PASSWORD = 1001;
+   
 }
