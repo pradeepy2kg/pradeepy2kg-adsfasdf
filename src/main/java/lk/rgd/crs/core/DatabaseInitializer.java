@@ -102,8 +102,15 @@ public class DatabaseInitializer implements ApplicationContextAware {
             // ---------------- populate permissions ---------------------
             RoleDAO roleDao = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
-            Role adrRole = roleDao.getRole("ADR");
+            Role deoRole = roleDao.getRole("DEO");
             BitSet bs = new BitSet();
+            // TODO add any DR specific permissions
+            deoRole.setPermBitSet(bs);
+            roleDao.save(deoRole);
+
+            Role adrRole = roleDao.getRole("ADR");
+            bs = new BitSet();
+            bs.or(deoRole.getPermBitSet());
             bs.set(Permission.APPROVE_BDF);
             bs.set(Permission.EDIT_BDF);
             bs.set(Permission.BIRTH_CONFIRMATION_PAGE);
@@ -139,8 +146,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             Role adminRole = roleDao.getRole("ADMIN");
             bs = new BitSet();
-            bs.or(rgRole.getPermBitSet());
             bs.set(Permission.CREATE_USER_PAGE);
+            bs.set(Permission.CREATE_USER);
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);

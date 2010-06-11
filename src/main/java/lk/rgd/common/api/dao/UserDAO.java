@@ -8,4 +8,8 @@ import lk.rgd.common.api.domain.User;
 public interface UserDAO {
 
     public User getUser(String username);
+
+    public void addUser(User user);
+
+
 }
