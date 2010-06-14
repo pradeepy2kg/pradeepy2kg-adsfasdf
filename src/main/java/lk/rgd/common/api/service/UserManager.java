@@ -1,6 +1,7 @@
 package lk.rgd.common.api.service;
 
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
 
@@ -42,19 +43,19 @@ public interface UserManager {
 
     /**
      * Return the list of users playing the specified role in the specified Birth/Death registration district
-     * @param roleId the role ID
-     * @param bdDistrictUKey the unique district id
+     * @param role the role being played
+     * @param assignedBDDistrict the BD district
      * @return list of users playing the role in that district
      */
-    public List<User> getUsersByRoleAndAssignedBDDistrict(String roleId, int bdDistrictUKey);
+    public List<User> getUsersByRoleAndAssignedBDDistrict(Role role, District assignedBDDistrict);
 
     /**
      * Return the list of users playing the specified role in the specified Marriage registration district
-     * @param roleId the role ID
-     * @param mrDistrictUKey the unique district id
+     * @param role the role
+     * @param assignedMRDistrict the MR district
      * @return list of users playing the role in that district
      */
-    public List<User> getUsersByRoleAndAssignedMRDistrict(String roleId, int mrDistrictUKey);
+    public List<User> getUsersByRoleAndAssignedMRDistrict(Role role, District assignedMRDistrict);
 
     /**
      * Get users by ID - with a wildcard match
