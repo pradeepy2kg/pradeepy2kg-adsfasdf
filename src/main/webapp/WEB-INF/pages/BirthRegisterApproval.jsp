@@ -74,6 +74,8 @@
                         <s:if test="#allowApprove==true">
                             <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
                                 <s:param name="bdId" value="idUKey"/>
+                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             </s:url>
                             <td align="center"><s:a href="%{approveSelected}"
                                                     title="%{getText('approveTooltip.label')}">
@@ -84,6 +86,8 @@
                         <s:if test="#allowReject==ture">
                             <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
                                 <s:param name="bdId" value="idUKey"/>
+                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             </s:url>
                             <td align="center"><s:a href="%{rejectSelected}"
                                                     title="%{getText('rejectTooltip.label')}"><img
@@ -93,6 +97,8 @@
                         </s:if>
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
                             <s:param name="bdId" value="idUKey"/>
+                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                         </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
@@ -111,24 +117,28 @@
                         name="allCheck"
                         onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
                     <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
             </s:if>
             <br/>
             <%-- Next link to visible next records will only visible if nextFlag is
           set to 1--%>
-            <s:url id="previousUrl" action="eprApprovalPrevious.do"/>
-            <s:url id="nextUrl" action="eprApprovalNext.do"/>
+            <s:url id="previousUrl" action="eprApprovalPrevious.do">
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
+            <s:url id="nextUrl" action="eprApprovalNext.do">
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
 
             <br/><br/>
-            <%--<s:if test="#request.previousFlag==1"><s:a href="%{previousUrl}">--%>
-               <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
+            <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
                 <s:label value="%{getText('previous.label')}"/></s:a></s:if>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <%--<s:if test="#request.nextFlag==1"><s:a href="%{nextUrl}">--%>
             <s:if test="#request.nextFlag"><s:a href="%{nextUrl}">
                 <s:label value="%{getText('next.label')}"/></s:a></s:if>
-            <s:hidden name="nextFlag" value="#request.nextFlag"/>
-            <s:hidden name="previousFlag" value="#request.previousFlag"/>
         </s:form>
 
     </div>
