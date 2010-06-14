@@ -5,6 +5,9 @@ import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
+import lk.rgd.prs.api.domain.Person;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.slf4j.Logger;
@@ -51,6 +54,10 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(Role.class);
         entityClasses.add(User.class);
         entityClasses.add(BirthDeclaration.class);
+
+        entityClasses.add(Address.class);
+        entityClasses.add(Person.class);
+        entityClasses.add(Marriage.class);
     }
 
     public void setDataSource(DataSource dataSource) {
