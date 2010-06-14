@@ -87,7 +87,7 @@ public class DAOImplTest extends TestCase {
         UserDAO userDAO = (UserDAO) ctx.getBean("userDAOImpl", UserDAO.class);
 
         // RG must see all districts and all BDDivisions for a selected district
-        User rg = userDAO.getUser("rg");
+        User rg = userDAO.getUserByPK("rg");
         Map<Integer, String> districts = districtDAO.getDistrictNames(AppConstants.SINHALA, rg);
         Assert.assertTrue(districts.size() == 25);
         Map<Integer, String> dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, rg);
@@ -96,7 +96,7 @@ public class DAOImplTest extends TestCase {
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // ARG-Western Province sees all 3 districts in province
-        User arg = userDAO.getUser("arg-western");
+        User arg = userDAO.getUserByPK("arg-western");
         districts = districtDAO.getDistrictNames(AppConstants.SINHALA, arg);
         Assert.assertTrue(districts.size() == 3);
         dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, arg);
@@ -105,7 +105,7 @@ public class DAOImplTest extends TestCase {
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // DR-colombo must see only colombo, but all BDDivisions within it
-        User dr = userDAO.getUser("dr-colombo");
+        User dr = userDAO.getUserByPK("dr-colombo");
         districts = districtDAO.getDistrictNames(AppConstants.SINHALA, dr);
         Assert.assertTrue(districts.size() == 1);
         Assert.assertTrue("11 : කොළඹ".equals(districts.values().iterator().next()));
@@ -115,7 +115,7 @@ public class DAOImplTest extends TestCase {
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // ADR-colombo must see only colombo, and fort BD division
-        User adr = userDAO.getUser("adr-colombo-colombo");
+        User adr = userDAO.getUserByPK("adr-colombo-colombo");
         districts = districtDAO.getDistrictNames(AppConstants.SINHALA, adr);
         Assert.assertTrue(districts.size() == 1);
         Assert.assertTrue("11 : කොළඹ".equals(districts.values().iterator().next()));
