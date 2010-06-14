@@ -166,8 +166,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         BDDivision bdDivision = bdf.getRegister().getBirthDivision();
-        if (user.isAllowedAccessToDistrict(bdDivision.getDistrict().getDistrictId()) &&
-            user.isAllowedAccessToDSDivision(bdDivision.getDsDivision().getDivisionId())) {
+        if (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictId()) &&
+            user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDivisionId())) {
 
         } else {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +

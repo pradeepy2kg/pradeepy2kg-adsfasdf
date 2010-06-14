@@ -83,8 +83,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                     new ClassPathResource("populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
-        } catch (Exception ignore) {
-            logger.info("Skipped creation and population of the database as it exists..", ignore);
+        } catch (Exception e) {
+            logger.info("Skipped creation and population of the database as it exists..", e);
         }
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);

@@ -49,7 +49,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
             Map<Integer, String> filteredResult = new HashMap<Integer, String>();
 
             for (Map.Entry<Integer, String> e : result.entrySet()) {
-                if (user.isAllowedAccessToDistrict(e.getKey())) {
+                if (user.isAllowedAccessToBDDistrict(e.getKey())) {
                     filteredResult.put(e.getKey(), e.getValue());
                 }
             }
