@@ -1,0 +1,47 @@
+package lk.rgd.common.api.dao;
+
+import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.User;
+
+import java.util.List;
+
+/**
+ * @author asankha
+ */
+public interface UserDAO {
+
+    /**
+     * Get user by user id
+     * @param userId the unique userId (PK)
+     * @return the corresponding user
+     */
+    public User getUserByPK(String userId);
+
+    /**
+     * Return the list of users playing the specified role
+     * @param roleId the role ID
+     * @return list of users playing the role
+     */
+    public List<User> getUsersByRole(String roleId);
+
+    /**
+     * Add a user
+     * @param user the user to be addes
+     */
+    public void addUser(User user);
+
+    /**
+     * Return the list of users assigned to the Birth / Death Registration district
+     * @param assignedBDDistrict the district
+     * @return list of users assigned
+     */
+
+    List<User> getUsersByAssignedBDDistrict(District assignedBDDistrict);
+
+    /**
+     * Return the list of users assigned to the Marriage Registration district
+     * @param assignedMRDistrict the district
+     * @return list of users assigned
+     */
+    List<User> getUsersByAssignedMRDistrict(District assignedMRDistrict);
+}
