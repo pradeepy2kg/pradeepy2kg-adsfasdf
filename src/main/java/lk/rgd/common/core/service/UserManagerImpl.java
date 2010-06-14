@@ -4,6 +4,7 @@ import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.dao.UserDAO;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
@@ -84,8 +85,8 @@ public class UserManagerImpl implements UserManager {
         }
     }
 
-    public List<User> getUsersByAssignedBDDistrict(int bdDistrictUKey) {
-        return null;
+    public List<User> getUsersByAssignedBDDistrict(District assignedBDDistrict) {
+        return userDao.getUsersByAssignedBDDistrict(assignedBDDistrict);
     }
 
     private void handleRGDRuntimeException(String message, int code) {
@@ -93,8 +94,8 @@ public class UserManagerImpl implements UserManager {
         throw new RGDRuntimeException(message, code);
     }
 
-    public List<User> getUsersByAssignedMRDistrict(int mrDistrictUKey) {
-        return null;
+    public List<User> getUsersByAssignedMRDistrict(District assignedMRDistrict) {
+        return userDao.getUsersByAssignedMRDistrict(assignedMRDistrict);
     }
 
     private void handleCRSRuntimeException(String message, int code) {
