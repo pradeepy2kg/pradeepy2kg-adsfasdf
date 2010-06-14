@@ -50,12 +50,6 @@
         <label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label>
     </div>
     <div>
-        <s:select list="{'2009','2010','2011'}" name="" id="fatherYear"
-                  onchange="javascript:setDate('year','3')"/>
-        <s:select list="{'01','02','03'}" name="" id="fatherMonth"
-                  onchange="javascript:setDate('month','3')"/>
-        <s:select list="{'01','02','03'}" name="" id="fatherDay"
-                  onchange="javascript:setDate('day','3')"/>
         <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
                            displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('fatherDatePicker')"/>
     </div>
@@ -124,13 +118,7 @@
         <label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label>
     </div>
     <div>
-        <s:select list="{'2009','2010','2011'}" name="" id="motherYear"
-                  onchange="javascript:setDate('year','4')"/>
-        <s:select list="{'01','02','03'}" name="" id="motherMonth"
-                  onchange="javascript:setDate('month','4')"/>
-        <s:select list="{'01','02','03'}" name="" id="motherDay"
-                  onchange="javascript:setDate('day','4')"/>
-        <sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
+       <sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                            onmouseover="javascript:splitDate('motherDatePicker')"/>
 
     </div>
@@ -194,12 +182,6 @@
         <label>(23)රෝහලට ඇතුලත් කිරිමේ දිනය<br>*in tamil<br>Hospital Admission Date</label>
     </div>
     <div>
-        <s:select list="{'2009','2010','2011'}" name="" id="admitYear"
-                  onchange="javascript:setDate('admitYear','5')"/>
-        <s:select list="{'01','02','03'}" name="" id="admitMonth"
-                  onchange="javascript:setDate('admitMonth','5')"/>
-        <s:select list="{'01','02','03'}" name="" id="admitDay"
-                  onchange="javascript:setDate('admitDay','5')"/>
         <sx:datetimepicker id="admitDatePicker" name="parent.motherAdmissionDate"
                            displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate('admitDatePicker')"/>
     </div>

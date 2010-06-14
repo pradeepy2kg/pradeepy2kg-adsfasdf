@@ -43,7 +43,8 @@
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
      <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 </head>
-<body>
+<body onload="selectdate(document.getElementsByTagName('year_list'),document.getElementsByTagName('mounth_list'),
+     document.getElementsByTagName('date_list'));">
 <div id="wrapper">
     <%-- Header  --%>
     <div id="layout-header">

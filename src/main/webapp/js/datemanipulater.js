@@ -18,7 +18,7 @@ function setDate(id, flag) {
     var admitDatePicker= dojo.widget.byId('admitDatePicker');
      var marriageDatePicker= dojo.widget.byId('marriageDatePicker');
        var modifiedDatePicker= dojo.widget.byId('modifiedDatePicker');
-       var informDatePicker= dojo.widget.byId('informDatePicker');
+
     if (flag == 1) submitDatePicker.setValue(getDateWhenYearIsGiven
             ("submitYear", "submitMonth", "submitDay"));
 
@@ -37,9 +37,8 @@ function setDate(id, flag) {
     else if (flag == 7)modifiedDatePicker.setValue(getDateWhenYearIsGiven
                     ("modifiedYear", "modifiedMonth", "modifiedDay"));
 
- else if (flag == 8) informDatePicker.setValue(getDateWhenYearIsGiven
-                    ("informdYear", "informMonth", "informDay"));
 }
+
 function ePopGetValue(val) {
     var sel = document.getElementById(val);
     return  sel.options[sel.selectedIndex].value;
@@ -85,4 +84,5 @@ function splitDate() {
     //todo has to be implemented
     //var stringValue = submitDatePicker.getValue();
     document.write("dddd");
+
 }

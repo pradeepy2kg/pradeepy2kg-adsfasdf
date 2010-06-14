@@ -6,6 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
+
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
             onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
@@ -22,14 +23,8 @@
                     <s:textfield name="register.bdfSerialNo"/>
                 </label>
             </div>
-            <div id="submit-date">
+            <div id="submit-date" >
                 <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span>
-                    <s:select list="{'2009','2010','2011'}" name="" id="submitYear"
-                              onchange="javascript:setDate('year','1')"/>
-                    <s:select list="{'01','02','03'}" name="" id="submitMonth"
-                              onchange="javascript:setDate('month','1')"/>
-                    <s:select list="{'01','02','03'}" name="" id="submitDay"
-                              onchange="javascript:setDate('day','1')"/>
                     <sx:datetimepicker id="submitDatePicker" name="register.dateOfRegistration" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate()"/>
                 </label>
@@ -56,18 +51,12 @@
 
             <div id="child-dob-year">
                 <label>*in sinhala<br>*in tamil<br>Year</label>
-                <s:select list="{'2009','2010','2011'}" name="" id="year"
-                          onchange="javascript:setDate('year','2')"/>
             </div>
             <div id="child-dob-month">
                 <label>*in sinhala<br>*in tamil<br>Month</label>
-                <s:select list="{'01','02','03'}" name="" id="month"
-                          onchange="javascript:setDate('month','2')"/>
             </div>
             <div id="child-dob-day">
                 <label>*in sinhala<br>*in tamil<br>Day</label>
-                <s:select list="{'01','02','03'}" name="" id="day"
-                          onchange="javascript:setDate('day','2')"/>
                 <div id="datePicker">
                     <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
                                        onchange="javascript:splitDate('datePicker')" />

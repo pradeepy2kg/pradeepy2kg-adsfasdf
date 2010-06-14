@@ -117,9 +117,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
                     bdf = service.getById(bdId);
-                    BirthDeclaration.State status = bdf.getRegister().getStatus();
-                    logger.debug("inside birthDeclaration - bdId : {}, status : {} ", bdId, status);
-                    if (status != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                         return "error";   // todo pass error info
                     }
                     //todo check permissions to operate on this birthdivision 
@@ -136,7 +134,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setParent(parent);
                         break;
                     case 3:
-                       logger.debug("Postal Address of informent  :" + informant.getInformantAddress());
                         bdf.setMarriage(marriage);
                         bdf.setGrandFather(grandFather);
                         bdf.setInformant(informant);
