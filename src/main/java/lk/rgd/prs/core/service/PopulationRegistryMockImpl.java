@@ -40,7 +40,7 @@ public class PopulationRegistryMockImpl implements PopulationRegistry {
     static {
         try {
             piyasena.setDateOfBirth(dfm.parse("1975-01-01"));
-            piyasena.setCivilStatus(0);
+            piyasena.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
 
         } catch (Exception e) {
             logger.error("Error initializing mock sample data..", e);

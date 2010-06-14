@@ -2,6 +2,7 @@ package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -9,73 +10,154 @@ import java.util.Set;
 /**
  * @author asankha
  */
+@Entity
+@Table(name = "PERSON", schema = "PRS")
 public class Person {
 
     /**
+     * The life status
+     */
+    public enum LifeStatus {
+        UNKNOWN         /** 0 - Current whereabouts are unknown */,
+        ALIVE           /** 1 - Is known to be born and not known to be dead */,
+        DEAD            /** 2 - Is known to be dead */,
+        MISSING         /** 3 - Reported as missing */,
+        NON_RESIDENT    /** 4 - Reported as not living within Sri Lanka anymore */
+    }
+
+    /**
+     * The civil status
+     */
+    public enum CivilStatus {
+        NEVER_MARRIED   /** 0 - Never known to be married */,
+        MARRIED         /** 1 - Currently married */,
+        ANNULLED        /** 2 - Currently married */,
+        SEPARATED       /** 3 - Living separately from spouse. Cannot re-marry - TODO is this necessary? */,
+        DIVORCED        /** 4 - Legally divorced from the spouse. Can re-marry */,
+        WIDOWED         /** 5 - Spouse has died */
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long personUKey;
+    /**
      * The unique Personal Identification Number
      */
-    private String pin;
+    @Column(unique = true)
+    private long pin;
     /**
      * The National ID card number - could be possibly duplicated in rare instances
      */
+    @Column(nullable = true, length = 10)
     private String nic;
+    /**
+     * The preferred language of for the record
+     */
+    @Column (nullable = false, columnDefinition="char(2) default 'si'")
+    private String preferredLanguage;
     /**
      * The full name in the official language
      */
+    @Column(nullable = true, length = 600)
     private String fullNameInOfficialLanguage;
     /**
-     * The first names in English
+     * The initials in the official language
      */
-    private String firstNamesInEnglish;
+    @Column(nullable = true, length = 30)
+    private String initialsInOfficialLanguage;
     /**
      * The last name in English
      */
+    @Column(nullable = true, length = 60)
+    private String lastNameInOfficialLanguage;
+    /**
+     * The full name in English
+     */
+    @Column(nullable = true, length = 600)
+    private String fullNameInEnglishLanguage;
+    /**
+     * The initials in English
+     */
+    @Column(nullable = true, length = 30)
+    private String initialsInEnglish;
+    /**
+     * The last name in English
+     */
+    @Column(nullable = true, length = 60)
     private String lastNameInEnglish;
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
      */
+    @Column(nullable = false)
     private int gender;
     /**
-     * Date of birth
+     * Date of birth - optional in the PRS
      */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfBirth;
     /**
      * Place of Birth
      */
+    @Column(nullable = true)
     private String placeOfBirth;
     /**
      * Date of death
      */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfDeath;
     /**
-     * Current civil status
+     * Current civil status - maybe unknown / null
      */
-    private int civilStatus;
+    @Column(nullable = true)
+    private CivilStatus civilStatus;
     /**
-     * Life status - alive, missing, dead, migrated etc..
+     * Life status - alive, missing, dead, migrated etc.., maybe unknown / null
      */
-    private int lifeStatus;
+    @Column(nullable = true)
+    private LifeStatus lifeStatus;
     /**
      * Countries of citizenship
      */
+    @OneToMany
+    @JoinTable(schema = "PRS", name = "PERSON_CITIZENSHIP",
+        joinColumns = @JoinColumn(name="personUKey"),
+        inverseJoinColumns = @JoinColumn(name="countryId"))
     private Set<Country> citizenship;
-
     /**
      * List of addresses
      */
-    private List<Address> addresses;
-    //TODO
-    // CurrentAddress, PermanentAddress, Contact details
-    // spouse, children, parents links
-
+    @OneToMany(mappedBy = "person")
+    private Set<Address> addresses;
+    /**
+     * The last known address for this person for quick access
+     */
+    @OneToOne
+    @JoinColumn(name = "lastAddressUKey")
+    private Address lastAddress;
+    /**
+     * List of marriages
+     */
+    @ManyToMany
+	@JoinTable(schema = "PRS", name = "PERSON_MARRIAGE",
+        joinColumns = @JoinColumn(name="personUKey"),
+        inverseJoinColumns = @JoinColumn(name="marriageUKey"))
+    private Set<Marriage> marriages;
+    /**
+     * The last marriage for this person for quick access
+     */
+    @OneToOne
+    @JoinColumn(name = "lastMarriageUKey")
+    private Marriage lastMarriage;
 
 
     //----------------------------------- getters and setters -----------------------------------
-    public String getPin() {
+    public long getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(long pin) {
         this.pin = pin;
     }
 
@@ -95,12 +177,12 @@ public class Person {
         this.fullNameInOfficialLanguage = fullNameInOfficialLanguage;
     }
 
-    public String getFirstNamesInEnglish() {
-        return firstNamesInEnglish;
+    public String getFullNameInEnglishLanguage() {
+        return fullNameInEnglishLanguage;
     }
 
-    public void setFirstNamesInEnglish(String firstNamesInEnglish) {
-        this.firstNamesInEnglish = firstNamesInEnglish;
+    public void setFullNameInEnglishLanguage(String fullNameInEnglishLanguage) {
+        this.fullNameInEnglishLanguage = fullNameInEnglishLanguage;
     }
 
     public String getLastNameInEnglish() {
@@ -143,19 +225,99 @@ public class Person {
         this.dateOfDeath = dateOfDeath;
     }
 
-    public int getCivilStatus() {
+    public CivilStatus getCivilStatus() {
         return civilStatus;
     }
 
-    public void setCivilStatus(int civilStatus) {
+    public void setCivilStatus(CivilStatus civilStatus) {
         this.civilStatus = civilStatus;
     }
 
-    public int getLifeStatus() {
+    public LifeStatus getLifeStatus() {
         return lifeStatus;
     }
 
-    public void setLifeStatus(int lifeStatus) {
+    public void setLifeStatus(LifeStatus lifeStatus) {
         this.lifeStatus = lifeStatus;
+    }
+
+    public String getPreferredLanguage() {
+        return preferredLanguage;
+    }
+
+    public void setPreferredLanguage(String preferredLanguage) {
+        this.preferredLanguage = preferredLanguage;
+    }
+
+    public String getInitialsInOfficialLanguage() {
+        return initialsInOfficialLanguage;
+    }
+
+    public void setInitialsInOfficialLanguage(String initialsInOfficialLanguage) {
+        this.initialsInOfficialLanguage = initialsInOfficialLanguage;
+    }
+
+    public String getLastNameInOfficialLanguage() {
+        return lastNameInOfficialLanguage;
+    }
+
+    public void setLastNameInOfficialLanguage(String lastNameInOfficialLanguage) {
+        this.lastNameInOfficialLanguage = lastNameInOfficialLanguage;
+    }
+
+    public String getInitialsInEnglish() {
+        return initialsInEnglish;
+    }
+
+    public void setInitialsInEnglish(String initialsInEnglish) {
+        this.initialsInEnglish = initialsInEnglish;
+    }
+
+    public Set<Country> getCitizenship() {
+        return citizenship;
+    }
+
+    public void setCitizenship(Set<Country> citizenship) {
+        this.citizenship = citizenship;
+    }
+
+    public long getPersonUKey() {
+        return personUKey;
+    }
+
+    public void setPersonUKey(long personUKey) {
+        this.personUKey = personUKey;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<Marriage> getMarriages() {
+        return marriages;
+    }
+
+    public void setMarriages(Set<Marriage> marriages) {
+        this.marriages = marriages;
+    }
+
+    public Marriage getLastMarriage() {
+        return lastMarriage;
+    }
+
+    public void setLastMarriage(Marriage lastMarriage) {
+        this.lastMarriage = lastMarriage;
+    }
+
+    public Address getLastAddress() {
+        return lastAddress;
+    }
+
+    public void setLastAddress(Address lastAddress) {
+        this.lastAddress = lastAddress;
     }
 }

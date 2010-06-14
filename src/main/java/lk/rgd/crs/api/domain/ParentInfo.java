@@ -138,6 +138,7 @@ public class ParentInfo implements Serializable {
      * Mother's DS division ID
      */
     @OneToOne
+    @JoinColumn(name = "motherDSDivisionUKey")
     private DSDivision motherDSDivision;
 
     /**
