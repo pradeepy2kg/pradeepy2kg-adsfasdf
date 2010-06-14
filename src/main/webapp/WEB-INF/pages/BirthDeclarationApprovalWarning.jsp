@@ -14,6 +14,12 @@
                 <tr>
                     <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
                     <td><s:checkbox name="ignoreWarning"/></td>
+                </tr>
+                <%--<tr>
+                    <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
+                    <td><s:textarea name="comments"/> </td>
+                </tr>--%>
+                <tr>
                     <td><s:submit name="approve" value="%{getText('approve.label')}"/></td>
                 </tr>
             </table>
