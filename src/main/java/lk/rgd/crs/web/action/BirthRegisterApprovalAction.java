@@ -50,6 +50,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     int pageNo;
     int initialDistrict;
     int initialDivision;
+    private boolean nextFlag;
+    private boolean previousFlag;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
@@ -92,9 +94,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         birthDeclarationPendingList = service.getDeclarationApprovalPending(
             bdDivisionDAO.getBDDivisionByPK(initialDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthDeclarationPendingList.size());
-        session.put("previousFlag", 0);
+        //request.put("previousFlag", 0);
+        request.put("previousFlag",false);
         session.put("districtOrDivisionSelectedFlag", 0);
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         session.put("pageNo", pageNo);
         return "pageLoad";
     }
@@ -114,10 +117,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         session.put("selectedDistrict", district);
         session.put("initialDivision", division);
+        //todo remove following after checking
         session.put("selectedFlag", 1);
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         paginationHandler(birthDeclarationPendingList.size());
         session.put("ApprovalStart", 0);
         populate();
@@ -148,7 +152,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             setStatus();
             birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-            session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+            request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
             if (birthDeclarationPendingList.size() > 0) {
                 paginationHandler(birthDeclarationPendingList.size());
             } else {
@@ -206,7 +210,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         setStatus();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         paginationHandler(birthDeclarationPendingList.size());
         populate();
         return "success";
@@ -225,7 +229,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         setStatus();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         paginationHandler(birthDeclarationPendingList.size());
         populate();
         return "success";
@@ -251,7 +255,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         setStatus();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         paginationHandler(birthDeclarationPendingList.size());
         populate();
         return "success";
@@ -288,7 +292,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          */
         birthDeclarationPendingList = service.getDeclarationApprovalPending(
             bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         paginationHandler(birthDeclarationPendingList.size());
         /**
          * when page refreshes BirthDeclaration approval pending list
@@ -299,8 +303,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         } else {
             session.put("pageNo", pageNo);
         }
-
-        session.put("previousFlag", 1);
+        request.put("previousFlag", true);
         session.put("ApprovalStart", ((Integer) session.get("ApprovalStart") + 10));
         populate();
         return "success";
@@ -321,31 +324,33 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * UI related handle whether to display the
          * next link and previous link
          */
-        Integer previousFlag = (Integer) session.get("previousFlag");
-        if (previousFlag == 1 && pageNo == 2) {
+        /*Integer previousFlag = (Integer) request.get("previousFlag");
+        if (previousFlag == 1 && pageNo == 2) {*/
+        if(previousFlag && pageNo==2){
             /**
              * request is comming backword(calls previous
              * to load the very first page
              */
-            session.put("previousFlag", 0);
+            request.put("previousFlag", false);
         } else if (pageNo == 1) {
             /**
              * if request is from page one
              * in the next page previous link
              * should be displayed
              */
-            session.put("previousFlag", 0);
+            request.put("previousFlag", false);
         } else {
-            session.put("previousFlag", 1);
+        logger.debug("previ {}",previousFlag);
+            request.put("previousFlag", true);
         }
-        session.put("nextFlag", 1);
+        request.put("nextFlag", true);
         if (pageNo > 1) {
             pageNo--;
         }
         session.put("pageNo", pageNo);
         birthDeclarationPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+        request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         Integer approvalStart = (Integer) session.get("ApprovalStart");
         if (approvalStart > 0) {
             approvalStart = approvalStart - 10;
@@ -365,9 +370,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public void paginationHandler(int recordsFound) {
         if (recordsFound == appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE)) {
-            session.put("nextFlag", 1);
+            request.put("nextFlag", true);
         } else {
-            session.put("nextFlag", 0);
+            request.put("nextFlag", false);
         }
     }
 
@@ -464,5 +469,21 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setIgnoreWarning(boolean ignoreWarning) {
         this.ignoreWarning = ignoreWarning;
+    }
+
+    public boolean isNextFlag() {
+        return nextFlag;
+    }
+
+    public void setNextFlag(boolean nextFlag) {
+        this.nextFlag = nextFlag;
+    }
+
+    public boolean isPreviousFlag() {
+        return previousFlag;
+    }
+
+    public void setPreviousFlag(boolean previousFlag) {
+        this.previousFlag = previousFlag;
     }
 }
