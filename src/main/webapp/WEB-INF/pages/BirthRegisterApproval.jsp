@@ -52,7 +52,7 @@
                 <s:if test="#session.ApprovalStart == null">
                     <s:set name="ApprovalStart" value="0" scope="session"/>
                 </s:if>
-                <s:iterator status="approvalStatus" value="#session.BirthDeclarationApprovalPending" id="approvalList">
+                <s:iterator status="approvalStatus" value="#request.BirthDeclarationApprovalPending" id="approvalList">
                     <tr>
                         <td><s:property value="%{#approvalStatus.count + #session.ApprovalStart}"/></td>
                         <td><s:checkbox name="index"
@@ -120,11 +120,15 @@
             <s:url id="nextUrl" action="eprApprovalNext.do"/>
 
             <br/><br/>
-            <s:if test="#session.previousFlag==1"><s:a href="%{previousUrl}">
+            <%--<s:if test="#request.previousFlag==1"><s:a href="%{previousUrl}">--%>
+               <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
                 <s:label value="%{getText('previous.label')}"/></s:a></s:if>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <s:if test="#session.nextFlag==1"><s:a href="%{nextUrl}">
+            <%--<s:if test="#request.nextFlag==1"><s:a href="%{nextUrl}">--%>
+            <s:if test="#request.nextFlag"><s:a href="%{nextUrl}">
                 <s:label value="%{getText('next.label')}"/></s:a></s:if>
+            <s:hidden name="nextFlag" value="#request.nextFlag"/>
+            <s:hidden name="previousFlag" value="#request.previousFlag"/>
         </s:form>
 
     </div>
