@@ -28,7 +28,13 @@ import java.util.Set;
         "ORDER BY u.userId"),
     @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
         "WHERE u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-        "ORDER BY u.userId")
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
+        "WHERE u.userId LIKE :userIdMatch " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
+        "WHERE u.userName LIKE :userNameMatch " +
+        "ORDER BY u.userName")
 })
 public class User {
 

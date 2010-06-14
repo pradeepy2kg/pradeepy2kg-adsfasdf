@@ -62,14 +62,14 @@ public interface UserManager {
      * @param userId the userid to match within the userId field
      * @return the list of users matching the criteria
      */
-    public List<User> getUsersByID(String userId);
+    public List<User> getUsersByIDMatch(String userId);
 
     /**
      * Get users by name - with a wildcard match
      * @param userName the userid to match within the userId field
      * @return the list of users matching the criteria
      */
-    public List<User> getUsersByName(String userName);
+    public List<User> getUsersByNameMatch(String userName);
 
     /**
      * Hash the password
