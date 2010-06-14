@@ -94,8 +94,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         birthDeclarationPendingList = service.getDeclarationApprovalPending(
             bdDivisionDAO.getBDDivisionByPK(initialDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthDeclarationPendingList.size());
-        //request.put("previousFlag", 0);
-        request.put("previousFlag",false);
+        request.put("previousFlag", false);
         session.put("districtOrDivisionSelectedFlag", 0);
         request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
         session.put("pageNo", pageNo);
@@ -326,7 +325,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          */
         /*Integer previousFlag = (Integer) request.get("previousFlag");
         if (previousFlag == 1 && pageNo == 2) {*/
-        if(previousFlag && pageNo==2){
+        if (previousFlag && pageNo == 2) {
             /**
              * request is comming backword(calls previous
              * to load the very first page
@@ -340,7 +339,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
              */
             request.put("previousFlag", false);
         } else {
-        logger.debug("previ {}",previousFlag);
+            logger.debug("previ {}", previousFlag);
             request.put("previousFlag", true);
         }
         request.put("nextFlag", true);
