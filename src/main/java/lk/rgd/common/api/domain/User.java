@@ -22,6 +22,12 @@ import java.util.Set;
         "ORDER BY u.userId"),
     @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
         "WHERE :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
+        "WHERE u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
+        "WHERE u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
         "ORDER BY u.userId")
 })
 public class User {
