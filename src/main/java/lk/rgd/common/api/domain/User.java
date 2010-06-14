@@ -16,6 +16,12 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
         "WHERE u.role.roleId = :roleId " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
+        "WHERE :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+        "ORDER BY u.userId"),
+    @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
+        "WHERE :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
         "ORDER BY u.userId")
 })
 public class User {

@@ -169,6 +169,13 @@ public class DAOImplTest extends TestCase {
         List<User> rgs = userManager.getUsersByRole("RG");
         Assert.assertEquals(1, rgs.size());
 
+        DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
+        List<User> usersByAssignedBDDistrict = userManager.getUsersByAssignedBDDistrict(districtDAO.getDistrict(1));
+        Assert.assertEquals(10, usersByAssignedBDDistrict.size());
+
+        List<User> usersByAssignedMRDistrict = userManager.getUsersByAssignedMRDistrict(districtDAO.getDistrict(1));
+        Assert.assertEquals(9, usersByAssignedMRDistrict.size());
+
         User admin = userManager.authenticateUser("admin", "password");
         User newUser1 = new User();
         newUser1.setUserId("newUser1");

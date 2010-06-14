@@ -1,5 +1,6 @@
 package lk.rgd.common.api.dao;
 
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface UserDAO {
     public List<User> getUsersByRole(String roleId);
 
     public void addUser(User user);
+
+    List<User> getUsersByAssignedBDDistrict(District assignedBDDistrict);
+
+    List<User> getUsersByAssignedMRDistrict(District assignedMRDistrict);
 }

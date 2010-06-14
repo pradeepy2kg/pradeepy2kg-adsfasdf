@@ -1,5 +1,6 @@
 package lk.rgd.common.api.service;
 
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
 
@@ -27,17 +28,17 @@ public interface UserManager {
 
     /**
      * Return the list of users assigned to the Birth / Death Registration district
-     * @param bdDistrictUKey the unique district id
+     * @param assignedBDDistrict the district
      * @return list of users assigned
      */
-    public List<User> getUsersByAssignedBDDistrict(int bdDistrictUKey);
+    public List<User> getUsersByAssignedBDDistrict(District assignedBDDistrict);
 
     /**
      * Return the list of users assigned to the Marriage Registration district
-     * @param mrDistrictUKey the unique district id
+     * @param assignedMRDistrict the district
      * @return list of users assigned
      */
-    public List<User> getUsersByAssignedMRDistrict(int mrDistrictUKey);
+    public List<User> getUsersByAssignedMRDistrict(District assignedMRDistrict);
 
     /**
      * Return the list of users playing the specified role in the specified Birth/Death registration district
