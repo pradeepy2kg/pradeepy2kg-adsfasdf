@@ -60,13 +60,15 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * confirmed yet by the parents and set them in the
      * session to get later in the jsp page naviagation
      * can be done only if previousFlag is set to 1 or
-     * nextFlag is set to 1 initial data are loaded based
-     * on the first district of the allowed district
-     * and the first division of the allowed division
+     * nextFlag is set to 1  districtSelectedFlag is to
+     * capture whether user selects a particular district
+     * or division if district or division is selected
+     * districtSelectedFlag is set to 1 else it is set to 0
      *
      * @return String
      */
     public String birthDeclarationApproval() {
+        //todo permission handling and warning handling
         populate();
         int selectedDistrict = -1;
         if (!districtList.isEmpty()) {
@@ -168,6 +170,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             return "approvalRejected";
         }
     }
+//    }
 
     public String approveIgnoringWorning() {
         //todo has to be checked with the backend
@@ -246,6 +249,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String deleteBirthDeclaration() {
+        //todo display warnings
         logger.debug("inside deleteApprovalPending : bdId {} received ", bdId);
         BirthDeclaration bd = service.getById(bdId);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);

@@ -90,19 +90,13 @@
             <div class="new">
                 <div id="new-year" class="font-7">
                     <label>*in Sinhala<br>*in Tamil<br>Year</label>
-                    <s:select list="{'2009','2010','2011'}" name="" id="submitYear"
-                              onchange="javascript:setDate('year','1')"/>
-                </div>
+                    </div>
                 <div id="new-month" class="font-7">
                     <label>*in Sinhala<br>*in Tamil<br>Month</label>
-                    <s:select list="{'01','02','03'}" name="" id="submitMonth"
-                              onchange="javascript:setDate('month','1')"/>
-                </div>
+                    </div>
                 <div id="new-day" class="font-7">
                     <label>*in Sinhala<br>*in Tamil<br>Day</label>
-                    <s:select list="{'01','02','03'}" name="" id="submitDay"
-                              onchange="javascript:setDate('day','1')"/>
-                </div>
+                    </div>
             </div>
         </div>
         <div id="new-dob">
