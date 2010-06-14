@@ -5,6 +5,7 @@ import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
@@ -103,12 +104,12 @@ public class UserManagerImpl implements UserManager {
         throw new CRSRuntimeException(message, code);
     }
 
-    public List<User> getUsersByRoleAndAssignedBDDistrict(String roleId, int bdDistrictUKey) {
-        return null;
+    public List<User> getUsersByRoleAndAssignedBDDistrict(Role role, District assignedBDDistrict) {
+        return userDao.getUsersByRoleAndAssignedBDDistrict(role, assignedBDDistrict);    
     }
 
-    public List<User> getUsersByRoleAndAssignedMRDistrict(String roleId, int mrDistrictUKey) {
-        return null;
+    public List<User> getUsersByRoleAndAssignedMRDistrict(Role role, District assignedMRDistrict) {
+        return userDao.getUsersByRoleAndAssignedMRDistrict(role, assignedMRDistrict);
     }
 
     public List<User> getUsersByID(String userId) {
