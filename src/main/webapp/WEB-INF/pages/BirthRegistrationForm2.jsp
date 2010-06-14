@@ -67,7 +67,6 @@
         <label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label>
     </div>
     <div>
-            <%--TODO name should be filled--%>
         <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
@@ -136,7 +135,6 @@
         <label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label>
     </div>
     <div>
-            <%--TODO name should be filled--%>
         <s:select list="raceList" name="motherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
     </div>
 </div>
@@ -156,13 +154,11 @@
     <div>
         <div id="mother-district">
             <label>*in Sinhala/*in English/District</label>
-                <%--TODO allDistrictList--%>
             <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
                       headerValue="%{getText('select_district.label')}"/>
         </div>
         <div id="mother-ds-division">
             <label>*in Sinhala/*in English/D.S Division</label>
-                <%--TODO name field should be filled    motherDSDivisionId  allDSDivisionList--%>
             <s:select name="motherDSDivisionId" list="allDSDivisionList" headerKey="0"
                       headerValue="%{getText('select_ds_division.label')}"/>
         </div>
@@ -205,7 +201,6 @@
 </div>
 <s:hidden name="pageNo" value="2"/>
 <s:submit value="%{getText('next.label')}"/>
-<s:submit value="%{getText('print.label')}" onclick="printPage()" type="button"/>
+<%--<s:submit value="%{getText('print.label')}" onclick="printPage()" type="button"/>--%>
 </s:form>
-</div>
 </div>

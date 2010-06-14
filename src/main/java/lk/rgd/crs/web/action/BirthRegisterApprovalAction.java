@@ -50,7 +50,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     int pageNo;
     int initialDistrict;
     int initialDivision;
-    private boolean nextFlag;
+    private boolean bdfApprove;
+	private boolean nextFlag;
     private boolean previousFlag;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
@@ -149,6 +150,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         if (caughtException || (warnings != null && warnings.isEmpty())) {
             setStatus();
+
             birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
             request.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
@@ -167,6 +169,49 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             request.put("bdId", bdId);//for testing
             return "approvalRejected";
         }
+    }
+
+    /**
+     * After filling BDF forms directly call approve without going to Approve List
+     *
+     * @return
+     */
+    public String approveBDF() {
+        logger.debug("inside approveBDF direct approve: bdId {} observed", bdId);
+        BirthDeclaration bd = service.getById(bdId);
+        List<UserWarning> warnings = null;
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        boolean caughtException = false;
+        try {
+            warnings = service.approveBirthDeclaration(bd, false, user);
+        }
+        catch (CRSRuntimeException e) {
+            logger.error("inside approveBirthDeclaration : {} , {} ", e.getErrorCode(), e);
+            addActionError(Integer.toString(e.getErrorCode()));
+            caughtException = true;
+        }
+        if (caughtException || (warnings != null && warnings.isEmpty())) {
+            setStatus();
+
+            birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+                    pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
+            if (birthDeclarationPendingList.size() > 0) {
+                paginationHandler(birthDeclarationPendingList.size());
+            } else {
+                pageNo--;
+                session.put("pageNo", pageNo);
+            }
+            populate();
+            return "success";
+        } else {
+            request.put("bdId", bdId);
+            request.put("warnings", warnings);
+            populate();
+            request.put("bdId", bdId);//for testing
+            return "approvalRejected";
+        }
+//        return "";
     }
 
     public String approveIgnoringWorning() {

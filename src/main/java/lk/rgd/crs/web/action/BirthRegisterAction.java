@@ -188,7 +188,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getParent().setFatherRace(parent.getFatherRace());
                         bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
                         bdf.getParent().setMotherRace(parent.getMotherRace());
-                       bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
+                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                         break;
                     case 2:
                         bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
@@ -206,7 +206,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
                         break;
                 }
-            }  
+            }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
 
             populate(bdf);
@@ -265,7 +265,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
 
         if (!districtList.isEmpty()) {
-           // int selectedDistrictId = districtList.keySet().iterator().next();
+            // int selectedDistrictId = districtList.keySet().iterator().next();
             int birthDistrictId = districtList.keySet().iterator().next();
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(birthDistrictId, language, user);
