@@ -112,11 +112,11 @@ public class UserManagerImpl implements UserManager {
         return userDao.getUsersByRoleAndAssignedMRDistrict(role, assignedMRDistrict);
     }
 
-    public List<User> getUsersByID(String userId) {
-        return null;
+    public List<User> getUsersByIDMatch(String userId) {
+        return userDao.getUsersByIDMatch(userId);
     }
 
-    public List<User> getUsersByName(String userName) {
-        return null;
+    public List<User> getUsersByNameMatch(String userName) {
+        return userDao.getUsersByNameMatch(userName);
     }
 }

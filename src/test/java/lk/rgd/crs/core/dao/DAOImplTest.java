@@ -152,6 +152,11 @@ public class DAOImplTest extends TestCase {
         } catch (AuthorizationException e) {
         }
 
+        Assert.assertTrue(!userManager.getUsersByIDMatch("sank").isEmpty());
+        Assert.assertTrue(userManager.getUsersByIDMatch("432").isEmpty());
+        Assert.assertTrue(!userManager.getUsersByNameMatch("Perera").isEmpty());
+        Assert.assertTrue(userManager.getUsersByNameMatch("2345").isEmpty());
+
         RoleDAO roleDAO = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
         User rg = userManager.authenticateUser("rg", "password");

@@ -67,6 +67,20 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         return q.getResultList();
     }
 
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getUsersByIDMatch(String userId) {
+        Query q = em.createNamedQuery("filter.by.wildcard_id");
+        q.setParameter("userIdMatch", "%" + userId + "%");
+        return q.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getUsersByNameMatch(String userName) {
+        Query q = em.createNamedQuery("filter.by.wildcard_name");
+        q.setParameter("userNameMatch", "%" + userName + "%");
+        return q.getResultList();
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     public void addUser(User user) {
         em.persist(user);

@@ -61,4 +61,18 @@ public interface UserDAO {
      * @return list of users playing the role in that district
      */
     public List<User> getUsersByRoleAndAssignedMRDistrict(Role role, District assignedMRDistrict);
+
+    /**
+     * Get users by ID - with a wildcard match
+     * @param userId the userid to match within the userId field
+     * @return the list of users matching the criteria
+     */
+    List<User> getUsersByIDMatch(String userId);
+
+    /**
+     * Get users by name - with a wildcard match
+     * @param userName the userid to match within the userId field
+     * @return the list of users matching the criteria
+     */
+    public List<User> getUsersByNameMatch(String userName);
 }
