@@ -68,7 +68,7 @@ public class User {
     /**
      * The password expiry date, after which the user is not allowed to login without changing the password
      */
-    @Column(nullable =false)
+    @Column(nullable =true)
     private Date passwordExpiry;
 
     /**
