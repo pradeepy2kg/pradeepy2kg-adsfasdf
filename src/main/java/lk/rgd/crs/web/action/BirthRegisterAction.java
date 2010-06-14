@@ -45,8 +45,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String scopeKey;
     private Map session;
 
-    private List<Person> myList;
-
     private ChildInfo child;
     private ParentInfo parent;
     private GrandFatherInfo grandFather;
@@ -305,14 +303,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
-    }
-
-    public List<Person> getMyList() {
-        return myList;
-    }
-
-    public void setMyList(List<Person> myList) {
-        this.myList = myList;
     }
 
     public void setSession(Map map) {
