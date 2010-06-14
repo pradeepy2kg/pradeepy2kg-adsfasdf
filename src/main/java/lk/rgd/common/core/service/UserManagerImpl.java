@@ -33,15 +33,15 @@ public class UserManagerImpl implements UserManager {
         this.roleDao = roleDao;
     }
 
-    public User authenticateUser(String userName, String password) throws AuthorizationException {
-        User user = userDao.getUser(userName);
+    public User authenticateUser(String userId, String password) throws AuthorizationException {
+        User user = userDao.getUserByPK(userId);
         if (password != null && user != null && user.getPasswordHash() != null) {
             if (user.getPasswordHash().equals(hashPassword(password))) {
                 return user;
             }
         }
-        logger.warn("Invalid user ID or password for user : " + userName);
-        throw new AuthorizationException("Invalid user ID or password for user : " + userName,
+        logger.warn("Invalid user ID or password for user : " + userId);
+        throw new AuthorizationException("Invalid user ID or password for user : " + userId,
             AuthorizationException.INVALID_USER_OR_PASSWORD);
     }
 
