@@ -39,6 +39,6 @@
                                onmouseover="javascript:splitDate('modifiedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="4"/>
-        <s:submit value="SUBMIT"/>
+        <s:submit value="%{getText('save.label')}"/>
     </s:form>
 </div>
