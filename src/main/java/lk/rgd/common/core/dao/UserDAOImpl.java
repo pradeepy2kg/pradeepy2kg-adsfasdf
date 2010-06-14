@@ -85,5 +85,10 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
     public void addUser(User user) {
         em.persist(user);
     }
+
+     public void editUser(){
+         
+     }
+
 }
 

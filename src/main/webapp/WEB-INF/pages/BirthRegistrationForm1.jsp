@@ -72,6 +72,7 @@
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
+       
                 <s:select name="dsDivisionId" list="dsDivisionList"/>
             </div>
             <div id="child-pob-division">

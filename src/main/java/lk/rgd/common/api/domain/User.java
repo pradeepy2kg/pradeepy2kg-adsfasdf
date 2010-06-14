@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.Date;
 
 /**
  * Represents a User of the system and his groups, preferences and privileges
@@ -63,6 +64,12 @@ public class User {
      */
     @Column(length = 2, nullable = false)
     private String prefLanguage;
+
+    /**
+     * The password expiry date, after which the user is not allowed to login without changing the password
+     */
+    @Column(nullable =false)
+    private Date passwordExpiry;
 
     /**
      * The preferred Marriage District - when multi-district authorization is available
@@ -235,6 +242,14 @@ public class User {
 
     public void setAssignedBDDSDivisions(Set<DSDivision> assignedBDDSDivisions) {
         this.assignedBDDSDivisions = assignedBDDSDivisions;
+    }
+
+    public Date getPasswordExpiry() {
+        return passwordExpiry;
+    }
+
+    public void setPasswordExpiry(Date passwordExpiry) {
+        this.passwordExpiry = passwordExpiry;
     }
 
     public boolean isAuthorized(int permission) {
