@@ -75,4 +75,5 @@ public interface UserDAO {
      * @return the list of users matching the criteria
      */
     public List<User> getUsersByNameMatch(String userName);
+  public void editUser();
 }

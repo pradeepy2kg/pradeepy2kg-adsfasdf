@@ -30,4 +30,7 @@ public class WebConstants {
 
     public static final String RADIO_ALREADY_PRINT = "Printed";
     public static final String RADIO_P = "Printed";
+
+
+    public static final String DEFAULT_PASS="password";
 }

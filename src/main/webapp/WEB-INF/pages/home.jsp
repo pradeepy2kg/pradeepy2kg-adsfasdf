@@ -9,6 +9,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="content-title">Home Page</div>
 <div class="content-body">
-    Welcome to the EPR system.<br><br>
+    Welcome to the EPR system this is home pagee.<br><br>
 </div>
    

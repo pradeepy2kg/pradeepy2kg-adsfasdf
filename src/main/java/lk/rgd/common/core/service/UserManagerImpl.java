@@ -12,6 +12,7 @@ import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.util.Base64;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.ErrorCodes;
+import lk.rgd.crs.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +76,8 @@ public class UserManagerImpl implements UserManager {
                 ErrorCodes.AUTHORIZATION_FAILS_CREATE_USER);
         } else {
             try {
+                //adding new default password
+                userToCreate.setPasswordHash(hashPassword(WebConstants.DEFAULT_PASS));
                 userDao.addUser(userToCreate);
                 logger.debug("New user {} created by : {}", userToCreate.getUserName(), adminUser.getUserName());
             }
