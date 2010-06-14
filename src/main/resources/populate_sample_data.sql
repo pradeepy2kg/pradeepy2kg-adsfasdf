@@ -143,23 +143,15 @@ INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGU
 INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('amith', 'ADR', '205', 'Amith - ADR Colombo / Colombo Fort (Medical)', 'RI/xsIJu3GrYsfWr2sLPf88I+Ks=', 'SI');
 INSERT INTO COMMON.USERS (USERID, ROLEID, PIN, USERNAME, PASSWORDHASH, PREFLANGUAGE) VALUES('chathuranga', 'ADR', '206', 'Chathuranga - ADR Colombo / Colombo Fort (Medical)', 'hEFeb6UFV1Kxst3H0N9p/Ics/dI=', 'SI');
 
--- ARG western province has access to all districts for BD, and colombo district for MR
+-- ARG western province has access to all districts
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('arg-western', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('arg-western', 2);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('arg-western', 3);
-
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('arg-western', 1);
-
--- DR of Colombo district has access only to Colombo district, similarly other DRs for Gampaha and Kalutara. MR is similar
+-- DR of Colombo district has access only to Colombo district, similarly other DRs for Gampaha and Kalutara
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('dr-colombo', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('dr-gampaha', 2);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('dr-kalutara', 3);
-
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('dr-colombo', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('dr-gampaha', 2);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('dr-kalutara', 3);
-
--- ADR Colombo/Colombo has access to Colombo district, similarly other ADRs and DEOs... MR is similar for ADRs but DEOs are not MR
+-- ADR Colombo/Colombo has access to Colombo district, similarly other ADRs and DEOs..
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('adr-colombo-colombo', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('adr-gampaha-negambo', 2);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('adr-kalutara-panadura', 3);
@@ -167,23 +159,12 @@ INSERT INTO COMMON.USER_BDDISTRICTS VALUES('deo-colombo-colombo', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('deo-gampaha-negambo', 2);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('deo-kalutara-panadura', 2);
 
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('adr-colombo-colombo', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('adr-gampaha-negambo', 2);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('adr-kalutara-panadura', 3);
-
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('ashoka', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('asankha', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('duminda', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('indunil', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('amith', 1);
 INSERT INTO COMMON.USER_BDDISTRICTS VALUES('chathuranga', 1);
-
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('ashoka', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('asankha', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('duminda', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('indunil', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('amith', 1);
-INSERT INTO COMMON.USER_MRDISTRICTS VALUES('chathuranga', 1);
 
 -- ADR Colombo/Colombo has access to Colombo district/Colombo DS Division, similarly other ADRs and DEOs..
 INSERT INTO COMMON.USER_BDDSDIVISIONS VALUES('adr-colombo-colombo', 1);

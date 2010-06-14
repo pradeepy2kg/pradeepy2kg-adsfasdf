@@ -77,13 +77,6 @@
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-        <!--BirthRegistration Approval Related-->
-        <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="birthDeclarationApproval">
-            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
-            <result type="tiles" name="success">epr.home</result>
-            <result type="tiles" name="error">epr.welcome</result>
-        </action>
 
         <!-- user creation related-->
         <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
@@ -117,6 +110,14 @@
         </action>
 
         <!--BirthDeclaration Approval related actions-->
+
+        <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="birthDeclarationApproval">
+            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.welcome</result>
+        </action>
+        
         <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclaration">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>

@@ -71,9 +71,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user) {
 
-        if (user.isAuthorized(Permission.APPROVE_BDF)) {
+        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("The user : " + user.getUserId() +
-                    " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
+                " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
         }
 
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -82,7 +82,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             List<UserWarning> w = approveBirthDeclaration(bdf, false, user);
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration ID : " + id +
-                        " must be approved after validating warnings"));
+                    " must be approved after validating warnings"));
             }
         }
         return warnings;
@@ -100,7 +100,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.updateBirthDeclaration(bdf);
         } else {
             handleException("Cannot modify birth declaration " + existing.getIdUKey() +
-                    "after its approved", ErrorCodes.ILLEGAL_STATE);
+                "after its approved", ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -132,7 +132,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (!ignoreWarnings) {
             // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
-            if (bdf.getParent().getMotherNICorPIN() != null) {
+            if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
                 List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBandMotherNICorPIN(
                     bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
 
@@ -166,10 +166,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         BDDivision bdDivision = bdf.getRegister().getBirthDivision();
-        if (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictId()) &&
-            user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDivisionId())) {
+        if (!user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey()) &&
+            !user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())) {
 
-        } else {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
                 bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
