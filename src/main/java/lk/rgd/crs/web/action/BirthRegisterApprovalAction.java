@@ -47,6 +47,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private User user;
     private long bdId;
     private boolean ignoreWarning;
+    int pageNo;
+    int initialDistrict;
+    int selectedDivision;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
@@ -60,21 +63,16 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * confirmed yet by the parents and set them in the
      * session to get later in the jsp page naviagation
      * can be done only if previousFlag is set to 1 or
-     * nextFlag is set to 1  districtSelectedFlag is to
-     * capture whether user selects a particular district
-     * or division if district or division is selected
-     * districtSelectedFlag is set to 1 else it is set to 0
+     * nextFlag is set to 1 initial data are loaded based
+     * on the first district of the allowed district
+     * and the first division of the allowed division
      *
      * @return String
      */
     public String birthDeclarationApproval() {
-        //todo permission handling and warning handling
         populate();
-        int selectedDistrict = -1;
-        if (!districtList.isEmpty()) {
-            selectedDistrict = districtList.keySet().iterator().next();
-        }
-        int selectedDivision = -1;
+        setInitialDistrict();
+        selectedDivision = -1;
         if (!divisionList.isEmpty()) {
             selectedDivision = divisionList.keySet().iterator().next();
         }
@@ -84,13 +82,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         session.put("allowEditBDF", allowEditBDF);
         //todo set following after changing the backend
         session.put("allowReject", true);
-        logger.debug("inside birthDeclarationPendingList: district {} division {} selected ", selectedDistrict, selectedDivision);
-        session.put("selectedDistrict", selectedDistrict);
+        logger.debug("inside birthDeclarationPendingList: district {} division {} selected ", initialDistrict, selectedDivision);
+        session.put("selectedDistrict", initialDistrict);
         session.put("selectedDivision", selectedDivision);
         /**
          * initially pageNo is set to 1
          */
-        int pageNo = 1;
+        pageNo = 1;
         birthDeclarationPendingList = service.getDeclarationApprovalPending(
             bdDivisionDAO.getBDDivisionByPK(selectedDivision), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthDeclarationPendingList.size());
@@ -109,12 +107,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String filter() {
-        int pageNo = 1;
+        pageNo = 1;
         session.put("pageNo", pageNo);
         if (logger.isDebugEnabled()) {
             logger.debug("inside filter : district {} division {} observed ", district, division + " Page number " + pageNo);
         }
-
         session.put("selectedDistrict", district);
         session.put("selectedDivision", division);
         session.put("selectedFlag", 1);
@@ -148,9 +145,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             caughtException = true;
         }
         if (caughtException || (warnings != null && warnings.isEmpty())) {
-            Integer pageNo = (Integer) session.get("pageNo");
-            district = (Integer) session.get("selectedDistrict");
-            division = (Integer) session.get("selectedDivision");
+            setStatus();
             birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
             session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
@@ -170,7 +165,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             return "approvalRejected";
         }
     }
-//    }
 
     public String approveIgnoringWorning() {
         //todo has to be checked with the backend
@@ -209,9 +203,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionError(Integer.toString(e.getErrorCode()));
             logger.error("inside approveAllSelectedBirthDeclaration : {} , {} ", e.getErrorCode(), e);
         }
-        Integer pageNo = (Integer) session.get("pageNo");
-        district = (Integer) session.get("selectedDistrict");
-        division = (Integer) session.get("selectedDivision");
+        setStatus();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
@@ -229,11 +221,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //todo has to be checked after getting the backend support
         logger.debug("inside rejectBirthDeclaration : bdId {} received", bdId);
         BirthDeclaration bd = service.getById(bdId);
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        //service.rejectNormalBirthDeclaration(bd,false,user);
-        Integer pageNo = (Integer) session.get("pageNo");
-        district = (Integer) session.get("selectedDistrict");
-        division = (Integer) session.get("selectedDivision");
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        setStatus();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
@@ -249,7 +238,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String deleteBirthDeclaration() {
-        //todo display warnings
         logger.debug("inside deleteApprovalPending : bdId {} received ", bdId);
         BirthDeclaration bd = service.getById(bdId);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
@@ -260,9 +248,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionError(Integer.toString(e.getErrorCode()));
             logger.error("inside deleteBirthDeclaration: {} , {} ", e.getErrorCode(), e);
         }
-        Integer pageNo = (Integer) session.get("pageNo");
-        district = (Integer) session.get("selectedDistrict");
-        division = (Integer) session.get("selectedDivision");
+        setStatus();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         session.put("BirthDeclarationApprovalPending", birthDeclarationPendingList);
@@ -278,13 +264,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
-        int selectedDistrict = -1;
         districtList = districtDAO.getDistrictNames(language, user);
-        if (!districtList.isEmpty()) {
-            selectedDistrict = districtList.keySet().iterator().next();
-        }
-        divisionList = bdDivisionDAO.getBDDivisionNames(selectedDistrict, language, user);
-
+        setInitialDistrict();
+        divisionList = bdDivisionDAO.getBDDivisionNames(initialDistrict, language, user);
         logger.debug("inside populate : districts , countriees and races populated.");
     }
 
@@ -295,16 +277,14 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String nextPage() {
-        Integer pageNo = (Integer) session.get("pageNo");
+        setStatus();
         logger.debug("inside nextPage : pageNo {} received", pageNo);
         pageNo++;
-        district = (Integer) session.get("selectedDistrict");
-        division = (Integer) session.get("selectedDivision");
         logger.debug("inside nextPage : district {} division {} observed", district, division);
         /**
          * gets the user selected district to get the records
          * variable nextFlag is used to handle the pagination link
-         * in the jsp page 
+         * in the jsp page
          */
         birthDeclarationPendingList = service.getDeclarationApprovalPending(
             bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
@@ -332,12 +312,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String previousPage() {
-        Integer pageNo = (Integer) session.get("pageNo");
-        district = (Integer) session.get("selectedDistrict");
-        division = (Integer) session.get("selectedDivision");
+        setStatus();
         if (logger.isDebugEnabled()) {
             logger.debug("inside filter : district {} division {} observed ", district, division +
-                " Page number " + pageNo.toString());
+                " Page number " + pageNo);
         }
         /**
          * UI related handle whether to display the
@@ -390,6 +368,29 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             session.put("nextFlag", 1);
         } else {
             session.put("nextFlag", 0);
+        }
+    }
+
+    /**
+     * populate district, division and pageNo
+     * required data will be loaded based on
+     * these values
+     */
+    public void setStatus() {
+        pageNo = (Integer) session.get("pageNo");
+        district = (Integer) session.get("selectedDistrict");
+        division = (Integer) session.get("selectedDivision");
+    }
+
+    /**
+     * initial district is set to the
+     * first district of the allowed
+     * district list of a perticular
+     * user
+     */
+    public void setInitialDistrict() {
+        if (!districtList.isEmpty()) {
+            initialDistrict = districtList.keySet().iterator().next();
         }
     }
 

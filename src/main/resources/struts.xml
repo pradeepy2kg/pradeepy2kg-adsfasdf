@@ -129,7 +129,7 @@
 
         <action name="eprApproveAllSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveAllSelectedBirthDeclaration">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
