@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 
@@ -62,8 +61,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         session.put(WebConstants.SESSION_USER_LANG, newLocale);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setPrefLanguage(prefLanguage);
-        user.setPrefDistrict(districtDAO.getDistrict(prefDistrictId));
-        user.setPrefDSDivision(dsDivisionDAO.getDSDivisionByPK(prefDSDivisionId));
+        user.setPrefBDDistrict(districtDAO.getDistrict(prefDistrictId));
+        user.setPrefBDDSDivision(dsDivisionDAO.getDSDivisionByPK(prefDSDivisionId));
         session.put(WebConstants.SESSION_USER_BEAN, user);
         // todo put new user object to session
         // todo persist this user

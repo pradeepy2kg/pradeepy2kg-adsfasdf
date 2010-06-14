@@ -1,5 +1,6 @@
 package lk.rgd.common.core.service;
 
+import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.dao.UserDAO;
@@ -12,12 +13,9 @@ import lk.rgd.crs.ErrorCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.PersistenceException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-
+import java.util.List;
 
 /**
  * @author asankha
@@ -37,62 +35,86 @@ public class UserManagerImpl implements UserManager {
     public User authenticateUser(String userName, String password) throws AuthorizationException {
         User user = userDao.getUser(userName);
         if (password != null && user != null && user.getPasswordHash() != null) {
-            MessageDigest sha = null;
-            try {
-                sha = MessageDigest.getInstance("SHA-1");
-            } catch (NoSuchAlgorithmException e) {
-                logger.warn("Cannot instantiate a SHA-1 message digest", e);
-                throw new RGDRuntimeException("Cannot instantiate a SHA-1 message digest", e);
-            }
-            sha.reset();
-            sha.update(password.getBytes());
-            if (user.getPasswordHash().equals(new String(Base64.encode(sha.digest())))) {
+            if (user.getPasswordHash().equals(hashPassword(password))) {
                 return user;
             }
         }
         logger.warn("Invalid user ID or password for user : " + userName);
         throw new AuthorizationException("Invalid user ID or password for user : " + userName,
-                AuthorizationException.INVALID_USER_OR_PASSWORD);
+            AuthorizationException.INVALID_USER_OR_PASSWORD);
+    }
+
+    public List<User> getUsersByRole(String roleId) {
+        return userDao.getUsersByRole(roleId);
+    }
+
+    public final String hashPassword(String password) {
+        MessageDigest sha = null;
+        try {
+            sha = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            logger.warn("Cannot instantiate a SHA-1 message digest", e);
+            throw new RGDRuntimeException("Cannot instantiate a SHA-1 message digest", e);
+        }
+        sha.reset();
+        sha.update(password.getBytes());
+        return new String(Base64.encode(sha.digest()));
     }
 
     /**
-     * @param user
-     * @param authanticatedUser
+     * @param userToCreate the user instance to be added
+     * @param adminUser the user initiating the addition - must belong to the ADMIN role
      */
-    public void creatUser(User user, User authanticatedUser) {
+    public void createUser(User userToCreate, User adminUser) {
 
-        //does user has authraization to add a new user
-        checkAuthrization(authanticatedUser);
-        //persisting data
-        try {
-            userDao.addUser(user);
-            logger.info(user.getUserName() + ": inserted to data base by" + authanticatedUser.getUserName());
-            logger.info("new user " + user.getUserName() + "created by :" + authanticatedUser.getUserName());
-        }
-        catch (Exception e) {
-            // just re throw Exception
-            throw new RGDRuntimeException("persistance exception catched", ErrorCodes.PERSISTING_EXCEPTION_COMMON);
+        // does user has authorization to add a new user
+        if (!adminUser.isAuthorized(Permission.CREATE_USER)) {
+            handleRGDRuntimeException(adminUser.getUserName() + " doesn't have permission to create a user",
+                ErrorCodes.AUTHORIZATION_FAILS_CREATE_USER);
+        } else {
+            try {
+                userDao.addUser(userToCreate);
+                logger.debug("New user {} created by : {}", userToCreate.getUserName(), adminUser.getUserName());
+            }
+            catch (Exception e) {
+                logger.error("Error creating a new user : " + userToCreate.getUserId() + " by : " + adminUser.getUserId(), e);
+                throw new RGDRuntimeException("Error creating a new user : " + userToCreate.getUserId(),
+                    ErrorCodes.PERSISTING_EXCEPTION_COMMON);
+            }
         }
     }
 
+    public List<User> getUsersByAssignedBDDistrict(int bdDistrictUKey) {
+        return null;
+    }
 
     private void handleRGDRuntimeException(String message, int code) {
         logger.error(message);
         throw new RGDRuntimeException(message, code);
     }
 
+    public List<User> getUsersByAssignedMRDistrict(int mrDistrictUKey) {
+        return null;
+    }
+
     private void handleCRSRuntimeException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
-
     }
 
-    private void checkAuthrization(User user) {
-        logger.info(user.getUserName() + ": user authanticated");
-        if (!user.isAuthorized(2)) {
-            handleRGDRuntimeException(user.getUserName() + " doesnt have permission to creat user", ErrorCodes.AUTHRIZATION_FAILS_CREATE_USER);
-        }
-
+    public List<User> getUsersByRoleAndAssignedBDDistrict(String roleId, int bdDistrictUKey) {
+        return null;
     }
 
+    public List<User> getUsersByRoleAndAssignedMRDistrict(String roleId, int mrDistrictUKey) {
+        return null;
+    }
+
+    public List<User> getUsersByID(String userId) {
+        return null;
+    }
+
+    public List<User> getUsersByName(String userName) {
+        return null;
+    }
 }

@@ -33,7 +33,7 @@ public class ErrorCodes {
     public static final int ILLEGAL_STATE = 2002;
 
     //error code 3001-4000 indicate autharization errors
-    public static final int AUTHRIZATION_FAILS_CREATE_USER = 3001;
+    public static final int AUTHORIZATION_FAILS_CREATE_USER = 3001;
 
     //erro code 4001-5000 indicate persistance exceptions
     public static int ENTITY_ALREADY_EXIST = 4001;

@@ -23,6 +23,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -137,33 +138,69 @@ public class DAOImplTest extends TestCase {
     }
 
     public void testUsersAndRoles() throws Exception {
-        UserManager bean = (UserManager) ctx.getBean("userManagerService", UserManager.class);
-        User user = bean.authenticateUser("asankha", "asankha");
+        UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+        User user = userManager.authenticateUser("asankha", "asankha");
         Assert.assertNotNull(user);
         try {
-            user = bean.authenticateUser("asankha", "wrong");
+            user = userManager.authenticateUser("asankha", "wrong");
             fail("Should fail for 'wrong' password");
         } catch (AuthorizationException e) {
         }
         try {
-            user = bean.authenticateUser("asankha", null);
+            user = userManager.authenticateUser("asankha", null);
             fail("Should fail for null password");
         } catch (AuthorizationException e) {
         }
 
         RoleDAO roleDAO = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
-        User rg = bean.authenticateUser("rg", "password");
+        User rg = userManager.authenticateUser("rg", "password");
         Assert.assertTrue(rg.getRole().equals(roleDAO.getRole("RG")));
         Assert.assertFalse(rg.getRole().equals(roleDAO.getRole("ADR")));
         Assert.assertFalse(rg.getRole().equals(roleDAO.getRole("DEO")));
         Assert.assertTrue(rg.isAuthorized(Permission.APPROVE_BDF));
 
-        User asankha = bean.authenticateUser("asankha", "asankha");
+        User asankha = userManager.authenticateUser("asankha", "asankha");
         Assert.assertFalse(asankha.getRole().equals(roleDAO.getRole("RG")));
         Assert.assertTrue(asankha.getRole().equals(roleDAO.getRole("ADR")));
         Assert.assertFalse(asankha.getRole().equals(roleDAO.getRole("DEO")));
         Assert.assertTrue(asankha.isAuthorized(Permission.APPROVE_BDF));
+
+        List<User> rgs = userManager.getUsersByRole("RG");
+        Assert.assertEquals(1, rgs.size());
+
+        User admin = userManager.authenticateUser("admin", "password");
+        User newUser1 = new User();
+        newUser1.setUserId("newUser1");
+        newUser1.setUserName("newUser1 Name");
+        newUser1.setPin("1");
+        newUser1.setPrefLanguage("si");
+        newUser1.setRole(roleDAO.getRole("DEO"));
+        newUser1.setPasswordHash(userManager.hashPassword("newUser1"));
+        userManager.createUser(newUser1, admin);
+
+        User newUser2 = new User();
+        newUser2.setUserId("newUser2");
+        newUser2.setUserName("newUser1 Name");
+        newUser2.setPin("1");
+        newUser2.setPrefLanguage("si");
+        newUser2.setRole(roleDAO.getRole("DEO"));
+        newUser2.setPasswordHash(userManager.hashPassword("newUser1"));
+        userManager.createUser(newUser2, admin);
+
+        try {
+            User newUser3 = new User();
+            newUser3.setUserId("newUser2");
+            newUser3.setUserName("newUser3 Name");
+            newUser3.setPin("2");
+            newUser3.setPrefLanguage("si");
+            newUser3.setRole(roleDAO.getRole("DEO"));
+            newUser3.setPasswordHash(userManager.hashPassword("newUser3"));
+            userManager.createUser(newUser3, admin);
+            fail("Should not be able to create users with duplicate IDs");
+        } catch (Exception e) {
+            logger.debug("Caught expected exception", e);
+        }
     }
 
     public void testBirthDeclaration() throws Exception {

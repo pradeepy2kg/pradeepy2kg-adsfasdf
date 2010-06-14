@@ -50,14 +50,14 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
             return result;
         } else if (
             (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
-                && user.isAllowedAccessToDistrict(districtUKey)) {
+                && user.isAllowedAccessToBDDistrict(districtUKey)) {
             // the ARG, or DR who has been assigned to this district has full access
             return result;
         } else {
             Map<Integer, String> filteredResult = new HashMap<Integer, String>();
 
             for (Map.Entry<Integer, String> e : result.entrySet()) {
-                if (user.isAllowedAccessToDSDivision(e.getKey())) {
+                if (user.isAllowedAccessToBDDSDivision(e.getKey())) {
                     filteredResult.put(e.getKey(), e.getValue());
                 }
             }

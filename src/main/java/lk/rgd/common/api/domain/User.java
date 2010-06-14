@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.BitSet;
 import java.util.Set;
 
 /**
@@ -14,6 +13,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "USERS", schema = "COMMON")
+@NamedQueries({
+    @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
+        "WHERE u.role.roleId = :roleId " +
+        "ORDER BY u.userId")
+})
 public class User {
 
     private static final Logger logger = LoggerFactory.getLogger(User.class);
@@ -43,35 +47,46 @@ public class User {
     private String prefLanguage;
 
     /**
-     * The preferred District - when multi-district authorization is available
+     * The preferred Marriage District - when multi-district authorization is available
      */
     @OneToOne
-    @JoinColumn(name = "prefDistrictUKey")
-    private District prefDistrict;
+    @JoinColumn(name = "prefMRDistrictUKey")
+    private District prefMRDistrict;
+
+    /**
+     * The preferred BD District - when multi-district authorization is available
+     */
+    @OneToOne
+    @JoinColumn(name = "prefBDDistrictUKey")
+    private District prefBDDistrict;
+
     /**
      * The preferred DS division - when multi-DS-Division authorization is available
      */
     @OneToOne
-    @JoinColumn(name = "prefDSDivisionUKey")
-    private DSDivision prefDSDivision;
+    @JoinColumn(name = "prefBDDSDivisionUKey")
+    private DSDivision prefBDDSDivision;
 
-    /**
-     * The assigned districts
-     */
+    /** The assigned Birth Registration districts */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(schema = "COMMON", name = "USER_DISTRICTS",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
-    private Set<District> assignedDistricts;
+	@JoinTable(schema = "COMMON", name = "USER_BDDISTRICTS",
+        joinColumns = @JoinColumn(name="userId"),
+        inverseJoinColumns = @JoinColumn(name="districtUKey"))
+    private Set<District> assignedBDDistricts;
 
-    /**
-     * The assigned DS Divisions
-     */
+    /** The assigned Marriage Registration districts */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(schema = "COMMON", name = "USER_DSDIVISIONS",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
-    private Set<DSDivision> assignedDSDivisions;
+	@JoinTable(schema = "COMMON", name = "USER_MRDISTRICTS",
+        joinColumns = @JoinColumn(name="userId"),
+        inverseJoinColumns = @JoinColumn(name="districtUKey"))
+    private Set<District> assignedMRDistricts;
+
+    /** The assigned Birth Registration DS Divisions */
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(schema = "COMMON", name = "USER_BDDSDIVISIONS",
+        joinColumns = @JoinColumn(name="userId"),
+        inverseJoinColumns = @JoinColumn(name="dsDivisionUKey"))
+    private Set<DSDivision> assignedBDDSDivisions;
 
     /**
      * Is the user account active - 0 : active, 1 - inactive, 2 - locked out
@@ -79,7 +94,7 @@ public class User {
     @Column(nullable = false, name = "STATUS", columnDefinition = "smallint not null default 1")
     private int status;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roleId")
     private Role role;
 
@@ -156,48 +171,64 @@ public class User {
         this.role = role;
     }
 
-    public District getPrefDistrict() {
-        return prefDistrict;
+    public District getPrefMRDistrict() {
+        return prefMRDistrict;
     }
 
-    public void setPrefDistrict(District prefDistrict) {
-        this.prefDistrict = prefDistrict;
+    public void setPrefMRDistrict(District prefMRDistrict) {
+        this.prefMRDistrict = prefMRDistrict;
     }
 
-    public DSDivision getPrefDSDivision() {
-        return prefDSDivision;
+    public District getPrefBDDistrict() {
+        return prefBDDistrict;
     }
 
-    public void setPrefDSDivision(DSDivision prefDSDivision) {
-        this.prefDSDivision = prefDSDivision;
+    public void setPrefBDDistrict(District prefBDDistrict) {
+        this.prefBDDistrict = prefBDDistrict;
     }
 
-    public Set<District> getAssignedDistricts() {
-        return assignedDistricts;
+    public DSDivision getPrefBDDSDivision() {
+        return prefBDDSDivision;
     }
 
-    public void setAssignedDistricts(Set<District> assignedDistricts) {
-        this.assignedDistricts = assignedDistricts;
+    public void setPrefBDDSDivision(DSDivision prefBDDSDivision) {
+        this.prefBDDSDivision = prefBDDSDivision;
     }
 
-    public Set<DSDivision> getAssignedDSDivisions() {
-        return assignedDSDivisions;
+    public Set<District> getAssignedMRDistricts() {
+        return assignedMRDistricts;
     }
 
-    public void setAssignedDSDivisions(Set<DSDivision> assignedDSDivisions) {
-        this.assignedDSDivisions = assignedDSDivisions;
+    public void setAssignedMRDistricts(Set<District> assignedMRDistricts) {
+        this.assignedMRDistricts = assignedMRDistricts;
+    }
+
+    public Set<District> getAssignedBDDistricts() {
+        return assignedBDDistricts;
+    }
+
+    public void setAssignedBDDistricts(Set<District> assignedBDDistricts) {
+        this.assignedBDDistricts = assignedBDDistricts;
+    }
+
+    public Set<DSDivision> getAssignedBDDSDivisions() {
+        return assignedBDDSDivisions;
+    }
+
+    public void setAssignedBDDSDivisions(Set<DSDivision> assignedBDDSDivisions) {
+        this.assignedBDDSDivisions = assignedBDDSDivisions;
     }
 
     public boolean isAuthorized(int permission) {
-        return role.getPermBitSet().get(permission);
+        return role == null ? false : role.getPermBitSet().get(permission);
     }
 
-    public boolean isAllowedAccessToDistrict(int id) {
-        if (assignedDistricts == null) {
+    public boolean isAllowedAccessToBDDistrict(int id) {
+        if (assignedBDDistricts == null) {
             return false;
         }
 
-        for (District d : assignedDistricts) {
+        for (District d : assignedBDDistricts) {
             if (d.getDistrictUKey() == id) {
                 return true;
             }
@@ -205,12 +236,12 @@ public class User {
         return false;
     }
 
-    public boolean isAllowedAccessToDSDivision(int id) {
-        if (assignedDSDivisions == null) {
+    public boolean isAllowedAccessToBDDSDivision(int id) {
+        if (assignedBDDSDivisions == null) {
             return false;
         }
 
-        for (DSDivision d : assignedDSDivisions) {
+        for (DSDivision d : assignedBDDSDivisions) {
             if (d.getDsDivisionUKey() == id) {
                 return true;
             }

@@ -6,12 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.sql.SQLException;
 
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -19,7 +14,6 @@ import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.core.service.UserManagerImpl;
-import lk.rgd.common.RGDException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 
 
@@ -61,7 +55,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         User currentUser = (User) session.get("user_bean");
 
         logger.info("About to create a user..");
-        service.creatUser(usr, currentUser);
+        service.createUser(usr, currentUser);
 
         return "pageLoad";
     }
