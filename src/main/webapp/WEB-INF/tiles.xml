@@ -117,8 +117,14 @@
         <put-attribute name="body" value="/WEB-INF/pages/UserPreferences.jsp"/>
         <put-attribute name="title" value="UserPreferences.title"/>
     </definition>
+
     <definition name="epr.viewUsers" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/viewUsers.jsp"/>
         <put-attribute name="title" value="search Users"/>
+    </definition>
+
+    <definition name="epr.BirthConfirmationSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationSearch.jsp"/>
+        <put-attribute name="title" value="confirmationSearch.title"/>
     </definition>
 </tiles-definitions>
