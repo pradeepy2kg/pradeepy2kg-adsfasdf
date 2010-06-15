@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.Date;
 
 /**
  * Represents a User of the system and his groups, preferences and privileges
@@ -14,27 +15,27 @@ import java.util.Set;
 @Entity
 @Table(name = "USERS", schema = "COMMON")
 @NamedQueries({
-    @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
-        "WHERE u.role.roleId = :roleId " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
-        "WHERE :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
-        "WHERE :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
-        "WHERE u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
-        "WHERE u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
-        "WHERE u.userId LIKE :userIdMatch " +
-        "ORDER BY u.userId"),
-    @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
-        "WHERE u.userName LIKE :userNameMatch " +
-        "ORDER BY u.userName")
+        @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
+                "WHERE u.role.roleId = :roleId " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
+                "WHERE :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
+                "WHERE :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
+                "WHERE u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
+                "WHERE u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
+                "WHERE u.userId LIKE :userIdMatch " +
+                "ORDER BY u.userId"),
+        @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
+                "WHERE u.userName LIKE :userNameMatch " +
+                "ORDER BY u.userName")
 })
 public class User {
 
@@ -65,6 +66,12 @@ public class User {
     private String prefLanguage;
 
     /**
+     * The password expiry date, after which the user is not allowed to login without changing the password
+     */
+    @Column(nullable =true) 
+    private Date passwordExpiry;
+
+    /**
      * The preferred Marriage District - when multi-district authorization is available
      */
     @OneToOne
@@ -85,25 +92,31 @@ public class User {
     @JoinColumn(name = "prefBDDSDivisionUKey")
     private DSDivision prefBDDSDivision;
 
-    /** The assigned Birth Registration districts */
+    /**
+     * The assigned Birth Registration districts
+     */
     @ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(schema = "COMMON", name = "USER_BDDISTRICTS",
-        joinColumns = @JoinColumn(name="userId"),
-        inverseJoinColumns = @JoinColumn(name="districtUKey"))
+    @JoinTable(schema = "COMMON", name = "USER_BDDISTRICTS",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> assignedBDDistricts;
 
-    /** The assigned Marriage Registration districts */
+    /**
+     * The assigned Marriage Registration districts
+     */
     @ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(schema = "COMMON", name = "USER_MRDISTRICTS",
-        joinColumns = @JoinColumn(name="userId"),
-        inverseJoinColumns = @JoinColumn(name="districtUKey"))
+    @JoinTable(schema = "COMMON", name = "USER_MRDISTRICTS",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "districtUKey"))
     private Set<District> assignedMRDistricts;
 
-    /** The assigned Birth Registration DS Divisions */
+    /**
+     * The assigned Birth Registration DS Divisions
+     */
     @ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(schema = "COMMON", name = "USER_BDDSDIVISIONS",
-        joinColumns = @JoinColumn(name="userId"),
-        inverseJoinColumns = @JoinColumn(name="dsDivisionUKey"))
+    @JoinTable(schema = "COMMON", name = "USER_BDDSDIVISIONS",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "dsDivisionUKey"))
     private Set<DSDivision> assignedBDDSDivisions;
 
     /**
@@ -235,6 +248,14 @@ public class User {
 
     public void setAssignedBDDSDivisions(Set<DSDivision> assignedBDDSDivisions) {
         this.assignedBDDSDivisions = assignedBDDSDivisions;
+    }
+
+    public Date getPasswordExpiry() {
+        return passwordExpiry;
+    }
+
+    public void setPasswordExpiry(Date passwordExpiry) {
+        this.passwordExpiry = passwordExpiry;
     }
 
     public boolean isAuthorized(int permission) {

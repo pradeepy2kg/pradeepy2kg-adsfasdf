@@ -49,7 +49,7 @@
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.birthRegistration_form4</result>
-            <result type="tiles" name="form4">epr.birthRegistration_success</result>
+            <result type="tiles" name="form4">epr.birthRegistration_details</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -79,14 +79,21 @@
         </action>
 
         <!-- user creation related-->
+        <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initUser">
+            <result type="tiles" name="pageLoad">epr.creatUser</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="creatUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="success">epr.home</result>
-            <result type="tiles" name="error">epr.welcome</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="birthDeclarationApproval">
+        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="birthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
@@ -149,16 +156,16 @@
         </action>
 
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
-                   method="userPreferenceInit">
+                method="userPreferenceInit">
 
             <result type="tiles" name="pageload">epr.UserPreferences</result>
         </action>
-        
+
         <action name="eprUserPreferencesAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="selectUserPreference">
             <result type="tiles" name="success">epr.home</result>
         </action>
 
-        
+
     </package>
 </struts>

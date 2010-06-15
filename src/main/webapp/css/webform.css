@@ -69,11 +69,11 @@
 }
 
 /* Page one (Form 1 ) of the Birth Registration form */
-#child-dob, #child-pob, #child-name, #child-name-in-english { display: block; border: 1px solid #000; border-top: none; float: left; width: 1023px; padding-left: 5px;}
-#child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-weight label, #child-birth-order-no label, #multiple-birth label {border-right: 1px solid #000;}
+#child-dob, #child-pob, #child-name, #child-name-in-english, #birth-certificate-preferred-language  { display: block; border: 1px solid #000; border-top: none; float: left; width: 1023px; padding-left: 5px;}
+#child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-weight label, #child-birth-order-no label, #multiple-birth label, #birth-certificate-preferred-language label {border-right: 1px solid #000;}
 #child-gender, #child-weight, #child-birth-order-no, #multiple-birth {display: block; border: 1px solid #000; border-top: none; float: left; width: 508px; padding-left: 5px;}
 #child-weight, #multiple-birth {border-left: none; padding-left: 6px;}
-#child-dob label, #child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-birth-order-no label {float: left; width: 200px;}
+#child-dob label, #child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-birth-order-no label, #birth-certificate-preferred-language label {float: left; width: 200px;}
 #child-weight label, #multiple-birth label { float: left; width: 225px;}
 #child-dob-year, #child-dob-month, #child-dob-day { width: auto;}
 #child-dob-year label, #child-dob-month label, #child-dob-day label {float: left; width: 100px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
@@ -93,7 +93,7 @@
 #child-pob-in-hospital div div input{margin:7px 25px;}
 #child-pob-in-hospital div div label{display:none;}
 #child-name textarea{float:left; margin:25px 5px; width:800px;}
-#child-name-in-english textarea{float:left; margin:5px; width:800px;}
+#child-name-in-english textarea, #birth-certificate-preferred-language select{float:left; margin:5px; width:800px;}
 #child-name-in-english label{padding:5px 0;}
 #child-gender select, #child-weight input{float:left; margin:10px 5px; width:260px;}
 #child-birth-order-no input, #multiple-birth input{float:left; margin:25px 5px; width:260px;}

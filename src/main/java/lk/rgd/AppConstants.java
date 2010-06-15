@@ -17,12 +17,19 @@ public class AppConstants {
     public static final int INFORMANT_FATHER = 1;
     public static final int INFORMANT_GUARDIAN = 2;
 
-    public static final String HOME_DIRECTORY = System.getProperty("POPREG_HOME"); 
+    public static final String HOME_DIRECTORY = System.getProperty("POPREG_HOME");
 
-    /** Language identifier for English */
+    /**
+     * Language identifier for English
+     */
     public static final String ENGLISH = "en";
-    /** Language identifier for Sinhala */
+    /**
+     * Language identifier for Sinhala
+     */
     public static final String SINHALA = "si";
-    /** Language identifier for Tamil */
-    public static final String TAMIL   = "ta";
+    /**
+     * Language identifier for Tamil
+     */
+    public static final String TAMIL = "ta";
+
 }

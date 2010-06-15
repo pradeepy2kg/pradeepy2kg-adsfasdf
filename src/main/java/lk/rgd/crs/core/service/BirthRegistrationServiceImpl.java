@@ -137,10 +137,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
 
                 for (BirthDeclaration b : existingRecords) {
-                    warnings.add(
-                        new UserWarning("Possible duplicate with record ID : " + b.getIdUKey() +
-                            " Registered on : " + b.getRegister().getDateOfRegistration() +
-                            " Child name : " + b.getChild().getChildFullNameOfficialLangToLength(20)));
+                    if (b.getIdUKey() != bdf.getIdUKey()) {
+                        warnings.add(
+                            new UserWarning("Possible duplicate with record ID : " + b.getIdUKey() +
+                                " Registered on : " + b.getRegister().getDateOfRegistration() +
+                                " Child name : " + b.getChild().getChildFullNameOfficialLangToLength(20)));
+                    }
                 }
             }
         }
@@ -157,10 +159,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     user.getUserId());
             }
             bdf.getRegister().setComments(sb.toString());
+            
+            bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
         }
-
-        bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
-        birthDeclarationDAO.updateBirthDeclaration(bdf);
         return warnings;
     }
 

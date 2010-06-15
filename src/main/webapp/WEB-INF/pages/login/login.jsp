@@ -25,7 +25,13 @@
             <s:textfield name="userName"></s:textfield>
             <s:label value="Password: "></s:label>
             <s:password name="password"></s:password>
+            <%--<s:if test=""--%>
+<%--            <div id="hidden">
+                <s:label value="new password"/>
+                <s:password name="newPassword"/>
+            </div>--%>
             <div><s:submit value="login"></s:submit></div>
+
         </s:form>
     </div>
 </div>

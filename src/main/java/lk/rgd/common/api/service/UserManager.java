@@ -84,4 +84,6 @@ public interface UserManager {
      * @param adminUser the user account creating the new user - must belong to role ADMIN
      */
     void createUser(User userToCreate, User adminUser);
+
+
 }
