@@ -25,6 +25,11 @@
     background: #ffffff;
     padding: 10px;
 }
+#birth-registration-form-1-outer{height:950px;}
+#birth-registration-form-2-outer{height:1040px}
+#birth-registration-form-3-outer{height:1225px;}
+#birth-registration-form-4-outer{height:305px;}
+
 
 /* Styles for the header area of the Birth Registration Form */
 #birth-registration-form-header {
@@ -43,6 +48,7 @@
     display: block;
     border: 1px solid #000000;
     margin: 5px 0 15px 730px;
+    height:45px;
 }
 
 #serial-no {
@@ -58,8 +64,13 @@
     margin-left: 5px;
 }
 
-#serial-no label input, #submit-date label input {
+#serial-no label input{
     margin: 10px;
+}
+
+#submitDatePicker{
+    float:right;
+    margin:10px;
 }
 
 .form-sub-title {
@@ -68,16 +79,15 @@
     border: 1px solid #000000;
 }
 
+.form-submit{float:right; margin-top:10px; }
+
 /* Page one (Form 1 ) of the Birth Registration form */
-#child-dob, #child-pob, #child-name, #child-name-in-english, #birth-certificate-preferred-language  { display: block; border: 1px solid #000; border-top: none; float: left; width: 1023px; padding-left: 5px;}
-#child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-weight label, #child-birth-order-no label, #multiple-birth label, #birth-certificate-preferred-language label {border-right: 1px solid #000;}
-#child-gender, #child-weight, #child-birth-order-no, #multiple-birth {display: block; border: 1px solid #000; border-top: none; float: left; width: 508px; padding-left: 5px;}
+#child-dob, #child-pob, #child-name, #child-name-in-english, #birth-certificate-preferred-language  { display: block; border: 1px solid #000; border-top: none; float: left; width: 1023px; padding-left: 5px; background:white;}
+#child-dob label,#child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-weight label, #child-birth-order-no label, #multiple-birth label, #birth-certificate-preferred-language label {border-right: 1px solid #000;}
+#child-gender, #child-weight, #child-birth-order-no, #multiple-birth {display: block; border: 1px solid #000; border-top: none; float: left; width: 508px; padding-left: 5px; background:white;}
 #child-weight, #multiple-birth {border-left: none; padding-left: 6px;}
 #child-dob label, #child-pob label, #child-name label, #child-name-in-english label, #child-gender label, #child-birth-order-no label, #birth-certificate-preferred-language label {float: left; width: 200px;}
 #child-weight label, #multiple-birth label { float: left; width: 225px;}
-#child-dob-year, #child-dob-month, #child-dob-day { width: auto;}
-#child-dob-year label, #child-dob-month label, #child-dob-day label {float: left; width: 100px; border: 1px solid #000; border-top: none; border-bottom: none; padding: 2px;}
-#child-dob-year select, #child-dob-month select, #child-dob-day select {float: left; margin: 12px 15px 12px 10px; width: 70px;}
 #datePicker{margin:5px 10px;float:right;}
 #child-pob label {padding:50px 0 51px 0;}
 
@@ -94,10 +104,10 @@
 #child-pob-in-hospital div div label{display:none;}
 #child-name textarea{float:left; margin:25px 5px; width:800px;}
 #child-name-in-english textarea, #birth-certificate-preferred-language select{float:left; margin:5px; width:800px;}
+#birth-certificate-preferred-language select{margin-top:20px;}
 #child-name-in-english label{padding:5px 0;}
 #child-gender select, #child-weight input{float:left; margin:10px 5px; width:260px;}
 #child-birth-order-no input, #multiple-birth input{float:left; margin:25px 5px; width:260px;}
-
 
 /* Page two (Form 2) of  the Birth Registration Form  */
 #birth-registration-form-father-info-sub-title{margin-top:0;}
@@ -131,6 +141,8 @@
 #mother-district, #mother-ds-division{border-bottom:1px solid #000; width:872px; float:left;}
 #mother-district label, #mother-ds-division label{float:left; padding:7px 5px; border-right:1px solid #000; width:250px;}
 #mother-district select, #mother-ds-division select{float:left; width:590px; margin:2px 5px;}
+#fatherDatePicker, #motherDatePicker, #admitDatePicker{float:right; margin:0 10px;}
+#admitDatePicker{margin-top:25px;}
 
 /* Page three (Form 3) of the Birth Registration Form */
 #birth-registration-form-marriage-info-sub-title{margin-top:0;}
@@ -179,6 +191,7 @@
 #informant-email, #informed-date{float:left; width:513px; border:1px solid #000; border-top:none;}
 #informant-telephone input, #informant-signature input, #informant-email input, #informed-date input{margin:18px 5px; width:330px; }
 #informant-signature input{margin-left:150px;}
+#marriageDatePicker, #informDatePicker{float:right; margin-right:10px;}
 
 /* Page four (Form 4) of the Birth Registration Form */
 #birth-registration-form-notify-autority-sub-title{margin-top:0;}
@@ -201,7 +214,7 @@
 #recipt-child-name textarea, #recipt-father-name textarea, #recipt-mother-name textarea{margin:5px; width:750px;}
 #recipt-child-dob input, #recipt-child-gender input{margin:18px 5px; width:750px;}
 #birth-form-serial-no input, #notify-autority-name-and-signature input{margin:40px 5px; width:750px;}
-
+#modifiedDatePicker{float:right; margin-right:10px;}
 
 /**
 * Styles for the Birth Confirmation Form begins here.
@@ -296,3 +309,16 @@ border-right:0px solid #000000;
 /* Styles for the BirthDeclarationApprovalWarnings. */
 #bdaw-outer{background:none;}
 #bdaw-content{text-align:justify; color:red; }
+
+
+/* Styles for the User Creation web form begins here. */
+#create-user-outer{
+    width:1080px;
+    padding:10px;
+}
+
+#create-user-outer div{width:1060px; }
+#create-user-outer div label{float:left;  }
+#create-user-outer div input, #create-user-outer div select{ width:400px;}
+
+/* Styles for the User Creation web form ends here. */

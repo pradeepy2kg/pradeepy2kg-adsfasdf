@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 @author Indunil Moremada
  @author Amith Jayasekara
  @author Chathuranga
- @author Duminda
+ @author Duminda Dharmakeerthi
  */
 public class Constants {
     //The repostory config file needed to initialize the Jackrabbit
