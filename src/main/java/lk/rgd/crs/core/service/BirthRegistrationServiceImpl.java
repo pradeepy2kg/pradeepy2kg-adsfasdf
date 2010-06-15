@@ -186,9 +186,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * Returns the Birth Declaration object for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration
+     * @param user
      * @Return BirthDeclaration
      */
-    public BirthDeclaration getById(long bdId) {
+    public BirthDeclaration getById(long bdId, User user) {
+        // todo security validations based on user. does the user have access to this birth division,
+        // todo auditing
         return birthDeclarationDAO.getById(bdId);
     }
 
