@@ -83,7 +83,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         child = new ChildInfo();
-        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     /**
@@ -241,8 +240,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-
         logger.debug("inside populate : {} observed.", language);
 
         countryList = countryDAO.getCountries(language);
@@ -274,7 +271,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         register = bdf.getRegister();
 
         if (register != null) {
-            if (register.getBirthDistrict() != null) {
+            if (register.getBirthDivision() != null) {
                 birthDistrictId = register.getBirthDistrict().getDistrictId();
                 birthDivisionId = register.getBirthDivision().getDivisionId();
                 dsDivisionId = register.getDsDivision().getDivisionId();
@@ -322,6 +319,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     public Map getSession() {
