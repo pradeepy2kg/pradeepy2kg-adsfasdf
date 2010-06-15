@@ -276,8 +276,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 birthDivisionId = register.getBirthDivision().getDivisionId();
                 dsDivisionId = register.getDsDivision().getDivisionId();
             } else {
-                birthDistrictId = user.getPrefBDDistrict().getDistrictId();
-                dsDivisionId = user.getPrefBDDSDivision().getDivisionId();
+                if (user.getPrefBDDistrict() != null) {
+                    birthDistrictId = user.getPrefBDDistrict().getDistrictId();
+                }
+                if (user.getPrefBDDSDivision() != null) {
+                    dsDivisionId = user.getPrefBDDSDivision().getDivisionId();
+                }
             }
         }
 
