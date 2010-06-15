@@ -27,7 +27,7 @@ import lk.rgd.crs.web.WebConstants;
  */
 public class UserManagmentAction extends ActionSupport implements SessionAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserManagmentAction.class);
     private final UserManagerImpl service;
     private Map session;
     private static User user;
