@@ -47,7 +47,7 @@
                             <td><s:property value="child.childFullNameOfficialLang"/></td>
                             <td align="center"><s:property value="register.dateOfRegistration"/></td>
                             <td align="center">
-                                <s:a href="">
+                                <s:a href="" >
                                     <img src="<s:url value='/images/print_icon.png'/>" border="none" width="25"
                                          height="25"/>
                                 </s:a>
