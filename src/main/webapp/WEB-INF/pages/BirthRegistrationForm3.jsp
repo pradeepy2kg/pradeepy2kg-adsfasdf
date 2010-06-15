@@ -120,18 +120,18 @@
     </div>
     <div id="informant-mother">
         <label>මව <br>மாதா <br>Mother</label>
-        <s:radio name="informant.informantType" list="#@java.util.HashMap@{'0':''}" onchange="javascript:setInformPerson('0','%{#session.birthRegister.parent.motherNICorPIN}',
+        <s:radio name="informant.informantType" list="#{'0':''}"  onchange="javascript:setInformPerson('0','%{#session.birthRegister.parent.motherNICorPIN}',
                 '%{#session.birthRegister.parent.motherFullName}','%{#session.birthRegister.parent.motherAddress}',
                 '%{#session.birthRegister.parent.motherPhoneNo}','%{#session.birthRegister.parent.motherEmail}')"/>
     </div>
     <div id="informant-father">
         <label>පියා<br> பிதா <br>Father</label>
-        <s:radio name="informant.informantType" list="#@java.util.HashMap@{'1':''}" onchange="javascript:setInformPerson('1','%{#session.birthRegister.parent.fatherNICorPIN}',
+        <s:radio name="informant.informantType" list="#{'1':''}" onchange="javascript:setInformPerson('1','%{#session.birthRegister.parent.fatherNICorPIN}',
                 '%{#session.birthRegister.parent.fatherFullName}','','','')"/>
     </div>
     <div id="informant-gardian">
         <label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label>
-        <s:radio name="informant.informantType" list="#@java.util.HashMap@{'2':''}"
+        <s:radio name="informant.informantType" list="#{'2':''}"
                  onchange="javascript:setInformPerson('2','','','','','','')"/>
     </div>
 </div>
@@ -153,29 +153,33 @@
         informantPhoneNo.value = phonoNo;
         informantEmail.value = email;
 
-        informantName.disabled = false;
-        informantNICorPIN.disabled = false;
-        informantAddress.disabled = false;
-        informantPhoneNo.disabled = false;
-        informantEmail.disabled = false;
+
+        informantName.readOnly = false;
+        informantNICorPIN.readOnly = false;
+        informantAddress.readOnly = false;
+        informantPhoneNo.readOnly = false;
+        informantEmail.readOnly = false;
 
 
         if (id == 0)
         {
-            informantName.disabled = true;
-            informantNICorPIN.disabled = true;
-            informantAddress.disabled = true;
-            informantPhoneNo.disabled = true;
-            informantEmail.disabled = true;
+            informantName.readOnly = true;
+            informantNICorPIN.readOnly = true;
+            informantAddress.readOnly = true;
+
+
+            informantPhoneNo.readOnly = true;
+            informantEmail.readOnly = true;
 
         }
         else if (id == 1)
         {
-            informantName.disabled = true;
-            informantNICorPIN.disabled = true;
+            informantName.readOnly = true;
+            informantNICorPIN.readOnly = true;
 
 
         }
+
 
     }
 
@@ -212,6 +216,7 @@
 </div>
 <div id="informed-date" class="font-9">
     <label>දිනය <br>*in tamil<br>Date</label>
+    
     <sx:datetimepicker id="informDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
                        onmouseover="javascript:splitDate('secondDatePicker')"/>
 </div>

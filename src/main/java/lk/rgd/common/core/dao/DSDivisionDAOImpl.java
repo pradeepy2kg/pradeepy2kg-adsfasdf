@@ -23,9 +23,9 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     // direct cache of objects by PK - dsDivisionUKey
     private final Map<Integer, DSDivision> dsDivisionsByPK = new HashMap<Integer, DSDivision>();
     // local caches indexed by districtUKey and dsDivisionUKey
-    private final Map<Integer, Map<Integer,String>> siNames = new HashMap<Integer, Map<Integer,String>>();
-    private final Map<Integer, Map<Integer,String>> enNames = new HashMap<Integer, Map<Integer,String>>();
-    private final Map<Integer, Map<Integer,String>> taNames = new HashMap<Integer, Map<Integer,String>>();
+    private final Map<Integer, Map<Integer, String>> siNames = new HashMap<Integer, Map<Integer, String>>();
+    private final Map<Integer, Map<Integer, String>> enNames = new HashMap<Integer, Map<Integer, String>>();
+    private final Map<Integer, Map<Integer, String>> taNames = new HashMap<Integer, Map<Integer, String>>();
 
     /**
      * @inheritDoc
@@ -49,8 +49,8 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
             // Admin, RG and has full access
             return result;
         } else if (
-            (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
-                && user.isAllowedAccessToBDDistrict(districtUKey)) {
+                (Role.ROLE_ARG.equals(user.getRole().getRoleId()) || Role.ROLE_DR.equals(user.getRole().getRoleId()))
+                        && user.isAllowedAccessToBDDistrict(districtUKey)) {
             // the ARG, or DR who has been assigned to this district has full access
             return result;
         } else {
@@ -79,7 +79,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     }
 
     private Map<Integer, String> getDSDivisionNamesImpl(
-        Map<Integer, Map<Integer,String>> namesByDistrict, int districtUKey) {
+            Map<Integer, Map<Integer, String>> namesByDistrict, int districtUKey) {
 
         Map<Integer, String> dsDivisionNames = namesByDistrict.get(districtUKey);
         if (dsDivisionNames != null) {
@@ -106,10 +106,10 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
 
         for (DSDivision d : results) {
             int districtUKey = d.getDistrict().getDistrictUKey();
-            int divisionId   = d.getDivisionId();
+            int divisionId = d.getDivisionId();
             int divisionUKey = d.getDsDivisionUKey();
 
-            dsDivisionsByPK.put(d.getDsDivisionUKey() , d);
+            dsDivisionsByPK.put(d.getDsDivisionUKey(), d);
 
             subMap = siNames.get(districtUKey);
             if (subMap == null) {

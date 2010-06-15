@@ -92,8 +92,19 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="birthDeclarationApproval">
+
+
+         <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="viewUsers">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+
+         <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="selectUsers">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+
+        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="birthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
@@ -124,7 +135,7 @@
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.welcome</result>
         </action>
-        
+
         <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclaration">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
