@@ -120,14 +120,15 @@
     </div>
     <div id="informant-mother">
         <label>මව <br>மாதா <br>Mother</label>
-        <s:radio name="informant.informantType" list="#{'0':''}"  onchange="javascript:setInformPerson('0','%{#session.birthRegister.parent.motherNICorPIN}',
-                '%{#session.birthRegister.parent.motherFullName}','%{#session.birthRegister.parent.motherAddress}',
-                '%{#session.birthRegister.parent.motherPhoneNo}','%{#session.birthRegister.parent.motherEmail}')"/>
+        <s:radio name="informant.informantType" list="#{'0':''}"  onchange="javascript:setInformPerson('0',
+            '%{#parent.motherNICorPIN}', '%{#parent.motherFullName}', '%{#parent.motherAddress}',
+            '%{#parent.motherPhoneNo}','%{#parent.motherEmail}')"/>
     </div>
     <div id="informant-father">
         <label>පියා<br> பிதா <br>Father</label>
-        <s:radio name="informant.informantType" list="#{'1':''}" onchange="javascript:setInformPerson('1','%{#session.birthRegister.parent.fatherNICorPIN}',
-                '%{#session.birthRegister.parent.fatherFullName}','','','')"/>
+        <s:radio name="informant.informantType" list="#{'1':''}" onchange="javascript:setInformPerson('1',
+            '%{#parent.fatherNICorPIN}',
+            '%{#parent.fatherFullName}','','','')"/>
     </div>
     <div id="informant-gardian">
         <label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label>
