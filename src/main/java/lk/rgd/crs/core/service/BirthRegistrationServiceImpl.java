@@ -147,7 +147,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
         }
 
-        if (ignoreWarnings) {
+        if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
             if (existing.getRegister().getComments() != null) {
                 sb.append(existing.getRegister().getComments()).append("\n");
@@ -159,9 +159,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     user.getUserId());
             }
             bdf.getRegister().setComments(sb.toString());
-            
+        }
+
+        if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            birthDeclarationDAO.updateBirthDeclaration(bdf);            
         }
         return warnings;
     }
