@@ -53,6 +53,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private NotifyingAuthorityInfo notifyingAuthority;
     private ConfirmantInfo confirmant;
     private BirthRegisterInfo register;
+    private User user;
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
@@ -69,17 +70,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDSDivisionId;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
-    /**
-     * confirmationFlag is set to 1 if
-     * request is from birth registration
-     * approval jsp else it is set to 0
-     */
-    private int confirmationFlag;
-    /**
-     * key is used to identify a particular
-     * entity of BirthDeclaration bean
-     */
-    private long bdKey;
 
     public String welcome() {
         return "success";
@@ -93,6 +83,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         child = new ChildInfo();
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     /**
@@ -112,9 +103,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (pageNo == 0) {
                 if (bdId == 0) {
                     bdf = new BirthDeclaration();
+                    
                     bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
-                    bdf = service.getById(bdId);
+                    bdf = service.getById(bdId, user);
                     if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                         return "error";   // todo pass error info
                     }
@@ -166,7 +158,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf;
             if (pageNo == 0) {
                 if (bdId != 0) {
-                    bdf = service.getById(bdId);
+                    bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
@@ -222,7 +214,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf;
             if (pageNo == 0) {
                 if (bdId != 0) {
-                    bdf = service.getById(bdId);
+                    bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getBySerialNo(serialNo);
                 } else {
@@ -281,20 +273,43 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         confirmant = bdf.getConfirmant();
         register = bdf.getRegister();
 
-//        if (register != null) {
-//            birthDistrictId = register.getBirthDistrict().getDistrictId();
-//            birthDivisionId = register.getBirthDivision().getDivisionId();
-//            dsDivisionId = register.getDsDivision().getDivisionId();
-//        }
-//
-//        if (parent != null) {
-//            fatherCountry = parent.getFatherCountry().getCountryId();
-//            motherCountry = parent.getMotherCountry().getCountryId();
-//            fatherRace = parent.getFatherRace().getRaceId();
-//            motherRace = parent.getMotherRace().getRaceId();
-//            motherDistrictId = parent.getMotherDSDivision().getDistrictId();
-//            motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
-//        }
+        if (register != null) {
+            if (register.getBirthDistrict() != null) {
+                birthDistrictId = register.getBirthDistrict().getDistrictId();
+                birthDivisionId = register.getBirthDivision().getDivisionId();
+                dsDivisionId = register.getDsDivision().getDivisionId();
+            } else {
+                birthDistrictId = user.getPrefBDDistrict().getDistrictId();
+                dsDivisionId = user.getPrefBDDSDivision().getDivisionId();
+            }
+        }
+
+        // following painful null checks are needed b'cos the DB may have incomplete data
+        if (parent != null) {
+            if (parent.getFatherCountry() != null) {
+                fatherCountry = parent.getFatherCountry().getCountryId();
+            }
+
+            if (parent.getMotherCountry() != null) {
+                motherCountry = parent.getMotherCountry().getCountryId();
+            }
+
+            if (parent.getFatherRace() != null) {
+                fatherRace = parent.getFatherRace().getRaceId();
+            }
+
+            if (parent.getMotherRace() != null) {
+                motherRace = parent.getMotherRace().getRaceId();
+            }
+
+            if (parent.getMotherDSDivision() != null) {
+                motherDistrictId = parent.getMotherDSDivision().getDistrictId();
+            }
+
+            if (parent.getMotherDSDivision() != null) {
+                motherDSDivisionId =  parent.getMotherDSDivision().getDivisionId();
+            }    
+        }
     }
 
     public int getPageNo() {

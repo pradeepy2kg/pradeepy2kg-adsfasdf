@@ -1,7 +1,6 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.core.dao.BaseDAO;
-import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;

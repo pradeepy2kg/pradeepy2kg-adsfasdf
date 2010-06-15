@@ -56,6 +56,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.bdDivisionDAO = bdDivisionDAO;
         this.appParametersDAO = appParametersDAO;
         this.service = service;
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     /**
@@ -129,7 +130,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String approveBirthDeclaration() {
         logger.debug("inside approveBirthDeclaration : bdId {} observed ", bdId);
-        BirthDeclaration bd = service.getById(bdId);
+        BirthDeclaration bd = service.getById(bdId, user);
         List<UserWarning> warnings = null;
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         boolean caughtException = false;
@@ -170,7 +171,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //todo has to be checked with the backend
         logger.debug("inside approveIgnoringWorning bdId {} received ignoreWarning is {}  ", bdId, ignoreWarning);
         if (ignoreWarning) {
-            BirthDeclaration bd = service.getById(bdId);
+            BirthDeclaration bd = service.getById(bdId, user);
             User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
             try {
                 service.approveBirthDeclaration(bd, true, user);
@@ -220,7 +221,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String rejectBirthDeclaration() {
         //todo has to be checked after getting the backend support
         logger.debug("inside rejectBirthDeclaration : bdId {} received", bdId);
-        BirthDeclaration bd = service.getById(bdId);
+        BirthDeclaration bd = service.getById(bdId, user);
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         populateCurrentDistrictAndDivision();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
@@ -239,7 +240,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String deleteBirthDeclaration() {
         logger.debug("inside deleteApprovalPending : bdId {} received ", bdId);
-        BirthDeclaration bd = service.getById(bdId);
+        BirthDeclaration bd = service.getById(bdId, user);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         try {
             service.deleteNormalBirthDeclaration(bd, false, user);
@@ -262,7 +263,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("inside populate : {} observed.", language);
         districtList = districtDAO.getDistrictNames(language, user);
         setInitialDistrict();
