@@ -22,6 +22,7 @@ import lk.rgd.crs.web.WebConstants;
 
 /**
  * @author amith jayasekara
+ * @author Duminda Dharmakeerthi 
  */
 public class UserManagmentAction extends ActionSupport implements SessionAware {
 
@@ -50,6 +51,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final RoleDAO roleDAO;
+
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
     private Map<String, String> roleList;
