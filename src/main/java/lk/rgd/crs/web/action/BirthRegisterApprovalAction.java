@@ -137,7 +137,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         catch (CRSRuntimeException e) {
             logger.error("inside approveBirthDeclaration : {} , {} ", e.getErrorCode(), e);
-            addActionError(Integer.toString(e.getErrorCode()));
+            addActionError(getText("brapproval.approval.error."+e.getErrorCode()));
             caughtException = true;
         }
 
@@ -201,7 +201,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 service.approveBirthDeclaration(bd, true, user);
             } catch (CRSRuntimeException e) {
                 logger.error("inside approveIgnoringWorning : {} , {} ", e.getErrorCode(), e);
-                addActionError(Integer.toString(e.getErrorCode()));
+                addActionError(getText("brapproval.ignoreWarningApproval.error."+e.getErrorCode()));
             }
             populate();
         } else {
@@ -215,18 +215,20 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String approveAllSelectedBirthDeclaration() {
         //todo warning handling has to be checked
-        logger.debug("inside approveAllSelectedBirthDeclaration : {} Declarations is/are requested to remove ", index.length);
+        logger.debug("inside approveAllSelectedBirthDeclaration  ");
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         List<UserWarning> warnings;
-        try {
-            warnings = service.approveBirthDeclarationIdList(index, user);
-            if (warnings != null && !warnings.isEmpty()) {
-                request.put("warnings", warnings);
+        if (index != null) {
+            try {
+                warnings = service.approveBirthDeclarationIdList(index, user);
+                if (warnings != null && !warnings.isEmpty()) {
+                    request.put("warnings", warnings);
+                }
             }
-        }
-        catch (CRSRuntimeException e) {
-            addActionError(Integer.toString(e.getErrorCode()));
-            logger.error("inside approveAllSelectedBirthDeclaration : {} , {} ", e.getErrorCode(), e);
+            catch (CRSRuntimeException e) {
+                addActionError(getText("brapproval.approval.error."+e.getErrorCode()));
+                logger.error("inside approveAllSelectedBirthDeclaration : {} , {} ", e.getErrorCode(), e);
+            }
         }
         populateCurrentDistrictAndDivision();
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
@@ -270,7 +272,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             service.deleteNormalBirthDeclaration(bd, false, user);
         }
         catch (CRSRuntimeException e) {
-            addActionError(Integer.toString(e.getErrorCode()));
+            addActionError(getText("brapproval.delete.error."+e.getErrorCode()));
             logger.error("inside deleteBirthDeclaration: {} , {} ", e.getErrorCode(), e);
         }
         populateCurrentDistrictAndDivision();
