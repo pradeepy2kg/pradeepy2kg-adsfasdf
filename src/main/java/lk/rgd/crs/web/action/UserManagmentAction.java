@@ -35,6 +35,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int[] assignedDivisions;
     private int UserDistrictId;
     private List<User> usersList;
+    private String nameOfUser;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -46,8 +47,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     private String roleId;
-
-
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final RoleDAO roleDAO;
@@ -120,9 +119,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         {
            usersList = service.getUsersByAssignedMRDistrict(districtDAO.getDistrict(getUserDistrictId()));
         }
-        else if (getUserDistrictId() != 0 && getRoleId().length()!=1)
+        else if(getUserDistrictId() != 0 && getRoleId().length()!=1)
         {
-              usersList=service.getUsersByRoleAndAssignedMRDistrict(roleDAO.getRole(getRoleId()),districtDAO.getDistrict(getUserDistrictId())); 
+           usersList = service.getUsersByRoleAndAssignedMRDistrict(roleDAO.getRole(getRoleId()),districtDAO.getDistrict(getUserDistrictId()));
+        }
+        if (getNameOfUser().length()!=0)
+        {
+              usersList=service.getUsersByNameMatch(getNameOfUser()); 
         }
 
         session.put("previousFlag", 0);
@@ -134,7 +137,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
 
     private void populate() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        String language = "en";//((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        logger.debug("language  of admin {}   :" + language );
         if (districtList == null)
             districtList = districtDAO.getDistrictNames(language, null);
         if (roleList == null)
@@ -240,5 +244,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setUsersList(List<User> usersList) {
         this.usersList = usersList;
+    }
+
+    public String getNameOfUser() {
+        return nameOfUser;
+    }
+
+    public void setNameOfUser(String nameOfUser) {
+        this.nameOfUser = nameOfUser;
     }
 }
