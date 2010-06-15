@@ -141,7 +141,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionError(Integer.toString(e.getErrorCode()));
             caughtException = true;
         }
-        if (pageNo!=0 && caughtException || (warnings != null && warnings.isEmpty())) {
+        if (caughtException || (warnings != null && warnings.isEmpty())) {
             populateCurrentDistrictAndDivision();
             birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
