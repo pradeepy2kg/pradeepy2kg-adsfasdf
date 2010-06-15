@@ -70,6 +70,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDSDivisionId;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
+    private boolean addNewMode;
 
     public String welcome() {
         return "success";
@@ -102,7 +103,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (pageNo == 0) {
                 if (bdId == 0) {
                     bdf = new BirthDeclaration();
-                    
+                    if (addNewMode) {
+                        initValues(bdf);
+                    }
                     bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
                     bdf = service.getById(bdId, user);
@@ -141,6 +144,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             logger.debug("Birth Declaration: PageNo=" + pageNo);
             return "form" + pageNo;
         }
+    }
+
+    private void initValues(BirthDeclaration bdf) {
+        BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        BirthRegisterInfo register = new BirthRegisterInfo();
+        register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
+        register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
+        bdf.setRegister(register);
     }
 
     /**
@@ -576,5 +587,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherDistrictId(int motherDistrictId) {
         this.motherDistrictId = motherDistrictId;
+    }
+
+    public boolean isAddNewMode() {
+        return addNewMode;
+    }
+
+    public void setAddNewMode(boolean addNewMode) {
+        this.addNewMode = addNewMode;
     }
 }
