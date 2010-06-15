@@ -5,10 +5,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Locale;
+import java.util.*;
 import java.sql.SQLException;
 
 import lk.rgd.common.api.domain.District;
@@ -19,11 +16,12 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.common.RGDException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.web.WebConstants;
+
 
 /**
  * @author amith jayasekara
- * @author Duminda Dharmakeerthi
  */
 public class UserManagmentAction extends ActionSupport implements SessionAware {
 
@@ -35,7 +33,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private String divisions = new String();
     private int[] assignedDistricts;
     private int[] assignedDivisions;
-
+    private int UserDistrictId;
+    private List<User> usersList;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -52,7 +51,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final RoleDAO roleDAO;
-
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
     private Map<String, String> roleList;
@@ -102,6 +100,39 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return "pageLoad";
     }
 
+    public String viewUsers() {
+        populate();
+
+        return "success";
+    }
+
+    public String selectUsers() {
+        populate();
+        int pageNo = 1;
+        logger.debug("length of roalId {}   :" + getRoleId().length());
+        usersList = service.getUsersByRole("");
+        if (getUserDistrictId() == 0 && getRoleId().length()!=1) {
+
+            usersList = service.getUsersByRole(getRoleId());
+
+        }
+        else if(getUserDistrictId() != 0 && getRoleId().length()==1)
+        {
+           usersList = service.getUsersByAssignedMRDistrict(districtDAO.getDistrict(getUserDistrictId()));
+        }
+        else if (getUserDistrictId() != 0 && getRoleId().length()!=1)
+        {
+              usersList=service.getUsersByRoleAndAssignedMRDistrict(roleDAO.getRole(getRoleId()),districtDAO.getDistrict(getUserDistrictId())); 
+        }
+
+        session.put("previousFlag", 0);
+        session.put("districtSelectedFlag", 0);
+        session.put("viewUsers", usersList);
+        session.put("pageNo", pageNo);
+        return "success";
+    }
+
+
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (districtList == null)
@@ -110,9 +141,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             roleList = roleDAO.getRoleList();
     }
 
-    /**
-     * To generate the divisionList according to the selected Districts.
-     */
 
     private void generateDSDivisions() {
         for (int i = 0; i < assignedDistricts.length; i++) {
@@ -196,5 +224,21 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
+    }
+
+    public int getUserDistrictId() {
+        return UserDistrictId;
+    }
+
+    public void setUserDistrictId(int userDistrictId) {
+        UserDistrictId = userDistrictId;
+    }
+
+    public List<User> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(List<User> usersList) {
+        this.usersList = usersList;
     }
 }

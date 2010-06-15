@@ -18,5 +18,6 @@ public final class Permission {
     public static final int BIRTH_CONFIRMATION_PAGE = 10;
     public static final int BIRTH_REGISTRATION_APPROVAL_PAGE = 11;
     public static final int USER_PREFERANCE_SELECT_PAGE = 12;
+    public static final int VIEW_USERS=13;
 
 }

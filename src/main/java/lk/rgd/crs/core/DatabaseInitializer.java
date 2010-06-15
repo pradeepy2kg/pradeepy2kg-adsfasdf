@@ -34,7 +34,8 @@ import java.util.Map;
  *
  * @author asankha
  */
-public class DatabaseInitializer implements ApplicationContextAware {
+public class
+        DatabaseInitializer implements ApplicationContextAware {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
@@ -126,7 +127,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.BIRTH_REGISTRATION_APPROVAL_PAGE);
             bs.set(Permission.BIRTH_REGISTRATON_PAGE);
             bs.set(Permission.USER_PREFERANCE_SELECT_PAGE);
-
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 
@@ -153,8 +153,10 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             Role adminRole = roleDao.getRole("ADMIN");
             bs = new BitSet();
+            bs.or(rgRole.getPermBitSet());
             bs.set(Permission.CREATE_USER_PAGE);
-            bs.set(Permission.CREATE_USER);
+			bs.set(Permission.CREATE_USER);
+            bs.set(Permission.VIEW_USERS);
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);

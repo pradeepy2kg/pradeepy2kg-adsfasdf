@@ -109,5 +109,5 @@ function splitDate() {
     document.write("dddd");
     alert ("ok"); 
 
-}
 
+}

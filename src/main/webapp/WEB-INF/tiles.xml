@@ -115,6 +115,10 @@
 
  <definition name="epr.UserPreferences" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/UserPreferences.jsp"/>
-         <put-attribute name="title" value="UserPreferences.title"/>
+        <put-attribute name="title" value="UserPreferences.title"/>
+    </definition>
+    <definition name="epr.viewUsers" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/viewUsers.jsp"/>
+        <put-attribute name="title" value="viewUsers.title"/>
     </definition>
 </tiles-definitions>
