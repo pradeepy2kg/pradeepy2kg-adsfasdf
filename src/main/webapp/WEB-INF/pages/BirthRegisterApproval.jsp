@@ -12,7 +12,7 @@
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
         </div>
     </s:form>
-    <s:actionerror/>
+    <s:actionerror />
     <s:if test="#request.warnings != null">
         <div id="birth-register-approval-message" class="font-9" align="center">
             <table>
