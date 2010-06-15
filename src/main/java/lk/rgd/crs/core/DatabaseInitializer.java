@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
@@ -67,21 +68,36 @@ public class
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 
-        // create schemas
+        // create schemas - common, crs and prs
         try {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                     new ClassPathResource("create_schemas.sql"), false);
             logger.info("Created the schemas : COMMON, CRS, PRS");
-        } catch (Exception ignore) {
+        } catch (Exception ignore) {}
+
+        // generate schema creation and drop script
+        String[] fileName = generateSchemaFromHibernate(Dialect.DERBY);
+
+        // drop tables if any exist
+        try {
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new FileSystemResource(fileName[1]), false);
+            logger.info("Drop existing tables using generated script : " + fileName[1]);
+
+        } catch (Exception ignore) {}
+
+        // create tables
+        try {
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new FileSystemResource(fileName[0]), false);
+            logger.info("Created tables using generated script : " + fileName[0]);
+
+        } catch (Exception e) {
+            logger.error("Error creating the database schema", e);
+            throw new IllegalStateException("Could not initialize the database schema. See log for details", e);
         }
 
         try {
-            String fileName = generateSchemaFromHibernate(Dialect.DERBY);
-            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new FileSystemResource(fileName), false);
-            logger.info("Created tables using generated script : " + fileName);
-
-
             // populate with initial data
             //SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
             //    new ClassPathResource("populate_database.sql"), false);
@@ -91,9 +107,8 @@ public class
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                     new ClassPathResource("populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
-        } catch (Exception e) {
-            logger.info("Skipped creation and population of the database as it exists..", e);
-        }
+
+        } catch (Exception e) {}
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
         for (PreloadableDAO dao : preloadableDaos.values()) {
@@ -161,7 +176,7 @@ public class
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);
 
-            logger.info("Initialized the test database by creating the schema and executing populate_database.sql");
+            logger.info("Initialized the database by performing permission initialization");
         } catch (Exception ignore) {
         }
     }
@@ -171,7 +186,7 @@ public class
         new DatabaseInitializer().generateSchemaFromHibernate(Dialect.DERBY);
     }
 
-    private String generateSchemaFromHibernate(Dialect dialect) {
+    private String[] generateSchemaFromHibernate(Dialect dialect) {
         AnnotationConfiguration cfg = new AnnotationConfiguration();
         cfg.setProperty("hibernate.hbm2ddl.auto", "create");
 
@@ -183,9 +198,15 @@ public class
         SchemaExport export = new SchemaExport(cfg);
         export.setDelimiter(";");
         export.setFormat(true);
-        String fileName = System.getProperty("java.io.tmpdir") + File.separator + dialect.name().toLowerCase() + ".sql";
-        export.setOutputFile(fileName);
+
+        String[] fileName = new String[2];
+        fileName[0] = System.getProperty("java.io.tmpdir") + File.separator + "create_" + dialect.name().toLowerCase() + ".sql";
+        export.setOutputFile(fileName[0]);
         export.execute(false, false, false, true /* Set to false to create drop table DDL*/);
+
+        fileName[1] = System.getProperty("java.io.tmpdir") + File.separator + "drop_" + dialect.name().toLowerCase() + ".sql";
+        export.setOutputFile(fileName[1]);
+        export.execute(false, false, true, false);
         return fileName;
     }
 
