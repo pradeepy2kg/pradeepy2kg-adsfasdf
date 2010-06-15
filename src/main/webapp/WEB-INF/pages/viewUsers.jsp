@@ -9,82 +9,86 @@
 
     <s:form action="eprViewSelectedUsers.do" name="viewUsers" id="view_usrs_form" method="POST">
 
-        <table>
+        <table align="center">
 
             <tr>
                 <td>
 
-                    <label>භූමිකාව Role in tamail Role</label>
-
-                </td>
-                <td>
+                    <label> Role </label>
                     <s:select name="roleId" list="roleList" headerKey="0"
-                              headerValue="%{getText('select_Role.label')}"/>
-                </td>
-                <td>
-
-                    <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
+                              headerValue="ALL" />
 
                 </td>
                 <td>
+                    <label>District</label>
                     <s:select name="userDistrictId" list="districtList" headerKey="0"
-                              headerValue="%{getText('select_district.label')}"/>
-                </td>
-                <td>
-
-                    <s:textarea name="nameOfUser"/>
-
-                </td>
-                <td>
-                   <s:submit value="%{getText('search.label')}"/>
-    </s:form>
+                              headerValue="ALL" />
                 </td>
             </tr>
+            <tr>
+                <td align="right"><label>OR</label></td>
+                <td></td>
+
+            </tr>
+        </table>
+        <table align="center">
+            <tr>
+
+
+                <td align="center">
+                    <label>Name </label> <s:textfield name="nameOfUser"/>
+                </td>
+
+            </tr>
+            <tr><td align="center"><s:submit value="   SEARCH   "/></td></tr>
 
         </table>
+    </s:form>
+    <s:if test="#session.viewUsers!=null">
         <s:form name="users_print" action="" method="POST">
-        <table>
+            <table align="center">
 
 
-            <tr>
-                <th><s:label name="name" value="    "/></th>
-                <th><s:label name="name" value="%{getText('nameOfUser.label')}"/></th>
-                <th><s:label name="edit" value="%{getText('editUser.label')}"/></th>
-                <th><s:label name="edit" value="%{getText('editUser.label')}"/></th>
-                <s:set name="allowEdit" value="true"/>
-            </tr>
-
-            <s:iterator status="userListStatus" value="#session.viewUsers">
                 <tr>
-                    <td><s:property value="%{#userListStatus.count}"/></td>
-                    <td><s:property value="userName"/></td>
-                    <s:if test="#allowEdit==true">
-                        <s:url id="editSelected" action="eprBirthRegistration.do">
-                            <s:param name="userID" value=""/>
-                        </s:url>
-                        <td align="center"><s:a href="%{editSelected}" title="">
-                            <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
-                        <td>
+                    <th><s:label name="name" value="    "/></th>
+                    <th><s:label name="name" value="Name"/></th>
+                    <th><s:label name="edit" value="Edit User"/></th>
+                    <th><s:label name="edit" value="Delete User"/></th>
+                    <s:set name="allowEdit" value="true"/>
+                </tr>
+
+                <s:iterator status="userListStatus" value="#session.viewUsers">
+                    <tr>
+                        <td><s:property value="%{#userListStatus.count}"/></td>
+                        <td><s:property value="userName"/></td>
+                        <s:if test="#allowEdit==true">
+                            <s:url id="editSelected" action="eprBirthRegistration.do">
+                                <s:param name="userID" value="userID"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{editSelected}" title="">
+                                <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
+
 
                             <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
                                 <s:param name="bdId" value=""/>
                             </s:url>
-                        <td align="center"><s:a href="%{deleteSelected}"
-                                                title="%{getText('deleteToolTip.label')}"><img
-                                src="<s:url value='/images/delete.png'/>" width="25" height="25" border="none"/></s:a>
-                        </td>
-                    </s:if>
+                            <td align="center"><s:a href="%{deleteSelected}"
+                                                    title="%{getText('deleteToolTip.label')}"><img
+                                    src="<s:url value='/images/delete.png'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
+                        </s:if>
 
 
-                </tr>
-            </s:iterator>
+                    </tr>
+                </s:iterator>
 
 
-        </table>
-            </s:form>
-
+            </table>
+        </s:form>
+    </s:if>
 </div>
 
 

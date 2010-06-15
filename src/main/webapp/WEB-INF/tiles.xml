@@ -119,6 +119,6 @@
     </definition>
     <definition name="epr.viewUsers" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/viewUsers.jsp"/>
-        <put-attribute name="title" value="viewUsers.title"/>
+        <put-attribute name="title" value="search Users"/>
     </definition>
 </tiles-definitions>
