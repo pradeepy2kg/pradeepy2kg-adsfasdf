@@ -26,12 +26,23 @@
             <s:label value="%{getText('preffered_language.label')}" />
             <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="user.prefLanguage" ></s:select> 
         </div>
-        
         <div>
-            <s:label value="%{getText('preffered_district.label')}" />
-            <s:select list="districtList" name="prefferedDistricts" multiple="true" size="10" onclick="javascript:displaySelectedDistricts(this.value)" />
-            <s:textarea disabled="true" id="selectedDistricts" />
+            <s:label value="%{getText('assigned_districts.label')}" />
+            <s:select list="districtList" name="assignedDistricts" multiple="true" size="10" />
+            <s:submit value="%{getText('get_ds_divisions.label')}" name="divisions"/>
         </div>
+        <div>
+            <s:label>
+                <s:label value="%{getText('assigned_ds_divisions.label')}" />
+                <s:select list="divisionList" name="assignedDivisions" multiple="true" size="10" />
+            </s:label>
+        </div>
+        <div>
+            <s:label>
+                <s:label value="%{getText('user_role.label')}" />
+                <s:select list="roleList" name="" />
+            </s:label>
+        </div>         
         <s:hidden name="pageNo" value="1" />
         <s:submit value="%{getText('create_user.label')}"  />
     </s:form>
