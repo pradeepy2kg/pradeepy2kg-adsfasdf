@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.Date;
+import java.text.DateFormat;
 
 /**
  * Represents a User of the system and his groups, preferences and privileges
@@ -68,7 +69,8 @@ public class User {
     /**
      * The password expiry date, after which the user is not allowed to login without changing the password
      */
-    @Column(nullable =true) 
+    @Column(nullable =true)
+    @Temporal(TemporalType.DATE)
     private Date passwordExpiry;
 
     /**

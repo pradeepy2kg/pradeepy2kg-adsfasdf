@@ -19,6 +19,11 @@ import org.slf4j.LoggerFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 /**
  * @author asankha
@@ -44,7 +49,7 @@ public class UserManagerImpl implements UserManager {
         }
         logger.warn("Invalid user ID or password for user : " + userId);
         throw new AuthorizationException("Invalid user ID or password for user : " + userId,
-            AuthorizationException.INVALID_USER_OR_PASSWORD);
+                AuthorizationException.INVALID_USER_OR_PASSWORD);
     }
 
     public List<User> getUsersByRole(String roleId) {
@@ -66,16 +71,23 @@ public class UserManagerImpl implements UserManager {
 
     /**
      * @param userToCreate the user instance to be added
-     * @param adminUser the user initiating the addition - must belong to the ADMIN role
+     * @param adminUser    the user initiating the addition - must belong to the ADMIN role
      */
     public void createUser(User userToCreate, User adminUser) {
 
         // does user has authorization to add a new user
         if (!adminUser.isAuthorized(Permission.CREATE_USER)) {
             handleRGDRuntimeException(adminUser.getUserName() + " doesn't have permission to create a user",
-                ErrorCodes.AUTHORIZATION_FAILS_CREATE_USER);
+                    ErrorCodes.AUTHORIZATION_FAILS_CREATE_USER);
         } else {
             try {
+                //setting expiry date
+                // get Calendar with current date
+                java.util.GregorianCalendar gCal = new GregorianCalendar();
+                // get yesterday's date
+                gCal.add(Calendar.DATE, -1);
+                //todo some trble with following logs 
+                logger.debug("expiry date set to yester day : {}", gCal.get(Calendar.DATE));
                 //adding new default password
                 userToCreate.setPasswordHash(hashPassword(WebConstants.DEFAULT_PASS));
                 userDao.addUser(userToCreate);
@@ -83,8 +95,7 @@ public class UserManagerImpl implements UserManager {
             }
             catch (Exception e) {
                 logger.error("Error creating a new user : " + userToCreate.getUserId() + " by : " + adminUser.getUserId(), e);
-                throw new RGDRuntimeException("Error creating a new user : " + userToCreate.getUserId(),
-                    ErrorCodes.PERSISTING_EXCEPTION_COMMON);
+                throw new RGDRuntimeException("Error creating a new user : " + userToCreate.getUserId(), ErrorCodes.PERSISTING_EXCEPTION_COMMON);
             }
         }
     }
@@ -108,7 +119,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     public List<User> getUsersByRoleAndAssignedBDDistrict(Role role, District assignedBDDistrict) {
-        return userDao.getUsersByRoleAndAssignedBDDistrict(role, assignedBDDistrict);    
+        return userDao.getUsersByRoleAndAssignedBDDistrict(role, assignedBDDistrict);
     }
 
     public List<User> getUsersByRoleAndAssignedMRDistrict(Role role, District assignedMRDistrict) {
