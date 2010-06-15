@@ -7,16 +7,21 @@
 
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
-        <s:if test="#request.warnings.size==0">
+        <s:if test="#request.warnings.size!=0">
             Following Warnings in Birth Declaration <b>Serial Number:<s:label
                 value="%{#session.birthRegister.register.bdfSerialNo}"/></b>
             <img src="<s:url value='/images/warning.png'/>" width="27" height="27" border="none"/>
         </s:if>
-        <s:elseif test="#request.warnings.size!=0">
+        <s:elseif test="#request.warnings==null">
             Birth Declaration Saved Successfully with <b>Serial Number:
             <s:label value="%{#session.birthRegister.register.bdfSerialNo}"/></b>
             <img src="<s:url value='/images/approve.png'/>" width="25" height="25" border="none"/>
-        </s:else>
+        </s:elseif>
+        <s:elseif test="#request.warnings.size==0">
+            Birth Declaration Approved Successfully with <b>Serial Number:
+            <s:label value="%{#session.birthRegister.register.bdfSerialNo}"/></b>
+            <img src="<s:url value='/images/approve.png'/>" width="25" height="25" border="none"/>
+        </s:elseif>
     </div>
     <div id="birth-register-approval-body">
         <s:url id="newBDFUrl" action="eprBirthRegistration.do">

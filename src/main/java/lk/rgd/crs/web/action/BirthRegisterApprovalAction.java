@@ -165,6 +165,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     /**
      * Used for direct Birth Declaration Registration after filling BDFs
+     *
      * @return
      */
     public String approveBirthDeclarationForm() {

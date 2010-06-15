@@ -138,6 +138,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
 
+                        // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
                         boolean allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
                         session.put("allowApproveBDF", allowApproveBDF);
                 }
@@ -153,9 +154,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void initValues(BirthDeclaration bdf) {
         BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         BirthRegisterInfo register = new BirthRegisterInfo();
-        int oldSerialNum = Integer.parseInt(oldBdf.getRegister().getBdfSerialNo());
-        register.setBdfSerialNo(Integer.toString(oldSerialNum + 1));
+        long oldSerialNum = Long.parseLong(oldBdf.getRegister().getBdfSerialNo());
+        register.setBdfSerialNo(Long.toString(oldSerialNum + 1));
         register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
+        birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
+        birthDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
+
+        NotifyingAuthorityInfo notifyAutho = new NotifyingAuthorityInfo();
+        notifyAutho.setNotifyingAuthorityPIN(oldBdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
+        notifyAutho.setNotifyingAuthorityName(oldBdf.getNotifyingAuthority().getNotifyingAuthorityName());
+        notifyAutho.setNotifyingAuthorityAddress(oldBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
+        notifyAutho.setNotifyingAuthoritySignDate(oldBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+
+        bdf.setNotifyingAuthority(notifyAutho);
         bdf.setRegister(register);
     }
 
@@ -285,13 +296,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         informant = bdf.getInformant();
         confirmant = bdf.getConfirmant();
         register = bdf.getRegister();
+        notifyingAuthority = bdf.getNotifyingAuthority();
 
         if (register != null) {
             if (register.getBirthDivision() != null) {
                 birthDistrictId = register.getBirthDistrict().getDistrictId();
                 birthDivisionId = register.getBirthDivision().getDivisionId();
                 dsDivisionId = register.getDsDivision().getDivisionId();
-            } else {
+            } else if (!addNewMode) {
                 if (user.getPrefBDDistrict() != null) {
                     birthDistrictId = user.getPrefBDDistrict().getDistrictId();
                 }
