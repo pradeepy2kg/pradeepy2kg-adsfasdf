@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>second</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">second</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/popreg/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න සහතික තහවුරු කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birth-confirmation-form-1_</td>
+	<td>120</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-confirmation-form-1_child_childGender</td>
+	<td>label=ගැහැණු</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='bcf-place']/div[3]/input</td>
+	<td>In Home</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='bcf-father-pin']/div[3]/input</td>
+	<td>259039302V</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-confirmation-form-1_fatherRace</td>
+	<td>label=2 : ශ්‍රී ලංකික දෙමල</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='bcf-mother-pin']/div[3]/input</td>
+	<td>458690393V</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-confirmation-form-1_motherRace</td>
+	<td>label=2 : ශ්‍රී ලංකික දෙමල</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-confirmation-form-1_marriage_parentsMarried0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameOfficialLang']</td>
+	<td>සමන් කුමා</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameEnglish']</td>
+	<td>saman Kuma</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_parent_fatherFullName']</td>
+	<td>Sarath Sumanaweeram</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_parent_motherFullName']</td>
+	<td>Kalyani Sumanaweeram</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprBirthConfirmation_confirmant_confirmantNICorPIN</td>
+	<td>852790393</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprBirthConfirmation_confirmant_confirmantFullName</td>
+	<td>Tharanga Punchihewa</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthConfirmation_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
