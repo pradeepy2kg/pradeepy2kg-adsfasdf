@@ -41,10 +41,10 @@
     <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
     <script type="text/javascript" src='<s:url value="/js/validation.js"/>'></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
-     <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+    <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+    <script type="text/javascript" src="<s:url value="/js/requirdfields.js"/>"></script>
 </head>
-<body onload="selectdate(document.getElementsByTagName('year_list'),document.getElementsByTagName('mounth_list'),
-     document.getElementsByTagName('date_list'));">
+<body >
 <div id="wrapper">
     <%-- Header  --%>
     <div id="layout-header">

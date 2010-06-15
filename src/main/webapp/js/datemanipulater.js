@@ -39,6 +39,29 @@ function setDate(id, flag) {
 
 }
 
+function setValue() {
+     var picker = dojo.widget.byId("picker");
+
+     //string value
+     picker.setValue('2007-01-01');
+
+     //Date value
+     picker.setValue(new Date());
+  }
+
+  function showValue() {
+     var picker = dojo.widget.byId("picker");
+
+     //string value
+     var stringValue = picker.getValue();
+     alert(stringValue);
+
+     //date value
+     var dateValue = picker.getDate();
+     alert(dateValue);
+  }
+
+
 function ePopGetValue(val) {
     var sel = document.getElementById(val);
     return  sel.options[sel.selectedIndex].value;
@@ -84,5 +107,7 @@ function splitDate() {
     //todo has to be implemented
     //var stringValue = submitDatePicker.getValue();
     document.write("dddd");
+    alert ("ok"); 
 
 }
+

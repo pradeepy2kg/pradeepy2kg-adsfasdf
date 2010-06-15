@@ -6,6 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer">
+
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
             onsubmit="javascript:return birthRegistrationValidator()">
         <div id="birth-registration-form-header">
@@ -19,10 +20,10 @@
             </div>
             <div id="serial-no">
                 <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
-                    <s:textfield name="register.bdfSerialNo"/>
+                    <s:textfield name="register.bdfSerialNo" />
                 </label>
             </div>
-            <div id="submit-date">
+            <div id="submit-date" >
                 <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span>
                     <sx:datetimepicker id="submitDatePicker" name="register.dateOfRegistration" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate()"/>
@@ -50,22 +51,16 @@
 
             <div id="child-dob-year">
                 <label>*in sinhala<br>*in tamil<br>Year</label>
-                <%--<s:select list="{'2009','2010','2011'}" name="" id="year"
-                          onchange="javascript:setDate('year','2')"/>--%>
             </div>
             <div id="child-dob-month">
                 <label>*in sinhala<br>*in tamil<br>Month</label>
-                <%--<s:select list="{'01','02','03'}" name="" id="month"
-                          onchange="javascript:setDate('month','2')"/>--%>
             </div>
             <div id="child-dob-day">
                 <label>*in sinhala<br>*in tamil<br>Day</label>
-                <%--<s:select list="{'01','02','03'}" name="" id="day"
-                          onchange="javascript:setDate('day','2')"/>--%>
                 <div id="datePicker">
                     <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
-                                       onchange="javascript:splitDate('datePicker')" />
-                </div>
+                                       onchange="javascript:splitDate('datePicker')"  />
+                         </div>
             </div>
         </div>
         <div id="child-pob" class="font-9">
@@ -77,7 +72,6 @@
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
-       
                 <s:select name="dsDivisionId" list="dsDivisionList"/>
             </div>
             <div id="child-pob-division">
@@ -86,7 +80,7 @@
             </div>
             <div id="child-pob-place">
                 <label>ස්ථානය பிறந்த இடம் Place</label>
-                <s:textfield name="child.placeOfBirth"/>
+                <s:textfield name="child.placeOfBirth" />
             </div>
             <div id="child-pob-in-hospital">
                 <label>*in Sinhala/*in Tamil/In a Hospital</label>
@@ -94,12 +88,14 @@
                     <label>ඔව් / *in Tamil / Yes </label>
                     <div>
                         <s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/>
+                        <%--<s:radio name="child.birthAtHospital" list="#{'0':''}"/>--%>
                     </div>
                 </div>
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
                     <div>
                         <s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/>
+                        <%--<s:radio name="child.birthAtHospital" list="#{'1':''}"/>--%>
                     </div>
                 </div>
             </div>
@@ -107,17 +103,15 @@
         <div id="child-name" class="font-9">
             <label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>Name in
                 any of the official languages (Sinhala / Tamil)</label>
-            <s:textarea name="child.childFullNameOfficialLang"/>
+            <s:textarea name="child.childFullNameOfficialLang" />
         </div>
         <div id="child-name-in-english" class="font-9">
             <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English </label>
-            <s:textarea name="child.childFullNameEnglish"/>
+            <s:textarea name="child.childFullNameEnglish" />
         </div>
         <div id="birth-certificate-preferred-language" class="font-9">
-            <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate
-            </label>
-            <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
-                      name="register.preferredLanguage"></s:select>
+            <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
+            <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="register.preferredLanguage"></s:select>
         </div>
         <div id="child-gender" class="font-9">
             <label>(5)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
@@ -127,12 +121,12 @@
         </div>
         <div id="child-weight" class="font-9">
             <label>(6) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label>
-            <s:textfield name="child.childBirthWeight"/>
+            <s:textfield name="child.childBirthWeight" />
         </div>
         <div id="child-birth-order-no" class="font-9">
             <label>(7)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According to Live Birth Order,
                 number of children?</label>
-            <s:textfield name="child.childRank"/>
+            <s:textfield name="child.childRank" />
         </div>
         <div id="multiple-birth" class="font-9">
             <label>(8)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்), பிள்னளகளின் எண்ணிக்கை<br>If
@@ -140,6 +134,49 @@
             <s:textfield name="child.numberOfChildrenBorn"/>
         </div>
         <s:hidden name="pageNo" value="1"/>
-        <s:submit value="%{getText('next.label')}"/>
+
+        <script type="text/javascript">
+            function show_alert()
+                {
+                    var element=new Array();
+                    var check=document.getElementById('skipjs');
+                    element[0]=document.getElementById('bdfSerialNo');
+                    element[1]=document.getElementById('childFullNameOfficialLang');
+                    element[2]=document.getElementById('childFullNameEnglish');
+                    element[3]=document.getElementById('childBirthWeight');
+                    element[4]=document.getElementById('childRank');
+
+                    var i=0;
+                    for(var e=0;e<element.length;e++) {
+                     if ( !element[e].value) {
+                         i++;
+                        }
+                     }
+                     if(i!=0){
+                    // if((i!=0) &&(check.value==false)){
+                        alert("You have to fill all required fields");
+                     return false;}
+                        else if(check.value==false){
+                             
+                         }
+
+                     
+                }
+                function skip_alert(id){
+                    var check=document.getElementById('skipjs')
+                    if(!check.value){
+                    var r = confirm("Do you want to skip?");
+                    return r;
+                    }
+                }
+        </script>
+
+        <s:submit value="%{getText('next.label')}"
+                onclick="javascript:show_alert()"/>
+        <label></label>
+        <s:checkbox name="skipjavaScript" id="skipjs"
+                >Skip Validations</s:checkbox>
+
     </s:form>
+
 </div>
