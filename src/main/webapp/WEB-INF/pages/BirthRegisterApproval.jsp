@@ -76,6 +76,7 @@
                                 <s:param name="bdId" value="idUKey"/>
                                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
                             </s:url>
                             <td align="center"><s:a href="%{approveSelected}"
                                                     title="%{getText('approveTooltip.label')}">
@@ -88,6 +89,7 @@
                                 <s:param name="bdId" value="idUKey"/>
                                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                <s:param name="pageNo" value="%{request.pageNo}"/>
                             </s:url>
                             <td align="center"><s:a href="%{rejectSelected}"
                                                     title="%{getText('rejectTooltip.label')}"><img
@@ -99,6 +101,7 @@
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
                         </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
@@ -119,6 +122,7 @@
                     <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                 <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
             </s:if>
             <br/>
@@ -127,10 +131,12 @@
             <s:url id="previousUrl" action="eprApprovalPrevious.do">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
             </s:url>
             <s:url id="nextUrl" action="eprApprovalNext.do">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
             </s:url>
 
             <br/><br/>
