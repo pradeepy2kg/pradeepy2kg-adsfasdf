@@ -4,7 +4,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="birth-registration-form-outer">
+<div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3" method="POST">
 <div id="birth-registration-form-marriage-info-sub-title" class="form-sub-title">
     *in Sinhala<br>*in Tamil<br>Details of the Marriage
@@ -41,7 +41,7 @@
         <label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label>
 
         <div>
-           <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
+            <sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
                                displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('marriageDatePicker')"/>
         </div>
@@ -120,7 +120,7 @@
     </div>
     <div id="informant-mother">
         <label>මව <br>மாதா <br>Mother</label>
-        <s:radio name="informant.informantType" list="#{'0':''}"  onchange="javascript:setInformPerson('0',
+        <s:radio name="informant.informantType" list="#{'0':''}" onchange="javascript:setInformPerson('0',
             '%{#parent.motherNICorPIN}', '%{#parent.motherFullName}', '%{#parent.motherAddress}',
             '%{#parent.motherPhoneNo}','%{#parent.motherEmail}')"/>
     </div>
@@ -217,11 +217,13 @@
 </div>
 <div id="informed-date" class="font-9">
     <label>දිනය <br>*in tamil<br>Date</label>
-    
+
     <sx:datetimepicker id="informDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
                        onmouseover="javascript:splitDate('secondDatePicker')"/>
 </div>
 <s:hidden name="pageNo" value="3"/>
-<s:submit value="%{getText('next.label')}"/>
+<div class="form-submit">
+    <s:submit value="%{getText('next.label')}"/>
+</div>
 </s:form>
 </div>

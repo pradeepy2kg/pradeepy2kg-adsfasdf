@@ -9,7 +9,7 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="birth-registration-form-outer">
+<div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST">
         <div id="birth-registration-form-notify-autority-sub-title" class="form-sub-title">
             *in Sinhala<br>*in Tamil<br>Notifying Authority
@@ -34,11 +34,13 @@
         </div>
         <div id="notified-date" class="font-9">
             <label>දිනය <br>*in tamil <br>Date</label>
-           <sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+            <sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
                                displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('modifiedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="4"/>
-        <s:submit value="%{getText('save.label')}"/>
+        <div class="form-submit">
+            <s:submit value="%{getText('save.label')}"/>
+        </div>
     </s:form>
 </div>
