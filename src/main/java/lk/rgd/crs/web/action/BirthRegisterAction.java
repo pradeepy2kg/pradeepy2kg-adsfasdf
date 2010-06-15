@@ -7,7 +7,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 
@@ -72,6 +71,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
+    private boolean back;
 
     public String welcome() {
         return "success";
@@ -115,6 +115,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                     //todo check permissions to operate on this birthdivision 
                 }
+            } else if (back){
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 switch (pageNo) {
@@ -190,6 +193,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
+            } else if (back){
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
@@ -612,5 +618,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setAddNewMode(boolean addNewMode) {
         this.addNewMode = addNewMode;
+    }
+
+    public boolean isBack() {
+        return back;
+    }
+
+    public void setBack(boolean back) {
+        this.back = back;
     }
 }
