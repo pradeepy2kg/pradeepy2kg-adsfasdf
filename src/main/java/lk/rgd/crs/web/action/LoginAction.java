@@ -128,5 +128,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(11, new Link("birth_register_approval.label", "/WEB-INF/pages/BirthRegisterApproval.jsp", "eprBirthRegisterApproval.do"));
         linkPermission.put(12, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
 		linkPermission.put(13, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
+        linkPermission.put(14,new Link("searchBirthConfirmation.label","/WEB-INF/pages/BirthConfirmationSearch.jsp","eprBirthConfirmationSearch.do"));
     }
 }

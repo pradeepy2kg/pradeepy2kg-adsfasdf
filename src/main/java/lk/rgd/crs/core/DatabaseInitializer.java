@@ -142,6 +142,7 @@ public class
             bs.set(Permission.BIRTH_REGISTRATION_APPROVAL_PAGE);
             bs.set(Permission.BIRTH_REGISTRATON_PAGE);
             bs.set(Permission.USER_PREFERANCE_SELECT_PAGE);
+            bs.set(Permission.BIRTH_CONFIRMATION_SEARCH);
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 

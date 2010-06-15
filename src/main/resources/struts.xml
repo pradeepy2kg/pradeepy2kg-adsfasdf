@@ -183,6 +183,10 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
+        <!--BirthConfirmation Search related-->
+        <action name="eprBirthConfirmationSearch" class="lk.rgd.crs.web.action.BirthRegisterAction" method="welcome">
+         <result type="tiles" name="success">epr.BirthConfirmationSearch</result>   
+        </action>
 
     </package>
 </struts>

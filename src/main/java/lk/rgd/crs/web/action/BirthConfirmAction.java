@@ -40,12 +40,6 @@ public class BirthConfirmAction extends ActionSupport implements SessionAware, R
     private final RaceDAO raceDao;
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
-
-    /**
-     * approveSelected is from BirhRegisterApproval.jsp
-     * if it is populated redirected to BirthApprovalAction
-     */
-    private String approveSelected;
     private int pageNo;
     private String language;
     private Map<Integer, String> districtList;
