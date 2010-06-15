@@ -31,11 +31,7 @@
 	<td>eprLogin_0</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='main-menu']/a[2]/label</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-1_register_bdfSerialNo</td>
@@ -51,11 +47,7 @@
 	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[1]/td[4]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>select</td>
-	<td>year</td>
-	<td>label=2010</td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-1_child_placeOfBirth</td>
@@ -226,11 +218,7 @@
 	<td>birth-registration-form-3_marriage_placeOfMarriage</td>
 	<td>Maharagama</td>
 </tr>
-<tr>
-	<td>select</td>
-	<td>marrigeYear</td>
-	<td>label=2010</td>
-</tr>
+
 <tr>
 	<td>click</td>
 	<td>birth-registration-form-3_marriage_motherSigned</td>
