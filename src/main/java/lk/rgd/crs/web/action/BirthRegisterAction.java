@@ -19,6 +19,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.Permission;
 
 /**
  * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
@@ -136,6 +137,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         // todo business validations and persiatance
 
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
+
+                        boolean allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+                        session.put("allowApproveBDF", allowApproveBDF);
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
@@ -149,7 +153,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void initValues(BirthDeclaration bdf) {
         BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         BirthRegisterInfo register = new BirthRegisterInfo();
-        register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
+        int oldSerialNum = Integer.parseInt(oldBdf.getRegister().getBdfSerialNo());
+        register.setBdfSerialNo(Integer.toString(oldSerialNum + 1));
         register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
         bdf.setRegister(register);
     }
@@ -319,8 +324,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
 
             if (parent.getMotherDSDivision() != null) {
-                motherDSDivisionId =  parent.getMotherDSDivision().getDivisionId();
-            }    
+                motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
+            }
         }
     }
 

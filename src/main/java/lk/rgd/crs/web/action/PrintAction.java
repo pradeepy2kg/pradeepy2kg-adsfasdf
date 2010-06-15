@@ -64,6 +64,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
         populate();
         session.remove(WebConstants.SESSION_PRINT_START);
         session.remove(WebConstants.SESSION_PRINT_COUNT);
+        if (selectOption == null) {
+            divisionId = 1;
+            selectOption = "Not Printed";
+        }
         session.put(WebConstants.SESSION_BCPRINT_SELECTED_DIVISION, divisionId);
         session.put(WebConstants.RADIO_ALREADY_PRINT, selectOption);
 

@@ -155,6 +155,12 @@
                 method="approveIgnoringWorning">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
+
+        <!--Direct Approval through BirthRegisterFoemDeails page -->
+        <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="approveBirthDeclarationForm">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
         <!--PrintAction related actions-->
         <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="filterPrintList">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
