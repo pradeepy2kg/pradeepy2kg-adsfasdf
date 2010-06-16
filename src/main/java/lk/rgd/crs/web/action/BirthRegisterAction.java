@@ -57,6 +57,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
+    private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -103,10 +104,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
-            if (back) {  // this is coming from a back or forward action, just do basic population and return to the provided pageNo
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-                return "form" + pageNo;
-            } else if (pageNo == 0) {
+            if (pageNo == 0) {
                 if (bdId == 0) {
                     bdf = new BirthDeclaration();
                     if (addNewMode) {
@@ -120,6 +118,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                     //todo check permissions to operate on this birthdivision 
                 }
+            } else if (back) {
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 switch (pageNo) {
@@ -179,7 +180,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * This method is responsible for loading and capture data for all 3 BDC pages as well
      * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
      * very first form page) is used to decide which state of the process we are in. bdId field should be used to
-     * determoine the particular birth declarion entity on the initial visit to action. (after then it will be kept in the session)
+     * determine the particular birth declarion entity on the initial visit to action. (after then it will be kept in the session)
      */
     public String birthConfirmation() {
         logger.debug("Step {} of 3 ", pageNo);
@@ -187,19 +188,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
-            if (back) {  // this is coming from a back or forward action, just do basic population and return to the provided pageNo
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-                return "form" + pageNo;
-            } else if (pageNo == 0) {
-                user=(User) session.get(WebConstants.SESSION_USER_BEAN);
+            label:
+            if (pageNo == 0) {
+                user = (User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
                     bdf = service.getById(bdId, user);
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     try {
-                        bdf = service.getBySerialNo(serialNo);
-                        boolean allowEditBDF = user.isAuthorized(Permission.EDIT_BDF);
-                        if (!allowEditBDF) {  // edit not allowed
-                            addActionError(getText("confirmationSearch.unauthorized"));
+                        bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
+                        if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED ||
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {  // edit not allowed
+                            addActionError(getText("confirmationSearch.EditNotAllowed"));
+                            break label;
+                        } else {
                             return "error";
                         }
                     } catch (Exception e) {
@@ -210,6 +212,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
+            } else if (back) {
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
@@ -642,5 +647,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setBack(boolean back) {
         this.back = back;
+    }
+
+    public boolean isConfirmationSearchFlag() {
+        return confirmationSearchFlag;
+    }
+
+    public void setConfirmationSearchFlag(boolean confirmationSearchFlag) {
+        this.confirmationSearchFlag = confirmationSearchFlag;
     }
 }

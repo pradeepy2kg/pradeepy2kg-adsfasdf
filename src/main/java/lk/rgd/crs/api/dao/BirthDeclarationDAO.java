@@ -88,5 +88,15 @@ public interface BirthDeclarationDAO {
      * @Return BirthDeclaration
      */
     public BirthDeclaration getBySerialNo(String serailNo);
+
+    /**
+     * Returns a limited set of BirthDeclarations for which BDFs are ready for
+     * confirmation or BDFs for which the parent confirmation forms were printed
+     * or BDFs for which the parent confirmation changes have been captured
+     *
+     * @param serialNo bdfSerialNo given to the Birth Declaration
+     * @return the birth declaration
+     */
+    public List <BirthDeclaration> getConfirmationPendingBySerialNo(String serialNo);
 }
 

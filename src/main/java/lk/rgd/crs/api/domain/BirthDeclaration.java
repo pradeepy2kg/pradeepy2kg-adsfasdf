@@ -36,7 +36,11 @@ import java.util.Date;
                         "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 0 "),
 
         @NamedQuery(name = "get.by.dateOfBirth.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                        "WHERE bdf.child.dateOfBirth = :dateOfBirth AND bdf.parent.motherNICorPIN = :motherNICorPIN ")
+                        "WHERE bdf.child.dateOfBirth = :dateOfBirth AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
+
+        @NamedQuery(name = "search.by.serialNo.confirmation.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
+                        "WHERE bdf.register.bdfSerialNo = :bdfSerialNo AND (bdf.register.status = 1 OR bdf.register.status = 2 OR bdf.register.status = 5) "+
+            "ORDER BY bdf.register.dateOfRegistration desc")
 })
 public class BirthDeclaration implements Serializable {
 

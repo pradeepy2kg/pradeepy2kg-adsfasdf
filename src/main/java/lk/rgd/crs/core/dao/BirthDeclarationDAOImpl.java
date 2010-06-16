@@ -83,4 +83,10 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("bdfSerialNo", bdfSerialNo);
         return (BirthDeclaration) q.getSingleResult();
     }
+
+    public List<BirthDeclaration> getConfirmationPendingBySerialNo(String serialNo) {
+        Query q = em.createNamedQuery("search.by.serialNo.confirmation.pending.approval");
+        q.setParameter("bdfSerialNo", serialNo);
+        return q.getResultList();
+    }
 }
