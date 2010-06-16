@@ -41,9 +41,9 @@
         </div>
         <s:hidden name="pageNo" value="4"/>
 
-        <s:hidden id="p4error1" value="%{getText('p4error1.value')}"/>
-        <s:hidden id="p4error2" value="%{getText('p4error2.value')}"/>
-        <s:hidden id="p4error3" value="%{getText('p4error3.value')}"/>
+        <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value.value')}"/>
+        <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
+        <s:hidden id="p4error3" value="%{getText('p4.Signature.error.value')}"/>
 
         <script type="text/javascript">
             function validate()

@@ -203,8 +203,8 @@
         </div>
         <s:hidden name="pageNo" value="2"/>
 
-        <s:hidden id="p2error1" value="%{getText('p2error1.value')}"/>
-        <s:hidden id="p2error2" value="%{getText('p2error2.value')}"/>
+        <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
+        <s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
 
         <script type="text/javascript">
             function validate()

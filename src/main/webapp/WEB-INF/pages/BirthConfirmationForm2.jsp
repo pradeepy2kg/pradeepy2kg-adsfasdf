@@ -58,6 +58,9 @@
         </div>            
         <s:hidden name="pageNo" value="2"/>
         
-        <s:submit value="%{getText('next.label')}"/></div>
+        <div class="form-submit">
+            <s:submit value="%{getText('next.label')}" />
+        </div>
+        </div>
     </s:form>
 </div>

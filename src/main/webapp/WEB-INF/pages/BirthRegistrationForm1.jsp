@@ -127,11 +127,11 @@
         </div>
         <s:hidden name="pageNo" value="1"/>
 
-        <s:hidden id="error1" value="%{getText('error1.value')}"/>
-        <s:hidden id="error2" value="%{getText('error2.value')}"/>
-        <s:hidden id="error3" value="%{getText('error3.value')}"/>
-        <s:hidden id="error4" value="%{getText('error4.value')}"/>
-        <s:hidden id="error5" value="%{getText('error5.value')}"/>
+        <s:hidden id="error1" value="%{getText('p1.SerialNum.error.value')}"/>
+        <s:hidden id="error2" value="%{getText('p1.childName.error.value')}"/>
+        <s:hidden id="error3" value="%{getText('p1.NameEnglish.error.value')}"/>
+        <s:hidden id="error4" value="%{getText('p1.Weigth.error.value')}"/>
+        <s:hidden id="error5" value="%{getText('p1.Rank.error.value')}"/>
 
         <script type="text/javascript">
             function validate()
