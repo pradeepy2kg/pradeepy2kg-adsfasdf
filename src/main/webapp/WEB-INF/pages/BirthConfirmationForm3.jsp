@@ -2,7 +2,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <div class="birth-confirmation-form-outer">
-<s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST">
+<s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST"
+        onsubmit="javascript:return validate()">
     <div id="civil-confirmation-info-sub-title" class="form-sub-title">
         උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil <br>Person confirming the birth details
     </div>
@@ -13,7 +14,7 @@
             <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
             <br>PIN / NIC of person confirming the birth details
         </label>
-        <s:textfield name="confirmant.confirmantNICorPIN"/>
+        <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN"/>
     </div>
     <div id="bcf-confirm-person-name" class="font-9">
         <div class="no">16</div>
@@ -21,7 +22,7 @@
             උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
             <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
             <br>Full Name of the person confirming the birth details</label>
-        <s:textarea name="confirmant.confirmantFullName"></s:textarea>
+        <s:textarea name="confirmant.confirmantFullName" id="confirmantFullName"></s:textarea>
     </div>
     <div id="bcf-confirm-person-certify" class="font-9">
         <div class="no">17</div>
@@ -41,6 +42,38 @@
 
     </div>
     <s:hidden name="pageNo" value="3"/>
-    <s:submit value="%{getText('next.label')}"/>
+    <s:hidden id="p4error1" value="%{getText('p4error1.value')}"/>
+    <s:hidden id="p4error2" value="%{getText('p4error2.value')}"/>
+
+        <script type="text/javascript">
+            function validate()
+                {
+                    var errormsg="";
+                    var element;
+                    var returnval;
+                    var check=document.getElementById('skipjs');
+                    if (!check.checked) {
+
+                        element=document.getElementById('confirmantNICorPIN');
+                        if (element.value=="") {
+                            errormsg = errormsg +  "\n" + document.getElementById('p4error1').value;
+                        }
+                        element=document.getElementById('confirmantFullName');
+                        if (element.value=="") {
+                            errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
+                        }
+                    }
+                    if(errormsg!=""){
+                        alert(errormsg);
+                        returnval =false;
+                    }
+                    return returnval;
+                    }
+         </script>
+
+         <div class="form-submit">
+        <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+        <s:submit value="%{getText('next.label')}" />
+        </div> 
 </s:form>
 </div>

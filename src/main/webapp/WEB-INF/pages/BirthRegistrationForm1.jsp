@@ -125,6 +125,7 @@
             <s:textfield name="child.numberOfChildrenBorn"/>
         </div>
         <s:hidden name="pageNo" value="1"/>
+
         <s:hidden id="error1" value="%{getText('error1.value')}"/>
         <s:hidden id="error2" value="%{getText('error2.value')}"/>
         <s:hidden id="error3" value="%{getText('error3.value')}"/>
@@ -139,6 +140,7 @@
                     var returnval;
                     var check=document.getElementById('skipjs');
                     if (!check.checked) {
+                        
                         element=document.getElementById('bdfSerialNo');
                         if ( element.value=="") {
 
