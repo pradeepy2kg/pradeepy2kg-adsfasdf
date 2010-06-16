@@ -233,23 +233,13 @@
          </script>
 
         <div class="form-submit">
-            <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
-            <s:submit value="%{getText('next.label')}"/>
-        </div>
-
-        <div class="form-submit">
             <s:url id="backUrl" action="eprBirthRegistration">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
             <s:a href="%{backUrl}"> << </s:a>
-            <s:if test="{back}"> <%--show forward url only if we came here by a 'back' from that page--%>
-                <s:url id="forwardUrl" action="eprBirthRegistration">
-                    <s:param name="back" value="true"/>
-                    <s:param name="pageNo" value="{pageNo + 1}"/>
-                </s:url>
-                <s:a href="%{forwardUrl}"> >> </s:a>
-            </s:if>
+            <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+            <s:submit value="%{getText('next.label')}"/>
         </div>
     </s:form>
 </div>
