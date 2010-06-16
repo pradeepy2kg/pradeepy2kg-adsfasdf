@@ -13,7 +13,8 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <div class="birth-confirmation-form-outer">
-    <s:form action="eprBirthConfirmation" name="birthConfirmationForm1" id="birth-confirmation-form-1" method="POST">
+    <s:form action="eprBirthConfirmation" name="birthConfirmationForm1" id="birth-confirmation-form-1" method="POST"
+            onsubmit="javascript:return validate()">
         <div id="birth-confirmation-form-header">
             <div id="birth-confirmation-form-header-logo">
                 <img src="<s:url value="/images/official-logo.png" />" alt=""/>
@@ -27,7 +28,8 @@
                 </label>
             </div>
             <div id="bcf-serial-no">
-                <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span><s:textfield name="" /></label>
+                <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
+                    <s:textfield name="" id="SerialNo" /></label>
             </div>
         </div>
         <div id="brf-serial-no-and-date" class="font-9">
@@ -223,6 +225,35 @@
             </div>
         </div>
         <s:hidden name="pageNo" value="1"/>
-        <s:submit value="%{getText('nextButton.label')}" />
+
+         <s:hidden id="p1error1" value="%{getText('p1error1.value')}"/>
+        
+         <script type="text/javascript">
+            function validate()
+                {
+                    var errormsg="";
+                    var element;
+                    var returnval;
+                    var check=document.getElementById('skipjs');
+                    if (!check.checked) {
+
+                        element=document.getElementById('SerialNo');
+                        if (element.value=="") {
+                            errormsg = errormsg +  "\n" + document.getElementById('p1error1').value;
+                        }
+                       
+                    }
+                    if(errormsg!=""){
+                        alert(errormsg);
+                        returnval =false;
+                    }
+                    return returnval;
+                    }
+         </script>
+
+         <div class="form-submit">
+        <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+        <s:submit value="%{getText('next.label')}" />
+        </div>
     </s:form>
 </div>
