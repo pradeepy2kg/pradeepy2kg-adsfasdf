@@ -117,7 +117,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                     //todo check permissions to operate on this birthdivision 
                 }
-            } else if (back){
+            } else if (back) {
                 populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
                 return "form" + pageNo;
             } else {
@@ -188,14 +188,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
+                user=(User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
-                    bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
+                    bdf = service.getById(bdId, user);
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
-                    bdf = service.getBySerialNo(serialNo);
+                    try {
+                        bdf = service.getBySerialNo(serialNo);
+                        boolean allowEditBDF = user.isAuthorized(Permission.EDIT_BDF);
+                        if (!allowEditBDF) {  // edit not allowed
+                            addActionError(getText("confirmationSearch.unauthorized"));
+                            return "error";
+                        }
+                    } catch (Exception e) {
+                        addActionError(getText("confirmationSearch.noRecordError"));
+                        handleErrors(e);
+                        return "searchError";
+                    }
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
-            } else if (back){
+            } else if (back) {
                 populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
                 return "form" + pageNo;
             } else {
