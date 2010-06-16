@@ -63,7 +63,7 @@ public class Person {
     /**
      * The initials in the official language
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 60)
     private String initialsInOfficialLanguage;
     /**
      * The last name in English
@@ -78,7 +78,7 @@ public class Person {
     /**
      * The initials in English
      */
-    @Column(nullable = true, length = 30)
+    @Column(nullable = true, length = 60)
     private String initialsInEnglish;
     /**
      * The last name in English

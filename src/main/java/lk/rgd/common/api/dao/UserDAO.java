@@ -27,10 +27,16 @@ public interface UserDAO {
 
     /**
      * Add a user
-     * @param user the user to be addes
+     * @param user the user to be added
      */
     public void addUser(User user);
 
+    /**
+     * Update a user
+     * @param user the updated user
+     */
+    public void updateUser(User user);
+    
     /**
      * Return the list of users assigned to the Birth / Death Registration district
      * @param assignedBDDistrict the district
@@ -75,5 +81,10 @@ public interface UserDAO {
      * @return the list of users matching the criteria
      */
     public List<User> getUsersByNameMatch(String userName);
-  public void editUser();
+
+    /**
+     * Get a list of all users (who are not deleted) - the results are not paged
+     * @return a List of all users
+     */
+    public List<User> getAllUsers();
 }

@@ -37,14 +37,15 @@ public class UserManagerImpl implements UserManager {
 
     public User authenticateUser(String userId, String password) throws AuthorizationException {
         User user = userDao.getUserByPK(userId);
-        if (password != null && user != null && user.getPasswordHash() != null) {
+        if (user != null && user.getStatus() == User.State.ACTIVE &&
+            password != null && user != null && user.getPasswordHash() != null) {
             if (user.getPasswordHash().equals(hashPassword(password))) {
                 return user;
             }
         }
-        logger.warn("Invalid user ID or password for user : " + userId);
-        throw new AuthorizationException("Invalid user ID or password for user : " + userId,
-            AuthorizationException.INVALID_USER_OR_PASSWORD);
+        logger.warn("Invalid user ID, password or user : " + userId);
+        throw new AuthorizationException("Invalid user ID, password or user : " + userId,
+            ErrorCodes.INVALID_LOGIN);
     }
 
     public List<User> getUsersByRole(String roleId) {
@@ -71,9 +72,9 @@ public class UserManagerImpl implements UserManager {
     public void createUser(User userToCreate, User adminUser) {
 
         // does user has authorization to add a new user
-        if (!adminUser.isAuthorized(Permission.CREATE_USER)) {
+        if (!adminUser.isAuthorized(Permission.USER_MANAGEMENT)) {
             handleRGDRuntimeException(adminUser.getUserName() + " doesn't have permission to create a user",
-                ErrorCodes.AUTHORIZATION_FAILS_CREATE_USER);
+                ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
         } else {
             try {
                 //adding new default password
@@ -87,6 +88,29 @@ public class UserManagerImpl implements UserManager {
                     ErrorCodes.PERSISTING_EXCEPTION_COMMON);
             }
         }
+    }
+
+    public void updateUser(User userToUpdate, User adminUser) {
+        // does user has authorization to add a update user
+        if (!adminUser.isAuthorized(Permission.USER_MANAGEMENT)) {
+            handleRGDRuntimeException(adminUser.getUserName() + " doesn't have permission to update a user",
+                ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
+        } else {
+            // we will not let anyone update deleted user accounts
+            User existing = userDao.getUserByPK(userToUpdate.getUserId());
+            if (existing.getStatus() == User.State.DELETED) {
+                logger.error("Attempt to modify deleted account : " + existing.getUserId() +
+                    " by : " + adminUser.getUserId() + " denied");
+                handleRGDRuntimeException("Attempt to modify deleted account : " + existing.getUserId() +
+                    " by : " + adminUser.getUserId() + " denied", ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
+            }
+            userDao.updateUser(userToUpdate);
+        }
+    }
+
+    public void deleteUser(User userToDelete, User adminUser) {
+        userToDelete.setStatus(User.State.DELETED);
+        updateUser(userToDelete, adminUser);
     }
 
     public List<User> getUsersByAssignedBDDistrict(District assignedBDDistrict) {
@@ -121,5 +145,9 @@ public class UserManagerImpl implements UserManager {
 
     public List<User> getUsersByNameMatch(String userName) {
         return userDao.getUsersByNameMatch(userName);
+    }
+
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 }

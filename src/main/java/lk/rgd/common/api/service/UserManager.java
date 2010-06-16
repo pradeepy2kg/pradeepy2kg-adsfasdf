@@ -21,28 +21,28 @@ public interface UserManager {
     User authenticateUser(String userName, String password) throws AuthorizationException;
 
     /**
-     * Return the list of users playing the specified role
+     * Return the list of non-deleted users playing the specified role
      * @param roleId the role ID
      * @return list of users playing the role
      */
     public List<User> getUsersByRole(String roleId);
 
     /**
-     * Return the list of users assigned to the Birth / Death Registration district
+     * Return the list of non-deleted users assigned to the Birth / Death Registration district
      * @param assignedBDDistrict the district
      * @return list of users assigned
      */
     public List<User> getUsersByAssignedBDDistrict(District assignedBDDistrict);
 
     /**
-     * Return the list of users assigned to the Marriage Registration district
+     * Return the list of non-deleted users assigned to the Marriage Registration district
      * @param assignedMRDistrict the district
      * @return list of users assigned
      */
     public List<User> getUsersByAssignedMRDistrict(District assignedMRDistrict);
 
     /**
-     * Return the list of users playing the specified role in the specified Birth/Death registration district
+     * Return the list of non-deleted users playing the specified role in the specified Birth/Death registration district
      * @param role the role being played
      * @param assignedBDDistrict the BD district
      * @return list of users playing the role in that district
@@ -50,7 +50,7 @@ public interface UserManager {
     public List<User> getUsersByRoleAndAssignedBDDistrict(Role role, District assignedBDDistrict);
 
     /**
-     * Return the list of users playing the specified role in the specified Marriage registration district
+     * Return the list of non-deleted users playing the specified role in the specified Marriage registration district
      * @param role the role
      * @param assignedMRDistrict the MR district
      * @return list of users playing the role in that district
@@ -58,18 +58,24 @@ public interface UserManager {
     public List<User> getUsersByRoleAndAssignedMRDistrict(Role role, District assignedMRDistrict);
 
     /**
-     * Get users by ID - with a wildcard match
+     * Get non-deleted users by ID - with a wildcard match
      * @param userId the userid to match within the userId field
      * @return the list of users matching the criteria
      */
     public List<User> getUsersByIDMatch(String userId);
 
     /**
-     * Get users by name - with a wildcard match
+     * Get non-deleted users by name - with a wildcard match
      * @param userName the userid to match within the userId field
      * @return the list of users matching the criteria
      */
     public List<User> getUsersByNameMatch(String userName);
+
+    /**
+     * Get all users (non-deleted accounts)
+     * @return all non-deleted Users
+     */
+    public List<User> getAllUsers();
 
     /**
      * Hash the password
@@ -85,5 +91,19 @@ public interface UserManager {
      */
     void createUser(User userToCreate, User adminUser);
 
+    /**
+     * Update a user
+     * @param userToUpdate the User instance to update
+     * @param adminUser the user account creating the new user - must belong to role ADMIN
+     */
+    void updateUser(User userToUpdate, User adminUser);
 
+    /**
+     * Delete a user. Will mark this record as permanently removed, and then maintained for historical
+     * and reporting/auditing purposes
+     *
+     * @param userToDelete the User instance to delete
+     * @param adminUser the user account creating the new user - must belong to role ADMIN
+     */
+    void deleteUser(User userToDelete, User adminUser);
 }

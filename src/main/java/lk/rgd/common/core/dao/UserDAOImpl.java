@@ -81,14 +81,20 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         return q.getResultList();
     }
 
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getAllUsers() {
+        Query q = em.createNamedQuery("filter.non.deleted");
+        return q.getResultList();
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     public void addUser(User user) {
         em.persist(user);
     }
 
-     public void editUser(){
-         
-     }
-
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateUser(User user) {
+        em.merge(user);
+    }
 }
 

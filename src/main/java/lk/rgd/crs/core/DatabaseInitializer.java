@@ -17,7 +17,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
@@ -171,7 +170,7 @@ public class
             bs = new BitSet();
             bs.or(rgRole.getPermBitSet());
             bs.set(Permission.CREATE_USER_PAGE);
-			bs.set(Permission.CREATE_USER);
+			bs.set(Permission.USER_MANAGEMENT);
             bs.set(Permission.VIEW_USERS);
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
@@ -185,6 +184,7 @@ public class
     // for testing
     public static void main(String[] args) {
         new DatabaseInitializer().generateSchemaFromHibernate(Dialect.DERBY);
+        new DatabaseInitializer().generateSchemaFromHibernate(Dialect.MYSQL);
     }
 
     private String[] generateSchemaFromHibernate(Dialect dialect) {
