@@ -197,15 +197,17 @@ public class DAOImplTest extends TestCase {
         newUser1.setPrefLanguage("si");
         newUser1.setRole(roleDAO.getRole("DEO"));
         newUser1.setPasswordHash(userManager.hashPassword("newUser1"));
+        newUser1.setStatus(User.State.ACTIVE);
         userManager.createUser(newUser1, admin);
 
         User newUser2 = new User();
         newUser2.setUserId("newUser2");
-        newUser2.setUserName("newUser1 Name");
-        newUser2.setPin("1");
+        newUser2.setUserName("newUser2 Name");
+        newUser2.setPin("2");
         newUser2.setPrefLanguage("si");
         newUser2.setRole(roleDAO.getRole("DEO"));
-        newUser2.setPasswordHash(userManager.hashPassword("newUser1"));
+        newUser2.setPasswordHash(userManager.hashPassword("newUser2"));
+        newUser2.setStatus(User.State.ACTIVE);
         userManager.createUser(newUser2, admin);
 
         try {
@@ -216,10 +218,21 @@ public class DAOImplTest extends TestCase {
             newUser3.setPrefLanguage("si");
             newUser3.setRole(roleDAO.getRole("DEO"));
             newUser3.setPasswordHash(userManager.hashPassword("newUser3"));
+            newUser3.setStatus(User.State.ACTIVE);
             userManager.createUser(newUser3, admin);
             fail("Should not be able to create users with duplicate IDs");
         } catch (Exception e) {
             logger.debug("Caught expected exception", e);
+        }
+
+        // try to delete user 2
+        userManager.deleteUser(newUser2, admin);
+        // now user2 cannot login
+        try {
+            userManager.authenticateUser("newUser2", "newUser2");
+            fail("Deleted user allowed to login");
+        } catch (Exception e) {
+            // expected
         }
     }
 

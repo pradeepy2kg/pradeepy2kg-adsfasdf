@@ -32,10 +32,11 @@ public class ErrorCodes {
      */
     public static final int ILLEGAL_STATE = 2002;
 
-    //error code 3001-4000 indicate autharization errors
-    public static final int AUTHORIZATION_FAILS_CREATE_USER = 3001;
+    //error code 3001-4000 indicate authorization errors
+    public static final int AUTHORIZATION_FAILS_USER_MANAGEMENT = 3001;
+    public static final int INVALID_LOGIN = 3002;
 
-    //erro code 4001-5000 indicate persistance exceptions
+    //erro code 4001-5000 indicate persistence exceptions
     public static int ENTITY_ALREADY_EXIST = 4001;
     public static int ENTITY_MANAGER_CLOSED = 4002;
     public static int NOT_AN_ENTITY = 4003;

@@ -16,28 +16,38 @@ import java.util.Date;
 @Table(name = "USERS", schema = "COMMON")
 @NamedQueries({
         @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
-                "WHERE u.role.roleId = :roleId " +
+                "WHERE u.status != 9 AND u.role.roleId = :roleId " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
-                "WHERE :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "WHERE u.status != 9 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
-                "WHERE :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "WHERE u.status != 9 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
-                "WHERE u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "WHERE u.status != 9 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
-                "WHERE u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "WHERE u.status != 9 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
-                "WHERE u.userId LIKE :userIdMatch " +
+                "WHERE u.status != 9 AND u.userId LIKE :userIdMatch " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
-                "WHERE u.userName LIKE :userNameMatch " +
+                "WHERE u.status != 9 AND u.userName LIKE :userNameMatch " +
+                "ORDER BY u.userName"),
+        @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " +
+                "WHERE u.status != 9 " +
                 "ORDER BY u.userName")
 })
 public class User {
+
+    public enum State {
+        INACTIVE, /** 0 - state. Cannot login */
+        ACTIVE, /** 1 - state. Can login */
+        LOCKEDOUT, /** 2 - state. Cannot login */
+        DELETED /** 9 - state. Permanently deleted cannot be edited or login */
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(User.class);
 
@@ -120,10 +130,10 @@ public class User {
     private Set<DSDivision> assignedBDDSDivisions;
 
     /**
-     * Is the user account active - 0 : active, 1 - inactive, 2 - locked out
+     * @see State
      */
     @Column(nullable = false, name = "STATUS", columnDefinition = "smallint not null default 1")
-    private int status;
+    private State status;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roleId")
@@ -186,11 +196,11 @@ public class User {
         this.prefLanguage = prefLanguage;
     }
 
-    public int getStatus() {
+    public State getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(State status) {
         this.status = status;
     }
 
