@@ -187,7 +187,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
-            if (pageNo == 0) {
+            if (back) {  // this is coming from a back or forward action, just do basic population and return to the provided pageNo
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
+            } else if (pageNo == 0) {
                 user=(User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
                     bdf = service.getById(bdId, user);
@@ -207,9 +210,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
-            } else if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {

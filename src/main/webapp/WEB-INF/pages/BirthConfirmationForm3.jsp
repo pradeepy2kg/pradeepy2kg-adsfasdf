@@ -45,35 +45,41 @@
     <s:hidden id="p1error1" value="%{getText('cp4.error.NIC.value')}"/>
     <s:hidden id="p2error2" value="%{getText('cp4.error.FullName.value')}"/>
 
-        <script type="text/javascript">
-            function validate()
-                {
-                    var errormsg="";
-                    var element;
-                    var returnval;
-                    var check=document.getElementById('skipjs');
-                    if (!check.checked) {
+    <script type="text/javascript">
+        function validate()
+        {
+            var errormsg="";
+            var element;
+            var returnval;
+            var check=document.getElementById('skipjs');
+            if (!check.checked) {
 
-                        element=document.getElementById('confirmantNICorPIN');
-                        if (element.value=="") {
-                            errormsg = errormsg +  "\n" + document.getElementById('p1error1').value;
-                        }
-                        element=document.getElementById('confirmantFullName');
-                        if (element.value=="") {
-                            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
-                        }
-                    }
-                    if(errormsg!=""){
-                        alert(errormsg);
-                        returnval =false;
-                    }
-                    return returnval;
-                    }
-         </script>
+                element=document.getElementById('confirmantNICorPIN');
+                if (element.value=="") {
+                    errormsg = errormsg +  "\n" + document.getElementById('p1error1').value;
+                }
+                element=document.getElementById('confirmantFullName');
+                if (element.value=="") {
+                    errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
+                }
+            }
+            if(errormsg!=""){
+                alert(errormsg);
+                returnval =false;
+            }
+            return returnval;
+        }
+     </script>
 
-         <div class="form-submit">
+     <div class="form-submit">
+         <s:url id="backUrl" action="eprBirthConfirmation">
+             <s:param name="back" value="true"/>
+             <s:param name="pageNo" value="{pageNo - 1}"/>
+         </s:url>
+         <s:a href="%{backUrl}"> << </s:a>
+
         <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
         <s:submit value="%{getText('next.label')}" />
-        </div> 
+    </div>
 </s:form>
 </div>
