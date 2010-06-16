@@ -77,8 +77,16 @@
          </script>
 
         <div class="form-submit">
-        <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
-        <s:submit value="%{getText('next.label')}" />
-        </div> 
+            <s:checkbox name="skipjavaScript" label=" Skip Validations " id="skipjs" value="false" />
+            <s:submit value="%{getText('next.label')}" />
+        </div>
+
+        <div class="form-submit">
+            <s:url id="backUrl" action="eprBirthRegistration">
+                <s:param name="back" value="true"/>
+                <s:param name="pageNo" value="{pageNo - 1}"/>
+            </s:url>
+            <s:a href="%{backUrl}"> << </s:a>
+        </div>
     </s:form>
 </div>

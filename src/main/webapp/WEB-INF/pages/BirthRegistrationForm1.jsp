@@ -101,26 +101,27 @@
             <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"/>
         </div>
         <div id="birth-certificate-preferred-language" class="font-9">
-            <label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
-            <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="register.preferredLanguage"></s:select>
+            <label>(5) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
+            <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
+                      name="register.preferredLanguage"></s:select>
         </div>
         <div id="child-gender" class="font-9">
-            <label>(5)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
+            <label>(6)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label>
             <s:select
                     list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                     name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/>
         </div>
         <div id="child-weight" class="font-9">
-            <label>(6) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label>
+            <label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label>
             <s:textfield name="child.childBirthWeight" id="childBirthWeight"/>
         </div>
         <div id="child-birth-order-no" class="font-9">
-            <label>(7)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According to Live Birth Order,
+            <label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According to Live Birth Order,
                 number of children?</label>
             <s:textfield name="child.childRank" id="childRank"/>
         </div>
         <div id="multiple-birth" class="font-9">
-            <label>(8)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்), பிள்னளகளின் எண்ணிக்கை<br>If
+            <label>(9)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்), பிள்னளகளின் எண்ணிக்கை<br>If
                 multiple births, number of children</label>
             <s:textfield name="child.numberOfChildrenBorn"/>
         </div>
@@ -172,11 +173,21 @@
                     }
                     return returnval;
                     }
-         </script>
+        </script>
         <div class="form-submit">
-        <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
-        <s:submit value="%{getText('next.label')}" />
-        </div>    
-   </s:form>
+            <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+            <s:submit value="%{getText('next.label')}"
+                      onclick="javascript:show_alert()"/>
+        </div>
+        <div class="form-submit">
+            <s:if test="{back}"> <%--show forward url only if we came here by a 'back' from that page--%>
+                <s:url id="forwardUrl" action="eprBirthRegistration">
+                    <s:param name="back" value="true"/>
+                    <s:param name="pageNo" value="{pageNo + 1}"/>
+                </s:url>
+                <s:a href="%{forwardUrl}"> >> </s:a>
+            </s:if>
+        </div>
+    </s:form>
 
 </div>
