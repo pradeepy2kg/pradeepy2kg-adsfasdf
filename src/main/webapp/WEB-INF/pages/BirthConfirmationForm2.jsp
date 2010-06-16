@@ -59,8 +59,13 @@
         <s:hidden name="pageNo" value="2"/>
         
         <div class="form-submit">
+            <s:url id="backUrl" action="eprBirthConfirmation">
+                <s:param name="back" value="true"/>
+                <s:param name="pageNo" value="{pageNo - 1}"/>
+            </s:url>
+            <s:a href="%{backUrl}"> << </s:a>
             <s:submit value="%{getText('next.label')}" />
         </div>
-        </div>
+    </div>
     </s:form>
 </div>
