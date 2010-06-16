@@ -60,6 +60,7 @@
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="form3">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="searchError">epr.BirthConfirmationSearch</result>
         </action>
 
         <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
