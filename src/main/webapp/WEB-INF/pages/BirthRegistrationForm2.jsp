@@ -238,7 +238,9 @@
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
             <s:a href="%{backUrl}"> << </s:a>
-            <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+            <s:checkbox name="skipjavaScript" id="skipjs" value="false" >
+                <s:label value="%{getText('skipvalidation.label')}"/>
+            </s:checkbox>
             <s:submit value="%{getText('next.label')}"/>
         </div>
     </s:form>
