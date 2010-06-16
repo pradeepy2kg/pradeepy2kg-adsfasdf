@@ -57,6 +57,14 @@ public interface BirthRegistrationService {
     public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
+     * Reject a birth declaration by an ADR or higher authority
+     * @param bdf  the BDF to be marked rejected
+     * @param comments comment specifying the reason for rejection (e.g. duplicate record)
+     * @param user the user initiating the rejection
+     */
+    public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user);
+
+    /**
      * Returns the Birth Declaration object for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration

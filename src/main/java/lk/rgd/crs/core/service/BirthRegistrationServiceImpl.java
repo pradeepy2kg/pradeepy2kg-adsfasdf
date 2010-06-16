@@ -129,6 +129,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
 
+        // check approve permission
+        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
         // create a holder to capture any warnings
         List<UserWarning> warnings = new ArrayList<UserWarning>();
 
@@ -168,6 +174,27 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.updateBirthDeclaration(bdf);
         }
         return warnings;
+    }
+
+    public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
+        if (comments == null || comments.trim().length() < 1) {
+            handleException("A comment is required to reject a birth declaration",
+                ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
+        }
+
+        // does the user have access to the BDF being added (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateAccessOfUser(user, existing);
+
+        // check approve/reject permission
+        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+        bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_REJECTED);
+        birthDeclarationDAO.updateBirthDeclaration(bdf);
     }
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {

@@ -21,6 +21,10 @@ public class ErrorCodes {
      * Data requested for a non existant country id
      */
     public static final int COUNTRY_NOT_FOUND = 1002;
+    /**
+     * A reason / comment is required for the action
+     */
+    public static final int COMMENT_REQUIRED_BDF_REJECT = 1003;
 
     // error codes 2001 - 3000 indicate permission denied errors
     /**
