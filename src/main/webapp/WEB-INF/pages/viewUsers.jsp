@@ -16,13 +16,13 @@
 
                     <label> Role </label>
                     <s:select name="roleId" list="roleList" headerKey="0"
-                              headerValue="ALL" />
+                              headerValue="ALL"/>
 
                 </td>
                 <td>
                     <label>District</label>
                     <s:select name="userDistrictId" list="districtList" headerKey="0"
-                              headerValue="ALL" />
+                              headerValue="ALL"/>
                 </td>
             </tr>
             <tr>
@@ -40,7 +40,9 @@
                 </td>
 
             </tr>
-            <tr><td align="center"><s:submit value="   SEARCH   "/></td></tr>
+            <tr>
+                <td align="center"><s:submit value="   SEARCH   "/></td>
+            </tr>
 
         </table>
     </s:form>
@@ -61,25 +63,24 @@
                     <tr>
                         <td><s:property value="%{#userListStatus.count}"/></td>
                         <td><s:property value="userName"/></td>
-                        <s:if test="#allowEdit==true">
-                            <s:url id="editSelected" action="eprBirthRegistration.do">
-                                <s:param name="userID" value="userID"/>
-                            </s:url>
-                            <td align="center"><s:a href="%{editSelected}" title="">
-                                <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
-                                     border="none"/></s:a>
-                            </td>
+                        <s:url id="deleteSelected" action="eprInitUserCreation.do">
+                            <s:param name="userId" value="userId"/>
+                        </s:url>
+                        <td align="center"><s:a href="%{deleteSelected}"
+                                                title="%{getText('deleteToolTip.label')}"><img
+                                src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
+                                border="none"/></s:a>
+                        </td>
 
 
-                            <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
-                                <s:param name="bdId" value=""/>
-                            </s:url>
-                            <td align="center"><s:a href="%{deleteSelected}"
-                                                    title="%{getText('deleteToolTip.label')}"><img
-                                    src="<s:url value='/images/delete.png'/>" width="25" height="25"
-                                    border="none"/></s:a>
-                            </td>
-                        </s:if>
+                        <s:url id="deleteSelected" action="eprInitUserCreation.do">
+                            <s:param name="bdId" value=""/>
+                        </s:url>
+                        <td align="center"><s:a href="%{deleteSelected}"
+                                                title="%{getText('deleteToolTip.label')}"><img
+                                src="<s:url value='/images/delete.png'/>" width="25" height="25"
+                                border="none"/></s:a>
+                        </td>
 
 
                     </tr>

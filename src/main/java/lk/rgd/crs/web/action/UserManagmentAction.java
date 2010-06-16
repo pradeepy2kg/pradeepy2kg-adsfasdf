@@ -6,17 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.sql.SQLException;
 
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
-import lk.rgd.common.RGDException;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.web.WebConstants;
 
 
@@ -37,6 +30,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int UserDistrictId;
     private List<User> usersList;
     private String nameOfUser;
+    private String userId;
+    private User editUserInfo;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -72,7 +67,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         } else {
             // todo...
 
-            User currentUser = (User) session.get("user_bean");
+            User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
             user.setRole(roleDAO.getRole(roleId));
             // creating assigned Districts
             Set assDistrict = new HashSet();
@@ -96,8 +91,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         }
     }
 
+
     public String initUser() {
         populate();
+
+        if (getUserId() != null) {
+            editUserInfo = service.getUsersByIDMatch(getUserId()).get(0);
+        }
         return "pageLoad";
     }
 
@@ -110,24 +110,18 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     public String selectUsers() {
         populate();
         int pageNo = 1;
-        logger.debug("length of roalId {}   :" + getRoleId().length());
         usersList = service.getUsersByRole("");
-        if (getUserDistrictId() == 0 && getRoleId().length()!=1) {
+        if (getUserDistrictId() == 0 && getRoleId().length() != 1) {
 
             usersList = service.getUsersByRole(getRoleId());
 
+        } else if (getUserDistrictId() != 0 && getRoleId().length() == 1) {
+            usersList = service.getUsersByAssignedMRDistrict(districtDAO.getDistrict(getUserDistrictId()));
+        } else if (getUserDistrictId() != 0 && getRoleId().length() != 1) {
+            usersList = service.getUsersByRoleAndAssignedMRDistrict(roleDAO.getRole(getRoleId()), districtDAO.getDistrict(getUserDistrictId()));
         }
-        else if(getUserDistrictId() != 0 && getRoleId().length()==1)
-        {
-           usersList = service.getUsersByAssignedMRDistrict(districtDAO.getDistrict(getUserDistrictId()));
-        }
-        else if(getUserDistrictId() != 0 && getRoleId().length()!=1)
-        {
-           usersList = service.getUsersByRoleAndAssignedMRDistrict(roleDAO.getRole(getRoleId()),districtDAO.getDistrict(getUserDistrictId()));
-        }
-        if (getNameOfUser().length()!=0)
-        {
-              usersList=service.getUsersByNameMatch(getNameOfUser()); 
+        if (getNameOfUser().length() != 0) {
+            usersList = service.getUsersByNameMatch(getNameOfUser());
         }
 
         session.put("previousFlag", 0);
@@ -140,7 +134,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     private void populate() {
         String language = "en";//((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        logger.debug("language  of admin {}   :" + language );
         if (districtList == null)
             districtList = districtDAO.getDistrictNames(language, null);
         if (roleList == null)
@@ -254,5 +247,21 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setNameOfUser(String nameOfUser) {
         this.nameOfUser = nameOfUser;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public User getEditUserInfo() {
+        return editUserInfo;
+    }
+
+    public void setEditUserInfo(User editUserInfo) {
+        this.editUserInfo = editUserInfo;
     }
 }

@@ -85,27 +85,24 @@
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-
         <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="creatUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
-
-
-
-         <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="viewUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
-         <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+        <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="selectUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
-        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="birthDeclarationApproval">
+        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="birthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
@@ -158,7 +155,8 @@
         </action>
 
         <!--Direct Approval through BirthRegisterFoemDeails page -->
-        <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="approveBirthDeclarationForm">
+        <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveBirthDeclarationForm">
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
