@@ -6,6 +6,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.ErrorCodes;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
@@ -163,7 +165,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);            
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
         }
         return warnings;
     }
@@ -265,5 +267,21 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         return bdf;
+    }
+
+    public BirthDeclaration getConfirmationPendingBySerialNo(String serialNo, User user) {
+        List<BirthDeclaration> birthDeclarationlist = birthDeclarationDAO.getConfirmationPendingBySerialNo(serialNo);
+        Set<DSDivision> assignedBDDSDivisions = user.getAssignedBDDSDivisions();
+        BirthDeclaration birthDeclaration = null;
+        label:
+        for (BirthDeclaration bd : birthDeclarationlist) {
+            for (DSDivision division : assignedBDDSDivisions) {
+                if (bd.getRegister().getDsDivision().getDsDivisionUKey() == division.getDsDivisionUKey()) {
+                    birthDeclaration = bd;
+                    break label;
+                }
+            }
+        }
+        return birthDeclaration;
     }
 }

@@ -158,7 +158,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             populate();
             return "success";
         } else {
-            request.put("bdId", bdId);
             request.put("warnings", warnings);
             populate();
             request.put("bdId", bdId);
@@ -187,7 +186,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
 
         if (caughtException || (warnings != null && warnings.isEmpty())) {
-            request.put("bdId", bdId);
             request.put("warnings", warnings);
             populate();
             request.put("bdId", bdId);

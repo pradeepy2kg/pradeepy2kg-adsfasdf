@@ -93,10 +93,24 @@ public interface BirthRegistrationService {
 
     /**
      * Load names of values for print or display, in the preferred language of the record
+     *
      * @param bdf the BDF to load values for
      * @return the BDF with all print/display string values populated
      */
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf);
+
+    /**
+     * Returns the BirthDeclaration for a given serialNo which is belong to the
+     * for which BDF is ready for confirmation or BDF for which the parent
+     * confirmation form was printed or BDF for which the parent confirmation
+     * changes has been captured based and for which BDF is belong to user's
+     * assingned BDDivision
+     *
+     * @param serialNo bdfSerialNo given to the Birth Declaration
+     * @param user     User
+     * @return the birth declaration results
+     */
+    public BirthDeclaration getConfirmationPendingBySerialNo(String serialNo, User user);
 
 }
 

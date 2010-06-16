@@ -13,6 +13,7 @@
                     <s:textfield name="serialNo"/>
                 </td>
                 <td>
+                    <s:hidden name="confirmationSearchFlag" value="true"/>
                     <s:submit value="%{getText('confirmationSearch.button')}" name="search"/>
                 </td>
             </tr>
