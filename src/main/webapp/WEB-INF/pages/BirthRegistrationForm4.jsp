@@ -10,18 +10,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
-    <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST">
+    <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST"
+            onsubmit="javascript:return validate()">
         <div id="birth-registration-form-notify-autority-sub-title" class="form-sub-title">
             *in Sinhala<br>*in Tamil<br>Notifying Authority
         </div>
         <div id="notifier-nic" class="font-9">
             <label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள
                 அட்டை இல.<br>PIN / NIC of the Notifying Authority</label>
-            <s:textfield name="notifyingAuthority.notifyingAuthorityPIN"/>
+            <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
         </div>
         <div id="notifier-name" class="font-9">
             <label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label>
-            <s:textarea name="notifyingAuthority.notifyingAuthorityName"/>
+            <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"/>
         </div>
         <div id="notifier-address" class="font-9">
             <label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
@@ -30,7 +31,7 @@
         <div id="notifier-signature" class="font-9">
             <label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and Official Seal (if available) of the
                 Notifying Authority</label>
-            <s:checkbox name="notifyingAuthority.notifyingAuthoritySigned"/>
+            <s:checkbox name="notifyingAuthority.notifyingAuthoritySigned" id="notifyingAuthoritySigned"/>
         </div>
         <div id="notified-date" class="font-9">
             <label>දිනය <br>*in tamil <br>Date</label>
@@ -39,8 +40,45 @@
                                onmouseover="javascript:splitDate('modifiedDatePicker')"/>
         </div>
         <s:hidden name="pageNo" value="4"/>
+
+        <s:hidden id="p4error1" value="%{getText('p4error1.value')}"/>
+        <s:hidden id="p4error2" value="%{getText('p4error2.value')}"/>
+        <s:hidden id="p4error3" value="%{getText('p4error3.value')}"/>
+
+        <script type="text/javascript">
+            function validate()
+                {
+                    var errormsg="";
+                    var element;
+                    var returnval;
+                    var check=document.getElementById('skipjs');
+                    if (!check.checked) {
+
+                        element=document.getElementById('notifyingAuthorityPIN');
+                        if (element.value=="") {
+                            errormsg = errormsg +  "\n" + document.getElementById('p4error1').value;
+                        }
+                        element=document.getElementById('notifyingAuthorityName');
+                        if (element.value=="") {
+                            errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
+                        }
+                        element=document.getElementById('notifyingAuthoritySigned');
+                        if (!element.checked) {
+                            errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
+                        }
+
+                    }
+                    if(errormsg!=""){
+                        alert(errormsg);
+                        returnval =false;
+                    }
+                    return returnval;
+                    }
+         </script>
+
         <div class="form-submit">
-            <s:submit value="%{getText('save.label')}"/>
-        </div>
+        <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+        <s:submit value="%{getText('next.label')}" />
+        </div> 
     </s:form>
 </div>
