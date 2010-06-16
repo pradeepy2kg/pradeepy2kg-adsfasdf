@@ -57,6 +57,7 @@
             <s:textarea name="parent.motherFullName" ></s:textarea>
         </div>            
         <s:hidden name="pageNo" value="2"/>
+        
         <s:submit value="%{getText('next.label')}"/></div>
     </s:form>
 </div>

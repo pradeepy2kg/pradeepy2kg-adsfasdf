@@ -69,6 +69,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDistrictId;
     private int motherDSDivisionId;
 
+    private boolean skipjavaScript;
+
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
     private boolean back;
@@ -273,6 +275,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+
         logger.debug("inside populate : {} observed.", language);
 
         countryList = countryDAO.getCountries(language);

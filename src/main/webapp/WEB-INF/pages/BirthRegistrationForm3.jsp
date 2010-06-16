@@ -17,7 +17,7 @@
         <label>*in sinhala<br>*in tamil<br>Yes</label>
 
         <div>
-            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/>
+            <s:radio name="marriage.parentsMarried"  list="#@java.util.HashMap@{'1':''}"/>
         </div>
         <label>*in sinhala<br>*in tamil<br>No</label>
 
