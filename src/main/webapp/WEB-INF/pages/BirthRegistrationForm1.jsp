@@ -175,7 +175,9 @@
                     }
         </script>
         <div class="form-submit">
-            <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+            <s:checkbox name="skipjavaScript" id="skipjs" value="false" >
+                <s:label value="%{getText('skipvalidation.label')}"/>     
+            </s:checkbox>
             <s:submit value="%{getText('next.label')}" />
         </div>
     </s:form>

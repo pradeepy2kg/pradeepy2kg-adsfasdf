@@ -226,9 +226,9 @@
         </div>
         <s:hidden name="pageNo" value="1"/>
 
-         <s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
+        <s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
         
-         <script type="text/javascript">
+        <script type="text/javascript">
             function validate()
                 {
                     var errormsg="";
@@ -249,10 +249,12 @@
                     }
                     return returnval;
                     }
-         </script>
+        </script>
 
-         <div class="form-submit">
-        <s:checkbox name="skipjavaScript" label=" Skip Validations "  id="skipjs" value="false" />
+        <div class="form-submit">
+        <s:checkbox name="skipjavaScript" id="skipjs" value="false" >
+            <s:label value="%{getText('skipvalidation.label')}"/>
+        </s:checkbox>
         <s:submit value="%{getText('next.label')}" />
         </div>
     </s:form>
