@@ -226,7 +226,7 @@
         </div>
         <s:hidden name="pageNo" value="1"/>
 
-         <s:hidden id="p1error1" value="%{getText('p1error1.value')}"/>
+         <s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
         
          <script type="text/javascript">
             function validate()

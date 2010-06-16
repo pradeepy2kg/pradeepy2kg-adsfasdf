@@ -42,8 +42,8 @@
 
     </div>
     <s:hidden name="pageNo" value="3"/>
-    <s:hidden id="p4error1" value="%{getText('p4error1.value')}"/>
-    <s:hidden id="p4error2" value="%{getText('p4error2.value')}"/>
+    <s:hidden id="p1error1" value="%{getText('cp4.error.NIC.value')}"/>
+    <s:hidden id="p2error2" value="%{getText('cp4.error.FullName.value')}"/>
 
         <script type="text/javascript">
             function validate()
@@ -56,11 +56,11 @@
 
                         element=document.getElementById('confirmantNICorPIN');
                         if (element.value=="") {
-                            errormsg = errormsg +  "\n" + document.getElementById('p4error1').value;
+                            errormsg = errormsg +  "\n" + document.getElementById('p1error1').value;
                         }
                         element=document.getElementById('confirmantFullName');
                         if (element.value=="") {
-                            errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
+                            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
                         }
                     }
                     if(errormsg!=""){
