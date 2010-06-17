@@ -198,10 +198,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
                         if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED ||
                             bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {  // edit not allowed
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                             addActionError(getText("confirmationSearch.EditNotAllowed"));
                             break label;
-                        } else {
+                        } else { // edit not allowed
                             return "error";
                         }
                     } catch (Exception e) {
