@@ -95,6 +95,10 @@
                 method="viewUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
+        <action name="eprdeleteUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="deleteUser">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
 
         <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="selectUsers">

@@ -66,18 +66,16 @@
                         <s:url id="deleteSelected" action="eprInitUserCreation.do">
                             <s:param name="userId" value="userId"/>
                         </s:url>
-                        <td align="center"><s:a href="%{deleteSelected}"
-                                                title="%{getText('deleteToolTip.label')}"><img
+                        <td align="center"><s:a href="%{deleteSelected}"><img
                                 src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>
 
 
-                        <s:url id="deleteSelected" action="eprInitUserCreation.do">
-                            <s:param name="bdId" value=""/>
+                        <s:url id="deleteSelected" action="eprdeleteUsers.do">
+                            <s:param name="userId" value="userId"/>
                         </s:url>
-                        <td align="center"><s:a href="%{deleteSelected}"
-                                                title="%{getText('deleteToolTip.label')}"><img
+                        <td align="center"><s:a href="%{deleteSelected}"><img
                                 src="<s:url value='/images/delete.png'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>
