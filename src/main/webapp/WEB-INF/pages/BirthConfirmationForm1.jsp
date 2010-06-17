@@ -213,7 +213,8 @@
             <div class="no">10</div>
             <label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label>
             <div class="current">
-                <s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"/>
+
+                <s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true" value="%{getText('marriedStatus'+marriage.parentsMarried+'.label')}"/>
             </div>
             <div class="new">
                 <label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label>

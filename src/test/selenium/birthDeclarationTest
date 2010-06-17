@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
 	<td></td>
@@ -25,11 +30,6 @@
 	<td>clickAndWait</td>
 	<td>link=උප්පැන්න ලියාපදිංචි කිරීම</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>bdfSerialNo</td>
-	<td>1300</td>
 </tr>
 <tr>
 	<td>click</td>
