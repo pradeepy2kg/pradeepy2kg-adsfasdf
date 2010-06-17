@@ -102,7 +102,7 @@
 /*Styles for BirthConfirmPrint page*/
 /*Used to high light printed rows*/
 .alreadyPrinted{
-    background-color:lightcoral;
+   color:red;
 }
 /*To change background color of table, odd and even rows*/
 .odd{
