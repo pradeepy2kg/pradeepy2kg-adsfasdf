@@ -59,7 +59,7 @@
                                         title="%{getText('select.label')}" value="%{#index}"
                                         fieldValue="%{#approvalList.idUKey}"/></td>
                         <td><s:property value="register.bdfSerialNo"/></td>
-                        <td><s:property value="child.childFullNameOfficialLang"/></td>
+                        <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                         <td><s:property value="confirmant.confirmationReceiveDate"/></td>
                         <td></td>
                         <s:if test="#request.allowEditBDF">

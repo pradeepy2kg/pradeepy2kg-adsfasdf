@@ -19,17 +19,22 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>ashoka</td>
+	<td>asankha</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
-	<td></td>
+	<td>asankha</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=උප්පැන්න ලියාපදිංචි කිරීම</td>
 	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>1303</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -64,18 +69,24 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>සමන් කුමාර</td>
+	<td>රත්නායක මුදියන්සෙලාගේ සමන්  රත්නායක </td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childFullNameEnglish</td>
-	<td>Sanam Kumara</td>
+	<td>Rathnayaka Mudiyanselage Saman Kumara Rathnayaka</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-registration-form-1_child_childGender</td>
+	<td>label=පිරිමි</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>birth-registration-form-1_register_preferredLanguage</td>
 	<td>label=සිංහල</td>
 </tr>
+
 <tr>
 	<td>type</td>
 	<td>childBirthWeight</td>
