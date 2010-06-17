@@ -11,17 +11,19 @@
 
 <div id="create-user-outer">
     <s:form name="userCreationForm" action="eprUserCreation" method="POST">
-             <div>
+        <div>
             <s:label value="%{getText('user_id.label')}"/>
-            <s:textfield name="user.userId" value="%{editUserInfo.getUserId()}"/>
+            <s:if test="userId == null">
+                <s:textfield name="user.userId"/>
+            </s:if>
         </div>
         <div>
             <s:label value="%{getText('user_name.label')}"/>
-            <s:textfield name="user.userName" value="%{editUserInfo.getUserName()}"/>
+            <s:textfield name="user.userName"/>
         </div>
         <div>
             <s:label value="%{getText('user_pin.label')}"/>
-            <s:textfield name="user.pin" value="%{editUserInfo.getPin()}"/>
+            <s:textfield name="user.pin"/>
         </div>
         <div>
             <s:label value="%{getText('preffered_language.label')}"/>
@@ -49,6 +51,12 @@
 
         </div>
         <%--    <s:hidden name="pageNo" value="1" />--%>
-        <s:submit value="%{getText('create_user.label')}"/>
+        <s:if test="userId != null">
+            <s:hidden name="userId" value="%{userId}"/>
+            <s:submit value="%{getText('edit_user.label')}"/>
+        </s:if>
+        <s:if test="userId == null">
+            <s:submit value="%{getText('create_user.label')}"/>
+        </s:if>
     </s:form>
 </div>

@@ -15,14 +15,14 @@ import lk.rgd.crs.web.WebConstants;
 
 /**
  * @author amith jayasekara
- * @author Duminda Dharmakeerthi 
+ * @author Duminda Dharmakeerthi
  */
 public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
     private final UserManagerImpl service;
     private Map session;
-    private static User user;
+    private User user;
     private int pageNo = 0;
     private String divisions = new String();
     private int[] assignedDistricts;
@@ -31,7 +31,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private List<User> usersList;
     private String nameOfUser;
     private String userId;
-    private User editUserInfo;
+    private String userName;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -59,16 +59,16 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String creatUser() {
-        logger.info("creat user called");
+        logger.debug("creat user called");
         if (divisions.equals(getText("get_ds_divisions.label"))) {
             generateDSDivisions();
             populate();
             return "pageLoad";
         } else {
             // todo...
-
             User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
             user.setRole(roleDAO.getRole(roleId));
+            user.setStatus(User.State.ACTIVE);
             // creating assigned Districts
             Set assDistrict = new HashSet();
             for (int i = 0; i < assignedDistricts.length; i++) {
@@ -83,27 +83,39 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
             }
             user.setAssignedBDDSDivisions(assDSDivision);
-
-            logger.info("About to create a user..");
-            service.createUser(user, currentUser);
-
+            if (userId == null) {
+                service.createUser(user, currentUser);
+            } else if (userId.length() > 0) {
+                user.setUserId(userId);
+                service.updateUser(user, currentUser);
+                session.put("viewUsers", null);
+            }
             return "success";
         }
+    }
+
+    public String deleteUser() {
+        populate();
+        user = service.getUsersByIDMatch(userId).get(0);
+        service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
+        usersList = service.getAllUsers();
+        session.put("viewUsers", null);
+        return "success";
     }
 
 
     public String initUser() {
         populate();
 
-        if (getUserId() != null) {
-            editUserInfo = service.getUsersByIDMatch(getUserId()).get(0);
+        if (userId != null) {
+            user = service.getUsersByIDMatch(getUserId()).get(0);
         }
         return "pageLoad";
     }
 
     public String viewUsers() {
         populate();
-
+        session.put("viewUsers", null);
         return "success";
     }
 
@@ -111,7 +123,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         int pageNo = 1;
         usersList = service.getUsersByRole("");
-        if (getUserDistrictId() == 0 && getRoleId().length() != 1) {
+        if (getUserDistrictId() == 0 && getRoleId().length() == 1 && getNameOfUser().length() == 0) {
+            usersList = service.getAllUsers();
+        } else if (getUserDistrictId() == 0 && getRoleId().length() != 1) {
 
             usersList = service.getUsersByRole(getRoleId());
 
@@ -123,11 +137,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         if (getNameOfUser().length() != 0) {
             usersList = service.getUsersByNameMatch(getNameOfUser());
         }
-
-        session.put("previousFlag", 0);
-        session.put("districtSelectedFlag", 0);
         session.put("viewUsers", usersList);
-        session.put("pageNo", pageNo);
         return "success";
     }
 
@@ -257,11 +267,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.userId = userId;
     }
 
-    public User getEditUserInfo() {
-        return editUserInfo;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEditUserInfo(User editUserInfo) {
-        this.editUserInfo = editUserInfo;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
+
+
 }

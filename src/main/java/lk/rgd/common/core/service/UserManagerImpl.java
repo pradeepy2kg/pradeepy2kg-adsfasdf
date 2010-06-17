@@ -132,7 +132,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     public List<User> getUsersByRoleAndAssignedBDDistrict(Role role, District assignedBDDistrict) {
-        return userDao.getUsersByRoleAndAssignedBDDistrict(role, assignedBDDistrict);    
+        return userDao.getUsersByRoleAndAssignedBDDistrict(role, assignedBDDistrict);
     }
 
     public List<User> getUsersByRoleAndAssignedMRDistrict(Role role, District assignedMRDistrict) {
