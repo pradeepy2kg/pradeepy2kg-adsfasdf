@@ -150,6 +150,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+            if (logger.isDebugEnabled()) {
+                logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
+            }
 
             populate(bdf);
             logger.debug("Birth Declaration: PageNo=" + pageNo);
@@ -157,6 +160,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
+    /**
+     * Used to Pre set serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
+     * In batch mode BDF serial number incerementing by one.
+     *
+     * @param bdf
+     */
     private void initValues(BirthDeclaration bdf) {
         BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         BirthRegisterInfo register = new BirthRegisterInfo();
@@ -164,7 +173,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         register.setBdfSerialNo(Long.toString(oldSerialNum + 1));
         register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
         birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
-        birthDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
+        birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
+        dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
 
         NotifyingAuthorityInfo notifyAutho = new NotifyingAuthorityInfo();
         notifyAutho.setNotifyingAuthorityPIN(oldBdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
@@ -197,11 +207,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
                         if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {  // edit not allowed
                             addActionError(getText("confirmationSearch.EditNotAllowed"));
                             break label;
-                        } else { // edit not allowed
+                        } else {
                             return "error";
                         }
                     } catch (Exception e) {
@@ -327,15 +337,15 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         if (register != null) {
             if (register.getBirthDivision() != null) {
-                birthDistrictId = register.getBirthDistrict().getDistrictId();
-                birthDivisionId = register.getBirthDivision().getDivisionId();
-                dsDivisionId = register.getDsDivision().getDivisionId();
+                birthDistrictId = register.getBirthDistrict().getDistrictUKey();
+                birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
+                dsDivisionId = register.getDsDivision().getDsDivisionUKey();
             } else if (!addNewMode) {
                 if (user.getPrefBDDistrict() != null) {
-                    birthDistrictId = user.getPrefBDDistrict().getDistrictId();
+                    birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
                 }
                 if (user.getPrefBDDSDivision() != null) {
-                    dsDivisionId = user.getPrefBDDSDivision().getDivisionId();
+                    dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
                 }
             }
         }
@@ -359,11 +369,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
 
             if (parent.getMotherDSDivision() != null) {
-                motherDistrictId = parent.getMotherDSDivision().getDistrictId();
+                motherDistrictId = parent.getMotherDSDivision().getDsDivisionUKey();
             }
 
             if (parent.getMotherDSDivision() != null) {
-                motherDSDivisionId = parent.getMotherDSDivision().getDivisionId();
+                motherDSDivisionId = parent.getMotherDSDivision().getDsDivisionUKey();
             }
         }
     }
@@ -379,6 +389,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setSession(Map map) {
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        logger.debug("setting User: {}", user.getUserName());
     }
 
     public Map getSession() {
@@ -467,7 +478,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register = new BirthRegisterInfo();
         }
         register.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
-        logger.debug("setting BirthDivision : {}", register.getBirthDivision().getEnDivisionName());
+        logger.debug("setting BirthDivision: {}", register.getBirthDivision().getEnDivisionName());
     }
 
     public int getFatherCountry() {
@@ -480,7 +491,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             parent = new ParentInfo();
         }
         parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
-        logger.debug("setting Father Country: {} From DAO: {}", parent.getFatherCountry().getEnCountryName());
+        logger.debug("setting Father Country: {}", parent.getFatherCountry().getEnCountryName());
     }
 
     public int getMotherCountry() {
@@ -538,7 +549,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
-        logger.debug("DS Division: {}", dsDivisionId);
     }
 
     public ConfirmantInfo getConfirmant() {
@@ -567,6 +577,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             parent = new ParentInfo();
         }
         parent.setFatherRace(raceDAO.getRace(fatherRace));
+        logger.debug("setting Father Race: {}", parent.getFatherRace().getEnRaceName());
     }
 
     public int getMotherRace() {
@@ -579,6 +590,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             parent = new ParentInfo();
         }
         parent.setMotherRace(raceDAO.getRace(motherRace));
+        logger.debug("setting Mother Race: {}", parent.getMotherRace().getEnRaceName());
     }
 
     public int getMotherDSDivisionId() {
@@ -591,6 +603,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             parent = new ParentInfo();
         }
         parent.setMotherDSDivision(dsDivisionDAO.getDSDivisionByPK(motherDSDivisionId));
+        logger.debug("setting Mother DSDivision: {}", parent.getMotherDSDivision().getEnDivisionName());
     }
 
     public BirthRegisterInfo getRegister() {
