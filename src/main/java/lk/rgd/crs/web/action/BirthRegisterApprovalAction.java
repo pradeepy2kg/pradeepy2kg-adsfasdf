@@ -49,6 +49,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private User user;
     private long bdId;
     private int pageNo;
+    private int recordCounter;
     private boolean nextFlag;
     private boolean previousFlag;
     private boolean ignoreWarning;
@@ -90,7 +91,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             bdDivisionDAO.getBDDivisionByPK(division), getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthDeclarationPendingList.size());
         setPreviousFlag(false);
-        session.put("globalCounter",0);
         return "pageLoad";
     }
 
@@ -119,7 +119,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         paginationHandler(birthDeclarationPendingList.size());
-        session.put("globalCounter", 0);
+        setRecordCounter(0);
         populate();
         return "success";
     }
@@ -167,7 +167,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return
      */
     public String approveBirthDeclarationForm() {
-        logger.debug("inside approveBirthDeclarationForm");
         initPermission();
         BirthDeclaration bd = service.getById(bdId, user);
         boolean caughtException = false;
@@ -218,6 +217,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 warnings = service.approveBirthDeclarationIdList(index, user);
             }
             catch (CRSRuntimeException e) {
+                //todo identify the number of faild entities to handle the record counter
                 addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
                 logger.error("inside approveAllSelectedBirthDeclaration : {} , {} ", e.getErrorCode(), e);
             }
@@ -307,7 +307,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             setPageNo(getPageNo() - 1);
         }
         setPreviousFlag(true);
-        session.put("globalCounter", ((Integer) session.get("globalCounter") + appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE)));
+        setRecordCounter(getRecordCounter() + appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         populate();
         return "success";
     }
@@ -349,11 +349,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         birthDeclarationPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        Integer globalCounter = (Integer) session.get("globalCounter");
-        if (globalCounter > 0) {
-            globalCounter = globalCounter - appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        if (recordCounter > 0) {
+            setRecordCounter(getRecordCounter() - appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         }
-        session.put("globalCounter", globalCounter);
         populate();
         return "success";
     }
@@ -501,5 +499,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setWarnings(List<UserWarning> warnings) {
         this.warnings = warnings;
+    }
+
+    public int getRecordCounter() {
+        return recordCounter;
+    }
+
+    public void setRecordCounter(int recordCounter) {
+        this.recordCounter = recordCounter;
     }
 }

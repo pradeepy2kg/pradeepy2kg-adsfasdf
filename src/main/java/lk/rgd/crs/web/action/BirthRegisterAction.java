@@ -203,6 +203,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 user = (User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
                     bdf = service.getById(bdId, user);
+                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                        return "error";   // todo pass error info
+                    }
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     try {
                         bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
@@ -549,6 +552,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
+        logger.debug("DS Division: {}", dsDivisionId);
     }
 
     public ConfirmantInfo getConfirmant() {
