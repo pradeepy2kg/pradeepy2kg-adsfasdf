@@ -28,9 +28,9 @@
             <form action="eprBirthConfirmation.do" method="post">
             <div id="bcf-serial-no">
                 <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
-                    <s:textfield name="serialNo" id="SerialNo" /></label>
+                    <s:textfield name="bdId" id="SerialNo" /></label>
                 <div id="bcf-search">
-                <s:submit name="search" value="Search"/>
+                <s:submit name="search" value="%{getText('searchButton.label')}"/> 
                 </div>
             </div>
             </form>
