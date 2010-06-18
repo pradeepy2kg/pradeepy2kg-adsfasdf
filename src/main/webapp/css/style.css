@@ -94,15 +94,10 @@
 #birth-confirmation-date{padding-top:20px;padding-bottom:20px}
 #birth-confirmation-finalize-date{padding-top:75px;padding-bottom:220px}
 
-/* Styles for the BirthRegisterApproval page */
-
-#birth-register-approval{padding:10px;}
-#birth-register-approval-header{width:100%; height:40px;}
-
 /*Styles for BirthConfirmPrint page*/
 /*Used to high light printed rows*/
 .alreadyPrinted{
-    background-color:lightcoral;
+   color:red;
 }
 /*To change background color of table, odd and even rows*/
 .odd{

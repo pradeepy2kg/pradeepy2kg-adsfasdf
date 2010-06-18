@@ -6,6 +6,7 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,8 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.common.api.domain.User;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Printing actions
@@ -44,6 +47,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int districtId;
     private int divisionId;
+    private int printStart;
 
     public PrintAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
@@ -62,15 +66,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
      */
     public String filterPrintList() {
         populate();
-        session.remove(WebConstants.SESSION_PRINT_START);
         session.remove(WebConstants.SESSION_PRINT_COUNT);
         if (selectOption == null) {
             divisionId = 1;
             selectOption = "Not Printed";
         }
-        session.put(WebConstants.SESSION_BCPRINT_SELECTED_DIVISION, divisionId);
-        session.put(WebConstants.RADIO_ALREADY_PRINT, selectOption);
-
         int pageNo = 1;
 
         if (selectOption != null) {
@@ -85,9 +85,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = birthDeclarationDAO.getConfirmationPrintPending(
                     bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
-
         logger.debug("Confirm Print List : items=" + printList.size());
-        session.put(WebConstants.SESSION_PRINT_LIST, printList);
+
         return "success";
     }
 
@@ -97,16 +96,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String nextPage() {
-        Integer printStart = (Integer) session.get(WebConstants.SESSION_PRINT_START);
-        Integer divisionId = (Integer) session.get(WebConstants.SESSION_BCPRINT_SELECTED_DIVISION);
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = ((printStart + noOfRows) / noOfRows) + 1;
         boolean printed = checkPrinted();
-
         printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
-        session.put(WebConstants.SESSION_PRINT_START, printStart + noOfRows);
-        session.put(WebConstants.SESSION_PRINT_LIST, printList);
-
+        printStart += noOfRows;
         populate();
         return "success";
     }
@@ -117,16 +111,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String previousPage() {
-        Integer printStart = (Integer) session.get(WebConstants.SESSION_PRINT_START);
-        Integer divisionId = (Integer) session.get(WebConstants.SESSION_BCPRINT_SELECTED_DIVISION);
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = printStart / noOfRows;
         boolean printed = checkPrinted();
-
         printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
-        session.put(WebConstants.SESSION_PRINT_START, printStart - noOfRows);
-        session.put(WebConstants.SESSION_PRINT_LIST, printList);
-
+        printStart -= noOfRows;
         populate();
         return "success";
     }
@@ -217,5 +206,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public int getPrintStart() {
+        return printStart;
+    }
+
+    public void setPrintStart(int printStart) {
+        this.printStart = printStart;
     }
 }
