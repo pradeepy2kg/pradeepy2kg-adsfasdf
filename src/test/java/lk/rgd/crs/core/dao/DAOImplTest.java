@@ -94,6 +94,10 @@ public class DAOImplTest extends TestCase {
         Assert.assertTrue(dsDivisions.size() > 1);
         Map<Integer, String> bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, rg);
         Assert.assertTrue(bdDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(2, AppConstants.SINHALA, rg);
+        Assert.assertTrue(bdDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(3, AppConstants.SINHALA, rg);
+        Assert.assertTrue(bdDivisions.size() > 1);
 
         // ARG-Western Province sees all 3 districts in province
         User arg = userDAO.getUserByPK("arg-western");
@@ -102,6 +106,10 @@ public class DAOImplTest extends TestCase {
         dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, arg);
         Assert.assertTrue(dsDivisions.size() > 1);
         bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, arg);
+        Assert.assertTrue(bdDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(2, AppConstants.SINHALA, rg);
+        Assert.assertTrue(bdDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(3, AppConstants.SINHALA, rg);
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // DR-colombo must see only colombo, but all BDDivisions within it
@@ -112,6 +120,10 @@ public class DAOImplTest extends TestCase {
         dsDivisions = dsDivisionDAO.getDSDivisionNames(1, AppConstants.SINHALA, dr);
         Assert.assertTrue(dsDivisions.size() > 1);
         bdDivisions = bdDivisionDAO.getBDDivisionNames(1, AppConstants.SINHALA, dr);
+        Assert.assertTrue(bdDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(2, AppConstants.SINHALA, dr);
+        Assert.assertTrue(bdDivisions.size() > 1);
+        bdDivisions = bdDivisionDAO.getBDDivisionNames(3, AppConstants.SINHALA, dr);
         Assert.assertTrue(bdDivisions.size() > 1);
 
         // ADR-colombo must see only colombo, and fort BD division
