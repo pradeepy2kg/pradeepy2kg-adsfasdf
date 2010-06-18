@@ -15,13 +15,13 @@ import java.util.Map;
 public interface BDDivisionDAO {
 
     /**
-     * Returns the list of Birth & Death Registration Divisions within a selected district for the given language
+     * Returns the list of Birth & Death Registration Divisions within a selected DS Division for the given language
      *
-     * @param districtIdUKey the district ID unique key
+     * @param dsDivisionUKey the DS Division unique key
      * @param language   the language ID (see AppConstants)
      * @return a Map of the list of known Birth and Death Registration divisions for the given language - with the ID
      */
-    public Map<Integer, String> getBDDivisionNames(int districtIdUKey, String language, User user);
+    public Map<Integer, String> getBDDivisionNames(int dsDivisionUKey, String language, User user);
 
     /**
      * Return the name of the B.D. Division in the given language
