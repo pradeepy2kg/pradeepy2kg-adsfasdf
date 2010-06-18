@@ -169,8 +169,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void initValues(BirthDeclaration bdf) {
         BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         BirthRegisterInfo register = new BirthRegisterInfo();
-        long oldSerialNum = Long.parseLong(oldBdf.getRegister().getBdfSerialNo());
-        register.setBdfSerialNo(Long.toString(oldSerialNum + 1));
+        register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
         register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
         birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
         birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
