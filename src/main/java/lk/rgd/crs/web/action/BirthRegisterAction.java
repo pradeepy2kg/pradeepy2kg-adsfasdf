@@ -198,7 +198,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
-            label:
             if (pageNo == 0) {
                 user = (User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
@@ -208,19 +207,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     try {
-                        bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
-                        if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {  // edit not allowed
-                            addActionError(getText("confirmationSearch.EditNotAllowed"));
-                            break label;
-                        } else {
+                        bdf = service.getBySerialNo(serialNo);
+                        if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {
+                            logger.debug("inside birthConfiramtion : serialNo {} recieved , bdf status {} ",
+                                serialNo, bdf.getRegister().getStatus());  // edit not allowed
+                            addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
                     } catch (Exception e) {
-                        addActionError(getText("confirmationSearch.noRecordError"));
-                        handleErrors(e);
-                        return "searchError";
+                      handleErrors(e);
+                        addActionError(getText("cp1.error.entryNotAvailable"));
+                        return "error";
                     }
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
