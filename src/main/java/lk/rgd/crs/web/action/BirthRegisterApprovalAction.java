@@ -85,7 +85,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (!divisionList.isEmpty()) {
             division = divisionList.keySet().iterator().next();
         }
-        //todo set following after changing the backend
         logger.debug("inside birthDeclarationPendingList: district {} division {} selected ", district, division);
         /**
          * initially pageNo is set to 1

@@ -228,10 +228,12 @@
 #birth-confirmation-form-header {margin-bottom: 10px;}
 #birth-confirmation-form-header-logo {text-align: center;}
 #birth-confirmation-form-header-title {text-align: center;}
-#bcf-serial-no{display: block; border: 1px solid #000000; margin: 5px 0 90px 730px;}
+#bcf-serial-no{display: block; border: 1px solid #000000; margin: 5px 0 90px 730px;height:70px;}
 #bcf-serial-no {margin-top: -130px;}
 #bcf-serial-no label span{float: left; margin-left: 5px;}
-#bcf-serial-no label input{margin: 10px;}
+#bcf-serial-no label input{ margin: 10px;}
+#bcf-search{float:right;margin-right:10px; }
+
 
 #civil-confirmation-info-sub-title{margin-top:20px;}
 #title-head{border:1px solid #000; border-top:none; padding:5px; height:52px;}

@@ -200,25 +200,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf;
             if (pageNo == 0) {
                 user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+                jump:
                 if (bdId != 0) {
-                    bdf = service.getById(bdId, user);
-                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
-                        return "error";   // todo pass error info
-                    }
-                } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     try {
-                        bdf = service.getBySerialNo(serialNo);
-                        if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {
-                            logger.debug("inside birthConfiramtion : serialNo {} recieved , bdf status {} ",
-                                serialNo, bdf.getRegister().getStatus());  // edit not allowed
+                        bdf = service.getById(bdId, user);
+                        if (bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                            //pass 
+                            break jump;
+                        } else {// edit not allowed
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
                     } catch (Exception e) {
-                      handleErrors(e);
+                        handleErrors(e);
                         addActionError(getText("cp1.error.entryNotAvailable"));
                         return "error";
                     }
+                } else if ((serialNo != null) && !(serialNo.equals(""))) {
+                    bdf = service.getBySerialNo(serialNo);
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
