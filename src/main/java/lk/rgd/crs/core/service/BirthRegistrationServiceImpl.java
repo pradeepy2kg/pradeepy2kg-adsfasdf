@@ -227,13 +227,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     /**
-     * Returns the Birth Declaration object for a given bdf serialNo
-     *
-     * @param serialNo bdfSerialNo given to the Birth Declarion
-     * @Return BirthDeclaration
+     * @inheritDoc
      */
-    public BirthDeclaration getBySerialNo(String serialNo) {
-        return birthDeclarationDAO.getBySerialNo(serialNo);
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, String serialNo) {
+        return birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serialNo);
     }
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {

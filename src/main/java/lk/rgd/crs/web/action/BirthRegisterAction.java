@@ -218,7 +218,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         return "error";
                     }
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
-                    bdf = service.getBySerialNo(serialNo);
+                    bdf = service.getByBDDivisionAndSerialNo(null /* TODO */, serialNo);
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
@@ -277,7 +277,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (bdId != 0) {
                     bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
                 } else if ((serialNo != null) && !(serialNo.equals(""))) {
-                    bdf = service.getBySerialNo(serialNo);
+                    bdf = service.getByBDDivisionAndSerialNo(null /* TODO */, serialNo);
                 } else {
                     //logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page

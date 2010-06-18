@@ -74,12 +74,13 @@ public interface BirthRegistrationService {
     public BirthDeclaration getById(long bdId, User user);
 
     /**
-     * Returns the Birth Declaration object for a given bdf serialNo
+     * Returns the Birth Declaration object for a given bdf serialNo under a selected BD Division
      *
+     * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
      * @param serialNo bdfSerialNo given to the Birth Declarion
      * @Return BirthDeclaration
      */
-    public BirthDeclaration getBySerialNo(String serialNo);
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, String serialNo);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
