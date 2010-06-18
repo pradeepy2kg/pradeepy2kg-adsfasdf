@@ -13,8 +13,6 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <div class="birth-confirmation-form-outer">
-    <s:form action="eprBirthConfirmation" name="birthConfirmationForm1" id="birth-confirmation-form-1" method="POST"
-            onsubmit="javascript:return validate()">
         <div id="birth-confirmation-form-header">
             <div id="birth-confirmation-form-header-logo">
                 <img src="<s:url value="/images/official-logo.png" />" alt=""/>
@@ -27,10 +25,17 @@
                     <br>Confirmation of Birth by Parents / Guardian
                 </label>
             </div>
+            <form action="eprBirthConfirmation.do" method="post">
             <div id="bcf-serial-no">
                 <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
-                    <s:textfield name="" id="SerialNo" /></label>
+                    <s:textfield name="serialNo" id="SerialNo" /></label>
+                <div id="bcf-search">
+                <s:submit name="search" value="Search"/>
+                </div>
             </div>
+            </form>
+    <s:form action="eprBirthConfirmation" name="birthConfirmationForm1" id="birth-confirmation-form-1" method="POST"
+            onsubmit="javascript:return validate()">
         </div>
         <div id="brf-serial-no-and-date" class="font-9">
             <div class="no">1</div>
@@ -213,7 +218,8 @@
             <div class="no">10</div>
             <label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label>
             <div class="current">
-                <s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"/>
+
+                <s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true" value="%{getText('marriedStatus'+marriage.parentsMarried+'.label')}"/>
             </div>
             <div class="new">
                 <label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label>

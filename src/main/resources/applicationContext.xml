@@ -118,4 +118,8 @@
     <bean id="loginAction" class="lk.rgd.crs.web.action.LoginAction">
         <constructor-arg ref="userManagerService"/>
     </bean>
+
+    <bean id="searchAction" class="lk.rgd.crs.web.action.SearchAction">
+        <constructor-arg ref="manageBirthService"/>
+    </bean>
 </beans>

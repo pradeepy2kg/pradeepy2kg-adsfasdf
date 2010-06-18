@@ -59,15 +59,15 @@
 
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
-                <s:select name="birthDistrictId" list="districtList"/>
+                <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
-                <s:select name="dsDivisionId" list="dsDivisionList"/>
+                <s:select name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"/>
             </div>
             <div id="child-pob-division">
                 <label>කොට්ඨාශය பிரிவு Division</label>
-                <s:select name="birthDivisionId" list="bdDivisionList"/>
+                <s:select name="birthDivisionId" list="bdDivisionList" value="birthDivisionId"/>
             </div>
             <div id="child-pob-place">
                 <label>ස්ථානය பிறந்த இடம் Place</label>
@@ -79,14 +79,12 @@
                     <label>ඔව් / *in Tamil / Yes </label>
                     <div>
                         <s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/>
-                            <%--<s:radio name="child.birthAtHospital" list="#{'0':''}"/>--%>
                     </div>
                 </div>
                 <div>
                     <label style="border-left:1px solid #000;">නැත / *in Tamil / No</label>
                     <div>
                         <s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/>
-                            <%--<s:radio name="child.birthAtHospital" list="#{'1':''}"/>--%>
                     </div>
                 </div>
             </div>
@@ -141,7 +139,7 @@
                     var returnval;
                     var check=document.getElementById('skipjs');
                     if (!check.checked) {
-                        
+
                         element=document.getElementById('bdfSerialNo');
                         if ( element.value=="") {
 
@@ -176,7 +174,7 @@
         </script>
         <div class="form-submit">
             <s:checkbox name="skipjavaScript" id="skipjs" value="false" >
-                <s:label value="%{getText('skipvalidation.label')}"/>     
+                <s:label value="%{getText('skipvalidation.label')}"/>
             </s:checkbox>
             <s:submit value="%{getText('next.label')}" />
         </div>
