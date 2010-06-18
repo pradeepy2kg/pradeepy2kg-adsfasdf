@@ -60,7 +60,7 @@
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="form3">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
-            <result type="tiles" name="searchError">epr.BirthConfirmationSearch</result>
+            <result type="tiles" name="searchError">epr.BDFSearch</result>
         </action>
 
         <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
@@ -186,9 +186,13 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
-        <!--BirthConfirmation Search related-->
-        <action name="eprBirthConfirmationSearch" class="lk.rgd.crs.web.action.BirthRegisterAction" method="welcome">
-         <result type="tiles" name="success">epr.BirthConfirmationSearch</result>   
+        <!-- Search related-->
+        <action name="eprSearchPageLoad" class="lk.rgd.crs.web.action.SearchAction" method="welcome">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
+        <action name="eprBDFSearch" class="lk.rgd.crs.web.action.SearchAction" method="searchBDF">
+            <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
     </package>

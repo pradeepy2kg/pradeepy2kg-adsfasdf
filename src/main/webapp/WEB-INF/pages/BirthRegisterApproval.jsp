@@ -5,9 +5,9 @@
     <s:form action="eprApprovalRefresh" name="birth_register_approval_header">
         <div id="birth-register-approval-header">
             <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span><s:select
-                    list="districtList" name="district"/></s:label>
+                    list="districtList" name="district" value="#request.district"/></s:label>
             <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span><s:select
-                    list="divisionList"
+                    list="divisionList" value="division"
                     name="division" headerKey="0"/></s:label>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
         </div>
@@ -51,9 +51,9 @@
                 <s:if test="#session.ApprovalStart == null">
                     <s:set name="ApprovalStart" value="0" scope="session"/>
                 </s:if>
-                <s:iterator status="approvalStatus" value="#request.birthDeclarationPendingList" id="approvalList">
+                <s:iterator status="approvalStatus" value="birthDeclarationPendingList" id="approvalList">
                     <tr>
-                        <td><s:property value="%{#approvalStatus.count + #session.globalCounter}"/></td>
+                        <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                         <td><s:checkbox name="index"
                                         onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                         title="%{getText('select.label')}" value="%{#index}"
@@ -82,6 +82,7 @@
                                 <s:param name="pageNo" value="%{#request.pageNo}"/>
                                 <s:param name="district" value="#request.district"/>
                                 <s:param name="division" value="#request.division"/>
+                                <s:param name="recordCounter" value="#request.recordCounter"/>"
                             </s:url>
                             <td align="center"><s:a href="%{approveSelected}"
                                                     title="%{getText('approveTooltip.label')}">
@@ -99,6 +100,7 @@
                                 <s:param name="pageNo" value="%{request.pageNo}"/>
                                 <s:param name="district" value="#request.district"/>
                                 <s:param name="division" value="#request.division"/>
+                                <s:param name="recordCounter" value="#request.recordCounter"/>"
                             </s:url>
                             <td align="center"><s:a href="%{rejectSelected}"
                                                     title="%{getText('rejectTooltip.label')}"><img
@@ -109,18 +111,20 @@
                         <td></td>
                         <td></td>
                         <s:if test="#request.allowApproveBDF">
-                        <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
-                            <s:param name="bdId" value="idUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{deleteSelected}"
-                                                title="%{getText('deleteToolTip.label')}"><img
-                                src="<s:url value='/images/delete.png'/>" width="25" height="25" border="none"/></s:a>
-                        </td>
+                            <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
+                                <s:param name="bdId" value="idUKey"/>
+                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="district" value="#request.district"/>
+                                <s:param name="division" value="#request.division"/>
+                                <s:param name="recordCounter" value="#request.recordCounter"/>"
+                            </s:url>
+                            <td align="center"><s:a href="%{deleteSelected}"
+                                                    title="%{getText('deleteToolTip.label')}"><img
+                                    src="<s:url value='/images/delete.png'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
                         </s:if>
                     </tr>
                     <%--select_all checkbox is visible only if
@@ -140,6 +144,7 @@
                 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                 <s:hidden name="district" value="%{#request.district}"/>
                 <s:hidden name="division" value="%{#request.division}"/>
+                <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                 <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
             </s:if>
             <br/>
@@ -151,6 +156,7 @@
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
                 <s:param name="district" value="#request.district"/>
                 <s:param name="division" value="#request.division"/>
+                <s:param name="recordCounter" value="#request.recordCounter"/>
             </s:url>
             <s:url id="nextUrl" action="eprApprovalNext.do">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -158,6 +164,7 @@
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
                 <s:param name="district" value="#request.district"/>
                 <s:param name="division" value="#request.division"/>
+                <s:param name="recordCounter" value="#request.recordCounter"/>
             </s:url>
 
             <br/><br/>
@@ -167,7 +174,6 @@
             <s:if test="#request.nextFlag"><s:a href="%{nextUrl}">
                 <s:label value="%{getText('next.label')}"/></s:a></s:if>
         </s:form>
-
     </div>
     <div id="birth-register-approval-footer">
     </div>
