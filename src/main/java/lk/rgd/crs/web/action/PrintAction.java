@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     private static final String BC_PRINT_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
     private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final BirthDeclarationDAO birthDeclarationDAO;
     private final AppParametersDAO appParametersDAO;
@@ -49,8 +51,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private int divisionId;
     private int printStart;
 
-    public PrintAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
+    public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
+        BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.appParametersDAO = appParametersDAO;
@@ -140,7 +144,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
         // TODO division list loaded by using district list's first district
         if (!districtList.isEmpty()) {
             int selectedDistrictId = districtList.keySet().iterator().next();
-            divisionList = bdDivisionDAO.getBDDivisionNames(selectedDistrictId, language, user);
+            Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, user);
+            if (!dsDivisionList.isEmpty()) {
+                int dsDivisionId = dsDivisionList.keySet().iterator().next();
+                divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+            }
         }
     }
 

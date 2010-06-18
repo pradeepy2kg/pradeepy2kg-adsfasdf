@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import org.apache.struts2.interceptor.SessionAware;
@@ -32,6 +33,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
 
     private final DistrictDAO districtDAO;
+    private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final AppParametersDAO appParametersDAO;
     private final BirthRegistrationService service;
@@ -56,8 +58,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean allowEditBDF;
     private boolean allowApproveBDF;
 
-    public BirthRegisterApprovalAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+    public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.appParametersDAO = appParametersDAO;
         this.service = service;
@@ -277,7 +281,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         logger.debug("inside populate : {} observed.", language);
         districtList = districtDAO.getDistrictNames(language, user);
         setInitialDistrict();
-        divisionList = bdDivisionDAO.getBDDivisionNames(district, language, user);
+        Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(district, language, user);
+        if (!dsDivisionList.isEmpty()) {
+            int dsDivisionId = dsDivisionList.keySet().iterator().next();
+            divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        }
         logger.debug("inside populate : districts , countriees and races populated.");
     }
 

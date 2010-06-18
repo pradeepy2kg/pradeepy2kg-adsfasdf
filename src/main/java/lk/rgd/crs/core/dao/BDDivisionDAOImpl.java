@@ -22,7 +22,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
 
     // direct cache of objects by PK - bdDivisionUKey
     private final Map<Integer, BDDivision> bdDivisionsByPK = new HashMap<Integer, BDDivision>();
-    // local caches indexed by districtUKey and bdDivisionUKey
+    // local caches indexed by dsDivisionUKey and bdDivisionUKey
     private final Map<Integer, Map<Integer, String>> siDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> enDivisions = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> taDivisions = new HashMap<Integer, Map<Integer, String>>();
@@ -30,20 +30,20 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    public Map<Integer, String> getBDDivisionNames(int districtId, String language, User user) {
+    public Map<Integer, String> getBDDivisionNames(int dsDivisionUKey, String language, User user) {
 
         Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
-            result = siDivisions.get(districtId);
+            result = siDivisions.get(dsDivisionUKey);
         } else if (AppConstants.ENGLISH.equals(language)) {
-            result = enDivisions.get(districtId);
+            result = enDivisions.get(dsDivisionUKey);
         } else if (AppConstants.TAMIL.equals(language)) {
-            result = taDivisions.get(districtId);
+            result = taDivisions.get(dsDivisionUKey);
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
         if (result == null) {
-            handleException("Invalid district id : " + districtId, ErrorCodes.INVALID_DISTRICT);
+            handleException("Invalid district id : " + dsDivisionUKey, ErrorCodes.INVALID_DISTRICT);
         }
         return result;
     }
@@ -76,32 +76,33 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         List<BDDivision> results = query.getResultList();
 
         for (BDDivision r : results) {
-            final int districtUKey = r.getDistrict().getDistrictUKey();
-            final int divisionId = r.getDivisionId();
-            final int divisionUKey = r.getBdDivisionUKey();
+            //final int districtUKey   = r.getDistrict().getDistrictUKey();
+            final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
+            final int bdDivisionId   = r.getDivisionId();
+            final int bdDivisionUKey = r.getBdDivisionUKey();
 
-            bdDivisionsByPK.put(divisionUKey, r);
+            bdDivisionsByPK.put(bdDivisionUKey, r);
 
-            Map<Integer, String> districtMap = siDivisions.get(districtUKey);
+            Map<Integer, String> districtMap = siDivisions.get(dsDivisionUKey);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                siDivisions.put(districtUKey, districtMap);
+                siDivisions.put(dsDivisionUKey, districtMap);
             }
-            districtMap.put(divisionUKey, divisionId + ": " + r.getSiDivisionName());
+            districtMap.put(bdDivisionUKey, bdDivisionId + ": " + r.getSiDivisionName());
 
-            districtMap = enDivisions.get(districtUKey);
+            districtMap = enDivisions.get(dsDivisionUKey);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                enDivisions.put(districtUKey, districtMap);
+                enDivisions.put(dsDivisionUKey, districtMap);
             }
-            districtMap.put(divisionUKey, divisionId + SPACER + r.getEnDivisionName());
+            districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getEnDivisionName());
 
-            districtMap = taDivisions.get(districtUKey);
+            districtMap = taDivisions.get(dsDivisionUKey);
             if (districtMap == null) {
                 districtMap = new HashMap<Integer, String>();
-                taDivisions.put(districtUKey, districtMap);
+                taDivisions.put(dsDivisionUKey, districtMap);
             }
-            districtMap.put(divisionUKey, divisionId + SPACER + r.getTaDivisionName());
+            districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getTaDivisionName());
         }
 
         logger.debug("Loaded : {} birth and death registration divisions from the database", results.size());

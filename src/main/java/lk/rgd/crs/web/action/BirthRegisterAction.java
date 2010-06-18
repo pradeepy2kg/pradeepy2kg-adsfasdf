@@ -318,10 +318,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
 
         if (!districtList.isEmpty()) {
-            // int selectedDistrictId = districtList.keySet().iterator().next();
             int birthDistrictId = districtList.keySet().iterator().next();
             dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-            bdDivisionList = bdDivisionDAO.getBDDivisionNames(birthDistrictId, language, user);
+            if (!dsDivisionList.isEmpty()) {
+                int dsDivisionId = dsDivisionList.keySet().iterator().next();
+                bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+            }
             raceList = raceDAO.getRaces(language);
             logger.debug("inside populate : districts , dsdivisions, countries and races populated.");
         }
