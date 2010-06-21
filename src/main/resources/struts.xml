@@ -65,10 +65,8 @@
 
         <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="birthConfirmationPrint">
-            <result type="tiles" name="form0">epr.birthConfirmationPrint_form1</result>
-            <result type="tiles" name="form1">epr.birthConfirmationPrint_form2</result>
-            <result type="tiles" name="form2">epr.birthConfirmationPrint_form3</result>
-            <result type="tiles" name="form3">epr.welcome</result>
+            <result type="tiles" name="form0">epr.birthConfirmationPrint_form</result>
+            <result type="tiles" name="form1">epr.welcome</result>
             <result type="redirectAction" name="re-direct">eprApproveSelected</result>
             <result type="tiles" name="error">epr.error</result>
         </action>

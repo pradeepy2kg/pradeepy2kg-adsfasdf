@@ -17,6 +17,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
 	<td></td>

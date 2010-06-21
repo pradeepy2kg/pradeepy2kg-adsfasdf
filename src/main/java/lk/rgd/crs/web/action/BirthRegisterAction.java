@@ -268,7 +268,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public String birthConfirmationPrint() {
         logger.debug("Step {} of 3 ", pageNo);
-        if ((pageNo > 3) || (pageNo < 0)) {
+        if ((pageNo > 2) || (pageNo < 0)) {
             return "error";
         } else {
             BirthDeclaration bdf;

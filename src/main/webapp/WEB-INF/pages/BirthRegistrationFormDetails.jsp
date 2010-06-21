@@ -31,7 +31,7 @@
             <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
         </s:url>
         <%--TODO shoud be redirected to confirmationPrinting... aproveAnd print--%>
-        <s:url id="approveAndPrintUrl" action="#">
+        <s:url id="approveAndPrintUrl" action="eprBirthConfirmationPrint">
             <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
         </s:url>
         <s:url id="mainUrl" action="eprHome.do"/>
@@ -123,8 +123,8 @@
         <s:a href="%{newBDFUrl}"><s:label value="%{getText('addNewBDF_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:if test="#session.allowApproveBDF==true">
             <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <s:a href="%{approveAndPrintUrl}"><s:label
-                    value="%{getText('approveAndPrint_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <s:a href="%{approveAndPrintUrl}">
+                <s:label value="%{getText('approveAndPrint_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
         </s:if>
         <s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
     </div>
