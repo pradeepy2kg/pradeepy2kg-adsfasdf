@@ -12,7 +12,7 @@
     <!--
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.42.104.105/epopulation"/>
+        <property name="url" value="jdbc:mysql://localhost/"/>
         <property name="username" value="epop"/>
         <property name="password" value="epop"/>
     </bean>
