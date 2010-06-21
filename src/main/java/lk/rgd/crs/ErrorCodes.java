@@ -17,6 +17,8 @@ public class ErrorCodes {
      * Data requested for a non-existent district
      */
     public static final int INVALID_DISTRICT = 1001;
+    /** non existing DS division */
+    public static final int INVALID_DSDIVISION = 1004;
     /**
      * Data requested for a non existant country id
      */

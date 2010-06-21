@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <sx:head/>
+    <sx:head debug="false" cache="false" compressed="true" parseContent="true"/>
     <title>E-Population System</title>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>

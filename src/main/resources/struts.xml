@@ -43,6 +43,11 @@
             <result type="tiles" name="success">epr.welcome</result>
         </action>
 
+        <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
+            <result name="DSDivList">/WEB-INF/pages/template/DSDivBox.jsp</result>
+            <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
+		</action>
+
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="birthDeclaration">
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
@@ -83,12 +88,14 @@
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
         <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="creatUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+
         <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="viewUsers">
             <result type="tiles" name="success">epr.viewUsers</result>

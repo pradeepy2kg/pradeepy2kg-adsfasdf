@@ -6,7 +6,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
+    <script>
+        function view_DSDivs() {
+            dojo.event.topic.publish("view_DSDivs");
+        }
 
+        function view_BDDivs() {
+            dojo.event.topic.publish("view_BDDivs");
+        }
+    </script>
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
             onsubmit="javascript:return validate()">
         <div id="birth-registration-form-header">
@@ -59,15 +67,22 @@
 
             <div id="child-pob-district">
                 <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
-                <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"/>
+                <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+                          onchange="javascript:view_BDDivs;view_DSDivs();return false;"/>
             </div>
             <div id="child-pob-ds-division">
                 <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
-                <s:select name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"/>
+                <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
+                <sx:div id="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs"
+                        formId="birth-registration-form-1" showLoadingText="false">
+                </sx:div>
             </div>
             <div id="child-pob-division">
                 <label>කොට්ඨාශය பிரிவு Division</label>
-                <s:select name="birthDivisionId" list="bdDivisionList" value="birthDivisionId"/>
+                <s:url id="loadBDDivList" action="ajaxSupport_loadBDDivList"/>
+                <sx:div id="birthDivisionId" href="%{loadBDDivList}" theme="ajax" listenTopics="view_BDDivs"
+                        formId="birth-registration-form-1" showLoadingText="false">
+                </sx:div>
             </div>
             <div id="child-pob-place">
                 <label>ස්ථානය பிறந்த இடம் Place</label>
@@ -139,7 +154,7 @@
                     var returnval;
                     var check=document.getElementById('skipjs');
                     if (!check.checked) {
-
+                        
                         element=document.getElementById('bdfSerialNo');
                         if ( element.value=="") {
 
@@ -174,7 +189,7 @@
         </script>
         <div class="form-submit">
             <s:checkbox name="skipjavaScript" id="skipjs" value="false" >
-                <s:label value="%{getText('skipvalidation.label')}"/>
+                <s:label value="%{getText('skipvalidation.label')}"/>     
             </s:checkbox>
             <s:submit value="%{getText('next.label')}" />
         </div>
