@@ -13,6 +13,11 @@
         <s:radio name="selectOption" list="#@java.util.HashMap@{'Printed':'Printed'}"/> &nbsp;&nbsp;&nbsp;&nbsp;
         <s:submit value="%{getText('view.label')}"></s:submit>
     </div>
+
+    <s:url id="approveAndPrintUrl" action="eprBirthConfirmationPrint">
+            <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
+        </s:url>
+
     <div id="birth-register-approval-body">
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
@@ -38,7 +43,7 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:a href="">
+                            <s:a href="%{approveAndPrintUrl}">
                                 <img src="<s:url value='/images/print_icon.png'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>
