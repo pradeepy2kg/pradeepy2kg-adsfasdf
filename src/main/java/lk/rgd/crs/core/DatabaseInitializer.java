@@ -42,6 +42,7 @@ public class
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     private DataSource dataSource;
+    private boolean createCleanDB = true;
 
     private static final List<Class> entityClasses = new ArrayList<Class>();
 
@@ -66,6 +67,10 @@ public class
         this.dataSource = dataSource;
     }
 
+    public void setCreateCleanDB(boolean createCleanDB) {
+        this.createCleanDB = createCleanDB;
+    }
+
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 
         boolean mysql = false;
@@ -76,6 +81,24 @@ public class
             getProperty("hibernate.dialect"))) {
             mysql = true;
         }
+
+        // recreate database with MySQL only if explicitly asked
+        if (!mysql || createCleanDB) {
+            recreateCleanDB(mysql);
+            // perform additional initialization with Java code
+            additionalInitialization(ctx);
+        }
+
+        Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
+        for (PreloadableDAO dao : preloadableDaos.values()) {
+            dao.preload();
+        }
+        logger.info("Pre-loaded master tables ...");
+    }
+
+    private void recreateCleanDB(boolean mysql) {
+
+        logger.info("Re-creating a clean Database ...");
 
         // drop mysql databases if they exist
         if (mysql) {
@@ -151,15 +174,6 @@ public class
             logger.error("Error populating the database with initial data from : populate_sample_data.sql", e);
             throw new IllegalStateException("Could not initialize the database. See log for details", e);
         }
-
-        Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
-        for (PreloadableDAO dao : preloadableDaos.values()) {
-            dao.preload();
-        }
-        logger.debug("Preloaded all PreloadableDAO instances");
-
-        // perform additional initialization with Java code
-        additionalInitialization(ctx);
     }
 
     private void additionalInitialization(ApplicationContext ctx) {
@@ -222,6 +236,7 @@ public class
             logger.info("Initialized the database by performing permission initialization");
         } catch (Exception e) {
             logger.error("Error initializing role permissions on the database");
+            throw new IllegalStateException("Error initializing role permissions. See log for details", e);
         }
     }
 

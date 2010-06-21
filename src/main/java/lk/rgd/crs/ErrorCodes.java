@@ -40,9 +40,15 @@ public class ErrorCodes {
     public static final int AUTHORIZATION_FAILS_USER_MANAGEMENT = 3001;
     public static final int INVALID_LOGIN = 3002;
 
-    //erro code 4001-5000 indicate persistence exceptions
+    //error code 4001-5000 indicate persistence exceptions
     public static int ENTITY_ALREADY_EXIST = 4001;
     public static int ENTITY_MANAGER_CLOSED = 4002;
     public static int NOT_AN_ENTITY = 4003;
     public static int PERSISTING_EXCEPTION_COMMON=4004;
+
+    // PRS error codes
+    public static int PRS_ADD_RECORD_DENIED = 5001;
+    public static int PRS_EDIT_RECORD_DENIED = 5002;
+    public static int PRS_LOOKUP_BY_KEYS_DENIED = 5003;
+    public static int PRS_SEARCH_DENIED = 5003;
 }
