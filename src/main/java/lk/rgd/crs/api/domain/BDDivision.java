@@ -30,7 +30,7 @@ public class BDDivision implements Serializable {
     /**
      * This is the standard B.D. Division ID as per the RGD Code List
      */
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false, nullable = false)
     private int divisionId;
 
     @ManyToOne

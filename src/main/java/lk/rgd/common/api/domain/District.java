@@ -28,7 +28,7 @@ public class District implements Serializable {
     /**
      * This is the standard District ID as per the location code database
      */
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false, unique = true, nullable = false)
     private int districtId;
 
     @Column(nullable = false, length = 30, unique = true, updatable = false)

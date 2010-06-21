@@ -24,7 +24,7 @@ public class DSDivision implements Serializable {
     /**
      * This is the standard G.N. Division ID as per the location code database
      */
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     private int divisionId;
 
     @ManyToOne
