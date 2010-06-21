@@ -43,7 +43,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
         if (result == null) {
-            handleException("Invalid district id : " + dsDivisionUKey, ErrorCodes.INVALID_DISTRICT);
+            handleException("Invalid DS Division id : " + dsDivisionUKey, ErrorCodes.INVALID_DSDIVISION);
         }
         return result;
     }

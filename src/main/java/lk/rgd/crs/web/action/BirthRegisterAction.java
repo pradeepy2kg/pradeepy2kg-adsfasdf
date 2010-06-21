@@ -90,6 +90,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         child = new ChildInfo();
     }
 
+    public String loadDSDivList() {
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        populateBasicLists(language);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
+        return "DSDivList";
+    }
+
+    public String loadBDDivList() {
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        if (dsDivisionId != 0) { // in case UI does not return a ID, (at page load) use the existing list
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        } else {
+            populateBasicLists(language);
+            populateDynamicLists(language);
+        }    
+        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, bdDivisionList);
+        return "BDDivList";
+    }
+    
     /**
      * This method is responsible for loading and capture data for all 4 BDF pages as well
      * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
@@ -104,23 +124,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
+            if (back) {
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
+            }
+
             if (pageNo == 0) {
                 if (bdId == 0) {
                     bdf = new BirthDeclaration();
-                    if (addNewMode) {
-                        initValues(bdf);
-                    }
                     bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
                     bdf = service.getById(bdId, user);
                     if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                         return "error";   // todo pass error info
                     }
-                    //todo check permissions to operate on this birthdivision 
                 }
-            } else if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 switch (pageNo) {
@@ -140,13 +158,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     case 4:
                         bdf.setNotifyingAuthority(notifyingAuthority);
                         // all pages captured, proceed to persist after validations
-                        // todo business validations and persiatance
-
+                        // todo data validations
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
-
-                        // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
-                        boolean allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
-                        session.put("allowApproveBDF", allowApproveBDF);
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
@@ -161,31 +174,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Used to Pre set serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
-     * In batch mode BDF serial number incerementing by one.
-     *
-     * @param bdf
-     */
-    private void initValues(BirthDeclaration bdf) {
-        BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        BirthRegisterInfo register = new BirthRegisterInfo();
-        register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
-        register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
-        birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
-        birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
-        dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
-
-        NotifyingAuthorityInfo notifyAutho = new NotifyingAuthorityInfo();
-        notifyAutho.setNotifyingAuthorityPIN(oldBdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
-        notifyAutho.setNotifyingAuthorityName(oldBdf.getNotifyingAuthority().getNotifyingAuthorityName());
-        notifyAutho.setNotifyingAuthorityAddress(oldBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
-        notifyAutho.setNotifyingAuthoritySignDate(oldBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
-
-        bdf.setNotifyingAuthority(notifyAutho);
-        bdf.setRegister(register);
-    }
-
-    /**
      * This method is responsible for loading and capture data for all 3 BDC pages as well
      * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
      * very first form page) is used to decide which state of the process we are in. bdId field should be used to
@@ -197,17 +185,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
+            if (back) {
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
+            }
+
             if (pageNo == 0) {
-                user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-                jump:
                 if (bdId != 0) {
                     try {
                         bdf = service.getById(bdId, user);
-                        if (bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
-                            //pass 
-                            break jump;
-                        } else {// edit not allowed
+                        if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -216,14 +204,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         addActionError(getText("cp1.error.entryNotAvailable"));
                         return "error";
                     }
-                } else if ((serialNo != null) && !(serialNo.equals(""))) {
-                    bdf = service.getByBDDivisionAndSerialNo(null /* TODO */, serialNo);
                 } else {
                     bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
-            } else if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-                return "form" + pageNo;
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 switch (pageNo) {
@@ -255,8 +238,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
 
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
+                        //todo archive the old entry
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
-                        break;
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
@@ -301,30 +284,33 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        populateBasicLists(language);
 
-        logger.debug("inside populate : {} observed.", language);
+        /**
+         *  under "Add another mode", few special values need to be3 preserved from last entry .
+         *  Pre setting serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
+         *  serial number incerementing by one.
+         */
+        if (addNewMode) {
+            BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            register = new BirthRegisterInfo();
+            register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
+            register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
+            birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
+            birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
+            dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
+            populateDynamicLists(language);
 
-        countryList = countryDAO.getCountries(language);
-        districtList = districtDAO.getDistrictNames(language, user);
-        /** getting full district list */
-        allDistrictList = districtDAO.getDistrictNames(language, null);
-        /** getting full DSDivision list */
-        // TODO currently getting DSDivision by first district id
-        if (!allDistrictList.isEmpty()) {
-            int selectedDistrictId = allDistrictList.keySet().iterator().next();
-            allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
-        }
+            notifyingAuthority = new NotifyingAuthorityInfo();
+            notifyingAuthority.setNotifyingAuthorityPIN(oldBdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
+            notifyingAuthority.setNotifyingAuthorityName(oldBdf.getNotifyingAuthority().getNotifyingAuthorityName());
+            notifyingAuthority.setNotifyingAuthorityAddress(oldBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
+            notifyingAuthority.setNotifyingAuthoritySignDate(oldBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
 
-        if (!districtList.isEmpty()) {
-            int birthDistrictId = districtList.keySet().iterator().next();
-            dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-            if (!dsDivisionList.isEmpty()) {
-                int dsDivisionId = dsDivisionList.keySet().iterator().next();
-                bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-            }
-            raceList = raceDAO.getRaces(language);
-            logger.debug("inside populate : districts , dsdivisions, countries and races populated.");
+            bdf.setNotifyingAuthority(notifyingAuthority);
+            bdf.setRegister(register);
+            logger.debug("Districts, DS and BD divisions set from earlier (AddNewMode) info : {} {}", birthDistrictId, dsDivisionId);
+            return;  // end of populating fields for this mode.
         }
 
         child = bdf.getChild();
@@ -336,20 +322,35 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         register = bdf.getRegister();
         notifyingAuthority = bdf.getNotifyingAuthority();
 
+        boolean idsPopulated = false;
         if (register != null) {
-            if (register.getBirthDivision() != null) {
+            if (register.getBirthDivision() != null) {  //if data present, populate with existing values
                 birthDistrictId = register.getBirthDistrict().getDistrictUKey();
                 birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
                 dsDivisionId = register.getDsDivision().getDsDivisionUKey();
-            } else if (!addNewMode) {
-                if (user.getPrefBDDistrict() != null) {
-                    birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
-                }
-                if (user.getPrefBDDSDivision() != null) {
-                    dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
-                }
+                idsPopulated = true;
             }
+            logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", birthDistrictId, dsDivisionId);
         }
+
+        if (!idsPopulated) {         // populate distric and ds div Ids with user preferences or set to 0 temporarily
+            if (user.getPrefBDDistrict() != null) {
+                birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
+                logger.debug("Prefered district {} set in user {}", birthDistrictId, user.getUserId());
+            } else {
+                birthDistrictId = 0;
+                logger.debug("First district in the list {} was set in user {}", birthDistrictId, user.getUserId());
+            }
+
+            if (user.getPrefBDDSDivision() != null) {
+                dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
+            } else {
+                dsDivisionId = 0;
+            }
+            logger.debug("Districts, DS and BD divisions set from defaults : {} {}", birthDistrictId, dsDivisionId);
+        }
+
+        populateDynamicLists(language);
 
         // following painful null checks are needed b'cos the DB may have incomplete data
         if (parent != null) {
@@ -376,6 +377,42 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (parent.getMotherDSDivision() != null) {
                 motherDSDivisionId = parent.getMotherDSDivision().getDsDivisionUKey();
             }
+        }
+    }
+
+    private void populateDynamicLists(String language) {
+        if (birthDistrictId == 0) {
+            if (!districtList.isEmpty()) {
+                birthDistrictId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+            }
+        }
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+
+        if (dsDivisionId == 0) {
+            if (!dsDivisionList.isEmpty()) {
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
+                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
+            }
+        }
+
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        if (birthDivisionId == 0) {
+            birthDivisionId = bdDivisionList.keySet().iterator().next();
+            logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
+        }
+    }
+
+    private void populateBasicLists(String language) {
+        countryList = countryDAO.getCountries(language);
+        districtList = districtDAO.getDistrictNames(language, user);
+        raceList = raceDAO.getRaces(language);
+
+        /** getting full district list and DS list for mother info on page 4 */
+        allDistrictList = districtDAO.getDistrictNames(language, null);
+        if (!allDistrictList.isEmpty()) {
+            int selectedDistrictId = allDistrictList.keySet().iterator().next();
+            allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
         }
     }
 
@@ -433,9 +470,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return bdDivisionList;
     }
 
-    public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
-        this.bdDivisionList = bdDivisionList;
-    }
+//    public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
+//        this.bdDivisionList = bdDivisionList;
+//    }
 
     public ChildInfo getChild() {
         return child;
@@ -536,13 +573,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return dsDivisionList;
     }
 
-    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
-        this.dsDivisionList = dsDivisionList;
-    }
-
-    public DSDivisionDAO getDsDivisionDAO() {
-        return dsDivisionDAO;
-    }
+//    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
+//        this.dsDivisionList = dsDivisionList;
+//    }
+//
+//    public DSDivisionDAO getDsDivisionDAO() {
+//        return dsDivisionDAO;
+//    }
 
     public int getDsDivisionId() {
         return dsDivisionId;
