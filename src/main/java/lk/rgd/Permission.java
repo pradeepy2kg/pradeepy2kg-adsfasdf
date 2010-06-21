@@ -21,4 +21,9 @@ public final class Permission {
     public static final int VIEW_USERS=13;
     public static final int BIRTH_CONFIRMATION_SEARCH=14;
 
+    // permission for PRS
+    public static final int PRS_ADD_PERSON  = 50;
+    public static final int PRS_EDIT_PERSON = 51;
+    public static final int PRS_LOOKUP_PERSON_BY_KEYS = 52;
+
 }

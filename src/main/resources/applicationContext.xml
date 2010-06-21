@@ -57,6 +57,7 @@
     <!--A special bean that initializes the in-memory test database with populate_database.sql-->
     <bean id="dbInit" class="lk.rgd.crs.core.DatabaseInitializer">
         <property name="dataSource" ref="dataSource"/>
+        <property name="createCleanDB" value="false"/>
     </bean>
 
     <!--DAO Beans - These allow access to the lower levels of the application data-->
@@ -70,6 +71,7 @@
     <bean id="userDAOImpl" class="lk.rgd.common.core.dao.UserDAOImpl"/>
     <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl"/>
     <bean id="birthDeclarationDAOImpl" class="lk.rgd.crs.core.dao.BirthDeclarationDAOImpl"/>
+    <bean id="personDAOImpl" class="lk.rgd.prs.core.dao.PersonDAOImpl"/>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
@@ -88,6 +90,13 @@
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
     </bean>
+
+    <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
+    the web interface as well as a Web Services interface -->
+    <bean id="popregService" class="lk.rgd.prs.core.service.PopulationRegistryImpl">
+        <constructor-arg ref="personDAOImpl"/>
+    </bean>
+
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">
         <constructor-arg ref="manageBirthService"/>
