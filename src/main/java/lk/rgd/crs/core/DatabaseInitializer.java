@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
 import javax.sql.DataSource;
@@ -67,23 +68,62 @@ public class
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 
-        // create schemas - common, crs and prs
-        try {
-            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("create_schemas.sql"), false);
-            logger.info("Created the schemas : COMMON, CRS, PRS");
-        } catch (Exception ignore) {}
+        boolean mysql = false;
+
+        // detect the target DB
+        EntityManagerFactoryInfo emf = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
+        if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
+            getProperty("hibernate.dialect"))) {
+            mysql = true;
+        }
+
+        // drop mysql databases if they exist
+        if (mysql) {
+            try {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                    new ClassPathResource("drop_mysql_databases.sql"), false);
+                logger.info("Drop existing MySQL databases : COMMON, CRS, PRS");
+            } catch (Exception ignore) {
+                logger.warn("Exception while dropping existing MySQL databases", ignore);
+            }
+        }
+
+        // create schemas (derby) or databases (mysql) - common, crs and prs
+        if (mysql) {
+            try {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                    new ClassPathResource("create_mysql_databases.sql"), false);
+                logger.info("Created MySQL databases : COMMON, CRS, PRS");
+            } catch (Exception e) {
+                logger.error("Error creating MySQL databases - COMMON, CRS and PRS", e);
+                throw new IllegalStateException("Could not create MySQL databases. See log for details", e);
+            }
+        } else {
+            try {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                        new ClassPathResource("create_schemas.sql"), false);
+                logger.info("Created the schemas : COMMON, CRS, PRS");
+            } catch (Exception ignore) {}
+        }
 
         // generate schema creation and drop script
-        String[] fileName = generateSchemaFromHibernate(Dialect.DERBY);
+        String[] fileName = null;
+        if (mysql) {
+            fileName = generateSchemaFromHibernate(Dialect.MYSQL);
+        } else {
+            fileName = generateSchemaFromHibernate(Dialect.DERBY);
+        }
 
         // drop tables if any exist
-        try {
-            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                new FileSystemResource(fileName[1]), false);
-            logger.info("Drop existing tables using generated script : " + fileName[1]);
-
-        } catch (Exception ignore) {}
+        if (!mysql) {
+            try {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                    new FileSystemResource(fileName[1]), false);
+                logger.info("Drop existing tables using generated script : " + fileName[1]);
+            } catch (Exception e) {
+                logger.debug("Exception while dropping existing tables using script : " + fileName[1], e);
+            }
+        }
 
         // create tables
         try {
@@ -92,8 +132,8 @@ public class
             logger.info("Created tables using generated script : " + fileName[0]);
 
         } catch (Exception e) {
-            logger.error("Error creating the database schema", e);
-            throw new IllegalStateException("Could not initialize the database schema. See log for details", e);
+            logger.error("Error creating tables", e);
+            throw new IllegalStateException("Could not create tables. See log for details", e);
         }
 
         try {
@@ -107,7 +147,10 @@ public class
                     new ClassPathResource("populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            logger.error("Error populating the database with initial data from : populate_sample_data.sql", e);
+            throw new IllegalStateException("Could not initialize the database. See log for details", e);
+        }
 
         Map<String, PreloadableDAO> preloadableDaos = ctx.getBeansOfType(PreloadableDAO.class);
         for (PreloadableDAO dao : preloadableDaos.values()) {
@@ -177,7 +220,8 @@ public class
             roleDao.save(adminRole);
 
             logger.info("Initialized the database by performing permission initialization");
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            logger.error("Error initializing role permissions on the database");
         }
     }
 
@@ -194,7 +238,11 @@ public class
         for (Class<Object> clazz : entityClasses) {
             cfg.addAnnotatedClass(clazz);
         }
-        cfg.setProperty("hibernate.dialect", dialect.getDialectClass());
+        if (Dialect.MYSQL.equals(dialect)) {
+            cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+        } else {
+            cfg.setProperty("hibernate.dialect", dialect.getDialectClass());
+        }
 
         SchemaExport export = new SchemaExport(cfg);
         export.setDelimiter(";");
