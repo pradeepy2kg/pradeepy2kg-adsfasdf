@@ -98,6 +98,7 @@ public class
 
     private void recreateCleanDB(boolean mysql) {
 
+        System.out.println("\n**********          **********          **********          **********          **********\n");
         logger.info("Re-creating a clean Database ...");
 
         // drop mysql databases if they exist
@@ -234,6 +235,7 @@ public class
             roleDao.save(adminRole);
 
             logger.info("Initialized the database by performing permission initialization");
+            System.out.println("\n**********          **********          **********          **********          **********\n");
         } catch (Exception e) {
             logger.error("Error initializing role permissions on the database");
             throw new IllegalStateException("Error initializing role permissions. See log for details", e);
