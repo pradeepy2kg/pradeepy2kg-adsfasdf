@@ -250,21 +250,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String birthConfirmationPrint() {
-        logger.debug("Step {} of 3 ", pageNo);
+        
+
+       // logger.debug("Step {} of 1 ", pageNo);
         if ((pageNo > 2) || (pageNo < 0)) {
             return "error";
         } else {
             BirthDeclaration bdf;
             if (pageNo == 0) {
+                BirthDeclaration bd = service.getById(bdId, user);
+                service.approveBirthDeclaration(bd, true, user);
                 if (bdId != 0) {
                     bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
-                } else if ((serialNo != null) && !(serialNo.equals(""))) {
+                }
+                else if ((serialNo != null) && !(serialNo.equals(""))) {
                     bdf = service.getByBDDivisionAndSerialNo(null /* TODO */, serialNo);
                 } else {
-                    //logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
-                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+                   bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
-            } else {
+            } 
+            else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
@@ -272,7 +277,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "form" + pageNo;
         }
 
-    }
+    }                                                                      
 
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
