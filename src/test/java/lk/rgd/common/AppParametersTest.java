@@ -1,7 +1,7 @@
 package lk.rgd.common;
 
 import junit.framework.TestCase;
-import lk.rgd.UnitTestSuite;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.crs.api.BirthConstants;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class AppParametersTest extends TestCase {
 
-    private final ApplicationContext ctx = UnitTestSuite.ctx;
+    private final ApplicationContext ctx = UnitTestManager.ctx;
 
     public void testAppParameters() throws Exception {
         AppParametersDAO bean = (AppParametersDAO) ctx.getBean("appParametersDAOImpl", AppParametersDAO.class);
