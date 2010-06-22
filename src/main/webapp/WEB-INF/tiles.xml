@@ -118,4 +118,9 @@
         <put-attribute name="body" value="/WEB-INF/pages/SearchBDF.jsp"/>
         <put-attribute name="title" value="search.title"/>
     </definition>
+
+    <definition name="epr.birthRegisterReject" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthDeclarationReject.jsp"/>
+        <put-attribute name="title" value="reject.title"/>
+    </definition>
 </tiles-definitions>

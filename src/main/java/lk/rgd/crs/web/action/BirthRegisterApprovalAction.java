@@ -45,21 +45,26 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private Map<Integer, String> districtList;
     private List<UserWarning> warnings;
     private List<BirthDeclaration> birthDeclarationPendingList;
+
     private int division;
     private int district;
     private long[] index;
-    private User user;
     private long bdId;
     private int pageNo;
     private int recordCounter;
+    private String comments;
+    private BirthDeclaration bdf;
+    private User user;
+
     private boolean nextFlag;
     private boolean previousFlag;
     private boolean ignoreWarning;
     private boolean allowEditBDF;
     private boolean allowApproveBDF;
+    private boolean reject;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -136,10 +141,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String approveBirthDeclaration() {
         initPermission();
         logger.debug("inside approveBirthDeclaration : bdId {} observed ", bdId);
-        BirthDeclaration bd = service.getById(bdId, user);
+        bdf = service.getById(bdId, user);
         boolean caughtException = false;
         try {
-            warnings = service.approveBirthDeclaration(bd, false, user);
+            warnings = service.approveBirthDeclaration(bdf, false, user);
         }
         catch (CRSRuntimeException e) {
             logger.error("inside approveBirthDeclaration : {} , {} ", e.getErrorCode(), e);
@@ -158,7 +163,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             populate();
             return "success";
         } else {
-            //todo check whether warnings are working fine
             populate();
             return "approvalRejected";
         }
@@ -171,11 +175,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String approveBirthDeclarationForm() {
         initPermission();
-        BirthDeclaration bd = service.getById(bdId, user);
+        bdf = service.getById(bdId, user);
         boolean caughtException = false;
 
         try {
-            warnings = service.approveBirthDeclaration(bd, false, user);
+            warnings = service.approveBirthDeclaration(bdf, false, user);
         }
         catch (CRSRuntimeException e) {
             logger.error("inside approveBirthDeclarationForm : {} , {} ", e.getErrorCode(), e);
@@ -194,17 +198,18 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         logger.debug("inside approveIgnoringWorning bdId {} received ignoreWarning is {}  ", bdId, ignoreWarning);
         initPermission();
         if (ignoreWarning) {
-            BirthDeclaration bd = service.getById(bdId, user);
+            bdf = service.getById(bdId, user);
             try {
-                service.approveBirthDeclaration(bd, true, user);
+                service.approveBirthDeclaration(bdf, true, user);
             } catch (CRSRuntimeException e) {
                 logger.error("inside approveIgnoringWorning : {} , {} ", e.getErrorCode(), e);
                 addActionError(getText("brapproval.ignoreWarningApproval.error." + e.getErrorCode()));
             }
-            populate();
-        } else {
-            birthDeclarationApproval();
         }
+        birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+            pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        paginationHandler(birthDeclarationPendingList.size());
+        populate();
         return "success";
     }
 
@@ -238,15 +243,19 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String rejectBirthDeclaration() {
-        //todo has to be checked after getting the backend support
         logger.debug("inside rejectBirthDeclaration : bdId {} received", bdId);
-        initPermission();
-        BirthDeclaration bd = service.getById(bdId, user);
-        birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
-            getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        paginationHandler(birthDeclarationPendingList.size());
-        populate();
-        return "success";
+        bdf = service.getById(bdId, user);
+        if (reject) {
+            return "initReject";
+        } else {
+            service.rejectBirthDeclaration(bdf, comments, user);
+            birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+                pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            initPermission();
+            paginationHandler(birthDeclarationPendingList.size());
+            populate();
+            return "success";
+        }
     }
 
     /**
@@ -257,9 +266,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String deleteBirthDeclaration() {
         logger.debug("inside deleteApprovalPending : bdId {} received ", bdId);
         initPermission();
-        BirthDeclaration bd = service.getById(bdId, user);
+        bdf = service.getById(bdId, user);
         try {
-            service.deleteNormalBirthDeclaration(bd, false, user);
+            service.deleteNormalBirthDeclaration(bdf, false, user);
         }
         catch (CRSRuntimeException e) {
             addActionError(getText("brapproval.delete.error." + e.getErrorCode()));
@@ -356,7 +365,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         birthDeclarationPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
-        if (recordCounter > 0) {
+        if (getRecordCounter() > 0) {
             setRecordCounter(getRecordCounter() - appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         }
         populate();
@@ -514,5 +523,29 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setRecordCounter(int recordCounter) {
         this.recordCounter = recordCounter;
+    }
+
+    public boolean getReject() {
+        return reject;
+    }
+
+    public void setReject(boolean reject) {
+        this.reject = reject;
+    }
+
+    public BirthDeclaration getBdf() {
+        return bdf;
+    }
+
+    public void setBdf(BirthDeclaration bdf) {
+        this.bdf = bdf;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
