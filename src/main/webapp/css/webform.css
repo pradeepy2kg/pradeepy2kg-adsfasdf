@@ -216,6 +216,15 @@
 #birth-form-serial-no input, #notify-autority-name-and-signature input{margin:40px 5px; width:750px;}
 #modifiedDatePicker{float:right; margin-right:10px;}
 
+#late-belated-registration{float:left; margin-top:40px; width:1023px; border:1px solid #000;}
+#late-belated-registration-title{width:1023px; border-bottom:1px solid #000; height:30px; line-height:30px; vertical-align:middle; text-align:center;background-color:rosybrown;}
+#late-belated-case-file-num, #late-belated-prev-comments {border-bottom:1px solid #000; height:56px;}
+#late-belated-prev-comments label, #late-belated-new-comments label, #late-belated-case-file-num label {float:left; width:200px; border-right:1px solid #000; padding:3px 5px; }
+#late-belated-prev-comments{height:60px;}
+#late-belated-prev-comments label, #late-belated-new-comments label{padding:5px;}
+#late-belated-case-file-num input {float:left; margin:10px 5px; width:250px;}
+#late-belated-prev-comments textarea, #late-belated-new-comments textarea {margin:5px; width:795px;}
+
 /**
 * Styles for the Birth Confirmation Form begins here.
 */

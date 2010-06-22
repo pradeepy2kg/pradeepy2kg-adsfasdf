@@ -16,7 +16,7 @@ public interface BirthRegistrationService {
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user           the user initiating the action
      */
-    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user, int caseFileNumber, String newComment);
 
     /**
      * Update an existing BDF by a DEO or ADR before approval
@@ -58,9 +58,10 @@ public interface BirthRegistrationService {
 
     /**
      * Reject a birth declaration by an ADR or higher authority
-     * @param bdf  the BDF to be marked rejected
+     *
+     * @param bdf      the BDF to be marked rejected
      * @param comments comment specifying the reason for rejection (e.g. duplicate record)
-     * @param user the user initiating the rejection
+     * @param user     the user initiating the rejection
      */
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user);
 
@@ -77,7 +78,7 @@ public interface BirthRegistrationService {
      * Returns the Birth Declaration object for a given bdf serialNo under a selected BD Division
      *
      * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
-     * @param serialNo bdfSerialNo given to the Birth Declarion
+     * @param serialNo   bdfSerialNo given to the Birth Declarion
      * @Return BirthDeclaration
      */
     public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, String serialNo);

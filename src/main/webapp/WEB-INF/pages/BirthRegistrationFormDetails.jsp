@@ -121,7 +121,8 @@
     </div>
     <div id="birth-register-approval-footer">
         <s:a href="%{newBDFUrl}"><s:label value="%{getText('addNewBDF_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <s:if test="#session.allowApproveBDF==true">
+        <s:if test="#session.allowApproveBDF">
+		<%--<s:if test="#session.allowApproveBDF==true">--%>
             <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
             <s:a href="%{approveAndPrintUrl}">
                 <s:label value="%{getText('approveAndPrint_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;

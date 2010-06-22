@@ -63,8 +63,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     /**
      * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
      * Used in first page load and first division selection.
-     * Selected divisionId and selected option(Not Printed or Printed) assigned to the session to use in pagination.
-     * returned List<BirthDeclaration > assigned to the session.
+     * Selected divisionId and selected option(Not Printed or Printed) used in pagination.
+     * returned List<BirthDeclaration > 
      *
      * @return String success
      */

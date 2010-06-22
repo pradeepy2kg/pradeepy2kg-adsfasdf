@@ -47,34 +47,54 @@
 
         <script type="text/javascript">
             function validate()
-                {
-                    var errormsg="";
-                    var element;
-                    var returnval;
-                    var check=document.getElementById('skipjs');
-                    if (!check.checked) {
+            {
+                var errormsg = "";
+                var element;
+                var returnval;
+                var check = document.getElementById('skipjs');
+                if (!check.checked) {
 
-                        element=document.getElementById('notifyingAuthorityPIN');
-                        if (element.value=="") {
-                            errormsg = errormsg +  "\n" + document.getElementById('p4error1').value;
-                        }
-                        element=document.getElementById('notifyingAuthorityName');
-                        if (element.value=="") {
-                            errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
-                        }
-                        element=document.getElementById('notifyingAuthoritySigned');
-                        if (!element.checked) {
-                            errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
-                        }
+                    element = document.getElementById('notifyingAuthorityPIN');
+                    if (element.value == "") {
+                        errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
+                    }
+                    element = document.getElementById('notifyingAuthorityName');
+                    if (element.value == "") {
+                        errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
+                    }
+                    element = document.getElementById('notifyingAuthoritySigned');
+                    if (!element.checked) {
+                        errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
+                    }
+                }
+                if (errormsg != "") {
+                    alert(errormsg);
+                    returnval = false;
+                }
+                return returnval;
+            }
+        </script>
 
-                    }
-                    if(errormsg!=""){
-                        alert(errormsg);
-                        returnval =false;
-                    }
-                    return returnval;
-                    }
-         </script>
+        <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
+            <div id="late-belated-registration" class="font-9">
+                <div id="late-belated-registration-title" class="font-12">
+                    <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
+                    <s:else>Belated Registration</s:else>
+                </div>
+                <div id="late-belated-case-file-num">
+                    <label>*in sinhala<br>*in tamil<br>Case File Number</label>
+                    <s:textfield name="caseFileNumber"/>
+                </div>
+                <div id="late-belated-prev-comments">
+                    <label>*in sinhala<br>* in tamil<br>Prevoius Comments </label>
+                    <s:textarea name="register.comments" disabled="true"/>
+                </div>
+                <div id="late-belated-new-comments">
+                    <label>*in sinhala<br>* in tamil<br>New Comments </label>
+                    <s:textarea name="newComment"/>
+                </div>
+            </div>
+        </s:if>
 
         <div class="form-submit">
             <s:url id="backUrl" action="eprBirthRegistration">
@@ -82,10 +102,10 @@
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
             <s:a href="%{backUrl}"> << </s:a>
-            <s:checkbox name="skipjavaScript" id="skipjs" value="false" >
+            <s:checkbox name="skipjavaScript" id="skipjs" value="false">
                 <s:label value="%{getText('skipvalidation.label')}"/>
             </s:checkbox>
-            <s:submit value="%{getText('next.label')}" />
+            <s:submit value="%{getText('next.label')}"/>
         </div>
     </s:form>
 </div>
