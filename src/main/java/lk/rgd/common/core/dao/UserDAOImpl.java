@@ -18,6 +18,7 @@ import javax.persistence.PersistenceException;
 
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author asankha
@@ -86,6 +87,14 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         Query q = em.createNamedQuery("filter.non.deleted");
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void changePassword(User user) {
+        //todo update  password
+        em.merge(user);
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addUser(User user) {

@@ -11,13 +11,16 @@ import java.util.Locale;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.service.UserManager;
 
 /**
  * @author Duminda
- * 
+ * @author amith jayasekara
  */
 public class UserPreferencesAction extends ActionSupport implements SessionAware {
 
+    private String newPassword;
+    private String retypeNewPassword;
     private String prefLanguage;
     private int prefDistrictId;
     private int prefDSDivisionId;
@@ -29,13 +32,14 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
-    
+    private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
 
-    public UserPreferencesAction(DistrictDAO districtDAO,DSDivisionDAO dsDivisionDAO) {
-       this.districtDAO = districtDAO;
-       this.dsDivisionDAO = dsDivisionDAO;
+    public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.userManager = userManager;
     }
 
     /**
@@ -72,6 +76,21 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         logger.debug("inside selectUserPreference() : {} passed.", prefDSDivisionId);
 
         return "success";
+    }
+
+    /**
+     * this method use to change a password of a user
+     *
+     * @return
+     */
+    public String changePassword() {
+        logger.info("requesting a password change.......");
+        if (newPassword.equals(retypeNewPassword)) {
+            User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+            userManager.updatePassword(newPassword, user);
+            return "success";
+        }
+        return "error";
     }
 
     public void setSession(Map map) {
@@ -113,4 +132,21 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public void setPrefDSDivisionId(int prefDSDivisionId) {
         this.prefDSDivisionId = prefDSDivisionId;
     }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getRetypeNewPassword() {
+        return retypeNewPassword;
+    }
+
+    public void setRetypeNewPassword(String retypeNewPassword) {
+        this.retypeNewPassword = retypeNewPassword;
+    }
+
 }

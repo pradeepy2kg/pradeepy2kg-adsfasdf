@@ -5,6 +5,7 @@ import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author asankha
@@ -13,6 +14,7 @@ public interface UserDAO {
 
     /**
      * Get user by user id
+     *
      * @param userId the unique userId (PK)
      * @return the corresponding user
      */
@@ -20,6 +22,7 @@ public interface UserDAO {
 
     /**
      * Return the list of users playing the specified role
+     *
      * @param roleId the role ID
      * @return list of users playing the role
      */
@@ -27,18 +30,21 @@ public interface UserDAO {
 
     /**
      * Add a user
+     *
      * @param user the user to be added
      */
     public void addUser(User user);
 
     /**
      * Update a user
+     *
      * @param user the updated user
      */
     public void updateUser(User user);
-    
+
     /**
      * Return the list of users assigned to the Birth / Death Registration district
+     *
      * @param assignedBDDistrict the district
      * @return list of users assigned
      */
@@ -47,6 +53,7 @@ public interface UserDAO {
 
     /**
      * Return the list of users assigned to the Marriage Registration district
+     *
      * @param assignedMRDistrict the district
      * @return list of users assigned
      */
@@ -54,7 +61,8 @@ public interface UserDAO {
 
     /**
      * Return the list of users playing the specified role in the specified Birth/Death registration district
-     * @param role the role being played
+     *
+     * @param role               the role being played
      * @param assignedBDDistrict the BD district
      * @return list of users playing the role in that district
      */
@@ -62,7 +70,8 @@ public interface UserDAO {
 
     /**
      * Return the list of users playing the specified role in the specified Marriage registration district
-     * @param role the role
+     *
+     * @param role               the role
      * @param assignedMRDistrict the MR district
      * @return list of users playing the role in that district
      */
@@ -70,6 +79,7 @@ public interface UserDAO {
 
     /**
      * Get users by ID - with a wildcard match
+     *
      * @param userId the userid to match within the userId field
      * @return the list of users matching the criteria
      */
@@ -77,6 +87,7 @@ public interface UserDAO {
 
     /**
      * Get users by name - with a wildcard match
+     *
      * @param userName the userid to match within the userId field
      * @return the list of users matching the criteria
      */
@@ -84,7 +95,14 @@ public interface UserDAO {
 
     /**
      * Get a list of all users (who are not deleted) - the results are not paged
+     *
      * @return a List of all users
      */
     public List<User> getAllUsers();
+
+    /**
+     * @param user
+     */
+    public void changePassword(User user);
+
 }

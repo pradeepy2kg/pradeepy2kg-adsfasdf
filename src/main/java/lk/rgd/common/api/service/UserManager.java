@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author asankha
@@ -13,6 +14,7 @@ import java.util.List;
 public interface UserManager {
     /**
      * Authenticate user credentials
+     *
      * @param userName the user name
      * @param password the password
      * @return the User object if authorization succeeds
@@ -22,6 +24,7 @@ public interface UserManager {
 
     /**
      * Return the list of non-deleted users playing the specified role
+     *
      * @param roleId the role ID
      * @return list of users playing the role
      */
@@ -29,6 +32,7 @@ public interface UserManager {
 
     /**
      * Return the list of non-deleted users assigned to the Birth / Death Registration district
+     *
      * @param assignedBDDistrict the district
      * @return list of users assigned
      */
@@ -36,6 +40,7 @@ public interface UserManager {
 
     /**
      * Return the list of non-deleted users assigned to the Marriage Registration district
+     *
      * @param assignedMRDistrict the district
      * @return list of users assigned
      */
@@ -43,7 +48,8 @@ public interface UserManager {
 
     /**
      * Return the list of non-deleted users playing the specified role in the specified Birth/Death registration district
-     * @param role the role being played
+     *
+     * @param role               the role being played
      * @param assignedBDDistrict the BD district
      * @return list of users playing the role in that district
      */
@@ -51,7 +57,8 @@ public interface UserManager {
 
     /**
      * Return the list of non-deleted users playing the specified role in the specified Marriage registration district
-     * @param role the role
+     *
+     * @param role               the role
      * @param assignedMRDistrict the MR district
      * @return list of users playing the role in that district
      */
@@ -59,6 +66,7 @@ public interface UserManager {
 
     /**
      * Get non-deleted users by ID - with a wildcard match
+     *
      * @param userId the userid to match within the userId field
      * @return the list of users matching the criteria
      */
@@ -66,6 +74,7 @@ public interface UserManager {
 
     /**
      * Get non-deleted users by name - with a wildcard match
+     *
      * @param userName the userid to match within the userId field
      * @return the list of users matching the criteria
      */
@@ -73,12 +82,14 @@ public interface UserManager {
 
     /**
      * Get all users (non-deleted accounts)
+     *
      * @return all non-deleted Users
      */
     public List<User> getAllUsers();
 
     /**
      * Hash the password
+     *
      * @param password pasword in clear text
      * @return hashed password
      */
@@ -86,15 +97,17 @@ public interface UserManager {
 
     /**
      * Create a new user
+     *
      * @param userToCreate the User instance to create
-     * @param adminUser the user account creating the new user - must belong to role ADMIN
+     * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void createUser(User userToCreate, User adminUser);
 
     /**
      * Update a user
+     *
      * @param userToUpdate the User instance to update
-     * @param adminUser the user account creating the new user - must belong to role ADMIN
+     * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void updateUser(User userToUpdate, User adminUser);
 
@@ -103,7 +116,17 @@ public interface UserManager {
      * and reporting/auditing purposes
      *
      * @param userToDelete the User instance to delete
-     * @param adminUser the user account creating the new user - must belong to role ADMIN
+     * @param adminUser    the user account creating the new user - must belong to role ADMIN
      */
     void deleteUser(User userToDelete, User adminUser);
+
+    /**
+     * check if the password is expired
+     *
+     * @param currentDate
+     * @return
+     */
+    boolean checkPasswordExpiryDate(Date currentDate, User user);
+
+    void updatePassword(String newPass, User user);
 }

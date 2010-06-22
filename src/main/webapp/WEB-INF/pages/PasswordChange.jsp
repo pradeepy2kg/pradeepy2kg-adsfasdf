@@ -16,16 +16,20 @@
 </head>
 <body>
 <div id="login-form">
-    <div id="login-form-title">user login</div>
+    <div id="login-form-title">user password change</div>
     <div id="login-form-body">
-        <s:form action="eprLogin.do" method="POST"
-                name="eprLogin">
-                <s:label value="User Name: "></s:label>
-                <s:textfield name="userName"></s:textfield>
-                <s:label value="Password: "></s:label>
-                <s:password name="password"></s:password>
-                <div><s:submit value="login"></s:submit></div>
-       </s:form>
+        <s:form action="eprChangePass.do" method="POST"
+                name="eprChangePass">
+            <!--password change -->
+
+                <s:label value="new password"/>
+                <s:password name="newPassword"/>
+                <s:label value="retype new password"/>
+                <s:password name="retypeNewPassword"/>
+                <div><s:submit value="apply"></s:submit></div>
+                <s:hidden name="changePass" value="0"/>
+            
+        </s:form>
     </div>
 </div>
 </body>

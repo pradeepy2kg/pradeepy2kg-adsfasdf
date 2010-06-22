@@ -225,7 +225,7 @@ public class
 
             Role adminRole = roleDao.getRole("ADMIN");
             bs = new BitSet();
-            bs.or(rgRole.getPermBitSet());
+    //        bs.or(rgRole.getPermBitSet());
             bs.set(Permission.CREATE_USER_PAGE);
 			bs.set(Permission.USER_MANAGEMENT);
             bs.set(Permission.VIEW_USERS);
