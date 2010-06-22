@@ -132,7 +132,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             BirthDeclaration bdf;
             if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
                 return "form" + pageNo;
             }
 
