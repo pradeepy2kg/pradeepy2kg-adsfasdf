@@ -280,6 +280,11 @@ public class User {
     }
 
     public boolean isAllowedAccessToBDDistrict(int id) {
+        // RG has full access without limitation
+        if (Role.ROLE_RG.equals(role.getRoleId())) {
+            return true;
+        }
+
         if (assignedBDDistricts == null) {
             return false;
         }
@@ -293,6 +298,11 @@ public class User {
     }
 
     public boolean isAllowedAccessToBDDSDivision(int id) {
+        if (Role.ROLE_RG.equals(role.getRoleId())) {
+            // RG has full access without limitation
+            return true;
+        }
+
         if (assignedBDDSDivisions == null) {
             return false;
         }
