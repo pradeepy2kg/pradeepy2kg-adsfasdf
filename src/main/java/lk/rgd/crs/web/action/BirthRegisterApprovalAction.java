@@ -358,7 +358,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String previousPage() {
         initPermission();
         if (logger.isDebugEnabled()) {
-            logger.debug("inside filter : district {} division {} observed ", district, division +
+            logger.debug("inside previousPage : district {} division {} observed ", district, division +
                 " Page number " + getPageNo());
         }
         /**
@@ -385,7 +385,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (getPageNo() > 1) {
             setPageNo(getPageNo() - 1);
         }
-        birthDeclarationPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+        birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
             getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         if (getRecordCounter() > 0) {
             setRecordCounter(getRecordCounter() - appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));

@@ -52,7 +52,7 @@
         <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
             <result name="DSDivList">/WEB-INF/pages/template/DSDivBox.jsp</result>
             <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
-		</action>
+        </action>
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="birthDeclaration">
@@ -116,6 +116,7 @@
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
+        <!--BirthDeclaration Approval related actions-->
         <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="birthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
@@ -140,8 +141,6 @@
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
             <result type="tiles" name="initReject">epr.birthRegisterReject</result>
         </action>
-
-        <!--BirthDeclaration Approval related actions-->
 
         <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="birthDeclarationApproval">
@@ -175,6 +174,7 @@
                 method="birthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
         </action>
+
         <!--Direct Approval through BirthRegisterFoemDeails page -->
         <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclarationForm">
