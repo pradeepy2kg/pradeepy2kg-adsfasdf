@@ -2,10 +2,9 @@ package lk.rgd.common;
 
 import junit.framework.TestCase;
 import lk.rgd.AppConstants;
-import lk.rgd.UnitTestSuite;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.crs.api.BirthConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
@@ -17,7 +16,7 @@ import java.util.Map;
  */
 public class MasterTablesTest extends TestCase {
 
-    private final ApplicationContext ctx = UnitTestSuite.ctx;
+    private final ApplicationContext ctx = UnitTestManager.ctx;
 
     public void testDistrictsAndBDDivisionListsReturnedForUsers() throws Exception {
         DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);

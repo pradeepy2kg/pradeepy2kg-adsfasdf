@@ -1,26 +1,23 @@
 package lk.rgd.common;
 
 import junit.framework.TestCase;
-import lk.rgd.AppConstants;
 import lk.rgd.Permission;
-import lk.rgd.UnitTestSuite;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
 import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author asankha
  */
 public class UserManagementTest extends TestCase {
 
-    private final ApplicationContext ctx = UnitTestSuite.ctx;
+    private final ApplicationContext ctx = UnitTestManager.ctx;
 
     public void testUsersAndRoles() throws Exception {
         UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);

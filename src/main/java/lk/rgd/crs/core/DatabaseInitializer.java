@@ -105,7 +105,7 @@ public class
         if (mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("drop_mysql_databases.sql"), false);
+                    new ClassPathResource("database/drop_mysql_databases.sql"), false);
                 logger.info("Drop existing MySQL databases : COMMON, CRS, PRS");
             } catch (Exception ignore) {
                 logger.warn("Exception while dropping existing MySQL databases", ignore);
@@ -116,7 +116,7 @@ public class
         if (mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("create_mysql_databases.sql"), false);
+                    new ClassPathResource("database/create_mysql_databases.sql"), false);
                 logger.info("Created MySQL databases : COMMON, CRS, PRS");
             } catch (Exception e) {
                 logger.error("Error creating MySQL databases - COMMON, CRS and PRS", e);
@@ -125,7 +125,7 @@ public class
         } else {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("create_schemas.sql"), false);
+                        new ClassPathResource("database/create_schemas.sql"), false);
                 logger.info("Created the schemas : COMMON, CRS, PRS");
             } catch (Exception ignore) {}
         }
@@ -163,16 +163,24 @@ public class
         try {
             // populate with initial data
             //SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-            //    new ClassPathResource("populate_database.sql"), false);
+            //    new ClassPathResource("database/populate_database.sql"), false);
             //logger.info("Populated the tables with initial data from : populate_database.sql");
 
             // populate with sample data
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("populate_sample_data.sql"), false);
+                new ClassPathResource("database/populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new ClassPathResource("database/populate_sample_crs.sql"), false);
+            logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
+
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new ClassPathResource("database/populate_sample_prs.sql"), false);
+            logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
+
         } catch (Exception e) {
-            logger.error("Error populating the database with initial data from : populate_sample_data.sql", e);
+            logger.error("Error populating the database with initial data from : populate_sample_data/crs/prs.sql", e);
             throw new IllegalStateException("Could not initialize the database. See log for details", e);
         }
     }
