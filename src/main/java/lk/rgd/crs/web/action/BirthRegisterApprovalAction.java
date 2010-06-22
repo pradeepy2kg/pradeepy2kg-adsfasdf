@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
+import java.util.ArrayList;
 
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -50,6 +51,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private int district;
     private long[] index;
     private long bdId;
+    private long bdfSerialNo;
     private int pageNo;
     private int recordCounter;
     private String comments;
@@ -62,6 +64,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean allowEditBDF;
     private boolean allowApproveBDF;
     private boolean reject;
+    private boolean confirmationApprovalFlag;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
                                        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
@@ -95,8 +98,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * initially pageNo is set to 1
          */
         setPageNo(1);
-        birthDeclarationPendingList = service.getDeclarationApprovalPending(
-            bdDivisionDAO.getBDDivisionByPK(division), getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        if (confirmationApprovalFlag) {
+            birthDeclarationPendingList=service.getConfirmationApprovalPending(
+                bdDivisionDAO.getBDDivisionByPK(division),pageNo,appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        } else {
+            birthDeclarationPendingList = service.getDeclarationApprovalPending(
+                bdDivisionDAO.getBDDivisionByPK(division), getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        }
         paginationHandler(birthDeclarationPendingList.size());
         setPreviousFlag(false);
         return "pageLoad";
@@ -122,10 +130,24 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         setPageNo(1);
         initPermission();
         if (logger.isDebugEnabled()) {
-            logger.debug("inside filter : district {} division {} observed ", district, division + " Page number " + pageNo);
+            logger.debug("inside filter : district {} division {}  ", district, division + " Page number " + pageNo +
+                " bdfSerialNumber " + bdfSerialNo + " observed ");
         }
-        birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
-            pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        if (bdfSerialNo > 0) {
+                birthDeclarationPendingList = new ArrayList<BirthDeclaration>();
+            try{
+            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), bdfSerialNo);}
+            catch(Exception e){
+                logger.error("inside filter : {} , {} ", e.getMessage(), e);
+                addActionError(getText("brapproval.filter.noResult"));
+            }
+            if (bdf != null) {
+                birthDeclarationPendingList.add(bdf);
+            }
+        } else {
+            birthDeclarationPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+                pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        }
         paginationHandler(birthDeclarationPendingList.size());
         setRecordCounter(0);
         populate();
@@ -547,5 +569,21 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public long getBdfSerialNo() {
+        return bdfSerialNo;
+    }
+
+    public void setBdfSerialNo(long bdfSerialNo) {
+        this.bdfSerialNo = bdfSerialNo;
+    }
+
+    public boolean isConfirmationApprovalFlag() {
+        return confirmationApprovalFlag;
+    }
+
+    public void setConfirmationApprovalFlag(boolean confirmationApprovalFlag) {
+        this.confirmationApprovalFlag = confirmationApprovalFlag;
     }
 }

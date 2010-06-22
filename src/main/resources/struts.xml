@@ -170,6 +170,11 @@
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
+        <!--Birth Confirmation Approval related actions-->
+        <action name="eprBirthConfirmationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="birthDeclarationApproval">
+            <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
+        </action>
         <!--Direct Approval through BirthRegisterFoemDeails page -->
         <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclarationForm">
