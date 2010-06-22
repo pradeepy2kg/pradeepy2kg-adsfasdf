@@ -56,7 +56,6 @@
         </div>
         <div id="child-dob" class="font-9">
             <label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
-
             <div id="datePicker">
                 <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
                                    onchange="javascript:splitDate('datePicker')"/>
@@ -139,6 +138,7 @@
             <s:textfield name="child.numberOfChildrenBorn"/>
         </div>
         <s:hidden name="pageNo" value="1"/>
+        <s:hidden name="" value="register.comments"/>
 
         <s:hidden id="error1" value="%{getText('p1.SerialNum.error.value')}"/>
         <s:hidden id="error2" value="%{getText('p1.childName.error.value')}"/>

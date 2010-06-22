@@ -18,6 +18,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.util.DateState;
 import lk.rgd.Permission;
 
 /**
@@ -27,12 +28,16 @@ import lk.rgd.Permission;
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
+    // TODO is this place correct
+    private static final String BR_LATE_MAX_DAYS = "crs.birth.late_reg_days";
+    private static final String BR_BELATED_MAX_DAYS = "crs.birth.belated_reg_days";
     private final BirthRegistrationService service;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final AppParametersDAO appParametersDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -69,8 +74,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int motherDistrictId;
     private int motherDSDivisionId;
-
-    private boolean skipjavaScript;
+    private int bdfLateOrBelated;
+    private int caseFileNumber;
+    private String newComment;
 
     private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
@@ -80,13 +86,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO) {
+    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
+        this.appParametersDAO = appParametersDAO;
         child = new ChildInfo();
     }
 
@@ -105,11 +112,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             populateBasicLists(language);
             populateDynamicLists(language);
-        }    
+        }
         logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, bdDivisionList);
         return "BDDivList";
     }
-    
+
     /**
      * This method is responsible for loading and capture data for all 4 BDF pages as well
      * as their persistance. pageNo hidden variable which is passed to the action (empty=0 for the
@@ -138,6 +145,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                         return "error";   // todo pass error info
                     }
+                    //todo check permissions to operate on this birthdivision 
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -145,6 +153,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     case 1:
                         bdf.setChild(child);
                         register.setStatus(bdf.getRegister().getStatus());
+                        register.setComments(bdf.getRegister().getComments());
                         bdf.setRegister(register);
                         break;
                     case 2:
@@ -154,15 +163,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.setMarriage(marriage);
                         bdf.setGrandFather(grandFather);
                         bdf.setInformant(informant);
+                        bdfLateOrBelated = checkDateLateOrBelated(bdf);
                         break;
                     case 4:
                         bdf.setNotifyingAuthority(notifyingAuthority);
+
+                        logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
                         // all pages captured, proceed to persist after validations
                         // todo data validations
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+
+                        // TODO remove this section, can access this in jsp
+                        // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
+                        boolean allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+                        session.put("allowApproveBDF", allowApproveBDF);
                 }
             }
-            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+            if (!addNewMode) {
+                session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+            }
+
             if (logger.isDebugEnabled()) {
                 logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
             }
@@ -185,18 +205,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
-            if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-                return "form" + pageNo;
-            }
-
+            label:
             if (pageNo == 0) {
+                user = (User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
+                    bdf = service.getById(bdId, user);
+                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                        return "error";   // todo pass error info
+                    }
+                } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     try {
-                        bdf = service.getById(bdId, user);
-                        if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
-                            addActionError(getText("cp1.error.editNotAllowed"));
+                        bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
+                        if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED ||
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {  // edit not allowed
+                            addActionError(getText("confirmationSearch.EditNotAllowed"));
+                            break label;
+                        } else {
                             return "error";
                         }
                     } catch (Exception e) {
@@ -239,7 +264,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         //todo archive the old entry
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN));
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        //break;
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
@@ -314,6 +340,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             bdf.setNotifyingAuthority(notifyingAuthority);
             bdf.setRegister(register);
+            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
             logger.debug("Districts, DS and BD divisions set from earlier (AddNewMode) info : {} {}", birthDistrictId, dsDivisionId);
             return;  // end of populating fields for this mode.
         }
@@ -382,6 +409,34 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (parent.getMotherDSDivision() != null) {
                 motherDSDivisionId = parent.getMotherDSDivision().getDsDivisionUKey();
             }
+        }
+    }
+
+    /**
+     * Check whether BirthDeclarationForm is late registration or belated registration
+     *
+     * @param bdf
+     * @return int id of specific item in DateState
+     */
+    private int checkDateLateOrBelated(BirthDeclaration bdf) {
+        long maxLateDays = appParametersDAO.getIntParameter(BR_LATE_MAX_DAYS);
+        long maxBelatedDays = appParametersDAO.getIntParameter(BR_BELATED_MAX_DAYS);
+        long registerDate = bdf.getRegister().getDateOfRegistration().getTime();
+        long birthDate = bdf.getChild().getDateOfBirth().getTime();
+        long milliSecPerDay = 1000 * 60 * 60 * 24;
+
+        long dateDiff = (registerDate - birthDate) / milliSecPerDay;
+
+        if (dateDiff >= 0) {
+            if (dateDiff >= maxBelatedDays) {
+                return DateState.BD_BELATED.getStateId();
+            } else if (dateDiff >= maxLateDays) {
+                return DateState.BD_LATE.getStateId();
+            } else {
+                return DateState.BD_OK.getStateId();
+            }
+        } else {
+            return DateState.ERROR.getStateId();
         }
     }
 
@@ -712,5 +767,29 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setConfirmationSearchFlag(boolean confirmationSearchFlag) {
         this.confirmationSearchFlag = confirmationSearchFlag;
+    }
+
+    public int getBdfLateOrBelated() {
+        return bdfLateOrBelated;
+    }
+
+    public void setBdfLateOrBelated(int bdfLateOrBelated) {
+        this.bdfLateOrBelated = bdfLateOrBelated;
+    }
+
+    public int getCaseFileNumber() {
+        return caseFileNumber;
+    }
+
+    public void setCaseFileNumber(int caseFileNumber) {
+        this.caseFileNumber = caseFileNumber;
+    }
+
+    public String getNewComment() {
+        return newComment;
+    }
+
+    public void setNewComment(String newComment) {
+        this.newComment = newComment;
     }
 }

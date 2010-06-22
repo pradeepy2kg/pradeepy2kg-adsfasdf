@@ -57,7 +57,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user           the user initiating the action
      */
-    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user, int caseFileNumber, String newComment) {
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
         birthDeclarationDAO.addBirthDeclaration(bdf);
