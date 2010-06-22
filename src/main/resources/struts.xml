@@ -132,6 +132,7 @@
         <action name="eprRejectBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="rejectBirthDeclaration">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
+            <result type="tiles" name="initReject">epr.birthRegisterReject</result>
         </action>
 
         <!--BirthDeclaration Approval related actions-->
