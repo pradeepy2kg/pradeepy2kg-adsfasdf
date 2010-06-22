@@ -85,19 +85,10 @@ public interface BirthDeclarationDAO {
      * Returns the Birth Declaration object for a given bdf serialNo under a selected BD Division
      *
      * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
-     * @param serialNo bdfSerialNo given to the Birth Declarion
+     * @param serialNo   bdfSerialNo given to the Birth Declarion
      * @Return BirthDeclaration
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, String serialNo);
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
 
-    /**
-     * Returns a limited set of BirthDeclarations for which BDFs are ready for
-     * confirmation or BDFs for which the parent confirmation forms were printed
-     * or BDFs for which the parent confirmation changes have been captured
-     *
-     * @param serialNo bdfSerialNo given to the Birth Declaration
-     * @return the birth declaration
-     */
-    public List <BirthDeclaration> getConfirmationPendingBySerialNo(String serialNo);
 }
 

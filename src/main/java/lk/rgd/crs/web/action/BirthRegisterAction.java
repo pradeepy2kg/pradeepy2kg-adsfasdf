@@ -78,7 +78,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int caseFileNumber;
     private String newComment;
 
-    private String serialNo; //to be used in the case where search is performed from confirmation 1 page.
+    private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
     private boolean back;
 
@@ -205,23 +205,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "error";
         } else {
             BirthDeclaration bdf;
-            label:
+            if (back) {
+                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+                return "form" + pageNo;
+            }
+
             if (pageNo == 0) {
-                user = (User) session.get(WebConstants.SESSION_USER_BEAN);
                 if (bdId != 0) {
-                    bdf = service.getById(bdId, user);
-                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
-                        return "error";   // todo pass error info
-                    }
-                } else if ((serialNo != null) && !(serialNo.equals(""))) {
                     try {
-                        bdf = service.getConfirmationPendingBySerialNo(serialNo, user);
-                        if (bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {  // edit not allowed
-                            addActionError(getText("confirmationSearch.EditNotAllowed"));
-                            break label;
-                        } else {
+                        bdf = service.getById(bdId, user);
+                        if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                            addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
                     } catch (Exception e) {
@@ -265,7 +260,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         //todo archive the old entry
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
-                        //break;
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
@@ -276,9 +270,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String birthConfirmationPrint() {
-        
 
-       // logger.debug("Step {} of 1 ", pageNo);
+
+        // logger.debug("Step {} of 1 ", pageNo);
         if ((pageNo > 2) || (pageNo < 0)) {
             return "error";
         } else {
@@ -288,14 +282,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 service.approveBirthDeclaration(bd, true, user);
                 if (bdId != 0) {
                     bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
-                }
-                else if ((serialNo != null) && !(serialNo.equals(""))) {
+                } else if ((serialNo > 0)) {
                     bdf = service.getByBDDivisionAndSerialNo(null /* TODO */, serialNo);
                 } else {
-                   bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+                    //logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
+                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
                 }
-            } 
-            else {
+            } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
@@ -303,7 +296,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "form" + pageNo;
         }
 
-    }                                                                      
+    }
 
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
@@ -658,11 +651,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.confirmant = confirmant;
     }
 
-    public String getSerialNo() {
+    public long getSerialNo() {
         return serialNo;
     }
 
-    public void setSerialNo(String serialNo) {
+    public void setSerialNo(long serialNo) {
         this.serialNo = serialNo;
     }
 

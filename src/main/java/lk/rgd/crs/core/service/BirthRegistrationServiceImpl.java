@@ -229,7 +229,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, String serialNo) {
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo) {
         return birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serialNo);
     }
 
@@ -293,19 +293,4 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         return bdf;
     }
 
-    public BirthDeclaration getConfirmationPendingBySerialNo(String serialNo, User user) {
-        List<BirthDeclaration> birthDeclarationlist = birthDeclarationDAO.getConfirmationPendingBySerialNo(serialNo);
-        Set<DSDivision> assignedBDDSDivisions = user.getAssignedBDDSDivisions();
-        BirthDeclaration birthDeclaration = null;
-        label:
-        for (BirthDeclaration bd : birthDeclarationlist) {
-            for (DSDivision division : assignedBDDSDivisions) {
-                if (bd.getRegister().getDsDivision().getDsDivisionUKey() == division.getDsDivisionUKey()) {
-                    birthDeclaration = bd;
-                    break label;
-                }
-            }
-        }
-        return birthDeclaration;
-    }
 }
