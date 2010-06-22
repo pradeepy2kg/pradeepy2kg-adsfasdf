@@ -7,6 +7,9 @@ package lk.rgd;
  */
 public class AppConstants {
 
+    /** The parameter key that holds the number of days until a password expires */
+    public static final String PASSWORD_EXPIRY_DAYS = "rgd.password_expiry_days";
+
     public static final String EMPTY_STRING = "";
 
     public static final int GENDER_MALE = 0;

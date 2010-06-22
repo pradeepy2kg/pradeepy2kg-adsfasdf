@@ -39,13 +39,20 @@ import java.util.Date;
         @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " +
                 "WHERE u.status != 9 " +
                 "ORDER BY u.userName")
+
 })
 public class User {
 
     public enum State {
-        INACTIVE, /** 0 - state. Cannot login */
-        ACTIVE, /** 1 - state. Can login */
-        LOCKEDOUT, /** 2 - state. Cannot login */
+        INACTIVE, /**
+         * 0 - state. Cannot login
+         */
+        ACTIVE, /**
+         * 1 - state. Can login
+         */
+        LOCKEDOUT, /**
+         * 2 - state. Cannot login
+         */
         DELETED /** 9 - state. Permanently deleted cannot be edited or login */
     }
 
@@ -78,7 +85,7 @@ public class User {
     /**
      * The password expiry date, after which the user is not allowed to login without changing the password
      */
-    @Column(nullable =true) 
+    @Column(nullable = true)
     private Date passwordExpiry;
 
     /**

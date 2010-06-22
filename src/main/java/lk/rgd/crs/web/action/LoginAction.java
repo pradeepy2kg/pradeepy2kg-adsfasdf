@@ -27,7 +27,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private String password;
     private Map session;
     private final UserManager userManager;
-    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginAction.class);
     //private UserPreferencesAction userPreferencesAction = new UserPreferencesAction();
 
     public LoginAction(UserManager userManager) {
@@ -45,6 +45,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public String login() {
         logger.debug("detected useName : {} and password : {}", userName, password);
         try {
+            // change password and continue
             User user = userManager.authenticateUser(userName, password);
             String language = user.getPrefLanguage();
             String country = "LK";
@@ -61,7 +62,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
             session.put(WebConstants.SESSION_USER_BEAN, user);
             session.put("page_title", "home");
             logger.debug(" user {} logged in. language {}", userName, language);
-            return "success";
+            return checkUserStatus(user);
+            // return "success";
         } catch (AuthorizationException e) {
             logger.error("{} : {}", e.getMessage(), e);
             return "error";
@@ -81,6 +83,27 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
         }
         return allowed;
+    }
+
+    /**
+     * use to check user's status ex : blocked ,new user, password expired...
+     *
+     * @param user
+     * @return
+     */
+    private String checkUserStatus(User user) {
+        //todo change :::::user staus chcking goes here
+        // get Calendar with current date
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+
+        if (userManager.checkPasswordExpiryDate(gCal.getTime(), user)) {
+            logger.warn("password has been expired for user :{}", user.getUserName());
+            return "expired";
+        }
+        // if status are OK
+        logger.info("---------users status OK------");
+        return "success";
+
     }
 
     /**
@@ -118,6 +141,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.session = map;
     }
 
+
     static {                                                                              //prpertyKey,link,action
         linkPermission.put(6, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp", "eprInitUserCreation.do"));
         linkPermission.put(7, new Link("birth_registration.label", "/WEB-INF/pages/BirthRegistrationForm1.jsp", "eprBirthRegistration.do"));
@@ -126,7 +150,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(10, new Link("birth_confirmation.label", "/WEB-INF/pages/BirthConfirmationForm1.jsp", "eprBirthConfirmation.do"));
         linkPermission.put(11, new Link("birth_register_approval.label", "/WEB-INF/pages/BirthRegisterApproval.jsp", "eprBirthRegisterApproval.do"));
         linkPermission.put(12, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
-		linkPermission.put(13, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
-        linkPermission.put(14,new Link("search.label","/WEB-INF/pages/SearchBDF.jsp","eprSearchPageLoad.do"));
+        linkPermission.put(13, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
+        linkPermission.put(14, new Link("search.label", "/WEB-INF/pages/SearchBDF.jsp", "eprSearchPageLoad.do"));
     }
 }

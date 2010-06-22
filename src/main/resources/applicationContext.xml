@@ -78,6 +78,7 @@
     <bean id="userManagerService" class="lk.rgd.common.core.service.UserManagerImpl">
         <constructor-arg ref="userDAOImpl"/>
         <constructor-arg ref="roleDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
