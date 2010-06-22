@@ -121,12 +121,9 @@ public interface UserManager {
     void deleteUser(User userToDelete, User adminUser);
 
     /**
-     * check if the password is expired
-     *
-     * @param currentDate
-     * @return
+     * Update the password of the user, along with a new password expiry date
+     * @param newPass the new password
+     * @param user user account 
      */
-    boolean checkPasswordExpiryDate(Date currentDate, User user);
-
     void updatePassword(String newPass, User user);
 }
