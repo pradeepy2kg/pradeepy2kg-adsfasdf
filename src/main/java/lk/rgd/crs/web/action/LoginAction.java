@@ -96,7 +96,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         // get Calendar with current date
         java.util.GregorianCalendar gCal = new GregorianCalendar();
 
-        if (userManager.checkPasswordExpiryDate(gCal.getTime(), user)) {
+        if (gCal.getTime().after(user.getPasswordExpiry())) {
             logger.warn("password has been expired for user :{}", user.getUserName());
             return "expired";
         }
