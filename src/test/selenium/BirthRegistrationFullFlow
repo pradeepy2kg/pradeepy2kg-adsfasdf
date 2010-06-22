@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>birth-registration-form-1_birthDivisionId</td>
+	<td>//select[@id='birthDivisionId']</td>
 	<td>label=3: අලුත් කඩේ (Medical)</td>
 </tr>
 <tr>
