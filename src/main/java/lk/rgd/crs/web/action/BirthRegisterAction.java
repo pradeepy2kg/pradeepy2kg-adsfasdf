@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 import java.util.Locale;
+import java.util.List;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
@@ -16,9 +17,11 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.bean.UserWarning;
 
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
 /**
@@ -46,6 +49,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
+    private List<UserWarning> warnings;
 
     private String scopeKey;
     private Map session;
@@ -269,33 +273,33 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    public String birthConfirmationPrint() {
+    public String ConfirmationPrintPageLoad(){
+        boolean caughtException = false;
+        BirthDeclaration bdf;
+        bdf = service.getById(bdId, user);
+        //bdf = service.getByBDDivisionAndSerialNo(user.,serialNo);
+        if (user.isAuthorized(Permission.APPROVE_BDF)){
+            service.approveBirthDeclaration(bdf, true, user);
+            logger.debug("User BDID {} : ",bdId );
 
-
-        // logger.debug("Step {} of 1 ", pageNo);
-        if ((pageNo > 2) || (pageNo < 0)) {
-            return "error";
-        } else {
-            BirthDeclaration bdf;
-            if (pageNo == 0) {
-                BirthDeclaration bd = service.getById(bdId, user);
-                service.approveBirthDeclaration(bd, true, user);
-                if (bdId != 0) {
-                    bdf = service.getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN));
-                } else if ((serialNo > 0)) {
-                    bdf = service.getByBDDivisionAndSerialNo(null /* TODO */, serialNo);
-                } else {
-                    //logger.debug("inside birthConfirmation : bdKey {}", getBdKey());
-                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
-                }
-            } else {
-                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+            try {
+            warnings = service.approveBirthDeclaration(bdf, false, user);
             }
-            session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
-            populate(bdf);
-            return "form" + pageNo;
-        }
+            catch (CRSRuntimeException e) {
+            addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
+            caughtException = true;
+            }
+            if(caughtException ||(warnings != null && warnings.isEmpty())) {
+                populate(bdf);
+            }
+            return "pageLoad";
+            }else {
+                return "error";
+            }
+    }
 
+    public String birthConfirmationPrint() {
+        return "success";
     }
 
     private void handleErrors(Exception e) {
@@ -784,5 +788,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setNewComment(String newComment) {
         this.newComment = newComment;
+    }
+    public List<UserWarning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<UserWarning> warnings) {
+        this.warnings = warnings;
     }
 }

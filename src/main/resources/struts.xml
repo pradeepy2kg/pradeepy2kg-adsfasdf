@@ -74,14 +74,19 @@
             <result type="tiles" name="searchError">epr.BDFSearch</result>
         </action>
 
-        <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
-                method="birthConfirmationPrint">
-            <result type="tiles" name="form0">epr.birthConfirmationPrint_form</result>
-            <result type="tiles" name="form1">epr.welcome</result>
-            <result type="redirectAction" name="re-direct">eprApproveSelected</result>
+        <action name="eprConfirmationPrintPageLoad" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="ConfirmationPrintPageLoad">
+            <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthConfirmationPrint">
+            <result type="tiles" name="success">epr.welcome</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        
         <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"
                 method="getBirthConfirmationReport">
             <result type="tiles" name="success">epr.welcome</result>
