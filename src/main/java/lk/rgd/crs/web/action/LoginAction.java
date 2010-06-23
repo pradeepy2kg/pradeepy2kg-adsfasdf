@@ -101,7 +101,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             return "expired";
         }
         // if status are OK
-        logger.info("---------users status OK------");
+        logger.info("users status OK------");
         return "success";
 
     }
@@ -152,6 +152,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(12, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
         linkPermission.put(13, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
         linkPermission.put(14, new Link("search.label", "/WEB-INF/pages/SearchBDF.jsp", "eprSearchPageLoad.do"));
-        linkPermission.put(15,new Link("birth_confirmation_approval.label","/WEB-INF/pages/BirthConfirmationApproval.jsp","eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
+        linkPermission.put(15, new Link("birth_confirmation_approval.label", "/WEB-INF/pages/BirthConfirmationApproval.jsp", "eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
     }
 }
