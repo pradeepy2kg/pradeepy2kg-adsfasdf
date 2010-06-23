@@ -175,7 +175,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
                         // all pages captured, proceed to persist after validations
                         // todo data validations
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), new Integer(caseFileNumber).toString() /** FIXME */, newComment);
 
                         // TODO remove this section, can access this in jsp
                         // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
@@ -263,7 +263,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         //todo archive the old entry
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), new Integer(caseFileNumber).toString() /** FIXME */, newComment);
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);

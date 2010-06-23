@@ -52,27 +52,22 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     /**
-     * Add a Birth declaration to the system. This is a Data Entry operation, and only data entry level validations
-     * are performed at this stage. The [ADR] Approval will trigger a manual / human approval after validating any
-     * warnings by an ADR or higher level authority
-     *
-     * @param bdf            the BDF to be added
-     * @param ignoreWarnings an explicit switch to disable optional validations
-     * @param user           the user initiating the action
+     * @inheritDoc
      */
-    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user, int caseFileNumber, String newComment) {
+    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
+        String caseFileNumber, String additionalDocumentsComment) {
         // does the user have access to the BDF being added (i.e. check district and DS division)
+        // TODO if a mother is specified, is she alive? etc
+        // TODO add case file number and additional document list as comments
+        if (!ignoreWarnings) {
+            // TODO more validations .. like bdf.getParent().getMotherFullName() != null etc
+        }
         validateAccessOfUser(user, bdf);
         birthDeclarationDAO.addBirthDeclaration(bdf);
     }
 
     /**
-     * Approve a list of BDF forms. Will only approve those that triggers no warnings. The result will contain
-     * information on the warnings returned.
-     *
-     * @param approvalDataList a list of the unique BDF IDs to be approved in batch
-     * @param user             the user approving the BDFs
-     * @return a list of warnings for those that trigger warnings during approval
+     * @inheritDoc
      */
     public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user) {
 
@@ -93,12 +88,17 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         return warnings;
     }
 
+    /**
+     * @inheritDoc
+     */
     public void updateNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
+
+        // TODO check validations as per addNormalBirthDeclaration
 
         // a BDF can be edited by a DEO or ADR only before being approved
         if (existing.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
@@ -109,6 +109,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     public void deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // does the user have access to the BDF being deleted
         validateAccessOfUser(user, bdf);
@@ -125,6 +128,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -166,8 +172,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
             // SimpleDateFormat is not thread-safe
             synchronized (dfm) {
-                sb.append(dfm.format(new Date()) + " - Approved birth declaration ignoring warnings. User : " +
-                    user.getUserId());
+                sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
+                    append(user.getUserId());
             }
             bdf.getRegister().setComments(sb.toString());
         }
@@ -179,6 +185,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         return warnings;
     }
 
+    /**
+     * @inheritDoc
+     */
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
         if (comments == null || comments.trim().length() < 1) {
             handleException("A comment is required to reject a birth declaration",
@@ -216,39 +225,39 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         throw new CRSRuntimeException(message, code);
     }
 
-    /**
-     * Returns the Birth Declaration object for a given Id
-     *
-     * @param bdId Birth Declarion Id for the given declaration
-     * @param user
-     * @Return BirthDeclaration
-     */
     public BirthDeclaration getById(long bdId, User user) {
-        // todo security validations based on user. does the user have access to this birth division,
-        // todo auditing
-        return birthDeclarationDAO.getById(bdId);
+        BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
+        // does the user have access to the BDF (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        return bdf;
     }
 
     /**
      * @inheritDoc
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo) {
-        return birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serialNo);
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user) {
+        BirthDeclaration bdf = birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serialNo);
+        // does the user have access to the BDF (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        return bdf;
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision, pageNo, noOfRows);
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         return birthDeclarationDAO.getDeclarationApprovalPending(birthDivision, pageNo, noOfRows);
     }
 
     /**
-     * Populates transient string values for Country, Race, District, Division etc
-     *
-     * @param bdf the BirthDeclaration to populate transient values
-     * @return populated BDF
+     * @inheritDoc
      */
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf) {
         String prefLanguage = bdf.getRegister().getPreferredLanguage();
@@ -295,5 +304,4 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         return bdf;
     }
-
 }
