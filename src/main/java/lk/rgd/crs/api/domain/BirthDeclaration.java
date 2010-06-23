@@ -142,6 +142,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public ParentInfo getParent() {
+        if (parent == null) {
+            parent = new ParentInfo();
+        }
         return parent;
     }
 
@@ -150,6 +153,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public MarriageInfo getMarriage() {
+        if (marriage == null) {
+            marriage = new MarriageInfo();
+        }
         return marriage;
     }
 
@@ -158,6 +164,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public GrandFatherInfo getGrandFather() {
+        if (grandFather == null) {
+            grandFather = new GrandFatherInfo();
+        }
         return grandFather;
     }
 
@@ -166,6 +175,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public NotifyingAuthorityInfo getNotifyingAuthority() {
+        if (notifyingAuthority == null) {
+            notifyingAuthority = new NotifyingAuthorityInfo();
+        }
         return notifyingAuthority;
     }
 
@@ -174,6 +186,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public InformantInfo getInformant() {
+        if (informant == null) {
+            informant = new InformantInfo();
+        }
         return informant;
     }
 
@@ -182,6 +197,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public ConfirmantInfo getConfirmant() {
+        if (confirmant == null) {
+            confirmant = new ConfirmantInfo();
+        }
         return confirmant;
     }
 
@@ -190,6 +208,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public BirthRegisterInfo getRegister() {
+        if (register == null) {
+            register = new BirthRegisterInfo();
+        }
         return register;
     }
 
