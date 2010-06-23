@@ -26,6 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The central service managing the CRS Birth Registration process
+ */
 public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegistrationServiceImpl.class);

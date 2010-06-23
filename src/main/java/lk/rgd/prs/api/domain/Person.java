@@ -19,6 +19,16 @@ import java.util.Set;
 public class Person {
 
     /**
+     * Record status
+     * Verified records are known to be accurate
+     * Unverified records may be inaccurate
+     */
+    public enum Status {
+        UNVERIFIED      /** 0 - Record may be inaccurate */,        
+        VERIFIED        /** 1 - Record is confirmed to be accurate */
+    }
+
+    /**
      * The life status
      */
     public enum LifeStatus {
@@ -54,6 +64,11 @@ public class Person {
      */
     @Column(nullable = true, length = 10)
     private String nic;
+    /**
+     * The current passport number
+     */
+    @Column(nullable = true, length = 20)
+    private String passportNo;
     /**
      * The preferred language of for the record
      */
@@ -111,6 +126,11 @@ public class Person {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfDeath;
+    /**
+     * Record status - unverified (default) or verified
+     */
+    @Column(columnDefinition="smallint not null default 0")
+    private Status status;
     /**
      * Current civil status - maybe unknown / null
      */
@@ -323,5 +343,21 @@ public class Person {
 
     public void setLastAddress(Address lastAddress) {
         this.lastAddress = lastAddress;
+    }
+
+    public String getPassportNo() {
+        return passportNo;
+    }
+
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
