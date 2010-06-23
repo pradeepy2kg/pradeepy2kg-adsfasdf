@@ -1,11 +1,11 @@
 package lk.rgd.common.core.service;
 
 import lk.rgd.Permission;
-import lk.rgd.AppConstants;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
@@ -22,7 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * @author asankha
@@ -152,7 +151,7 @@ public class UserManagerImpl implements UserManager {
     public void updatePassword(String newPass, User user) {
         // setting new password expiry date get Calendar with current date
         java.util.GregorianCalendar gCal = new GregorianCalendar();
-        int resetDays = appParaDao.getIntParameter(AppConstants.PASSWORD_EXPIRY_DAYS);
+        int resetDays = appParaDao.getIntParameter(AppParameter.PASSWORD_EXPIRY_DAYS);
         gCal.add(Calendar.DATE, resetDays);
         user.setPasswordExpiry(gCal.getTime());
         // setting new password

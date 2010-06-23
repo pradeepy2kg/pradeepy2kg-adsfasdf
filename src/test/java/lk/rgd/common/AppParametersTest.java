@@ -3,7 +3,7 @@ package lk.rgd.common;
 import junit.framework.TestCase;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.AppParametersDAO;
-import lk.rgd.crs.api.BirthConstants;
+import lk.rgd.common.api.domain.AppParameter;
 import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
 
@@ -16,7 +16,7 @@ public class AppParametersTest extends TestCase {
 
     public void testAppParameters() throws Exception {
         AppParametersDAO bean = (AppParametersDAO) ctx.getBean("appParametersDAOImpl", AppParametersDAO.class);
-        Assert.assertEquals(bean.getIntParameter(BirthConstants.CRS_BIRTH_LATE_REG_DAYS), 90);
+        Assert.assertEquals(bean.getIntParameter(AppParameter.CRS_BIRTH_LATE_REG_DAYS), 90);
 
         bean.setIntParameter("test_int", 3);
         Assert.assertEquals(bean.getIntParameter("test_int"), 3);
