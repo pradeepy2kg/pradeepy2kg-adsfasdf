@@ -277,25 +277,24 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         boolean caughtException = false;
         BirthDeclaration bdf;
         bdf = service.getById(bdId, user);
-        //bdf = service.getByBDDivisionAndSerialNo(user.,serialNo);
         if (user.isAuthorized(Permission.APPROVE_BDF)){
-            service.approveBirthDeclaration(bdf, true, user);
-            logger.debug("User BDID {} : ",bdId );
+            logger.debug("BDID {} : ",bdId );
 
             try {
-            warnings = service.approveBirthDeclaration(bdf, false, user);
+                warnings = service.approveBirthDeclaration(bdf, false, user);
+            } catch (CRSRuntimeException e) {
+                addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
+                caughtException = true;
             }
-            catch (CRSRuntimeException e) {
-            addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
-            caughtException = true;
-            }
+
             if(caughtException ||(warnings != null && warnings.isEmpty())) {
-                populate(bdf);
-            }
-            return "pageLoad";
-            }else {
+                return "pageLoad";
+            } else {
                 return "error";
             }
+        } else {
+            return "error";
+        } 
     }
 
     public String birthConfirmationPrint() {

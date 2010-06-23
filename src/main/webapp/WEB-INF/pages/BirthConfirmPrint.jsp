@@ -16,7 +16,6 @@
 
     <s:url id="approveAndPrintUrl" action="eprConfirmationPrintPageLoad">
             <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
-            <%--<s:param name="serialNo" value="%{#session.birthRegister.register.bdfSerialNo}"/> --%>
         </s:url>
 
     <div id="birth-register-approval-body">
