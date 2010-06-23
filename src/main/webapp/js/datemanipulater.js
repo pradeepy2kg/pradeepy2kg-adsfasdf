@@ -1,5 +1,5 @@
 /**
- * @author Indunil Moremada
+ * @author Indunil Moremada  ,amith jayasekara
  * javascript for changing the datepicker dynamically with the changes done for the list boxes year,month and date
  *  @param id is used to identified the field in the jsp
  * @param flag is used to identify whether the request is coming from if flag is 1 request is from page 1 of 4
@@ -10,14 +10,24 @@ var Selectedmonth;
 var day;
 var selectedDate,secondSelectedDate,thirdSelectedDate;
 var sel;
+
+
+dojo.provide("dojo.widget.DatePicker");
+dojo.provide("dojo.widget.DatePicker.util");
+dojo.require("dojo.widget.DomWidget");
+dojo.require("dojo.date");
+
+
 function setDate(id, flag) {
     var submitDatePicker = dojo.widget.byId('submitDatePicker');
+
+
     var datePicker = dojo.widget.byId('datePicker');
     var fatherDatePicker = dojo.widget.byId('fatherDatePicker');
     var motherDatePicker = dojo.widget.byId('motherDatePicker');
-    var admitDatePicker= dojo.widget.byId('admitDatePicker');
-     var marriageDatePicker= dojo.widget.byId('marriageDatePicker');
-       var modifiedDatePicker= dojo.widget.byId('modifiedDatePicker');
+    var admitDatePicker = dojo.widget.byId('admitDatePicker');
+    var marriageDatePicker = dojo.widget.byId('marriageDatePicker');
+    var modifiedDatePicker = dojo.widget.byId('modifiedDatePicker');
 
     if (flag == 1) submitDatePicker.setValue(getDateWhenYearIsGiven
             ("submitYear", "submitMonth", "submitDay"));
@@ -28,38 +38,38 @@ function setDate(id, flag) {
     else if (flag == 3) fatherDatePicker.setValue(getDateWhenYearIsGiven
                 ("fatherYear", "fatherMonth", "fatherDay"));
 
-    else if (flag == 4) motherDatePicker.setValue(getDateWhenYearIsGiven
+        else if (flag == 4) motherDatePicker.setValue(getDateWhenYearIsGiven
                     ("motherYear", "motherMonth", "motherDay"));
-     else if (flag == 5) admitDatePicker.setValue(getDateWhenYearIsGiven
-                    ("admitYear", "admitMonth", "admitDay"));
-       else if (flag == 6)marriageDatePicker.setValue(getDateWhenYearIsGiven
-                    ("marrigeYear", "marrigeMonth", "marrigeDay"));
-    else if (flag == 7)modifiedDatePicker.setValue(getDateWhenYearIsGiven
-                    ("modifiedYear", "modifiedMonth", "modifiedDay"));
+            else if (flag == 5) admitDatePicker.setValue(getDateWhenYearIsGiven
+                        ("admitYear", "admitMonth", "admitDay"));
+                else if (flag == 6)marriageDatePicker.setValue(getDateWhenYearIsGiven
+                            ("marrigeYear", "marrigeMonth", "marrigeDay"));
+                    else if (flag == 7)modifiedDatePicker.setValue(getDateWhenYearIsGiven
+                                ("modifiedYear", "modifiedMonth", "modifiedDay"));
 
 }
 
 function setValue() {
-     var picker = dojo.widget.byId("picker");
+    var picker = dojo.widget.byId("picker");
 
-     //string value
-     picker.setValue('2007-01-01');
+    //string value
+    picker.setValue('2007-01-01');
 
-     //Date value
-     picker.setValue(new Date());
-  }
+    //Date value
+    picker.setValue(new Date());
+}
 
-  function showValue() {
-     var picker = dojo.widget.byId("picker");
+function showValue() {
+    var picker = dojo.widget.byId("picker");
 
-     //string value
-     var stringValue = picker.getValue();
-     alert(stringValue);
+    //string value
+    var stringValue = picker.getValue();
+    alert(stringValue);
 
-     //date value
-     var dateValue = picker.getDate();
-     alert(dateValue);
-  }
+    //date value
+    var dateValue = picker.getDate();
+    alert(dateValue);
+}
 
 
 function ePopGetValue(val) {
@@ -107,7 +117,23 @@ function splitDate() {
     //todo has to be implemented
     //var stringValue = submitDatePicker.getValue();
     document.write("dddd");
-    alert ("ok"); 
+    alert("ok");
+
+
+}
+
+function validateDate() {
+
+    var datePicker = dojo.widget.byId('datePicker').inputNode.value;
+    //var x = dojo.widget.byId("datePicker").datePicker.storedDate;
+    alert(datePicker);
+    var submitDatePicker = dojo.widget.byId('submitDatePicker').inputNode.value;
+    alert(submitDatePicker);
+    /*  SelectedDateDDMMMYYYY = dojo.widget.byId("atePicker").inputNode.value;
+     SelectedDateYYYYMMDD = dojo.widget.byId("atePicker").datePicker.storedDate;
+
+     alert("Date selected is " + SelectedDateDDMMMYYYY + " length " + SelectedDateDDMMMYYYY.length + " "
+     + SelectedDateYYYYMMDD);*/
 
 
 }

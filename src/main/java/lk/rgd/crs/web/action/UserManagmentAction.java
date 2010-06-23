@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
