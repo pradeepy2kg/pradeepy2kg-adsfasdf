@@ -10,13 +10,19 @@ import java.util.List;
 public interface BirthRegistrationService {
 
     /**
-     * Add a new BDF by a DEO or ADR
+     * Add a Birth declaration to the system. This is a Data Entry operation, and only data entry level validations
+     * are performed at this stage. The [ADR] Approval will trigger a manual / human approval after validating any
+     * warnings by an ADR or higher level authority
      *
      * @param bdf            the BDF to be added
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user           the user initiating the action
+     * @param caseFileNumber the case file number for a late or belated registration
+     * @param additionalDocumentsComment a comment specifying the list of additional document supplied
+     * (for a late registration)
      */
-    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user, int caseFileNumber, String newComment);
+    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
+        String caseFileNumber, String additionalDocumentsComment);
 
     /**
      * Update an existing BDF by a DEO or ADR before approval
@@ -69,8 +75,8 @@ public interface BirthRegistrationService {
      * Returns the Birth Declaration object for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration
-     * @param user
-     * @Return BirthDeclaration
+     * @param user the user making the request
+     * @return the BDF if found, and the user has access to the record
      */
     public BirthDeclaration getById(long bdId, User user);
 
@@ -79,15 +85,18 @@ public interface BirthRegistrationService {
      *
      * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
      * @param serialNo   bdfSerialNo given to the Birth Declarion
-     * @Return BirthDeclaration
+     * @param user the user making the request
+     * @return the BDF if found, and the user has access to the record
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
+     * @param pageNo the page number for the results required (start from 1)
+     * @param noOfRows number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -97,6 +106,8 @@ public interface BirthRegistrationService {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
+     * @param pageNo the page number for the results required (start from 1)
+     * @param noOfRows number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);

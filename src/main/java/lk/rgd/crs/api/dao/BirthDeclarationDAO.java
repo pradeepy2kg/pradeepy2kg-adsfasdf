@@ -51,6 +51,8 @@ public interface BirthDeclarationDAO {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
+     * @param pageNo the page number for the results required (start from 1)
+     * @param noOfRows number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -60,6 +62,8 @@ public interface BirthDeclarationDAO {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
+     * @param pageNo the page number for the results required (start from 1)
+     * @param noOfRows number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -68,7 +72,7 @@ public interface BirthDeclarationDAO {
      * Returns the Birth Declaration object for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration
-     * @Return BirthDeclaration
+     * @return BirthDeclaration
      */
     public BirthDeclaration getById(long bdId);
 

@@ -158,7 +158,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         } else {
             if (bdfSerialNo > 0) {
                 try {
-                    bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), bdfSerialNo);
+                    bdf = service.getByBDDivisionAndSerialNo(
+                        bdDivisionDAO.getBDDivisionByPK(division), bdfSerialNo, user);
                 }
                 catch (Exception e) {
                     logger.error("inside filter : {} , {} ", e.getMessage(), e);
