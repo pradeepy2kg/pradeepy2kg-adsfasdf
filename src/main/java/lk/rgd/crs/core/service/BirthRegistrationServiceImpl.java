@@ -188,6 +188,102 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public void markBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user) {
+
+        // does the user have access to the BDF being confirmed (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateAccessOfUser(user, existing);
+
+        // to ensure correctness, modify the existing copy and not update to whats passed to us
+        // i.e. only update the confirmant information
+        existing.setConfirmant(bdf.getConfirmant());
+
+        if (bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) {
+            bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMED_WITHOUT_CHANGES);
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
+        } else {
+            handleException("Cannot update birth declaration record : " + bdf.getIdUKey() +
+                " as confirmed without changes, as its not in a state where the confirmation is printed",
+                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION_CHANGES);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+
+        // check approve permission
+        if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth confirmation",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        if (bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+
+            List<UserWarning> warnings = prepareForConfirmation(bdf, ignoreWarnings, user);
+            if (warnings.isEmpty() || ignoreWarnings) {
+                bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_APPROVED);
+                birthDeclarationDAO.updateBirthDeclaration(bdf);
+            }
+            return warnings;
+        } else {
+            handleException("Cannot approve a confirmation : " + bdf.getIdUKey() + " with changes, as its not in a " +
+                "state where the confirmation is printed; or changes have been captured",
+                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION_CHANGES);
+        }
+        return null;
+    }
+
+    private List<UserWarning> prepareForConfirmation(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        // does the user have access to the BDF being confirmed (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateAccessOfUser(user, existing);
+
+        // create a holder to capture any warnings
+        List<UserWarning> warnings = new ArrayList<UserWarning>();
+
+        if (!ignoreWarnings) {
+            // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
+            if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
+                List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBandMotherNICorPIN(
+                    bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
+
+                for (BirthDeclaration b : existingRecords) {
+                    if (b.getIdUKey() != bdf.getIdUKey()) {
+                        warnings.add(
+                            new UserWarning("Possible duplicate with record ID : " + b.getIdUKey() +
+                                " Registered on : " + b.getRegister().getDateOfRegistration() +
+                                " Child name : " + b.getChild().getChildFullNameOfficialLangToLength(20)));
+                    }
+                }
+            }
+        }
+
+        if (!warnings.isEmpty() && ignoreWarnings) {
+            StringBuilder sb = new StringBuilder();
+            if (existing.getRegister().getComments() != null) {
+                sb.append(existing.getRegister().getComments()).append("\n");
+            }
+
+            // SimpleDateFormat is not thread-safe
+            synchronized (dfm) {
+                sb.append(dfm.format(new Date())).append(" - Approved birth confirmation ignoring warnings. User : ").
+                    append(user.getUserId());
+            }
+            bdf.getRegister().setComments(sb.toString());
+        }
+        return warnings;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
         if (comments == null || comments.trim().length() < 1) {
             handleException("A comment is required to reject a birth declaration",

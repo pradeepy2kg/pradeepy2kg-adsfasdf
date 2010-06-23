@@ -63,7 +63,24 @@ public interface BirthRegistrationService {
     public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
-     * Reject a birth declaration by an ADR or higher authority
+     * Approve a birth confirmation without any additional changes
+     * @param bdf the birth declaration confirmed as correct
+     * @param user user initiating the action
+     */
+    public void markBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user);
+
+    /**
+     * Approve changes submitted by parents (or possibly those already captured by a DEO)
+     * @param bdf the BDF to approve with changes
+     * @param ignoreWarnings a flag indicating that any warnings are confirmed as checked by the user
+     * @param user user initiating the action
+     * @return any warnings generated for the record
+     */
+    public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Reject a birth declaration by an ADR or higher authority. This should be used to reject a BDF even after
+     * the confirmation is printed, and is now being rejected
      *
      * @param bdf      the BDF to be marked rejected
      * @param comments comment specifying the reason for rejection (e.g. duplicate record)
