@@ -27,6 +27,10 @@ public class ErrorCodes {
      * A reason / comment is required for the action
      */
     public static final int COMMENT_REQUIRED_BDF_REJECT = 1003;
+    /**
+     * The BDF is not in a state where confirmation changes can be approved/rejected
+     */
+    public static final int INVALID_STATE_FOR_BDF_CONFIRMATION_CHANGES = 1004;
 
     // error codes 2001 - 3000 indicate permission denied errors
     /**
