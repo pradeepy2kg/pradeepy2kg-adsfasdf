@@ -97,5 +97,8 @@
 
     <bean id="searchAction" class="lk.rgd.crs.web.action.SearchAction">
         <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
     </bean>
 </beans>

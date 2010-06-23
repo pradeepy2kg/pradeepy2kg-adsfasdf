@@ -4,6 +4,7 @@
 <div id="bdaw-outer">
     <div id="bdaw-content">
         <table>
+            <%--todo confirmation igoreWarning has to be implemented--%>
             <s:iterator value="#request.warnings">
                 <tr>
                     <td><s:property value="message"/></td>

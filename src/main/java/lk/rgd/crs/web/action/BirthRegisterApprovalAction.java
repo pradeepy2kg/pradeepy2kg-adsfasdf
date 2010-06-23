@@ -63,6 +63,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean ignoreWarning;
     private boolean allowEditBDF;
     private boolean allowApproveBDF;
+    private boolean allowApproveBDFConfirmation;
     private boolean reject;
     //decides request is from birth confirmation approval if confirmationApprovalFlag is set to true
     private boolean confirmationApprovalFlag;
@@ -117,8 +118,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * of the user
      */
     private void initPermission() {
-        setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
-        setAllowEditBDF(user.isAuthorized(Permission.EDIT_BDF));
+        if (confirmationApprovalFlag) {
+            setAllowApproveBDFConfirmation(user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION));
+        } else {
+            setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
+            setAllowEditBDF(user.isAuthorized(Permission.EDIT_BDF));
+        }
     }
 
     /**
@@ -191,17 +196,26 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         bdf = service.getById(bdId, user);
         boolean caughtException = false;
         try {
-            warnings = service.approveBirthDeclaration(bdf, false, user);
+            if (confirmationApprovalFlag) {
+                warnings = service.approveConfirmationChanges(bdf, false, user);
+            } else {
+                warnings = service.approveBirthDeclaration(bdf, false, user);
+            }
         }
         catch (CRSRuntimeException e) {
-            logger.error("inside approve : {} , {} ", e.getErrorCode(), e);
+            logger.error("inside approve BirthRegistration/BirthConfirmation : {} ", e);
             addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
             caughtException = true;
         }
 
         if (caughtException || (warnings != null && warnings.isEmpty())) {
-            approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
-                pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            if (confirmationApprovalFlag) {
+                   approvalPendingList=service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+                       pageNo,appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            } else {
+                approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
+                    pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+            }
             if (approvalPendingList.size() > 0) {
                 paginationHandler(approvalPendingList.size());
             } else {
@@ -616,5 +630,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setConfirmationApprovalFlag(boolean confirmationApprovalFlag) {
         this.confirmationApprovalFlag = confirmationApprovalFlag;
+    }
+
+    public boolean isAllowApproveBDFConfirmation() {
+        return allowApproveBDFConfirmation;
+    }
+
+    public void setAllowApproveBDFConfirmation(boolean allowApproveBDFConfirmation) {
+        this.allowApproveBDFConfirmation = allowApproveBDFConfirmation;
     }
 }

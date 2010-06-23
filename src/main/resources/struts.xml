@@ -196,7 +196,7 @@
         <action name="eprApproveBirthConfirmation" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approve">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
-           <!-- <result type="tiles" name="approvalRejected">epr.approvalWorning</result>-->
+           <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
         </action>
         
         <!--Direct Approval through BirthRegisterFoemDeails page -->

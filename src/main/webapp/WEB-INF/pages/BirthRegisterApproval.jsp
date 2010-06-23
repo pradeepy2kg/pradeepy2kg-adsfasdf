@@ -59,7 +59,7 @@
                                     fieldValue="%{#approvalList.idUKey}"/></td>
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
-                    <td><s:property value="confirmant.confirmationReceiveDate"/></td>
+                    <td><s:property value="register.dateOfRegistration"/></td>
                     <td></td>
                     <s:if test="#request.allowEditBDF">
                         <s:url id="editSelected" action="eprBirthRegistration.do">
