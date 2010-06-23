@@ -180,6 +180,19 @@
             <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
         </action>
 
+         <action name="eprConfirmationApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="filter">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprConfirmationApprovalNext" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="nextPage">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprConfirmationApprovalPrevious" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
         <!--Direct Approval through BirthRegisterFoemDeails page -->
         <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclarationForm">

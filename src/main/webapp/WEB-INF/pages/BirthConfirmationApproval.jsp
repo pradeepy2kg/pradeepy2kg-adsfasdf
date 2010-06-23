@@ -2,14 +2,15 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
 <div id="birth-register-approval">
-    <s:form action="eprApprovalRefresh" name="birth_register_approval_header">
+    <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header">
         <div id="birth-register-approval-header">
             <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span><s:select
                     list="districtList" name="district" value="#request.district"/></s:label>
             <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span><s:select
                     list="divisionList" value="division"
                     name="division" headerKey="0"/></s:label>
-            <s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo"/>
+            <s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdId"/>
+            <s:hidden name="confirmationApprovalFlag" value="true"/>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
         </div>
     </s:form>
@@ -62,7 +63,7 @@
                     <td><s:property value="confirmant.confirmationReceiveDate"/></td>
                     <td></td>
                     <s:if test="#request.allowEditBDF">
-                        <s:url id="editSelected" action="eprBirthRegistration.do">
+                        <s:url id="editSelected" action="eprBirthConfirmation.do">
                             <s:param name="bdId" value="idUKey"/>
                         </s:url>
                         <td></td>
@@ -75,6 +76,7 @@
                     </s:if>
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
+                            <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -93,6 +95,7 @@
                     </s:if>
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
+                            <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -112,6 +115,7 @@
                     <td></td>
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
+                            <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -139,6 +143,7 @@
                         name="allCheck"
                         onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
                     <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                <s:hidden name="confirmationApprovalFlag" value="true"/>
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
@@ -150,7 +155,8 @@
             <br/>
             <%-- Next link to visible next records will only visible if nextFlag is
           set to 1--%>
-            <s:url id="previousUrl" action="eprApprovalPrevious.do">
+            <s:url id="previousUrl" action="eprConfirmationApprovalPrevious.do">
+                <s:param name="confirmationApprovalFlag" value="true"/>
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -159,7 +165,8 @@
                 <s:param name="recordCounter" value="#request.recordCounter"/>
             </s:url>
 
-            <s:url id="nextUrl" action="eprApprovalNext.do">
+            <s:url id="nextUrl" action="eprConfirmationApprovalNext.do">
+                <s:param name="confirmationApprovalFlag" value="true"/>
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
