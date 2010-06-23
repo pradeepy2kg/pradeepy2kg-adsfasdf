@@ -74,8 +74,8 @@
                         <td></td>
                         <td></td>
                     </s:if>
-                    <s:if test="#request.allowApproveBDF">
-                        <s:url id="approveSelected" action="eprHome.do">
+                    <s:if test="#request.allowApproveBDFConfirmation">
+                        <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
                             <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -93,7 +93,7 @@
                         <td></td>
                         <td></td>
                     </s:if>
-                    <s:if test="#request.allowApproveBDF">
+                    <s:if test="#request.allowApproveBDFConfirmation">
                         <s:url id="rejectSelected" action="eprHome.do">
                             <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
@@ -113,23 +113,6 @@
                     </s:if>
                     <td></td>
                     <td></td>
-                    <s:if test="#request.allowApproveBDF">
-                        <s:url id="deleteSelected" action="eprHome.do">
-                            <s:param name="confirmationApprovalFlag" value="true"/>
-                            <s:param name="bdId" value="idUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
-                            <s:param name="recordCounter" value="#request.recordCounter"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{deleteSelected}"
-                                                title="%{getText('deleteToolTip.label')}"><img
-                                src="<s:url value='/images/delete.png'/>" width="25" height="25"
-                                border="none"/></s:a>
-                        </td>
-                    </s:if>
                 </tr>
                 <%--select_all checkbox is visible only if
             counter is greater than one--%>

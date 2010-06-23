@@ -200,6 +200,7 @@ public class
             bs = new BitSet();
             bs.or(deoRole.getPermBitSet());
             bs.set(Permission.APPROVE_BDF);
+            bs.set(Permission.APPROVE_BDF_CONFIRMATION);
             bs.set(Permission.EDIT_BDF);
             bs.set(Permission.BIRTH_CONFIRMATION_PAGE);
             bs.set(Permission.BIRTH_CONFIRMATION_PRINT_PAGE);
