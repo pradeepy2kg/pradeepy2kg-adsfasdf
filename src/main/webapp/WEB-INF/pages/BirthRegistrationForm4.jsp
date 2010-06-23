@@ -5,6 +5,8 @@
   Time: 4:01:05 PM
   To change this template use File | Settings | File Templates.
 --%>
+
+
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,33 +14,79 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST"
             onsubmit="javascript:return validate()">
-        <div id="birth-registration-form-notify-autority-sub-title" class="form-sub-title">
-            *in Sinhala<br>*in Tamil<br>Notifying Authority
-        </div>
-        <div id="notifier-nic" class="font-9">
-            <label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள
-                அட்டை இல.<br>PIN / NIC of the Notifying Authority</label>
-            <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
-        </div>
-        <div id="notifier-name" class="font-9">
-            <label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label>
-            <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"/>
-        </div>
-        <div id="notifier-address" class="font-9">
-            <label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
-            <s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/>
-        </div>
-        <div id="notifier-signature" class="font-9">
-            <label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and Official Seal (if available) of the
-                Notifying Authority</label>
-            <s:checkbox name="notifyingAuthority.notifyingAuthoritySigned" id="notifyingAuthoritySigned"/>
-        </div>
-        <div id="notified-date" class="font-9">
-            <label>දිනය <br>*in tamil <br>Date</label>
-            <sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
-                               displayFormat="yyyy-MM-dd"
-                               onmouseover="javascript:splitDate('modifiedDatePicker')"/>
-        </div>
+
+
+        <table class="table_reg_page_04" cellspacing="0">
+            <caption></caption>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <tbody>
+            <tr>
+                <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Notifying
+                    Authority
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
+                    அடையாள எண் / அடையாள
+                    அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
+                <td colspan="2"><s:textfield name="notifyingAuthority.notifyingAuthorityPIN"
+                                             id="notifyingAuthorityPIN"/></td>
+            </tr>
+            <tr>
+                <td><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityName"
+                                            id="notifyingAuthorityName"/></td>
+            </tr>
+            <tr>
+                <td><label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
+                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width:220px"><label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and
+                    Official Seal (if available) of the
+                    Notifying Authority</label></td>
+                <td><s:checkbox name="notifyingAuthority.notifyingAuthoritySigned" id="notifyingAuthoritySigned"/></td>
+                <td><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td><sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+                                       displayFormat="yyyy-MM-dd"
+                                       onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <%--
+     <div id="birth-registration-form-notify-autority-sub-title" class="form-sub-title">
+           *in Sinhala<br>*in Tamil<br>Notifying Authority
+       </div>
+       <div id="notifier-nic" class="font-9">
+           <label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள
+               அட்டை இல.<br>PIN / NIC of the Notifying Authority</label>
+           <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
+       </div>
+       <div id="notifier-name" class="font-9">
+           <label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label>
+           <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"/>
+       </div>
+       <div id="notifier-address" class="font-9">
+           <label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
+           <s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/>
+       </div>
+       <div id="notifier-signature" class="font-9">
+           <label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and Official Seal (if available) of the
+               Notifying Authority</label>
+           <s:checkbox name="notifyingAuthority.notifyingAuthoritySigned" id="notifyingAuthoritySigned"/>
+       </div>
+       <div id="notified-date" class="font-9">
+           <label>දිනය <br>*in tamil <br>Date</label>
+           <sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+                              displayFormat="yyyy-MM-dd"
+                              onmouseover="javascript:splitDate('modifiedDatePicker')"/>
+       </div> --%>
         <s:hidden name="pageNo" value="4"/>
 
         <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value.value')}"/>

@@ -16,44 +16,37 @@ import java.util.Date;
 @Table(name = "USERS", schema = "COMMON")
 @NamedQueries({
         @NamedQuery(name = "filter.by.roleid", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND u.role.roleId = :roleId " +
+                "WHERE u.status != 3 AND u.role.roleId = :roleId " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.bd_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "WHERE u.status != 3 AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.mr_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "WHERE u.status != 3 AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.role_and_bd_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
+                "WHERE u.status != 3 AND u.role = :role AND :assignedBDDistrict MEMBER OF u.assignedBDDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.role_and_mr_district", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
+                "WHERE u.status != 3 AND u.role = :role AND :assignedMRDistrict MEMBER OF u.assignedMRDistricts " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.wildcard_id", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND u.userId LIKE :userIdMatch " +
+                "WHERE u.status != 3 AND u.userId LIKE :userIdMatch " +
                 "ORDER BY u.userId"),
         @NamedQuery(name = "filter.by.wildcard_name", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 AND u.userName LIKE :userNameMatch " +
+                "WHERE u.status != 3 AND u.userName LIKE :userNameMatch " +
                 "ORDER BY u.userName"),
         @NamedQuery(name = "filter.non.deleted", query = "SELECT u FROM User u " +
-                "WHERE u.status != 9 " +
+                "WHERE u.status != 3 " +
                 "ORDER BY u.userName")
-
 })
 public class User {
 
     public enum State {
-        INACTIVE, /**
-         * 0 - state. Cannot login
-         */
-        ACTIVE, /**
-         * 1 - state. Can login
-         */
-        LOCKEDOUT, /**
-         * 2 - state. Cannot login
-         */
-        DELETED /** 9 - state. Permanently deleted cannot be edited or login */
+        INACTIVE, /** 0 - state. Cannot login */
+        ACTIVE, /** 1 - state. Can login */
+        LOCKEDOUT, /** 2 - state. Cannot login */
+        DELETED /** 3 - state. Permanently deleted cannot be edited or login */
     }
 
     private static final Logger logger = LoggerFactory.getLogger(User.class);
@@ -85,7 +78,7 @@ public class User {
     /**
      * The password expiry date, after which the user is not allowed to login without changing the password
      */
-    @Column(nullable = true)
+    @Column(nullable =true) 
     private Date passwordExpiry;
 
     /**

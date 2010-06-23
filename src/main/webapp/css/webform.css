@@ -25,10 +25,10 @@
     background: #ffffff;
     padding: 10px;
 }
-#birth-registration-form-1-outer{height:950px;}
-#birth-registration-form-2-outer{height:1040px}
-#birth-registration-form-3-outer{height:1225px;}
-#birth-registration-form-4-outer{height:305px;}
+#birth-registration-form-1-outer{height:945px;}
+#birth-registration-form-2-outer{height:1005px}
+#birth-registration-form-3-outer{height:1258px;}
+#birth-registration-form-4-outer{height:320px;}
 
 
 /* Styles for the header area of the Birth Registration Form */
@@ -333,3 +333,151 @@ border-right:0px solid #000000;
 #create-user-outer div input, #create-user-outer div select{ width:400px;}
 
 /* Styles for the User Creation web form ends here. */
+
+/*styles for birth declaration forms*/
+.table_reg_page_01 {
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+}
+
+.table_reg_page_01 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_reg_page_01 textarea {
+    float: left;
+    width: 800px;
+}
+
+.table_reg_cell_01 {
+    border: none;
+}
+
+.table_reg_cell_01  select {
+    float: left;
+    width: 590px;
+    margin: 2px 5px;
+}
+
+
+/*styles for birth declaration form 02*/
+ .table_reg_page_02 {
+        border: 1px solid #000000;;
+        border-right: none;
+        border-bottom: none;
+        font-size: 9pt;
+        margin-bottom:10px
+    }
+
+    .table_reg_page_02 td {
+        border-right: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+    }
+
+    .table_reg_page_02 textarea {
+        float: left;
+        margin: 15px 5px;
+        width: 800px;
+    }
+
+    .table_reg_cell_02 {
+        border: none;
+    }
+
+    .table_reg_page_02 select {
+        float: left;
+        width: 250px;
+        margin: 2px 5px;
+    }
+
+    .table_reg_cell_02  select {
+        float: left;
+        width: 590px;
+        margin: 2px 5px;
+    }
+
+ /*styles for birth declaration form 03*/
+
+.table_reg_page_03 {
+        width: 1030px;
+        border: 1px solid #000000;;
+        border-right: none;
+        border-bottom: none;
+        font-size: 9pt;
+        margin-bottom: 15px;
+        margin-top:15px
+    }
+
+    .table_reg_page_03 td {
+        border-right: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+    }
+
+    .table_reg_page_03 textarea {
+        float: left;
+        margin: 15px 5px;
+        width: 800px;
+    }
+
+    .table_reg_cell_03 {
+        border: none;
+    }
+
+    .table_reg_page_03 select {
+        float: left;
+        width: 250px;
+        margin: 2px 5px;
+    }
+
+    .table_reg_cell_03  select {
+        float: left;
+        width: 590px;
+        margin: 2px 5px;
+    }
+
+    .sub_table {
+        border: none;
+    }
+
+    .sub_table td {
+        border: none;
+    }
+
+
+    /*styles for birth declaration form 04*/
+
+    .table_reg_page_04 {
+        border: 1px solid #000000;;
+        border-right: none;
+        border-bottom: none;
+        font-size: 9pt;
+    }
+
+    .table_reg_page_04 td {
+        border-right: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+    }
+
+    .table_reg_page_04 textarea {
+        float: left;
+        width: 800px;
+    }
+
+    .table_reg_cell {
+        border: none;
+    }
+
+    .table_reg_page_04 select {
+        float: left;
+        width: 250px;
+        margin: 2px 5px;
+    }
+
+    .table_reg_cell_04  select {
+        float: left;
+        width: 590px;
+        margin: 2px 5px;
+    }
