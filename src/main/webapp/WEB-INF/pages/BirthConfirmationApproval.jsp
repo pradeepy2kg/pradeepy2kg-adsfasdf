@@ -29,7 +29,7 @@
     <div id="birth-register-approval-body">
         <%--todo permission handling--%>
         <s:form action="" name="birth_register_approval_body" method="POST">
-            <s:if test="birthDeclarationPendingList.size>0">
+            <s:if test="approvalPendingList.size>0">
                 <table>
                 <tr>
                     <th></th>
@@ -51,7 +51,7 @@
                     <th></th>
                 </tr>
             </s:if>
-            <s:iterator status="approvalStatus" value="birthDeclarationPendingList" id="approvalList">
+            <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
                 <tr>
                     <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:checkbox name="index"

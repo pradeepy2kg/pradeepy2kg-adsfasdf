@@ -123,7 +123,7 @@
 
         <!--BirthDeclaration Approval related actions-->
         <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="birthDeclarationApproval">
+                method="birthRegisterApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
@@ -137,25 +137,25 @@
         </action>
 
         <action name="eprDeleteApprovalPending" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="deleteBirthDeclaration">
+                method="delete">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprRejectBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="rejectBirthDeclaration">
+                method="reject">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
             <result type="tiles" name="initReject">epr.birthRegisterReject</result>
         </action>
 
         <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="birthDeclarationApproval">
+                method="birthRegisterApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
             <result type="tiles" name="success">epr.home</result>
             <result type="tiles" name="error">epr.welcome</result>
         </action>
 
         <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="approveBirthDeclaration">
+                method="approve">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
             <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
         </action>
@@ -165,7 +165,7 @@
         </action>
 
         <action name="eprApproveAllSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="approveAllSelectedBirthDeclaration">
+                method="approveListOfEntries">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
@@ -176,7 +176,7 @@
 
         <!--Birth Confirmation Approval related actions-->
         <action name="eprBirthConfirmationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
-                method="birthDeclarationApproval">
+                method="birthRegisterApproval">
             <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
         </action>
 
@@ -193,6 +193,12 @@
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
+        <action name="eprApproveBirthConfirmation" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approve">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+           <!-- <result type="tiles" name="approvalRejected">epr.approvalWorning</result>-->
+        </action>
+        
         <!--Direct Approval through BirthRegisterFoemDeails page -->
         <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclarationForm">
