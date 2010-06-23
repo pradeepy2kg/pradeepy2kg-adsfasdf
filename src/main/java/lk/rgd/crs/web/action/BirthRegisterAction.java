@@ -2,6 +2,7 @@ package lk.rgd.crs.web.action;
 
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.domain.AppParameter;
 import org.apache.struts2.interceptor.SessionAware;
 
 import org.slf4j.LoggerFactory;
@@ -31,9 +32,6 @@ import lk.rgd.Permission;
 public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
-    // TODO is this place correct
-    private static final String BR_LATE_MAX_DAYS = "crs.birth.late_reg_days";
-    private static final String BR_BELATED_MAX_DAYS = "crs.birth.belated_reg_days";
     private final BirthRegistrationService service;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
@@ -415,8 +413,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return int id of specific item in DateState
      */
     private int checkDateLateOrBelated(BirthDeclaration bdf) {
-        long maxLateDays = appParametersDAO.getIntParameter(BR_LATE_MAX_DAYS);
-        long maxBelatedDays = appParametersDAO.getIntParameter(BR_BELATED_MAX_DAYS);
+        long maxLateDays = appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_LATE_REG_DAYS);
+        long maxBelatedDays = appParametersDAO.getIntParameter(AppParameter.CRS_BELATED_MAX_DAYS);
         long registerDate = bdf.getRegister().getDateOfRegistration().getTime();
         long birthDate = bdf.getChild().getDateOfBirth().getTime();
         long milliSecPerDay = 1000 * 60 * 60 * 24;

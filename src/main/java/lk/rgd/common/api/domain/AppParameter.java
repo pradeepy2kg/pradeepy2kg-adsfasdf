@@ -16,6 +16,13 @@ import java.io.Serializable;
 @Table(name = "APP_PARAMETERS", schema = "COMMON")
 public class AppParameter implements Serializable {
 
+    /** The parameter key that holds the number of days for a birth to be considered as a late registration */
+    public static final String CRS_BIRTH_LATE_REG_DAYS = "crs.birth.late_reg_days";
+    /** The parameter key that holds the number of days for a birth to be considered as a belated registration */
+    public static final String CRS_BELATED_MAX_DAYS = "crs.birth.belated_reg_days";
+    /** The parameter key that holds the number of days until a password expires */
+    public static final String PASSWORD_EXPIRY_DAYS = "rgd.password_expiry_days";
+    
     @Id
     @Column(length = 30)
     private String name;

@@ -45,37 +45,50 @@ public class BirthDeclaration implements Serializable {
      * impact on any existing records
      */
     public enum State {
-        DATA_ENTRY, /**
+        /**
          * 0 - A newly entered BDF - can be edited by DEO or ADR
          */
-        APPROVED, /**
+        DATA_ENTRY,
+        /**
          * 1 - An ADR or higher approved BDF - ready for confirmation or auto BC generation
          */
-        CONFIRMATION_PRINTED, /**
+        APPROVED,
+        /**
          * 2 - A BDF for which the parent confirmation form was printed
          */
-        CONFIRMED_WITHOUT_CHANGES, /**
+        CONFIRMATION_PRINTED,
+        /**
          * 3 - A BDF with no changes during confirmation by parents
          */
-        ARCHIVED_CORRECTED, /**
+        CONFIRMED_WITHOUT_CHANGES,
+        /**
          * 4 - A BDF archived due to corrections by parents. This is the State of the old
          * record. A new record is added with State as CONFIRMATION_CHANGES_CAPTURED
          */
-        CONFIRMATION_CHANGES_CAPTURED, /**
+        ARCHIVED_CORRECTED,
+        /**
          * 5 - A BDF for which the parent confirmation changes has been captured
          */
-        CONFIRMATION_CHANGES_APPROVED, /**
+        CONFIRMATION_CHANGES_CAPTURED,
+        /**
          * 6 - A BDF for which the parent confirmation changes has been approved
          */
-        ARCHIVED_REJECTED,              /** 7 - A BDF rejected [e.g. as a duplicate] at any stage during processing */
+        CONFIRMATION_CHANGES_APPROVED,
         /**
-         * Normal states after initial BC printing
+         * 7 - A BDF rejected [e.g. as a duplicate] at any stage during processing
          */
-        ARCHIVED_BC_GENERATED, /**
+        ARCHIVED_REJECTED,
+
+        // Normal states after initial BC printing
+        /**
          * 8 - A BDF for which [a PIN is generated and] the BC is printed
          */
-        ARCHIVED_ALTERED                /** 9 - A BDF archived after an alteration is performed after initial BC. New
-         record is captured as ARCHIVED_BC_GENERATED */
+        ARCHIVED_BC_GENERATED,
+        /**
+         * 9 - A BDF archived after an alteration is performed after initial BC. New
+         * record is captured as ARCHIVED_BC_GENERATED
+         */
+        ARCHIVED_ALTERED
         }
 
     /**
@@ -118,6 +131,9 @@ public class BirthDeclaration implements Serializable {
     }
 
     public ChildInfo getChild() {
+        if (child == null) {
+            child = new ChildInfo();
+        }
         return child;
     }
 
