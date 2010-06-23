@@ -28,7 +28,7 @@
     </s:if>
     <div id="birth-register-approval-body">
         <%--todo permission handling--%>
-        <s:form action="eprApproveAllSelected" name="birth_register_approval_body" method="POST">
+        <s:form action="" name="birth_register_approval_body" method="POST">
             <s:if test="birthDeclarationPendingList.size>0">
                 <table>
                 <tr>
@@ -75,7 +75,7 @@
                         <td></td>
                     </s:if>
                     <s:if test="#request.allowApproveBDF">
-                        <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
+                        <s:url id="approveSelected" action="eprHome.do">
                             <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -94,7 +94,7 @@
                         <td></td>
                     </s:if>
                     <s:if test="#request.allowApproveBDF">
-                        <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
+                        <s:url id="rejectSelected" action="eprHome.do">
                             <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
@@ -114,7 +114,7 @@
                     <td></td>
                     <td></td>
                     <s:if test="#request.allowApproveBDF">
-                        <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
+                        <s:url id="deleteSelected" action="eprHome.do">
                             <s:param name="confirmationApprovalFlag" value="true"/>
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
