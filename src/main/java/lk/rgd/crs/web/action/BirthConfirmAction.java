@@ -25,9 +25,6 @@ import java.beans.Introspector;
 import java.beans.BeanInfo;
 import java.io.UnsupportedEncodingException;
 
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
-
 /**
  * Birth Confirmation related actions.
  *
