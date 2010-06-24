@@ -1,10 +1,9 @@
 /* Main-Layout for the print */
-@media print {
+@media print {    
     body {
         background-color: white !important;
         font-family: verdana, arial, sans-serif;
         font-size: 10pt;
-        color: green;
         width: 210mm;
         height: 297mm;
     }
@@ -50,6 +49,7 @@
         font-size: 12pt;
     }
 }
+
 
 /*@media print {*/
 

@@ -1184,16 +1184,24 @@
     border-bottom: none;
     font-size: 9pt;
 }
+
 .table_reg_page_01 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
 }
-.table_reg_header_01
-{
-    width:1030px;
-    border:none;
+
+.table_reg_header_01 {
+    width: 1030px;
+    border: none;
 }
-.table_reg_datePicker_page_01{width:300px; border:1px solid #000000; margin:10px};
+
+.table_reg_datePicker_page_01 {
+    width: 300px;
+    border: 1px solid #000000;
+    margin: 10px
+}
+
+;
 .table_reg_page_01 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
@@ -1353,10 +1361,10 @@
     width: 300px;
     margin: 2px 5px;
 }
-.table_con_header_01
-{
-    width:1030px;
-    border:none;
+
+.table_con_header_01 {
+    width: 1030px;
+    border: none;
 }
 
 .cell_01 {
@@ -1415,4 +1423,40 @@
 
 .table_con_page_03 textarea {
     width: 750px;
+}
+
+/* Styles for the Birth Certificate begins here. */
+#birth-certificate-outer {
+    width: auto;
+    height: auto;
+    padding: 10px;
+    padding-bottom: 5px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: BhashitaComplex;
+}
+
+#birth-certificate-outer table {
+    font-size: 10pt;
+    font-family: BhashitaComplex;
+    margin-bottom: 10px;
+}
+
+#birth-certificate-outer p {
+    font-size: 8pt;
+    font-family: BhashitaComplex;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+.bc-name {
+    font-size: 12pt;
+    font-family: BhashitaComplex;
+}
+
+#birth-certificate-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
 }
