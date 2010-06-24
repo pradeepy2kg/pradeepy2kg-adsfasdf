@@ -37,6 +37,11 @@ import java.util.Date;
         "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
+    @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+
     @NamedQuery(name = "get.by.serialNo.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 0 "),
 
@@ -94,7 +99,7 @@ public class BirthDeclaration implements Serializable {
          * record is captured as ARCHIVED_BC_GENERATED
          */
         ARCHIVED_ALTERED
-        }
+    }
 
     /**
      * This is an auto generated unique row identifier

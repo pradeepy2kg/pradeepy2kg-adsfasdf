@@ -1,18 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <div id="birth-register-approval">
     <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header">
         <div id="birth-register-approval-header">
-            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span><s:select
-                    list="districtList" name="district" value="#request.district"/></s:label>
-            <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span><s:select
-                    list="divisionList" value="division"
-                    name="division" /></s:label>
-            <s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdId"/>
+            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
+                <s:select list="districtList" name="district"/></s:label>
+            <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
+                <s:select list="divisionList" name="division"/></s:label>
             <s:hidden name="confirmationApprovalFlag" value="true"/>
+            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate" displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate" displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
-        </div>
+            <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdId"/>
+        </div><br>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
@@ -28,7 +29,7 @@
     </s:if>
     <div id="birth-register-approval-body">
         <%--todo permission handling--%>
-        <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="POST">
+        <s:form action="" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
                 <table>
                 <tr>
