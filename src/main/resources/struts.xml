@@ -171,7 +171,7 @@
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
-        <action name="eprApproveAllSelected" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+        <action name="eprApproveBulk" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveListOfEntries">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
@@ -206,6 +206,11 @@
                 method="approve">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
             <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
+        </action>
+
+        <action name="eprApproveConfirmationBulk" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveListOfEntries">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
         <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
@@ -251,10 +256,18 @@
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-        <action name="eprBDFSearch" class="lk.rgd.crs.web.action.SearchAction" method="searchBDF">
+        <action name="eprBDFSearchBySerialNo" class="lk.rgd.crs.web.action.SearchAction" method="searchBDFBySerialNumber">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
+         <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.SearchAction" method="">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
+         <action name="eprBDFSearchByChildName" class="lk.rgd.crs.web.action.SearchAction" method="">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+        
         <!--user preferance  -->
         <action name="passChangePageLoad">
             <result>/WEB-INF/pages/PasswordChange.jsp</result>

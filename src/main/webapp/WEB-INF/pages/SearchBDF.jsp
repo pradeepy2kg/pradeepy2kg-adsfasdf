@@ -3,7 +3,8 @@
 <%@ taglib prefix="sx" uri="/struts-tags" %>
 <div id="birth-confirmation-search">
     <s:actionerror/>
-    <form action="eprBDFSearch.do" name="birthConfirmationSearchForm" method="post">
+    <br/>
+    <form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" method="post">
         <fieldset>
             <legend><s:label name="registrationSerchLegend" value="%{getText('registrationSerchLegend.label')}"/> </legend>
             <table>
@@ -27,18 +28,9 @@
 
                 <tr>
                     <td></td>
-                    <td><s:label name="searchOr" value="%{getText('searchOr.label')}"/></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>
-                        <s:label name="confirmationSerch" value="%{getText('searchConfirmationSerial.label')}"/>
-                    </td>
-                    <td></td>
-                    <td>
-                        <s:textfield name="idUKey"/>
-                    </td>
-                </tr>
+
                 <tr>
                     <td></td>
                     <td>
@@ -49,11 +41,51 @@
             </table>
         </fieldset>
     </form>
-    <s:form>
+    <br/>
+    <s:form action="eprBDFSearchByIdUKey.do" method="post">
         <fieldset>
-            <legend><s:label name="confirmatinSearchLegend" /></legend>
+            <legend><s:label name="confirmatinSearchLegend" value="%{getText('confirmationSearchLegend.label')}" /></legend>
             <table>
-                
+              <tr>
+                    <td>
+                        <s:label name="confirmationSearch" value="%{getText('searchConfirmationSerial.label')}"/>
+                    </td>
+                   
+                    <td>
+                        <s:textfield name="idUKey"/>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td></td>
+                    <td>
+                        <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </s:form>
+    <br/>
+    <s:form action="eprBDFSearchByChildName.do" method="post">
+        <fieldset>
+            <legend><s:label name="nameSearchLegend" value="%{getText('nameSearchLegend.label')}" /></legend>
+        <table>
+              <tr>
+                    <td>
+                        <s:label name="childName" value="%{getText('childName.label')}"/>
+                    </td>
+
+                    <td>
+                        <s:textfield name="childName"/>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td></td>
+                    <td>
+                        <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
+                    </td>
+                </tr>
             </table>
         </fieldset>
     </s:form>
