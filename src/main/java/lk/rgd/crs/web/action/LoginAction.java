@@ -12,6 +12,7 @@ import lk.rgd.crs.web.Link;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.Permission;
 
 /**
  * @author Indunil Moremada
@@ -143,15 +144,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 
     static {                                                                              //prpertyKey,link,action
-        linkPermission.put(6, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp", "eprInitUserCreation.do"));
-        linkPermission.put(7, new Link("birth_registration.label", "/WEB-INF/pages/BirthRegistrationForm1.jsp", "eprBirthRegistration.do"));
-        linkPermission.put(8, new Link("birth_conformation_report.label", "/WEB-INF/pages/Welcome.jsp", "eprBirthConfirmationReport.do"));
-        linkPermission.put(9, new Link("birth_confirmation_print.label", "/WEB-INF/pages/BirthConfirmationPrintForm.jsp", "eprFilterBirthConfirmPrint.do"));
-        linkPermission.put(10, new Link("birth_confirmation.label", "/WEB-INF/pages/BirthConfirmationForm1.jsp", "eprBirthConfirmation.do"));
-        linkPermission.put(11, new Link("birth_register_approval.label", "/WEB-INF/pages/BirthRegisterApproval.jsp", "eprBirthRegisterApproval.do"));
-        linkPermission.put(12, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
-        linkPermission.put(13, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
-        linkPermission.put(14, new Link("search.label", "/WEB-INF/pages/SearchBDF.jsp", "eprSearchPageLoad.do"));
-        linkPermission.put(15, new Link("birth_confirmation_approval.label", "/WEB-INF/pages/BirthConfirmationApproval.jsp", "eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
+        linkPermission.put(Permission.PAGE_CREATE_USER, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp", "eprInitUserCreation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link("birth_registration.label", "/WEB-INF/pages/BirthRegistrationForm1.jsp", "eprBirthRegistration.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_REPORT, new Link("birth_conformation_report.label", "/WEB-INF/pages/Welcome.jsp", "eprBirthConfirmationReport.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT, new Link("birth_confirmation_print.label", "/WEB-INF/pages/BirthConfirmationPrintForm.jsp", "eprFilterBirthConfirmPrint.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link("birth_confirmation.label", "/WEB-INF/pages/BirthConfirmationForm1.jsp", "eprBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_register_approval.label", "/WEB-INF/pages/BirthRegisterApproval.jsp", "eprBirthRegisterApproval.do"));
+        linkPermission.put(Permission.PAGE_USER_PREFERANCE_SELECT, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
+        linkPermission.put(Permission.PAGE_VIEW_USERS, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH, new Link("search.label", "/WEB-INF/pages/SearchBDF.jsp", "eprSearchPageLoad.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "/WEB-INF/pages/BirthConfirmationApproval.jsp", "eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
     }
 }
