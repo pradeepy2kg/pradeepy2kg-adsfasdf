@@ -1,17 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <div id="birth-register-approval">
     <s:form action="eprApprovalRefresh" name="birth_register_approval_header">
         <div id="birth-register-approval-header">
-            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span><s:select
-                    list="districtList" name="district" value="#request.district"/></s:label>
-            <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span><s:select
-                    list="divisionList" value="division"
-                    name="division" headerKey="0"/></s:label>
-            <s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo"/>
+            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
+                <s:select list="districtList" name="district" value="#request.district"/></s:label>&nbsp;
+            <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
+                <s:select list="divisionList" value="division" name="division"/></s:label>&nbsp;
+            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate" displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate" displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
-        </div>
+            <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo" />
+            <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
+        </div><br>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
@@ -59,7 +61,7 @@
                                     fieldValue="%{#approvalList.idUKey}"/></td>
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
-                    <td><s:property value="register.dateOfRegistration"/></td>
+                    <td align="center"><s:property value="register.dateOfRegistration"/></td>
                     <td></td>
                     <s:if test="#request.allowEditBDF">
                         <s:url id="editSelected" action="eprBirthRegistration.do">
@@ -150,22 +152,28 @@
             <br/>
             <%-- Next link to visible next records will only visible if nextFlag is
           set to 1--%>
-            <s:url id="previousUrl" action="eprApprovalPrevious.do">
+            <s:url id="previousUrl" action="eprApprovalPrevious.do" encode="true">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
                 <s:param name="district" value="#request.district"/>
                 <s:param name="division" value="#request.division"/>
                 <s:param name="recordCounter" value="#request.recordCounter"/>
+                <s:param name="startDate" value="#request.startDate"/>
+                <s:param name="endDate" value="#request.endDate"/>
+                <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
             </s:url>
 
-            <s:url id="nextUrl" action="eprApprovalNext.do">
+            <s:url id="nextUrl" action="eprApprovalNext.do" encode="true">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
                 <s:param name="district" value="#request.district"/>
                 <s:param name="division" value="#request.division"/>
                 <s:param name="recordCounter" value="#request.recordCounter"/>
+                <s:param name="startDate" value="#request.startDate"/>
+                <s:param name="endDate" value="#request.endDate"/>
+                <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
             </s:url>
 
             <br/><br/>

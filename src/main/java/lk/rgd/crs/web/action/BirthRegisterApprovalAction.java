@@ -8,6 +8,10 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
@@ -38,6 +42,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private final BDDivisionDAO bdDivisionDAO;
     private final AppParametersDAO appParametersDAO;
     private final BirthRegistrationService service;
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private static final String BR_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
     private Map session;
@@ -58,6 +63,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private BirthDeclaration bdf;
     private User user;
 
+    private Date searchStartDate;
+    private Date searchEndDate;
+    // extra startDate, endDate fields used to get date when passing through a url
+    private String startDate;
+    private String endDate;
+
     private boolean nextFlag;
     private boolean previousFlag;
     private boolean ignoreWarning;
@@ -67,6 +78,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean reject;
     //decides request is from birth confirmation approval if confirmationApprovalFlag is set to true
     private boolean confirmationApprovalFlag;
+    private boolean searchDateRangeFlag;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
                                        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
@@ -161,7 +173,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
             } else {
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
-                    pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                        pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
             }
         } else {
             if (bdfSerialNo > 0) {
@@ -170,12 +182,16 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         bdDivisionDAO.getBDDivisionByPK(division), bdfSerialNo, user);
                 }
                 catch (Exception e) {
-                    logger.error("inside filter : {} ", e);
+                    logger.error("inside filter : {} , {} ", e.getMessage(), e);
                     addActionError(getText("brapproval.filter.noResult"));
                 }
                 if (bdf != null) {
                     approvalPendingList.add(bdf);
                 }
+            } else if (searchStartDate != null && searchEndDate != null) {
+                searchDateRangeFlag = true;
+                approvalPendingList = service.getDeclarationPendingByBDDivisionAndDateRange(
+                        bdDivisionDAO.getBDDivisionByPK(division), searchStartDate, searchEndDate, pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
             } else {
                 approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                     pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
@@ -406,7 +422,16 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          */
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(
-                bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                    bdDivisionDAO.getBDDivisionByPK(division), pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        } else if (searchDateRangeFlag) {
+            try {
+                searchStartDate = df.parse(startDate);
+                searchEndDate = df.parse(endDate);
+            } catch (ParseException e) {
+                logger.error("in nextPage() startDate and endDate conversion failed: {}", e);
+            }
+            approvalPendingList = service.getDeclarationPendingByBDDivisionAndDateRange(
+                    bdDivisionDAO.getBDDivisionByPK(division), searchStartDate, searchEndDate, pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(
                 bdDivisionDAO.getBDDivisionByPK(division), getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
@@ -459,7 +484,16 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
-                pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+                    pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
+        } else if (searchDateRangeFlag) {
+            try {
+                searchStartDate = df.parse(startDate);
+                searchEndDate = df.parse(endDate);
+            } catch (ParseException e) {
+                logger.error("in previousPage() startDate and endDate conversion failed: {}", e);
+            }
+            approvalPendingList = service.getDeclarationPendingByBDDivisionAndDateRange(
+                    bdDivisionDAO.getBDDivisionByPK(division), searchStartDate, searchEndDate, pageNo, appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE));
@@ -670,5 +704,47 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setAllowApproveBDFConfirmation(boolean allowApproveBDFConfirmation) {
         this.allowApproveBDFConfirmation = allowApproveBDFConfirmation;
+    }
+
+    public Date getSearchStartDate() {
+        return searchStartDate;
+    }
+
+    public void setSearchStartDate(Date searchStartDate) {
+        this.searchStartDate = searchStartDate;
+        startDate = df.format(searchStartDate);
+    }
+
+    public Date getSearchEndDate() {
+        return searchEndDate;
+    }
+
+    public void setSearchEndDate(Date searchEndDate) {
+        this.searchEndDate = searchEndDate;
+        endDate = df.format(searchEndDate);
+    }
+
+    public boolean isSearchDateRangeFlag() {
+        return searchDateRangeFlag;
+    }
+
+    public void setSearchDateRangeFlag(boolean searchDateRangeFlag) {
+        this.searchDateRangeFlag = searchDateRangeFlag;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

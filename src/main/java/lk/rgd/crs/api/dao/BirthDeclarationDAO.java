@@ -94,5 +94,19 @@ public interface BirthDeclarationDAO {
      */
     public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
 
+    /**
+     * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
+     * particular status.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param birthDivision the birth division
+     * @param status        BirthDeclaration state
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByBDDivisionStatusAndDateRange(BDDivision birthDivision, BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 }
 

@@ -81,4 +81,17 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("bdfSerialNo", bdfSerialNo);
         return (BirthDeclaration) q.getSingleResult();
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getByBDDivisionStatusAndDateRange(BDDivision birthDivision, BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("get.by.division.status.register.date").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("birthDivision", birthDivision);
+        q.setParameter("status", status);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return q.getResultList();
+    }
 }

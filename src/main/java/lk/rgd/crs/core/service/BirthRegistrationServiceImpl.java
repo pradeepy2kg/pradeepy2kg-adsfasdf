@@ -39,8 +39,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final RaceDAO raceDAO;
 
     public BirthRegistrationServiceImpl(
-        BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+            BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+            BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -384,6 +384,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo) {
+        return birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serialNo);
+    }
+
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision, pageNo, noOfRows);
     }
@@ -397,6 +401,16 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     /**
      * @inheritDoc
+     */
+    public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndDateRange(BDDivision birthDivision, Date startDate, Date endDate, int pageNo, int noOfRows) {
+        return birthDeclarationDAO.getByBDDivisionStatusAndDateRange(birthDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * Populates transient string values for Country, Race, District, Division etc
+     *
+     * @param bdf the BirthDeclaration to populate transient values
+     * @return populated BDF
      */
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf) {
         String prefLanguage = bdf.getRegister().getPreferredLanguage();
