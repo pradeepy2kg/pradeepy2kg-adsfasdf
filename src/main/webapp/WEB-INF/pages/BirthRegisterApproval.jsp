@@ -96,7 +96,7 @@
                             <s:param name="bdId" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param  name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
                             <s:param name="district" value="#request.district"/>
                             <s:param name="division" value="#request.division"/>
                             <s:param name="recordCounter" value="#request.recordCounter"/>

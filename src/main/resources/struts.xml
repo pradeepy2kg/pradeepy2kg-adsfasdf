@@ -92,7 +92,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        
+
         <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"
                 method="getBirthConfirmationReport">
             <result type="tiles" name="success">epr.welcome</result>
@@ -149,8 +149,9 @@
 
         <action name="eprRejectBirthDeclaration" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="reject">
-            <result type="tiles" name="success">epr.birthRegisterApproval</result>
-            <result type="tiles" name="initReject">epr.birthRegisterReject</result>
+            <result type="tiles" name="successDeclarationReject">epr.birthRegisterApproval</result>
+            <result type="tiles" name="successConfirmationReject">epr.BirthConfirmationApproval</result>
+            <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
         </action>
 
         <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
@@ -186,11 +187,13 @@
             <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
         </action>
 
-         <action name="eprConfirmationApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="filter">
+        <action name="eprConfirmationApprovalRefresh" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="filter">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
-        <action name="eprConfirmationApprovalNext" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction" method="nextPage">
+        <action name="eprConfirmationApprovalNext" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="nextPage">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
@@ -202,9 +205,19 @@
         <action name="eprApproveBirthConfirmation" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approve">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
-           <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
+            <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
         </action>
-        
+
+        <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveIgnoringWorning">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprRejectBirthConfirmation" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="reject">
+            <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
+        </action>
+
         <!--Direct Approval through BirthRegisterFoemDeails page -->
         <action name="eprDirectApprove" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveBirthDeclarationForm">
