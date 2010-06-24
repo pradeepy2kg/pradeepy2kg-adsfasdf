@@ -81,6 +81,14 @@ public interface BirthRegistrationService {
     public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
+     * API to perform approval of a set of confirmations with changes
+     * @param approvalDataList the unique IDs of the confirmations with changes to approve
+     * @param user the user making the bulk approval
+     * @return a list of warnings, if any are encountered
+     */
+    public List<UserWarning> approveChangedConfirmationIDList(long[] approvalDataList, User user);
+
+    /**
      * Reject a birth declaration by an ADR or higher authority. This should be used to reject a BDF even after
      * the confirmation is printed, and is now being rejected
      *
