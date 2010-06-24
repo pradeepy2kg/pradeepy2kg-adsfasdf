@@ -22,7 +22,7 @@ import lk.rgd.Permission;
  */
 public class LoginAction extends ActionSupport implements SessionAware {
     public static Map<Integer, Link> linkPermission = new HashMap<Integer, Link>();
-    public Map<Integer, Link> allowed = new HashMap<Integer, Link>();
+    public Map<String, Map> allowedLinks = new HashMap<String, Map>();
     private List userRoles;
     private String userName;
     private String password;
@@ -75,15 +75,41 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @param user
      * @return
      */
-    private Map<Integer, Link> allowedLinks(User user) {
-
+    private Map<String, Map> allowedLinks(User user) {
+        Map birthLink = new HashMap();
+        Map deathLink = new HashMap();
+        Map marrageLink = new HashMap();
+        Map reportLink = new HashMap();
+        Map adminLink = new HashMap();
+        Map preferanceLink = new HashMap();
 
         for (Map.Entry<Integer, Link> e : linkPermission.entrySet()) {
             if (user.isAuthorized(e.getKey())) {
-                allowed.put(e.getKey(), e.getValue());
+                if (e.getValue().getCategory().equals("0")) {
+                    birthLink.put(e.getKey(), e.getValue());
+                } else if (e.getValue().getCategory().equals("2")) {
+                    deathLink.put(e.getKey(), e.getValue());
+                } else if (e.getValue().getCategory().equals("1")) {
+                    marrageLink.put(e.getKey(), e.getValue());
+                } else if (e.getValue().getCategory().equals("4")) {
+                    reportLink.put(e.getKey(), e.getValue());
+                } else if (e.getValue().getCategory().equals("5")) {
+                    adminLink.put(e.getKey(), e.getValue());
+                } else if (e.getValue().getCategory().equals("3")) {
+                    preferanceLink.put(e.getKey(), e.getValue());
+                }
+                //allowedLinks.put(e.getKey(), e.getValue());
             }
         }
-        return allowed;
+
+        allowedLinks.put("BIRTH", birthLink);
+        allowedLinks.put("DEATH", deathLink);
+        allowedLinks.put("MARRAGE", marrageLink);
+        allowedLinks.put("REPORT", reportLink);
+        allowedLinks.put("ADMIN", adminLink);
+        allowedLinks.put("PREFERANCE", preferanceLink);
+
+        return allowedLinks;
     }
 
     /**
@@ -143,16 +169,18 @@ public class LoginAction extends ActionSupport implements SessionAware {
     }
 
 
-    static {                                                                              //prpertyKey,link,action
-        linkPermission.put(Permission.PAGE_CREATE_USER, new Link("creat_user.label", "/WEB-INF/pages/CreatUser.jsp", "eprInitUserCreation.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link("birth_registration.label", "/WEB-INF/pages/BirthRegistrationForm1.jsp", "eprBirthRegistration.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_REPORT, new Link("birth_conformation_report.label", "/WEB-INF/pages/Welcome.jsp", "eprBirthConfirmationReport.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT, new Link("birth_confirmation_print.label", "/WEB-INF/pages/BirthConfirmationPrintForm.jsp", "eprFilterBirthConfirmPrint.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link("birth_confirmation.label", "/WEB-INF/pages/BirthConfirmationForm1.jsp", "eprBirthConfirmation.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_APPROVAL, new Link("birth_register_approval.label", "/WEB-INF/pages/BirthRegisterApproval.jsp", "eprBirthRegisterApproval.do"));
-        linkPermission.put(Permission.PAGE_USER_PREFERANCE_SELECT, new Link("userPreference.label", "/WEB-INF/pages/UserPreferences.jsp", "eprUserPreferencesInit.do"));
-        linkPermission.put(Permission.PAGE_VIEW_USERS, new Link("viewUsers.label", "/WEB-INF/pages/viewUsers.jsp", "eprViewUsers.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH, new Link("search.label", "/WEB-INF/pages/SearchBDF.jsp", "eprSearchPageLoad.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "/WEB-INF/pages/BirthConfirmationApproval.jsp", "eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
+    static {
+        //prpertyKey,link,action
+        // categories ::::admin task 5 ,reprtts 4 , user preferance 3 ,death 2,marrage 1,birth 0
+        linkPermission.put(Permission.PAGE_CREATE_USER, new Link("creat_user.label", "5", "eprInitUserCreation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link("birth_registration.label", "0", "eprBirthRegistration.do"));
+        /*  linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_REPORT, new Link("birth_conformation_report.label", "4", "eprBirthConfirmationReport.do"));*/
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT, new Link("birth_confirmation_print.label", "4", "eprFilterBirthConfirmPrint.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link("birth_confirmation.label", "0", "eprBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_APPROVAL, new Link("birth_register_approval.label", "0", "eprBirthRegisterApproval.do"));
+        linkPermission.put(Permission.PAGE_USER_PREFERANCE_SELECT, new Link("userPreference.label", "3", "eprUserPreferencesInit.do"));
+        linkPermission.put(Permission.PAGE_VIEW_USERS, new Link("viewUsers.label", "5", "eprViewUsers.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH, new Link("search.label", "0", "eprSearchPageLoad.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "0", "eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
     }
 }

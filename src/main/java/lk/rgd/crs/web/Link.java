@@ -5,12 +5,12 @@ package lk.rgd.crs.web;
  */
 public class Link {
     private String propertyKey;
-    private String link;
+    private String category;
     private String action;
 
     public Link(String propertyKey, String link, String action) {
         this.propertyKey = propertyKey;
-        this.link = link;
+        this.category = link;
         this.action = action;
     }
 
@@ -31,11 +31,11 @@ public class Link {
         this.propertyKey = propertyKey;
     }
 
-    public String getLink() {
-        return link;
+    public String getCategory() {
+        return category;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
