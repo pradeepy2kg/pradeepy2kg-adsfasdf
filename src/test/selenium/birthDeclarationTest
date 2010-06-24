@@ -28,9 +28,10 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උප්පැන්න ලියාපදිංචි කිරීම</td>
+	<td>link=උපතක් ලියාපදිංචි කිරීම</td>
 	<td></td>
 </tr>
+
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
@@ -317,11 +318,13 @@
 	<td>birth-registration-form-2_motherCountry</td>
 	<td>label=LK : ශ්‍රී ලංකාව</td>
 </tr>
+
 <tr>
 	<td>type</td>
-	<td>birth-registration-form-2_parent_motherPassportNo</td>
-	<td>889955623</td>
+	<td>//form[@id='birth-registration-form-2']/table[5]/tbody/tr[5]/td[4]/input</td>
+	<td>Kandy</td>
 </tr>
+
 <tr>
 	<td>type</td>
 	<td>motherFullName</td>

@@ -62,6 +62,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private BirthRegisterInfo register;
     private User user;
 
+    private int division;
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
@@ -217,7 +218,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         bdf = service.getById(bdId, user);
                         if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -271,12 +272,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    public String ConfirmationPrintPageLoad(){
+    public String ConfirmationPrintPageLoad() {
         boolean caughtException = false;
-        BirthDeclaration bdf;
+         BirthDeclaration bdf;
         bdf = service.getById(bdId, user);
-        if (user.isAuthorized(Permission.APPROVE_BDF)){
-            logger.debug("BDID {} : ",bdId );
+        if (user.isAuthorized(Permission.APPROVE_BDF)) {
+            logger.debug("BDID {} : ", bdId);
 
             try {
                 warnings = service.approveBirthDeclaration(bdf, false, user);
@@ -285,19 +286,31 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 caughtException = true;
             }
 
-            if(caughtException ||(warnings != null && warnings.isEmpty())) {
+            if (caughtException || (warnings != null && warnings.isEmpty())) {
                 return "pageLoad";
             } else {
                 return "error";
             }
         } else {
             return "error";
-        } 
+        }
     }
 
     public String birthConfirmationPrint() {
         return "success";
     }
+
+    public String birthCetificatePrint() {
+        BirthDeclaration bdf=service.getById(bdId,user);
+        parent = bdf.getParent();
+        child =bdf.getChild();
+        register=bdf.getRegister();
+        serialNo=bdf.getIdUKey();
+        marriage=bdf.getMarriage();
+        return "pageLoad";
+
+    }
+
 
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
@@ -786,6 +799,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setNewComment(String newComment) {
         this.newComment = newComment;
     }
+
     public List<UserWarning> getWarnings() {
         return warnings;
     }
