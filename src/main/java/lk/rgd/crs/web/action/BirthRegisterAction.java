@@ -78,7 +78,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int motherDistrictId;
     private int motherDSDivisionId;
     private int bdfLateOrBelated;
-    private int caseFileNumber;
+    private String caseFileNumber;
     private String newComment;
 
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
@@ -174,7 +174,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
                         // all pages captured, proceed to persist after validations
                         // todo data validations
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), new Integer(caseFileNumber).toString() /** FIXME */, newComment);
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
 
                         // TODO remove this section, can access this in jsp
                         // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
@@ -262,7 +262,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         //todo archive the old entry
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), new Integer(caseFileNumber).toString() /** FIXME */, newComment);
+                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
@@ -784,11 +784,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdfLateOrBelated = bdfLateOrBelated;
     }
 
-    public int getCaseFileNumber() {
+    public String getCaseFileNumber() {
         return caseFileNumber;
     }
 
-    public void setCaseFileNumber(int caseFileNumber) {
+    public void setCaseFileNumber(String caseFileNumber) {
         this.caseFileNumber = caseFileNumber;
     }
 

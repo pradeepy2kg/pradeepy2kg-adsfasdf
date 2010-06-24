@@ -6,6 +6,7 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
 
 import java.util.List;
+import java.util.Date;
 
 public interface BirthRegistrationService {
 
@@ -147,5 +148,18 @@ public interface BirthRegistrationService {
      */
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf);
 
+    /**
+     * Returns a limited set of approval pending BirthDeclarations for elected BD Division and selected range of
+     * registration dates.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param birthDivision the birth division
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndDateRange(BDDivision birthDivision, Date startDate, Date endDate, int pageNo, int noOfRows);
 }
 
