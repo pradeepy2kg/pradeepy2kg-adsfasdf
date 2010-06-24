@@ -202,14 +202,14 @@ public class
             bs.set(Permission.APPROVE_BDF);
             bs.set(Permission.APPROVE_BDF_CONFIRMATION);
             bs.set(Permission.EDIT_BDF);
-            bs.set(Permission.BIRTH_CONFIRMATION_PAGE);
-            bs.set(Permission.BIRTH_CONFIRMATION_PRINT_PAGE);
-            bs.set(Permission.BIRTH_CONFIRMATION_REPORT_PAGE);
-            bs.set(Permission.BIRTH_REGISTRATION_APPROVAL_PAGE);
-            bs.set(Permission.BIRTH_REGISTRATON_PAGE);
-            bs.set(Permission.USER_PREFERANCE_SELECT_PAGE);
-            bs.set(Permission.BIRTH_CONFIRMATION_SEARCH);
-            bs.set(Permission.BIRTH_CONFIRMATION_APPROVAL_PAGE);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_REPORT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_APPROVAL);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON);
+            bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL);
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 
@@ -237,9 +237,9 @@ public class
             Role adminRole = roleDao.getRole("ADMIN");
             bs = new BitSet();
     //        bs.or(rgRole.getPermBitSet());
-            bs.set(Permission.CREATE_USER_PAGE);
+            bs.set(Permission.PAGE_CREATE_USER);
 			bs.set(Permission.USER_MANAGEMENT);
-            bs.set(Permission.VIEW_USERS);
+            bs.set(Permission.PAGE_VIEW_USERS);
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);
