@@ -4,27 +4,17 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>second</title>
+<title>birthConfirmationTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">second</td></tr>
+<tr><td rowspan="1" colspan="3">birthConfirmationTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
 	<td>/popreg/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>eprLogin_userName</td>
-	<td>ashoka</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>eprLogin_password</td>
-	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -33,13 +23,18 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උප්පැන්න සහතික තහවුරු කිරීම</td>
+	<td>link=උපත් තහවුරු කිරීම</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>birth-confirmation-form-1_</td>
-	<td>120</td>
+	<td>click</td>
+	<td>//img[@alt='Select a date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//tbody/tr[1]/td[4]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>select</td>
@@ -48,13 +43,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='bcf-place']/div[3]/input</td>
-	<td>In Home</td>
+	<td>//form[@id='birth-confirmation-form-1']/table[2]/tbody/tr[9]/td[4]/input</td>
+	<td>At home</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='bcf-father-pin']/div[3]/input</td>
-	<td>259039302V</td>
+	<td>//form[@id='birth-confirmation-form-1']/table[2]/tbody/tr[10]/td[4]/input</td>
+	<td>334</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -63,8 +58,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='bcf-mother-pin']/div[3]/input</td>
-	<td>458690393V</td>
+	<td>//form[@id='birth-confirmation-form-1']/table[2]/tbody/tr[13]/td[4]/input</td>
+	<td>324</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -73,7 +68,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-confirmation-form-1_marriage_parentsMarried0</td>
+	<td>birth-confirmation-form-1_marriage_parentsMarried2</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,17 +84,27 @@
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameEnglish']</td>
-	<td>saman Kuma</td>
+	<td>sarathSunil</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='birth-confirmation-form-2_parent_fatherFullName']</td>
-	<td>Sarath Sumanaweeram</td>
+	<td>Kalyani</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameEnglish']</td>
+	<td>saman kuma</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_parent_fatherFullName']</td>
+	<td>sarathsunil</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='birth-confirmation-form-2_parent_motherFullName']</td>
-	<td>Kalyani Sumanaweeram</td>
+	<td>kalyani</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -108,13 +113,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>eprBirthConfirmation_confirmant_confirmantNICorPIN</td>
-	<td>852790393</td>
+	<td>confirmantNICorPIN</td>
+	<td>343</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>eprBirthConfirmation_confirmant_confirmantFullName</td>
-	<td>Tharanga Punchihewa</td>
+	<td>confirmantFullName</td>
+	<td>tharanga</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

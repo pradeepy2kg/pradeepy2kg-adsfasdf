@@ -12,41 +12,57 @@
         dojo.event.topic.publish("view_BDDivs");
     }
 </script>
+
+
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
         onsubmit="javascript:return validate()">
-<div id="birth-registration-form-header">
-<div id="birth-registration-form-header-logo">
-    <img src="<s:url value="/images/official-logo.png"/>" alt=""/>
-</div>
-<div id="birth-registration-form-header-title" class="font-12">
-    <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-        <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
-        <br>Particulars for Registration of a Birth</label>
-</div>
-<div id="serial-no">
-    <label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span>
-        <s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/>
-    </label>
-</div>
-<div id="submit-date">
-    <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span>
-        <sx:datetimepicker id="submitDatePicker" name="register.dateOfRegistration"
-                           displayFormat="yyyy-MM-dd"
-                />
 
-
-    </label>
-</div>
-<div id="birth-registration-form-header-info" class="font-9">
-    දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය යුතුය. මෙම
-    තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
-    <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-    சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-    <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
-    forwarded
-    to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
-    information provided in this form.
-</div>
+<table class="table_reg_header_01" style="font-size:9pt">
+    <caption></caption>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td width="300px"></td>
+        <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
+                                                                    alt=""/><br><label>
+            උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
+            <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
+            <br>Particulars for Registration of a Birth</label></td>
+        <td>
+            <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    </td>
+                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
+                </tr>
+            </table>
+            <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <td><label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
+                    </td>
+                    <td><sx:datetimepicker id="submitDatePicker" name="register.dateOfRegistration"
+                                           displayFormat="yyyy-MM-dd"
+                                           onmouseover="javascript:splitDate()"/>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
+            යුතුය. මෙම
+            තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+            <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+            சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+            <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
+            forwarded
+            to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
+            information provided in this form.
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
 <table class="table_reg_page_01" cellspacing="0">
@@ -71,10 +87,8 @@
     <tr style="border-left:1px solid #000000;">
         <td class="font-9"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="7">
-
-
             <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
-                               onchange="javascript:alert('OOOOKKkk');return false;"/>
+                               onchange="javascript:splitDate('datePicker')"/>
         </td>
     </tr>
     <tr>
@@ -106,7 +120,7 @@
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
         <td><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/></td>
-        <td><label style="border-left:1px solid #000;">නැත / *in Tamil / No</label></td>
+        <td><label>නැත / *in Tamil / No</label></td>
         <td><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/></td>
     </tr>
     <tr>
@@ -161,7 +175,6 @@
 <s:hidden id="error7" value="%{getText('p1.submit.after.90.value')}"/>
 
 <script type="text/javascript">
-
     function validate()
     {
         var errormsg = "";
@@ -200,8 +213,7 @@
                 errormsg = errormsg + "\n" + document.getElementById('error2').value;
             }
 
-            element
-                    = document.getElementById('childFullNameEnglish');
+            element = document.getElementById('childFullNameEnglish');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error3').value;
             }
@@ -222,7 +234,6 @@
         }
         return returnval;
     }
-
 </script>
 
 <table style="border:none; margin-bottom:20px;" align="center" class="form-submit">

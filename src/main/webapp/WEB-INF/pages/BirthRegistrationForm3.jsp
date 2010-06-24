@@ -196,8 +196,6 @@
 </table>
 
 
-
-
 <script type="text/javascript">
     var informPerson;
     function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
@@ -247,41 +245,7 @@
 
 </script>
 
-<%--
-<div id="informant-name" class="font-9">
 
- <label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label>
-
- <s:textarea name="informant.informantName" id="informantName"/>
-
-</div>
-<div id="informant-nic" class="font-9">
- <label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல் கொடுப்பவரின் தனிநபர்
-     அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label>
- <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
-</div>
-<div id="informant-address" class="font-9">
- <label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label>
- <s:textarea name="informant.informantAddress" id="informantAddress"/>
-</div>
-<div id="informant-telephone" class="font-9">
- <label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label>
- <s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"/>
-</div>
-<div id="informant-email" class="font-9">
- <label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label>
- <s:textfield name="informant.informantEmail" id="informantEmail"/>
-</div>
-<div id="informant-signature" class="font-9">
- <label>(32) අත්සන<br>தகவல் ... <br>Signature</label>
- <s:checkbox name="informant.informantSigned"/>
-</div>
-<div id="informed-date" class="font-9">
- <label>දිනය <br>*in tamil<br>Date</label>
-
- <sx:datetimepicker id="informDatePicker" name="informant.informantSignDate" displayFormat="yyyy-MM-dd"
-                    onmouseover="javascript:splitDate('secondDatePicker')"/>
-</div>   --%>
 <s:hidden name="pageNo" value="3"/>
 
 <table style="border:none; margin:12px;" align="center" class="form-submit">

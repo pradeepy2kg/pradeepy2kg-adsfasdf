@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>birthDeclarationTest</title>
+<title>BirthRegistrationFullFlow</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">birthDeclarationTest</td></tr>
+<tr><td rowspan="1" colspan="3">BirthRegistrationFullFlow</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -22,24 +22,19 @@
 	<td>ashoka</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>eprLogin_password</td>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
 	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>eprLogin_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=උප්පැන්න ලියාපදිංචි කිරීම</td>
+	<td>link=උපතක් ලියාපදිංචි කිරීම</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>1304</td>
+	<td>1303</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -74,8 +69,7 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>රත්නායක මුදියන්සෙලාගේ සමන් කුමාර රත්නායක රත්නායක මුදියන්සෙලාගේ සමන් කුමාර රත්නායක රත්නායක මුදියන්සෙලාගේ සමන් කුමාර රත්නායක
-	රත්නායක මුදියන්සෙලාගේ සමන් කුමාර රත්නායක </td>
+	<td>රත්නායක මුදියන්සෙලාගේ සමන් රත්නායක</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -92,7 +86,6 @@
 	<td>birth-registration-form-1_register_preferredLanguage</td>
 	<td>label=සිංහල</td>
 </tr>
-
 <tr>
 	<td>type</td>
 	<td>childBirthWeight</td>
@@ -325,8 +318,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>birth-registration-form-2_parent_motherPassportNo</td>
-	<td>889955623</td>
+	<td>//form[@id='birth-registration-form-2']/table[5]/tbody/tr[5]/td[4]/input</td>
+	<td>Kandy</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -750,691 +743,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[1]/label</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[2]/td[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[@id='datePicker']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[2]/td[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-1_birthDivisionId</td>
-	<td>label=3: අලුත් කඩේ (Medical)</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-1_child_birthAtHospital0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>childFullNameOfficialLang</td>
-	<td> අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ ඉලන්කෝන් සේනානායක රාජපක්ෂ
-                රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
-</tr>
-<tr>
-	<td>type</td>
-	<td>childFullNameEnglish</td>
-	<td> Angammana Ranhida Samaradiwakara Wikramasinha elangakon </td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-1_child_childGender</td>
-	<td>label=පිරිමි</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-1_register_preferredLanguage</td>
-	<td>label=සිංහල</td>
-</tr>
-
-<tr>
-	<td>type</td>
-	<td>childBirthWeight</td>
-	<td>4</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>childRank</td>
-	<td>3</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-1_child_numberOfChildrenBorn</td>
-	<td>2</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-1_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_fatherNICorPIN</td>
-	<td>123456777</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_fatherCountry</td>
-	<td>label=LK : ශ්‍රී ලංකාව</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_fatherPassportNo</td>
-	<td>112277456</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_fatherNICorPIN</td>
-	<td>123444489v</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>fatherFullName</td>
-	<td>Sarath Kumara</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[2]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_fatherPlaceOfBirth</td>
-	<td>Kandy</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_fatherRace</td>
-	<td>label=1 : සිංහල</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherNICorPIN</td>
-	<td>987654321v</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_motherCountry</td>
-	<td>label=LK : ශ්‍රී ලංකාව</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherPassportNo</td>
-	<td>889955623</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>motherFullName</td>
-	<td>Kanthi Liyanege</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[@id='motherDatePicker']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[2]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherPlaceOfBirth</td>
-	<td>Kandy</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_motherRace</td>
-	<td>label=1 : සිංහල</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherAgeAtBirth</td>
-	<td>26</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_motherDistrictId</td>
-	<td>label=11 : කොළඹ</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_motherDSDivisionId</td>
-	<td>label=33 : මොරටුව</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birth-registration-form-2_motherDSDivisionId</td>
-	<td>label=12 : හෝමගම</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherAddress</td>
-	<td>Homagama</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
-	<td>288</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[@id='admitDatePicker']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[3]/div/table/thead/tr/td/table/tbody/tr/td[2]/span[4]/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[3]/div/table/tbody/tr/td/table/tbody/tr[6]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherPhoneNo</td>
-	<td>0715516541</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherEmail</td>
-	<td>htrathnayaka@gmail.com</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-2_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_marriage_parentsMarried1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_marriage_placeOfMarriage</td>
-	<td>Maharagama</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[2]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_marriage_motherSigned</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_marriage_fatherSigned</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_grandFatherFullName</td>
-	<td>Tharanga punchihewa</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_grandFatherBirthYear</td>
-	<td>1948</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_grandFatherBirthPlace</td>
-	<td>Ruwanwella</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_greatGrandFatherFullName</td>
-	<td>Udaya Chandana</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_greatGrandFatherBirthYear</td>
-	<td>1914</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_greatGrandFatherBirthPlace</td>
-	<td>Kurunegala</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantName</td>
-	<td>Charith Ranabahu</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantNICorPIN</td>
-	<td>554564556v</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantAddress</td>
-	<td>Bandarawela</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantPhoneNo</td>
-	<td>0147025864</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantEmail</td>
-	<td>ucsam86@gmail.com</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantSigned</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[@id='informDatePicker']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[3]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-3_0</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>click</td>
-	<td>notifyingAuthoritySigned</td>
+	<td>link=උපත් තහවුරු කිරීම</td>
 	<td></td>
 </tr>
 <tr>
@@ -1444,131 +753,42 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[3]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-4_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/popreg/eprDirectApprove.do?bdId=162</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
+	<td>//tbody/tr[1]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>division</td>
-	<td>label=3: අලුත් කඩේ (Medical)</td>
+	<td>birth-confirmation-form-1_child_childGender</td>
+	<td>label=ගැහැණු</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/popreg/eprApprovalRefresh.do</td>
-	<td></td>
+	<td>type</td>
+	<td>//form[@id='birth-confirmation-form-1']/table[2]/tbody/tr[9]/td[4]/input</td>
+	<td>At home</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>eprApprovalRefresh_refresh</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//td[11]/a/img</td>
-	<td></td>
-</tr>
-
-
-<tr>
-	<td>open</td>
-	<td>/popreg/eprBirthRegisterApproval.do</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
-	<td></td>
+	<td>type</td>
+	<td>//form[@id='birth-confirmation-form-1']/table[2]/tbody/tr[10]/td[4]/input</td>
+	<td>334</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>division</td>
-	<td>label=3: අලුත් කඩේ (Medical)</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprApprovalRefresh_refresh</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//td[11]/a/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprIgnoreWarning_ignoreWarning</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprIgnoreWarning_approve</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Birth Confirmation Search in Sinhala</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>type</td>
-	<td>serialNo</td>
-	<td>1305</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>skipjs</td>
-	<td></td>
+	<td>birth-confirmation-form-1_fatherRace</td>
+	<td>label=2 : ශ්‍රී ලංකික දෙමල</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>SerialNo</td>
-	<td>1111</td>
+	<td>//form[@id='birth-confirmation-form-1']/table[2]/tbody/tr[13]/td[4]/input</td>
+	<td>324</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//div[@id='bcf-father-pin']/div[3]/input</td>
-	<td>145456789v</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//div[@id='bcf-mother-pin']/div[3]/input</td>
-	<td>857654321v</td>
+	<td>select</td>
+	<td>birth-confirmation-form-1_motherRace</td>
+	<td>label=2 : ශ්‍රී ලංකික දෙමල</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-confirmation-form-1_marriage_parentsMarried0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-confirmation-form-1_marriage_parentsMarried1</td>
+	<td>birth-confirmation-form-1_marriage_parentsMarried2</td>
 	<td></td>
 </tr>
 <tr>
@@ -1579,7 +799,32 @@
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameOfficialLang']</td>
-	<td>රත්නායක මුදියන්සෙලාගේ සමන් කුමාර රත්නායක</td>
+	<td>සමන් කුමා</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameEnglish']</td>
+	<td>sarathSunil</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_parent_fatherFullName']</td>
+	<td>Kalyani</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_child_childFullNameEnglish']</td>
+	<td>saman kuma</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_parent_fatherFullName']</td>
+	<td>sarathsunil</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='birth-confirmation-form-2_parent_motherFullName']</td>
+	<td>kalyani</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -1589,19 +834,18 @@
 <tr>
 	<td>type</td>
 	<td>confirmantNICorPIN</td>
-	<td>123456789</td>
+	<td>343</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>confirmantFullName</td>
-	<td>Lalith Priyantha</td>
+	<td>tharanga</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprBirthConfirmation_0</td>
 	<td></td>
 </tr>
-
 
 </tbody></table>
 </body>

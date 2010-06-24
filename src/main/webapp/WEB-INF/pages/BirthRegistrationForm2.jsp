@@ -198,7 +198,7 @@
     }
 </script>
 
-<table style="border:none; margin:13px;" align="center" class="form-submit">
+<table style="border:none; margin:15px;" align="right" width="1030px">
     <s:url id="backUrl" action="eprBirthRegistration">
         <s:param name="back" value="true"/>
         <s:param name="pageNo" value="{pageNo - 1}"/>

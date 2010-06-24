@@ -19,48 +19,50 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="3" style="text-align:center;font-size:12pt">  * in Sinhala <br>* in Tamil *<br> Changes in Names</td>
+            <td colspan="3" style="text-align:center;font-size:12pt"> * in Sinhala <br>* in Tamil *<br> Changes in Names
+            </td>
         </tr>
         <tr>
             <td class="cell_01">11</td>
             <td><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் / தமிழ்)
                 <br>Childs name in the official languages (Sinhala / Tamil)</label></td>
-            <td> <s:textfield cssClass="disable" disabled="true" name="child.childFullNameOfficialLang" >
+            <td><s:textfield cssClass="disable" disabled="true" name="child.childFullNameOfficialLang">
             </s:textfield></td>
         </tr>
         <tr>
             <td></td>
-            <td><label>නම වෙනස් විය යුතු  අයුරු<br>* in Tamil <br>Corrected name</label></td>
-            <td><s:textarea name="child.childFullNameOfficialLang" ></s:textarea></td>
+            <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+            <td><s:textarea name="child.childFullNameOfficialLang"></s:textarea></td>
         </tr>
         <tr>
             <td>12</td>
-            <td><label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ...   <br>Childs name in English</label></td>
-            <td> <s:textfield cssClass="disable" disabled="true" name="child.childFullNameEnglish" ></s:textfield></td>
+            <td><label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ... <br>Childs name in English</label></td>
+            <td><s:textfield cssClass="disable" disabled="true" name="child.childFullNameEnglish"></s:textfield></td>
         </tr>
         <tr>
             <td></td>
-            <td><label>නම වෙනස් විය යුතු  අයුරු<br>* in Tamil <br>Corrected name</label></td>
-            <td><s:textarea name="child.childFullNameEnglish" ></s:textarea></td>
+            <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+            <td><s:textarea name="child.childFullNameEnglish"></s:textarea></td>
         </tr>
         <tr>
             <td>13</td>
-            <td> <label>පියාගේ සම්පුර්ණ නම  <br>தந்நையின் முழுப் பெயர்<br>Father's Full Name</label></td>
-            <td><s:textfield cssClass="disable" disabled="true" name="parent.fatherFullName" ></s:textfield></td>
+            <td><label>පියාගේ සම්පුර්ණ නම <br>தந்நையின் முழுப் பெயர்<br>Father's Full Name</label></td>
+            <td><s:textfield cssClass="disable" disabled="true" name="parent.fatherFullName"></s:textfield></td>
         </tr>
         <tr>
             <td></td>
-            <td> <label>නම වෙනස් විය යුතු  අයුරු<br>* in Tamil <br>Corrected name</label></td>
-            <td><s:textarea name="parent.fatherFullName" ></s:textarea></td>
+            <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+            <td><s:textarea name="parent.fatherFullName"></s:textarea></td>
         </tr>
-        <tr> <td>14</td>
-            <td>  <label>මවගේ සම්පූර්ණ නම <br>தாயின் முழுப் பெயர்<br>Mother's Full Name</label></td>
-            <td><s:textfield cssClass="disable" disabled="true" name="parent.motherFullName" ></s:textfield></td>
+        <tr>
+            <td>14</td>
+            <td><label>මවගේ සම්පූර්ණ නම <br>தாயின் முழுப் பெயர்<br>Mother's Full Name</label></td>
+            <td><s:textfield cssClass="disable" disabled="true" name="parent.motherFullName"></s:textfield></td>
         </tr>
-        <tr> 
+        <tr>
             <td></td>
-            <td><label>නම වෙනස් විය යුතු  අයුරු<br>* in Tamil <br>Corrected name</label></td>
-            <td><s:textarea name="parent.motherFullName" ></s:textarea></td>
+            <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+            <td><s:textarea name="parent.motherFullName"></s:textarea></td>
         </tr>
         </tbody>
     </table>

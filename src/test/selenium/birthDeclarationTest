@@ -19,12 +19,12 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>asankha</td>
+	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
-	<td>asankha</td>
+	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -70,7 +70,7 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>රත්නායක මුදියන්සෙලාගේ සමන්  රත්නායක </td>
+	<td>රත්නායක මුදියන්සෙලාගේ සමන් රත්නායක</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -87,7 +87,6 @@
 	<td>birth-registration-form-1_register_preferredLanguage</td>
 	<td>label=සිංහල</td>
 </tr>
-
 <tr>
 	<td>type</td>
 	<td>childBirthWeight</td>

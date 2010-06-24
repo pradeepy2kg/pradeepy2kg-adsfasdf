@@ -42,7 +42,7 @@
 }
 
 #birth-registration-form-1-outer {
-    height: 945px;
+    height: 920px;
 }
 
 #birth-registration-form-2-outer {
@@ -1184,7 +1184,16 @@
     border-bottom: none;
     font-size: 9pt;
 }
-
+.table_reg_page_01 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.table_reg_header_01
+{
+    width:1030px;
+    border:none;
+}
+.table_reg_datePicker_page_01{width:300px; border:1px solid #000000; margin:10px};
 .table_reg_page_01 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
@@ -1323,7 +1332,8 @@
     width: 590px;
     margin: 2px 5px;
 }
-   /*styles for birth confirmation form 01*/
+
+/*styles for birth confirmation form 01*/
 .table_con_page_01 {
     width: 1030px;
     border: 1px solid #000000;;
@@ -1342,6 +1352,11 @@
     float: left;
     width: 300px;
     margin: 2px 5px;
+}
+.table_con_header_01
+{
+    width:1030px;
+    border:none;
 }
 
 .cell_01 {
@@ -1363,39 +1378,41 @@
     width: 100px
 }
 
-   /*styles for birth confirmation form 02*/
+/*styles for birth confirmation form 02*/
 
+.table_con_page_02 {
+    width: 1030px;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+    margin-bottom: 30px;
+}
 
-    .table_con_page_02 {
-        width: 1030px;
-        border: 1px solid #000000;;
-        border-right: none;
-        border-bottom: none;
-        font-size: 9pt;
-        margin-bottom: 30px;
-    }
+.table_con_page_02 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
 
-    .table_con_page_02 td {
-        border-right: 1px solid #000000;
-        border-bottom: 1px solid #000000;
-    }
-    .table_con_page_02 textarea{
-        width:750px;
-    }
-   /*styles for birth confirmation form 03*/
-    .table_con_page_03 {
-        width: 1030px;
-        border: 1px solid #000000;;
-        border-right: none;
-        border-bottom: none;
-        font-size: 9pt;
-        margin-bottom: 30px;
-    }
+.table_con_page_02 textarea {
+    width: 750px;
+}
 
-    .table_con_page_03 td {
-        border-right: 1px solid #000000;
-        border-bottom: 1px solid #000000;
-    }
-    .table_con_page_03 textarea{
-        width:750px;
-    }
+/*styles for birth confirmation form 03*/
+.table_con_page_03 {
+    width: 1030px;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+    margin-bottom: 30px;
+}
+
+.table_con_page_03 td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_con_page_03 textarea {
+    width: 750px;
+}
