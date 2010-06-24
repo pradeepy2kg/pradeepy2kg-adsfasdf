@@ -4,7 +4,6 @@
 <div id="bdaw-outer">
     <div id="bdaw-content">
         <table>
-            <%--todo confirmation igoreWarning has to be implemented--%>
             <s:iterator value="#request.warnings">
                 <tr>
                     <td><s:property value="message"/></td>
@@ -14,6 +13,7 @@
     </div>
     <div id="bdaw-action">
         <s:form action="eprIgnoreWarning" name="birthDeclarationApprovalWarningForm">
+            <fieldset>
             <s:hidden value="%{#request.bdId}" name="bdId"/>
             <table align="center" border="0">
                 <tr>
@@ -26,6 +26,7 @@
                 <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
                     <%--<tr>
                         <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
                         <td><s:textarea name="comments"/> </td>
@@ -34,6 +35,7 @@
                     <td><s:submit name="approve" value="%{getText('approve.label')}"/></td>
                 </tr>
             </table>
+                </fieldset>
         </s:form>
     </div>
 </div>
