@@ -2,40 +2,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
-    @media screen {
-        #birth-certificate-outer {
-            width: auto;
-            height: auto;
-            padding: 10px;
-            padding-bottom:5px;
-            background: #fff;
-            font-size: 9pt;
-            font-family: BhashitaComplex;
-        }
-    }
-
     @media print {
-        body {
-            background-color: white !important;
-            font-family: verdana, arial, sans-serif;
-            font-size: 10pt;
-            width: 210mm;
-            height: 297mm;
-        }
-
-        * {
-            background: none;
-        }
-
-        #layout-header, #body-content-title, #layout-footer {
-            display: none;
-        }
-
-        #body-sidebar {
-            display: none;
-        }
-
         #birth-certificate-outer {
+            float: none;
             width: 210mm;
             height: 297mm;
             padding: 10px;
@@ -44,33 +13,12 @@
             font-family: BhashitaComplex;
         }
 
-    }
-
-    #birth-certificate-outer table {
-        font-size: 10pt;
-        font-family: BhashitaComplex;
-        margin-bottom: 10px;
-    }
-
-    #birth-certificate-outer p {
-        font-size: 8pt;
-        font-family: BhashitaComplex;
-        text-align: center;
-        margin-top: -3px;
-        margin-bottom:0;
-    }
-
-    .bc-name {
-        font-size: 12pt;
-        font-family: BhashitaComplex;
-    }
-
-    #birth-certificate-outer .table-with-border {
-        width: 100%;
-        border: 1px solid #000;
-        border-collapse: collapse;
+        .form-submit {
+            display: none;
+        }
     }
 </style>
+
 <div id="birth-certificate-outer">
     <s:form action="eprBirthConfirmationPrint" name="birthCertificatePrint"
             id="birth-certificate-print" method="POST">
@@ -162,10 +110,6 @@
                 </td>
                 <td colspan="5" class="bc-name">
                     <s:label name="" value="%{#childFullNameOfficialLang}"/>
-                    අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ ඉලන්කෝන් සේනානායක රාජපක්ෂ
-                    රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
-                    අංගම්මන (356 bytes – font size 10)
-                    අංගම්මන
                 </td>
             </tr>
             <tr>
@@ -173,10 +117,6 @@
                 </td>
                 <td colspan="5" class="bc-name">
                     <s:label name="" value="%{#child.childFullNameEnglish}"/>
-                    අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ ඉලන්කෝන් සේනානායක රාජපක්ෂ
-                    රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
-                    අංගම්මන (356 bytes – font size 10)
-                    අංගම්මන
                 </td>
             </tr>
             <tr>
@@ -192,10 +132,6 @@
                 </td>
                 <td colspan="5" class="bc-name">
                     <s:label name="" value="%{#parent.fatherFullName}"/>
-                    අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ ඉලන්කෝන් සේනානායක රාජපක්ෂ
-                    රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
-                    අංගම්මන (356 bytes – font size 10)
-                    අංගම්මන
                 </td>
             </tr>
             <tr>
@@ -211,16 +147,12 @@
                 </td>
                 <td colspan="5" class="bc-name">
                     <s:label name="" value="%{#parent.motherFullName}"/>
-                    අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ ඉලන්කෝන් සේනානායක රාජපක්ෂ
-                    රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
-                    අංගම්මන (356 bytes – font size 10)
-                    අංගම්මන
                 </td>
             </tr>
             </tbody>
         </table>
 
-        <table border="1" class="table-with-border" >
+        <table border="1" class="table-with-border">
             <col width="195px">
             <col width="215px">
             <col width="120px">
