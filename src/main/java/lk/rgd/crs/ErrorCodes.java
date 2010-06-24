@@ -28,9 +28,17 @@ public class ErrorCodes {
      */
     public static final int COMMENT_REQUIRED_BDF_REJECT = 1003;
     /**
-     * The BDF is not in a state where confirmation changes can be approved/rejected
+     * The BDF is not in a state where it can be can be approved/rejected
      */
-    public static final int INVALID_STATE_FOR_BDF_CONFIRMATION_CHANGES = 1004;
+    public static final int INVALID_STATE_FOR_BDF_APPROVAL = 1004;
+    /**
+     * The BDF is not in a state where bdf / confirmation can be approved
+     */
+    public static final int INVALID_STATE_FOR_BDF_CONFIRMATION = 1005;
+    /**
+     * The BDF is not in a state where bdf / confirmation can be rejected
+     */
+    public static final int INVALID_STATE_FOR_BDF_REJECTION = 1006;
 
     // error codes 2001 - 3000 indicate permission denied errors
     /**

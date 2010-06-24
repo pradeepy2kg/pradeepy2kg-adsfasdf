@@ -17,7 +17,7 @@ public class BirthRegisterInfo {
      * The preferred language of for the record
      */
     @Column (nullable = false, columnDefinition="char(2) default 'si'")
-    private String preferredLanguage;
+    private String preferredLanguage = "si";
 
     /**
      * This is the serial number captured from the BDF

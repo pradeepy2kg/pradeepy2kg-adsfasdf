@@ -33,11 +33,17 @@ public class UnitTestManager extends TestCase {
         try {
             GenericApplicationContext ctx = new GenericApplicationContext();
             XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
-            xmlReader.loadBeanDefinitions(new ClassPathResource("unitTest_applicationContext.xml"));
+            if (Boolean.getBoolean("keepdb")) {
+                xmlReader.loadBeanDefinitions(new ClassPathResource("unitTestKeepDB_applicationContext.xml"));
+            } else {
+                xmlReader.loadBeanDefinitions(new ClassPathResource("unitTest_applicationContext.xml"));
+            }
             ctx.refresh();
 
             // create Lucene indexes
-            createTestLuceneIndex();
+            createTestLuceneIndex(Boolean.getBoolean("keepdb") ?
+                "jdbc:derby://localhost:1527/unit-testing-jpa;create=true" :
+                "jdbc:derby:memory:unit-testing-jpa");
             return ctx;
 
         } catch (Exception e) {
@@ -46,19 +52,24 @@ public class UnitTestManager extends TestCase {
         }
     }
 
-    private static void createTestLuceneIndex() {
+    private static void createTestLuceneIndex(String url) {
 
-        logger.info("Creating Lucene indexes ...");
-        
         // delete any existing index
         File f = new File("/tmp/index/person");
         if (f.exists()) {
-            f.delete();
+            if (Boolean.getBoolean("keepdb")) {
+                logger.info("Reusing existing Lucene indexes ...");
+                return;
+            } else {
+                f.delete();
+            }
         }
         f.mkdirs();
 
+        logger.info("Creating Lucene indexes ...");
+
         try {
-            Connection c = DriverManager.getConnection("jdbc:derby:memory:unit-testing-jpa", "epop", "epop");
+            Connection c = DriverManager.getConnection(url, "epop", "epop");
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("select * from PRS.PERSON");
 

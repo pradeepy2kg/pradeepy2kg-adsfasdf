@@ -7,6 +7,12 @@ package lk.rgd;
  */
 public class AppConstants {
 
+    public enum Gender {
+        MALE,
+        FEMALE,
+        UNKNOWN
+    }
+
     public static final String EMPTY_STRING = "";
 
     /**

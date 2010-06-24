@@ -83,7 +83,7 @@ public class
         }
 
         // recreate database with MySQL only if explicitly asked
-        if (!mysql || createCleanDB) {
+        if (!Boolean.getBoolean("keepdb") && (!mysql || createCleanDB)) {
             recreateCleanDB(mysql);
             // perform additional initialization with Java code
             additionalInitialization(ctx);

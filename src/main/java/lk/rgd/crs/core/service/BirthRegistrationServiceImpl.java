@@ -6,7 +6,6 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.ErrorCodes;
@@ -24,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The central service managing the CRS Birth Registration process
@@ -54,7 +52,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public void addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
+    public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment) {
         // does the user have access to the BDF being added (i.e. check district and DS division)
         // TODO if a mother is specified, is she alive? etc
@@ -64,6 +62,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
         validateAccessOfUser(user, bdf);
         birthDeclarationDAO.addBirthDeclaration(bdf);
+        return null;
     }
 
     /**
@@ -101,11 +100,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // TODO check validations as per addNormalBirthDeclaration
 
         // a BDF can be edited by a DEO or ADR only before being approved
-        if (existing.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (currentState == BirthDeclaration.State.DATA_ENTRY) {
             birthDeclarationDAO.updateBirthDeclaration(bdf);
         } else {
-            handleException("Cannot modify birth declaration " + existing.getIdUKey() +
-                "after its approved", ErrorCodes.ILLEGAL_STATE);
+            handleException("Cannot modify birth declaration : " + existing.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -120,11 +120,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, existing);
 
         // a BDF can be edited by a DEO or ADR only before being approved
-        if (existing.getRegister().getStatus() == BirthDeclaration.State.DATA_ENTRY) {
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (currentState == BirthDeclaration.State.DATA_ENTRY) {
             birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
         } else {
             handleException("Cannot delete birth declaration " + existing.getIdUKey() +
-                "after its approved", ErrorCodes.ILLEGAL_STATE);
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -137,6 +138,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
+
+        final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
+        if (BirthDeclaration.State.DATA_ENTRY != currentState) {
+            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
+        }
 
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
@@ -200,14 +207,36 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // i.e. only update the confirmant information
         existing.setConfirmant(bdf.getConfirmant());
 
-        if (bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) {
+        final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
+        if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState) {
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMED_WITHOUT_CHANGES);
             birthDeclarationDAO.updateBirthDeclaration(bdf);
         } else {
-            handleException("Cannot update birth declaration record : " + bdf.getIdUKey() +
-                " as confirmed without changes, as its not in a state where the confirmation is printed",
-                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION_CHANGES);
+            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<UserWarning> approveChangedConfirmationIDList(long[] approvalDataList, User user) {
+
+        if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth confirmation",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        List<UserWarning> warnings = new ArrayList<UserWarning>();
+        for (long id : approvalDataList) {
+            BirthDeclaration bdf = birthDeclarationDAO.getById(id);
+            List<UserWarning> w = approveConfirmationChanges(bdf, false, user);
+            if (!w.isEmpty()) {
+                warnings.add(new UserWarning("Birth Declaration Confirmation with ID : " + id +
+                    " must be approved after validating warnings"));
+            }
+        }
+        return warnings;
     }
 
     /**
@@ -221,8 +250,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 ErrorCodes.PERMISSION_DENIED);
         }
 
-        if (bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+        final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
+        if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState ||
+            BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState ) {
 
             List<UserWarning> warnings = prepareForConfirmation(bdf, ignoreWarnings, user);
             if (warnings.isEmpty() || ignoreWarnings) {
@@ -231,9 +261,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
             return warnings;
         } else {
-            handleException("Cannot approve a confirmation : " + bdf.getIdUKey() + " with changes, as its not in a " +
-                "state where the confirmation is printed; or changes have been captured",
-                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION_CHANGES);
+            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
         }
         return null;
     }
@@ -296,13 +325,24 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
 
-        // check approve/reject permission
-        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
-            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
-                ErrorCodes.PERMISSION_DENIED);
+        // check state of record
+        BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState ||
+            BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState ||
+            BirthDeclaration.State.DATA_ENTRY == currentState) {
+
+            // check approve/reject permission
+            if (!user.isAuthorized(Permission.APPROVE_BDF)) {
+                handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
+                    ErrorCodes.PERMISSION_DENIED);
+            }
+            bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_REJECTED);
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
+
+        } else {
+            handleException("Cannot reject birth declaration / confirmation : " + bdf.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.INVALID_STATE_FOR_BDF_REJECTION);
         }
-        bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_REJECTED);
-        birthDeclarationDAO.updateBirthDeclaration(bdf);
     }
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
@@ -321,6 +361,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         throw new CRSRuntimeException(message, code);
     }
 
+    /**
+     * @inheritDoc
+     */
     public BirthDeclaration getById(long bdId, User user) {
         BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
         // does the user have access to the BDF (i.e. check district and DS division)
