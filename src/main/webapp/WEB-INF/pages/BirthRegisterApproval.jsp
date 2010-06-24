@@ -29,7 +29,7 @@
     </s:if>
     <div id="birth-register-approval-body">
         <%--todo permission handling--%>
-        <s:form action="eprApproveAllSelected" name="birth_register_approval_body" method="POST">
+        <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
                 <table>
                 <tr>

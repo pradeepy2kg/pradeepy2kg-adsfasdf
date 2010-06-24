@@ -8,7 +8,7 @@
                     list="districtList" name="district" value="#request.district"/></s:label>
             <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span><s:select
                     list="divisionList" value="division"
-                    name="division" headerKey="0"/></s:label>
+                    name="division" /></s:label>
             <s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdId"/>
             <s:hidden name="confirmationApprovalFlag" value="true"/>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
@@ -28,7 +28,7 @@
     </s:if>
     <div id="birth-register-approval-body">
         <%--todo permission handling--%>
-        <s:form action="" name="birth_register_approval_body" method="POST">
+        <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
                 <table>
                 <tr>

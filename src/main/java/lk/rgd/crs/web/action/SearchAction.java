@@ -34,6 +34,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
 
     private int district;
+    private int division;
+
+    private long serialNo;
+    private long idUKey;
+    private String childName;
+
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
         this.service = service;
@@ -52,29 +58,16 @@ public class SearchAction extends ActionSupport implements SessionAware {
      *
      * @return String
      */
-    public String searchBDF() {
-        logger.debug("inside searchBDF : idUKey {} recieved , SearialNo {} recieved", idUKey, serialNo);
-        if (idUKey != 0) {
-            /*bdf = service.getById(idUKey, user);
-            if (bdf.getRegister().getStatus() != BirthDeclaration.State.APPROVED ||
-                bdf.getRegister().getStatus() != BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() != BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
-                addActionError("bdfSearch.EditNotAllowed");
-                return "error";
-            }*/
-        } else if (serialNo != null && !serialNo.equals("")) {
-        } else {
-            addActionError(getText("bdfSearch.InvalidEntryError"));
-        }
+    public String searchBDFBySerialNumber() {
         return "success";
     }
 
     /**
-     * Populate master data to the UIs
+     * Populate master data to the UI
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        logger.debug("inside populate : {} observed.", language);
+        logger.debug("inside populate : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
         setInitialDistrict();
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(getDistrict(), language, user);
@@ -82,7 +75,6 @@ public class SearchAction extends ActionSupport implements SessionAware {
             int dsDivisionId = dsDivisionList.keySet().iterator().next();
             setDivisionList(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
         }
-        logger.debug("inside populate : districts , countriees and races populated.");
     }
 
     /**
@@ -97,14 +89,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
         }
     }
 
-    private String serialNo;
-    private long idUKey;
-
-    public String getSerialNo() {
+    public long getSerialNo() {
         return serialNo;
     }
 
-    public void setSerialNo(String serialNo) {
+    public void setSerialNo(long serialNo) {
         this.serialNo = serialNo;
     }
 
@@ -151,5 +140,21 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setDistrictList(Map<Integer, String> districtList) {
         this.districtList = districtList;
+    }
+
+    public int getDivision() {
+        return division;
+    }
+
+    public void setDivision(int division) {
+        this.division = division;
+    }
+
+    public String getChildName() {
+        return childName;
+    }
+
+    public void setChildName(String childName) {
+        this.childName = childName;
     }
 }
