@@ -10,9 +10,9 @@
                 <s:select list="divisionList" value="division" name="division"/></s:label>&nbsp;
             <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate" displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate" displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
             <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo" />
-            <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
         </div><br>
     </s:form>
     <s:actionerror/>

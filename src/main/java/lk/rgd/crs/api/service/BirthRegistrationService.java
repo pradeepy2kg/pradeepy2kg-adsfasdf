@@ -15,14 +15,14 @@ public interface BirthRegistrationService {
      * are performed at this stage. The [ADR] Approval will trigger a manual / human approval after validating any
      * warnings by an ADR or higher level authority
      *
-     * @param bdf            the BDF to be added
-     * @param ignoreWarnings an explicit switch to disable optional validations
-     * @param user           the user initiating the action
-     * @param caseFileNumber the case file number for a late or belated registration
+     * @param bdf                        the BDF to be added
+     * @param ignoreWarnings             an explicit switch to disable optional validations
+     * @param user                       the user initiating the action
+     * @param caseFileNumber             the case file number for a late or belated registration
      * @param additionalDocumentsComment a comment specifying the list of additional document supplied
-     * (for a late registration)
+     *                                   (for a late registration)
      * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
-     * Warnings maybe if a mother specified is known to be dead etc
+     *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment);
@@ -67,24 +67,27 @@ public interface BirthRegistrationService {
 
     /**
      * Approve a birth confirmation without any additional changes
-     * @param bdf the birth declaration confirmed as correct
+     *
+     * @param bdf  the birth declaration confirmed as correct
      * @param user user initiating the action
      */
     public void markBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user);
 
     /**
      * Approve changes submitted by parents (or possibly those already captured by a DEO)
-     * @param bdf the BDF to approve with changes
+     *
+     * @param bdf            the BDF to approve with changes
      * @param ignoreWarnings a flag indicating that any warnings are confirmed as checked by the user
-     * @param user user initiating the action
+     * @param user           user initiating the action
      * @return any warnings generated for the record
      */
     public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * API to perform approval of a set of confirmations with changes
+     *
      * @param approvalDataList the unique IDs of the confirmations with changes to approve
-     * @param user the user making the bulk approval
+     * @param user             the user making the bulk approval
      * @return a list of warnings, if any are encountered
      */
     public List<UserWarning> approveChangedConfirmationIDList(long[] approvalDataList, User user);
@@ -113,7 +116,7 @@ public interface BirthRegistrationService {
      *
      * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
      * @param serialNo   bdfSerialNo given to the Birth Declarion
-     * @param user the user making the request
+     * @param user       the user making the request
      * @return the BDF if found, and the user has access to the record
      */
     public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
@@ -123,8 +126,8 @@ public interface BirthRegistrationService {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
-     * @param pageNo the page number for the results required (start from 1)
-     * @param noOfRows number of rows to return per page
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -134,8 +137,8 @@ public interface BirthRegistrationService {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
-     * @param pageNo the page number for the results required (start from 1)
-     * @param noOfRows number of rows to return per page
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -149,7 +152,7 @@ public interface BirthRegistrationService {
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf);
 
     /**
-     * Returns a limited set of approval pending BirthDeclarations for elected BD Division and selected range of
+     * Returns a limited set of approval pending BirthDeclarations for selected BD Division and selected range of
      * registration dates.
      * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
      *
@@ -160,6 +163,22 @@ public interface BirthRegistrationService {
      * @param noOfRows      number of rows
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndDateRange(BDDivision birthDivision, Date startDate, Date endDate, int pageNo, int noOfRows);
+    public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
+     * by an ADR for selected BD Division and selected range of confirmation recevied dates.
+     * Results are ordered on the descending confirmationReceiveDate. pageNo  and noOfRows used for pagination
+     *
+     * @param birthDivision the birth division
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows);
 }
 

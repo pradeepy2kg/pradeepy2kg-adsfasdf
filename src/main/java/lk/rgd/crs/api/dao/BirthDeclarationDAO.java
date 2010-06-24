@@ -51,8 +51,8 @@ public interface BirthDeclarationDAO {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
-     * @param pageNo the page number for the results required (start from 1)
-     * @param noOfRows number of rows to return per page
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -62,8 +62,8 @@ public interface BirthDeclarationDAO {
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
-     * @param pageNo the page number for the results required (start from 1)
-     * @param noOfRows number of rows to return per page
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
@@ -107,6 +107,22 @@ public interface BirthDeclarationDAO {
      * @param noOfRows      number of rows
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getByBDDivisionStatusAndDateRange(BDDivision birthDivision, BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+    public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
+        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
+     * by an ADR for selected BD Division and selected range of confirmation recevied dates.
+     * Results are ordered on the descending confirmationReceiveDate. pageNo  and noOfRows used for pagination
+     *
+     * @param birthDivision the birth division
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
+        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 }
 

@@ -39,8 +39,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final RaceDAO raceDAO;
 
     public BirthRegistrationServiceImpl(
-            BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-            BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+        BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -252,7 +252,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
         if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState ||
-            BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState ) {
+            BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
 
             List<UserWarning> warnings = prepareForConfirmation(bdf, ignoreWarnings, user);
             if (warnings.isEmpty() || ignoreWarnings) {
@@ -402,8 +402,19 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndDateRange(BDDivision birthDivision, Date startDate, Date endDate, int pageNo, int noOfRows) {
-        return birthDeclarationDAO.getByBDDivisionStatusAndDateRange(birthDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
+    public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows) {
+        return birthDeclarationDAO.getByBDDivisionStatusAndRegisterDateRange(
+            birthDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows) {
+        return birthDeclarationDAO.getByBDDivisionStatusAndConfirmationReceiveDateRange(
+            birthDivision, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, startDate, endDate, pageNo, noOfRows);
     }
 
     /**
