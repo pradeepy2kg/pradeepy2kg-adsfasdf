@@ -250,7 +250,7 @@
         </div>
     </div>
 
-        <s:hidden name="pageNo" value="1"/>
+        
         <s:submit value="%{getText('print.label')}" onclick="print()" type="button"/>
     </s:form>
 </div>

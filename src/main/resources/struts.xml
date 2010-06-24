@@ -85,6 +85,12 @@
             <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
+        
+        <action name="eprbirthCetificatePrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthCetificatePrint">
+            <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
 
         
         <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"

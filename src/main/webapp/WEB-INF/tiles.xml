@@ -70,9 +70,13 @@
 
     <definition name="epr.birthConfirmationPrint_form" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationPrintForm.jsp"/>
-        <put-attribute name="title" value="BirthConfirmationForm1.title"/>
+        <put-attribute name="title" value="BirthConfirmationPrintForm.title"/>
     </definition>
-    
+
+    <definition name="epr.birthCertificate_form" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthCertificate.jsp"/>
+        <put-attribute name="title" value="BirthCertificate.title"/>
+    </definition>
 
 
     <definition name="epr.home" extends="epr.template">

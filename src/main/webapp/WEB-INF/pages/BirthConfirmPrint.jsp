@@ -14,9 +14,7 @@
         <s:submit value="%{getText('view.label')}"></s:submit>
     </div>
 
-    <s:url id="approveAndPrintUrl" action="eprConfirmationPrintPageLoad">
-            <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
-        </s:url>
+
 
     <div id="birth-register-approval-body">
         <s:if test="printList.size==0 && printStart==0">
@@ -35,6 +33,7 @@
 
                     <%--following code used for pagination--%>
                 <s:iterator status="printStatus" value="printList">
+
                     <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                         <td align="right"><s:property value="%{#printStatus.count+printStart}"/></td>
                         <td><s:checkbox name="index"
@@ -43,7 +42,10 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:a href="%{approveAndPrintUrl}">
+                             <s:url id="cetificatePrintUrl" action="eprbirthCetificatePrint">
+                                <s:param name="bdId" value="idUKey"/>
+                             </s:url>
+                            <s:a href="%{cetificatePrintUrl}">
                                 <img src="<s:url value='/images/print_icon.png'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>
