@@ -1,5 +1,7 @@
 package lk.rgd;
 
+import java.util.Locale;
+
 /**
  * Defines application-wide constants shared by both CRS and PRS
  *
@@ -14,6 +16,19 @@ public class AppConstants {
     }
 
     public static final String EMPTY_STRING = "";
+
+    /**
+     * Locale for Sri Lankan Sinhalese
+     */
+    public static final Locale LK_SI = new Locale("si", "lk");
+    /**
+     * Locale for Sri Lankan Tamil
+     */
+    public static final Locale LK_TA = new Locale("ta", "lk");
+    /**
+     * Locale for Sri Lankan English - defaults to en-US
+     */
+    public static final Locale LK_EN = new Locale("en", "US");
 
     /**
      * Language identifier for English

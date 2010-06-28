@@ -13,8 +13,8 @@ import java.util.Date;
 @Embeddable
 public class NotifyingAuthorityInfo implements Serializable {
     /** The notifying authority PIN */
-    @Column(nullable = false, length = 10)
-    private String notifyingAuthorityPIN;
+    @Column(nullable = false)
+    private long notifyingAuthorityPIN;
 
     /** The notifying authority Name */
     @Column(nullable = false, length = 120)
@@ -38,11 +38,11 @@ public class NotifyingAuthorityInfo implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date notifyingAuthoritySignDate;
 
-    public String getNotifyingAuthorityPIN() {
+    public long getNotifyingAuthorityPIN() {
         return notifyingAuthorityPIN;
     }
 
-    public void setNotifyingAuthorityPIN(String notifyingAuthorityPIN) {
+    public void setNotifyingAuthorityPIN(long notifyingAuthorityPIN) {
         this.notifyingAuthorityPIN = notifyingAuthorityPIN;
     }
 

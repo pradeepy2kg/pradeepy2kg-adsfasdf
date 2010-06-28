@@ -62,6 +62,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // TODO more validations .. like bdf.getParent().getMotherFullName() != null etc
         }
         validateAccessOfUser(user, bdf);
+        bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
         birthDeclarationDAO.addBirthDeclaration(bdf);
         return null;
     }
@@ -134,17 +135,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+
+        // load the existing record
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
-        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
-
-        final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
-        if (BirthDeclaration.State.DATA_ENTRY != currentState) {
-            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
-                ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
-        }
 
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
@@ -152,25 +150,19 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 ErrorCodes.PERMISSION_DENIED);
         }
 
-        // create a holder to capture any warnings
-        List<UserWarning> warnings = new ArrayList<UserWarning>();
-
-        if (!ignoreWarnings) {
-            // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
-            if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
-                List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBandMotherNICorPIN(
-                    bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
-
-                for (BirthDeclaration b : existingRecords) {
-                    if (b.getIdUKey() != bdf.getIdUKey()) {
-                        warnings.add(
-                            new UserWarning("Possible duplicate with record ID : " + b.getIdUKey() +
-                                " Registered on : " + b.getRegister().getDateOfRegistration() +
-                                " Child name : " + b.getChild().getChildFullNameOfficialLangToLength(20)));
-                    }
-                }
-            }
+        // is the BDF currently existing in a state for approval
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (BirthDeclaration.State.DATA_ENTRY != currentState) {
+            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
         }
+
+        // validate if the minimum required fields are adequately filled
+        BirthDeclarationValidator.validateMinimalRequirements(bdf);
+
+        // validate standard validations anyway, since even if validations are rejected a note of it will be made
+        // against the approval for audit requirements
+        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();

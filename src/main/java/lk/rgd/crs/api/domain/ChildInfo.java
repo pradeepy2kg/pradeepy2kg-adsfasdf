@@ -12,8 +12,8 @@ public class ChildInfo implements Serializable {
     /**
      * This is the PIN number generated to the child
      */
-    @Column(nullable = true, length = 10)
-    private String pin;
+    @Column(nullable = true)
+    private Long pin;
 
     /**
      * The date of the birth
@@ -172,11 +172,11 @@ public class ChildInfo implements Serializable {
         this.birthAtHospital = birthAtHospital;
     }
 
-    public String getPin() {
+    public Long getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(Long pin) {
         this.pin = pin;
     }
 

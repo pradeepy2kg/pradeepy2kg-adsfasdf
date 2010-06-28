@@ -75,7 +75,7 @@ public class UserManagementTest extends TestCase {
         User newUser1 = new User();
         newUser1.setUserId("newUser1");
         newUser1.setUserName("newUser1 Name");
-        newUser1.setPin("1");
+        newUser1.setPin(1);
         newUser1.setPrefLanguage("si");
         newUser1.setRole(roleDAO.getRole("DEO"));
         newUser1.setPasswordHash(userManager.hashPassword("newUser1"));
@@ -85,7 +85,7 @@ public class UserManagementTest extends TestCase {
         User newUser2 = new User();
         newUser2.setUserId("newUser2");
         newUser2.setUserName("newUser2 Name");
-        newUser2.setPin("2");
+        newUser2.setPin(2);
         newUser2.setPrefLanguage("si");
         newUser2.setRole(roleDAO.getRole("DEO"));
         newUser2.setPasswordHash(userManager.hashPassword("newUser2"));
