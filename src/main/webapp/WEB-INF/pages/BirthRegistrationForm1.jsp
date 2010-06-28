@@ -164,6 +164,7 @@
 <s:hidden id="error5" value="%{getText('p1.Rank.error.value')}"/>
 <s:hidden id="error6" value="%{getText('p1.dob.after.submit.value')}"/>
 <s:hidden id="error7" value="%{getText('p1.submit.after.90.value')}"/>
+<s:hidden id="error8" value="%{getText('p1.submit.after.365.value')}"/>
 
 <script type="text/javascript">
     function validate()
@@ -171,8 +172,8 @@
         var errormsg = "";
         var element;
         var returnval;
+        var lateOrBelate = false;
         var check = document.getElementById('skipjs');
-
 
         /*date related validations*/
         var datePicker = dojo.widget.byId('datePicker').inputNode.value;
@@ -188,9 +189,14 @@
         var one_day = 1000 * 60 * 60 * 24 ;
         var numDays = Math.ceil((submit.getTime() - birtdate.getTime()) / (one_day));
 
-        if (numDays >= 90)
-            errormsg = errormsg + "\n" + document.getElementById('error7').value;
-
+        if (numDays >= 90) {
+            if (numDays >= 365) {
+                errormsg = errormsg + "\n" + document.getElementById('error8').value;
+            } else {
+                errormsg = errormsg + "\n" + document.getElementById('error7').value;
+            }
+            lateOrBelate = true;
+        }
 
         if (!check.checked) {
 
@@ -219,10 +225,16 @@
                 errormsg = errormsg + "\n" + document.getElementById('error5').value;
             }
         }
+
         if (errormsg != "") {
             alert(errormsg);
-            returnval = false;
+            if (lateOrBelate) {
+                returnval = true;
+            } else {
+                returnval = false;
+            }
         }
+
         return returnval;
     }
 </script>

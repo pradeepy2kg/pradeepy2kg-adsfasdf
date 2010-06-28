@@ -176,6 +176,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
                         // all pages captured, proceed to persist after validations
                         // todo data validations
+//                        if (caseFileNumber == null) {
+//                            caseFileNumber = "CF1";
+//                            newComment = "";
+//                        }
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
 
                         // TODO remove this section, can access this in jsp
@@ -220,7 +224,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         bdf = service.getById(bdId, user);
                         if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -276,7 +280,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public String ConfirmationPrintPageLoad() {
         boolean caughtException = false;
-         BirthDeclaration bdf;
+        BirthDeclaration bdf;
         bdf = service.getById(bdId, user);
         if (user.isAuthorized(Permission.APPROVE_BDF)) {
             logger.debug("BDID {} : ", bdId);
@@ -303,12 +307,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String birthCetificatePrint() {
-        BirthDeclaration bdf=service.getById(bdId,user);
+        BirthDeclaration bdf = service.getById(bdId, user);
         parent = bdf.getParent();
-        child =bdf.getChild();
-        register=bdf.getRegister();
-        serialNo=bdf.getIdUKey();
-        marriage=bdf.getMarriage();
+        child = bdf.getChild();
+        register = bdf.getRegister();
+        serialNo = bdf.getIdUKey();
+        marriage = bdf.getMarriage();
         return "pageLoad";
 
     }
@@ -336,6 +340,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register = new BirthRegisterInfo();
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
+            register.setStatus(BirthDeclaration.State.DATA_ENTRY);
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
