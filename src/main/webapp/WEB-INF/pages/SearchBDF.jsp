@@ -4,9 +4,11 @@
 <div id="birth-confirmation-search">
     <s:actionerror/>
     <br/>
+
     <form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" method="post">
         <fieldset>
-            <legend><s:label name="registrationSerchLegend" value="%{getText('registrationSerchLegend.label')}"/> </legend>
+            <legend><s:label name="registrationSerchLegend"
+                             value="%{getText('registrationSerchLegend.label')}"/></legend>
             <table>
                 <tr>
                     <td>
@@ -44,13 +46,14 @@
     <br/>
     <s:form action="eprBDFSearchByIdUKey.do" method="post">
         <fieldset>
-            <legend><s:label name="confirmatinSearchLegend" value="%{getText('confirmationSearchLegend.label')}" /></legend>
+            <legend><s:label name="confirmatinSearchLegend"
+                             value="%{getText('confirmationSearchLegend.label')}"/></legend>
             <table>
-              <tr>
+                <tr>
                     <td>
                         <s:label name="confirmationSearch" value="%{getText('searchConfirmationSerial.label')}"/>
                     </td>
-                   
+
                     <td>
                         <s:textfield name="idUKey"/>
                     </td>
@@ -68,9 +71,9 @@
     <br/>
     <s:form action="eprBDFSearchByChildName.do" method="post">
         <fieldset>
-            <legend><s:label name="nameSearchLegend" value="%{getText('nameSearchLegend.label')}" /></legend>
-        <table>
-              <tr>
+            <legend><s:label name="nameSearchLegend" value="%{getText('nameSearchLegend.label')}"/></legend>
+            <table>
+                <tr>
                     <td>
                         <s:label name="childName" value="%{getText('childName.label')}"/>
                     </td>
@@ -90,6 +93,40 @@
         </fieldset>
     </s:form>
 </div>
+<br/>
 
 <div>
+    <s:if test="%{#request.bdf != null}">
+        <fieldset>
+            <legend>
+                <s:label value="%{getText('searchResult.label')}" />
+            </legend>
+            <table>
+                <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
+                <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
+                <th><s:label name="districtlbl" value="%{getText('district.label')}"/></th>
+                <th><s:label name="divisionlbl" value="%{getText('division.label')}"/></th>
+                <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
+                <tr>
+                    <td align="center"><s:label name="childName"
+                                 value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                    <td align="center"><s:if test="%{#request.bdf.child.childGender == 0}">
+                        <s:label value="%{getText('male.label')}"/>
+                    </s:if>
+                        <s:elseif test="%{#request.bdf.child.childGender == 1}">
+                            <s:label value="%{getText('female.label')}"/>
+                        </s:elseif>
+                        <s:elseif test="%{#request.bdf.child.childGender == 2}">
+                            <s:label value="%{getText('unknown.label')}"/>
+                        </s:elseif>
+                    </td>
+                    <td align="center"><s:label name="district"
+                                 value="%{#request.districtList.get(#request.bdf.register.getBirthDistrict().districtUKey)}"/></td>
+                    <td align="center"><s:label name="division"
+                                 value="%{#request.divisionList.get(#request.bdf.register.getBirthDivision().bdDivisionUKey)}"/></td>
+                    <td align="center"><s:label name="" value="%{#request.bdf.register.getStatus()}"/></td>
+                </tr>
+            </table>
+        </fieldset>
+    </s:if>
 </div>
