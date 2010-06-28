@@ -8,12 +8,15 @@
                 <s:select list="districtList" name="district" value="#request.district"/></s:label>&nbsp;
             <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
                 <s:select list="divisionList" value="division" name="division"/></s:label>&nbsp;
-            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate" displayFormat="yyyy-MM-dd"/>&nbsp;
-            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate" displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
+                                                                               displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
+                                                                             displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
-            <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo" />
-        </div><br>
+            <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo"/>
+        </div>
+        <br>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
@@ -42,18 +45,10 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </s:if>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
-                <tr>
+                <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
                     <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:checkbox name="index"
                                     onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
@@ -62,18 +57,14 @@
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td align="center"><s:property value="register.dateOfRegistration"/></td>
-                    <td></td>
                     <s:if test="#request.allowEditBDF">
                         <s:url id="editSelected" action="eprBirthRegistration.do">
                             <s:param name="bdId" value="idUKey"/>
                         </s:url>
-                        <td></td>
                         <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                             <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
-                        <td></td>
-                        <td></td>
                     </s:if>
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
@@ -90,8 +81,6 @@
                             <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
-                        <td></td>
-                        <td></td>
                     </s:if>
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
@@ -110,8 +99,6 @@
                                 border="none"/></s:a>
                         </td>
                     </s:if>
-                    <td></td>
-                    <td></td>
                     <s:if test="#request.allowApproveBDF">
                         <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
                             <s:param name="bdId" value="idUKey"/>

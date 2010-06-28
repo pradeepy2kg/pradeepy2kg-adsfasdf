@@ -42,21 +42,10 @@
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
                     <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </s:if>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList" var="currentEntry">
-                <tr>
+                <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
                     <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:checkbox name="index"
                                     onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
@@ -65,61 +54,49 @@
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                    <td></td>
                     <s:if test="#request.allowEditBDF">
-                        <s:url id="editSelected" action="eprBirthConfirmation.do">
-                            <s:param name="bdId" value="idUKey"/>
-                        </s:url>
-                        <td></td>
-                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                            <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </s:if>
-                    <s:if test="#request.allowApproveBDFConfirmation">
-                        <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
-                            <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
-                                <s:param name="confirmationApprovalFlag" value="true"/>
-                                <s:param name="bdId" value="idUKey"/>
-                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                                <s:param name="district" value="#request.district"/>
-                                <s:param name="division" value="#request.division"/>
-                                <s:param name="recordCounter" value="#request.recordCounter"/>
-                            </s:url>
-                            <td align="center"><s:a href="%{approveSelected}"
-                                                    title="%{getText('approveTooltip.label')}">
+                    <s:url id="editSelected" action="eprBirthConfirmation.do">
+                        <s:param name="bdId" value="idUKey"/>
+                    </s:url>
+                    <td align="left"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                        <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
+                             border="none"/></s:a>
+                        </s:if>
+                        <s:if test="#request.allowApproveBDFConfirmation">
+                            <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
+                                <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
+                                    <s:param name="confirmationApprovalFlag" value="true"/>
+                                    <s:param name="bdId" value="idUKey"/>
+                                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                    <s:param name="district" value="#request.district"/>
+                                    <s:param name="division" value="#request.division"/>
+                                    <s:param name="recordCounter" value="#request.recordCounter"/>
+                                </s:url><s:a href="%{approveSelected}"
+                                             title="%{getText('approveTooltip.label')}">
                                 <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
                                      border="none"/></s:a>
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </s:if> </s:if>
-                    <s:if test="#request.allowApproveBDFConfirmation">
+                            </s:if> </s:if>
+                        <s:if test="#request.allowApproveBDFConfirmation">
                         <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
-                            <s:url id="rejectSelected" action="eprRejectBirthConfirmation.do">
-                                <s:param name="confirmationApprovalFlag" value="true"/>
-                                <s:param name="bdId" value="idUKey"/>
-                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                                <s:param name="district" value="#request.district"/>
-                                <s:param name="division" value="#request.division"/>
-                                <s:param name="recordCounter" value="#request.recordCounter"/>
-                                <s:param name="reject" value="true"/>
-                            </s:url>
-                            <td align="center"><s:a href="%{rejectSelected}"
-                                                    title="%{getText('rejectTooltip.label')}"><img
-                                    src="<s:url value='/images/reject.png'/>" width="25" height="25"
-                                    border="none"/></s:a>
-                            </td>
-                        </s:if>
+                        <s:url id="rejectSelected" action="eprRejectBirthConfirmation.do">
+                            <s:param name="confirmationApprovalFlag" value="true"/>
+                            <s:param name="bdId" value="idUKey"/>
+                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="district" value="#request.district"/>
+                            <s:param name="division" value="#request.division"/>
+                            <s:param name="recordCounter" value="#request.recordCounter"/>
+                            <s:param name="reject" value="true"/>
+                        </s:url><s:a href="%{rejectSelected}"
+                                     title="%{getText('rejectTooltip.label')}"><img
+                                src="<s:url value='/images/reject.png'/>" width="25" height="25"
+                                border="none"/></s:a>
+                    </td>
                     </s:if>
-                    <td></td>
-                    <td></td>
+                    </s:if>
                 </tr>
                 <%--select_all checkbox is visible only if
             counter is greater than one--%>
