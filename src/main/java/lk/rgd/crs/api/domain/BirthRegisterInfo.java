@@ -64,7 +64,8 @@ public class BirthRegisterInfo {
     private BirthDeclaration.State status;
 
     /** Status comment - e.g. reason for rejection due to duplicate  */
-    @Column(nullable = true)
+    @Lob
+    @Column(nullable = true, length = 4096)
     private String comments;
 
     /** The date of issue for the original birth certificate - free copy */

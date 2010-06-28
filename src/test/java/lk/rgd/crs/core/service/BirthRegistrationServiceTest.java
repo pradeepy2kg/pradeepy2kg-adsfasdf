@@ -107,6 +107,10 @@ public class BirthRegistrationServiceTest extends TestCase {
         // ignore warnings should allow approval
         warnings = birthRegSvc.approveBirthDeclaration(bdf1, true, adrColomboColombo);
 
+        // check for existence of warning comment
+        BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
+        Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings"));
+
     }
 
     private BirthDeclaration getMinimalBDF(int serial, Date dob, BDDivision bdDivision) {
