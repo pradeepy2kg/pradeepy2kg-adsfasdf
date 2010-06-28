@@ -1,6 +1,7 @@
 package lk.rgd;
 
 import junit.framework.TestCase;
+import lk.rgd.crs.core.DatabaseInitializer;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
@@ -33,7 +34,7 @@ public class UnitTestManager extends TestCase {
         try {
             GenericApplicationContext ctx = new GenericApplicationContext();
             XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
-            if (Boolean.getBoolean("keepdb")) {
+            if (Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY)) {
                 xmlReader.loadBeanDefinitions(new ClassPathResource("unitTestKeepDB_applicationContext.xml"));
             } else {
                 xmlReader.loadBeanDefinitions(new ClassPathResource("unitTest_applicationContext.xml"));
@@ -41,7 +42,7 @@ public class UnitTestManager extends TestCase {
             ctx.refresh();
 
             // create Lucene indexes
-            createTestLuceneIndex(Boolean.getBoolean("keepdb") ?
+            createTestLuceneIndex(Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY) ?
                 "jdbc:derby://localhost:1527/unit-testing-jpa;create=true" :
                 "jdbc:derby:memory:unit-testing-jpa");
             return ctx;
@@ -57,7 +58,7 @@ public class UnitTestManager extends TestCase {
         // delete any existing index
         File f = new File("/tmp/index/person");
         if (f.exists()) {
-            if (Boolean.getBoolean("keepdb")) {
+            if (Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY)) {
                 logger.info("Reusing existing Lucene indexes ...");
                 return;
             } else {

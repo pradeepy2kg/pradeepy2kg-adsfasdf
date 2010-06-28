@@ -35,9 +35,9 @@ import java.util.Map;
  *
  * @author asankha
  */
-public class
-        DatabaseInitializer implements ApplicationContextAware {
+public class DatabaseInitializer implements ApplicationContextAware {
 
+    public static final String USE_NW_DERBY = "nwderby";
     private static final Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -82,8 +82,19 @@ public class
             mysql = true;
         }
 
-        // recreate database with MySQL only if explicitly asked
-        if (!Boolean.getBoolean("keepdb") && (!mysql || createCleanDB)) {
+        // decide if DB is to be recreated
+        boolean recreateDb = false;
+        if (Boolean.getBoolean(USE_NW_DERBY)) {
+            try {
+                SimpleJdbcTestUtils.countRowsInTable(new SimpleJdbcTemplate(dataSource), "PRS.PERSON");
+            } catch (Exception ignore) {
+                recreateDb = true;
+            }
+        } else {
+            recreateDb = !mysql || createCleanDB;    // recreate for derby or for MySQL when explicitly requested
+        }
+
+        if (recreateDb) {
             recreateCleanDB(mysql);
             // perform additional initialization with Java code
             additionalInitialization(ctx);

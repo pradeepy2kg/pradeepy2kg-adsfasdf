@@ -173,7 +173,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // SimpleDateFormat is not thread-safe
             synchronized (dfm) {
                 sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
-                    append(user.getUserId());
+                    append(user.getUserId()).append("\n");
+            }
+
+            for (UserWarning w : warnings) {
+                sb.append(w.getSeverity());
+                sb.append("-");
+                sb.append(w.getMessage());
             }
             bdf.getRegister().setComments(sb.toString());
         }
