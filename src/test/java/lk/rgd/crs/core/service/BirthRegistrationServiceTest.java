@@ -123,7 +123,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf.getInformant().setInformantName("Name of Informant for Child : " + serial);
         bdf.getInformant().setInformantAddress("Address of Informant for Child : " + serial);
         bdf.getInformant().setInformantSignDate(today);
-        bdf.getInformant().setInformantType(InformantInfo.InformantType.FATHER);
+        bdf.getInformant().setInformantType(InformantInfo.InformantType.FATHER.ordinal());
 
         bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the Birth registrar");
         bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(today);

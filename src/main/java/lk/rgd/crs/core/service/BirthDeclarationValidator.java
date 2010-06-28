@@ -103,10 +103,10 @@ public class BirthDeclarationValidator {
         checkValidString(parent.getMotherAddress(), warnings, rb, "mother_address_invalid");
 
         // if mother or father is known, a guardian cannot be the informant
-        if (bdf.getInformant().getInformantType() == InformantInfo.InformantType.GUARDIAN &&
+        /*if (bdf.getInformant().getInformantType() == InformantInfo.InformantType.GUARDIAN &&
             (!isEmptyString(parent.getMotherFullName()) || !isEmptyString(parent.getFatherFullName()))) {
             warnings.add(new UserWarning(rb.getString("illegal_informant"), UserWarning.Severity.ERROR));
-        }
+        }*/
 
         // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
         if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
