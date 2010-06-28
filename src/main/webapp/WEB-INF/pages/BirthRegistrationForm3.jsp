@@ -137,7 +137,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="justify"><s:radio name="informant.informantType" list="#{'0':''}" onchange="javascript:setInformPerson('0',
+                    <td align="justify"><s:radio name="informant.informantType" list="#{'MOTHER':''}" onchange="javascript:setInformPerson('MOTHER',
             '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
             '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
                 </tr>
@@ -147,7 +147,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="justify"><s:radio name="informant.informantType" list="#{'1':''}" onchange="javascript:setInformPerson('1',
+                    <td align="justify"><s:radio name="informant.informantType" list="#{'FATHER':''}" onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
             '%{parent.fatherFullName}','','','')"/></td>
                 </tr>
@@ -158,8 +158,8 @@
                 <tr>
                     <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
                     <td align="justify">
-                        <s:radio name="informant.informantType" list="#{'2':''}"
-                                 onchange="javascript:setInformPerson('2','','','','','','')"/></td>
+                        <s:radio name="informant.informantType" list="#{'GUARDIAN':''}"
+                                 onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
                 </tr>
             </table>
         </td>
