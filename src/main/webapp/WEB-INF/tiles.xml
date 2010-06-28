@@ -23,6 +23,13 @@
 
     </definition>
 
+
+    <definition name="epr.BirthCertificatePrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthCertificatePrint.jsp"/>
+        <put-attribute name="title" value="BirthCertificatePrint.title"/>
+
+    </definition>
+
     <definition name="epr.birthRegistration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationForm1.jsp"/>
         <put-attribute name="title" value="form1.title"/>

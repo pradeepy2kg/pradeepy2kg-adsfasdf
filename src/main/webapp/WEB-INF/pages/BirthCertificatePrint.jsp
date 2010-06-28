@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
-        <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST">
+        <s:form action="eprbirthCetificatePrint.do" name="birth_register_approval_head" method="POST">
         <s:label><span><s:label name="district" value="%{getText('district.label')} : "/></span>
             <s:select name="districtId" list="districtList"/> </s:label>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:label><span><s:label name="division" value="%{getText('division.label')} : "/></span>
@@ -13,7 +13,6 @@
         <s:radio name="selectOption" list="#@java.util.HashMap@{'Printed':'Printed'}"/> &nbsp;&nbsp;&nbsp;&nbsp;
         <s:submit value="%{getText('view.label')}"></s:submit>
     </div>
-
 
 
     <div id="birth-register-approval-body">
@@ -42,9 +41,9 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                             <s:url id="cetificatePrintUrl" action="eprConfirmationPrintPageLoad">
+                            <s:url id="cetificatePrintUrl" action="eprFinalbirthCertificate">
                                 <s:param name="bdId" value="idUKey"/>
-                             </s:url>
+                            </s:url>
                             <s:a href="%{cetificatePrintUrl}">
                                 <img src="<s:url value='/images/print_icon.png'/>" border="none" width="25"
                                      height="25"/>

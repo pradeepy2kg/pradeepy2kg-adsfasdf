@@ -133,6 +133,16 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
 
     /**
+     * 
+     * @param birthDivision the birth division
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows  number of rows to return per page
+     * @param printed return already printed items if true, or items pending printing if false
+     * @return  approved list for print
+     */
+    public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
+
+    /**
      * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
      * by an ADR. Results are ordered on the descending confirmationReceiveDate
      *

@@ -61,13 +61,49 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
+     * Filter print list by confiremed without changes and confirmation changes approved.
+     * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List. 
+     * @return
+     */
+
+    public String birthCertificatePrintList() {
+        populate();
+        session.remove(WebConstants.SESSION_PRINT_COUNT);
+        if (selectOption == null) {
+            divisionId = 1;
+            selectOption = "Not Printed";
+        }
+        int pageNo = 1;
+
+        if (selectOption != null) {
+            if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
+                try{
+                printList = birthDeclarationDAO.getConfirmPrintList(
+                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);}
+                catch (Exception e){
+                    
+                }
+            } else {
+                printList = birthDeclarationDAO.getConfirmPrintList(
+                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+            }
+        } else {
+            printList = birthDeclarationDAO.getConfirmPrintList(
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+        }
+        logger.debug("Confirm Print List : items=" + printList.size());
+        return "pageLoad";
+    }
+
+     /**
      * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
      * Used in first page load and first division selection.
      * Selected divisionId and selected option(Not Printed or Printed) used in pagination.
-     * returned List<BirthDeclaration > 
+     * returned List<BirthDeclaration >
      *
      * @return String success
      */
+
     public String filterPrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);

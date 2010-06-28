@@ -32,7 +32,7 @@
         </s:url>
         <%--TODO shoud be redirected to confirmationPrinting... aproveAnd print--%>
         <s:url id="approveAndPrintUrl" action="eprConfirmationPrintPageLoad">
-            <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
+            <s:param name="bdId" value="#request.bdId"/>
         </s:url>
         <s:url id="mainUrl" action="eprHome.do"/>
 
