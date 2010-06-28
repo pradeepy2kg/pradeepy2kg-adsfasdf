@@ -208,4 +208,9 @@
             </plugin>
         </plugins>
     </build>
+
+    <properties>
+        <sonar.host.url>http://localhost:8000</sonar.host.url>
+    </properties>
+
 </project>
