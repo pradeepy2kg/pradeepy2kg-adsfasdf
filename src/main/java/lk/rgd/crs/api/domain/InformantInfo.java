@@ -41,12 +41,16 @@ public class InformantInfo implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date informantSignDate;
 
-    public InformantType getInformantType() {
-        return informantType;
+    public int getInformantType() {
+        return informantType.ordinal();
     }
 
-    public void setInformantType(InformantType informantType) {
-        this.informantType = informantType;
+    public void setInformantType(int informantType) {
+        switch (informantType) {
+            case 0: this.informantType = InformantType.FATHER; break;
+            case 1: this.informantType = InformantType.MOTHER; break;
+            default: this.informantType = InformantType.GUARDIAN;
+        }
     }
 
     public String getInformantName() {
