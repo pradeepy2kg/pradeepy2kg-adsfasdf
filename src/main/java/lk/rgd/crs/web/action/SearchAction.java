@@ -8,6 +8,7 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -54,11 +55,21 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Search method for searching based on idUKey or SearialNo
+     * Search method for searching based on SearialNo,
+     * district and bdDivision
      *
      * @return String
      */
     public String searchBDFBySerialNumber() {
+        logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, district {} " + "and division " +
+            division, serialNo, district + " recieved");
+        try {
+            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), serialNo, user);
+        } catch (CRSRuntimeException e) {
+            logger.error("inside searchBDFBySerialNumber() SearchBDFBySerialNumber : {} ", e);
+            addActionError(getText("SearchBDF.error." + e.getErrorCode()));
+        }
+        populate();
         return "success";
     }
 
@@ -75,6 +86,27 @@ public class SearchAction extends ActionSupport implements SessionAware {
             int dsDivisionId = dsDivisionList.keySet().iterator().next();
             setDivisionList(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
         }
+    }
+
+    /**
+     * search method to search particular BirthDeclaration
+     * based on IdUKey
+     *
+     * @return
+     */
+    public String searchBDFByIdUKey() {
+        logger.debug("inside searchBDFByIdUKey() : search parameter idUKey {} recieved", idUKey);
+        try {
+            bdf = service.getById(idUKey, user);
+        } catch (CRSRuntimeException e) {
+            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
+            addActionError(getText("SearchBDF.error." + e.getErrorCode()));
+        } catch (Exception e) {
+            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
+            addActionError(getText("SearchBDF.error.NoResult"));
+        }
+        populate();
+        return "success";
     }
 
     /**

@@ -260,7 +260,7 @@
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-         <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.SearchAction" method="">
+         <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.SearchAction" method="searchBDFByIdUKey">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
