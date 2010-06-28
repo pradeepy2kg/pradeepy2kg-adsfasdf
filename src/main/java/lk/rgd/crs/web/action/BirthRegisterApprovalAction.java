@@ -107,7 +107,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (!divisionList.isEmpty()) {
             division = divisionList.keySet().iterator().next();
         }
-        logger.debug("inside birthRegisterApproval : division {} initialized ", division);
+        logger.debug("inside birthRegisterApproval() : division {} initialized ", division);
         /**
          * initially pageNo is set to 1
          */
@@ -153,7 +153,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         setPageNo(1);
         initPermission();
         if (logger.isDebugEnabled()) {
-            logger.debug("inside filter : district {} and division {}  ", district, division + " bdfSerialNumber " +
+            logger.debug("inside filter() : district {} and division {}  ", district, division + " bdfSerialNumber " +
                 bdfSerialNo + " selected, requested from page " + pageNo);
         }
 
@@ -225,10 +225,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         try {
             if (confirmationApprovalFlag) {
                 warnings = service.approveConfirmationChanges(bdf, false, user);
-                logger.debug("inside approve : requested to approve birth confirmation bdId {} ", bdId);
+                logger.debug("inside approve() : requested to approve birth confirmation bdId {} ", bdId);
             } else {
                 warnings = service.approveBirthDeclaration(bdf, false, user);
-                logger.debug("inside approve : requested to approve birth registratin bdId {} ", bdId);
+                logger.debug("inside approve() : requested to approve birth registratin bdId {} ", bdId);
             }
         }
         catch (CRSRuntimeException e) {
@@ -272,7 +272,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             warnings = service.approveBirthDeclaration(bdf, false, user);
         }
         catch (CRSRuntimeException e) {
-            logger.error("inside approveBirthDeclarationForm : {} , {} ", e.getErrorCode(), e);
+            logger.error("inside approveBirthDeclarationForm() : {} ", e);
             addActionError(Integer.toString(e.getErrorCode()));
             caughtException = true;
         }
@@ -284,9 +284,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     public String approveIgnoringWorning() {
-        //todo has to be checked with the backend
         if (logger.isDebugEnabled()) {
-            logger.debug("inside approveIgnoringWorning : bdId {} requested isBirthConfirmatinConfirmationApproval {} ",
+            logger.debug("inside approveIgnoringWorning() : bdId {} requested isBirthConfirmatinConfirmationApproval {} ",
                 bdId, confirmationApprovalFlag + " IgnoreWarnings " + ignoreWarning);
         }
         initPermission();
@@ -299,7 +298,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     service.approveBirthDeclaration(bdf, true, user);
                 }
             } catch (CRSRuntimeException e) {
-                logger.error("inside approveIgnoringWorning : {} ", e);
+                logger.error("inside approveIgnoringWorning() : {} ", e);
                 addActionError(getText("brapproval.ignoreWarningApproval.error." + e.getErrorCode()));
             }
         }
@@ -323,7 +322,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //todo warning handling has to be checked when rejecting some records from the requested list
         initPermission();
         if (index != null) {
-            logger.debug("inside approveListOfEntries : {} records are requested to approve isBirthConfirmationApproval {}",
+            logger.debug("inside approveListOfEntries() : {} records are requested to approve isBirthConfirmationApproval {}",
                 index.length, confirmationApprovalFlag);
             try {
                 if (confirmationApprovalFlag) {
@@ -361,7 +360,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (reject) {
             return "rejectGetComments";
         } else {
-            logger.debug("inside reject : bdId {} requested to reject, is birthConfirmationReject {} ", bdId, confirmationApprovalFlag);
+            logger.debug("inside reject() : bdId {} requested to reject, is birthConfirmationReject {} ", bdId, confirmationApprovalFlag);
             try {
                 service.rejectBirthDeclaration(bdf, comments, user);
             }
@@ -393,7 +392,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String delete() {
-        logger.debug("inside delete: bdId {} requested to delete", bdId);
+        logger.debug("inside delete() : bdId {} requested to delete", bdId);
         initPermission();
         bdf = service.getById(bdId, user);
         try {
@@ -415,7 +414,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        logger.debug("inside populate : language {} observed.", language);
+        logger.debug("inside populate() : language {} observed.", language);
         districtList = districtDAO.getDistrictNames(language, user);
         setInitialDistrict();
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(district, language, user);
@@ -434,7 +433,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String nextPage() {
         initPermission();
         if (logger.isDebugEnabled()) {
-            logger.debug("inside nextPage : current district {}, division {}", district, division + " requested from pageNo " + pageNo);
+            logger.debug("inside nextPage() : current district {}, division {}", district, division + " requested from pageNo " + pageNo);
         }
         setPageNo(getPageNo() + 1);
 
@@ -479,7 +478,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String previousPage() {
         initPermission();
         if (logger.isDebugEnabled()) {
-            logger.debug("inside previousPage : current district {}, division {} ", district, division
+            logger.debug("inside previousPage() : current district {}, division {} ", district, division
                 + " requested from pageNo " + pageNo);
         }
         /**
@@ -555,7 +554,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (!districtList.isEmpty()) {
             district = districtList.keySet().iterator().next();
         }
-        logger.debug("inside setInitialDistrict : district {} selected", district);
+        logger.debug("inside setInitialDistrict() : district {} selected", district);
     }
 
     public void setApprovalPendingList(List<BirthDeclaration> approvalPendingList) {

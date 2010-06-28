@@ -78,7 +78,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
      */
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        logger.debug("inside populate : language {} observed ", language);
+        logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
         setInitialDistrict();
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(getDistrict(), language, user);

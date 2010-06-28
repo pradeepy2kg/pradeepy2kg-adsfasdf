@@ -263,18 +263,15 @@
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-        <action name="eprBDFSearchBySerialNo" class="lk.rgd.crs.web.action.SearchAction" method="searchBDFBySerialNumber">
+        <action name="eprBDFSearchBySerialNo" class="lk.rgd.crs.web.action.SearchAction"
+                method="searchBDFBySerialNumber">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-         <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.SearchAction" method="searchBDFByIdUKey">
+        <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.SearchAction" method="searchBDFByIdUKey">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-         <action name="eprBDFSearchByChildName" class="lk.rgd.crs.web.action.SearchAction" method="">
-            <result type="tiles" name="success">epr.BDFSearch</result>
-        </action>
-        
         <!--user preferance  -->
         <action name="passChangePageLoad">
             <result>/WEB-INF/pages/PasswordChange.jsp</result>

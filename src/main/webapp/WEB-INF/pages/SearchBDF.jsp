@@ -68,7 +68,7 @@
             </table>
         </fieldset>
     </s:form>
-    <br/>
+    <%--<br/>
     <s:form action="eprBDFSearchByChildName.do" method="post">
         <fieldset>
             <legend><s:label name="nameSearchLegend" value="%{getText('nameSearchLegend.label')}"/></legend>
@@ -91,7 +91,7 @@
                 </tr>
             </table>
         </fieldset>
-    </s:form>
+    </s:form>--%>
 </div>
 <br/>
 
@@ -99,7 +99,7 @@
     <s:if test="%{#request.bdf != null}">
         <fieldset>
             <legend>
-                <s:label value="%{getText('searchResult.label')}" />
+                <s:label value="%{getText('searchResult.label')}"/>
             </legend>
             <table>
                 <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
@@ -109,7 +109,7 @@
                 <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
                 <tr>
                     <td align="center"><s:label name="childName"
-                                 value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                                                value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td align="center"><s:if test="%{#request.bdf.child.childGender == 0}">
                         <s:label value="%{getText('male.label')}"/>
                     </s:if>
@@ -121,9 +121,9 @@
                         </s:elseif>
                     </td>
                     <td align="center"><s:label name="district"
-                                 value="%{#request.districtList.get(#request.bdf.register.getBirthDistrict().districtUKey)}"/></td>
+                                                value="%{#request.districtList.get(#request.bdf.register.getBirthDistrict().districtUKey)}"/></td>
                     <td align="center"><s:label name="division"
-                                 value="%{#request.divisionList.get(#request.bdf.register.getBirthDivision().bdDivisionUKey)}"/></td>
+                                                value="%{#request.divisionList.get(#request.bdf.register.getBirthDivision().bdDivisionUKey)}"/></td>
                     <td align="center"><s:label name="" value="%{#request.bdf.register.getStatus()}"/></td>
                 </tr>
             </table>
