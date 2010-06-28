@@ -57,8 +57,8 @@ public class Person {
     /**
      * The unique Personal Identification Number
      */
-    @Column(unique = true)
-    private long pin;
+    @Column(unique = true, nullable = true)
+    private Long pin;
     /**
      * The National ID card number - could be possibly duplicated in rare instances
      */
@@ -142,6 +142,18 @@ public class Person {
     @Column(nullable = true)
     private LifeStatus lifeStatus;
     /**
+     * The mother of this person
+     */
+    @OneToOne
+    @JoinColumn(name = "motherUKey")
+    private Person mother;
+    /**
+     * The father of this person
+     */
+    @OneToOne
+    @JoinColumn(name = "fatherUKey")
+    private Person father;
+    /**
      * Countries of citizenship
      */
     @OneToMany
@@ -177,11 +189,11 @@ public class Person {
 
 
     //----------------------------------- getters and setters -----------------------------------
-    public long getPin() {
+    public Long getPin() {
         return pin;
     }
 
-    public void setPin(long pin) {
+    public void setPin(Long pin) {
         this.pin = pin;
     }
 
@@ -359,5 +371,21 @@ public class Person {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Person getMother() {
+        return mother;
+    }
+
+    public void setMother(Person mother) {
+        this.mother = mother;
+    }
+
+    public Person getFather() {
+        return father;
+    }
+
+    public void setFather(Person father) {
+        this.father = father;
     }
 }

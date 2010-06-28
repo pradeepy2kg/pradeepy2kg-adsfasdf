@@ -62,8 +62,8 @@ public class User {
     /**
      * This is the PIN of the actual user in the PRS
      */
-    @Column(nullable = false, length = 10)
-    private String pin;
+    @Column(nullable = false)
+    private long pin;
     /**
      * The SHA-1 hash of the password
      */
@@ -172,11 +172,11 @@ public class User {
         this.userName = userName;
     }
 
-    public String getPin() {
+    public long getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(long pin) {
         this.pin = pin;
     }
 

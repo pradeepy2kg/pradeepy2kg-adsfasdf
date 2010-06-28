@@ -9,11 +9,18 @@ import java.util.Date;
 
 @Embeddable
 public class InformantInfo implements Serializable {
+
     /**
      * 0 - father, 1 - mother, 2 - guardian
      */
+    public enum InformantType {
+        FATHER,
+        MOTHER,
+        GUARDIAN
+    }
+
     @Column(nullable = false)
-    private int informantType;
+    private InformantType informantType;
 
     @Column(nullable = false, length = 600)
     private String informantName;
@@ -34,11 +41,11 @@ public class InformantInfo implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date informantSignDate;
 
-    public int getInformantType() {
+    public InformantType getInformantType() {
         return informantType;
     }
 
-    public void setInformantType(int informantType) {
+    public void setInformantType(InformantType informantType) {
         this.informantType = informantType;
     }
 

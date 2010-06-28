@@ -14,10 +14,12 @@ public class ErrorCodes {
      */
     public static final int INVALID_LANGUAGE = 1000;
     /**
-     * Data requested for a non-existent district
+     * Record does not satisfy minimum requirements for acceptance for storage
      */
-    public static final int INVALID_DISTRICT = 1001;
-    /** non existing DS division */
+    public static final int INVALID_DATA = 1001;
+    /**
+     * non existing DS division
+     */
     public static final int INVALID_DSDIVISION = 1004;
     /**
      * Data requested for a non existant country id
