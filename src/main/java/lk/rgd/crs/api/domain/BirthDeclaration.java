@@ -9,49 +9,48 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "BIRTH_REGISTER", schema = "CRS",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"bdDivisionUKey", "bdfSerialNo", "status"})})
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"bdDivisionUKey", "bdfSerialNo", "status"})})
 
 @NamedQueries({
-        @NamedQuery(name = "filter.by.division.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "filter.by.division.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "birth.certificate.print.approved", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND (bdf.register.status = 3 OR bdf.register.status = 6)" +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "birth.certificate.print.approved", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND (bdf.register.status = 3 OR bdf.register.status = 6)" +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "confirmation.pending.approval.expired", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
-                "AND bdf.confirmant.lastDateForConfirmation < :today " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "confirmation.pending.approval.expired", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
+        "AND bdf.confirmant.lastDateForConfirmation < :today " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "confirmation.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 5 " +
-                "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+    @NamedQuery(name = "confirmation.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND (bdf.register.status = 5 OR bdf.register.status = 2) " +
+        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
+    @NamedQuery(name = "declaration.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 0 " +
+        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
-        @NamedQuery(name = "declaration.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 0 " +
-                "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+    @NamedQuery(name = "get.by.id", query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.idUKey = :bdfidUKey"),
 
-        @NamedQuery(name = "get.by.id", query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.idUKey = :bdfidUKey"),
+    @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-                "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
-        @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-                "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
-                "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+    @NamedQuery(name = "get.by.serialNo.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 0 "),
 
-        @NamedQuery(name = "get.by.serialNo.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 0 "),
-
-        @NamedQuery(name = "get.by.dateOfBirth.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.child.dateOfBirth = :dateOfBirth AND bdf.parent.motherNICorPIN = :motherNICorPIN ")
+    @NamedQuery(name = "get.by.dateOfBirth.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.child.dateOfBirth = :dateOfBirth AND bdf.parent.motherNICorPIN = :motherNICorPIN ")
 })
 public class BirthDeclaration implements Serializable {
 

@@ -9,11 +9,14 @@
             <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
                 <s:select list="divisionList" name="division"/></s:label>
             <s:hidden name="confirmationApprovalFlag" value="true"/>
-            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate" displayFormat="yyyy-MM-dd"/>&nbsp;
-            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate" displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
+                                                                               displayFormat="yyyy-MM-dd"/>&nbsp;
+            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
+                                                                             displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
             <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdId"/>
-        </div><br>
+        </div>
+        <br>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
@@ -52,7 +55,7 @@
                     <th></th>
                 </tr>
             </s:if>
-            <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
+            <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList" var="currentEntry">
                 <tr>
                     <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:checkbox name="index"
@@ -76,41 +79,44 @@
                         <td></td>
                     </s:if>
                     <s:if test="#request.allowApproveBDFConfirmation">
-                        <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
-                            <s:param name="confirmationApprovalFlag" value="true"/>
-                            <s:param name="bdId" value="idUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
-                            <s:param name="recordCounter" value="#request.recordCounter"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{approveSelected}"
-                                                title="%{getText('approveTooltip.label')}">
-                            <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </s:if>
+                        <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
+                            <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
+                                <s:param name="confirmationApprovalFlag" value="true"/>
+                                <s:param name="bdId" value="idUKey"/>
+                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="district" value="#request.district"/>
+                                <s:param name="division" value="#request.division"/>
+                                <s:param name="recordCounter" value="#request.recordCounter"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{approveSelected}"
+                                                    title="%{getText('approveTooltip.label')}">
+                                <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </s:if> </s:if>
                     <s:if test="#request.allowApproveBDFConfirmation">
-                        <s:url id="rejectSelected" action="eprRejectBirthConfirmation.do">
-                            <s:param name="confirmationApprovalFlag" value="true"/>
-                            <s:param name="bdId" value="idUKey"/>
-                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
-                            <s:param name="recordCounter" value="#request.recordCounter"/>
-                            <s:param name="reject" value="true"/>
-                        </s:url>
-                        <td align="center"><s:a href="%{rejectSelected}"
-                                                title="%{getText('rejectTooltip.label')}"><img
-                                src="<s:url value='/images/reject.png'/>" width="25" height="25"
-                                border="none"/></s:a>
-                        </td>
+                        <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
+                            <s:url id="rejectSelected" action="eprRejectBirthConfirmation.do">
+                                <s:param name="confirmationApprovalFlag" value="true"/>
+                                <s:param name="bdId" value="idUKey"/>
+                                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="district" value="#request.district"/>
+                                <s:param name="division" value="#request.division"/>
+                                <s:param name="recordCounter" value="#request.recordCounter"/>
+                                <s:param name="reject" value="true"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{rejectSelected}"
+                                                    title="%{getText('rejectTooltip.label')}"><img
+                                    src="<s:url value='/images/reject.png'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
+                        </s:if>
                     </s:if>
                     <td></td>
                     <td></td>
