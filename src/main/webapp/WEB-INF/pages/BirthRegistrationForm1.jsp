@@ -65,7 +65,7 @@
 </table>
 
 
-<table class="table_reg_page_01" cellspacing="0">
+<table class="table_reg_page_01" cellspacing="0" cellpadding="0">
 
     <caption></caption>
     <col/>
@@ -101,8 +101,8 @@
     <tr>
         <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-        <td colspan="6" class="table_reg_cell_01"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs"
-            formId="birth-registration-form-1" preload="true"></sx:div>
+        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs"
+            formId="birth-registration-form-1"></sx:div>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth"/></td>

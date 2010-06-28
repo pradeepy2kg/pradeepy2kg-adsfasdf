@@ -1209,7 +1209,7 @@
 
 .table_reg_page_01 textarea {
     float: left;
-    width: 800px;
+    width: 700px;
 }
 
 .table_reg_cell_01 {
@@ -1221,6 +1221,13 @@
     width: 590px;
     margin: 2px 5px;
 }
+#no-bottom-border{border:none;}
+#table_reg_cell_01 select{width:250px; }
+.table_reg_page_01 .no-bottom-border{border:none;}
+#left-right-border{border-left:1px solid #000; border-right:1px solid #000;}
+#left-right-border label{margin:0 5px;line-height:30px; float:left; vertical-align:top;}
+.table_reg_page_01 .no-bottom-border select{float:right;}
+
 
 /*styles for birth declaration form 02*/
 .table_reg_page_02 {
