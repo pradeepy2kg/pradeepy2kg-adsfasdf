@@ -275,46 +275,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String ConfirmationPrintPageLoad() {
-        boolean caughtException = false;
-        BirthDeclaration bdf;
-
-        if (bdId == 0) {
-            
-            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), serialNo,
-                    (User) session.get(WebConstants.SESSION_USER_BEAN));
-        } else {
-            bdf = service.getById(bdId, user);
-        }
-
-        child = bdf.getChild();
-        parent = bdf.getParent();
-        grandFather = bdf.getGrandFather();
-        marriage = bdf.getMarriage();
-        informant = bdf.getInformant();
-        confirmant = bdf.getConfirmant();
-        register = bdf.getRegister();
-        notifyingAuthority = bdf.getNotifyingAuthority();
-
-
-        /* if (user.isAuthorized(Permission.APPROVE_BDF)) {
-    logger.debug("BDID {} : ", bdId);
-
-    try {
-        warnings = service.approveBirthDeclaration(bdf, false, user);
-    } catch (CRSRuntimeException e) {
-        addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
-        caughtException = true;
-    }
-
-    if (caughtException || (warnings != null && warnings.isEmpty())) {
-        return "pageLoad";
-    } else {
-        return "error";
-    }
-} else {
-    return "error";
-}        */
-        return "pageLoad";
+       return birthCetificatePrint();
     }
 
     public String birthConfirmationPrint() {

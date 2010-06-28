@@ -32,65 +32,10 @@
         </s:url>
         <%--TODO shoud be redirected to confirmationPrinting... aproveAnd print--%>
         <s:url id="approveAndPrintUrl" action="eprConfirmationPrintPageLoad">
-            <s:param name="bdId" value="#request.bdId"/>
+            <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
         </s:url>
         <s:url id="mainUrl" action="eprHome.do"/>
 
-        <%--<table>--%>
-        <%--<tr>--%>
-        <%--<td>--%>
-        <%--<img src="<s:url value='/images/add_page.png'/>" width="35" height="35"--%>
-        <%--border="none"/>--%>
-        <%--</td>--%>
-        <%--<td>--%>
-        <%--<img src="<s:url value='/images/accept_page.png'/>" width="35" height="35"--%>
-        <%--border="none"/>--%>
-        <%--</td>--%>
-        <%--<td>--%>
-        <%--<img src="<s:url value='/images/approve.png'/>" width="35" height="35"--%>
-        <%--border="none"/>--%>
-        <%--</td>--%>
-        <%--<td>--%>
-        <%--<img src="<s:url value='/images/approve.png'/>" width="35" height="35"--%>
-        <%--border="none"/>--%>
-        <%--</td>--%>
-        <%--</tr>--%>
-        <%--</table>--%>
-        <%--<table cellpadding="3">--%>
-        <%--<tr>--%>
-        <%--<th></th>--%>
-        <%--<th><s:label name="item" value="%{getText('item.label')}"/></th>--%>
-        <%--<th><s:label name="serial" value="%{getText('serial.label')}"/></th>--%>
-        <%--<th><s:label name="name" value="%{getText('name.label')}"/></th>--%>
-        <%--<th><s:label name="registered_date" value="%{getText('registered_date.label')}"/></th>--%>
-        <%--<th><s:label value="%{getText('print.label')}"/></th>--%>
-        <%--</tr>--%>
-
-        <%--following code used for pagination--%>
-
-
-        <%--<s:iterator status="printStatus" value="#session.printList">--%>
-        <%--<tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">--%>
-        <%--<td><s:property value="%{#printStatus.count+#session.printStart}"/></td>--%>
-        <%--<td><s:checkbox name="index"--%>
-        <%--onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>--%>
-        <%--<td align=" center"><s:property value="register.bdfSerialNo"/></td>--%>
-        <%--<td><s:property value="child.childFullNameOfficialLang"/></td>--%>
-        <%--<td align="center"><s:property value="register.dateOfRegistration"/></td>--%>
-        <%--<td align="center">--%>
-        <%--<s:a href="">--%>
-        <%--<img src="<s:url value='/images/print_icon.png'/>" border="none" width="25"--%>
-        <%--height="25"/>--%>
-        <%--</s:a>--%>
-        <%--</td>--%>
-        <%--</tr>--%>
-        <%--<s:set name="printCount" value="#printStatus.count" scope="session"/>--%>
-        <%--</s:iterator>--%>
-
-        <%--<tr>--%>
-        <%--<td>&nbsp;</td>--%>
-        <%--</tr>--%>
-        <%--</table>--%>
         <s:if test="#request.warnings.size!=0">
             <s:iterator value="#request.warnings">
                 <s:property value="message"/>
