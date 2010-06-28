@@ -104,6 +104,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        dsDivisionId = dsDivisionList.keySet().iterator().next();
         logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
         return "DSDivList";
     }
@@ -116,7 +117,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populateBasicLists(language);
             populateDynamicLists(language);
         }
-        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, bdDivisionList);
+        birthDivisionId = bdDivisionList.keySet().iterator().next();
+        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, birthDivisionId);
         return "BDDivList";
     }
 
@@ -654,7 +656,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
-        logger.debug("DS Division: {}", dsDivisionId);
+        logger.debug("setting DS Division: {}", dsDivisionId);
     }
 
     public ConfirmantInfo getConfirmant() {
