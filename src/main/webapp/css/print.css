@@ -1,5 +1,5 @@
 /* Main-Layout for the print */
-@media print {    
+@media print {
     body {
         background-color: white !important;
         font-family: verdana, arial, sans-serif;
@@ -48,8 +48,12 @@
         color: black;
         font-size: 12pt;
     }
-}
 
+    .page_break {
+
+        page-break-before: always;
+    }
+}
 
 /*@media print {*/
 

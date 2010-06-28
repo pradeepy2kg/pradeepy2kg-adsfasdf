@@ -176,10 +176,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
                         // all pages captured, proceed to persist after validations
                         // todo data validations
-//                        if (caseFileNumber == null) {
-//                            caseFileNumber = "CF1";
-//                            newComment = "";
-//                        }
                         service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
 
                         // TODO remove this section, can access this in jsp
@@ -224,7 +220,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         bdf = service.getById(bdId, user);
                         if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -281,40 +277,63 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String ConfirmationPrintPageLoad() {
         boolean caughtException = false;
         BirthDeclaration bdf;
-        bdf = service.getById(bdId, user);
-        if (user.isAuthorized(Permission.APPROVE_BDF)) {
-            logger.debug("BDID {} : ", bdId);
 
-            try {
-                warnings = service.approveBirthDeclaration(bdf, false, user);
-            } catch (CRSRuntimeException e) {
-                addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
-                caughtException = true;
-            }
-
-            if (caughtException || (warnings != null && warnings.isEmpty())) {
-                return "pageLoad";
-            } else {
-                return "error";
-            }
+        if (bdId == 0) {
+            
+            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), serialNo,
+                    (User) session.get(WebConstants.SESSION_USER_BEAN));
         } else {
-            return "error";
+            bdf = service.getById(bdId, user);
         }
+
+        child = bdf.getChild();
+        parent = bdf.getParent();
+        grandFather = bdf.getGrandFather();
+        marriage = bdf.getMarriage();
+        informant = bdf.getInformant();
+        confirmant = bdf.getConfirmant();
+        register = bdf.getRegister();
+        notifyingAuthority = bdf.getNotifyingAuthority();
+
+
+        /* if (user.isAuthorized(Permission.APPROVE_BDF)) {
+    logger.debug("BDID {} : ", bdId);
+
+    try {
+        warnings = service.approveBirthDeclaration(bdf, false, user);
+    } catch (CRSRuntimeException e) {
+        addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
+        caughtException = true;
+    }
+
+    if (caughtException || (warnings != null && warnings.isEmpty())) {
+        return "pageLoad";
+    } else {
+        return "error";
+    }
+} else {
+    return "error";
+}        */
+        return "pageLoad";
     }
 
     public String birthConfirmationPrint() {
         return "success";
     }
 
+
     public String birthCetificatePrint() {
         BirthDeclaration bdf = service.getById(bdId, user);
-        parent = bdf.getParent();
         child = bdf.getChild();
-        register = bdf.getRegister();
-        serialNo = bdf.getIdUKey();
+        parent = bdf.getParent();
+        grandFather = bdf.getGrandFather();
         marriage = bdf.getMarriage();
-        return "pageLoad";
+        informant = bdf.getInformant();
+        confirmant = bdf.getConfirmant();
+        register = bdf.getRegister();
+        notifyingAuthority = bdf.getNotifyingAuthority();
 
+        return "pageLoad";
     }
 
 

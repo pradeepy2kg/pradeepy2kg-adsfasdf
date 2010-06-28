@@ -18,6 +18,7 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.Query;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -390,6 +391,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision, pageNo, noOfRows);
+    }
+
+    public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
+        return birthDeclarationDAO.getConfirmPrintList(birthDivision,pageNo,noOfRows,printed);
     }
 
     /**

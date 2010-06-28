@@ -22,6 +22,8 @@ public final class Permission {
     public static final int PAGE_VIEW_USERS = 32;
     public static final int PAGE_BIRTH_CONFIRMATION_SEARCH = 33;
     public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL = 34;
+    public static final int PAGE_BIRTH_CERTIFICATE_PRINT = 35;
+
 
     // permission for PRS
     public static final int PRS_ADD_PERSON  = 50;

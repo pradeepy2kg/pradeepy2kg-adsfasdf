@@ -211,6 +211,7 @@ public class
             bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL);
+            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT);
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 

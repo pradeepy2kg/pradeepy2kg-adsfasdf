@@ -12,8 +12,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <div class="birth-confirmation-form-outer">
-
-
 <table class="table_con_header_01">
     <caption></caption>
     <col/>
