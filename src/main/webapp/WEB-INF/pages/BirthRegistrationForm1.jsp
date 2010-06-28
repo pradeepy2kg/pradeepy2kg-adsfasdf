@@ -96,22 +96,13 @@
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      onchange="javascript:view_BDDivs;view_DSDivs();return false;"/></td>
+                      onchange="javascript:view_DSDivs();return false;"/></td>
     </tr>
     <tr>
+        <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-        <td colspan="6" class="table_reg_cell_01"><s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
-            <sx:div id="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs"
-                    formId="birth-registration-form-1" showLoadingText="false">
-            </sx:div></td>
-    </tr>
-    <tr>
-        <td><label>කොට්ඨාශය பிரிவு Division</label></td>
-        <td colspan="6" class="table_reg_cell_01"><s:url id="loadBDDivList" action="ajaxSupport_loadBDDivList"/>
-            <sx:div id="birthDivisionId" href="%{loadBDDivList}" theme="ajax" listenTopics="view_BDDivs"
-                    formId="birth-registration-form-1" showLoadingText="false">
-            </sx:div></td>
-    </tr>
+        <td colspan="6" class="table_reg_cell_01"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs"
+            formId="birth-registration-form-1"></sx:div>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth"/></td>
