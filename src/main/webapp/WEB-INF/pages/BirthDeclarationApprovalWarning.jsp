@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="bdaw-outer">
     <div id="bdaw-content">
-        <table>
+        <table align="center">
             <s:iterator value="#request.warnings">
                 <tr>
                     <td><s:property value="message"/></td>
@@ -14,6 +14,8 @@
     <div id="bdaw-action">
         <s:form action="eprIgnoreWarning" name="birthDeclarationApprovalWarningForm">
             <fieldset>
+                <legend><s:label
+                             value="%{getText('approvalIgnorWarning.label')}"/></legend>
             <s:hidden value="%{#request.bdId}" name="bdId"/>
             <table align="center" border="0">
                 <tr>
