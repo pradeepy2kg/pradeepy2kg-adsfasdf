@@ -7,7 +7,8 @@
 
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
-<s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3" method="POST">
+<s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3"
+        method="POST" onsubmit="javascript:return validate()">
 
 
 <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
@@ -141,7 +142,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="justify"><s:radio name="informant.informantType" list="#{'MOTHER':''}" onchange="javascript:setInformPerson('MOTHER',
+                    <td align="justify"><s:radio name="informant.informantType" id="informantType"list="#{'MOTHER':''}" onchange="javascript:setInformPerson('MOTHER',
             '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
             '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
                 </tr>
@@ -151,7 +152,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="justify"><s:radio name="informant.informantType" list="#{'FATHER':''}" onchange="javascript:setInformPerson('FATHER',
+                    <td align="justify"><s:radio name="informant.informantType" id="informantType" list="#{'FATHER':''}" onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
             '%{parent.fatherFullName}','','','')"/></td>
                 </tr>
@@ -162,8 +163,8 @@
                 <tr>
                     <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
                     <td align="justify">
-                        <s:radio name="informant.informantType" list="#{'GUARDIAN':''}"
-                                 onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
+                        <s:radio name="informant.informantType" id="informantType" list="#{'GUARDIAN':''}"
+                                 onchange="javascript:setInformPerson('GUARDIAN','','','','','','')" /></td>
                 </tr>
             </table>
         </td>
@@ -190,7 +191,7 @@
     </tr>
     <tr>
         <td><label>(32) අත්සන<br>தகவல் ... <br>Signature</label></td>
-        <td colspan="2"><s:checkbox name="informant.informantSigned"/></td>
+        <td colspan="2"><s:checkbox name="informant.informantSigned" id="informantSigned"/></td>
         <td><label>දිනය <br>*in tamil<br>Date</label></td>
         <td colspan="2"><sx:datetimepicker id="informDatePicker" name="informant.informantSignDate"
                                            displayFormat="yyyy-MM-dd"
@@ -199,6 +200,15 @@
     </tbody>
 </table>
 
+
+
+<s:hidden name="pageNo" value="3"/>
+
+<s:hidden id="p3error1" value="%{getText('p3.person.error.value')}"/>
+<s:hidden id="p3error2" value="%{getText('p3.Informent.Name.error.value')}"/>
+<s:hidden id="p3error3" value="%{getText('p3.Informent.Address.error.value')}"/>
+<s:hidden id="p3error4" value="%{getText('p3.Informent.Signature.error.value')}"/>
+<s:hidden id="p3error5" value="%{getText('p3.Inform.Date.error.value')}"/>
 
 <script type="text/javascript">
     var informPerson;
@@ -243,15 +253,47 @@
 
 
         }
+    }
 
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
 
+        /*date related validations*/
+        var submitDatePicker = dojo.widget.byId('informDatePicker').inputNode.value;
+        var submit = new Date(submitDatePicker);
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
+            flag = true;
+        }
+
+        element = document.getElementById('informantType');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+        }    
+        element = document.getElementById('informantName');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+        }
+        element = document.getElementById('informantAddress');
+        if (!element.checked) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+        }
+        element = document.getElementById('informantSigned');
+        if (!element.checked) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
     }
 
 </script>
-
-
-<s:hidden name="pageNo" value="3"/>
-
 <table style="border:none; margin:12px;" align="center" class="form-submit">
     <s:url id="backUrl" action="eprBirthRegistration">
         <s:param name="back" value="true"/>
