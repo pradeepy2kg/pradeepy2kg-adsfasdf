@@ -165,6 +165,8 @@
 <s:hidden id="error6" value="%{getText('p1.dob.after.submit.value')}"/>
 <s:hidden id="error7" value="%{getText('p1.submit.after.90.value')}"/>
 <s:hidden id="error8" value="%{getText('p1.submit.after.365.value')}"/>
+<s:hidden id="error9" value="%{getText('p1.submitDate.error.value')}"/>
+<s:hidden id="error10" value="%{getText('p1.dob.error.value')}"/>
 
 <script type="text/javascript">
     function validate()
@@ -172,7 +174,8 @@
         var errormsg = "";
         var element;
         var returnval;
-        var lateOrBelate = false;
+        var flag = false;
+        var lateOrbelate = false;
         var check = document.getElementById('skipjs');
 
         /*date related validations*/
@@ -195,43 +198,57 @@
             } else {
                 errormsg = errormsg + "\n" + document.getElementById('error7').value;
             }
-            lateOrBelate = true;
+            lateOrbelate = true;
         }
 
         if (!check.checked) {
+            if (!(submit.getTime())) {
+                errormsg = errormsg + "\n" + document.getElementById('error9').value;
+                flag = true;
+            }
+            if (!birtdate.getTime()) {
+                errormsg = errormsg + "\n" + document.getElementById('error10').value;
+                flag = true;
+            }
 
             element = document.getElementById('bdfSerialNo');
             if (element.value == "") {
-
                 errormsg = errormsg + "\n" + document.getElementById('error1').value;
+                flag = true;
             }
             element = document.getElementById('childFullNameOfficialLang');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error2').value;
+                flag = true;
             }
 
             element = document.getElementById('childFullNameEnglish');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error3').value;
+                flag = true;
             }
 
             element = document.getElementById('childBirthWeight');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error4').value;
+                flag = true;
             }
 
             element = document.getElementById('childRank');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error5').value;
+                flag = true;
             }
         }
 
         if (errormsg != "") {
             alert(errormsg);
-            if (lateOrBelate) {
-                returnval = true;
-            } else {
+            if (flag) {
                 returnval = false;
+            } else {
+                if (lateOrbelate) {
+                    returnval = true;
+                }
             }
         }
 

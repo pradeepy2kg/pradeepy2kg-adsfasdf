@@ -7,20 +7,16 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
-import org.apache.struts2.interceptor.ServletRequestAware;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.PrintData;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.common.api.domain.User;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Printing actions
@@ -62,7 +58,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     /**
      * Filter print list by confiremed without changes and confirmation changes approved.
-     * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List. 
+     * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
+     *
      * @return
      */
 
@@ -77,25 +74,26 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                try{
-                printList = birthDeclarationDAO.getConfirmPrintList(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);}
-                catch (Exception e){
-                    
+                try {
+                    printList = birthDeclarationDAO.getConfirmPrintList(
+                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
+                }
+                catch (Exception e) {
+
                 }
             } else {
                 printList = birthDeclarationDAO.getConfirmPrintList(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
             }
         } else {
             printList = birthDeclarationDAO.getConfirmPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
         return "pageLoad";
     }
 
-     /**
+    /**
      * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
      * Used in first page load and first division selection.
      * Selected divisionId and selected option(Not Printed or Printed) used in pagination.
@@ -116,14 +114,14 @@ public class PrintAction extends ActionSupport implements SessionAware {
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
                 printList = birthDeclarationDAO.getConfirmationPrintPending(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
             } else {
                 printList = birthDeclarationDAO.getConfirmationPrintPending(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
             }
         } else {
             printList = birthDeclarationDAO.getConfirmationPrintPending(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
 
