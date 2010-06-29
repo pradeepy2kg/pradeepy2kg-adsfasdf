@@ -40,6 +40,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private long serialNo;
     private long idUKey;
     private String childName;
+    private String status;
 
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
@@ -65,9 +66,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
             division, serialNo, district + " recieved");
         try {
             bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), serialNo, user);
+            setStatus("searchBDF.status." + bdf.getRegister().getStatus().ordinal());
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFBySerialNumber() SearchBDFBySerialNumber : {} ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
+        } catch (Exception e) {
+            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
+            addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();
         return "success";
@@ -98,6 +103,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside searchBDFByIdUKey() : search parameter idUKey {} recieved", idUKey);
         try {
             bdf = service.getById(idUKey, user);
+            setStatus("searchBDF.status." + bdf.getRegister().getStatus().ordinal());
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
@@ -188,5 +194,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setChildName(String childName) {
         this.childName = childName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
