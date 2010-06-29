@@ -145,6 +145,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (bdId == 0) {
                     bdf = new BirthDeclaration();
                     bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
+                    logger.debug(" New bdf created with state : {}", BirthDeclaration.State.DATA_ENTRY);
                 } else {
                     bdf = service.getById(bdId, user);
                     if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
