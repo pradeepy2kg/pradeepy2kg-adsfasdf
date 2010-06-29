@@ -220,7 +220,7 @@
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
-        <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+        <action name="eprConfirmationIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
                 method="approveIgnoringWorning">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>

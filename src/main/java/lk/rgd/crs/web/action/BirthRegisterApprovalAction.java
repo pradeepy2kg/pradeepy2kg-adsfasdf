@@ -58,6 +58,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private long bdId;
     private long bdfSerialNo;
     private int pageNo;
+    private int noOfRows;
     private int recordCounter;
     private String comments;
     private BirthDeclaration bdf;
@@ -112,7 +113,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          * initially pageNo is set to 1
          */
         setPageNo(1);
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(
                 bdDivisionDAO.getBDDivisionByPK(division), pageNo, noOfRows);
@@ -157,7 +158,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 bdfSerialNo + " selected, requested from page " + pageNo);
         }
 
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         approvalPendingList = new ArrayList<BirthDeclaration>();
         if (confirmationApprovalFlag) {
             if (bdId > 0) {
@@ -237,7 +238,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             caughtException = true;
         }
 
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (caughtException || (warnings != null && warnings.isEmpty())) {
             if (confirmationApprovalFlag) {
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
@@ -302,7 +303,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 addActionError(getText("brapproval.ignoreWarningApproval.error." + e.getErrorCode()));
             }
         }
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, noOfRows);
@@ -332,13 +333,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
             }
             catch (CRSRuntimeException e) {
-                //todo identify the number of faild entities to handle the record counter
                 logger.error("inside approveListOfEntries : {} ", e);
                 addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
             }
         }
         populate();
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, noOfRows);
@@ -371,7 +371,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             }
             initPermission();
             populate();
-            int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+            noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
             if (confirmationApprovalFlag) {
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                     pageNo, noOfRows);
@@ -437,7 +437,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         setPageNo(getPageNo() + 1);
 
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         /**
          * gets the user selected district to get the records
          * variable nextFlag is used to handle the pagination link
@@ -505,7 +505,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (getPageNo() > 1) {
             setPageNo(getPageNo() - 1);
         }
-        int noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+        noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(division),
                 pageNo, noOfRows);
