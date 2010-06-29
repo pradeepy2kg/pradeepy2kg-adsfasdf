@@ -14,6 +14,8 @@
     <div id="bdaw-action">
         <s:form action="eprConfirmationIgnoreWarning" name="birthConfirmationApprovalWarningForm">
             <fieldset>
+                <legend><s:label
+                             value="%{getText('approvalIgnorWarning.label')}"/></legend>
                 <s:hidden value="%{#request.bdId}" name="bdId"/>
                 <table align="center" border="0">
                     <tr>
