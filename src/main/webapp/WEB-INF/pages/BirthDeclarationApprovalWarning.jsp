@@ -26,7 +26,6 @@
                 <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
                     <%--<tr>
                         <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
                         <td><s:textarea name="comments"/> </td>
