@@ -124,7 +124,7 @@
                                                 value="%{#request.districtList.get(#request.bdf.register.getBirthDistrict().districtUKey)}"/></td>
                     <td align="center"><s:label name="division"
                                                 value="%{#request.divisionList.get(#request.bdf.register.getBirthDivision().bdDivisionUKey)}"/></td>
-                    <td align="center"><s:label name="" value="%{#request.bdf.register.getStatus()}"/></td>
+                    <td align="center"><%--<s:label name="" value="%{#request.bdf.register.getStatus()}"/>--%><s:label value="%{getText(status)}"/> </td>
                 </tr>
             </table>
         </fieldset>
