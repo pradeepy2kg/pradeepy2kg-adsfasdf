@@ -9,7 +9,7 @@
                 <td>
                     <label> Role </label>
                     <s:select name="roleId" list="roleList" headerKey="0"
-                              headerValue="ALL"/>                </td>
+                              headerValue="ALL"/></td>
                 <td>
                     <label>District</label>
                     <s:select name="userDistrictId" list="districtList" headerKey="0"
@@ -46,10 +46,10 @@
                     <tr>
                         <td><s:property value="%{#userListStatus.count}"/></td>
                         <td><s:property value="userName"/></td>
-                        <s:url id="deleteSelected" action="eprInitUserCreation.do">
+                        <s:url id="editSelected" action="eprInitUserCreation.do">
                             <s:param name="userId" value="userId"/>
                         </s:url>
-                        <td align="center"><s:a href="%{deleteSelected}"><img
+                        <td align="center"><s:a href="%{editSelected}"><img
                                 src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>

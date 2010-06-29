@@ -272,10 +272,19 @@
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
+        <action name="eprBDFSearchByChildName" class="lk.rgd.crs.web.action.SearchAction" method="">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
         <!--user preferance  -->
         <action name="passChangePageLoad">
             <result>/WEB-INF/pages/PasswordChange.jsp</result>
         </action>
+
+        <action name="eprBirthRegistrationHome" class="lk.rgd.crs.web.action.SearchAction" method="">
+            <result type="tiles" name="success">epr.birthRegistrationHome</result>
+        </action>
+
 
     </package>
 </struts>

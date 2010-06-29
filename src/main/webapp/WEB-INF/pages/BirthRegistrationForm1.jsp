@@ -85,7 +85,7 @@
         </td>
     </tr>
     <tr style="border-left:1px solid #000000;">
-        <td class="font-9"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="150px"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="7">
             <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
                                onchange="javascript:splitDate('datePicker')"/>

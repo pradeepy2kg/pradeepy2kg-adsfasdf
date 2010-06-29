@@ -75,6 +75,7 @@ amith jayasekara
 
 <script type="text/javascript">
     var toggleMenu = {
+
         init : function(sContainerClass, sHiddenClass) {
             if (!document.getElementById || !document.createTextNode) {
                 return;
@@ -128,16 +129,18 @@ amith jayasekara
     };
     toggleMenu.addEvent(window, 'load', function() {
         toggleMenu.init('menu', 'hidden');
+
+
     });
 </script>
 
 <body>
 <div id="main-menue">
     <ul class="menu">
-
         <s:iterator value="#session.allowed_menue" id="menue">
             <s:if test="%{(value.size > 0)& (key== 'BIRTH')}">
-                <li><a href="."><s:label value="%{getText('category_birth_registration')}"/> </a>
+                <li><s:a ondblclick="parent.location='eprBirthRegistrationHome.do'">
+                    <s:label value="%{getText('category_birth_registration')}"/></s:a>
                     <ul>
                         <s:iterator value="value" id="x">
                             <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
@@ -158,7 +161,8 @@ amith jayasekara
             </s:if>
 
             <s:if test="%{(value.size > 0)& (key == 'DEATH')}">
-                <li><a href="."><s:label value="%{getText('category_death_registraion')}"/> </a>
+
+                <li><s:a href="%{editSelected}"><s:label value="%{getText('category_death_registraion')}"/> </s:a>
                     <ul>
                         <s:iterator value="value" id="x">
                             <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
@@ -169,7 +173,7 @@ amith jayasekara
             </s:if>
 
             <s:if test="%{(value.size > 0)& (key == 'MARRAGE')}">
-                <li><a href="."><s:label value="%{getText('category_marrage_registraion')}"/> </a>
+                <li><a href=><s:label value="%{getText('category_marrage_registraion')}"/> </a>
                     <ul>
                         <s:iterator value="value" id="x">
                             <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
@@ -200,9 +204,7 @@ amith jayasekara
                     </ul>
                 </li>
             </s:if>
-
         </s:iterator>
-
     </ul>
 </div>
 

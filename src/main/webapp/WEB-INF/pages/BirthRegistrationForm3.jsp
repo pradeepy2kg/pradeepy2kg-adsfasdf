@@ -249,16 +249,17 @@
 
 </script>
 
-
-<s:hidden name="pageNo" value="3"/>
-
-<table style="border:none; margin:12px;" align="center" class="form-submit">
-    <s:url id="backUrl" action="eprBirthRegistration">
-        <s:param name="back" value="true"/>
-        <s:param name="pageNo" value="{pageNo - 1}"/>
-    </s:url>
-    <s:a href="%{backUrl}"> << </s:a>
-    <s:submit value="%{getText('next.label')}"/>
-</table>
-</s:form>
 </div>
+<s:hidden name="pageNo" value="3"/>
+<div class="form-submit">
+    <table style="border:none; margin:12px;" align="center" class="form-submit">
+        <s:url id="backUrl" action="eprBirthRegistration">
+            <s:param name="back" value="true"/>
+            <s:param name="pageNo" value="{pageNo - 1}"/>
+        </s:url>
+        <s:a href="%{backUrl}"> << </s:a>
+        <s:submit value="%{getText('next.label')}"/>
+    </table>
+</div>
+</s:form>
+

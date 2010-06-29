@@ -140,4 +140,8 @@
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationApproval.jsp"/>
         <put-attribute name="title" value="BirthConfirmationApproval.title"/>
     </definition>
+      <definition name="epr.birthRegistrationHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationHome.jsp"/>
+        <put-attribute name="title" value="search Users"/>
+    </definition>
 </tiles-definitions>

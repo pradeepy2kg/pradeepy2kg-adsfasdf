@@ -234,6 +234,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+
+        logger.debug("{}'s informant's Address is    :{}", child.getChildFullNameEnglish(), informant.getInformantAddress());
                 switch (pageNo) {
                     case 1:
                         bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
@@ -468,6 +470,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             int selectedDistrictId = allDistrictList.keySet().iterator().next();
             allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
         }
+    }
+   public String welcome1()
+    {
+        return "success";
     }
 
     public int getPageNo() {

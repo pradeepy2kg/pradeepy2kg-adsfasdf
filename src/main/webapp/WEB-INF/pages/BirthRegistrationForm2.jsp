@@ -197,18 +197,20 @@
         return returnval;
     }
 </script>
-
-<table style="border:none; margin:15px;" align="right" width="1030px">
-    <s:url id="backUrl" action="eprBirthRegistration">
-        <s:param name="back" value="true"/>
-        <s:param name="pageNo" value="{pageNo - 1}"/>
-    </s:url>
-    <s:a href="%{backUrl}"> << </s:a>
-    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-        <s:label value="%{getText('skipvalidation.label')}"/>
-    </s:checkbox>
-    <s:submit value="%{getText('next.label')}"/>
-
-</table>
-</s:form>
 </div>
+
+<div class="form-submit">
+    <table style="border:none; margin-bottom:20px;" align="center" class="form-submit">
+        <s:url id="backUrl" action="eprBirthRegistration">
+            <s:param name="back" value="true"/>
+            <s:param name="pageNo" value="{pageNo - 1}"/>
+        </s:url>
+        <s:a href="%{backUrl}"> << </s:a>
+        <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+            <s:label value="%{getText('skipvalidation.label')}"/>
+        </s:checkbox>
+        <s:submit value="%{getText('next.label')}"/>
+
+    </table>
+</div>
+</s:form>
