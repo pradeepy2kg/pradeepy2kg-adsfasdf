@@ -19,12 +19,12 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>asankha</td>
+	<td>chathuranga</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
-	<td>asankha</td>
+	<td>chathuranga</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -673,7 +673,7 @@
 <tr>
 	<td>type</td>
 	<td>informantNICorPIN</td>
-	<td>554564556v</td>
+	<td>554564556</td>
 </tr>
 <tr>
 	<td>type</td>

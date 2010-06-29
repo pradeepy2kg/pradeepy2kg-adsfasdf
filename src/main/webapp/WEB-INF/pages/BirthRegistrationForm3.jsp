@@ -28,16 +28,20 @@
         <td rowspan="2">
             <table class="sub_table">
                 <tr>
-                    <td><label>*in sinhala<br>*in tamil<br>Yes</label></td>
+                    <td><label>*in sinhala<br>*in tamil<br>Unknown</label></td>
                     <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
                 </tr>
                 <tr>
-                    <td><label>*in sinhala<br>*in tamil<br>No</label></td>
+                    <td><label>*in sinhala<br>*in tamil<br>Yes</label></td>
                     <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/></td>
                 </tr>
                 <tr>
-                    <td><label>*in sinhala<br>*in tamil<br>Since Married</label></td>
+                    <td><label>*in sinhala<br>*in tamil<br>No</label></td>
                     <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
+                </tr>
+                <tr>
+                    <td><label>*in sinhala<br>*in tamil<br>Since Married</label></td>
+                    <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"/></td>
                 </tr>
             </table>
         </td>
