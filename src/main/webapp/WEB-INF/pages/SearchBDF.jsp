@@ -38,8 +38,7 @@
                         <s:param name="formId" value="search-bdf-form"/>
                     </s:url>
                     <td><label value="%{getText('select_ds_division.label')}"/></td>
-                    <td>
-                        <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                    <td><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
                                 listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div></td>
                  </tr>
                 <tr>
