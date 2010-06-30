@@ -46,8 +46,20 @@
     <tr>
         <s:url id="loadFatherInfo" action="ajaxSupport_loadFatherInfo"/>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
-        <td><s:div id="fatherInfo"></s:div><sx:div id="fatherInfo" href="%{loadFatherInfo}" theme="ajax"
-            listenTopics="view_Info" formId="birth-registration-form-2" preload="true"></sx:div>
+        <td><s:textfield  name="parent.fatherPassportNo"/></td>
+    </tr>
+    <tr>
+        <td><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
+        <td colspan="6">
+            <sx:div id="parents.fatherNICorPIN" href="%{loadFatherInfo}" listenTopics="view_Info" formId="birth-registration-form-2"></sx:div>
+        </td>
+    </tr>
+    <tr>
+        <td><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
+        <td colspan="2">
+            <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
+                onmouseover="javascript:splitDate('fatherDatePicker')"/>
+        </td>
         <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
         <td colspan="2"><s:textfield name="parent.fatherPlaceOfBirth"/></td>
     </tr>

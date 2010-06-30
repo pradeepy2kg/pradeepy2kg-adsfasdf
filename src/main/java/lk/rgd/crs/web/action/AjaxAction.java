@@ -107,17 +107,26 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     }
 
     public String loadFatherInfo() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        raceList = raceDAO.getRaces(language);
         if (!"".equals(parent.getFatherNICorPIN())) {
             logger.debug("Father NIC/PIN received : {}", parent.getFatherNICorPIN());
             Person father = registryService.findPersonByPINorNIC(parent.getFatherNICorPIN(), user);
             if (father != null) {
                 parent.setFatherFullName(father.getFullNameInOfficialLanguage());
-                parent.setFatherPassportNo(father.getPassportNo());
                 parent.setFatherDOB(father.getDateOfBirth());
-                parent.setFatherPlaceOfBirth(father.getPlaceOfBirth());
                 logger.debug("Father info set from Ajax : {} {}", parent.getFatherNICorPIN(), parent.getFatherFullName());
+            }
+        }
+        return "FatherInfo";
+    }
+
+    public String loadMotherInfo() {
+        if (!"".equals(parent.getMotherNICorPIN())) {
+            logger.debug("Father NIC/PIN received : {}", parent.getFatherNICorPIN());
+            Person mother = registryService.findPersonByPINorNIC(parent.getMotherNICorPIN(), user);
+            if (mother != null) {
+                parent.setMotherFullName(mother.getFullNameInOfficialLanguage());
+                parent.setMotherDOB(mother.getDateOfBirth());
+                logger.debug("Mother info set from Ajax : {} {}", parent.getMotherNICorPIN(), parent.getMotherFullName());
             }
         }
         return "FatherInfo";
