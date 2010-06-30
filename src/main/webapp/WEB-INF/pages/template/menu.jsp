@@ -81,14 +81,20 @@ amith jayasekara
                 return;
             } // Check for DOM support
             var arrMenus = this.getElementsByClassName(document, 'ul', sContainerClass);
-            var arrSubMenus, oSubMenu, oLink;
+            var arrSubMenus, oSubMenu, oLink,checkLink;
             for (var i = 0; i < arrMenus.length; i++) {
                 arrSubMenus = arrMenus[i].getElementsByTagName('ul');
                 for (var j = 0; j < arrSubMenus.length; j++) {
                     oSubMenu = arrSubMenus[j];
                     oLink = oSubMenu.parentNode.getElementsByTagName('a')[0];
+                    if (oLink == "http://localhost:8080/popreg/eprBirthRegistration.do")
+                    {
+                        toggleMenu.toggle(this.parentNode.getElementsByTagName('ul')[0], sHiddenClass);
+                        return false;
+                    }
                     oLink.onclick = function() {
                         toggleMenu.toggle(this.parentNode.getElementsByTagName('ul')[0], sHiddenClass);
+                        //alert(oLink);
                         return false;
                     }
                     this.toggle(oSubMenu, sHiddenClass);
@@ -132,13 +138,24 @@ amith jayasekara
 
 
     });
+    toggleMenu.addEvent(window, 'load', function() {
+        toggleMenu.init('menu1', 'hidden');
+
+
+    });
 </script>
 
 <body>
 <div id="main-menue">
-    <ul class="menu">
+    <s:if test="{#session.check=='ok'}">
+        <s:set name="checkPage" value="menu1"/>
+    </s:if>
+    <s:else>
+        <s:set name="checkPage" value="menu"/>
+    </s:else>
+    <ul class=menu>
         <s:iterator value="#session.allowed_menue" id="menue">
-            <s:if test="%{(value.size > 0)& (key== 'BIRTH')}">
+            <s:if test="%{((value.size > 0)& (key== 'BIRTH'))||(#session.viewUsers=='ok')}">
                 <li><s:a ondblclick="parent.location='eprBirthRegistrationHome.do'">
                     <s:label value="%{getText('category_birth_registration')}"/></s:a>
                     <ul>

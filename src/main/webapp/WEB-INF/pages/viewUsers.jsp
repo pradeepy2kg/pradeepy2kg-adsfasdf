@@ -62,8 +62,6 @@
                         </td>
                     </tr>
                 </s:iterator>
-
-
             </table>
         </s:form>
     </s:if>

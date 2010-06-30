@@ -150,7 +150,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                         return "error";   // todo pass error info
                     }
-                    //todo check permissions to operate on this birthdivision 
+                    //todo check permissions to operate on this birthdivision
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);

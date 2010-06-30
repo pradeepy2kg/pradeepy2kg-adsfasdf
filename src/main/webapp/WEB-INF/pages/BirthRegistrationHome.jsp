@@ -10,6 +10,10 @@
 <style>
     .front_page_table {
         border: none;
+        background-image:url("images/birth-flow_en.png");
+        width:916px;
+        height:1252px;
+        margin:10px
 
     }
 
@@ -18,39 +22,10 @@
         text-align: center;
     }
 </style>
-<div class="content-title">Home Page</div>
+<div class="content-title"></div>
     <table width="780" height="202" class="front_page_table" align="center">
-        <caption></caption>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td><img alt="" src="images/pic03.gif" width="144" height="72"/></td>
-            <td><img alt="" src="images/pic04.gif" width="144" height="72"/></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><img alt="" src="images/pic02.gif" width="144" height="72"/></td>
-            <td colspan="2" rowspan="2"><img alt="" src="images/bg.gif" width="400"
-                                             height="100"/></td>
-            <td><img alt="" src="images/pic05.gif" width="144" height="72"/></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><img alt="" src="images/pic01.gif" width="144" height="72"/></td>
-            <td></td>
-            <td></td>
-            <td><img alt="" src="images/pic06.gif" width="144" height="72"/></td>
-        </tr>
-        </tbody>
+
+        
     </table>
 
 

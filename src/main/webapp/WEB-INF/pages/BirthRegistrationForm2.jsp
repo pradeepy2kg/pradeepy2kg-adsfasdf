@@ -210,7 +210,6 @@
             <s:label value="%{getText('skipvalidation.label')}"/>
         </s:checkbox>
         <s:submit value="%{getText('next.label')}"/>
-
     </table>
 </div>
 </s:form>
