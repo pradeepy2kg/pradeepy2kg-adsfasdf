@@ -61,7 +61,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private BirthRegisterInfo register;
     private User user;
 
-    private int division;
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
@@ -97,28 +96,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.dsDivisionDAO = dsDivisionDAO;
         this.appParametersDAO = appParametersDAO;
         child = new ChildInfo();
-    }
-
-    public String loadDSDivList() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        populateBasicLists(language);
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-        dsDivisionId = dsDivisionList.keySet().iterator().next();
-        logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
-        return "DSDivList";
-    }
-
-    public String loadBDDivList() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        if (dsDivisionId != 0) { // in case UI does not return a ID, (at page load) use the existing list
-            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        } else {
-            populateBasicLists(language);
-            populateDynamicLists(language);
-        }
-        birthDivisionId = bdDivisionList.keySet().iterator().next();
-        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, birthDivisionId);
-        return "BDDivList";
     }
 
     /**
@@ -234,7 +211,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
 
-        logger.debug("{}'s informant's Address is    :{}", child.getChildFullNameEnglish(), informant.getInformantAddress());
+                logger.debug("{}'s informant's Address is    :{}", child.getChildFullNameEnglish(),
+                        informant.getInformantAddress());
                 switch (pageNo) {
                     case 1:
                         bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
@@ -529,10 +507,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return bdDivisionList;
     }
 
-//    public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
-//        this.bdDivisionList = bdDivisionList;
-//    }
-
     public ChildInfo getChild() {
         return child;
     }
@@ -631,14 +605,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public Map<Integer, String> getDsDivisionList() {
         return dsDivisionList;
     }
-
-//    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
-//        this.dsDivisionList = dsDivisionList;
-//    }
-//
-//    public DSDivisionDAO getDsDivisionDAO() {
-//        return dsDivisionDAO;
-//    }
 
     public int getDsDivisionId() {
         return dsDivisionId;
