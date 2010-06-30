@@ -44,28 +44,11 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
+    public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision, int pageNo, int noOfRows, BirthDeclaration.State status) {
 
-        Query q = em.createNamedQuery("birth.certificate.print.approved").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        Query q = em.createNamedQuery("filter.by.division.and.status").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
-        return q.getResultList();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("confirmation.pending.approval").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
-        q.setParameter("birthDivision", birthDivision);
-        return q.getResultList();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("declaration.pending.approval").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
-        q.setParameter("birthDivision", birthDivision);
+        q.setParameter("status", status);
         return q.getResultList();
     }
 
@@ -74,9 +57,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     public BirthDeclaration getById(long bdfidUKey) {
         logger.debug("Get BDF by ID : {}", bdfidUKey);
-        Query q = em.createNamedQuery("get.by.id");
-        q.setParameter("bdfidUKey", bdfidUKey);
-        return (BirthDeclaration) q.getSingleResult();
+        return em.find(BirthDeclaration.class, bdfidUKey);
     }
 
     /**
@@ -94,7 +75,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long bdfSerialNo) {
-        Query q = em.createNamedQuery("get.by.serialNo.pending.approval");
+        Query q = em.createNamedQuery("get.by.bddivision.and.serialNo");
         q.setParameter("birthDivision", bdDivision);
         q.setParameter("bdfSerialNo", bdfSerialNo);
         return (BirthDeclaration) q.getSingleResult();

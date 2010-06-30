@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -15,7 +16,6 @@ import java.util.Locale;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.common.api.domain.User;
 
 /**
@@ -31,7 +31,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
-    private final BirthDeclarationDAO birthDeclarationDAO;
+    private final BirthRegistrationService birthRegistrationService;
     private final AppParametersDAO appParametersDAO;
 
     private List<BirthDeclaration> printList;
@@ -48,11 +48,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private int printStart;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        BirthDeclarationDAO birthDeclarationDAO, AppParametersDAO appParametersDAO) {
+        BirthRegistrationService birthRegistrationService, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
-        this.birthDeclarationDAO = birthDeclarationDAO;
+        this.birthRegistrationService = birthRegistrationService;
         this.appParametersDAO = appParametersDAO;
     }
 
@@ -75,18 +75,18 @@ public class PrintAction extends ActionSupport implements SessionAware {
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
                 try {
-                    printList = birthDeclarationDAO.getConfirmPrintList(
+                    printList = birthRegistrationService.getConfirmationPrintList(
                         bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
                 }
                 catch (Exception e) {
 
                 }
             } else {
-                printList = birthDeclarationDAO.getConfirmPrintList(
+                printList = birthRegistrationService.getConfirmationPrintList(
                     bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
             }
         } else {
-            printList = birthDeclarationDAO.getConfirmPrintList(
+            printList = birthRegistrationService.getConfirmationPrintList(
                 bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
@@ -113,14 +113,14 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(
+                printList = birthRegistrationService.getConfirmationPrintList(
                     bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
             } else {
-                printList = birthDeclarationDAO.getConfirmationPrintPending(
+                printList = birthRegistrationService.getConfirmationPrintList(
                     bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
             }
         } else {
-            printList = birthDeclarationDAO.getConfirmationPrintPending(
+            printList = birthRegistrationService.getConfirmationPrintList(
                 bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
@@ -137,7 +137,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = ((printStart + noOfRows) / noOfRows) + 1;
         boolean printed = checkPrinted();
-        printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
+        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
         printStart += noOfRows;
         populate();
         return "success";
@@ -152,7 +152,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = printStart / noOfRows;
         boolean printed = checkPrinted();
-        printList = birthDeclarationDAO.getConfirmationPrintPending(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
+        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
         printStart -= noOfRows;
         populate();
         return "success";

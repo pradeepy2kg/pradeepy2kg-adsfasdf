@@ -193,6 +193,32 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public void markLiveBirthConfirmationAsPrinted(BirthDeclaration bdf, User user) {
+        // load the existing record
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+
+        // does the user have access to the BDF being added (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        validateAccessOfUser(user, existing);
+
+        existing.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_PRINTED);
+        birthDeclarationDAO.updateBirthDeclaration(existing);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void markLiveBirthConfirmationIDsAsPrinted(long[] printedIDList, User user) {
+        for (long l : printedIDList) {
+            BirthDeclaration bdf = birthDeclarationDAO.getById(l);
+            markLiveBirthConfirmationAsPrinted(bdf, user);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public void markLiveBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user) {
 
         // does the user have access to the BDF being confirmed (i.e. check district and DS division)
@@ -218,6 +244,33 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public void captureLiveBirthConfirmationChanges(BirthDeclaration bdf, User user) {
+        // does the user have access to the BDF being confirmed (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateAccessOfUser(user, existing);
+
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState) {
+            // mark existing as archived with a newer record of corrections
+            existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CORRECTED);
+            birthDeclarationDAO.updateBirthDeclaration(existing);
+            // add new record
+            bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
+            birthDeclarationDAO.addBirthDeclaration(bdf);
+        } else if (BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
+            bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
+            birthDeclarationDAO.updateBirthDeclaration(existing);    
+        } else {
+            handleException("Cannot capture confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_CONFIRMATION_CHANGES);
+        }    
+    }
+
+    /**
+     * @inheritDoc
+     */
     public List<UserWarning> approveConfirmationChangesForIDList(long[] approvalDataList, User user) {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
@@ -235,6 +288,34 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
         }
         return warnings;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
+        // load the existing record
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+
+        // does the user have access to the BDF being added (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        validateAccessOfUser(user, existing);
+
+        existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_PRINTED);
+        existing.getRegister().setOriginalBCDateOfIssue(new Date());
+        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
+        birthDeclarationDAO.updateBirthDeclaration(existing);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void markLiveBirthCertificateIDsAsPrinted(long[] printedIDList, User user) {
+        for (long l : printedIDList) {
+            BirthDeclaration bdf = birthDeclarationDAO.getById(l);
+            markLiveBirthCertificateAsPrinted(bdf, user);
+        }
     }
 
     /**
@@ -380,18 +461,25 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        return birthDeclarationDAO.getConfirmationApprovalPending(birthDivision, pageNo, noOfRows);
+        return birthDeclarationDAO.getPaginatedListForState(
+            birthDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
     }
 
-    public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
-        return birthDeclarationDAO.getConfirmPrintList(birthDivision,pageNo,noOfRows,printed);
+    public List<BirthDeclaration> getConfirmationPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
+        return birthDeclarationDAO.getPaginatedListForState(birthDivision, pageNo, noOfRows,
+            printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
+    }
+
+    public List<BirthDeclaration> getBirthCertificatePrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
+        return birthDeclarationDAO.getPaginatedListForState(birthDivision, pageNo, noOfRows,
+            printed ? BirthDeclaration.State.ARCHIVED_BC_PRINTED : BirthDeclaration.State.ARCHIVED_BC_GENERATED);
     }
 
     /**
      * @inheritDoc
      */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
-        return birthDeclarationDAO.getDeclarationApprovalPending(birthDivision, pageNo, noOfRows);
+        return birthDeclarationDAO.getPaginatedListForState(birthDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
     }
 
     /**

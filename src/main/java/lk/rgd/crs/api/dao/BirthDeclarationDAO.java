@@ -47,37 +47,15 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
 
     /**
+     * Get Paginated list of BDFs for the given state
      *
      * @param birthDivision  the birth division
      * @param pageNo  page number
      * @param noOfRows  number of rows
-     * @param printed   return already printed items if true, or items pending printing if false
+     * @param state the state of the records to be returned
      * @return   approved list for print
      */
-    public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
-
-
-    /**
-     * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
-     * by an ADR. Results are ordered on the descending confirmationReceiveDate
-     *
-     * @param birthDivision the birth division
-     * @param pageNo        the page number for the results required (start from 1)
-     * @param noOfRows      number of rows to return per page
-     * @return the birth declaration results
-     */
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
-
-    /**
-     * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
-     * by an ADR. Results are ordered on the descending confirmationReceiveDate
-     *
-     * @param birthDivision the birth division
-     * @param pageNo        the page number for the results required (start from 1)
-     * @param noOfRows      number of rows to return per page
-     * @return the birth declaration results
-     */
-    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
+    public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision, int pageNo, int noOfRows, BirthDeclaration.State state);
 
     /**
      * Returns the Birth Declaration object for a given Id
