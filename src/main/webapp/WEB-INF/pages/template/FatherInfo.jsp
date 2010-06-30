@@ -10,6 +10,7 @@
 </tr>
 <tr>
     <td><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
-    <td colspan="2"><sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
-                                       displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('fatherDatePicker')"/></td>
+    <td colspan="2">
+        <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
+                onmouseover="javascript:splitDate('fatherDatePicker')"/>
+    </td>
