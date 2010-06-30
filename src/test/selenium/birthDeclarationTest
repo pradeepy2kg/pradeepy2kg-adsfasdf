@@ -19,12 +19,12 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>chathuranga</td>
+	<td>asankha</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
-	<td>chathuranga</td>
+	<td>asankha</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -632,67 +632,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantType2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantName</td>
-	<td>Charith Ranabahu</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantNICorPIN</td>
-	<td>554564556</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantAddress</td>
-	<td>Bandarawela</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantPhoneNo</td>
-	<td>0147025864</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>informantEmail</td>
-	<td>ucsam86@gmail.com</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>birth-registration-form-3_informant_informantSigned</td>
+	<td>birth-registration-form-3_informant_informantTypeMOTHER</td>
 	<td></td>
 </tr>
 <tr>
@@ -702,7 +642,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[3]/td[3]</td>
+	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[5]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
