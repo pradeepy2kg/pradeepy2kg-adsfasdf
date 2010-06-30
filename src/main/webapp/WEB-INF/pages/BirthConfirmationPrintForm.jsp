@@ -207,7 +207,7 @@
         <div class="no">12</div>
         <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ... <br>Childs name in English</label>
         <s:textfield cssClass="disable" disabled="true"
-                     value="%{#request.child.childFullNameEnglish}"></s:textfield>
+                     value="%{#request.child.childFullNameEnglish}" size="50"></s:textfield>
     </div>
     <div id="bcf-father-current-name" class="font-9">
         <div class="no">13</div>

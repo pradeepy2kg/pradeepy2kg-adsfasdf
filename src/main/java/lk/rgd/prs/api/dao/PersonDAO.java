@@ -45,5 +45,5 @@ public interface PersonDAO {
      * @param nic the national ID card number
      * @return the matching persons
      */
-    public List<Person> findPersonsByNIC(long nic);
+    public List<Person> findPersonsByNIC(String nic);
 }

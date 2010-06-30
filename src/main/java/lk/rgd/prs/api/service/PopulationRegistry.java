@@ -54,6 +54,16 @@ public interface PopulationRegistry {
      * @param user the user performing this action
      * @return the matching persons
      */
-    public List<Person> findPersonsByNIC(long nic, User user);
+    public List<Person> findPersonsByNIC(String nic, User user);
+
+    /**
+     * Return the Person object for the given PIN or National ID card number. If the NIC number matches multiple
+     * Persons, the first match is returned for simplicity.
+     *
+     * @param pinOrNic the PIN or national ID card number
+     * @param user the user performing this action
+     * @return the matching person
+     */
+    public Person findPersonByPINorNIC(String pinOrNic, User user);
 
 }

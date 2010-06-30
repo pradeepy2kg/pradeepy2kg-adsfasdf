@@ -99,13 +99,15 @@
                       onchange="javascript:view_DSDivs();return false;"/></td>
     </tr>
     <tr>
-        <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
+            <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs"
-            formId="birth-registration-form-1"></sx:div>
+        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><sx:div id="dsDivisionId" value="dsDivisionId"
+                                                                                 href="%{loadDSDivList}" theme="ajax"
+                                                                                 listenTopics="view_DSDivs"
+                                                                                 formId="birth-registration-form-1"></sx:div>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirth"/></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth"/></td>
     </tr>
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
@@ -167,6 +169,7 @@
 <s:hidden id="error8" value="%{getText('p1.submit.after.365.value')}"/>
 <s:hidden id="error9" value="%{getText('p1.submitDate.error.value')}"/>
 <s:hidden id="error10" value="%{getText('p1.dob.error.value')}"/>
+<s:hidden id="error11" value="%{getText('p1.placeOfBirth.error.value')}"/>
 
 <script type="text/javascript">
     function validate()
@@ -200,17 +203,27 @@
             }
             lateOrbelate = true;
         }
+        
+        element = document.getElementById('bdfSerialNo');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error1').value;
+            flag = true;
+        }
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('error9').value;
+            flag = true;
+        }
+        if (!birtdate.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('error10').value;
+            flag = true;
+        }
+        element = document.getElementById('placeOfBirth');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('error11').value;
+                flag = true;
+            }
 
         if (!check.checked) {
-            if (!(submit.getTime())) {
-                errormsg = errormsg + "\n" + document.getElementById('error9').value;
-                flag = true;
-            }
-            if (!birtdate.getTime()) {
-                errormsg = errormsg + "\n" + document.getElementById('error10').value;
-                flag = true;
-            }
-
             element = document.getElementById('bdfSerialNo');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error1').value;

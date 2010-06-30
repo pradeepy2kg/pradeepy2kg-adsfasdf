@@ -31,8 +31,7 @@
         </div>
     </s:if>
     <div id="birth-register-approval-body">
-        <%--todo permission handling--%>
-        <s:form action="" name="birth_register_approval_body" method="POST">
+        <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="post">
             <s:if test="approvalPendingList.size>0">
                 <table>
                 <tr>
@@ -44,13 +43,14 @@
                     <th></th>
                 </tr>
             </s:if>
-            <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList" var="currentEntry">
+            <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
                 <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
                     <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
-                    <td><s:checkbox name="index"
-                                    onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
-                                    title="%{getText('select.label')}" value="%{#index}"
-                                    fieldValue="%{#approvalList.idUKey}"/></td>
+                    <td><s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'"><s:checkbox
+                            name="index"
+                            onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
+                            title="%{getText('select.label')}" value="%{#index}"
+                            fieldValue="%{#approvalList.idUKey}"/></s:if></td>
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td><s:property value="confirmant.confirmationReceiveDate"/></td>

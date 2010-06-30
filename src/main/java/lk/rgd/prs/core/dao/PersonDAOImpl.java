@@ -50,7 +50,7 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Person> findPersonsByNIC(long nic) {
+    public List<Person> findPersonsByNIC(String nic) {
         Query q = em.createNamedQuery("filter.by.nic");
         q.setParameter("nic", nic);
         return q.getResultList();
