@@ -99,12 +99,13 @@
                       onchange="javascript:view_DSDivs();return false;"/></td>
     </tr>
     <tr>
-        <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
+        <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
+            <s:param name="formId" value="birth-registration-form-1"/>
+        </s:url>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><sx:div id="dsDivisionId" value="dsDivisionId"
-                                                                                 href="%{loadDSDivList}" theme="ajax"
-                                                                                 listenTopics="view_DSDivs"
-                                                                                 formId="birth-registration-form-1"></sx:div>
+        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
+                <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                        listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth"/></td>
@@ -203,7 +204,7 @@
             }
             lateOrbelate = true;
         }
-        
+
         element = document.getElementById('bdfSerialNo');
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('error1').value;
@@ -218,10 +219,10 @@
             flag = true;
         }
         element = document.getElementById('placeOfBirth');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error11').value;
-                flag = true;
-            }
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error11').value;
+            flag = true;
+        }
 
         if (!check.checked) {
             element = document.getElementById('bdfSerialNo');

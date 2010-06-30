@@ -28,14 +28,16 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private Map session;
-    private Map<Integer, String> divisionList;
+    private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
+    private Map<Integer, String> dsDivisionList;
     private User user;
     private BirthDeclaration bdf;
 
 
-    private int district;
-    private int division;
+    private int birthDistrictId;
+    private int dsDivisionId;
+    private int birthDivisionId;
 
     private long serialNo;
     private long idUKey;
@@ -62,10 +64,10 @@ public class SearchAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String searchBDFBySerialNumber() {
-        logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, district {} " + "and division " +
-            division, serialNo, district + " recieved");
+        logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
+            birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
-            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(division), serialNo, user);
+            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
             setStatus("searchBDF.status." + bdf.getRegister().getStatus().ordinal());
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFBySerialNumber() SearchBDFBySerialNumber : {} ", e);
@@ -86,11 +88,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
         setInitialDistrict();
-        Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(getDistrict(), language, user);
+       /* Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(getBirthDistrictId(), language, user);
         if (!dsDivisionList.isEmpty()) {
             int dsDivisionId = dsDivisionList.keySet().iterator().next();
-            setDivisionList(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
-        }
+            setBdDivisionList(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
+        }*/
     }
 
     /**
@@ -123,7 +125,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
      */
     public void setInitialDistrict() {
         if (!getDistrictList().isEmpty()) {
-            setDistrict(getDistrictList().keySet().iterator().next());
+            setBirthDistrictId(getDistrictList().keySet().iterator().next());
         }
     }
 
@@ -156,20 +158,20 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.bdf = bdf;
     }
 
-    public int getDistrict() {
-        return district;
+    public int getBirthDistrictId() {
+        return birthDistrictId;
     }
 
-    public void setDistrict(int district) {
-        this.district = district;
+    public void setBirthDistrictId(int birthDistrictId) {
+        this.birthDistrictId = birthDistrictId;
     }
 
-    public Map<Integer, String> getDivisionList() {
-        return divisionList;
+    public Map<Integer, String> getBdDivisionList() {
+        return bdDivisionList;
     }
 
-    public void setDivisionList(Map<Integer, String> divisionList) {
-        this.divisionList = divisionList;
+    public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
+        this.bdDivisionList = bdDivisionList;
     }
 
     public Map<Integer, String> getDistrictList() {
@@ -180,12 +182,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.districtList = districtList;
     }
 
-    public int getDivision() {
-        return division;
+    public int getBirthDivisionId() {
+        return birthDivisionId;
     }
 
-    public void setDivision(int division) {
-        this.division = division;
+    public void setBirthDivisionId(int birthDivisionId) {
+        this.birthDivisionId = birthDivisionId;
     }
 
     public String getChildName() {
@@ -202,5 +204,21 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getDsDivisionId() {
+        return dsDivisionId;
+    }
+
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
+    }
+
+    public Map<Integer, String> getDsDivisionList() {
+        return dsDivisionList;
+    }
+
+    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
+        this.dsDivisionList = dsDivisionList;
     }
 }

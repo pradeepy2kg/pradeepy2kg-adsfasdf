@@ -76,7 +76,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         List<BDDivision> results = query.getResultList();
 
         for (BDDivision r : results) {
-            //final int districtUKey   = r.getDistrict().getDistrictUKey();
+            //final int districtUKey   = r.getBirthDistrictId().getDistrictUKey();
             final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
             final int bdDivisionId   = r.getDivisionId();
             final int bdDivisionUKey = r.getBdDivisionUKey();
