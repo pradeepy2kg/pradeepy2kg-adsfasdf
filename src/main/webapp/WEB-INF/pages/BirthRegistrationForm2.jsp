@@ -35,7 +35,7 @@
         <td rowspan="2"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td rowspan="2"><s:textfield name="parent.fatherNICorPIN"/>
-            <label onclick="javascript:view_Info();return false;">>></label>
+            <label onclick="javascript:view_Info();return false;"></label>
         </td>
         <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label></td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>

@@ -26,13 +26,14 @@
     <div id="birth-register-approval-body">
         <s:url id="newBDFUrl" action="eprBirthRegistration.do">
             <s:param name="addNewMode" value="true"/>
+            <s:param name="oldBdId" value="#request.bdId"/>
         </s:url>
         <s:url id="approveUrl" action="eprDirectApprove.do">
-            <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
+            <s:param name="bdId" value="#request.bdId"/>
         </s:url>
         <%--TODO shoud be redirected to confirmationPrinting... aproveAnd print--%>
         <s:url id="approveAndPrintUrl" action="eprConfirmationPrintPageLoad">
-            <s:param name="bdId" value="%{#session.birthRegister.idUKey}"/>
+            <s:param name="bdId" value="#request.bdId"/>
         </s:url>
         <s:url id="mainUrl" action="eprHome.do"/>
 
@@ -66,8 +67,7 @@
     </div>
     <div id="birth-register-approval-footer">
         <s:a href="%{newBDFUrl}"><s:label value="%{getText('addNewBDF_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <s:if test="#session.allowApproveBDF">
-		<%--<s:if test="#session.allowApproveBDF==true">--%>
+        <s:if test="#request.allowApproveBDF">
             <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
             <s:a href="%{approveAndPrintUrl}">
                 <s:label value="%{getText('approveAndPrint_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
