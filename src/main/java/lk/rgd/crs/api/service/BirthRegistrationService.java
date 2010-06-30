@@ -11,9 +11,11 @@ import java.util.Date;
 public interface BirthRegistrationService {
 
     /**
-     * Add a Birth declaration to the system. This is a Data Entry operation, and only data entry level validations
+     * Add a Live Birth declaration to the system. This is a Data Entry operation, and only data entry level validations
      * are performed at this stage. The [ADR] Approval will trigger a manual / human approval after validating any
-     * warnings by an ADR or higher level authority
+     * warnings by an ADR or higher level authority. Late (e.g. > 90 days) or belated (e.g. > 365 days) registrations
+     * are entered using this same method, and will ask for the case file number and additional comments - which should
+     * specify the additional documents submitted to assist in the registration
      *
      * @param bdf                        the BDF to be added
      * @param ignoreWarnings             an explicit switch to disable optional validations
@@ -24,59 +26,60 @@ public interface BirthRegistrationService {
      * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
      *         Warnings maybe if a mother specified is known to be dead etc
      */
-    public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
+    public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment);
 
     /**
-     * Update an existing BDF by a DEO or ADR before approval
+     * Update an existing BDF for a Live birth by a DEO or ADR <b>before</b> approval
      *
      * @param bdf            the BDF to be updated
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user           the user initiating the action
      */
-    public void updateNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public void editLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
-     * Remove an existing BDF by a DEO or ADR before approval
+     * Remove an existing BDF by a DEO or ADR <b>before</b> approval
      *
      * @param bdf            the BDF to be added
      * @param ignoreWarnings an explicit switch to disable optional validations
      * @param user           the user initiating the action
      */
-    public void deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public void deleteLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
-     * Approve a list of BDF forms. Will only approve those that triggers no warnings. The result will contain
-     * information on the warnings returned.
+     * Approve a list of BDF forms for Live births. Will only approve those that triggers no warnings. The result
+     * will contain information on the warnings returned.
      *
      * @param approvalDataList a list of the unique BDF IDs to be approved in batch
      * @param user             the user approving the BDFs
      * @return a list of warnings for those that trigger warnings during approval
      */
-    public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user);
+    public List<UserWarning> approveLiveBirthDeclarationIdList(long[] approvalDataList, User user);
 
     /**
-     * Approve a single BDF by an ADR or higher authority
+     * Approve a single BDF for a Live birth by an ADR or higher authority
      *
      * @param bdf            the BDF to be approved
      * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
      * @param user           the user initiating the action
      * @return a list of warnings, if ignoreWarnings is false
      */
-    public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
-     * Approve a birth confirmation without any additional changes
+     * Mark a live birth declaration as confirmed without any additional changes by parents.
      *
-     * @param bdf  the birth declaration confirmed as correct
+     * @param bdf  the birth declaration confirmed as correct. <b>Only</b> the confirmant information will be
+     * updated into the already existing record
      * @param user user initiating the action
      */
-    public void markBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user);
+    public void markLiveBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user);
 
     /**
      * Approve changes submitted by parents (or possibly those already captured by a DEO)
      *
-     * @param bdf            the BDF to approve with changes
+     * @param bdf            the BDF containing the updates captured during the confirmation stage
      * @param ignoreWarnings a flag indicating that any warnings are confirmed as checked by the user
      * @param user           user initiating the action
      * @return any warnings generated for the record
@@ -90,7 +93,7 @@ public interface BirthRegistrationService {
      * @param user             the user making the bulk approval
      * @return a list of warnings, if any are encountered
      */
-    public List<UserWarning> approveChangedConfirmationIDList(long[] approvalDataList, User user);
+    public List<UserWarning> approveConfirmationChangesForIDList(long[] approvalDataList, User user);
 
     /**
      * Reject a birth declaration by an ADR or higher authority. This should be used to reject a BDF even after

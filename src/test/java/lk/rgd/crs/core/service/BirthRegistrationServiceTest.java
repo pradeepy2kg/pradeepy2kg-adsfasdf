@@ -91,33 +91,33 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // test colombo deo adding for colombo
         BirthDeclaration bdf1 = getMinimalBDF(2010101, dob.getTime(), colomboBDDivision);
-        birthRegSvc.addNormalBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
 
         // reload again to fill all fields as we still only have IDUkey of new record
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
 
         // colombo deo cannot approve
         try {
-            birthRegSvc.approveBirthDeclaration(bdf1, false, deoColomboColombo);
+            birthRegSvc.approveLiveBirthDeclaration(bdf1, false, deoColomboColombo);
             fail("DEO cannot approve BDFs");
         } catch (Exception expected) {}
         // negambo deo cannot approve either
         try {
-            birthRegSvc.approveBirthDeclaration(bdf1, false, deoGampahaNegambo);
+            birthRegSvc.approveLiveBirthDeclaration(bdf1, false, deoGampahaNegambo);
             fail("Negambo DEO cannot approve BDFs of Colombo BD division");
         } catch (Exception expected) {}
         // negambo adr cannot approve either
         try {
-            birthRegSvc.approveBirthDeclaration(bdf1, false, adrGampahaNegambo);
+            birthRegSvc.approveLiveBirthDeclaration(bdf1, false, adrGampahaNegambo);
             fail("Negambo ADR cannot approve BDFs of Colombo BD division");
         } catch (Exception expected) {}
 
         // colombo ADR approves - should raise warnings
-        List<UserWarning> warnings = birthRegSvc.approveBirthDeclaration(bdf1, false, adrColomboColombo);
+        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, false, adrColomboColombo);
         Assert.assertTrue("A minimal BDF must trigger warnings that data is incomplete", !warnings.isEmpty());
 
         // ignore warnings should allow approval
-        warnings = birthRegSvc.approveBirthDeclaration(bdf1, true, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
 
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
@@ -143,10 +143,10 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf3.getParent().setMotherNICorPIN("755010001V");
         bdf4.getParent().setMotherNICorPIN("755010001V");
 
-        birthRegSvc.addNormalBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
-        birthRegSvc.addNormalBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
-        birthRegSvc.addNormalBirthDeclaration(bdf3, false, deoColomboColombo, null, null);
-        birthRegSvc.addNormalBirthDeclaration(bdf4, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf4, false, deoColomboColombo, null, null);
 
         // reload again to fill all fields as we still only have IDUkey of new record
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
@@ -155,10 +155,10 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf4 = birthRegSvc.getById(bdf4.getIdUKey(), deoColomboColombo);
 
         // ignore warnings and approve first
-        List<UserWarning> warnings = birthRegSvc.approveBirthDeclaration(bdf1, true, adrColomboColombo);
+        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
 
         // check warnings issued for second
-        warnings = birthRegSvc.approveBirthDeclaration(bdf2, false, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf2, false, adrColomboColombo);
         boolean found = false;
         for (UserWarning w : warnings) {
             if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
@@ -171,7 +171,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
 
         // check warnings issued for third
-        warnings = birthRegSvc.approveBirthDeclaration(bdf3, false, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf3, false, adrColomboColombo);
         found = false;
         for (UserWarning w : warnings) {
             if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
@@ -184,7 +184,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
 
         // check warnings issued for fourth
-        warnings = birthRegSvc.approveBirthDeclaration(bdf4, false, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf4, false, adrColomboColombo);
         found = false;
         for (UserWarning w : warnings) {
             if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {

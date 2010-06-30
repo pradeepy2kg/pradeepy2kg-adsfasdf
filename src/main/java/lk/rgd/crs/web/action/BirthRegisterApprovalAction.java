@@ -228,7 +228,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 warnings = service.approveConfirmationChanges(bdf, false, user);
                 logger.debug("inside approve() : requested to approve birth confirmation bdId {} ", bdId);
             } else {
-                warnings = service.approveBirthDeclaration(bdf, false, user);
+                warnings = service.approveLiveBirthDeclaration(bdf, false, user);
                 logger.debug("inside approve() : requested to approve birth registratin bdId {} ", bdId);
             }
         }
@@ -270,7 +270,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         boolean caughtException = false;
 
         try {
-            warnings = service.approveBirthDeclaration(bdf, false, user);
+            warnings = service.approveLiveBirthDeclaration(bdf, false, user);
         }
         catch (CRSRuntimeException e) {
             logger.error("inside approveBirthDeclarationForm() : {} ", e);
@@ -296,7 +296,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 if (confirmationApprovalFlag) {
                     service.approveConfirmationChanges(bdf, true, user);
                 } else {
-                    service.approveBirthDeclaration(bdf, true, user);
+                    service.approveLiveBirthDeclaration(bdf, true, user);
                 }
             } catch (CRSRuntimeException e) {
                 logger.error("inside approveIgnoringWorning() : {} ", e);
@@ -327,9 +327,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 index.length, confirmationApprovalFlag);
             try {
                 if (confirmationApprovalFlag) {
-                    warnings = service.approveChangedConfirmationIDList(index, user);
+                    warnings = service.approveConfirmationChangesForIDList(index, user);
                 } else {
-                    warnings = service.approveBirthDeclarationIdList(index, user);
+                    warnings = service.approveLiveBirthDeclarationIdList(index, user);
                 }
             }
             catch (CRSRuntimeException e) {
@@ -396,7 +396,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         initPermission();
         bdf = service.getById(bdId, user);
         try {
-            service.deleteNormalBirthDeclaration(bdf, false, user);
+            service.deleteLiveBirthDeclaration(bdf, false, user);
         }
         catch (CRSRuntimeException e) {
             addActionError(getText("brapproval.delete.error." + e.getErrorCode()));

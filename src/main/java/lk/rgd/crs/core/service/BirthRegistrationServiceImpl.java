@@ -18,7 +18,6 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Query;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<UserWarning> addNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
+    public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment) {
         // does the user have access to the BDF being added (i.e. check district and DS division)
         // TODO if a mother is specified, is she alive? etc
@@ -70,7 +69,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<UserWarning> approveBirthDeclarationIdList(long[] approvalDataList, User user) {
+    public List<UserWarning> approveLiveBirthDeclarationIdList(long[] approvalDataList, User user) {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("The user : " + user.getUserId() +
@@ -80,7 +79,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         List<UserWarning> warnings = new ArrayList<UserWarning>();
         for (long id : approvalDataList) {
             BirthDeclaration bdf = birthDeclarationDAO.getById(id);
-            List<UserWarning> w = approveBirthDeclaration(bdf, false, user);
+            List<UserWarning> w = approveLiveBirthDeclaration(bdf, false, user);
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration ID : " + id +
                     " must be approved after validating warnings"));
@@ -92,14 +91,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public void updateNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+    public void editLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
 
-        // TODO check validations as per addNormalBirthDeclaration
+        // TODO check validations as per addLiveBirthDeclaration
 
         // a BDF can be edited by a DEO or ADR only before being approved
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
@@ -114,7 +113,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public void deleteNormalBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+    public void deleteLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // does the user have access to the BDF being deleted
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
@@ -134,7 +133,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<UserWarning> approveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+    public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
@@ -194,7 +193,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public void markBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user) {
+    public void markLiveBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user) {
 
         // does the user have access to the BDF being confirmed (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -219,7 +218,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<UserWarning> approveChangedConfirmationIDList(long[] approvalDataList, User user) {
+    public List<UserWarning> approveConfirmationChangesForIDList(long[] approvalDataList, User user) {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth confirmation",
