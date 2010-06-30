@@ -21,7 +21,7 @@
     <s:actionerror/>
     <s:if test="#request.warnings != null">
         <div id="birth-register-approval-message" class="font-9" align="center">
-            <table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <s:iterator value="#request.warnings">
                     <tr>
                         <td><s:property value="message"/></td>
@@ -33,19 +33,21 @@
     <div id="birth-register-approval-body">
         <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="post">
             <s:if test="approvalPendingList.size>0">
-                <table>
-                <tr>
+                <table id="confirm-list-table" width="100%" cellpadding="0" cellspacing="0">
+                <tr class="table-title">
                     <th></th>
                     <th></th>
-                    <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                    <th width="90px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                 </tr>
             </s:if>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
                 <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                    <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
+                    <td class="table-row-index"><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'"><s:checkbox
                             name="index"
                             onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
@@ -54,14 +56,18 @@
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                    <s:if test="#request.allowEditBDF">
-                    <s:url id="editSelected" action="eprBirthConfirmation.do">
-                        <s:param name="bdId" value="idUKey"/>
-                    </s:url>
-                    <td align="left"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                        <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
-                             border="none"/></s:a>
+                    <td>
+                        <s:if test="#request.allowEditBDF">
+                            <s:url id="editSelected" action="eprBirthConfirmation.do">
+                                <s:param name="bdId" value="idUKey"/>
+                            </s:url>
+
+                            <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                     border="none"/></s:a>
                         </s:if>
+                    </td>
+                    <td>
                         <s:if test="#request.allowApproveBDFConfirmation">
                             <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
                                 <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
@@ -78,6 +84,8 @@
                                 <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
                                      border="none"/></s:a>
                             </s:if> </s:if>
+                    </td>
+                    <td>
                         <s:if test="#request.allowApproveBDFConfirmation">
                         <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
                         <s:url id="rejectSelected" action="eprRejectBirthConfirmation.do">
@@ -92,8 +100,8 @@
                             <s:param name="reject" value="true"/>
                         </s:url><s:a href="%{rejectSelected}"
                                      title="%{getText('rejectTooltip.label')}"><img
-                                src="<s:url value='/images/reject.png'/>" width="25" height="25"
-                                border="none"/></s:a>
+                            src="<s:url value='/images/reject.png'/>" width="25" height="25"
+                            border="none"/></s:a>
                     </td>
                     </s:if>
                     </s:if>
@@ -104,7 +112,7 @@
             </s:iterator>
             <tr></tr>
             </table>
-            <br/>
+            <div class="form-submit">
             <s:if test="#request.counter>1">
                 <s:label><s:checkbox
                         name="allCheck"
@@ -119,7 +127,8 @@
                 <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                 <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
             </s:if>
-            <br/>
+                </div>
+            <div class="next-previous">
             <%-- Next link to visible next records will only visible if nextFlag is
           set to 1--%>
             <s:url id="previousUrl" action="eprConfirmationApprovalPrevious.do">
@@ -142,12 +151,12 @@
                 <s:param name="recordCounter" value="#request.recordCounter"/>
             </s:url>
 
-            <br/><br/>
             <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
                 <s:label value="%{getText('previous.label')}"/></s:a></s:if>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <s:if test="#request.nextFlag"><s:a href="%{nextUrl}">
                 <s:label value="%{getText('next.label')}"/></s:a></s:if>
+                </div>
         </s:form>
     </div>
     <div id="birth-register-approval-footer">

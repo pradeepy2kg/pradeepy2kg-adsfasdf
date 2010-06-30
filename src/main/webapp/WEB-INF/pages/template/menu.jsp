@@ -8,10 +8,6 @@ amith jayasekara
 <style type="text/css" media="screen,print">
     @import '/css/lab.css';
 
-    body {
-        padding: 1em
-    }
-
     #wrap {
         width: 500px;
         margin: 1em auto;
@@ -36,7 +32,7 @@ amith jayasekara
     }
 
     .menu {
-        width: 200px;
+        width: 198px;
     }
 
     .menu li {
@@ -61,7 +57,7 @@ amith jayasekara
     }
 
     .menu ul li {
-        padding-left: 15px;
+        padding-left: 10px;
     }
 
     .menu ul a {
