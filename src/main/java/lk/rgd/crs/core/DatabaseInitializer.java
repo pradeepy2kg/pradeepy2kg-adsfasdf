@@ -157,7 +157,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
                         new FileSystemResource(fileName[1]), false);
                 logger.info("Drop existing tables using generated script : " + fileName[1]);
             } catch (Exception e) {
-                logger.debug("Exception while dropping existing tables using script : " + fileName[1], e);
+                logger.debug("Exception while dropping existing tables using script : " + fileName[1]);
             }
         }
 
