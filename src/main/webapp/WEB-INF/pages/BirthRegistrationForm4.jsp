@@ -32,7 +32,7 @@
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
                 <td colspan="2"><s:textfield name="notifyingAuthority.notifyingAuthorityPIN"
-                                             id="notifyingAuthorityPIN" value=""/></td>
+                                             id="notifyingAuthorityPIN" /></td>
             </tr>
             <tr>
                 <td><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>

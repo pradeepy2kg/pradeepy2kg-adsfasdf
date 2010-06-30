@@ -63,6 +63,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
+    private long oldBdId;    // bdId of previously persisted birth declaration, used in add neew entry in batch mode
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
@@ -82,6 +83,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
     private boolean back;
+    private boolean allowApproveBDF;
 
     public String welcome() {
         return "success";
@@ -118,9 +120,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
 
             if (pageNo == 0) {
+                session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 if (bdId == 0) {
+                    if (!addNewMode) {
+                        session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                    }
                     bdf = new BirthDeclaration();
-                    bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
                 } else {
                     bdf = service.getById(bdId, user);
                     if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -154,13 +159,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         // todo data validations
                         service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
 
-                        // TODO remove this section, can access this in jsp
+                        session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                        bdId = bdf.getIdUKey();
                         // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
-                        boolean allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
-                        session.put("allowApproveBDF", allowApproveBDF);
+                        allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
                 }
             }
-            if (!addNewMode) {
+            if (!addNewMode && (pageNo != 4)) {
                 session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
             }
 
@@ -192,11 +197,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
 
             if (pageNo == 0) {
+                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 if (bdId != 0) {
                     try {
                         bdf = service.getById(bdId, user);
                         if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -210,9 +217,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             } else {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-
-                logger.debug("{}'s informant's Address is    :{}", child.getChildFullNameEnglish(),
-                        informant.getInformantAddress());
                 switch (pageNo) {
                     case 1:
                         bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
@@ -244,17 +248,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         //todo archive the old entry
                         service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 }
             }
-            session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
-
+            if (pageNo != 3) {
+                session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
+            }
             populate(bdf);
             return "form" + pageNo;
         }
     }
 
     public String ConfirmationPrintPageLoad() {
-       return birthCetificatePrint();
+        return birthCetificatePrint();
     }
 
     public String birthConfirmationPrint() {
@@ -293,11 +299,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
          *  serial number incerementing by one.
          */
         if (addNewMode) {
-            BirthDeclaration oldBdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            BirthDeclaration oldBdf = service.getById(oldBdId, user);
             register = new BirthRegisterInfo();
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
-            register.setStatus(BirthDeclaration.State.DATA_ENTRY);
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
@@ -446,8 +451,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
         }
     }
-   public String welcome1()
-    {
+
+    public String welcome1() {
         return "success";
     }
 
@@ -762,5 +767,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setWarnings(List<UserWarning> warnings) {
         this.warnings = warnings;
+    }
+
+    public boolean isAllowApproveBDF() {
+        return allowApproveBDF;
+    }
+
+    public void setAllowApproveBDF(boolean allowApproveBDF) {
+        this.allowApproveBDF = allowApproveBDF;
+    }
+
+    public long getOldBdId() {
+        return oldBdId;
+    }
+
+    public void setOldBdId(long oldBdId) {
+        this.oldBdId = oldBdId;
     }
 }

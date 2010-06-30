@@ -38,7 +38,7 @@
                 <tr class="table-title">
                     <th></th>
                     <th></th>
-                    <th width="90px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                    <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
                     <th width="50px">edit</th>
@@ -164,9 +164,9 @@
                     <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
                 <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                    <img src="<s:url value='/images/previous.png'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}"/></s:if>
+                    <img src="<s:url value='/images/previous.png'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}" cssStyle="margin-right:5px;"/></s:if>
                 
-                <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}">
+                <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}" cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
                     <img src="<s:url value='/images/next.png'/>" width="40px" height="35px" border="none"/></s:a></s:if>
             </div>
         </s:form>
