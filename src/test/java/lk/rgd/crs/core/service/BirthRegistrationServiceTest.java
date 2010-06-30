@@ -30,6 +30,7 @@ public class BirthRegistrationServiceTest extends TestCase {
     private final UserManagerImpl userManager;
     private final BDDivision colomboBDDivision;
     private final BDDivision negamboBDDivision;
+    private BirthDeclarationDAO birthDeclarationDAO;
     private User deoColomboColombo;
     private User deoGampahaNegambo;
     private User adrColomboColombo;
@@ -39,30 +40,13 @@ public class BirthRegistrationServiceTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        BirthDeclarationDAO birthDeclarationDAO = (BirthDeclarationDAO)
+        birthDeclarationDAO = (BirthDeclarationDAO)
                 ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
 
         // delete records we may have added
-        try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010101).getIdUKey());
-        } catch (Exception e) {}
-        try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010102).getIdUKey());
-        } catch (Exception e) {}
-        try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010103).getIdUKey());
-        } catch (Exception e) {}
-        try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010104).getIdUKey());
-        } catch (Exception e) {}
-        try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010105).getIdUKey());
-        } catch (Exception e) {}
+        for (int i=2010101; i<2010110; i++) {
+            deleteBDF(colomboBDDivision, i);
+        }
     }
 
     public BirthRegistrationServiceTest() {
@@ -122,6 +106,8 @@ public class BirthRegistrationServiceTest extends TestCase {
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
         Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings"));
+
+        deleteBDF(colomboBDDivision, 2010101);
     }
 
     public void testDuplicateBDF() throws Exception {
@@ -195,6 +181,133 @@ public class BirthRegistrationServiceTest extends TestCase {
         if (found) {
             fail("Did not expect a warning for possible duplicate record after 28 weeks");
         }
+
+        // delete records we may have added
+        for (int i=2010102; i<2010105; i++) {
+            deleteBDF(colomboBDDivision, i);
+        }
+    }
+
+    public void testConfirmationChanges() throws Exception {
+        Calendar dob = Calendar.getInstance();
+        // test saving of a minimal BDF for colombo by DEO
+        dob.add(Calendar.DATE, -3);
+
+        // add a record for testing
+        BirthDeclaration bdf1 = getMinimalBDF(2010106, dob.getTime(), colomboBDDivision);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+
+        // reload again to fill all fields as we still only have IDUkey of new record
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.DATA_ENTRY, bdf1.getRegister().getStatus());
+
+        // make an edit as DEO - ignore any warnings
+        bdf1.getChild().setChildFullNameEnglish("New name 1 of child");
+        birthRegSvc.editLiveBirthDeclaration(bdf1, true, deoColomboColombo);
+
+        // now approve as ADR
+        birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
+
+        // an edit attempt now should not be allowed
+        try {
+            bdf1.getChild().setChildFullNameEnglish("New name 2 of child");
+            birthRegSvc.editLiveBirthDeclaration(bdf1, true, deoColomboColombo);
+            fail("Should not allow edits for approved records");
+        } catch (Exception expected) {}
+
+        // reload again and check for updated name
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("New name 1 of child", bdf1.getChild().getChildFullNameEnglish());
+
+        // assert that the confirmed record now exists in the print queue
+        List<BirthDeclaration> printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, false);
+        Assert.assertTrue(!printList.isEmpty());
+        boolean found = false;
+        for (BirthDeclaration b : printList) {
+            if (b.getIdUKey() == bdf1.getIdUKey()) {
+                found = true;
+            }
+        }
+        Assert.assertTrue("approved record must show up for confirmation printing", found);
+
+        // DEO prints BDF - mark BDF as printed
+        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for updated status as printed
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
+
+        // assert that the printed record now does not exist in the print queue
+        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, false);
+        for (BirthDeclaration b : printList) {
+            if (b.getIdUKey() == bdf1.getIdUKey()) {
+                fail("The record when the confirmation is printed should not appear in the pending print list");
+            }
+        }
+        // assert that the printed record will still appear if printed records are requested
+        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, true);
+        Assert.assertTrue(!printList.isEmpty());
+        found = false;
+        for (BirthDeclaration b : printList) {
+            if (b.getIdUKey() == bdf1.getIdUKey()) {
+                found = true;
+            }
+        }
+        Assert.assertTrue("approved record must show up for confirmation printing (again) when explicitly requested", found);
+
+        // capture confirmation by DEO without changes
+        bdf1.getConfirmant().setConfirmantFullName("Person confirming");
+        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
+
+        // reload again and check for update
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMED_WITHOUT_CHANGES, bdf1.getRegister().getStatus());
+
+        // simulate the system generation of the PIN
+        bdf1.getChild().setPin(1000100001L);
+        bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_GENERATED);
+        birthDeclarationDAO.updateBirthDeclaration(bdf1);
+
+        // assert that the confirmed record now exists in the print queue for BC
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 10, false);
+        Assert.assertTrue(!printList.isEmpty());
+        found = false;
+        for (BirthDeclaration b : printList) {
+            if (b.getIdUKey() == bdf1.getIdUKey()) {
+                found = true;
+            }
+        }
+        Assert.assertTrue("confirmed record must now show up for BC printing", found);
+
+        // DEO prints BC - mark BC as printed
+        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for update
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_PRINTED, bdf1.getRegister().getStatus());
+
+        // assert that the printed record now does not exist in the print queue
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 10, false);
+        found = false;
+        for (BirthDeclaration b : printList) {
+            if (b.getIdUKey() == bdf1.getIdUKey()) {
+                found = true;
+            }
+        }
+        Assert.assertTrue("confirmed record must not show up for BC printing", !found);
+        
+        // assert that the printed record will still appear if printed records are requested
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 10, true);
+        Assert.assertTrue(!printList.isEmpty());
+        found = false;
+        for (BirthDeclaration b : printList) {
+            if (b.getIdUKey() == bdf1.getIdUKey()) {
+                found = true;
+            }
+        }
+        Assert.assertTrue("confirmed record must not show up for BC printing again if requested", found);
+
+        deleteBDF(colomboBDDivision, 2010106);
     }
 
     private BirthDeclaration getMinimalBDF(int serial, Date dob, BDDivision bdDivision) {
@@ -218,5 +331,12 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
         bdf.getNotifyingAuthority().setNotifyingAuthorityPIN(750010001);
         return bdf;
+    }
+
+    private void deleteBDF(BDDivision bdDivision, long serial) {
+        try {
+            birthDeclarationDAO.deleteBirthDeclaration(
+                birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial).getIdUKey());
+        } catch (Exception e) {}
     }
 }

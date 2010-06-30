@@ -17,25 +17,6 @@ import java.util.Date;
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
-    @NamedQuery(name = "birth.certificate.print.approved", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision = :birthDivision AND (bdf.register.status = 3 OR bdf.register.status = 6)" +
-        "ORDER BY bdf.register.dateOfRegistration desc"),
-
-    @NamedQuery(name = "confirmation.pending.approval.expired", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 1 " +
-        "AND bdf.confirmant.lastDateForConfirmation < :today " +
-        "ORDER BY bdf.register.dateOfRegistration desc"),
-
-    @NamedQuery(name = "confirmation.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision = :birthDivision AND (bdf.register.status = 5 OR bdf.register.status = 2) " +
-        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
-
-    @NamedQuery(name = "declaration.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = 0 " +
-        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
-
-    @NamedQuery(name = "get.by.id", query = "SELECT bdf FROM BirthDeclaration bdf WHERE bdf.idUKey = :bdfidUKey"),
-
     @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
         "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
@@ -46,8 +27,8 @@ import java.util.Date;
         "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
         "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
-    @NamedQuery(name = "get.by.serialNo.pending.approval", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo AND bdf.register.status = 0 "),
+    @NamedQuery(name = "get.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo"),
 
     @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN ")
@@ -95,11 +76,15 @@ public class BirthDeclaration implements Serializable {
 
         // Normal states after initial BC printing
         /**
-         * 8 - A BDF for which [a PIN is generated and] the BC is printed
+         * 8 - A BDF for which a PIN is generated
          */
         ARCHIVED_BC_GENERATED,
         /**
-         * 9 - A BDF archived after an alteration is performed after initial BC. New
+         * 9 - A BDF for which the BC is printed
+         */
+        ARCHIVED_BC_PRINTED,
+        /**
+         * 10 - A BDF archived after an alteration is performed after initial BC. New
          * record is captured as ARCHIVED_BC_GENERATED
          */
         ARCHIVED_ALTERED

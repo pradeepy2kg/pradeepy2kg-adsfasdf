@@ -51,11 +51,11 @@ public interface BirthRegistrationService {
      * Approve a list of BDF forms for Live births. Will only approve those that triggers no warnings. The result
      * will contain information on the warnings returned.
      *
-     * @param approvalDataList a list of the unique BDF IDs to be approved in batch
+     * @param approveIDList a list of the unique BDF IDs to be approved in batch
      * @param user             the user approving the BDFs
      * @return a list of warnings for those that trigger warnings during approval
      */
-    public List<UserWarning> approveLiveBirthDeclarationIdList(long[] approvalDataList, User user);
+    public List<UserWarning> approveLiveBirthDeclarationIdList(long[] approveIDList, User user);
 
     /**
      * Approve a single BDF for a Live birth by an ADR or higher authority
@@ -68,6 +68,22 @@ public interface BirthRegistrationService {
     public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
+     * Mark that the confirmation form for the BDF has been printed
+     *
+     * @param bdf the BDF for which the confirmation form has been printed
+     * @param user the user initiating the action
+     */
+    public void markLiveBirthConfirmationAsPrinted(BirthDeclaration bdf, User user);
+
+    /**
+     * Mark that the confirmation forms for the BDF IDs given has been printed
+     *
+     * @param printedIDList the list of unique BDF IDs that have the parental confirmations now printed
+     * @param user the user initiating the action
+     */
+    public void markLiveBirthConfirmationIDsAsPrinted(long[] printedIDList, User user);
+
+    /**
      * Mark a live birth declaration as confirmed without any additional changes by parents.
      *
      * @param bdf  the birth declaration confirmed as correct. <b>Only</b> the confirmant information will be
@@ -75,6 +91,15 @@ public interface BirthRegistrationService {
      * @param user user initiating the action
      */
     public void markLiveBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user);
+
+    /**
+     * Captures changes sent by parents during confirmation. This method may be invoked during the data capture of
+     * a received confirmation, or by a DEO/ADR subsequently before approval.
+     *
+     * @param bdf  the birth declaration with changes
+     * @param user user initiating the action
+     */
+    public void captureLiveBirthConfirmationChanges(BirthDeclaration bdf, User user);
 
     /**
      * Approve changes submitted by parents (or possibly those already captured by a DEO)
@@ -94,6 +119,22 @@ public interface BirthRegistrationService {
      * @return a list of warnings, if any are encountered
      */
     public List<UserWarning> approveConfirmationChangesForIDList(long[] approvalDataList, User user);
+
+    /**
+     * Mark that the Birth Certificate for the BDF has been printed
+     *
+     * @param bdf the BDF for which the BC has been printed
+     * @param user the user initiating the action
+     */
+    public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
+
+    /**
+     * Mark that the Birth Certificates for the BDF IDs given has been printed
+     * 
+     * @param printedIDList the list of unique BDF IDs that have the BC now printed
+     * @param user the user initiating the action
+     */
+    public void markLiveBirthCertificateIDsAsPrinted(long[] printedIDList, User user);
 
     /**
      * Reject a birth declaration by an ADR or higher authority. This should be used to reject a BDF even after
@@ -136,6 +177,7 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
 
     /**
+     * Get the list of BDFs for which the Confirmation form should be printed
      * 
      * @param birthDivision the birth division
      * @param pageNo   the page number for the results required (start from 1)
@@ -143,7 +185,18 @@ public interface BirthRegistrationService {
      * @param printed return already printed items if true, or items pending printing if false
      * @return  approved list for print
      */
-    public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
+    public List<BirthDeclaration> getConfirmationPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
+
+    /**
+     * Get the list of BDFs for which the Birth Certificate should be printed
+     *
+     * @param birthDivision the birth division
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows  number of rows to return per page
+     * @param printed return already printed items if true, or items pending printing if false
+     * @return  approved list for print
+     */
+    public List<BirthDeclaration> getBirthCertificatePrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval

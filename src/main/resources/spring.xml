@@ -86,7 +86,7 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
-        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="manageBirthService"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
