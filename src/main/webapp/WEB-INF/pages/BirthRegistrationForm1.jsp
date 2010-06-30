@@ -100,7 +100,7 @@
     </tr>
     <tr>
         <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
-            <s:param name="formId" value="birth-registration-form-1"/>
+            <s:param name="flag" value="birth-registration-form-1"/>
         </s:url>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">

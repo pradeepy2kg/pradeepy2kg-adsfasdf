@@ -1,7 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
-<div id="birth-register-approval">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div id="birth-register-approval"><script>
+        function view_DSDivs() {
+            dojo.event.topic.publish("view_DSDivs");
+        }
+
+        function view_BDDivs() {
+            dojo.event.topic.publish("view_BDDivs");
+        }
+    </script>
     <s:form action="eprApprovalRefresh" name="birth_register_approval_header">
         <div id="birth-register-approval-header">
             <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>

@@ -44,7 +44,6 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private String childName;
     private String status;
 
-
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
@@ -88,11 +87,6 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
         setInitialDistrict();
-       /* Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(getBirthDistrictId(), language, user);
-        if (!dsDivisionList.isEmpty()) {
-            int dsDivisionId = dsDivisionList.keySet().iterator().next();
-            setBdDivisionList(bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user));
-        }*/
     }
 
     /**
