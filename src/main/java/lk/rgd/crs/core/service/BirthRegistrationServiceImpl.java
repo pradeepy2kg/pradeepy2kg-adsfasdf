@@ -273,25 +273,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
         validateAccessOfUser(user, existing);
 
-        // create a holder to capture any warnings
-        List<UserWarning> warnings = new ArrayList<UserWarning>();
+        // validate if the minimum required fields are adequately filled
+        BirthDeclarationValidator.validateMinimalRequirements(bdf);
 
-        if (!ignoreWarnings) {
-            // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
-            if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
-                List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBandMotherNICorPIN(
-                    bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
-
-                for (BirthDeclaration b : existingRecords) {
-                    if (b.getIdUKey() != bdf.getIdUKey()) {
-                        warnings.add(
-                            new UserWarning("Possible duplicate with record ID : " + b.getIdUKey() +
-                                " Registered on : " + b.getRegister().getDateOfRegistration() +
-                                " Child name : " + b.getChild().getChildFullNameOfficialLangToLength(20)));
-                    }
-                }
-            }
-        }
+        // validate standard validations anyway, since even if validations are rejected a note of it will be made
+        // against the approval for audit requirements
+        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
@@ -301,8 +288,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
             // SimpleDateFormat is not thread-safe
             synchronized (dfm) {
-                sb.append(dfm.format(new Date())).append(" - Approved birth confirmation ignoring warnings. User : ").
-                    append(user.getUserId());
+                sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
+                    append(user.getUserId()).append("\n");
+            }
+
+            for (UserWarning w : warnings) {
+                sb.append(w.getSeverity());
+                sb.append("-");
+                sb.append(w.getMessage());
             }
             bdf.getRegister().setComments(sb.toString());
         }

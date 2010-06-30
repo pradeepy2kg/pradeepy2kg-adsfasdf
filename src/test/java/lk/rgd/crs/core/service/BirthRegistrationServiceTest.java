@@ -49,7 +49,19 @@ public class BirthRegistrationServiceTest extends TestCase {
         } catch (Exception e) {}
         try {
             birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(negamboBDDivision, 2010102).getIdUKey());
+                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010102).getIdUKey());
+        } catch (Exception e) {}
+        try {
+            birthDeclarationDAO.deleteBirthDeclaration(
+                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010103).getIdUKey());
+        } catch (Exception e) {}
+        try {
+            birthDeclarationDAO.deleteBirthDeclaration(
+                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010104).getIdUKey());
+        } catch (Exception e) {}
+        try {
+            birthDeclarationDAO.deleteBirthDeclaration(
+                birthDeclarationDAO.getByBDDivisionAndSerialNo(colomboBDDivision, 2010105).getIdUKey());
         } catch (Exception e) {}
     }
 
@@ -110,7 +122,79 @@ public class BirthRegistrationServiceTest extends TestCase {
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
         Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings"));
+    }
 
+    public void testDuplicateBDF() throws Exception {
+        Calendar dob = Calendar.getInstance();
+        // test saving of a minimal BDF for colombo by DEO
+        dob.add(Calendar.DATE, -3);
+
+        // add another record for the same mother, and check if the duplication warning was issued
+        BirthDeclaration bdf1 = getMinimalBDF(2010102, dob.getTime(), colomboBDDivision);
+        dob.add(Calendar.DATE, -30*27);
+        BirthDeclaration bdf2 = getMinimalBDF(2010103, dob.getTime(), colomboBDDivision);
+        dob.add(Calendar.DATE, 2*30*27);
+        BirthDeclaration bdf3 = getMinimalBDF(2010104, dob.getTime(), colomboBDDivision);
+        dob.add(Calendar.DATE, 30*12);
+        BirthDeclaration bdf4 = getMinimalBDF(2010105, dob.getTime(), colomboBDDivision);
+
+        bdf1.getParent().setMotherNICorPIN("755010001V");
+        bdf2.getParent().setMotherNICorPIN("755010001V");
+        bdf3.getParent().setMotherNICorPIN("755010001V");
+        bdf4.getParent().setMotherNICorPIN("755010001V");
+
+        birthRegSvc.addNormalBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addNormalBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
+        birthRegSvc.addNormalBirthDeclaration(bdf3, false, deoColomboColombo, null, null);
+        birthRegSvc.addNormalBirthDeclaration(bdf4, false, deoColomboColombo, null, null);
+
+        // reload again to fill all fields as we still only have IDUkey of new record
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        bdf2 = birthRegSvc.getById(bdf2.getIdUKey(), deoColomboColombo);
+        bdf3 = birthRegSvc.getById(bdf3.getIdUKey(), deoColomboColombo);
+        bdf4 = birthRegSvc.getById(bdf4.getIdUKey(), deoColomboColombo);
+
+        // ignore warnings and approve first
+        List<UserWarning> warnings = birthRegSvc.approveBirthDeclaration(bdf1, true, adrColomboColombo);
+
+        // check warnings issued for second
+        warnings = birthRegSvc.approveBirthDeclaration(bdf2, false, adrColomboColombo);
+        boolean found = false;
+        for (UserWarning w : warnings) {
+            if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            fail("Expected a warning for possible duplicate record for same mother in less within 28 weeks");
+        }
+
+        // check warnings issued for third
+        warnings = birthRegSvc.approveBirthDeclaration(bdf3, false, adrColomboColombo);
+        found = false;
+        for (UserWarning w : warnings) {
+            if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            fail("Expected a warning for possible duplicate record for same mother within 28 weeks");
+        }
+
+        // check warnings issued for fourth
+        warnings = birthRegSvc.approveBirthDeclaration(bdf4, false, adrColomboColombo);
+        found = false;
+        for (UserWarning w : warnings) {
+            if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            fail("Did not expect a warning for possible duplicate record after 28 weeks");
+        }
     }
 
     private BirthDeclaration getMinimalBDF(int serial, Date dob, BDDivision bdDivision) {

@@ -13,10 +13,8 @@ import lk.rgd.crs.api.domain.ParentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * A class to contain validations for BDFs
@@ -33,6 +31,7 @@ public class BirthDeclarationValidator {
         ResourceBundle.getBundle("messages/bdf_validation_messages", AppConstants.LK_EN);
 
     private static final Logger logger = LoggerFactory.getLogger(BirthDeclarationValidator.class);
+    private static final int WEEKS_FOR_FOETUS_TO_SURVIVE = 28;
 
     /**
      * Validate if the record satisfy the minimum requirements for acceptance and storage. These checks does not
@@ -110,15 +109,24 @@ public class BirthDeclarationValidator {
 
         // check if this is a duplicate by checking dateOfBirth and motherNICorPIN
         if (bdf.getParent() != null && bdf.getParent().getMotherNICorPIN() != null) {
-            List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBandMotherNICorPIN(
-                bdf.getChild().getDateOfBirth(), bdf.getParent().getMotherNICorPIN());
+
+            Calendar start = Calendar.getInstance();
+            start.setTime(bdf.getChild().getDateOfBirth());
+            start.add(Calendar.DATE, -30 * WEEKS_FOR_FOETUS_TO_SURVIVE);
+
+            Calendar end = Calendar.getInstance();
+            end.setTime(bdf.getChild().getDateOfBirth());
+            end.add(Calendar.DATE, 30 * WEEKS_FOR_FOETUS_TO_SURVIVE);
+
+            List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBRangeandMotherNICorPIN(
+                start.getTime(), end.getTime(), bdf.getParent().getMotherNICorPIN());
 
             for (BirthDeclaration b : existingRecords) {
                 if (b.getIdUKey() != bdf.getIdUKey()) {
                     warnings.add(
-                        new UserWarning("Possible duplicate with record ID : " + b.getIdUKey() +
-                            " Registered on : " + b.getRegister().getDateOfRegistration() +
-                            " Child name : " + b.getChild().getChildFullNameOfficialLangToLength(20)));
+                        new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
+                            new Object[] {b.getIdUKey(), b.getRegister().getDateOfRegistration(),
+                                b.getChild().getChildFullNameOfficialLangToLength(20)})));
                 }
             }
         }

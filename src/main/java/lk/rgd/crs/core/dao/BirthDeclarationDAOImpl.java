@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,9 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<BirthDeclaration> getConfirmPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
 
         Query q = em.createNamedQuery("birth.certificate.print.approved").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
@@ -47,12 +51,18 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("confirmation.pending.approval").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("declaration.pending.approval").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -60,10 +70,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     }
 
     /**
-     * Returns the Birth Declaration object for a given Id
-     *
-     * @param bdfidUKey Birth Declarion Id for the given declaration
-     * @Return BirthDeclaration
+     * @inheritDoc
      */
     public BirthDeclaration getById(long bdfidUKey) {
         logger.debug("Get BDF by ID : {}", bdfidUKey);
@@ -72,9 +79,13 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         return (BirthDeclaration) q.getSingleResult();
     }
 
-    public List<BirthDeclaration> getByDOBandMotherNICorPIN(Date dateOfBirth, String motherNICorPIN) {
-        Query q = em.createNamedQuery("get.by.dateOfBirth.and.motherNICorPIN");
-        q.setParameter("dateOfBirth", dateOfBirth);
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getByDOBRangeandMotherNICorPIN(Date start, Date end, String motherNICorPIN) {
+        Query q = em.createNamedQuery("get.by.dateOfBirth_range.and.motherNICorPIN");
+        q.setParameter("start", start, TemporalType.DATE);
+        q.setParameter("end", end, TemporalType.DATE);
         q.setParameter("motherNICorPIN", motherNICorPIN);
         return q.getResultList();
     }
