@@ -113,6 +113,9 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             Person father = registryService.findPersonByPINorNIC(parent.getFatherNICorPIN(), user);
             if (father != null) {
                 parent.setFatherFullName(father.getFullNameInOfficialLanguage());
+                parent.setFatherPassportNo(father.getPassportNo());
+                parent.setFatherDOB(father.getDateOfBirth());
+                parent.setFatherPlaceOfBirth(father.getPlaceOfBirth());
                 logger.debug("Father info set from Ajax : {} {}", parent.getFatherNICorPIN(), parent.getFatherFullName());
             }
         }

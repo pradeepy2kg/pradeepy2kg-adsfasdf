@@ -43,9 +43,19 @@
                       headerValue="%{getText('select_country.label')}"/>
         </td>
     </tr>
-    <s:url id="loadFatherInfo" action="ajaxSupport_loadFatherInfo"/>
-    <sx:div id="parent.fatherNICorPIN" value="parent.fatherNICorPIN" href="%{loadFatherInfo}" theme="ajax"
-        listenTopics="view_Info" formId="birth-registration-form-2"></sx:div>
+    <tr>
+        <s:url id="loadFatherInfo" action="ajaxSupport_loadFatherInfo"/>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
+        <td><sx:div id="parent.fatherNICorPIN" value="parent.fatherNICorPIN" href="%{loadFatherInfo}" theme="ajax"
+            listenTopics="view_Info" formId="birth-registration-form-2" preload="true" refreshOnShow="true" autoStart="true"></sx:div>
+        <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="2"><s:textfield name="parent.fatherPlaceOfBirth"/></td>
+    </tr>
+    <tr>
+        <td><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
+        <td colspan="6" class="table_reg_cell_02"><s:select list="raceList" name="fatherRace" headerKey="0"
+                                                            headerValue="%{getText('select_race.label')}"/></td>
+    </tr>
     </tbody>
 </table>
 
