@@ -261,7 +261,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-
     public String birthCetificatePrint() {
         BirthDeclaration bdf = service.getById(bdId, user);
         child = bdf.getChild();
@@ -275,7 +274,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         return "pageLoad";
     }
-
 
     private void handleErrors(Exception e) {
         logger.error("Handle Error {} : {}", e.getMessage(), e);
