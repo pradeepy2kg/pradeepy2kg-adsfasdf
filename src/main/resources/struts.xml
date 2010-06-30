@@ -27,16 +27,6 @@
             </interceptor>
         </interceptors>
 
-        <!--<default-interceptor-ref name="exceptionmappingStack"/>-->
-
-        <global-results>
-            <result type="tiles" name="error">epr.error</result>
-        </global-results>
-
-        <global-exception-mappings>
-            <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
-        </global-exception-mappings>
-
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
             <interceptor-ref name="i18n"/>
             <interceptor-ref name="basicStack"/>
@@ -104,16 +94,9 @@
         </action>
 
 
-        <action name="eprbirthCetificatePrint" class="lk.rgd.crs.web.action.PrintAction"
+        <action name="eprBirthCetificatePrint" class="lk.rgd.crs.web.action.PrintAction"
                 method="birthCertificatePrintList">
             <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>
-
-
-        <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"
-                method="getBirthConfirmationReport">
-            <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
