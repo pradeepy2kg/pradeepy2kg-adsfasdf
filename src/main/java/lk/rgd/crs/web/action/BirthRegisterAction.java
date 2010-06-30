@@ -22,7 +22,6 @@ import lk.rgd.crs.api.bean.UserWarning;
 
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
-import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
 /**
@@ -176,7 +175,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
                         // all pages captured, proceed to persist after validations
                         // todo data validations
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
 
                         // TODO remove this section, can access this in jsp
                         // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
@@ -266,7 +265,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
                         //todo archive the old entry
-                        service.addNormalBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
                 }
             }
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
