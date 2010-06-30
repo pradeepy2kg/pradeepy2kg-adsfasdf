@@ -72,17 +72,24 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
-    <bean id="birthConfirmAction" scope="prototype" class="lk.rgd.crs.web.action.BirthConfirmAction">
-        <constructor-arg ref="raceDAOImpl"/>
+
+    <bean id="ajaxSupport" scope="prototype" class="lk.rgd.crs.web.action.AjaxAction">
+        <constructor-arg ref="popregService"/>
         <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
     </bean>
+
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.PrintAction">
         <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="birthDeclarationDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
+
     <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction">
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>

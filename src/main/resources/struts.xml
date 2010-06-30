@@ -49,9 +49,10 @@
             <result type="tiles" name="success">epr.welcome</result>
         </action>
 
-        <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.BirthRegisterAction" method="{1}">
+        <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.AjaxAction" method="{1}">
             <result name="DSDivList">/WEB-INF/pages/template/DSDivBox.jsp</result>
             <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
+            <result name="FatherInfo">/WEB-INF/pages/template/FatherInfo.jsp</result>
         </action>
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
@@ -75,7 +76,7 @@
         </action>
 
         <action name="eprConfirmationPrintPageLoad" class="lk.rgd.crs.web.action.BirthRegisterAction"
-                method="ConfirmationPrintPageLoad">
+                method="confirmationPrintPageLoad">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -92,17 +93,9 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-
-        <action name="eprbirthCetificatePrint" class="lk.rgd.crs.web.action.PrintAction"
+        <action name="eprBirthCetificatePrint" class="lk.rgd.crs.web.action.PrintAction"
                 method="birthCertificatePrintList">
             <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>
-
-
-        <action name="eprBirthConfirmationReport" class="lk.rgd.crs.web.action.BirthConfirmAction"
-                method="getBirthConfirmationReport">
-            <result type="tiles" name="success">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

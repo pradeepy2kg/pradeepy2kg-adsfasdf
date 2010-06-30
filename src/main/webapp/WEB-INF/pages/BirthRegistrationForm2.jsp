@@ -9,6 +9,11 @@
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm2" id="birth-registration-form-2" method="POST"
         onsubmit="javascript:return validate()">
 
+<script>
+    function view_Info() {
+        dojo.event.topic.publish("view_Info");
+    }
+</script>
 
 <table class="table_reg_page_02" cellspacing="0">
     <caption></caption>
@@ -29,35 +34,18 @@
     <tr>
         <td rowspan="2"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td rowspan="2"><s:textfield name="parent.fatherNICorPIN"/></td>
+        <td rowspan="2"><s:textfield name="parent.fatherNICorPIN"/>
+            <label onclick="javascript:view_Info();return false;">>></label>
+        </td>
         <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label></td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td><s:select name="fatherCountry" list="countryList" headerKey="0"
                       headerValue="%{getText('select_country.label')}"/>
         </td>
     </tr>
-    <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
-        <td><s:textfield name="parent.fatherPassportNo"/></td>
-    </tr>
-    <tr>
-        <td><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
-        <td colspan="6"><s:textarea name="parent.fatherFullName" id="fatherFullName"/></td>
-    </tr>
-    <tr>
-        <td><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
-        <td colspan="2"><sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB"
-                                           displayFormat="yyyy-MM-dd"
-                                           onmouseover="javascript:splitDate('fatherDatePicker')"/></td>
-        <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
-        <td colspan="2"><s:textfield name="parent.fatherPlaceOfBirth"/></td>
-
-    </tr>
-    <tr>
-        <td><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
-        <td colspan="6" class="table_reg_cell_02"><s:select list="raceList" name="fatherRace" headerKey="0"
-                                                            headerValue="%{getText('select_race.label')}"/></td>
-    </tr>
+    <s:url id="loadFatherInfo" action="ajaxSupport_loadFatherInfo"/>
+    <sx:div id="parent.fatherNICorPIN" value="parent.fatherNICorPIN" href="%{loadFatherInfo}" theme="ajax"
+        listenTopics="view_Info" formId="birth-registration-form-2"></sx:div>
     </tbody>
 </table>
 

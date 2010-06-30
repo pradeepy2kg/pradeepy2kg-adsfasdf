@@ -2,7 +2,7 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:select name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
-          onchange="javascript:view_BDDivs();return false;"/>
+          onchange="javascript:view_BDDi vs();return false;"/>
     <tr>
         <s:url id="loadBDDivList" action="ajaxSupport_loadBDDivList"/>
         <td class="no-bottom-border" id="left-right-border"><label>කොට්ඨාශය பிரிவு Division</label></td>
