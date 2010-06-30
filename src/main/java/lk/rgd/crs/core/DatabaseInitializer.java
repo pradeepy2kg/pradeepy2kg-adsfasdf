@@ -204,7 +204,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             Role deoRole = roleDao.getRole("DEO");
             BitSet bs = new BitSet();
-            // TODO add any DR specific permissions
+            // TODO add any DEO specific permissions
+            bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
 
