@@ -88,13 +88,12 @@ public interface BirthDeclarationDAO {
     public BirthDeclaration getById(long bdId);
 
     /**
-     * Get existing records for the same mother and date of birth of the child
+     * Get existing records for the same mother
      *
-     * @param dateOfBirth    the date of birth of the child
      * @param motherNICorPIN mothers NIC or PIN
      * @return existing records if any
      */
-    public List<BirthDeclaration> getByDOBandMotherNICorPIN(Date dateOfBirth, String motherNICorPIN);
+    public List<BirthDeclaration> getByDOBRangeandMotherNICorPIN(Date start, Date end, String motherNICorPIN);
 
     /**
      * Returns the Birth Declaration object for a given bdf serialNo under a selected BD Division
