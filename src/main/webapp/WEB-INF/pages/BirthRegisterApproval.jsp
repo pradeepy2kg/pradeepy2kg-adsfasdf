@@ -21,7 +21,7 @@
     <s:actionerror/>
     <s:if test="#request.warnings != null">
         <div id="birth-register-approval-message" class="font-9" align="center">
-            <table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <s:iterator value="#request.warnings">
                     <tr>
                         <td><s:property value="message"/></td>
@@ -34,22 +34,22 @@
         <%--todo permission handling--%>
         <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
-                <table>
-                <tr>
+                <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0">
+                <tr class="table-title">
                     <th></th>
                     <th></th>
-                    <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                    <th width="90px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th width="50px">edit</th>
+                    <th width="50px">approve</th>
+                    <th width="50px">reject</th>
+                    <th width="50px">delete</th>
                 </tr>
             </s:if>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
                 <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                    <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
+                    <td class="table-row-index"><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:checkbox name="index"
                                     onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                     title="%{getText('select.label')}" value="%{#index}"
@@ -62,7 +62,7 @@
                             <s:param name="bdId" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                            <img src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
+                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
                     </s:if>
@@ -78,7 +78,7 @@
                         </s:url>
                         <td align="center"><s:a href="%{approveSelected}"
                                                 title="%{getText('approveTooltip.label')}">
-                            <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
+                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
                     </s:if>
@@ -95,7 +95,7 @@
                         </s:url>
                         <td align="center"><s:a href="%{rejectSelected}"
                                                 title="%{getText('rejectTooltip.label')}"><img
-                                src="<s:url value='/images/reject.png'/>" width="25" height="25"
+                                src="<s:url value='/images/delete.gif'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>
                     </s:if>
@@ -111,7 +111,7 @@
                         </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
-                                src="<s:url value='/images/delete.png'/>" width="25" height="25"
+                                src="<s:url value='/images/reject.png'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>
                     </s:if>
@@ -120,57 +120,55 @@
             counter is greater than one--%>
                 <s:set name="counter" scope="request" value="#approvalStatus.count"/>
             </s:iterator>
-            <tr></tr>
             </table>
-            <br/>
-            <s:if test="#request.counter>1">
-                <s:label><s:checkbox
-                        name="allCheck"
-                        onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
-                    <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
-                <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-                <s:hidden name="district" value="%{#request.district}"/>
-                <s:hidden name="division" value="%{#request.division}"/>
-                <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
-            </s:if>
-            <br/>
-            <%-- Next link to visible next records will only visible if nextFlag is
-          set to 1--%>
-            <s:url id="previousUrl" action="eprApprovalPrevious.do" encode="true">
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="district" value="#request.district"/>
-                <s:param name="division" value="#request.division"/>
-                <s:param name="recordCounter" value="#request.recordCounter"/>
-                <s:param name="startDate" value="#request.startDate"/>
-                <s:param name="endDate" value="#request.endDate"/>
-                <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
-            </s:url>
 
-            <s:url id="nextUrl" action="eprApprovalNext.do" encode="true">
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="district" value="#request.district"/>
-                <s:param name="division" value="#request.division"/>
-                <s:param name="recordCounter" value="#request.recordCounter"/>
-                <s:param name="startDate" value="#request.startDate"/>
-                <s:param name="endDate" value="#request.endDate"/>
-                <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
-            </s:url>
+            <div class="form-submit">
+                <s:if test="#request.counter>1">
+                    <s:label><s:checkbox
+                            name="allCheck"
+                            onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
+                        <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+                    <s:hidden name="district" value="%{#request.district}"/>
+                    <s:hidden name="division" value="%{#request.division}"/>
+                    <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
+                    <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
+                </s:if>
+            </div>
+            <div class="next-previous">
+                    <%-- Next link to visible next records will only visible if nextFlag is
+                  set to 1--%>
+                <s:url id="previousUrl" action="eprApprovalPrevious.do" encode="true">
+                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="district" value="#request.district"/>
+                    <s:param name="division" value="#request.division"/>
+                    <s:param name="recordCounter" value="#request.recordCounter"/>
+                    <s:param name="startDate" value="#request.startDate"/>
+                    <s:param name="endDate" value="#request.endDate"/>
+                    <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
+                </s:url>
 
-            <br/><br/>
-            <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                <s:label value="%{getText('previous.label')}"/></s:a></s:if>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <s:if test="#request.nextFlag"><s:a href="%{nextUrl}">
-                <s:label value="%{getText('next.label')}"/></s:a></s:if>
+                <s:url id="nextUrl" action="eprApprovalNext.do" encode="true">
+                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="district" value="#request.district"/>
+                    <s:param name="division" value="#request.division"/>
+                    <s:param name="recordCounter" value="#request.recordCounter"/>
+                    <s:param name="startDate" value="#request.startDate"/>
+                    <s:param name="endDate" value="#request.endDate"/>
+                    <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
+                </s:url>
+                <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
+                    <img src="<s:url value='/images/previous.png'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}"/></s:if>
+                
+                <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}">
+                    <img src="<s:url value='/images/next.png'/>" width="40px" height="35px" border="none"/></s:a></s:if>
+            </div>
         </s:form>
-    </div>
-    <div id="birth-register-approval-footer">
     </div>
 </div>

@@ -109,6 +109,8 @@
     margin-top: 5px;
 }
 
+.next-previous{float:left; margin-top:5px;}
+
 #page_breake {
     page-break-after: always;
 }
@@ -1509,3 +1511,4 @@
     border: 1px solid #000;
     border-collapse: collapse;
 }
+
