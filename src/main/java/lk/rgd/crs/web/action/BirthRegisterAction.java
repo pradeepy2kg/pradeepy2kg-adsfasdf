@@ -49,7 +49,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private List<UserWarning> warnings;
 
     private String scopeKey;
-    private String formId;
     private Map session;
 
     private ChildInfo child;
@@ -763,13 +762,5 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setWarnings(List<UserWarning> warnings) {
         this.warnings = warnings;
-    }
-
-    public String getFormId() {
-        return formId;
-    }
-
-    public void setFormId(String formId) {
-        this.formId = formId;
     }
 }
