@@ -211,40 +211,11 @@
         var informantPhoneNo = document.getElementById("informantPhoneNo");
         var informantEmail = document.getElementById("informantEmail");
 
-        informantName.value = name;
+        informantName.value =name;
         informantNICorPIN.value = nICorPIN;
         informantAddress.value = address;
         informantPhoneNo.value = phonoNo;
         informantEmail.value = email;
-
-
-        informantName.readOnly = false;
-        informantNICorPIN.readOnly = false;
-        informantAddress.readOnly = false;
-        informantPhoneNo.readOnly = false;
-        informantEmail.readOnly = false;
-
-
-        if (id == 0)
-        {
-            informantName.readOnly = true;
-            informantNICorPIN.readOnly = true;
-            informantAddress.readOnly = true;
-
-
-            informantPhoneNo.readOnly = true;
-            informantEmail.readOnly = true;
-
-        }
-        else if (id == 1)
-        {
-            informantName.readOnly = true;
-            informantNICorPIN.readOnly = true;
-
-
-        }
-
-
     }
 
 </script>
