@@ -72,7 +72,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int motherDistrictId;
     private int motherDSDivisionId;
-    private String formId;
+    private String flag;
 
     public AjaxAction(PopulationRegistry service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO,
                       BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO) {
@@ -393,11 +393,11 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         this.motherDistrictId = motherDistrictId;
     }
 
-    public String getFormId() {
-        return formId;
+    public String getFlag() {
+        return flag;
     }
 
-    public void setFormId(String formId) {
-        this.formId = formId;
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }
