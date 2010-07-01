@@ -12,10 +12,10 @@
             <td><s:label value="%{bdf.register.bdfSerialNo}"/></td>
             <td><s:label value="%{bdf.child.getChildFullNameOfficialLangToLength(50)}"/></td>
             <s:if test="#request.confirmationApprovalFlag == true">
-            <td><s:label value="%{bdf.confirmant.confirmationReceiveDate}"/></td>
-                </s:if><s:else>
-                <td><s:label value="%{bdf.register.dateOfRegistration}"/></td>
-                </s:else>
+                <td><s:label value="%{bdf.confirmant.confirmationReceiveDate}"/></td>
+            </s:if><s:else>
+            <td><s:label value="%{bdf.register.dateOfRegistration}"/></td>
+        </s:else>
         </tr>
 
     </table>
@@ -31,9 +31,11 @@
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
             <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:hidden name="district" value="%{#request.district}"/>
-            <s:hidden name="division" value="%{#request.division}"/>
+            <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
+            <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
+            <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
             <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
+            <s:hidden name="flag" value="birth-register-approval-form"/>
             <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
             <table>
                 <tr>

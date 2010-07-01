@@ -1,9 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
-    <%--<script>
+    <script>
         function view_DSDivs() {
             dojo.event.topic.publish("view_DSDivs");
         }
@@ -11,18 +10,29 @@
         function view_BDDivs() {
             dojo.event.topic.publish("view_BDDivs");
         }
-    </script>--%>
-    <s:form action="eprApprovalRefresh" name="birth_register_approval_header">
+    </script>
+    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
+        <s:param name="flag" value="birth-register-approval-form"/>
+    </s:url>
+    <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
         <div id="birth-register-approval-header">
-            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
-                <s:select list="districtList" name="district" value="#request.district"/></s:label>&nbsp;
-            <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
-                <s:select list="divisionList" value="division" name="division"/></s:label>&nbsp;
+            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span><s:select
+                    name="birthDistrictId" list="districtList" value="birthDistrictId"
+                    onchange="javascript:view_DSDivs();return false;"/>
+            </s:label>&nbsp;
+            <s:label><span><s:label name="division" value="%{getText('select_ds_division.label')}"/></span>
+                <%--<s:select list="divisionList" value="division" name="division"/>--%><sx:div id="dsDivisionId"
+                                                                                                value="dsDivisionId"
+                                                                                                href="%{loadDSDivList}"
+                                                                                                theme="ajax"
+                                                                                                listenTopics="view_DSDivs"
+                                                                                                formId="birth-register-approval-form"></sx:div></s:label>&nbsp;
             <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
                                                                                displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
                                                                              displayFormat="yyyy-MM-dd"/>&nbsp;
             <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
+            <s:hidden name="flag" value="birth-register-approval-form"/>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
             <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo"/>
         </div>
@@ -47,7 +57,7 @@
                 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0">
                 <tr class="table-title">
                     <th></th>
-                    <th width="30px"></th>
+                    <th></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
@@ -82,8 +92,9 @@
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                             <s:param name="recordCounter" value="#request.recordCounter"/>
                         </s:url>
                         <td align="center"><s:a href="%{approveSelected}"
@@ -98,8 +109,9 @@
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                             <s:param name="recordCounter" value="#request.recordCounter"/>
                             <s:param name="reject" value="true"/>
                         </s:url>
@@ -115,8 +127,9 @@
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                             <s:param name="recordCounter" value="#request.recordCounter"/>
                         </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
@@ -141,9 +154,11 @@
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-                    <s:hidden name="district" value="%{#request.district}"/>
-                    <s:hidden name="division" value="%{#request.division}"/>
+                    <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
+                    <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
+                    <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+                    <s:hidden name="flag" value="birth-register-approval-form"/>
                     <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
                 </s:if>
             </div>
@@ -154,8 +169,9 @@
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
-                    <s:param name="district" value="#request.district"/>
-                    <s:param name="division" value="#request.division"/>
+                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                     <s:param name="recordCounter" value="#request.recordCounter"/>
                     <s:param name="startDate" value="#request.startDate"/>
                     <s:param name="endDate" value="#request.endDate"/>
@@ -166,18 +182,22 @@
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
-                    <s:param name="district" value="#request.district"/>
-                    <s:param name="division" value="#request.division"/>
+                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                     <s:param name="recordCounter" value="#request.recordCounter"/>
                     <s:param name="startDate" value="#request.startDate"/>
                     <s:param name="endDate" value="#request.endDate"/>
                     <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
                 <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                    <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}" cssStyle="margin-right:5px;" /></s:if>
-                
-                <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}" cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
-                    <img src="<s:url value='/images/next.gif'/>" width="40px" height="35px" border="none"/></s:a></s:if>
+                    <img src="<s:url value='/images/previous.png'/>" width="40px" height="35px"
+                         border="none"/></s:a><s:label value="%{getText('previous.label')}"
+                                                       cssStyle="margin-right:5px;"/></s:if>
+
+                <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
+                                                        cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
+                    <img src="<s:url value='/images/next.png'/>" width="40px" height="35px" border="none"/></s:a></s:if>
             </div>
         </s:form>
     </div>
