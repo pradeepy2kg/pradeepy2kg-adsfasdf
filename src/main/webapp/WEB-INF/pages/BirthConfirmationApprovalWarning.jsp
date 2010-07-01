@@ -23,12 +23,13 @@
                         <td><s:checkbox name="ignoreWarning"/></td>
                     </tr>
                     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-                    <s:hidden name="district" value="%{#request.district}"/>
-                    <s:hidden name="division" value="%{#request.division}"/>
+                    <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
+                    <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                     <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
+                    <s:hidden name="flag" value="birth-confirmation-approval-form"/>
                         <%--<tr>
                             <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
                             <td><s:textarea name="comments"/> </td>

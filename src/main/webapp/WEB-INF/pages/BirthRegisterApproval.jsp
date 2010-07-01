@@ -156,8 +156,8 @@
                     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                     <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
                     <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
-                    <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                     <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+                    <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                     <s:hidden name="flag" value="birth-register-approval-form"/>
                     <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
                 </s:if>

@@ -30,3 +30,10 @@
             listenTopics="view_BDDivs" formId="birth-register-approval-form" parseContent="true">
     </sx:div>
 </s:elseif>
+
+<s:elseif test="{#request.flag.equals('birth-confirmation-approval-form')}">
+    <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span></s:label>
+    <sx:div id="birthDivisionId" value="birthDivisionId" href="%{loadBDDivList}" theme="ajax" cssStyle="float:right;"
+            listenTopics="view_BDDivs" formId="birth-confirmation-approval-form" parseContent="true">
+    </sx:div>
+</s:elseif>

@@ -33,7 +33,6 @@
             <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
             <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
             <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
-            <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
             <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
             <s:hidden name="flag" value="birth-register-approval-form"/>
             <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
