@@ -1,13 +1,35 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-confirm-approval">
-    <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header">
+    <script>
+        function view_DSDivs() {
+            dojo.event.topic.publish("view_DSDivs");
+        }
+
+        function view_BDDivs() {
+            dojo.event.topic.publish("view_BDDivs");
+        }
+    </script>
+    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
+        <s:param name="flag" value="birth-confirmation-approval-form"/>
+    </s:url>
+    <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header"
+            id="birth-confirmation-approval-form">
         <div id="birth-confirm-approval-header">
             <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
-                <s:select list="districtList" name="district"/></s:label>
-            <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
-                <s:select list="divisionList" name="division"/></s:label>
+                <s:select
+                        name="birthDistrictId" list="districtList" value="birthDistrictId"
+                        onchange="javascript:view_DSDivs();return false;"/>
+            </s:label>
+            <s:label><span><s:label name="division" value="%{getText('select_ds_division.label')}"/></span>
+                <sx:div id="dsDivisionId"
+                        value="dsDivisionId"
+                        href="%{loadDSDivList}"
+                        theme="ajax"
+                        listenTopics="view_DSDivs"
+                        formId="birth-confirmation-approval-form"></sx:div>
+            </s:label>
             <s:hidden name="confirmationApprovalFlag" value="true"/>
             <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
                                                                                displayFormat="yyyy-MM-dd"/>&nbsp;
@@ -76,8 +98,8 @@
                                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
-                                    <s:param name="district" value="#request.district"/>
-                                    <s:param name="division" value="#request.division"/>
+                                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                                     <s:param name="recordCounter" value="#request.recordCounter"/>
                                 </s:url><s:a href="%{approveSelected}"
                                              title="%{getText('approveTooltip.label')}">
@@ -94,8 +116,8 @@
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                             <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="district" value="#request.district"/>
-                            <s:param name="division" value="#request.division"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                             <s:param name="recordCounter" value="#request.recordCounter"/>
                             <s:param name="reject" value="true"/>
                         </s:url><s:a href="%{rejectSelected}"
@@ -112,51 +134,56 @@
             </s:iterator>
             <tr></tr>
             </table>
+
             <div class="form-submit">
-            <s:if test="#request.counter>1">
-                <s:label><s:checkbox
-                        name="allCheck"
-                        onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
-                    <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
-                <s:hidden name="confirmationApprovalFlag" value="true"/>
-                <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-                <s:hidden name="district" value="%{#request.district}"/>
-                <s:hidden name="division" value="%{#request.division}"/>
-                <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
-            </s:if>
-                </div>
+                <s:if test="#request.counter>1">
+                    <s:label><s:checkbox
+                            name="allCheck"
+                            onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
+                        <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                    <s:hidden name="confirmationApprovalFlag" value="true"/>
+                    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+                    <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
+                    <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
+                    <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
+                    <s:hidden name="flag" value="birth-confirmation-approval-form"/>
+                    <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
+                </s:if>
+            </div>
             <div class="next-previous">
-            <%-- Next link to visible next records will only visible if nextFlag is
-          set to 1--%>
-            <s:url id="previousUrl" action="eprConfirmationApprovalPrevious.do">
-                <s:param name="confirmationApprovalFlag" value="true"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="district" value="#request.district"/>
-                <s:param name="division" value="#request.division"/>
-                <s:param name="recordCounter" value="#request.recordCounter"/>
-            </s:url>
+                    <%-- Next link to visible next records will only visible if nextFlag is
+                  set to 1--%>
+                <s:url id="previousUrl" action="eprConfirmationApprovalPrevious.do">
+                    <s:param name="confirmationApprovalFlag" value="true"/>
+                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="recordCounter" value="#request.recordCounter"/>
+                </s:url>
 
-            <s:url id="nextUrl" action="eprConfirmationApprovalNext.do">
-                <s:param name="confirmationApprovalFlag" value="true"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="district" value="#request.district"/>
-                <s:param name="division" value="#request.division"/>
-                <s:param name="recordCounter" value="#request.recordCounter"/>
-            </s:url>
+                <s:url id="nextUrl" action="eprConfirmationApprovalNext.do">
+                    <s:param name="confirmationApprovalFlag" value="true"/>
+                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="recordCounter" value="#request.recordCounter"/>
+                </s:url>
 
-            <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}" cssStyle="margin-right:5px;" /></s:if>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}" cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
+                <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
+                    <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
+                         border="none"/></s:a><s:label value="%{getText('previous.label')}"
+                                                       cssStyle="margin-right:5px;"/></s:if>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
+                                                        cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
                     <img src="<s:url value='/images/next.gif'/>" width="40px" height="35px" border="none"/></s:a></s:if>
-                </div>
+            </div>
         </s:form>
     </div>
 </div>
