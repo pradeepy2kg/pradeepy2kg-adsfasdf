@@ -1,19 +1,24 @@
-<%--@author Chathuranga Withana--%>
+<%--
+    @author Chathuranga Withana
+    @author Duminda Dharmakeerthi
+    --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="birth-confirm-print">
     <div id="birth-register-approval-header">
         <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST">
-        <s:label><span><s:label name="district" value="%{getText('district.label')} : "/></span>
-            <s:select name="districtId" list="districtList"/> </s:label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <s:label><span><s:label name="division" value="%{getText('division.label')} : "/></span>
-            <s:select name="divisionId" list="divisionList"/></s:label>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <s:radio name="selectOption" list="#@java.util.HashMap@{'Not Printed':'Not Printed'}"/> &nbsp;&nbsp;&nbsp;
-        <s:radio name="selectOption" list="#@java.util.HashMap@{'Printed':'Printed'}"/> &nbsp;&nbsp;&nbsp;&nbsp;
-        <s:submit value="%{getText('view.label')}"></s:submit>
+        <table  width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+            <tr>
+                <td><s:label name="district" value="%{getText('district.label')} : "/></td>
+                <td width="250px"><s:select name="districtId" list="districtList" cssStyle="width:230px;"/></td>
+                <td><s:label name="division" value="%{getText('division.label')} : "/></td>
+                <td width="250px"><s:select name="divisionId" list="divisionList" cssStyle="width:230px;"/></td>
+                <td><s:radio name="selectOption" list="#@java.util.HashMap@{'Not Printed':'Not Printed'}"/></td>
+                <td><s:radio name="selectOption" list="#@java.util.HashMap@{'Printed':'Printed'}"/></td>
+                <td align="right" class="button"><s:submit value="%{getText('view.label')}"></s:submit></td>
+            </tr>
+        </table>
     </div>
-
 
     <div id="birth-register-approval-body">
         <s:if test="printList.size==0 && printStart==0">
@@ -26,8 +31,8 @@
                     <th width="30px"></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                    <th><s:label name="registered_date" value="%{getText('registered_date.label')}"/></th>
-                    <th><s:label value="%{getText('print.label')}"/></th>
+                    <th width="110px"><s:label name="registered_date" value="%{getText('registered_date.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('print.label')}"/></th>
                 </tr>
 
                     <%--following code used for pagination--%>

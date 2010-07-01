@@ -17,28 +17,34 @@
     <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header"
             id="birth-confirmation-approval-form">
         <div id="birth-confirm-approval-header">
-            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
-                <s:select
-                        name="birthDistrictId" list="districtList" value="birthDistrictId"
-                        onchange="javascript:view_DSDivs();return false;"/>
-            </s:label>
-            <s:label><span><s:label name="division" value="%{getText('select_ds_division.label')}"/></span>
-                <sx:div id="dsDivisionId"
-                        value="dsDivisionId"
-                        href="%{loadDSDivList}"
-                        theme="ajax"
-                        listenTopics="view_DSDivs"
-                        formId="birth-confirmation-approval-form"></sx:div>
-            </s:label>
-            <s:hidden name="confirmationApprovalFlag" value="true"/>
-            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
-                                                                               displayFormat="yyyy-MM-dd"/>&nbsp;
-            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
-                                                                             displayFormat="yyyy-MM-dd"/>&nbsp;
-            <s:submit name="refresh" value="%{getText('refresh.label')}"/>
-            <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdId"/>
-        </div>
-        <br>
+            <table  width="100%" cellpadding="5" cellspacing="0">
+                <col width="220px"/>
+                <col />
+                <col width="220px"/>
+                <col />
+                <tbody>
+                    <tr>
+                        <td colspan="2"><s:label name="district" value="%{getText('district.label')}"/></td>
+                        <td colspan="2"><s:select name="birthDistrictId" list="districtList" value="birthDistrictId" onchange="javascript:view_DSDivs();return false;" cssStyle="width:100%;"/></td>
+                    </tr>
+                    <tr>
+                        <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
+                        <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax" listenTopics="view_DSDivs" formId="birth-confirmation-approval-form"></sx:div></td>
+                    </tr>
+                    <tr>
+                        <td><s:label value="%{getText('serial.label')}"/></td>
+                        <td><s:textfield value="" name="bdId" cssStyle="width:232px;"/></td>
+                        <td align="right"><s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate" displayFormat="yyyy-MM-dd"/></td>
+                        <td align="right"><s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate" displayFormat="yyyy-MM-dd"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="button" align="right">
+                            <s:hidden name="confirmationApprovalFlag" value="true"/>
+                            <s:submit name="refresh" value="%{getText('refresh.label')}"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">

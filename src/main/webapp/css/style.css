@@ -2,6 +2,8 @@
    color:red;
 }
 
+.form-submit input, .button input{text-transform:capitalize;}
+.form-submit input:hover, .button input:hover{color:red;}
 
 /*To change background color of table, odd and even rows*/
 #approval-list-table, #confirm-list-table, #confirm-print-table{margin:10px auto;}
