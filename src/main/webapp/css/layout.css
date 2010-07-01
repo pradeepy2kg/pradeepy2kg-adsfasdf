@@ -23,6 +23,6 @@ html{background:url(../images/body-bg1.png) repeat;}
 
 /* Styles for the Main-Menu */
 
-#main-menu{margin:5px; padding-left:10px;}
+
 #main-menu a{display:list-item; font-size:10pt; text-transform:capitalize; text-decoration:none; color:#533517;}
 #main-menu a:hover{color:#943e0e;}

@@ -4,14 +4,15 @@
 <%@ taglib prefix="sx" uri="/struts-tags" %>
 
 
-<div id="User_Preference_Action">
+<div id="user-preference-outer">
     <br>
     <s:form action="eprUserPreferencesAction" name="user_preference_form" id="user_preference" method="POST">
-        <table>
+        <table  width="100%" cellpadding="0" cellspacing="5">
             <tr>
                 <td>
-                    <div id="set-language" class="font -12">
-                        <label>Select Language </label></div>
+                    <div id="set-language" class="font-10">
+                        <label>Select Language </label>
+                    </div>
                 </td>
                 <td><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="prefLanguage"
                               value="%{#session.WW_TRANS_I18N_LOCALE.language}"></s:select>
@@ -19,16 +20,18 @@
             </tr>
             <tr>
                 <td>
-                    <div id="user-district" class="font-12">
-                        <label>දිස්ත්‍රික්කය மாவட்டம் District</label></div>
+                    <div id="user-district" class="font-10">
+                        <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
+                    </div>
                 </td>
                 <td><s:select name="prefDistrictId" list="districtList" headerKey="0"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="user-district" class="font-12">
-                        <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></div>
+                    <div id="user-ds-division" class="font-10">
+                        <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
+                    </div>
                 </td>
                 <td><s:select name="prefDSDivisionId" list="dsDivisionList" headerKey="0"/>
                 </td>
@@ -36,7 +39,7 @@
         </table>
         <br><br>
 
-        <div id="submit">
+        <div class="form-submit">
             <s:submit value="%{getText('submit.label')}"></s:submit>
         </div>
         <br><br>

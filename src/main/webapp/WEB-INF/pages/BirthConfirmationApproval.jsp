@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
-<div id="birth-register-approval">
+<div id="birth-confirm-approval">
     <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header">
-        <div id="birth-register-approval-header">
+        <div id="birth-confirm-approval-header">
             <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
                 <s:select list="districtList" name="district"/></s:label>
             <s:label><span><s:label name="division" value="%{getText('division.label')}"/></span>
@@ -20,7 +20,7 @@
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
-        <div id="birth-register-approval-message" class="font-9" align="center">
+        <div id="birth-confirm-approval-message" class="font-9" align="center">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <s:iterator value="#request.warnings">
                     <tr>
@@ -30,14 +30,14 @@
             </table>
         </div>
     </s:if>
-    <div id="birth-register-approval-body">
+    <div id="birth-confirm-approval-body">
         <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="post">
             <s:if test="approvalPendingList.size>0">
                 <table id="confirm-list-table" width="100%" cellpadding="0" cellspacing="0">
                 <tr class="table-title">
                     <th></th>
-                    <th></th>
-                    <th width="90px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                    <th width="30px"></th>
+                    <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
                     <th></th>
@@ -152,13 +152,11 @@
             </s:url>
 
             <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                <s:label value="%{getText('previous.label')}"/></s:a></s:if>
+                <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}" cssStyle="margin-right:5px;" /></s:if>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <s:if test="#request.nextFlag"><s:a href="%{nextUrl}">
-                <s:label value="%{getText('next.label')}"/></s:a></s:if>
+            <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}" cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
+                    <img src="<s:url value='/images/next.gif'/>" width="40px" height="35px" border="none"/></s:a></s:if>
                 </div>
         </s:form>
-    </div>
-    <div id="birth-register-approval-footer">
     </div>
 </div>

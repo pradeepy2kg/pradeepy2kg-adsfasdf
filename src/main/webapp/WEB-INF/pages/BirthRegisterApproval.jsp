@@ -1,7 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div id="birth-register-approval"><script>
+<div id="birth-register-approval">
+    <%--<script>
         function view_DSDivs() {
             dojo.event.topic.publish("view_DSDivs");
         }
@@ -9,7 +11,7 @@
         function view_BDDivs() {
             dojo.event.topic.publish("view_BDDivs");
         }
-    </script>
+    </script>--%>
     <s:form action="eprApprovalRefresh" name="birth_register_approval_header">
         <div id="birth-register-approval-header">
             <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span>
@@ -45,7 +47,7 @@
                 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0">
                 <tr class="table-title">
                     <th></th>
-                    <th></th>
+                    <th width="30px"></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th><s:label name="received" value="%{getText('received.label')}"/></th>
@@ -172,10 +174,10 @@
                     <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
                 <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                    <img src="<s:url value='/images/previous.png'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}" cssStyle="margin-right:5px;"/></s:if>
+                    <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px" border="none"/></s:a><s:label value="%{getText('previous.label')}" cssStyle="margin-right:5px;" /></s:if>
                 
                 <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}" cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
-                    <img src="<s:url value='/images/next.png'/>" width="40px" height="35px" border="none"/></s:a></s:if>
+                    <img src="<s:url value='/images/next.gif'/>" width="40px" height="35px" border="none"/></s:a></s:if>
             </div>
         </s:form>
     </div>
