@@ -47,7 +47,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     private Map session;
 
-    private Map<Integer, String> bdDivisionList;
+    private Map<Integer, String> divisionList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private List<UserWarning> warnings;
@@ -106,8 +106,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String birthRegisterApproval() {
         initPermission();
         populate();
-        if (!bdDivisionList.isEmpty()) {
-            division = bdDivisionList.keySet().iterator().next();
+        if (!divisionList.isEmpty()) {
+            division = divisionList.keySet().iterator().next();
         }
         logger.debug("inside birthRegisterApproval() : division {} initialized ", division);
         /**
@@ -421,7 +421,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(district, language, user);
         if (!dsDivisionList.isEmpty()) {
             int dsDivisionId = dsDivisionList.keySet().iterator().next();
-            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+            divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         }
     }
 
@@ -579,12 +579,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.districtList = districtList;
     }
 
-    public Map<Integer, String> getBdDivisionList() {
-        return bdDivisionList;
+    public Map<Integer, String> getDivisionList() {
+        return divisionList;
     }
 
-    public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
-        this.bdDivisionList = bdDivisionList;
+    public void setDivisionList(Map<Integer, String> divisionList) {
+        this.divisionList = divisionList;
     }
 
     public int getDivision() {
