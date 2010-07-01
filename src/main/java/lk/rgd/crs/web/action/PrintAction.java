@@ -57,7 +57,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Filter print list by confiremed without changes and confirmation changes approved.
+     * Filter print list by confirmed without changes and confirmation changes approved.
      * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
      *
      * @return
@@ -66,30 +66,14 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String birthCertificatePrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
-        if (selectOption == null) {
-            divisionId = 1;
-            selectOption = "Not Printed";
-        }
         int pageNo = 1;
 
-        if (selectOption != null) {
-            if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                try {
-                    printList = birthRegistrationService.getConfirmationPrintList(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
-                }
-                catch (Exception e) {
+        printList = birthRegistrationService.getBirthCertificatePrintList(
+            bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
+            appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE),
+            WebConstants.RADIO_ALREADY_PRINT.equals(selectOption));
 
-                }
-            } else {
-                printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
-            }
-        } else {
-            printList = birthRegistrationService.getConfirmationPrintList(
-                bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
-        }
-        logger.debug("Cetificate Print List : items=" + printList.size());
+        logger.debug("Confirm Print List : items {}", printList.size());
         return "pageLoad";
     }
 

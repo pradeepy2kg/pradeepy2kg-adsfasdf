@@ -11,11 +11,13 @@ import java.io.Serializable;
 @Embeddable
 public class GrandFatherInfo implements Serializable {
     // If grandfather of the child born in Sri Lanka, grandfather's details
+
     @Column(nullable = true, length = 600)
     private String grandFatherFullName;
 
     @Column(nullable = true)
-    private int grandFatherBirthYear;
+    private Integer grandFatherBirthYear;
+
     @Column(nullable = true, length = 60)
     private String grandFatherBirthPlace;
 
@@ -24,7 +26,7 @@ public class GrandFatherInfo implements Serializable {
     private String greatGrandFatherFullName;
 
     @Column(nullable = true)
-    private String greatGrandFatherBirthYear;
+    private Integer greatGrandFatherBirthYear;
 
     @Column(nullable = true, length = 60)
     private String greatGrandFatherBirthPlace;
@@ -37,11 +39,11 @@ public class GrandFatherInfo implements Serializable {
         this.grandFatherFullName = grandFatherFullName;
     }
 
-    public int getGrandFatherBirthYear() {
+    public Integer getGrandFatherBirthYear() {
         return grandFatherBirthYear;
     }
 
-    public void setGrandFatherBirthYear(int grandFatherBirthYear) {
+    public void setGrandFatherBirthYear(Integer grandFatherBirthYear) {
         this.grandFatherBirthYear = grandFatherBirthYear;
     }
 
@@ -61,11 +63,11 @@ public class GrandFatherInfo implements Serializable {
         this.greatGrandFatherFullName = greatGrandFatherFullName;
     }
 
-    public String getGreatGrandFatherBirthYear() {
+    public Integer getGreatGrandFatherBirthYear() {
         return greatGrandFatherBirthYear;
     }
 
-    public void setGreatGrandFatherBirthYear(String greatGrandFatherBirthYear) {
+    public void setGreatGrandFatherBirthYear(Integer greatGrandFatherBirthYear) {
         this.greatGrandFatherBirthYear = greatGrandFatherBirthYear;
     }
 

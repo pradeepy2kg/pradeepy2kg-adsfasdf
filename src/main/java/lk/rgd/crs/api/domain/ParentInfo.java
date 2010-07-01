@@ -132,7 +132,7 @@ public class ParentInfo implements Serializable {
      * Age of mother at birth
      */
     @Column(nullable = true)
-    private int motherAgeAtBirth;
+    private Integer motherAgeAtBirth;
 
     /**
      * Mother's DS division ID
@@ -296,11 +296,11 @@ public class ParentInfo implements Serializable {
         this.motherRace = motherRace;
     }
 
-    public int getMotherAgeAtBirth() {
+    public Integer getMotherAgeAtBirth() {
         return motherAgeAtBirth;
     }
 
-    public void setMotherAgeAtBirth(int motherAgeAtBirth) {
+    public void setMotherAgeAtBirth(Integer motherAgeAtBirth) {
         this.motherAgeAtBirth = motherAgeAtBirth;
     }
 

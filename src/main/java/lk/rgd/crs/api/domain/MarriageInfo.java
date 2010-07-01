@@ -11,7 +11,7 @@ import java.util.Date;
 public class MarriageInfo implements Serializable {
     /** Were parents married at birth - 0 - no, 1 - yes, 2 - no but married later  */
     @Column(nullable = true)
-    private int parentsMarried;
+    private Integer parentsMarried;
 
     /** Place of marriage */
     @Column(nullable = true, length = 60)
@@ -30,11 +30,11 @@ public class MarriageInfo implements Serializable {
     @Column(nullable = true)
     private boolean fatherSigned;
 
-    public int getParentsMarried() {
+    public Integer getParentsMarried() {
         return parentsMarried;
     }
 
-    public void setParentsMarried(int parentsMarried) {
+    public void setParentsMarried(Integer parentsMarried) {
         this.parentsMarried = parentsMarried;
     }
 
