@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="birth-register-approval">
     <div id="birth-register-approval-header">
-        <s:form action="eprbirthCetificatePrint.do" name="birth_register_approval_head" method="POST">
+        <s:form action="eprBirthCetificateList.do" name="birth_register_approval_head" method="POST">
         <s:label><span><s:label name="district" value="%{getText('district.label')} : "/></span>
             <s:select name="districtId" list="districtList"/> </s:label>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:label><span><s:label name="division" value="%{getText('division.label')} : "/></span>
@@ -41,7 +41,7 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprFinalbirthCertificate">
+                            <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">

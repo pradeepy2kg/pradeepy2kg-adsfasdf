@@ -259,15 +259,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    public String ConfirmationPrintPageLoad() {
-        return birthCetificatePrint();
-    }
-
-    public String birthConfirmationPrint() {
-        return "success";
+    public String confirmationPrintPageLoad() {
+        beanPopulate();
+        return "pageLoad";
     }
 
     public String birthCetificatePrint() {
+        beanPopulate();
+        return "pageLoad";
+    }
+
+
+    private void beanPopulate() {
         BirthDeclaration bdf = service.getById(bdId, user);
         child = bdf.getChild();
         parent = bdf.getParent();
@@ -277,8 +280,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         confirmant = bdf.getConfirmant();
         register = bdf.getRegister();
         notifyingAuthority = bdf.getNotifyingAuthority();
-
-        return "pageLoad";
     }
 
     private void handleErrors(Exception e) {

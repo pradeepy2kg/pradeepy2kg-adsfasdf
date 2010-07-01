@@ -20,7 +20,7 @@
 </style>
 
 <div id="birth-certificate-outer">
-    <s:form action="eprbirthCetificatePrint" name="birthCertificatePrint"
+    <s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"
             id="birth-certificate-print" method="POST">
 
 
