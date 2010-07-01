@@ -5,68 +5,10 @@ amith jayasekara
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<style type="text/css" media="screen,print">
-    @import '/css/lab.css';
-
-    #wrap {
-        width: 500px;
-        margin: 1em auto;
-    }
-
-    body {
-        font: 76% / 1.4 Verdana, sans-serif;
-    }
-
-    /* Disable properties specified in the imported CSS file */
-    .menu a {
-        border: none;
-        font-weight: normal;
-    }
-
+<style type="text/css" media="screen">
+    
     /* Actual menu CSS starts here */
-    .menu,
-        .menu ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    .menu {
-        width: 198px;
-    }
-
-    .menu li {
-        display: block;
-        margin: 0;
-        padding: 0;
-        margin-bottom: 1px;
-    }
-
-    .menu a {
-        display: block;
-        padding: 2px 5px;
-        color: #000;
-        background: #f0d3af;
-        text-decoration: none;
-    }
-
-    .menu a:hover,
-        .menu a:focus,
-        .menu a:active {
-        background: #943e0e;
-    }
-
-    .menu ul li {
-        padding-left: 10px;
-    }
-
-    .menu ul a {
-        background: #fbf9ed;
-    }
-
-    .hidden {
-        display: none;
-    }
+    
 </style>
 
 <script type="text/javascript">

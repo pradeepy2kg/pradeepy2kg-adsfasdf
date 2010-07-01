@@ -11,9 +11,9 @@
 <head>
     <sx:head debug="false" cache="false" compressed="true" parseContent="true"/>
     <title>E-Population System</title>
+    <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
-    <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
     <style type="text/css">
         @font-face

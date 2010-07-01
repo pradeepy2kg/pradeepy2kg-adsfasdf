@@ -5,13 +5,12 @@
 
 
 <div id="user-preference-outer">
-    <br>
     <s:form action="eprUserPreferencesAction" name="user_preference_form" id="user_preference" method="POST">
-        <table  width="100%" cellpadding="0" cellspacing="5">
+        <table width="100%" cellpadding="0" cellspacing="5">
             <tr>
                 <td>
                     <div id="set-language" class="font-10">
-                        <label>Select Language </label>
+                        <label>*in sinhala / *in tamil / Select Language </label>
                     </div>
                 </td>
                 <td><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="prefLanguage"
@@ -21,7 +20,7 @@
             <tr>
                 <td>
                     <div id="user-district" class="font-10">
-                        <label>දිස්ත්‍රික්කය மாவட்டம் District</label>
+                        <label>දිස්ත්‍රික්කය / மாவட்டம் / District</label>
                     </div>
                 </td>
                 <td><s:select name="prefDistrictId" list="districtList" headerKey="0"/>
@@ -30,24 +29,26 @@
             <tr>
                 <td>
                     <div id="user-ds-division" class="font-10">
-                        <label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label>
+                        <label>D.S.කොට්ඨාශය / பிரிவு / D.S. Division</label>
                     </div>
                 </td>
                 <td><s:select name="prefDSDivisionId" list="dsDivisionList" headerKey="0"/>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div id="passChange">
+                        <s:url id="url" action="passChangePageLoad">
+                        </s:url>
+                        <s:a href="%{url}"><s:label value="%{getText('change_pass.label')}"></s:label></s:a>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="%{getText('submit.label')}"></s:submit>
+                    </div>
+                </td>
+            </tr>
         </table>
-        <br><br>
-
-        <div class="form-submit">
-            <s:submit value="%{getText('submit.label')}"></s:submit>
-        </div>
-        <br><br>
-
-        <div id="passChange">
-            <s:url id="url" action="passChangePageLoad">
-            </s:url>
-            <s:a href="%{url}"><s:label value="%{getText('change_pass.label')}"/></s:a>
-        </div>
     </s:form>
 </div>

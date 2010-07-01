@@ -2,40 +2,53 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
-    <script>
-        function view_DSDivs() {
-            dojo.event.topic.publish("view_DSDivs");
-        }
+<script>
+    function view_DSDivs() {
+        dojo.event.topic.publish("view_DSDivs");
+    }
 
-        function view_BDDivs() {
-            dojo.event.topic.publish("view_BDDivs");
-        }
-    </script>
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
-        <s:param name="flag" value="birth-register-approval-form"/>
-    </s:url>
-    <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
-        <div id="birth-register-approval-header">
-            <s:label><span><s:label name="district" value="%{getText('district.label')}"/></span><s:select
-                    name="birthDistrictId" list="districtList" value="birthDistrictId"
-                    onchange="javascript:view_DSDivs();return false;"/>
-            </s:label>&nbsp;
-            <s:label><span><s:label name="division" value="%{getText('select_ds_division.label')}"/></span><sx:div id="dsDivisionId"
-                                                                                                value="dsDivisionId"
-                                                                                                href="%{loadDSDivList}"
-                                                                                                theme="ajax"
-                                                                                                listenTopics="view_DSDivs"
-                                                                                                formId="birth-register-approval-form"></sx:div></s:label>&nbsp;
-            <s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
-                                                                               displayFormat="yyyy-MM-dd"/>&nbsp;
-            <s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
-                                                                             displayFormat="yyyy-MM-dd"/>&nbsp;
-            <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
-            <s:hidden name="flag" value="birth-register-approval-form"/>
-            <s:submit name="refresh" value="%{getText('refresh.label')}"/>
-            <br><br><s:label value="%{getText('serial.label')}"/><s:textfield value="" name="bdfSerialNo"/>
-        </div>
-        <br>
+    function view_BDDivs() {
+        dojo.event.topic.publish("view_BDDivs");
+    }
+</script>
+<s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
+    <s:param name="flag" value="birth-register-approval-form"/>
+</s:url>
+<s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
+<div id="birth-register-approval-header">
+    <table width="100%" cellpadding="5" cellspacing="0">
+        <col width="220px"/>
+        <col/>
+        <col width="220px"/>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="2"><s:label name="district" value="%{getText('district.label')}"/></td>
+            <td colspan="2"><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+                                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:100%;"/></td>
+        </tr>
+        <tr>
+            <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
+            <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                                    listenTopics="view_DSDivs" formId="birth-register-approval-form"></sx:div></td>
+        </tr>
+        <tr>
+            <td><s:label value="%{getText('serial.label')}"/></td>
+            <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;"/></td>
+            <td align="right"><s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
+                                                                                                 displayFormat="yyyy-MM-dd"/></td>
+            <td align="right"><s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
+                                                                                               displayFormat="yyyy-MM-dd"/></td>
+        </tr>
+        <tr>
+            <td colspan="4" class="button" align="right">
+                <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
+                <s:hidden name="flag" value="birth-register-approval-form"/>
+                <s:submit name="refresh" value="%{getText('refresh.label')}"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
@@ -53,13 +66,13 @@
         <%--todo permission handling--%>
         <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
-                <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0">
+                <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" >
                 <tr class="table-title">
                     <th></th>
                     <th></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                    <th><s:label name="received" value="%{getText('received.label')}"/></th>
+                    <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
                     <th width="50px">edit</th>
                     <th width="50px">approve</th>
                     <th width="50px">reject</th>
@@ -190,13 +203,13 @@
                     <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
                 <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                    <img src="<s:url value='/images/previous.png'/>" width="40px" height="35px"
+                    <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
                          border="none"/></s:a><s:label value="%{getText('previous.label')}"
                                                        cssStyle="margin-right:5px;"/></s:if>
 
                 <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
                                                         cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
-                    <img src="<s:url value='/images/next.png'/>" width="40px" height="35px" border="none"/></s:a></s:if>
+                    <img src="<s:url value='/images/next.gif'/>" width="40px" height="35px" border="none"/></s:a></s:if>
             </div>
         </s:form>
     </div>
