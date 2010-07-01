@@ -14,7 +14,7 @@ import java.util.Date;
 public class NotifyingAuthorityInfo implements Serializable {
     /** The notifying authority PIN */
     @Column(nullable = false)
-    private long notifyingAuthorityPIN;
+    private String notifyingAuthorityPIN;
 
     /** The notifying authority Name */
     @Column(nullable = false, length = 120)
@@ -38,11 +38,11 @@ public class NotifyingAuthorityInfo implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date notifyingAuthoritySignDate;
 
-    public long getNotifyingAuthorityPIN() {
+    public String getNotifyingAuthorityPIN() {
         return notifyingAuthorityPIN;
     }
 
-    public void setNotifyingAuthorityPIN(long notifyingAuthorityPIN) {
+    public void setNotifyingAuthorityPIN(String notifyingAuthorityPIN) {
         this.notifyingAuthorityPIN = notifyingAuthorityPIN;
     }
 

@@ -401,7 +401,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf.getNotifyingAuthority().setNotifyingAuthorityAddress("The address of the Birth registrar");
         bdf.getNotifyingAuthority().setNotifyingAuthoritySignDate(today);
         bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
-        bdf.getNotifyingAuthority().setNotifyingAuthorityPIN(750010001);
+        bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
         return bdf;
     }
 
