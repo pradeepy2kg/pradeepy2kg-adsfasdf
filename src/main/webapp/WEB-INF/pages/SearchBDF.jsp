@@ -13,9 +13,7 @@
     </script>
     <s:actionerror/>
     <br/>
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
-        <s:param name="flag" value="search-bdf-form"/>
-    </s:url>
+    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
     <form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
           method="post">
         <fieldset>
@@ -42,13 +40,14 @@
                 <tr>
 
                     <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-                    <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                            listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div></td>
+                    <td colspan="3" class="table_reg_cell_01" id="table_reg_cell_01">
+                        <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                            listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <s:hidden name="flag" value="search-bdf-form"/>
                         <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
                     </td>
                     <td></td>
@@ -77,7 +76,6 @@
 
                     <td></td>
                     <td>
-                        <s:hidden name="flag" value="search-bdf-form"/>
                         <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
                     </td>
                 </tr>

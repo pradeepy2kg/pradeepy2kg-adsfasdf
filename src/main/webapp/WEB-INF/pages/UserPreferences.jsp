@@ -47,7 +47,7 @@
         <div id="passChange">
             <s:url id="url" action="passChangePageLoad">
             </s:url>
-            <s:a href="%{url}"><s:label value="%{getText('change_pass.label')}"></s:label></s:a>
+            <s:a href="%{url}"><s:label value="%{getText('change_pass.label')}"/></s:a>
         </div>
     </s:form>
 </div>
