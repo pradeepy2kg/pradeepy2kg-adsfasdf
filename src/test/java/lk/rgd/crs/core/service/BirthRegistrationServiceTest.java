@@ -188,7 +188,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
     }
 
-    public void testConfirmationChanges() throws Exception {
+    public void testConfirmationWithoutChanges() throws Exception {
         Calendar dob = Calendar.getInstance();
         // test saving of a minimal BDF for colombo by DEO
         dob.add(Calendar.DATE, -3);
@@ -231,21 +231,21 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
         Assert.assertTrue("approved record must show up for confirmation printing", found);
 
-        // DEO prints BDF - mark BDF as printed
+        // DEO prints confirmation - mark confirmation as printed
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
         // reload again and check for updated status as printed
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
 
         // assert that the printed record now does not exist in the print queue
-        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, false);
+        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 100, false);
         for (BirthDeclaration b : printList) {
             if (b.getIdUKey() == bdf1.getIdUKey()) {
                 fail("The record when the confirmation is printed should not appear in the pending print list");
             }
         }
         // assert that the printed record will still appear if printed records are requested
-        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, true);
+        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 100, true);
         Assert.assertTrue(!printList.isEmpty());
         found = false;
         for (BirthDeclaration b : printList) {
@@ -270,7 +270,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         birthDeclarationDAO.updateBirthDeclaration(bdf1);
 
         // assert that the confirmed record now exists in the print queue for BC
-        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 10, false);
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false);
         Assert.assertTrue(!printList.isEmpty());
         found = false;
         for (BirthDeclaration b : printList) {
@@ -287,7 +287,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_PRINTED, bdf1.getRegister().getStatus());
 
         // assert that the printed record now does not exist in the print queue
-        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 10, false);
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false);
         found = false;
         for (BirthDeclaration b : printList) {
             if (b.getIdUKey() == bdf1.getIdUKey()) {
@@ -297,7 +297,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertTrue("confirmed record must not show up for BC printing", !found);
         
         // assert that the printed record will still appear if printed records are requested
-        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 10, true);
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, true);
         Assert.assertTrue(!printList.isEmpty());
         found = false;
         for (BirthDeclaration b : printList) {
@@ -308,6 +308,78 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertTrue("confirmed record must not show up for BC printing again if requested", found);
 
         deleteBDF(colomboBDDivision, 2010106);
+    }
+
+    public void testConfirmationWithChanges() throws Exception {
+        Calendar dob = Calendar.getInstance();
+        // test saving of a minimal BDF for colombo by DEO
+        dob.add(Calendar.DATE, -3);
+
+        // add a record for testing
+        BirthDeclaration bdf1 = getMinimalBDF(2010107, dob.getTime(), colomboBDDivision);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+
+        // reload again to fill all fields as we still only have IDUkey of new record
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.DATA_ENTRY, bdf1.getRegister().getStatus());
+
+        // now approve as ADR making changes to name
+        bdf1.getChild().setChildFullNameEnglish("New name 1 of child");
+        birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+
+        // reload again and check for updated name
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
+        Assert.assertEquals("New name 1 of child", bdf1.getChild().getChildFullNameEnglish());
+
+        // DEO prints confirmation - mark confirmation as printed
+        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for updated status as printed
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
+
+        // capture confirmation by DEO with changes
+        bdf1.getConfirmant().setConfirmantFullName("Person confirming");
+        bdf1.getChild().setChildFullNameEnglish("New name 2 of child");
+        long idUKeyToArchive = bdf1.getIdUKey();
+        birthRegSvc.captureLiveBirthConfirmationChanges(bdf1, deoColomboColombo);
+
+        // reload again and check for update of old record which should now be archived
+        BirthDeclaration bdfOld = birthRegSvc.getById(idUKeyToArchive, deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CORRECTED, bdfOld.getRegister().getStatus());
+        Assert.assertEquals("New name 1 of child", bdfOld.getChild().getChildFullNameEnglish());
+
+        // reload new record with confirmation changes
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals("New name 2 of child", bdf1.getChild().getChildFullNameEnglish());
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, bdf1.getRegister().getStatus());
+
+        // update the child name again for a second time
+        bdf1.getChild().setChildFullNameEnglish("New name 3 of child");
+        birthRegSvc.captureLiveBirthConfirmationChanges(bdf1, deoColomboColombo);
+        // the status should remain as confirmation changes captured with only the name updated
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("New name 3 of child", bdf1.getChild().getChildFullNameEnglish());
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, bdf1.getRegister().getStatus());
+
+        // approve the changes by ADR
+        birthRegSvc.approveConfirmationChanges(bdf1, true, adrColomboColombo);
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_APPROVED, bdf1.getRegister().getStatus());
+
+        // simulate the system generation of the PIN
+        bdf1.getChild().setPin(1000100002L);
+        bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_GENERATED);
+        birthDeclarationDAO.updateBirthDeclaration(bdf1);
+
+        // DEO prints BC - mark BC as printed
+        birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for update
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_PRINTED, bdf1.getRegister().getStatus());
+
+        deleteBDF(colomboBDDivision, 2010107);
     }
 
     private BirthDeclaration getMinimalBDF(int serial, Date dob, BDDivision bdDivision) {

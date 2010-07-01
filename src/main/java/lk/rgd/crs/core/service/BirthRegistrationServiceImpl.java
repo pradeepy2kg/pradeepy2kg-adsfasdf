@@ -294,9 +294,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState) {
             // mark existing as archived with a newer record of corrections
+            existing.setConfirmant(bdf.getConfirmant());
             existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CORRECTED);
             birthDeclarationDAO.updateBirthDeclaration(existing);
+
             // add new record
+            bdf.setIdUKey(0); // force addition
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
             birthDeclarationDAO.addBirthDeclaration(bdf);
             logger.debug("Changes captured as birth record : {} and the old record : {} archived",
@@ -304,7 +307,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else if (BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
-            birthDeclarationDAO.updateBirthDeclaration(existing);
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
             logger.debug("Changes captured for birth record : {} ", bdf.getIdUKey());
 
         } else {
