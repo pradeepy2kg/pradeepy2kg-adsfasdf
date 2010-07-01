@@ -1445,7 +1445,7 @@
 /*styles for birth confirmation form 02*/
 
 .table_con_page_02 {
-    width: 1030px;
+    width: 100%;
     border: 1px solid #000000;;
     border-right: none;
     border-bottom: none;
@@ -1480,7 +1480,10 @@
 .table_con_page_03 textarea {
     width: 750px;
 }
+/*Styyle for the Birth Confirmation  Print form*/
+.table_con_page2_table {
 
+}
 /* Styles for the Birth Certificate begins here. */
 #birth-certificate-outer {
     width: auto;

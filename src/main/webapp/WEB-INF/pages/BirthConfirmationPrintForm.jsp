@@ -236,7 +236,7 @@
 </div>
 <div id="page2" style="page-break-after:always;">
 
-    <table class="table_con_page_03" cellspacing="0">
+    <table class="table_con_page_03" cellspacing="0" style="margin-top:30px ; margin-bottom:30px">
         <caption></caption>
         <col/>
         <col/>

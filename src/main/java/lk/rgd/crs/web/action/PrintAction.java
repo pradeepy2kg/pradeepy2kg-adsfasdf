@@ -48,7 +48,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private int printStart;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        BirthRegistrationService birthRegistrationService, AppParametersDAO appParametersDAO) {
+                       BirthRegistrationService birthRegistrationService, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -57,8 +57,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Filter print list by confirmed without changes and confirmation changes approved.
-     * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
+     * Birth Cetificate list confirmed without changes and confirmation changes approved.
+     * Filter Cetificate print list, Not Printed and Printed. Default viwing Not Printed Confirmation List.
      *
      * @return
      */
@@ -66,14 +66,18 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String birthCertificatePrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
+        if (!divisionList.isEmpty()) {
+            divisionId = divisionList.keySet().iterator().next();
+        }
         int pageNo = 1;
 
-        printList = birthRegistrationService.getBirthCertificatePrintList(
-            bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
-            appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE),
-            WebConstants.RADIO_ALREADY_PRINT.equals(selectOption));
 
-        logger.debug("Confirm Print List : items {}", printList.size());
+        printList = birthRegistrationService.getBirthCertificatePrintList(
+                bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE),
+                WebConstants.RADIO_ALREADY_PRINT.equals(selectOption));
+
+        logger.debug("Cetificate Print List : items {}", printList.size());
         return "pageLoad";
     }
 
@@ -90,7 +94,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
         if (selectOption == null) {
-            divisionId = 1;
+            if (!divisionList.isEmpty()) {
+                divisionId = divisionList.keySet().iterator().next();
+            }
             selectOption = "Not Printed";
         }
         int pageNo = 1;
@@ -98,14 +104,14 @@ public class PrintAction extends ActionSupport implements SessionAware {
         if (selectOption != null) {
             if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
                 printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
+                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
             } else {
                 printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
             }
         } else {
             printList = birthRegistrationService.getConfirmationPrintList(
-                bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
 

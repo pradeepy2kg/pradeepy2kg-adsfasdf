@@ -41,7 +41,7 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprConfirmationPrintPageLoad">
+                            <s:url id="cetificatePrintUrl" action="eprBirthConfirmationListPage">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
@@ -74,29 +74,7 @@
                     <s:label value="%{getText('next.label')}"/>&gt;</s:a></s:if>
 
             </div>
-            <%--
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td>
-                        <s:property value="printList.size"/>
-                        <s:label name="items_found" value=" %{getText('items_found.label')} "/>
-                        <s:if test="printList.size!=0">
-                            <s:property value="printStart+1"/> to <s:property value="%{printList.size+printStart}"/>.
-                        </s:if>
-                    </td>
-                    <td>&nbsp;</td>
-                    <td>
-                        <s:if test="printStart!=0 & printStart>0"><s:a href="%{previousUrl}">
-                            &lt;<s:label value="%{getText('previous.label')}"/></s:a></s:if>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>
-                        <s:if test="printList.size >= 10"><s:a href="%{nextUrl}">
-                            <s:label value="%{getText('next.label')}"/>&gt;</s:a></s:if>
-                    </td>
-                </tr>
-            </table>
-             --%>
+
             <div class="form-submit">
                 <s:label><s:checkbox name="allCheck"
                                      onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
