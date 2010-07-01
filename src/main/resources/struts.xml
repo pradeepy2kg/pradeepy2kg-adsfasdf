@@ -53,6 +53,7 @@
             <result name="DSDivList">/WEB-INF/pages/template/DSDivBox.jsp</result>
             <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
             <result name="FatherInfo">/WEB-INF/pages/template/FatherInfo.jsp</result>
+            <result name="MotherInfo">/WEB-INF/pages/template/MotherInfo.jsp</result>
         </action>
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
