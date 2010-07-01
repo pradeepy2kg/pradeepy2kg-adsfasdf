@@ -1,0 +1,22 @@
+.alreadyPrinted{
+   color:red;
+}
+
+
+/*To change background color of table, odd and even rows*/
+#approval-list-table, #confirm-list-table{margin-bottom:10px;}
+.table-title{background:url(../images/table-title.png); line-height:30px; color:#000;}
+.table-title th{text-align:center; text-transform:capitalize;}
+.table-row-index{text-align:center;}
+
+.odd{
+    background:url(../images/odd-row.png);
+    line-height:30px;
+}
+.even{
+    background:url(../images/even-row.png);
+    line-height:30px;
+}
+.odd img, .even img{width:20px;  height:20px; text-align:center; vertical-align:middle;}
+/* Styles for the birth register approval page. */
+#birth-register-approval{padding:10px;}
