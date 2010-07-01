@@ -203,7 +203,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         bdf = service.getById(bdId, user);
                         if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -259,19 +259,56 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
+    /**
+     * Load  List page which needs changes by parents
+     *
+     * @return pageLoad
+     */
     public String confirmationPrintPageLoad() {
-        beanPopulate();
-        return "pageLoad";
+
+        try {
+            BirthDeclaration bdf = service.getById(bdId, user);
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED||
+                  bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                return "error";
+            } else {
+                beanPopulate(bdf);
+                return "pageLoad";
+            }
+        } catch (Exception e) {
+            handleErrors(e);
+            return "error";
+        }
+
     }
 
+    /**
+     * Load Birth Cetificate List Page
+     *
+     * @return pageLoad
+     */
     public String birthCetificatePrint() {
-        beanPopulate();
-        return "pageLoad";
+
+        try {
+            BirthDeclaration bdf = service.getById(bdId, user);
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED||
+                  bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED  )) {
+                return "error";
+            } else {
+                beanPopulate(bdf);
+                return "pageLoad";
+            }
+        } catch (Exception e) {
+            handleErrors(e);
+            return "error";
+        }
     }
 
 
-    private void beanPopulate() {
-        BirthDeclaration bdf = service.getById(bdId, user);
+    /**
+     * Populate BDF for pages
+     */
+    private void beanPopulate(BirthDeclaration bdf) {
         child = bdf.getChild();
         parent = bdf.getParent();
         grandFather = bdf.getGrandFather();
@@ -322,14 +359,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return;  // end of populating fields for this mode.
         }
 
-        child = bdf.getChild();
-        parent = bdf.getParent();
-        grandFather = bdf.getGrandFather();
-        marriage = bdf.getMarriage();
-        informant = bdf.getInformant();
-        confirmant = bdf.getConfirmant();
-        register = bdf.getRegister();
-        notifyingAuthority = bdf.getNotifyingAuthority();
+        beanPopulate(bdf);
 
         boolean idsPopulated = false;
         if (register != null) {
