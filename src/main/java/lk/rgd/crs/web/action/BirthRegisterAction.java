@@ -115,6 +115,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             return "form" + pageNo;
         }
+        
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
@@ -134,14 +135,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 break;
             case 4:
                 bdf.setNotifyingAuthority(notifyingAuthority);
-
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
-                // all pages captured, proceed to persist after validations
-                // todo data validations
-                service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
 
-                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                // all pages captured, proceed to persist after validations
+                // todo data validations, exception handling and error reporting
                 bdId = bdf.getIdUKey();
+                if (bdId == 0) {
+                    service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
+                    bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add. 
+                } else {
+                    service.editLiveBirthDeclaration(bdf, true, user);
+                }
+                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+
                 // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
         }
@@ -225,11 +231,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
 
                         logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
-                        //todo archive the old entry
-                        service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+                        //todo esception handling, validations and error reporting
+                        service.captureLiveBirthConfirmationChanges(bdf, user);
                         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 }
             }
+            
             if (pageNo != 3) {
                 session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
             }

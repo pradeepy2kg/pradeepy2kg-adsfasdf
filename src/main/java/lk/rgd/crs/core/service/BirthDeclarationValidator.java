@@ -55,7 +55,7 @@ public class BirthDeclarationValidator {
             isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
             bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
             isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
-            bdf.getNotifyingAuthority().getNotifyingAuthorityPIN() == 0) {
+            isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
 
             if (bdf.getIdUKey() > 0) {
                 handleException("Birth declaration record ID : " + bdf.getIdUKey() + " is not complete. " +
