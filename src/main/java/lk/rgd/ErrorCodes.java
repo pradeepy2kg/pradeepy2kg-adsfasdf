@@ -1,4 +1,4 @@
-package lk.rgd.crs;
+package lk.rgd;
 
 /**
  * Defines error codes used by the system. These maybe converted into users' language by the UI layer

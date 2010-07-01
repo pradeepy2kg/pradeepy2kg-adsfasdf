@@ -3,7 +3,7 @@ package lk.rgd.common.core.dao;
 import lk.rgd.AppConstants;
 import lk.rgd.common.api.dao.GNDivisionDAO;
 import lk.rgd.common.api.domain.GNDivision;
-import lk.rgd.crs.ErrorCodes;
+import lk.rgd.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -8,7 +9,6 @@ import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;

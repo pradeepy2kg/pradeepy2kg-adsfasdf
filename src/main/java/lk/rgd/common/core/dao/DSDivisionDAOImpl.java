@@ -1,11 +1,11 @@
 package lk.rgd.common.core.dao;
 
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.crs.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

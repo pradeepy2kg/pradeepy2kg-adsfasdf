@@ -4,21 +4,11 @@ import lk.rgd.common.api.dao.UserDAO;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.RGDRuntimeException;
-import lk.rgd.crs.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.stereotype.Repository;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.hibernate.exception.ConstraintViolationException;
-
-import javax.persistence.EntityExistsException;
-import javax.persistence.PersistenceException;
 
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Date;
 
 /**
  * @author asankha

@@ -1,9 +1,8 @@
 package lk.rgd.prs.core.service;
 
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.crs.ErrorCodes;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Person;
