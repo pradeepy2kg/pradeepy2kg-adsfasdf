@@ -66,16 +66,23 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String birthCertificatePrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
-        divisionId = divisionList.keySet().iterator().next();
-        selectOption = "Not Printed";
+        if (selectOption == null) {
+            divisionId = divisionList.keySet().iterator().next();
+            selectOption = "Not Printed";
+        }
         int pageNo = 1;
-
-        printList = birthRegistrationService.getBirthCertificatePrintList(
-                bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
-                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE),
-                WebConstants.RADIO_ALREADY_PRINT.equals(selectOption));
-
-        logger.debug("Cetificate Print List : items {}", printList.size());
+        if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
+            printList = birthRegistrationService.getBirthCertificatePrintList(
+                    bdDivisionDAO.getBDDivisionByPK(divisionId),
+                    pageNo,
+                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
+        } else {
+            printList = birthRegistrationService.getBirthCertificatePrintList(
+                    bdDivisionDAO.getBDDivisionByPK(divisionId),
+                    pageNo,
+                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+        }
+        logger.debug("Cetificate Print List : items {} ", printList.size());
         return "pageLoad";
     }
 
@@ -96,18 +103,14 @@ public class PrintAction extends ActionSupport implements SessionAware {
             selectOption = "Not Printed";
         }
         int pageNo = 1;
-
-        if (selectOption != null) {
-            if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-                printList = birthRegistrationService.getConfirmationPrintList(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
-            } else {
-                printList = birthRegistrationService.getConfirmationPrintList(
-                        bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
-            }
+        if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
+            printList = birthRegistrationService.getConfirmationPrintList(
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
+                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
         } else {
             printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
+                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
+                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
 

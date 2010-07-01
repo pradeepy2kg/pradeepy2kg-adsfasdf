@@ -557,7 +557,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         BDDivision bdDivision, int pageNo, int noOfRows, boolean printed) {
 
         if (logger.isDebugEnabled()) {
-            logger.debug("Get records pending birth certificate printing by BDDivision ID : " +
+            logger.debug("Get birth certificate list print by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
 
