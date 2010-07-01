@@ -66,6 +66,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprBirthRegistrationInit" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthDeclaratinInit">
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="birthConfirmation">
             <result type="tiles" name="form0">epr.birthConfirmation_form1</result>

@@ -20,8 +20,7 @@
                     name="birthDistrictId" list="districtList" value="birthDistrictId"
                     onchange="javascript:view_DSDivs();return false;"/>
             </s:label>&nbsp;
-            <s:label><span><s:label name="division" value="%{getText('select_ds_division.label')}"/></span>
-                <%--<s:select list="divisionList" value="division" name="division"/>--%><sx:div id="dsDivisionId"
+            <s:label><span><s:label name="division" value="%{getText('select_ds_division.label')}"/></span><sx:div id="dsDivisionId"
                                                                                                 value="dsDivisionId"
                                                                                                 href="%{loadDSDivList}"
                                                                                                 theme="ajax"
@@ -78,7 +77,7 @@
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td align="center"><s:property value="register.dateOfRegistration"/></td>
                     <s:if test="#request.allowEditBDF">
-                        <s:url id="editSelected" action="eprBirthRegistration.do">
+                        <s:url id="editSelected" action="eprBirthRegistrationInit.do">
                             <s:param name="bdId" value="idUKey"/>
                         </s:url>
                         <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">

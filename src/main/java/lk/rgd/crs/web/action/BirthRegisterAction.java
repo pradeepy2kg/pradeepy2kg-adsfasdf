@@ -110,73 +110,52 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String birthDeclaration() {
         logger.debug("Step {} of 4 ", pageNo);
-        if ((pageNo > 4) || (pageNo < 0)) {
-            return "error";
-        } else {
-            BirthDeclaration bdf;
-            if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-                return "form" + pageNo;
-            }
-
-            if (pageNo == 0) {
-                session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-                if (bdId == 0) {
-                    if (!addNewMode) {
-                        session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                    }
-                    bdf = new BirthDeclaration();
-                } else {
-                    bdf = service.getById(bdId, user);
-                    if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
-                        return "error";   // todo pass error info
-                    }
-                    //todo check permissions to operate on this birthdivision
-                }
-            } else {
-                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                switch (pageNo) {
-                    case 1:
-                        bdf.setChild(child);
-                        register.setStatus(bdf.getRegister().getStatus());
-                        register.setComments(bdf.getRegister().getComments());
-                        bdf.setRegister(register);
-                        break;
-                    case 2:
-                        bdf.setParent(parent);
-                        break;
-                    case 3:
-                        bdf.setMarriage(marriage);
-                        bdf.setGrandFather(grandFather);
-                        bdf.setInformant(informant);
-                        bdfLateOrBelated = checkDateLateOrBelated(bdf);
-                        break;
-                    case 4:
-                        bdf.setNotifyingAuthority(notifyingAuthority);
-
-                        logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
-                        // all pages captured, proceed to persist after validations
-                        // todo data validations
-                        service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
-
-                        session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                        bdId = bdf.getIdUKey();
-                        // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
-                        allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
-                }
-            }
-            if (!addNewMode && (pageNo != 4)) {
-                session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-            }
-
-            if (logger.isDebugEnabled()) {
-                logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
-            }
-
-            populate(bdf);
-            logger.debug("Birth Declaration: PageNo=" + pageNo);
+        BirthDeclaration bdf;
+        if (back) {
+            populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             return "form" + pageNo;
         }
+        bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        switch (pageNo) {
+            case 1:
+                bdf.setChild(child);
+                register.setStatus(bdf.getRegister().getStatus());
+                register.setComments(bdf.getRegister().getComments());
+                bdf.setRegister(register);
+                break;
+            case 2:
+                bdf.setParent(parent);
+                break;
+            case 3:
+                bdf.setMarriage(marriage);
+                bdf.setGrandFather(grandFather);
+                bdf.setInformant(informant);
+                bdfLateOrBelated = checkDateLateOrBelated(bdf);
+                break;
+            case 4:
+                bdf.setNotifyingAuthority(notifyingAuthority);
+
+                logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
+                // all pages captured, proceed to persist after validations
+                // todo data validations
+                service.addLiveBirthDeclaration(bdf, true, (User) session.get(WebConstants.SESSION_USER_BEAN), caseFileNumber, newComment);
+
+                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                bdId = bdf.getIdUKey();
+                // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
+                allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+        }
+        if (!addNewMode && (pageNo != 4)) {
+            session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+        }
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
+        }
+
+        populate(bdf);
+        logger.debug("Birth Declaration: PageNo=" + pageNo);
+        return "form" + pageNo;
     }
 
     /**
@@ -203,7 +182,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     try {
                         bdf = service.getById(bdId, user);
                         if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                             addActionError(getText("cp1.error.editNotAllowed"));
                             return "error";
                         }
@@ -268,8 +247,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
-            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED||
-                  bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return "error";
             } else {
                 beanPopulate(bdf);
@@ -282,6 +261,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     }
 
+    public String birthDeclaratinInit() {
+        BirthDeclaration bdf;
+        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        if (bdId == 0) {
+            if (!addNewMode) {
+                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            }
+            bdf = new BirthDeclaration();
+        } else {
+            bdf = service.getById(bdId, user);
+            if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                return "error";   // todo pass error info
+            }
+            //todo check permissions to operate on this birthdivision
+        }
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+        populate(bdf);
+        return "form0";
+    }
+
     /**
      * Load Birth Cetificate List Page
      *
@@ -291,8 +290,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
-            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED||
-                  bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED  )) {
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED ||
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED)) {
                 return "error";
             } else {
                 beanPopulate(bdf);
@@ -481,10 +480,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             int selectedDistrictId = allDistrictList.keySet().iterator().next();
             allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
         }
-    }
-
-    public String welcome1() {
-        return "success";
     }
 
     public int getPageNo() {

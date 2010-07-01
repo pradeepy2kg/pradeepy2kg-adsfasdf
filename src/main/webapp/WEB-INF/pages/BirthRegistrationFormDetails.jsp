@@ -24,7 +24,7 @@
         </s:elseif>
     </div>
     <div id="birth-register-approval-body">
-        <s:url id="newBDFUrl" action="eprBirthRegistration.do">
+        <s:url id="newBDFUrl" action="eprBirthRegistrationInit.do">
             <s:param name="addNewMode" value="true"/>
             <s:param name="oldBdId" value="#request.bdId"/>
         </s:url>

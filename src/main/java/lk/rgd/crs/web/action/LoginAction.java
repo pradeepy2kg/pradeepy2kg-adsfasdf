@@ -173,7 +173,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         //prpertyKey,link,action
         // categories ::::admin task 5 ,reprtts 4 , user preferance 3 ,death 2,marrage 1,birth 0
         linkPermission.put(Permission.PAGE_CREATE_USER, new Link("creat_user.label", "5", "eprInitUserCreation.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link("birth_registration.label", "0", "eprBirthRegistration.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link("birth_registration.label", "0", "eprBirthRegistrationInit.do"));
         /*  linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_REPORT, new Link("birth_conformation_report.label", "4", "eprBirthConfirmationReport.do"));*/
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT, new Link("birth_confirmation_print.label", "4", "eprFilterBirthConfirmPrint.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link("birth_confirmation.label", "0", "eprBirthConfirmation.do"));
