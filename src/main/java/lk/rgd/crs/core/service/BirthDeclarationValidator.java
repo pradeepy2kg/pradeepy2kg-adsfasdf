@@ -1,9 +1,9 @@
 package lk.rgd.crs.core.service;
 
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;

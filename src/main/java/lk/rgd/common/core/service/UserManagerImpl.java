@@ -1,5 +1,6 @@
 package lk.rgd.common.core.service;
 
+import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
 import lk.rgd.common.api.dao.RoleDAO;
@@ -12,7 +13,6 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.util.Base64;
-import lk.rgd.crs.ErrorCodes;
 import lk.rgd.crs.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
