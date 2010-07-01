@@ -89,7 +89,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = birthRegistrationService.getConfirmationPrintList(
                 bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
-        logger.debug("Confirm Print List : items=" + printList.size());
+        logger.debug("Cetificate Print List : items=" + printList.size());
         return "pageLoad";
     }
 

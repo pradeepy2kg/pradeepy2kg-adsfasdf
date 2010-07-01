@@ -75,26 +75,19 @@
             <result type="tiles" name="searchError">epr.BDFSearch</result>
         </action>
 
-        <action name="eprConfirmationPrintPageLoad" class="lk.rgd.crs.web.action.BirthRegisterAction"
+        <action name="eprBirthConfirmationListPage" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="confirmationPrintPageLoad">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmationPrint" class="lk.rgd.crs.web.action.BirthRegisterAction"
-                method="birthConfirmationPrint">
-            <result type="tiles" name="success">epr.welcome</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>
-
-        <action name="eprFinalbirthCertificate" class="lk.rgd.crs.web.action.BirthRegisterAction"
+        <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="birthCetificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-
-        <action name="eprBirthCetificatePrint" class="lk.rgd.crs.web.action.PrintAction"
+        <action name="eprBirthCetificateList" class="lk.rgd.crs.web.action.PrintAction"
                 method="birthCertificatePrintList">
             <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
             <result type="tiles" name="error">epr.error</result>
