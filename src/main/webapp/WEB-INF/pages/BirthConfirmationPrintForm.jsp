@@ -236,7 +236,7 @@
 </div>
 <div id="page2" style="page-break-after:always;">
 
-    <table class="table_con_page_03" cellspacing="0" style="margin-top:30px ; margin-bottom:30px">
+    <table class="table_con_page2_table" cellspacing="0">
         <caption></caption>
         <col/>
         <col/>
@@ -253,7 +253,7 @@
 
                 <p></p>
             </td>
-            <td><s:textfield cssClass="disable" disabled="true" name="child.childFullNameOfficialLang" size="100">
+            <td><s:textfield cssClass="disable" disabled="true" name="child.childFullNameOfficialLang">
             </s:textfield></td>
         </tr>
         <tr>
@@ -289,8 +289,7 @@
 
                 <p></p>
             </td>
-            <td><s:textfield cssClass="disable" disabled="true" name="child.childFullNameEnglish"
-                             size="100"></s:textfield></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameEnglish"></s:textarea></td>
         </tr>
         <tr>
             <td rowspan="5"></td>
@@ -322,8 +321,7 @@
 
                 <p></p>
             </td>
-            <td><s:textfield cssClass="disable" disabled="true" name="parent.fatherFullName"
-                             size="100"></s:textfield></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="parent.fatherFullName" ></s:textarea></td>
         </tr>
         <tr>
             <td rowspan="5"></td>
@@ -354,8 +352,7 @@
 
                 <p></p>
             </td>
-            <td><s:textfield cssClass="disable" disabled="true" name="parent.motherFullName"
-                             size="100"></s:textfield></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="parent.motherFullName" ></s:textarea></td>
         </tr>
         <tr>
             <td rowspan="5"></td>

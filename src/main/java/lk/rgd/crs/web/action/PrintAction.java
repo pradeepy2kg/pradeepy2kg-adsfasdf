@@ -66,11 +66,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String birthCertificatePrintList() {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
-        if (!divisionList.isEmpty()) {
-            divisionId = divisionList.keySet().iterator().next();
-        }
+        divisionId = divisionList.keySet().iterator().next();
+        selectOption = "Not Printed";
         int pageNo = 1;
-
 
         printList = birthRegistrationService.getBirthCertificatePrintList(
                 bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
@@ -94,9 +92,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
         if (selectOption == null) {
-            if (!divisionList.isEmpty()) {
-                divisionId = divisionList.keySet().iterator().next();
-            }
+            divisionId = divisionList.keySet().iterator().next();
             selectOption = "Not Printed";
         }
         int pageNo = 1;
