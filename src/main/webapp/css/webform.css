@@ -1484,7 +1484,21 @@
 }
 /*Styyle for the Birth Confirmation  Print form*/
 .table_con_page2_table {
+    width:100%;
+    border: 1px solid #000000;;
+    border-right: none;
+    border-bottom: none;
+    font-size: 9pt;
+    margin-bottom: 30px;
+}
 
+.table_con_page2_table td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.table_con_page2_table textarea {
+    width: 750px;
 }
 /* Styles for the Birth Certificate begins here. */
 #birth-certificate-outer {
