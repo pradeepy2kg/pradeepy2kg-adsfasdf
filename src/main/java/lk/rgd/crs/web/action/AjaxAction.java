@@ -121,7 +121,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public String loadMotherInfo() {
         if (!"".equals(parent.getMotherNICorPIN())) {
-            logger.debug("Father NIC/PIN received : {}", parent.getFatherNICorPIN());
+            logger.debug("Mother NIC/PIN received : {}", parent.getFatherNICorPIN());
             Person mother = registryService.findPersonByPINorNIC(parent.getMotherNICorPIN(), user);
             if (mother != null) {
                 parent.setMotherFullName(mother.getFullNameInOfficialLanguage());
@@ -129,7 +129,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 logger.debug("Mother info set from Ajax : {} {}", parent.getMotherNICorPIN(), parent.getMotherFullName());
             }
         }
-        return "FatherInfo";
+        return "MotherInfo";
     }
 
     private void populateDynamicLists(String language) {
@@ -296,14 +296,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     public Map<Integer, String> getDsDivisionList() {
         return dsDivisionList;
     }
-
-//    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
-//        this.dsDivisionList = dsDivisionList;
-//    }
-//
-//    public DSDivisionDAO getDsDivisionDAO() {
-//        return dsDivisionDAO;
-//    }
 
     public int getDsDivisionId() {
         return dsDivisionId;
