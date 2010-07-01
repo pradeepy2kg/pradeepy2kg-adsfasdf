@@ -141,8 +141,7 @@ amith jayasekara
     });
 </script>
 
-<body>
-<div id="main-menue">
+<div id="main-menu">
     <s:if test="{#session.check=='ok'}">
         <s:set name="checkPage" value="menu1"/>
     </s:if>
@@ -220,5 +219,3 @@ amith jayasekara
         </s:iterator>
     </ul>
 </div>
-
-</body>
