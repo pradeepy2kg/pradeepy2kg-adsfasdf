@@ -17,8 +17,7 @@
     <form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
           method="post">
         <fieldset>
-            <legend><s:label name="registrationSerchLegend"
-                             value="%{getText('registrationSerchLegend.label')}"/></legend>
+            <legend><s:label name="registrationSerchLegend" value="%{getText('registrationSerchLegend.label')}"/></legend>
             <table>
                 <col/>
                 <col/>

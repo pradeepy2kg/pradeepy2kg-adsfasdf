@@ -1,12 +1,12 @@
 <%--
-  Created amith jayasekara and duminda
+  Created amith jayasekara and Dumida Dharmakeerthi
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>EPR Login</title>
+    <title>EPR Change Password</title>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <style type="text/css">
         html {
@@ -26,7 +26,10 @@
                 <s:password name="newPassword"/>
                 <s:label value="retype new password"/>
                 <s:password name="retypeNewPassword"/>
-                <div><s:submit value="apply"></s:submit></div>
+                <div class="form-submit">
+                    <s:submit value="apply"></s:submit>
+                    <s:submit action="eprBackChangePass" value="back"/>
+                </div>
                 <s:hidden name="changePass" value="0"/>
             
         </s:form>
