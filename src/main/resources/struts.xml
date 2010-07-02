@@ -19,13 +19,17 @@
 
     <package name="epr" namespace="/" extends="NG">
         <interceptors>
-            <interceptor name="scopedModelDriven"
-                         class="com.opensymphony.xwork2.interceptor.ScopedModelDrivenInterceptor">
-                <param name="scope">session</param>
-                <param name="name">birthRegister</param>
-                <param name="className">lk.rgd.crs.api.domain.BirthDeclaration</param>
-            </interceptor>
+            <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
         </interceptors>
+
+        <!--<default-interceptor-ref name="exception"/>-->
+        <global-results>
+            <result type="tiles" name="error">epr.error</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
+        </global-exception-mappings>
 
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
             <interceptor-ref name="i18n"/>
