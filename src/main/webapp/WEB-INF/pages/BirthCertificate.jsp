@@ -3,16 +3,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
     @media print {
-        #birth-certificate-outer {
-            float: none;
-            width: 210mm;
-            height: 297mm;
-            padding: 10px;
-            background: #fff;
-            font-size: 9pt;
-            font-family: BhashitaComplex;
-        }
-
         .form-submit {
             display: none;
         }
@@ -21,7 +11,7 @@
 
 <div id="birth-certificate-outer">
     <s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"
-            id="birth-certificate-print" method="POST">
+            id="birth-certificate-print-form" method="POST">
 
 
         <table style="width: 100%; border:none; border-collapse:collapse; ">
@@ -40,7 +30,6 @@
             </tr>
             <tr>
                 <td><s:label name="" value="%{#request.register.bdfSerialNo}"/></td>
-
             </tr>
             <tr>
                 <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
@@ -203,3 +192,4 @@
         </div>
     </s:form>
 </div>
+<%-- Styling Completed --%>

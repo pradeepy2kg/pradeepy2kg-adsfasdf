@@ -119,7 +119,7 @@ body {
 }
 
 #login-form #login-form-body div input:hover {
-    color: red;
+    color: darkred;
 }
 
 /* Styles for the Main-Menu */

@@ -249,12 +249,13 @@
         <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="filterPrintList">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
+        <!--
         <action name="eprPrintNext" class="lk.rgd.crs.web.action.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
         <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="previousPage">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
-        </action>
+        </action>         -->
 
         <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
