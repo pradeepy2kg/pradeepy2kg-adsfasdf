@@ -28,7 +28,7 @@
         </label></td>
         <td>
             <table style=" border:1px solid #000000; width:300px">
-                <form action="eprBirthConfirmation.do" method="post">
+                <form action="eprBirthConfirmationInit.do" method="post">
                     <tr>
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>

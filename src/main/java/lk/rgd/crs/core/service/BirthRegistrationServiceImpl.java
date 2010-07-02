@@ -53,7 +53,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-        String caseFileNumber, String additionalDocumentsComment) {
+                                                     String caseFileNumber, String additionalDocumentsComment) {
 
         logger.debug("Adding a new live birth declaration");
         // does the user have access to the BDF being added (i.e. check district and DS division)
@@ -313,7 +313,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         } else {
             handleException("Cannot capture confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
                 ErrorCodes.INVALID_STATE_FOR_CONFIRMATION_CHANGES);
-        }    
+        }
     }
 
     /**
@@ -490,7 +490,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     private void validateAccessToDS(User user, BDDivision bdDivision) {
-        if (!user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey()) &&
+        if ((User.State.ACTIVE != user.getStatus()) &&
+            !user.getRole().ROLE_RG.equals(user.getRole().getName()) &&
+            !user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey()) &&
             !user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
@@ -531,12 +533,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows,User user) {
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmations pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDS(user,bdDivision);
+        validateAccessToDS(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(
             bdDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
     }
@@ -545,13 +547,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getConfirmationPrintList(
-        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed,User user) {
+        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending confirmation printing by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDS(user,bdDivision);
+        validateAccessToDS(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
     }
@@ -560,13 +562,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getBirthCertificatePrintList(
-        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed,User user) {
+        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth certificate list print by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDS(user,bdDivision);
+        validateAccessToDS(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.ARCHIVED_BC_PRINTED : BirthDeclaration.State.ARCHIVED_BC_GENERATED);
     }
@@ -574,12 +576,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows,User user) {
+    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDS(user,bdDivision);
+        validateAccessToDS(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
     }
 
@@ -587,14 +589,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows,User user) {
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
                 " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDS(user,bdDivision);
+        validateAccessToDS(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndRegisterDateRange(
             bdDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
     }
@@ -603,14 +605,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows,User user) {
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " and date range : " + startDate + " to " + endDate +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        validateAccessToDS(user,bdDivision);
+        validateAccessToDS(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndConfirmationReceiveDateRange(
             bdDivision, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, startDate, endDate, pageNo, noOfRows);
     }
@@ -621,10 +623,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @param bdf the BirthDeclaration to populate transient values
      * @return populated BDF
      */
-    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf,User user) {
+    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf, User user) {
 
         logger.debug("Loading record : {} for printing", bdf.getIdUKey());
-        validateAccessOfUser(user,bdf);
+        validateAccessOfUser(user, bdf);
         String prefLanguage = bdf.getRegister().getPreferredLanguage();
 
         ChildInfo child = bdf.getChild();

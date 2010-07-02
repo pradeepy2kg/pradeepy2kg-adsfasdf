@@ -176,7 +176,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link("birth_registration.label", "0", "eprBirthRegistrationInit.do"));
         /*  linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_REPORT, new Link("birth_conformation_report.label", "4", "eprBirthConfirmationReport.do"));*/
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT, new Link("birth_confirmation_print.label", "4", "eprFilterBirthConfirmPrint.do"));
-        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link("birth_confirmation.label", "0", "eprBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link("birth_confirmation.label", "0", "eprBirthConfirmationInit.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_APPROVAL, new Link("birth_register_approval.label", "0", "eprBirthRegisterApproval.do"));
         linkPermission.put(Permission.PAGE_USER_PREFERANCE_SELECT, new Link("userPreference.label", "3", "eprUserPreferencesInit.do"));
         linkPermission.put(Permission.PAGE_VIEW_USERS, new Link("viewUsers.label", "5", "eprViewUsers.do"));
