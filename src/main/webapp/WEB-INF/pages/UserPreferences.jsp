@@ -10,7 +10,7 @@
             <tr>
                 <td>
                     <div id="set-language" class="font-10">
-                        <label>*in sinhala / *in tamil / Select Language </label>
+                        <label>භාෂාව / *in tamil / Language </label>
                     </div>
                 </td>
                 <td><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}" name="prefLanguage"
@@ -36,19 +36,15 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div id="passChange">
-                        <s:url id="url" action="passChangePageLoad">
-                        </s:url>
-                        <s:a href="%{url}"><s:label value="%{getText('change_pass.label')}"></s:label></s:a>
-                    </div>
-                </td>
+                <td></td>
                 <td>
                     <div class="form-submit">
-                        <s:submit value="%{getText('submit.label')}"></s:submit>
+                        <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"></s:submit>                     
+                        <s:submit action="passChangePageLoad" value="%{getText('change_pass.label')}" cssStyle="float:right;"/>
                     </div>
                 </td>
             </tr>
         </table>
     </s:form>
 </div>
+<%-- Styling Completed (Duminda) --%>

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.common.Constants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.service.UserManager;
@@ -91,6 +92,10 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             return "success";
         }
         return "error";
+    }
+
+    public String back() {
+        return this.userPreferenceInit();
     }
 
     public void setSession(Map map) {

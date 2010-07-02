@@ -38,7 +38,8 @@
     <tr>
         <td rowspan="2"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td rowspan="2"><s:textfield name="parent.fatherNICorPIN"/><label onclick="javascript:view_FatherInfo();return false;">></label></td>
+        <td rowspan="2"><s:textfield name="parent.fatherNICorPIN"/><label
+                onclick="javascript:view_FatherInfo();return false;">></label></td>
         <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label></td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td><s:select name="fatherCountry" list="countryList" headerKey="0"
@@ -47,7 +48,7 @@
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
-        <td><s:textfield  name="parent.fatherPassportNo"/></td>
+        <td><s:textfield name="parent.fatherPassportNo"/></td>
     </tr>
     <tr>
         <td><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
@@ -60,9 +61,10 @@
     <tr>
         <td><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="2">
-            <sx:div theme="ajax" id="parent.fatherNICorPIN" listenTopics="view_FatherInfo" formId="birth-registration-form-2">
-                <sx:datetimepicker  id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
-                onmouseover="javascript:splitDate('fatherDatePicker')" />
+            <sx:div theme="ajax" id="parent.fatherNICorPIN" listenTopics="view_FatherInfo"
+                    formId="birth-registration-form-2">
+                <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
+                                   onmouseover="javascript:splitDate('fatherDatePicker')"/>
             </sx:div>
         </td>
         <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
@@ -116,7 +118,8 @@
     <tr>
         <td rowspan="2"><label>(15)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td colspan="2" rowspan="2"><s:textfield name="parent.motherNICorPIN"/><label onclick="javascript:view_MotherInfo();return false;">></label></td>
+        <td colspan="2" rowspan="2"><s:textfield name="parent.motherNICorPIN"/><label
+                onclick="javascript:view_MotherInfo();return false;">></label></td>
         <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label></td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0"
@@ -130,7 +133,7 @@
         <td><label>(16)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:url id="loadMotherInfo" action="ajaxSupport_loadMotherInfo"/>
-            <sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}" 
+            <sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}"
                     listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"></sx:div>
         </td>
     </tr>

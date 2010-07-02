@@ -40,6 +40,10 @@
             <result name="error">/WEB-INF/pages/PasswordChange.jsp</result>
         </action>
 
+        <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
+            <result name="pageload" type="tiles">epr.UserPreferences</result>
+        </action>
+
         <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">
             <result name="success">/WEB-INF/pages/login/login.jsp</result>
             <result type="tiles" name="error">epr.home</result>
