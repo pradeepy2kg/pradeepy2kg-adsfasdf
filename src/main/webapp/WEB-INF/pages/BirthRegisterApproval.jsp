@@ -199,13 +199,13 @@
                     <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
                 <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                    <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
+                    <img src="<s:url value='/images/previous.gif'/>"
                          border="none"/></s:a><s:label value="%{getText('previous.label')}"
                                                        cssStyle="margin-right:5px;"/></s:if>
 
                 <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
                                                         cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
-                    <img src="<s:url value='/images/next.gif'/>" width="40px" height="35px" border="none"/></s:a></s:if>
+                    <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
             </div>
         </s:form>
     </div>

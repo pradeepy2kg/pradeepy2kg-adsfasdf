@@ -35,16 +35,17 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private final AppParametersDAO appParametersDAO;
 
     private List<BirthDeclaration> printList;
+    private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
-    private Map<Integer, String> divisionList;
+    private Map<Integer, String> dsDivisionList;
     private Map session;
     private String selectOption;
 
     private User user;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
-    private int districtId;
-    private int divisionId;
+    private int birthDistrictId;
+    private int birthDivisionId;
     private int printStart;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
@@ -67,18 +68,18 @@ public class PrintAction extends ActionSupport implements SessionAware {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
         if (selectOption == null) {
-            divisionId = divisionList.keySet().iterator().next();
+            birthDivisionId = dsDivisionList.keySet().iterator().next();
             selectOption = "Not Printed";
         }
         int pageNo = 1;
         if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
             printList = birthRegistrationService.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId),
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                     pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
         } else {
             printList = birthRegistrationService.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId),
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                     pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
@@ -99,17 +100,17 @@ public class PrintAction extends ActionSupport implements SessionAware {
         populate();
         session.remove(WebConstants.SESSION_PRINT_COUNT);
         if (selectOption == null) {
-            divisionId = divisionList.keySet().iterator().next();
+            birthDivisionId = dsDivisionList.keySet().iterator().next();
             selectOption = "Not Printed";
         }
         int pageNo = 1;
         if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
             printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true);
         } else {
             printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo,
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false);
         }
         logger.debug("Confirm Print List : items=" + printList.size());
@@ -126,7 +127,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = ((printStart + noOfRows) / noOfRows) + 1;
         boolean printed = checkPrinted();
-        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
+        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed);
         printStart += noOfRows;
         populate();
         return "success";
@@ -141,7 +142,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = printStart / noOfRows;
         boolean printed = checkPrinted();
-        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(divisionId), pageNo, noOfRows, printed);
+        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed);
         printStart -= noOfRows;
         populate();
         return "success";
@@ -170,7 +171,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, user);
             if (!dsDivisionList.isEmpty()) {
                 int dsDivisionId = dsDivisionList.keySet().iterator().next();
-                divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+                this.dsDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
             }
         }
     }
@@ -199,12 +200,12 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.districtList = districtList;
     }
 
-    public Map<Integer, String> getDivisionList() {
-        return divisionList;
+    public Map<Integer, String> getDsDivisionList() {
+        return dsDivisionList;
     }
 
-    public void setDivisionList(Map<Integer, String> divisionList) {
-        this.divisionList = divisionList;
+    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
+        this.dsDivisionList = dsDivisionList;
     }
 
     public String getSelectOption() {
@@ -223,20 +224,28 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.user = user;
     }
 
-    public int getDistrictId() {
-        return districtId;
+    public int getBirthDistrictId() {
+        return birthDistrictId;
     }
 
-    public void setDistrictId(int districtId) {
-        this.districtId = districtId;
+    public void setBirthDistrictId(int birthDistrictId) {
+        this.birthDistrictId = birthDistrictId;
     }
 
-    public int getDivisionId() {
-        return divisionId;
+    public Map<Integer, String> getBdDivisionList() {
+        return bdDivisionList;
     }
 
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
+    public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
+        this.bdDivisionList = bdDivisionList;
+    }
+     
+    public int getBirthDivisionId() {
+        return birthDivisionId;
+    }
+
+    public void setBirthDivisionId(int birthDivisionId) {
+        this.birthDivisionId = birthDivisionId;
     }
 
     public int getPrintStart() {

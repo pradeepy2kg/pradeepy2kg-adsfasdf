@@ -68,6 +68,7 @@
             <result name="DSDivListBDFApproval">/WEB-INF/pages/template/DSDivBoxBDFApproval.jsp</result>
             <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
             <result name="NotifyerInfo">/WEB-INF/pages/template/NotifyerInfo.jsp</result>
+			<result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
         </action>
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"
@@ -255,6 +256,12 @@
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
 
+        <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.PrintAction" method="nextPage">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+        </action>
+        <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="previousPage">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+        </action>
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="userPreferenceInit">
 

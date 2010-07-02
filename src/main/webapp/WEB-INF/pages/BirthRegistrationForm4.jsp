@@ -127,7 +127,8 @@
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
-            <s:a href="%{backUrl}"> << </s:a>
+            <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
+                         border="none" title="Back"/></s:a>
             <s:submit value="%{getText('next.label')}"/>
         </div>
     </s:form>

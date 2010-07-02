@@ -60,6 +60,9 @@ body {
     margin-right: 10px;
 }
 
+#logout-button{float:right; text-transform:capitalize; margin:10px;}
+#logout-button:hover{color:darkred;}
+
 /* Styles for the Login Page */
 #login-form {
     width: 40%;
@@ -167,6 +170,7 @@ body {
 .menu ul a {
     background:url(../images/menu-2.png) repeat;
     color: saddlebrown;
+    border-bottom:1px inset saddlebrown;
 }
 
 .hidden {

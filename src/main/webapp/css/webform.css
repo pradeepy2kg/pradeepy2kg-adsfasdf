@@ -1540,4 +1540,4 @@
 
 #user-preference-outer table tr td select{float:right; width:300px;}
 #user-preference-outer table tr td input{text-transform:capitalize;}
-#user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:red;}
+#user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}

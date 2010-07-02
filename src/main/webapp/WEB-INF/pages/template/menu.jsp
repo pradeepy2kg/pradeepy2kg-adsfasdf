@@ -82,70 +82,70 @@ amith jayasekara
     <s:else>
         <s:set name="checkPage" value="menu"/>
     </s:else>
-    <ul class=menu>
+    <ul class="menu">
         <s:iterator value="#session.allowed_menue" id="menue">
-        <s:if test="%{((value.size > 0)& (key== 'BIRTH'))||(#session.viewUsers=='ok')}">
-            <li><s:a href="eprBirthRegistrationHome.do">
-                <s:label value="%{getText('category_birth_registration')}"/></s:a>
-                <ul>
-                    <s:iterator value="value" id="x">
-                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                        </s:a></li>
-                    </s:iterator>
-                </ul>
-            </li>
-        </s:if>
-   <s:if test="%{(value.size > 0)& (key == 'ADMIN')}">
-            <li><a href="."><s:label value="%{getText('category_admin_task')}"/> </a>
-                <ul>
-                    <s:iterator value="value" id="x">
-                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                        </s:a></li>
-                    </s:iterator>
-                </ul>
-            </li>
-        </s:if>
-    <s:if test="%{(value.size > 0)& (key == 'DEATH')}">
+            <s:if test="%{((value.size > 0)& (key== 'BIRTH'))||(#session.viewUsers=='ok')}">
+                <li><s:a href="eprBirthRegistrationHome.do">
+                    <s:label value="%{getText('category_birth_registration')}"/></s:a>
+                    <ul>
+                        <s:iterator value="value" id="x">
+                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a></li>
+                        </s:iterator>
+                    </ul>
+                </li>
+            </s:if>
+            <s:if test="%{(value.size > 0)& (key == 'ADMIN')}">
+                <li><a href="."><s:label value="%{getText('category_admin_task')}"/> </a>
+                    <ul>
+                        <s:iterator value="value" id="x">
+                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a></li>
+                        </s:iterator>
+                    </ul>
+                </li>
+            </s:if>
+            <s:if test="%{(value.size > 0)& (key == 'DEATH')}">
 
-            <li><s:a href="%{editSelected}"><s:label value="%{getText('category_death_registraion')}"/> </s:a>
-                <ul>
-                    <s:iterator value="value" id="x">
-                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                        </s:a></li>
-                    </s:iterator>
-                </ul>
-            </li>
-        </s:if>
-     <s:if test="%{(value.size > 0)& (key == 'MARRAGE')}">
-            <li><a href=><s:label value="%{getText('category_marrage_registraion')}"/> </a>
-                <ul>
-                    <s:iterator value="value" id="x">
-                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                        </s:a></li>
-                    </s:iterator>
-                </ul>
-            </li>
-        </s:if>
-    <s:if test="%{(value.size > 0)& (key == 'REPORT')}">
-            <li><a href="."><s:label value="%{getText('category_reports')}"/> </a>
-                <ul>
-                    <s:iterator value="value" id="x">
-                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                        </s:a></li>
-                    </s:iterator>
-                </ul>
-            </li>
-        </s:if>
-   <s:if test="%{(value.size > 0)& (key == 'PREFERANCE')}">
-            <li><s:a href="."><s:label value="%{getText('category_user_preferance')}"/> </s:a>
-                <ul>
-                    <s:iterator value="value" id="x">
-                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                        </s:a></li>
-                    </s:iterator>
-                </ul>
-            </li>
-        </s:if>
+                <li><s:a href="%{editSelected}"><s:label value="%{getText('category_death_registraion')}"/> </s:a>
+                    <ul>
+                        <s:iterator value="value" id="x">
+                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a></li>
+                        </s:iterator>
+                    </ul>
+                </li>
+            </s:if>
+            <s:if test="%{(value.size > 0)& (key == 'MARRAGE')}">
+                <li><a href=><s:label value="%{getText('category_marrage_registraion')}"/> </a>
+                    <ul>
+                        <s:iterator value="value" id="x">
+                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a></li>
+                        </s:iterator>
+                    </ul>
+                </li>
+            </s:if>
+            <s:if test="%{(value.size > 0)& (key == 'REPORT')}">
+                <li><a href="."><s:label value="%{getText('category_reports')}"/> </a>
+                    <ul>
+                        <s:iterator value="value" id="x">
+                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a></li>
+                        </s:iterator>
+                    </ul>
+                </li>
+            </s:if>
+            <s:if test="%{(value.size > 0)& (key == 'PREFERANCE')}">
+                <li><s:a href="."><s:label value="%{getText('category_user_preferance')}"/> </s:a>
+                    <ul>
+                        <s:iterator value="value" id="x">
+                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a></li>
+                        </s:iterator>
+                    </ul>
+                </li>
+            </s:if>
         </s:iterator>
     </ul>
 </div>

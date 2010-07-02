@@ -106,6 +106,11 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         return "DSDivListBDFApproval";
     }
 
+    public String loadDSDivListBCPrint() {
+        dsDivList();
+        return "BirthCertificatePrint";
+    }
+    
     public String loadDSDivListBDFConfirmation() {
         dsDivList();
         return "DSDivListBDFConfirmation";
