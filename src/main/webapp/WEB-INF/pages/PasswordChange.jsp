@@ -22,9 +22,9 @@
                 name="eprChangePass">
             <!--password change -->
 
-                <s:label value="new password"/>
+                <s:label value="New Password"/>
                 <s:password name="newPassword"/>
-                <s:label value="retype new password"/>
+                <s:label value="Retype New Password"/>
                 <s:password name="retypeNewPassword"/>
                 <div class="form-submit">
                     <s:submit value="apply"></s:submit>
@@ -37,3 +37,4 @@
 </div>
 </body>
 </html>
+<%-- Styling Completed --%>

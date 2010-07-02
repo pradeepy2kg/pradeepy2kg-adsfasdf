@@ -2,9 +2,6 @@
    color:red;
 }
 
-.form-submit input, .button input{text-transform:capitalize;}
-.form-submit input:hover, .button input:hover{color:darkred;}
-
 /*To change background color of table, odd and even rows*/
 #approval-list-table, #confirm-list-table, #confirm-print-table, #birth-certificate-print table{margin:10px auto;}
 .table-title{background:url(../images/table-title.png); line-height:30px; color:#000;}
@@ -25,3 +22,8 @@
 #birth-register-approval .form-submit, #birth-confirm-approval .form-submit, #birth-confirm-print .form-submit, #birth-certificate-print .form-submit{float:left; margin-left:40px;}
 #birth-register-approval .next-previous, #birth-confirm-approval .next-previous, #birth-confirm-print .next-previous, #birth-certificate-print .next-previous{float:right;}
 #birth-register-approval .next-previous img, #birth-confirm-approval .next-previous img, #birth-confirm-print .next-previous img, #birth-certificate-print .next-previous img{width:30px; height:25px;}
+
+#birth-certificate-outer .form-submit, #birth-confirmation-form-outer .form-submit{float:right; margin-top:15px;}
+
+.form-submit input, .button input{text-transform:capitalize;}
+.form-submit input:hover, .form-submit button:hover, .button input:hover{color:darkred;}

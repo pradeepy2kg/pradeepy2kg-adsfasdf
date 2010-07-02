@@ -115,7 +115,5 @@
         </s:else>
         </s:form>
     </div>
-    <div id="birth-register-approval-footer">
-    </div>
 </div>
-<%-- Styling Completed (Duminda) --%>
+<%-- Styling Completed --%>

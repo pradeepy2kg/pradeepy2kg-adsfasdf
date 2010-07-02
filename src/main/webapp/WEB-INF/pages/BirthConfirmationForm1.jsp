@@ -11,8 +11,8 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
-<div class="birth-confirmation-form-outer">
-<table class="table_con_header_01">
+<div id="birth-confirmation-form-outer">
+<table class="table_con_header_01" width="100%" cellpadding="0" cellspacing="0">
     <caption></caption>
     <col/>
     <col/>
@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td align="center"><s:submit name="search" value="%{getText('searchButton.label')}"/></td>
+                        <td align="right" class="button"><s:submit name="search" value="%{getText('searchButton.label')}" cssStyle="margin-right:10px;"/></td>
                     </tr>
                 </form>
             </table>
@@ -51,7 +51,7 @@
         onsubmit="javascript:return validate()">
 
 
-    <table class="table_con_page_01" cellspacing="0">
+    <table class="table_con_page_01" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
         <caption></caption>
         <col/>
         <col/>
@@ -80,7 +80,7 @@
     </table>
 
 
-    <table class="table_con_page_01" cellspacing="0">
+    <table class="table_con_page_01" width="100%" cellpadding="0" cellspacing="0">
         <caption></caption>
         <col/>
         <col/>
@@ -93,14 +93,15 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="15" style="text-align:center;font-size:12pt"> සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
+            <td colspan="14" style="text-align:center;font-size:12pt"> සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
                 <br>சிவில் பதிவு அமைப்பில் உள்ளடக்கப்பட்டுள்ள விபரம்
                 <br>Information included in Civil Registration System
             </td>
         </tr>
         <tr>
             <td colspan="2"><label>විස්තර <br>விபரங்கள் <br>Particulars </label></td>
-            <td colspan="6"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ දැනට අඩංගු විස්තර <br>சிவில் பதிவு அமைப்பில்
+            <td colspan="6" width="350px"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ දැනට අඩංගු විස්තර <br>சிவில் பதிவு
+                அமைப்பில்
                 உள்ளடக்கப்பட்டுள்ள
                 விபரம<br>Information included in Civil Registration System </label></td>
             <td class="cell_02" colspan="6"><label>
@@ -120,9 +121,10 @@
             <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Day</label></td>
             <td class="cell_03"><s:textfield value="%{child.dateOfBirth.date}" cssClass="disable" disabled="true"
                                              size="4"/></td>
-            <td colspan="6"><sx:datetimepicker id="submitDatePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
-                                               value="child.dateOfBirth"
-                                               onmouseover="javascript:splitDate('submitDatePicker')"/></td>
+            <td colspan="6" width="350px"><sx:datetimepicker id="submitDatePicker" name="child.dateOfBirth"
+                                                             displayFormat="yyyy-MM-dd"
+                                                             value="child.dateOfBirth"
+                                                             onmouseover="javascript:splitDate('submitDatePicker')"/></td>
         </tr>
         <tr>
             <td>4</td>
@@ -249,3 +251,4 @@
     </div>
 </s:form>
 </div>
+<%-- Styling Completed --%>
