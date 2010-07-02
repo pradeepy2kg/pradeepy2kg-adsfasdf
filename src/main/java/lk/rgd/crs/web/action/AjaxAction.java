@@ -83,17 +83,17 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         this.registryService = service;
     }
 
-    public String loadDSDivList() {
-        dsDivList();
-        return "DSDivList";
-    }
-
     private void dsDivList() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         dsDivisionId = dsDivisionList.keySet().iterator().next();
         logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
+    }
+
+    public String loadDSDivList() {
+        dsDivList();
+        return "DSDivList";
     }
 
     public String loadDSDivListSearch() {
@@ -125,29 +125,44 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     }
 
     public String loadFatherInfo() {
-        if (!"".equals(parent.getFatherNICorPIN())) {
-            logger.debug("Father NIC/PIN received : {}", parent.getFatherNICorPIN());
-            Person father = registryService.findPersonByPINorNIC(parent.getFatherNICorPIN(), user);
+        String pin = parent.getFatherNICorPIN();
+        if (!"".equals(pin)) {
+            logger.debug("Father NIC/PIN received : {}", pin);
+            Person father = registryService.findPersonByPINorNIC(pin, user);
             if (father != null) {
                 parent.setFatherFullName(father.getFullNameInOfficialLanguage());
                 parent.setFatherDOB(father.getDateOfBirth());
-                logger.debug("Father info set from Ajax : {} {}", parent.getFatherNICorPIN(), parent.getFatherFullName());
+                logger.debug("Father info set from Ajax : {} {}", pin, parent.getFatherFullName());
             }
         }
         return "FatherInfo";
     }
 
     public String loadMotherInfo() {
-        if (!"".equals(parent.getMotherNICorPIN())) {
-            logger.debug("Mother NIC/PIN received : {}", parent.getFatherNICorPIN());
-            Person mother = registryService.findPersonByPINorNIC(parent.getMotherNICorPIN(), user);
+        String pin = parent.getMotherNICorPIN();
+        if (!"".equals(pin)) {
+            logger.debug("Mother NIC/PIN received : {}", pin);
+            Person mother = registryService.findPersonByPINorNIC(pin, user);
             if (mother != null) {
                 parent.setMotherFullName(mother.getFullNameInOfficialLanguage());
                 parent.setMotherDOB(mother.getDateOfBirth());
-                logger.debug("Mother info set from Ajax : {} {}", parent.getMotherNICorPIN(), parent.getMotherFullName());
+                logger.debug("Mother info set from Ajax : {} {}", pin, parent.getMotherFullName());
             }
         }
         return "MotherInfo";
+    }
+
+    public String loadNotifyerInfo() {
+        String pin = notifyingAuthority.getNotifyingAuthorityPIN();
+        if (!"".equals(pin)) {
+            logger.debug("Notifyer NIC/PIN received : {}", pin);
+            Person notifyer = registryService.findPersonByPINorNIC(pin, user);
+            if (notifyer != null) {
+                notifyingAuthority.setNotifyingAuthorityName(notifyer.getFullNameInOfficialLanguage());
+                logger.debug("Notifyer info set from Ajax : {} {}", pin, notifyer.getFullNameInOfficialLanguage());
+            }
+        }
+        return "NotifyerInfo";
     }
 
     private void populateDynamicLists(String language) {
