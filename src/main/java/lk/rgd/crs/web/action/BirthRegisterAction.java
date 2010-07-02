@@ -230,8 +230,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                         bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
 
-                        logger.debug("Birth Confirmation Persist : {}", confirmant.getConfirmantSignDate());
-                        //todo esception handling, validations and error reporting
+                        //todo exception handling, validations and error reporting
                         service.captureLiveBirthConfirmationChanges(bdf, user);
                         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 }
@@ -267,10 +266,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
 
     }
+
     public String initBirthRegistration() {
         return "success";
     }
-        public String initStillBirth() {
+
+    public String initStillBirth() {
         return "success";
     }
 
@@ -283,12 +284,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf = new BirthDeclaration();
         } else {
+            // todo exception handling
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                 return "error";   // todo pass error info
             }
-            //todo check permissions to operate on this birthdivision
         }
+
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
         populate(bdf);
         return "form0";
