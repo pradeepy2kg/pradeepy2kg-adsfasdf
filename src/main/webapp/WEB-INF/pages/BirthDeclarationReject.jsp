@@ -34,7 +34,6 @@
             <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
             <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
             <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-            <s:hidden name="flag" value="birth-register-approval-form"/>
             <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
             <table>
                 <tr>

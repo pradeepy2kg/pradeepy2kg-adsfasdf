@@ -7,7 +7,7 @@
 
 <s:url id="loadBDDivList" action="ajaxSupport_loadBDDivList"/>
 <sx:div name="birthDivisionId" id="birthDivisionId" value="birthDivisionId" href="%{loadBDDivList}"
-        theme="ajax" listenTopics="view_BDDivs" formId="birth-registration-form-1">
+        theme="ajax" listenTopics="view_BDDivs" formId="birth-confirmation-approval-form">
 </sx:div>
 <label style="float:right; line-height:25px; vertical-align:middle;">කොට්ඨාශය /பிரிவு /Division</label>
 

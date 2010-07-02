@@ -11,9 +11,7 @@
         dojo.event.topic.publish("view_BDDivs");
     }
 </script>
-<s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
-    <s:param name="flag" value="birth-register-approval-form"/>
-</s:url>
+<s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListBDFApproval"/>
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
 <div id="birth-register-approval-header">
     <table width="100%" cellpadding="5" cellspacing="0">
@@ -43,7 +41,6 @@
         <tr>
             <td colspan="4" class="button" align="right">
                 <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
-                <s:hidden name="flag" value="birth-register-approval-form"/>
                 <s:submit name="refresh" value="%{getText('refresh.label')}"/>
             </td>
         </tr>
@@ -170,7 +167,6 @@
                     <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                    <s:hidden name="flag" value="birth-register-approval-form"/>
                     <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
                 </s:if>
             </div>

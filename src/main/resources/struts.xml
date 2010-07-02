@@ -58,6 +58,9 @@
             <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
             <result name="FatherInfo">/WEB-INF/pages/template/FatherInfo.jsp</result>
             <result name="MotherInfo">/WEB-INF/pages/template/MotherInfo.jsp</result>
+            <result name="DSDivListSearch">/WEB-INF/pages/template/DSDivBoxSearch.jsp</result>
+            <result name="DSDivListBDFApproval">/WEB-INF/pages/template/DSDivBoxBDFApproval.jsp</result>
+            <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
         </action>
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.BirthRegisterAction"

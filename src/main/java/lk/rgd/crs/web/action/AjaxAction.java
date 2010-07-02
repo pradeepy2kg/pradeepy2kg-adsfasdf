@@ -72,7 +72,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int motherDistrictId;
     private int motherDSDivisionId;
-    private String flag;
 
     public AjaxAction(PopulationRegistry service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO,
                       BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO) {
@@ -85,12 +84,31 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     }
 
     public String loadDSDivList() {
+        dsDivList();
+        return "DSDivList";
+    }
+
+    private void dsDivList() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         dsDivisionId = dsDivisionList.keySet().iterator().next();
         logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
-        return "DSDivList";
+    }
+
+    public String loadDSDivListSearch() {
+        dsDivList();
+        return "DSDivListSearch";
+    }
+
+    public String loadDSDivListBDFApproval() {
+        dsDivList();
+        return "DSDivListBDFApproval";
+    }
+
+    public String loadDSDivListBDFConfirmation() {
+        dsDivList();
+        return "DSDivListBDFConfirmation";
     }
 
     public String loadBDDivList() {
@@ -383,13 +401,5 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public void setMotherDistrictId(int motherDistrictId) {
         this.motherDistrictId = motherDistrictId;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
     }
 }

@@ -11,11 +11,11 @@
             dojo.event.topic.publish("view_BDDivs");
         }
     </script>
+    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListSearch"/>
     <s:actionerror/>
     <br/>
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
-    <form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
-          method="post">
+    <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
+            method="post">
         <fieldset>
             <legend><s:label name="registrationSerchLegend" value="%{getText('registrationSerchLegend.label')}"/></legend>
             <table>
@@ -37,11 +37,10 @@
                     </td>
                 </tr>
                 <tr>
-
                     <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
                     <td colspan="3" class="table_reg_cell_01" id="table_reg_cell_01">
                         <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                            listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div>
+                                listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div>
                     </td>
                 </tr>
                 <tr>
@@ -54,7 +53,7 @@
                 </tbody>
             </table>
         </fieldset>
-    </form>
+    </s:form>
     <br/>
 
     <s:form action="eprBDFSearchByIdUKey.do" method="post">

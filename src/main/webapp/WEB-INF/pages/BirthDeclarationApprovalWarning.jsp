@@ -28,7 +28,6 @@
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                    <s:hidden name="flag" value="birth-register-approval-form"/>
                         <%--<tr>
                             <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
                             <td><s:textarea name="comments"/> </td>
