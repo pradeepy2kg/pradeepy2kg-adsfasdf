@@ -11,9 +11,7 @@
             dojo.event.topic.publish("view_BDDivs");
         }
     </script>
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList">
-        <s:param name="flag" value="birth-confirmation-approval-form"/>
-    </s:url>
+    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListBDFConfirmation"/>
     <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header"
             id="birth-confirmation-approval-form">
         <div id="birth-confirm-approval-header">
@@ -154,7 +152,6 @@
                     <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
                     <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                    <s:hidden name="flag" value="birth-confirmation-approval-form"/>
                     <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
                 </s:if>
             </div>
