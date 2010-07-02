@@ -267,6 +267,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
 
     }
+    public String initBirthRegistration() {
+        return "success";
+    }
+        public String initStillBirth() {
+        return "success";
+    }
 
     public String birthDeclaratinInit() {
         BirthDeclaration bdf;
