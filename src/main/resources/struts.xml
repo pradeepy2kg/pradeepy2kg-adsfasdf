@@ -27,6 +27,14 @@
             <result type="tiles" name="error">epr.error</result>
         </global-results>
 
+        <global-results>
+            <result type="tiles" name="RGDerror">epr.error</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="lk.rgd.common.RGDRuntimeException" result="RGDError"></exception-mapping>
+        </global-exception-mappings>
+
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
         </global-exception-mappings>
