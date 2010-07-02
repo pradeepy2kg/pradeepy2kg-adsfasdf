@@ -84,7 +84,7 @@
                     <td><s:property value="confirmant.confirmationReceiveDate"/></td>
                     <td>
                         <s:if test="#request.allowEditBDF">
-                            <s:url id="editSelected" action="eprBirthConfirmation.do">
+                            <s:url id="editSelected" action="eprBirthConfirmationInit.do">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
 

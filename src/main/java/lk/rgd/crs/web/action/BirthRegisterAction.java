@@ -173,76 +173,53 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String birthConfirmation() {
         logger.debug("Step {} of 3 ", pageNo);
-        if ((pageNo > 3) || (pageNo < 0)) {
-            return "error";
-        } else {
-            BirthDeclaration bdf;
-            if (back) {
-                populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-                return "form" + pageNo;
-            }
-
-            if (pageNo == 0) {
-                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-                if (bdId != 0) {
-                    try {
-                        bdf = service.getById(bdId, user);
-                        if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                            bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
-                            addActionError(getText("cp1.error.editNotAllowed"));
-                            return "error";
-                        }
-                    } catch (Exception e) {
-                        handleErrors(e);
-                        addActionError(getText("cp1.error.entryNotAvailable"));
-                        return "error";
-                    }
-                } else {
-                    bdf = new BirthDeclaration(); // just go to the confirmation 1 page
-                }
-            } else {
-                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-                switch (pageNo) {
-                    case 1:
-                        bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
-                        bdf.getRegister().setDateOfRegistration(register.getDateOfRegistration());
-                        bdf.getRegister().setBirthDivision(register.getBirthDivision());
-
-                        bdf.getChild().setDateOfBirth(child.getDateOfBirth());
-                        bdf.getChild().setChildGender(child.getChildGender());
-                        bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
-
-                        bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
-                        bdf.getParent().setFatherRace(parent.getFatherRace());
-                        bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
-                        bdf.getParent().setMotherRace(parent.getMotherRace());
-                        bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
-                        break;
-                    case 2:
-                        bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
-                        bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
-
-                        bdf.getParent().setFatherFullName(parent.getFatherFullName());
-                        bdf.getParent().setMotherFullName(parent.getMotherFullName());
-                        break;
-                    case 3:
-                        bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
-                        bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
-                        bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
-
-                        //todo exception handling, validations and error reporting
-                        service.captureLiveBirthConfirmationChanges(bdf, user);
-                        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-                }
-            }
-
-            if (pageNo != 3) {
-                session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
-            }
-            populate(bdf);
+        BirthDeclaration bdf;
+        if (back) {
+            populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
             return "form" + pageNo;
         }
+
+        bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        switch (pageNo) {
+            case 1:
+                bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
+                bdf.getRegister().setDateOfRegistration(register.getDateOfRegistration());
+                bdf.getRegister().setBirthDivision(register.getBirthDivision());
+
+                bdf.getChild().setDateOfBirth(child.getDateOfBirth());
+                bdf.getChild().setChildGender(child.getChildGender());
+                bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
+
+                bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
+                bdf.getParent().setFatherRace(parent.getFatherRace());
+                bdf.getParent().setMotherNICorPIN(parent.getMotherNICorPIN());
+                bdf.getParent().setMotherRace(parent.getMotherRace());
+                bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
+                break;
+            case 2:
+                bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+
+                bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                break;
+            case 3:
+                bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
+                bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
+                bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
+
+                //todo exception handling, validations and error reporting
+                service.captureLiveBirthConfirmationChanges(bdf, user);
+                session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        }
+        //}
+
+        if (pageNo != 3) {
+            session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
+        }
+        populate(bdf);
+        return "form" + pageNo;
+        //}
     }
 
     /**
@@ -254,7 +231,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
-            bdf=service.loadValuesForPrint(bdf,user);
+            bdf = service.loadValuesForPrint(bdf, user);
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return "error";
@@ -279,11 +256,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     /**
      * This method is responsible for loading 1 of 4 BDF pages
-     * if bdId is 0 it is a fresh birth declaration if addNewMode
-     * is true it is in the batch mode. If bdId is greater than
-     * 0 it is in the edit mode. In the edit mode checks whether
-     * there is permission to edit to the requested user else
-     * directed to an error page.
+     * if bdId is 0 it is a fresh birth declaration, if addNewMode
+     * is true it is in the batch mode. switches to editable mode
+     * if bdId is greater than 0. for editing checks whether
+     * requested birthDeclaration is editable. If it is not in
+     * the editable mode directed to error page
      *
      * @return
      */
@@ -298,11 +275,40 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                addActionError(getText("p1.editNotAllowedaddActionError"));
                 return "RGDerror";
             }
         }
 
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+        populate(bdf);
+        return "form0";
+    }
+
+    /**
+     * This method is responsible for loading 1 of the 3 BDC pages.
+     * If bdId is 0 it is a fresh birth confirmation, else it is for
+     * edit. In edit mode checks wheather requested birthDeclaration
+     * is in the editable. If it is not in the editable mode directed
+     * to error page
+     *
+     * @return
+     */
+    public String birthConfirmationInit() {
+        BirthDeclaration bdf;
+        session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        if (bdId != 0) {
+            bdf = service.getById(bdId, user);
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                addActionError(getText("cp1.error.editNotAllowed"));
+                return "RGDerror";
+            }
+        } else {
+            bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+        }
+        session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
         populate(bdf);
         return "form0";
     }
@@ -316,7 +322,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
-            bdf=service.loadValuesForPrint(bdf,user);
+            bdf = service.loadValuesForPrint(bdf, user);
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED)) {
                 return "error";

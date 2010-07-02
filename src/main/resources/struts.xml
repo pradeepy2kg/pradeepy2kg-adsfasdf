@@ -94,7 +94,12 @@
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
             <result type="tiles" name="form3">epr.welcome</result>
             <result type="tiles" name="error">epr.error</result>
-            <result type="tiles" name="searchError">epr.BDFSearch</result>
+        </action>
+
+        <action name="eprBirthConfirmationInit" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="birthConfirmationInit">
+            <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
+            <result type="tiles" name="RGDerror">epr.error</result>
         </action>
 
         <action name="eprBirthConfirmationListPage" class="lk.rgd.crs.web.action.BirthRegisterAction"
