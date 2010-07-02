@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: duminda
-  Date: May 10, 2010
-  Time: 4:01:05 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,7 +5,11 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST"
             onsubmit="javascript:return validate()">
-
+        <script>
+            function view_NotifyerInfo() {
+                dojo.event.topic.publish("view_NotifyerInfo");
+            }
+        </script>
 
         <table class="table_reg_page_04" cellspacing="0">
             <caption></caption>
@@ -31,13 +28,18 @@
                 <td colspan="3"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
-                <td colspan="2"><s:textfield name="notifyingAuthority.notifyingAuthorityPIN"
-                                             id="notifyingAuthorityPIN" /></td>
+                <td colspan="2">
+                    <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
+                    <label onclick="javascript:view_NotifyerInfo();return false;">></label>
+                </td>
             </tr>
             <tr>
                 <td><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
-                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityName"
-                                            id="notifyingAuthorityName"/></td>
+                <td colspan="4">
+                    <s:url id="loadNotifyerInfo" action="ajaxSupport_loadNotifyerInfo"/>
+                    <sx:div id="notifyingAuthority.notifyingAuthorityPIN" href="%{loadNotifyerInfo}"
+                            listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"></sx:div>
+                </td>
             </tr>
             <tr>
                 <td><label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
