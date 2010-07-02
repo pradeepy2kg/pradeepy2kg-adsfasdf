@@ -6,9 +6,9 @@ amith jayasekara
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <style type="text/css" media="screen">
-    
+
     /* Actual menu CSS starts here */
-    
+
 </style>
 
 <script type="text/javascript">
@@ -20,19 +20,14 @@ amith jayasekara
             } // Check for DOM support
             var arrMenus = this.getElementsByClassName(document, 'ul', sContainerClass);
             var arrSubMenus, oSubMenu, oLink,checkLink;
+            checkLink = location.href;
             for (var i = 0; i < arrMenus.length; i++) {
                 arrSubMenus = arrMenus[i].getElementsByTagName('ul');
                 for (var j = 0; j < arrSubMenus.length; j++) {
                     oSubMenu = arrSubMenus[j];
                     oLink = oSubMenu.parentNode.getElementsByTagName('a')[0];
-                    if (oLink == "http://localhost:8080/popreg/eprBirthRegistration.do")
-                    {
+                    oLink.onmouseover = function() {
                         toggleMenu.toggle(this.parentNode.getElementsByTagName('ul')[0], sHiddenClass);
-                        return false;
-                    }
-                    oLink.onclick = function() {
-                        toggleMenu.toggle(this.parentNode.getElementsByTagName('ul')[0], sHiddenClass);
-                        //alert(oLink);
                         return false;
                     }
                     this.toggle(oSubMenu, sHiddenClass);
@@ -76,11 +71,8 @@ amith jayasekara
 
 
     });
-    toggleMenu.addEvent(window, 'load', function() {
-        toggleMenu.init('menu1', 'hidden');
 
 
-    });
 </script>
 
 <div id="main-menu">
@@ -92,72 +84,68 @@ amith jayasekara
     </s:else>
     <ul class=menu>
         <s:iterator value="#session.allowed_menue" id="menue">
-            <s:if test="%{((value.size > 0)& (key== 'BIRTH'))||(#session.viewUsers=='ok')}">
-                <li><s:a ondblclick="parent.location='eprBirthRegistrationHome.do'">
-                    <s:label value="%{getText('category_birth_registration')}"/></s:a>
-                    <ul>
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
-            <s:if test="%{(value.size > 0)& (key == 'ADMIN')}">
-                <li><a href="."><s:label value="%{getText('category_admin_task')}"/> </a>
-                    <ul>
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
+        <s:if test="%{((value.size > 0)& (key== 'BIRTH'))||(#session.viewUsers=='ok')}">
+            <li><s:a href="eprBirthRegistrationHome.do">
+                <s:label value="%{getText('category_birth_registration')}"/></s:a>
+                <ul>
+                    <s:iterator value="value" id="x">
+                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                        </s:a></li>
+                    </s:iterator>
+                </ul>
+            </li>
+        </s:if>
+   <s:if test="%{(value.size > 0)& (key == 'ADMIN')}">
+            <li><a href="."><s:label value="%{getText('category_admin_task')}"/> </a>
+                <ul>
+                    <s:iterator value="value" id="x">
+                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                        </s:a></li>
+                    </s:iterator>
+                </ul>
+            </li>
+        </s:if>
+    <s:if test="%{(value.size > 0)& (key == 'DEATH')}">
 
-            <s:if test="%{(value.size > 0)& (key == 'DEATH')}">
-
-                <li><s:a href="%{editSelected}"><s:label value="%{getText('category_death_registraion')}"/> </s:a>
-                    <ul>
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
-
-            <s:if test="%{(value.size > 0)& (key == 'MARRAGE')}">
-                <li><a href=><s:label value="%{getText('category_marrage_registraion')}"/> </a>
-                    <ul>
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
-
-            <s:if test="%{(value.size > 0)& (key == 'REPORT')}">
-                <li><a href="."><s:label value="%{getText('category_reports')}"/> </a>
-                    <ul>
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
-
-            <s:if test="%{(value.size > 0)& (key == 'PREFERANCE')}">
-                <li><a href="."><s:label value="%{getText('category_user_preferance')}"/> </a>
-                    <ul>
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
+            <li><s:a href="%{editSelected}"><s:label value="%{getText('category_death_registraion')}"/> </s:a>
+                <ul>
+                    <s:iterator value="value" id="x">
+                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                        </s:a></li>
+                    </s:iterator>
+                </ul>
+            </li>
+        </s:if>
+     <s:if test="%{(value.size > 0)& (key == 'MARRAGE')}">
+            <li><a href=><s:label value="%{getText('category_marrage_registraion')}"/> </a>
+                <ul>
+                    <s:iterator value="value" id="x">
+                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                        </s:a></li>
+                    </s:iterator>
+                </ul>
+            </li>
+        </s:if>
+    <s:if test="%{(value.size > 0)& (key == 'REPORT')}">
+            <li><a href="."><s:label value="%{getText('category_reports')}"/> </a>
+                <ul>
+                    <s:iterator value="value" id="x">
+                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                        </s:a></li>
+                    </s:iterator>
+                </ul>
+            </li>
+        </s:if>
+   <s:if test="%{(value.size > 0)& (key == 'PREFERANCE')}">
+            <li><s:a href="."><s:label value="%{getText('category_user_preferance')}"/> </s:a>
+                <ul>
+                    <s:iterator value="value" id="x">
+                        <li><s:a href="%{value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                        </s:a></li>
+                    </s:iterator>
+                </ul>
+            </li>
+        </s:if>
         </s:iterator>
     </ul>
 </div>

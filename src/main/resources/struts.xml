@@ -270,5 +270,14 @@
         <action name="passChangePageLoad">
             <result>/WEB-INF/pages/PasswordChange.jsp</result>
         </action>
+        <action name="eprBirthRegistrationHome" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="initBirthRegistration">
+            <result type="tiles" name="success">epr.birthRegistrationHome</result>
+        </action>
+        <action name="eprStillBirth" class="lk.rgd.crs.web.action.BirthRegisterAction"
+                method="initStillBirth">
+            <result type="tiles" name="success">epr.stillBirth</result>
+        </action>
+
     </package>
 </struts>
