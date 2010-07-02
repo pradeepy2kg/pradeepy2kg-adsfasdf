@@ -22,6 +22,7 @@ import lk.rgd.crs.api.bean.UserWarning;
 
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
 /**
@@ -115,7 +116,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             return "form" + pageNo;
         }
-        
+
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
@@ -142,7 +143,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdId = bdf.getIdUKey();
                 if (bdId == 0) {
                     service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
-                    bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add. 
+                    bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                 } else {
                     service.editLiveBirthDeclaration(bdf, true, user);
                 }
@@ -235,7 +236,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
                 }
             }
-            
+
             if (pageNo != 3) {
                 session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
             }
@@ -275,6 +276,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
+    /**
+     * This method is responsible for loading 1 of 4 BDF pages
+     * if bdId is 0 it is a fresh birth declaration if addNewMode
+     * is true it is in the batch mode. If bdId is greater than
+     * 0 it is in the edit mode. In the edit mode checks whether
+     * there is permission to edit to the requested user else
+     * directed to an error page.
+     *
+     * @return
+     */
     public String birthDeclaratinInit() {
         BirthDeclaration bdf;
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
@@ -284,10 +295,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf = new BirthDeclaration();
         } else {
-            // todo exception handling
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
-                return "error";   // todo pass error info
+                return "RGDerror";
             }
         }
 
