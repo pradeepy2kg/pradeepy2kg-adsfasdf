@@ -174,7 +174,7 @@ public interface BirthRegistrationService {
      * @param noOfRows      number of rows to return per page
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows,User user);
 
     /**
      * Get the list of BDFs for which the Confirmation form should be printed
@@ -185,7 +185,7 @@ public interface BirthRegistrationService {
      * @param printed return already printed items if true, or items pending printing if false
      * @return  approved list for print
      */
-    public List<BirthDeclaration> getConfirmationPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
+    public List<BirthDeclaration> getConfirmationPrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed,User user);
 
     /**
      * Get the list of BDFs for which the Birth Certificate should be printed
@@ -196,7 +196,7 @@ public interface BirthRegistrationService {
      * @param printed return already printed items if true, or items pending printing if false
      * @return  approved list for print
      */
-    public List<BirthDeclaration> getBirthCertificatePrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
+    public List<BirthDeclaration> getBirthCertificatePrintList(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed,User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
@@ -207,7 +207,7 @@ public interface BirthRegistrationService {
      * @param noOfRows      number of rows to return per page
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows);
+    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows,User user);
 
     /**
      * Load names of values for print or display, in the preferred language of the record
@@ -230,7 +230,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows);
+        Date startDate, Date endDate, int pageNo, int noOfRows,User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -245,6 +245,6 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows);
+        Date startDate, Date endDate, int pageNo, int noOfRows,User user);
 }
 

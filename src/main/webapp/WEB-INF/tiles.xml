@@ -116,7 +116,7 @@
         <put-attribute name="title" value="CreatUser.title"/>
     </definition>
 
- <definition name="epr.UserPreferences" extends="epr.template">
+    <definition name="epr.UserPreferences" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/UserPreferences.jsp"/>
         <put-attribute name="title" value="UserPreferences.title"/>
     </definition>
@@ -140,11 +140,13 @@
         <put-attribute name="body" value="/WEB-INF/pages/BirthConfirmationApproval.jsp"/>
         <put-attribute name="title" value="BirthConfirmationApproval.title"/>
     </definition>
-      <definition name="epr.birthRegistrationHome" extends="epr.template">
+
+    <definition name="epr.birthRegistrationHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationHome.jsp"/>
         <put-attribute name="title" value="Birth Registration"/>
     </definition>
-          <definition name="epr.stillBirth" extends="epr.template">
+
+    <definition name="epr.stillBirth" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/stillBirth.jsp"/>
         <put-attribute name="title" value="still Birth Registration"/>
     </definition>

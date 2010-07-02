@@ -531,11 +531,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows) {
+    public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows,User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmations pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
+        validateAccessToDS(user,bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(
             bdDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
     }
@@ -544,12 +545,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getConfirmationPrintList(
-        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed) {
+        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed,User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending confirmation printing by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
+        validateAccessToDS(user,bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
     }
@@ -558,13 +560,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getBirthCertificatePrintList(
-        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed) {
+        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed,User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth certificate list print by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-
+        validateAccessToDS(user,bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.ARCHIVED_BC_PRINTED : BirthDeclaration.State.ARCHIVED_BC_GENERATED);
     }
@@ -572,11 +574,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows) {
+    public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows,User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
+        validateAccessToDS(user,bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
     }
 
@@ -584,13 +587,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows) {
+        Date startDate, Date endDate, int pageNo, int noOfRows,User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
                 " with number of rows per page : " + noOfRows);
         }
+        validateAccessToDS(user,bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndRegisterDateRange(
             bdDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
     }
@@ -599,13 +603,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows) {
+        Date startDate, Date endDate, int pageNo, int noOfRows,User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
                 bdDivision.getBdDivisionUKey() + " and date range : " + startDate + " to " + endDate +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
+        validateAccessToDS(user,bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndConfirmationReceiveDateRange(
             bdDivision, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, startDate, endDate, pageNo, noOfRows);
     }
