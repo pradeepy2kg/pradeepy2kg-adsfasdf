@@ -621,10 +621,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @param bdf the BirthDeclaration to populate transient values
      * @return populated BDF
      */
-    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf) {
+    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf,User user) {
 
         logger.debug("Loading record : {} for printing", bdf.getIdUKey());
-
+        validateAccessOfUser(user,bdf);
         String prefLanguage = bdf.getRegister().getPreferredLanguage();
 
         ChildInfo child = bdf.getChild();

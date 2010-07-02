@@ -215,7 +215,7 @@ public interface BirthRegistrationService {
      * @param bdf the BDF to load values for
      * @return the BDF with all print/display string values populated
      */
-    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf);
+    public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf,User user);
 
     /**
      * Returns a limited set of approval pending BirthDeclarations for selected BD Division and selected range of
