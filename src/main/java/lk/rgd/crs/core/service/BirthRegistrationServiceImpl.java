@@ -486,6 +486,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessOfUser(User user, BirthDeclaration bdf) {
         BDDivision bdDivision = bdf.getRegister().getBirthDivision();
+        validateAccessToDS(user, bdDivision);
+    }
+
+    private void validateAccessToDS(User user, BDDivision bdDivision) {
         if (!user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey()) &&
             !user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())) {
 
