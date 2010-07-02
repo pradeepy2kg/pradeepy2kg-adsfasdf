@@ -14,6 +14,7 @@ import java.util.List;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.RGDRuntimeException;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -133,11 +134,13 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         String pin = parent.getFatherNICorPIN();
         if (!"".equals(pin)) {
             logger.debug("Father NIC/PIN received : {}", pin);
-            Person father = registryService.findPersonByPINorNIC(pin, user);
-            if (father != null) {
+            try {
+                Person father = registryService.findPersonByPINorNIC(pin, user);
                 parent.setFatherFullName(father.getFullNameInOfficialLanguage());
                 parent.setFatherDOB(father.getDateOfBirth());
                 logger.debug("Father info set from Ajax : {} {}", pin, parent.getFatherFullName());
+            } catch (Exception e) {
+                logger.debug("No match from Ajax for Father PIN/NIC : {}", pin);
             }
         }
         return "FatherInfo";
@@ -147,11 +150,13 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         String pin = parent.getMotherNICorPIN();
         if (!"".equals(pin)) {
             logger.debug("Mother NIC/PIN received : {}", pin);
-            Person mother = registryService.findPersonByPINorNIC(pin, user);
-            if (mother != null) {
+            try {
+                Person mother = registryService.findPersonByPINorNIC(pin, user);
                 parent.setMotherFullName(mother.getFullNameInOfficialLanguage());
                 parent.setMotherDOB(mother.getDateOfBirth());
                 logger.debug("Mother info set from Ajax : {} {}", pin, parent.getMotherFullName());
+            } catch (Exception e) {
+                logger.debug("No match from Ajax for Mother PIN/NIC : {}", pin);
             }
         }
         return "MotherInfo";
@@ -161,10 +166,12 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         String pin = notifyingAuthority.getNotifyingAuthorityPIN();
         if (!"".equals(pin)) {
             logger.debug("Notifyer NIC/PIN received : {}", pin);
-            Person notifyer = registryService.findPersonByPINorNIC(pin, user);
-            if (notifyer != null) {
+            try {
+                Person notifyer = registryService.findPersonByPINorNIC(pin, user);
                 notifyingAuthority.setNotifyingAuthorityName(notifyer.getFullNameInOfficialLanguage());
                 logger.debug("Notifyer info set from Ajax : {} {}", pin, notifyer.getFullNameInOfficialLanguage());
+            } catch (Exception e) {
+                logger.debug("No match from Ajax for Notifyer PIN/NIC : {}", pin);
             }
         }
         return "NotifyerInfo";
