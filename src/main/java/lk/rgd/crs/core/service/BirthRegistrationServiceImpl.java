@@ -678,4 +678,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         return bdf;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getByBirthDivision(BDDivision bdDivision, User user) {
+        logger.debug("Get records birthDivision ID : {}", bdDivision.getBdDivisionUKey());
+        validateAccessToBDDivision(user, bdDivision);
+        return birthDeclarationDAO.getByBirthDivision(bdDivision);
+    }
 }
