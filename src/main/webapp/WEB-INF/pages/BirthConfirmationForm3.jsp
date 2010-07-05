@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
-<div class="birth-confirmation-form-outer">
+<div id="birth-confirmation-form-outer">
     <s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST"
             onsubmit="javascript:return validate()">
 
@@ -83,17 +83,22 @@
                 return returnval;
             }
         </script>
-
+        <div class="skip-validation">
+            <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+                <s:label value="%{getText('skipvalidation.label')}"/>
+            </s:checkbox>
+        </div>
         <div class="form-submit">
+            <s:submit value="%{getText('next.label')}"/>
+        </div>
+        <div class="next-previous">
             <s:url id="backUrl" action="eprBirthConfirmation">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
-            <s:a href="%{backUrl}"> << </s:a>
-            <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-                <s:label value="%{getText('skipvalidation.label')}"/>
-            </s:checkbox>
-            <s:submit value="%{getText('next.label')}"/>
+            <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" border="none"
+                                        style="margin-top:10px;"/></s:a>
         </div>
     </s:form>
 </div>
+<%-- Styling Completed --%>

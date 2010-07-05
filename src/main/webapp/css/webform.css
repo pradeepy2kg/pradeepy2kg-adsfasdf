@@ -1411,15 +1411,15 @@
 }
 
 .cell_01 {
-    width: 40px
+    width: 40px;
 }
 
-;
+
 .cell_02 {
-    width: 300px
+    width: 300px;
 }
 
-;
+
 .cell_03 {
     width: 50px
 }
@@ -1437,7 +1437,6 @@
     border-right: none;
     border-bottom: none;
     font-size: 9pt;
-    margin-bottom: 30px;
 }
 
 .table_con_page_02 td {
@@ -1456,7 +1455,6 @@
     border-right: none;
     border-bottom: none;
     font-size: 9pt;
-    margin-bottom: 30px;
 }
 
 .table_con_page_03 td {

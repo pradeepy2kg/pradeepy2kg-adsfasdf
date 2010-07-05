@@ -30,12 +30,11 @@
             <table style=" border:1px solid #000000; width:300px">
                 <form action="eprBirthConfirmationInit.do" method="post">
                     <tr>
-                        <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                        <td rowspan="2"><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
                         <td><s:textfield name="bdId" id="SerialNo"/></td>
                     </tr>
                     <tr>
-                        <td></td>
                         <td align="right" class="button"><s:submit name="search" value="%{getText('searchButton.label')}" cssStyle="margin-right:10px;"/></td>
                     </tr>
                 </form>
@@ -53,7 +52,7 @@
 
     <table class="table_con_page_01" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
         <caption></caption>
-        <col/>
+        <col align="center"/>
         <col/>
         <col/>
         <tbody>
@@ -81,7 +80,12 @@
 
 
     <table class="table_con_page_01" width="100%" cellpadding="0" cellspacing="0">
-        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
         <col/>
         <col/>
         <col/>
@@ -242,11 +246,12 @@
             return returnval;
         }
     </script>
-
-    <div class="form-submit">
+    <div class="skip-validation">
         <s:checkbox name="skipjavaScript" id="skipjs" value="false">
             <s:label value="%{getText('skipvalidation.label')}"/>
         </s:checkbox>
+    </div>
+    <div class="form-submit">
         <s:submit value="%{getText('next.label')}"/>
     </div>
 </s:form>
