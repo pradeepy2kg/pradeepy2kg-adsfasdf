@@ -17,7 +17,7 @@ body {
 #layout-header {
     width: 100%;
     height: 150px;
-    background: url(../images/epr-header.jpg) no-repeat;
+    background: url(../images/epr-header.png) no-repeat;
 }
 
 #layout-body {
@@ -60,14 +60,14 @@ body {
     margin-right: 10px;
 }
 
-#logout-button{float:right; text-transform:capitalize; margin:10px;}
+#logout-button{float:right; text-transform:capitalize; width: 130px; height:35px; border:none; background:url("../images/button_bg.png");}
 #logout-button:hover{color:darkred;}
 
 /* Styles for the Login Page */
 #login-form {
     width: 40%;
     height: 150px;
-    margin: 23% auto;
+    margin: 6% auto;
     float: none;
     padding: 5px;
     background: url(../images/odd-row.png);
@@ -79,7 +79,7 @@ body {
     text-align: center;
     background: url(../images/title-bg.png);
     font-size: 11pt;
-    text-transform: uppercase;
+    text-transform: capitalize;
     line-height: 30px;
     color: #533517;
 }
@@ -113,64 +113,16 @@ body {
 
 #login-form #login-form-body div input {
     float: right;
-    width: 100px;
     margin: 5px 0;
-    text-transform: uppercase;
+    text-transform:capitalize;
+    width: 130px;
+    height:35px;
+    border:none;
+    background:url("../images/button_bg.png");}
 }
 
 #login-form #login-form-body div input:hover {
     color: darkred;
-}
-
-/* Styles for the Main-Menu */
-
-#main-menu a {
-    display: list-item;
-    text-transform: capitalize;
-    text-decoration: none;
-}
-
-.menu, .menu ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.menu {
-    width: 198px;
-}
-
-.menu li {
-    margin-bottom: 1px;
-}
-
-.menu a {
-    border: none;
-    font-size: 9pt;
-    color: saddlebrown;
-    text-transform: capitalize;
-    text-decoration: none;
-    padding: 2px 5px;
-    line-height: 20px;
-    background: url(../images/title-bg.png) repeat;
-    text-decoration: none;
-}
-
-.menu a:hover,
-    .menu a:focus,
-    .menu a:active {
-    background:url(../images/menu-hover.png) repeat;
-    color: cornsilk;
-}
-
-.menu ul li {
-    padding-left: 5px;
-}
-
-.menu ul a {
-    background:url(../images/menu-2.png) repeat;
-    color: saddlebrown;
-    border-bottom:1px inset saddlebrown;
 }
 
 .hidden {
