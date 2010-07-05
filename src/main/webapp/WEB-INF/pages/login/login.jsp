@@ -13,8 +13,14 @@
             background: <s:url value="/images/body-bg1.png"/> repeat;
         }
     </style>
+    <script type="text/javascript">
+    function setFocus() {
+        document.forms[0].userName.focus();
+    }
+    </script>
 </head>
-<body>
+<body onload="setFocus()">
+<img src="images/epr-header.png"/>
 <div id="login-form">
     <div id="login-form-title">user login</div>
     <div id="login-form-body">
@@ -27,6 +33,10 @@
                 <div><s:submit value="login"></s:submit></div>
        </s:form>
     </div>
+</div>
+<div style="margin-left:auto; margin-right:auto; width:62%;">
+    <img src="<s:url value="/images/icta-logo.jpg"/>">
+    Copyright © 2010 ICTA » Information and Communication Technology Agency of Sri Lanka. All Rights Reserved.
 </div>
 </body>
 </html>
