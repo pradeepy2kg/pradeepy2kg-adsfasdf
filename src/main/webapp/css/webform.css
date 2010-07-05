@@ -1290,7 +1290,7 @@
 
 .table_reg_cell_02  select {
     float: left;
-    width: 590px;
+    width: 550px;
     margin: 2px 5px;
 }
 
@@ -1523,3 +1523,5 @@
 #user-preference-outer table tr td select{float:right; width:300px;}
 #user-preference-outer table tr td input{text-transform:capitalize;}
 #user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}
+
+#birth-registration-form-2-outer table{margin:10px 0;}
