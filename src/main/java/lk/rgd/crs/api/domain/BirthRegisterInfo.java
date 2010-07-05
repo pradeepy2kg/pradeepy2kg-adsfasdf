@@ -12,11 +12,10 @@ import java.util.Date;
  */
 @Embeddable
 public class BirthRegisterInfo {
-
     /**
      * The preferred language of for the record
      */
-    @Column (nullable = false, columnDefinition="char(2) default 'si'")
+    @Column(nullable = false, columnDefinition = "char(2) default 'si'")
     private String preferredLanguage = "si";
 
     /**
@@ -63,17 +62,23 @@ public class BirthRegisterInfo {
     @Enumerated
     private BirthDeclaration.State status;
 
-    /** Status comment - e.g. reason for rejection due to duplicate  */
+    /**
+     * Status comment - e.g. reason for rejection due to duplicate
+     */
     @Lob
     @Column(nullable = true, length = 4096)
     private String comments;
 
-    /** The date of issue for the original birth certificate - free copy */
+    /**
+     * The date of issue for the original birth certificate - free copy
+     */
     @Column(nullable = true, updatable = false)
     @Temporal(value = TemporalType.DATE)
     private Date originalBCDateOfIssue;
 
-    /** The place of issue for the original birth certificate - free copy (Stores the DS Division ID) */
+    /**
+     * The place of issue for the original birth certificate - free copy (Stores the DS Division ID)
+     */
     @Column(nullable = true, updatable = false)
     private Integer originalBCPlaceOfIssue;
 
@@ -82,6 +87,12 @@ public class BirthRegisterInfo {
      */
     @Transient
     private String originalBCPlaceOfIssuePrint;
+
+    /**
+     * if normal birth - true, if still birth - false
+     */
+    @Column(nullable = true)
+    private boolean birthType;
 
     public String getComments() {
         return comments;
@@ -130,7 +141,7 @@ public class BirthRegisterInfo {
     public void setBdfSerialNo(long bdfSerialNo) {
         this.bdfSerialNo = bdfSerialNo;
     }
-    
+
     public Date getDateOfRegistration() {
         return dateOfRegistration;
     }
@@ -185,5 +196,13 @@ public class BirthRegisterInfo {
 
     public void setDistrictPrint(String districtPrint) {
         this.districtPrint = districtPrint;
+    }
+
+    public boolean getBirthType() {
+        return birthType;
+    }
+
+    public void setBirthType(boolean birthType) {
+        this.birthType = birthType;
     }
 }

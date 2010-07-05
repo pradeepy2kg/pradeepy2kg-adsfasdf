@@ -86,6 +86,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean back;
     private boolean allowApproveBDF;
 
+    private boolean liveBirth;
+
     public String welcome() {
         return "success";
     }
@@ -120,21 +122,28 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
+                liveBirth = bdf.getRegister().getBirthType();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
                 register.setComments(bdf.getRegister().getComments());
                 bdf.setRegister(register);
+                if (liveBirth) {
+                    bdf.getRegister().setBirthType(true);
+                }
                 break;
             case 2:
+                liveBirth = bdf.getRegister().getBirthType();
                 bdf.setParent(parent);
                 break;
             case 3:
+                liveBirth = bdf.getRegister().getBirthType();
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
                 bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 break;
             case 4:
+                liveBirth = bdf.getRegister().getBirthType();
                 bdf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
@@ -272,6 +281,32 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
             bdf = new BirthDeclaration();
+            bdf.getRegister().setBirthType(true);
+        } else {
+            bdf = service.getById(bdId, user);
+            if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
+                addActionError(getText("p1.editNotAllowedaddActionError"));
+                return "RGDerror";
+            }
+        }
+
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+        populate(bdf);
+        return "form0";
+    }
+
+    /**
+     * @return
+     */
+    public String stillBirthDeclarationInit() {
+        BirthDeclaration bdf;
+        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        if (bdId == 0) {
+            if (!addNewMode) {
+                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            }
+            bdf = new BirthDeclaration();
+            bdf.getRegister().setBirthType(false);
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -843,5 +878,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setOldBdId(long oldBdId) {
         this.oldBdId = oldBdId;
+    }
+
+    public boolean isLiveBirth() {
+        return liveBirth;
+    }
+
+    public void setLiveBirth(boolean liveBirth) {
+        this.liveBirth = liveBirth;
     }
 }
