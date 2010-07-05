@@ -90,13 +90,13 @@
                     <s:submit value="%{getText('print.label')}"/></s:label>
             </div>
             <div class="next-previous">
-                <s:url id="previousUrl" action="eprCertificatePrintPrevious.do">
+                <s:url id="previousUrl" action="eprPrintPrevious.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="select" value="#request.select"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
-                <s:url id="nextUrl" action="eprCertificatePrintNext.do">
+                <s:url id="nextUrl" action="eprPrintNext.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="select" value="#request.select"/>
