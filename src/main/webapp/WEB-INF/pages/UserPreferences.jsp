@@ -23,7 +23,7 @@
                         <label>දිස්ත්‍රික්කය / மாவட்டம் / District</label>
                     </div>
                 </td>
-                <td><s:select name="prefDistrictId" list="districtList" headerKey="0"/>
+                <td><s:select name="prefDistrictId" list="districtList" value="prefDistrictId"/>
                 </td>
             </tr>
             <tr>
@@ -32,7 +32,7 @@
                         <label>D.S.කොට්ඨාශය / பிரிவு / D.S. Division</label>
                     </div>
                 </td>
-                <td><s:select name="prefDSDivisionId" list="dsDivisionList" headerKey="0"/>
+                <td><s:select name="prefDSDivisionId" list="dsDivisionList" value="prefDSDivisionId"/>
                 </td>
             </tr>
             <tr>

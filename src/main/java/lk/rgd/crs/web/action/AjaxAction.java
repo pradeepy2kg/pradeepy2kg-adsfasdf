@@ -37,17 +37,12 @@ import lk.rgd.prs.core.dao.PersonDAOImpl;
 public class AjaxAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(AjaxAction.class);
 
-    private final DistrictDAO districtDAO;
-    private final CountryDAO countryDAO;
-    private final RaceDAO raceDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final PopulationRegistry registryService;
 
     private Map<Integer, String> districtList;
-    private Map<Integer, String> countryList;
     private Map<Integer, String> dsDivisionList;
-    private Map<Integer, String> raceList;
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
@@ -55,30 +50,17 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private Map session;
 
     private ParentInfo parent;
-    private GrandFatherInfo grandFather;
-    private MarriageInfo marriage;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
-    private ConfirmantInfo confirmant;
-    private BirthRegisterInfo register;
     private User user;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
     private int birthDivisionId;
-    private int fatherCountry;
-    private int motherCountry;
-    private int fatherRace;
-    private int motherRace;
     private int dsDivisionId;
-    private int motherDistrictId;
-    private int motherDSDivisionId;
 
-    public AjaxAction(PopulationRegistry service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO,
-                      BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO) {
-        this.districtDAO = districtDAO;
-        this.countryDAO = countryDAO;
-        this.raceDAO = raceDAO;
+    public AjaxAction(PopulationRegistry service, DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO,
+                      DSDivisionDAO dsDivisionDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.registryService = service;
@@ -87,12 +69,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private void dsDivList() {
         populateDSDivList();
         logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
-    }
-
-    public String loadBDDivList() {
-        populateBDDivList();
-        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, birthDivisionId);
-        return "BDDivList";
     }
 
     private void populateDSDivList() {
@@ -142,6 +118,12 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             birthDivisionId = bdDivisionList.keySet().iterator().next();
             logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
         }
+    }
+
+    public String loadBDDivList() {
+        populateBDDivList();
+        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, birthDivisionId);
+        return "BDDivList";
     }
 
     public String loadDSDivList() {
@@ -234,22 +216,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         this.districtList = districtList;
     }
 
-    public Map<Integer, String> getCountryList() {
-        return countryList;
-    }
-
-    public void setCountryList(Map<Integer, String> countryList) {
-        this.countryList = countryList;
-    }
-
-    public Map<Integer, String> getRaceList() {
-        return raceList;
-    }
-
-    public void setRaceList(Map<Integer, String> raceList) {
-        this.raceList = raceList;
-    }
-
     public Map<Integer, String> getBdDivisionList() {
         return bdDivisionList;
     }
@@ -284,45 +250,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
-        if (register == null) {
-            register = new BirthRegisterInfo();
-        }
-        register.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
-        logger.debug("setting BirthDivision: {}", register.getBirthDivision().getEnDivisionName());
-    }
-
-    public int getFatherCountry() {
-        return fatherCountry;
-    }
-
-    public void setFatherCountry(int fatherCountry) {
-        this.fatherCountry = fatherCountry;
-        if (parent == null) {
-            parent = new ParentInfo();
-        }
-        parent.setFatherCountry(countryDAO.getCountry(fatherCountry));
-        logger.debug("setting Father Country: {}", parent.getFatherCountry().getEnCountryName());
-    }
-
-    public int getMotherCountry() {
-        return motherCountry;
-    }
-
-    public void setMotherCountry(int motherCountry) {
-        this.motherCountry = motherCountry;
-        if (parent == null) {
-            parent = new ParentInfo();
-        }
-        parent.setMotherCountry(countryDAO.getCountry(motherCountry));
-        logger.debug("setting Mother Country: {}", parent.getMotherCountry().getEnCountryName());
-    }
-
-    public MarriageInfo getMarriage() {
-        return marriage;
-    }
-
-    public void setMarriage(MarriageInfo marriage) {
-        this.marriage = marriage;
+        logger.debug("setting BD Division: {}", birthDivisionId);
     }
 
     public InformantInfo getInformant() {
@@ -331,14 +259,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public void setInformant(InformantInfo informant) {
         this.informant = informant;
-    }
-
-    public GrandFatherInfo getGrandFather() {
-        return grandFather;
-    }
-
-    public void setGrandFather(GrandFatherInfo grandFather) {
-        this.grandFather = grandFather;
     }
 
     public Map<Integer, String> getDsDivisionList() {
@@ -352,61 +272,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
         logger.debug("setting DS Division: {}", dsDivisionId);
-    }
-
-    public ConfirmantInfo getConfirmant() {
-        return confirmant;
-    }
-
-    public void setConfirmant(ConfirmantInfo confirmant) {
-        this.confirmant = confirmant;
-    }
-
-    public int getFatherRace() {
-        return fatherRace;
-    }
-
-    public void setFatherRace(int fatherRace) {
-        this.fatherRace = fatherRace;
-        if (parent == null) {
-            parent = new ParentInfo();
-        }
-        parent.setFatherRace(raceDAO.getRace(fatherRace));
-        logger.debug("setting Father Race: {}", parent.getFatherRace().getEnRaceName());
-    }
-
-    public int getMotherRace() {
-        return motherRace;
-    }
-
-    public void setMotherRace(int motherRace) {
-        this.motherRace = motherRace;
-        if (parent == null) {
-            parent = new ParentInfo();
-        }
-        parent.setMotherRace(raceDAO.getRace(motherRace));
-        logger.debug("setting Mother Race: {}", parent.getMotherRace().getEnRaceName());
-    }
-
-    public int getMotherDSDivisionId() {
-        return motherDSDivisionId;
-    }
-
-    public void setMotherDSDivisionId(int motherDSDivisionId) {
-        this.motherDSDivisionId = motherDSDivisionId;
-        if (parent == null) {
-            parent = new ParentInfo();
-        }
-        parent.setMotherDSDivision(dsDivisionDAO.getDSDivisionByPK(motherDSDivisionId));
-        logger.debug("setting Mother DSDivision: {}", parent.getMotherDSDivision().getEnDivisionName());
-    }
-
-    public BirthRegisterInfo getRegister() {
-        return register;
-    }
-
-    public void setRegister(BirthRegisterInfo register) {
-        this.register = register;
     }
 
     public Map<Integer, String> getAllDistrictList() {
@@ -423,13 +288,5 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public void setAllDSDivisionList(Map<Integer, String> allDSDivisionList) {
         this.allDSDivisionList = allDSDivisionList;
-    }
-
-    public int getMotherDistrictId() {
-        return motherDistrictId;
-    }
-
-    public void setMotherDistrictId(int motherDistrictId) {
-        this.motherDistrictId = motherDistrictId;
     }
 }
