@@ -373,6 +373,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register = new BirthRegisterInfo();
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
+            register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
