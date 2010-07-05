@@ -1411,9 +1411,28 @@
 }
 
 .cell_01 {
-    width: 40px
+    width: 40px;
+    height:100px;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
 }
-
+/* Fix Confirmation page2 table hight*/
+.cell_012 {
+    width:40px;
+    height:150px;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+/* Fix Confirmation page1 table hight*/
+.cell_011 {
+    width:40px;
+    height:70px;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
 ;
 .cell_02 {
     width: 300px
@@ -1475,6 +1494,7 @@
     border-bottom: none;
     font-size: 9pt;
     margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .table_con_page2_table td {

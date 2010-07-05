@@ -37,6 +37,8 @@
         ;
             src: url(eot/LATHA0.eot)
         ;
+        
+        }
     </style>
     <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>

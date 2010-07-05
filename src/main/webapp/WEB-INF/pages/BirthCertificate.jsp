@@ -106,16 +106,16 @@
                 <td><s:label name="" value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>
             </tr>
             <tr>
-                <td>නම <br>பெயர் <br>Name
+                <td height="100px">නම <br>பெயர் <br>Name
                 </td>
-                <td colspan="5" class="bc-name">
+                <td colspan="5" class="bc-name" style="font-size:10pt">
                     <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
                 </td>
             </tr>
             <tr>
-                <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
+                <td height="100px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
                 </td>
-                <td colspan="5" class="bc-name">
+                <td colspan="5" class="bc-name" style="font-size:10pt">
                     <s:label name="" value="%{#request.child.childFullNameEnglish}"/>
                 </td>
             </tr>
@@ -125,12 +125,12 @@
                 <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
                 <td>පියාගේ ජාතිය<br>தந்தையின் இனம் <br> Father's Race
                 </td>
-                <td colspan="3"><s:label name="" value="%{#request.parent.fatherRace.siRaceName}"/></td>
+                <td colspan="3" ><s:label name="" value="%{#request.parent.fatherRace.siRaceName}"/></td>
             </tr>
             <tr>
-                <td>පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+                <td height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
                 </td>
-                <td colspan="5" class="bc-name">
+                <td colspan="5" class="bc-name" style="font-size:10pt">
                     <s:label name="" value="%{#request.parent.fatherFullName}"/>
                 </td>
             </tr>
@@ -143,9 +143,8 @@
                 <td colspan="3"><s:label name="" value="%{#request.parent.motherRace.siRaceName}"/></td>
             </tr>
             <tr>
-                <td>මවගේ සම්පූර්ණ නම <br>தாயின் முழுப் பெயர் <br> Mother's Full Name
                 </td>
-                <td colspan="5" class="bc-name">
+                <td colspan="5" class="bc-name" style="font-size:10pt">
                     <s:label name="" value="%{#request.parent.motherFullName}"/>
                 </td>
             </tr>
@@ -167,17 +166,17 @@
                 <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="2" height="100px" >
                     සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
                     சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
                     Name, Signature and Designation of certifying officer
                 </td>
-                <td colspan="2"><s:label name="" value="%{#request.register.confirmantFullName}"/></td>
+                <td colspan="2" style="font-size:10pt"><s:label name="" value="%{#request.register.confirmantFullName}"/></td>
             </tr>
             <tr>
                 <td colspan="2">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
                 </td>
-                <td colspan="2"><s:label name="" value="%{#request.register.dateOfRegistration}"/></td>
+                <td colspan="2" ><s:label name="" value="%{#request.register.dateOfRegistration}"/></td>
             </tr>
             </tbody>
         </table>
@@ -188,7 +187,7 @@
             Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
 
         <div class="form-submit">
-            <s:submit value="%{getText('print.label')}" onclick="print()" type="button"/>
+            <s:submit value="%{getText('print.label')}" onclick="print()" type="button" cssClass="button_print"/>
         </div>
     </s:form>
 </div>

@@ -28,9 +28,8 @@
                               onchange="javascript:view_DSDivs();return false;"
                               cssStyle="width:100%;"/>
                 </td>
-                <td align="right"><s:radio name="selectOption"
-                                           list="#@java.util.HashMap@{'Not Printed':'Not Printed'}"/></td>
-                <td align="right"><s:radio name="selectOption" list="#@java.util.HashMap@{'Printed':'Printed'}"/></td>
+                <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="selectOption1" value="false" /></td>
+                <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="selectOption1" /></td>
             </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
@@ -94,13 +93,13 @@
                 <s:url id="previousUrl" action="eprCertificatePrintPrevious.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                    <s:param name="selectOption" value="#request.selectOption"/>
+                    <s:param name="selectOption1" value="#request.selectOption1"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:url id="nextUrl" action="eprCertificatePrintNext.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                    <s:param name="selectOption" value="#request.selectOption"/>
+                    <s:param name="selectOption1" value="#request.selectOption1"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:if test="printStart!=0 & printStart>0">
