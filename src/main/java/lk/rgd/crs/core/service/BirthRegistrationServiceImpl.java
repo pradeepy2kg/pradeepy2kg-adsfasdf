@@ -364,7 +364,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
     }
 
-    /**
+    /**                                                      BirthRegistrationServiceImpl
      * @inheritDoc
      */
     public void markLiveBirthCertificateIDsAsPrinted(long[] printedIDList, User user) {
