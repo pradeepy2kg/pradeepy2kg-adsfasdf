@@ -1,22 +1,47 @@
-<%--
-    @author Chathuranga Withana
-    @author Duminda Dharmakeerthi
-    --%>
+<%--@author Chathuranga Withana--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div id="birth-confirm-print">
-    <div id="birth-register-approval-header">
-        <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST">
-        <table  width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<script>
+    function view_DSDivs() {
+        dojo.event.topic.publish("view_DSDivs");
+    }
+
+    function view_BDDivs() {
+        dojo.event.topic.publish("view_BDDivs");
+    }
+</script>
+<div id="birth-certificate-print">
+    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListBCPrint"/>
+    <div id="birth-certificate-print-header">
+        <s:form action="eprFilterBirthConfirmPrint.do" name="birth_register_approval_head" method="POST"
+                id="birth-certificate-print-form">
+        <table width="100%" cellpadding="5" cellspacing="0">
+            <col width="220px"/>
+            <col/>
+            <col width="120px"/>
+            <col width="120px"/>
+            <tbody>
             <tr>
-                <td><s:label name="district" value="%{getText('district.label')} : "/></td>
-                <td width="250px"><s:select name="districtId" list="districtList" cssStyle="width:230px;"/></td>
-                <td><s:label name="division" value="%{getText('division.label')} : "/></td>
-                <td width="250px"><s:select name="divisionId" list="divisionList" cssStyle="width:230px;"/></td>
-                <td><s:radio name="selectOption" list="#@java.util.HashMap@{'Not Printed':'Not Printed'}"/></td>
-                <td><s:radio name="selectOption" list="#@java.util.HashMap@{'Printed':'Printed'}"/></td>
-                <td align="right" class="button"><s:submit value="%{getText('view.label')}"></s:submit></td>
+                <td><s:label name="district" value="%{getText('district.label')}"/></td>
+                <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+                              onchange="javascript:view_DSDivs();return false;"
+                              cssStyle="width:100%;"/>
+                </td>
+                <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="selectOption1" value="false" /></td>
+                 <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="selectOption1" /></td>
+                 </tr>
+            <tr>
+                <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
+                <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                                        listenTopics="view_DSDivs" formId="birth-certificate-print-form"></sx:div></td>
             </tr>
+            <tr>
+                <td colspan="4" class="button" align="right">
+                    <s:submit value="%{getText('view.label')}"></s:submit>
+                </td>
+            </tr>
+            </tbody>
         </table>
     </div>
 
@@ -25,9 +50,9 @@
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>
         <s:else>
-            <table id="confirm-print-table" width="100%" cellpadding="0" cellspacing="0">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr class="table-title">
-                    <th><s:label name="item" value="%{getText('item.label')}"/></th>
+                    <th></th>
                     <th width="30px"></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
@@ -37,16 +62,15 @@
 
                     <%--following code used for pagination--%>
                 <s:iterator status="printStatus" value="printList">
-
                     <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                         <td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>
                         <td><s:checkbox name="index"
                                         onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
-                        <td align=" center"><s:property value="register.bdfSerialNo"/></td>
+                        <td align="center"><s:property value="register.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprBirthConfirmationListPage">
+                            <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
@@ -58,38 +82,38 @@
                 </s:iterator>
             </table>
 
-            <div class="next-previous">
-
-                <s:url id="previousUrl" action="eprPrintPrevious.do">
-                    <s:param name="districtId" value="#request.districtId"/>
-                    <s:param name="divisionId" value="#request.divisionId"/>
-                    <s:param name="selectOption" value="#request.selectOption"/>
-                    <s:param name="printStart" value="#request.printStart"/>
-                </s:url>
-                <s:url id="nextUrl" action="eprPrintNext.do">
-                    <s:param name="districtId" value="#request.districtId"/>
-                    <s:param name="divisionId" value="#request.divisionId"/>
-                    <s:param name="selectOption" value="#request.selectOption"/>
-                    <s:param name="printStart" value="#request.printStart"/>
-                </s:url>
-
-                <s:if test="printStart!=0 & printStart>0"><s:a href="%{previousUrl}">
-                    &lt;<s:label value="%{getText('previous.label')}"/></s:a></s:if>
-                <s:if test="printList.size >= 10"><s:a href="%{nextUrl}">
-                    <s:label value="%{getText('next.label')}"/>&gt;</s:a></s:if>
-
-            </div>
-
             <div class="form-submit">
                 <s:label><s:checkbox name="allCheck"
                                      onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
-                <span><s:label name="select_all"
-                               value="%{getText('select_all.label')}"/></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
-                <s:label><span><s:label name="print_selected"
-                                        value="%{getText('print_selected.label')}"/></span><s:submit
-                        value="%{getText('print.label')}"/></s:label>
+                    <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
+                <s:label><span><s:label name="print_selected" value="%{getText('print_selected.label')}"/></span>
+                    <s:submit value="%{getText('print.label')}"/></s:label>
+            </div>
+            <div class="next-previous">
+                <s:url id="previousUrl" action="eprPrintPrevious.do">
+                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="select" value="#request.select"/>
+                    <s:param name="printStart" value="#request.printStart"/>
+                </s:url>
+                <s:url id="nextUrl" action="eprPrintNext.do">
+                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="select" value="#request.select"/>
+                    <s:param name="printStart" value="#request.printStart"/>
+                </s:url>
+                <s:if test="printStart!=0 & printStart>0">
+                    <s:a href="%{previousUrl}"><img src="<s:url value='/images/previous.gif'/>"
+                                                    border="none"/></s:a><s:label value="%{getText('previous.label')}"/>
+                </s:if>
+                <s:if test="printList.size >= 10">
+                    <s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}"><img
+                        src="<s:url value='/images/next.gif'/>"border="none"/></s:a>
+                </s:if>
             </div>
         </s:else>
         </s:form>
+    </div>
+    <div id="birth-register-approval-footer">
     </div>
 </div>

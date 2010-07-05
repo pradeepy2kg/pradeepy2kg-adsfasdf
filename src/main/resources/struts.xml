@@ -254,18 +254,18 @@
         <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="filterPrintList">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
-        <!--
-        <action name="eprPrintNext" class="lk.rgd.crs.web.action.PrintAction" method="nextPage">
+
+        <action name="eprPrintNext" class="lk.rgd.crs.web.action.PrintAction" method="confirmNextPage">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
-        <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="previousPage">
+        <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="confirmPreviousPage">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
-        </action>         -->
+        </action>
 
-        <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.PrintAction" method="nextPage">
+        <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.PrintAction" method="cetificateNextPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
-        <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="previousPage">
+        <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.PrintAction" method="cetificatePreviousPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"

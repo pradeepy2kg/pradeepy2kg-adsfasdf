@@ -1,3 +1,25 @@
+<style type="text/css" title="currentStyle">
+    @import "lib/datatables/media/css/demo_page.css";
+    @import "lib/datatables/media/css/demo_table.css";
+    @import "lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+</style>
+<script type="text/javascript" language="javascript" src="lib/jquery/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="lib/datatables/media/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#approval-list-table').dataTable({
+                "bPaginate": true,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers"
+            });
+    });
+</script>
+
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -63,10 +85,11 @@
         <%--todo permission handling--%>
         <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
-                <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" >
-                <tr class="table-title">
-                    <th></th>
-                    <th></th>
+                <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+                <thead>
+                 <tr>
+                    <th>x</th>
+                    <th>y</th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
@@ -74,11 +97,13 @@
                     <th width="50px">approve</th>
                     <th width="50px">reject</th>
                     <th width="50px">delete</th>
-                </tr>
+                 </tr>
+                </thead>
             </s:if>
+            <tbody>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
-                <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                    <td class="table-row-index"><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
+                <tr>
+                    <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
                     <td><s:checkbox name="index"
                                     onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                     title="%{getText('select.label')}" value="%{#index}"
@@ -152,6 +177,7 @@
             counter is greater than one--%>
                 <s:set name="counter" scope="request" value="#approvalStatus.count"/>
             </s:iterator>
+            </tbody>
             </table>
 
             <div class="form-submit">

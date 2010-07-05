@@ -19,12 +19,12 @@
 <tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
-	<td>chathuranga</td>
+	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
-	<td>chathuranga</td>
+	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -102,6 +102,11 @@
 	<td>type</td>
 	<td>birth-registration-form-1_child_numberOfChildrenBorn</td>
 	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>Hospital</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -677,7 +682,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[3]/td[4]</td>
+	<td>//tr[5]/td[5]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,13 +1,11 @@
 <%--
  @author amith jayasekara
 --%>
-<%@ page import="lk.rgd.crs.api.domain.BirthDeclaration" %>
-<%@ page import="lk.rgd.crs.api.domain.ChildInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
-<div class="birth-confirmation-form-outer">
+<div class="birth-confirmation-print-form-outer">
 <s:form action="eprFilterBirthConfirmPrint.do" name="birthConfirmationPrintForm1" id="birth-confirmation-print-form-1"
         method="POST">
 <div id="page1" style="page-break-after:always;">
@@ -27,18 +25,23 @@
                 <br>Confirmation of Birth by Parents / Guardian
 
             </label></td>
-        <td>
-            <table style=" border:1px solid #000000; width:300px">
+        <td style="text-align:right;margin-left:auto;margin-right:0;">
 
-                <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+            <table cellspacing="0"  style=" border: 1px solid #000000;height:60px">
+                <caption></caption>
+                <col/>
+                <col/>
+                <tbody>
+                <tr width="200px">
+                    <td style="text-align:left;margin-left:0;margin-right:auto;width:150px;">
+                        <label>අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</label>
                     </td>
-                    <td><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/></td>
+                    <td>
+                        <s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
+                    </td>
                 </tr>
-
-
+                </tbody>
             </table>
-
         </td>
     </tr>
 
@@ -78,6 +81,8 @@
     </tr>
     </tbody>
 </table>
+
+
 <table class="table_con_page_01" cellspacing="0">
     <caption></caption>
     <col/>
@@ -106,7 +111,20 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" cellspacing="0">
+<table border="0" style="width: 100%">
+    <caption></caption>
+    <col/>
+    <tbody>
+    <tr>
+        <td colspan="20" style="text-align:center;font-size:12pt"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
+            <br>சிவில் பதிவு அமைப்பில் உள்ளடக்கப்பட்டுள்ள விபரம்
+            <br>Information included in Civil Registration System</label>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="table_con_page_01" cellspacing="0" style="margin-top:10px">
     <caption></caption>
     <col/>
     <col/>
@@ -118,12 +136,7 @@
     <col/>
     <col/>
     <tbody>
-    <tr>
-        <td colspan="20" style="text-align:center;font-size:12pt"> සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
-            <br>சிவில் பதிவு அமைப்பில் உள்ளடக்கப்பட்டுள்ள விபரம்
-            <br>Information included in Civil Registration System
-        </td>
-    </tr>
+
     <tr>
         <td colspan="2"><label>විස්තර <br>விபரங்கள் <br>Particulars </label></td>
         <td colspan="6"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ දැනට අඩංගු විස්තර <br>சிவில் பதிவு அமைப்பில்
@@ -135,7 +148,7 @@
             <br>Insert new details or modify existing details</label></td>
     </tr>
     <tr>
-        <td class="cell_01">3</td>
+        <td class="cell_011">3</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
         <td><label>*in Sinhala<br>*in Tamil<br>Year</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
@@ -155,7 +168,7 @@
 
     </tr>
     <tr>
-        <td>4</td>
+        <td class="cell_011">4</td>
         <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
         <td colspan="6"><s:if test="child.childGender == 0">
             <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
@@ -169,38 +182,36 @@
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td>5</td>
-        <td colspan="18"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
+        <td style="text-align:center;margin-left:auto;margin-right:auto;">5</td>
+        <td colspan="18" height="25px"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
     </tr>
     <tr>
-        <td></td>
-        <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
+        <td rowspan="3"></td>
+        <td height="40px"><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
 
     <tr>
-        <td></td>
-        <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
+        <td height="40px"><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
         <td colspan="6"><s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td></td>
-        <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
+        <td height="40px"><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" cssClass="disable" disabled="true" size="30"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td>6</td>
+        <td class="cell_011">6</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td>7</td>
+        <td class="cell_011">7</td>
         <td><label><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -209,23 +220,23 @@
     <tr>
 
     <tr>
-        <td>8</td>
+        <td class="cell_011">8</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td>9</td>
+        <td class="cell_011">9</td>
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td>10</td>
+        <td class="cell_011">10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6"><s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"
-                                     value="%{getText('marriedStatus'+marriage.parentsMarried+'.label')}"/></td>
+                                     value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>
         <td colspan="11"></td>
     </tr>
 
@@ -235,6 +246,17 @@
 
 </div>
 <div id="page2" style="page-break-after:always;">
+    <table border="0" style="width: 100%">
+        <caption></caption>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="3" style="text-align:center;font-size:12pt">
+                <label>නම් වල වෙනස් වීම්<br> பெயரிலுள்ள மாற்றங்கள் <br> Changes in Names</label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
     <table class="table_con_page2_table" cellspacing="0">
         <caption></caption>
@@ -243,138 +265,159 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="3" style="text-align:center;font-size:12pt"> * in Sinhala <br>* in Tamil *<br> Changes in Names
-            </td>
-        </tr>
-        <tr>
             <td class="cell_01">11</td>
-            <td><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் / தமிழ்)
+            <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் /
+                தமிழ்)
                 <br>Childs name in the official languages (Sinhala / Tamil)</label>
 
-                <p></p>
+                <p></p></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameOfficialLang">
+            </s:textarea></td>
             </td>
-            <td><s:textfield cssClass="disable" disabled="true" name="child.childFullNameOfficialLang">
-            </s:textfield></td>
         </tr>
         <tr>
-            <td rowspan="5"></td>
+            <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
                 <br>* in Tamil
                 <br>Corrected name</label>
 
-                <p></p>
-            </td>
-            <td colspan="3"><p></p></td>
+                <p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
+        </tbody>
+    </table>
 
+    <table class="table_con_page2_table" cellspacing="0">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
         <tr>
-            <td>12</td>
-            <td><p></p>
+            <td class="cell_01">12</td>
+            <td width="200px"><p></p>
                 <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
                     <br>பிறப்பு ...
                     <br>Childs name in English
                 </label>
 
-                <p></p>
-            </td>
-            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameEnglish"></s:textarea></td>
+                <p></p></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameEnglish">
+            </s:textarea></td>
         </tr>
         <tr>
-            <td rowspan="5"></td>
+            <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
                 <br>* in Tamil
                 <br>Corrected name</label>
 
-                <p></p>
-            <td colspan="3"><p></p></td>
+                <p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
+        </tbody>
+    </table>
 
+    <table class="table_con_page2_table" cellspacing="0">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
         <tr>
-            <td>13</td>
-            <td><p></p><label>පියාගේ සම්පුර්ණ නම
+            <td class="cell_01">13</td>
+            <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම
                 <br>தந்நையின் முழுப் பெயர
                 ்<br>Father's Full Name</label>
 
                 <p></p>
             </td>
-            <td><s:textarea cssClass="disable" disabled="true" name="parent.fatherFullName" ></s:textarea></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="parent.fatherFullName"></s:textarea></td>
         </tr>
         <tr>
-            <td rowspan="5"></td>
+            <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
                 <br>* in Tamil
                 <br>Corrected name</label>
 
-                <p></p>
-            <td colspan="3"><p></p></td>
+                <p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
+        </tbody>
+    </table>
+
+    <table class="table_con_page2_table" cellspacing="0">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
         <tr>
-            <td>14</td>
-            <td><p></p><label>මවගේ සම්පූර්ණ නම
+            <td class="cell_01">14</td>
+            <td width="200px"><p></p><label>මවගේ සම්පූර්ණ නම
                 <br>தாயின் முழுப் பெயர
                 ்<br>Mother's Full Name</label>
 
                 <p></p>
             </td>
-            <td><s:textarea cssClass="disable" disabled="true" name="parent.motherFullName" ></s:textarea></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="parent.motherFullName"></s:textarea></td>
+
         </tr>
         <tr>
-            <td rowspan="5"></td>
+            <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
                 <br>* in Tamil
                 <br>Corrected name</label>
 
-                <p></p>
-            </td>
-            <td colspan="3"><p></p></td>
+                <p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td></td>
         </tr>
         </tbody>
     </table>
@@ -382,6 +425,24 @@
 </div>
 
 <div id="page3" class="page_break">
+
+    <table border="0" style="width: 100%">
+        <caption></caption>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="3" style="text-align:center;font-size:12pt">
+                <p></p>
+                <label>
+                    උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil
+                    <br>Person confirming the birth details
+                </label>
+
+                <p></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
     <table class="table_con_page_03" cellspacing="0">
         <caption></caption>
@@ -391,11 +452,7 @@
         <col/>
         <col/>
         <tbody>
-        <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt"> උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil
-                <br>Person confirming the birth details
-            </td>
-        </tr>
+
         <tr>
             <td class="cell_01">15</td>
             <td colspan="3">
@@ -412,7 +469,7 @@
         </tr>
 
         <tr>
-            <td rowspan="5">16</td>
+            <td rowspan="5" class="cell_012">16</td>
             <td rowspan="5">
                 <p></p>
                 <label>
@@ -440,14 +497,16 @@
         </tr>
 
         <tr>
-            <td rowspan="2">17</td>
+            <td rowspan="2" class="cell_01">17</td>
             <td rowspan="2">
                 <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct
                 </label>
             </td>
-            <td width="350px"><label>දිනය <br>திகதி <br>Date </label></td>
+            <td width="350px"><p></p><label>දිනය <br>திகதி <br>Date </label>
+
+                <p></p></td>
             <td colspan="2"></td>
         </tr>
         <tr>
@@ -456,30 +515,43 @@
         </tr>
         </tbody>
     </table>
-    <label>=======================================================================================================</label>
+    <hr>
+    <br><br>
 
-    <table class="table_con_page_03" cellspacing="0" style="margin-top:30px ; margin-bottom:30px">
+    <table border="0" style="width: 100%">
+        <caption></caption>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="3" style="text-align:center;font-size:12pt;">
+                <label>කාර්යාලයේ ප්‍රයෝජනය සඳහා පමණි <br>
+                    அலுவலக பாவனைக்காக மட்டும் <br>
+                    Only for office use
+
+                </label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table_con_page_03" cellspacing="0" style="margin-top:20px ; margin-bottom:30px">
         <caption></caption>
         <col/>
         <col/>
         <col/>
         <col/>
         <tbody>
-        <tr style="text-align:center;margin-left:auto;margin-right:auto;">
-            <td colspan="4" style="text-align:center;font-size:12pt">කාර්යාලයේ ප්‍රයෝජනය සඳහා පමණි <br>
-                அலுவலக பாவனைக்காக மட்டும் <br>
-                Only for office use
 
-            </td>
-        </tr>
         <tr>
-            <td rowspan="2">18</td>
-            <td rowspan="2">ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී. (දිස්ත්‍රික්
-                රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)
+            <td rowspan="2" class="cell_01">18</td>
+            <td rowspan="2"><p></p><label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
+                (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
                 மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
-                பதிவாளர்)
+                பதிவாளர்)<br>
                 Above information has been entered into the Civil Registration System.
-                (District Registrar / Additional District Registrar)
+                (District Registrar / Additional District Registrar)</label>
+
+                <p></p>
             </td>
             <td width="350px"><label>දිනය<br> திகதி <br>Date</label>
             </td>
@@ -503,10 +575,13 @@
         <col/>
         <tbody>
         <tr>
-            <td rowspan="8" width="200px"></td>
-            <td colspan="2" width="600px"
-                style="text-align:center;margin-left:auto;margin-right:auto;font-size:12pt"><label>රාජ්‍ය සේවය පිණිසයි
-                / *in Tamil * / On State Service </label></td>
+            <td rowspan="8" width="200px" height="350px"></td>
+            <td colspan="2" width="600px" height="100px"
+                style="text-align:center;margin-left:auto;margin-right:auto;font-size:12pt">
+                <label>රාජ්‍ය සේවය පිණිසයි<br>
+                    / *in Tamil * <br>
+                    / On State Service<br>
+                </label></td>
             <td rowspan="8"></td>
         </tr>
         <tr>
@@ -536,8 +611,9 @@
     </table>
 
 </div>
-
-<s:submit value="%{getText('print.label')}" onclick="print()" type="button"/>
+<div class="form-submit">
+    <s:submit value="%{getText('print.label')}" onclick="print()" type="button" cssClass="button_print"/>
+</div>
 </s:form>
 </div>
 

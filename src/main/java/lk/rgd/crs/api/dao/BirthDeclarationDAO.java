@@ -49,11 +49,11 @@ public interface BirthDeclarationDAO {
     /**
      * Get Paginated list of BDFs for the given state
      *
-     * @param birthDivision  the birth division
-     * @param pageNo  page number
-     * @param noOfRows  number of rows
-     * @param state the state of the records to be returned
-     * @return   approved list for print
+     * @param birthDivision the birth division
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @param state         the state of the records to be returned
+     * @return approved list for print
      */
     public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision, int pageNo, int noOfRows, BirthDeclaration.State state);
 
@@ -96,7 +96,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -111,6 +111,14 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                                       BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthDeclarations for a given birthDivision
+     *
+     * @param birthDivision the birth division
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByBirthDivision(BDDivision birthDivision);
 }
 

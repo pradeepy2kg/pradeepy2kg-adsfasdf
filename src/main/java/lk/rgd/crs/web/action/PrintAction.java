@@ -17,6 +17,7 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.Permission;
 
 /**
  * Printing actions
@@ -39,7 +40,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map session;
-    private String selectOption;
+    private boolean selectOption1;
 
     private User user;
 
@@ -66,23 +67,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public String birthCertificatePrintList() {
         populate();
-        session.remove(WebConstants.SESSION_PRINT_COUNT);
-        if (selectOption == null) {
-            birthDivisionId = dsDivisionList.keySet().iterator().next();
-            selectOption = "Not Printed";
-        }
+        //session.remove(WebConstants.SESSION_PRINT_COUNT);
         int pageNo = 1;
-        if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-            printList = birthRegistrationService.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true,user);
-        } else {
-            printList = birthRegistrationService.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false,user);
-        }
+
+        printList = birthRegistrationService.getBirthCertificatePrintList(
+                bdDivisionDAO.getBDDivisionByPK(dsDivisionList.keySet().iterator().next()), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), selectOption1, user);
+
         logger.debug("Cetificate Print List : items {} ", printList.size());
         return "pageLoad";
     }
@@ -98,64 +89,79 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public String filterPrintList() {
         populate();
-        session.remove(WebConstants.SESSION_PRINT_COUNT);
-        if (selectOption == null) {
-            birthDivisionId = bdDivisionList.keySet().iterator().next();
-            selectOption = "Not Printed";
-        }
+        //session.remove(WebConstants.SESSION_PRINT_COUNT);
+
         int pageNo = 1;
-        if (WebConstants.RADIO_ALREADY_PRINT.equals(selectOption)) {
-            printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), true,user);
-        } else {
-            printList = birthRegistrationService.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), false,user);
-        }
+
+        printList = birthRegistrationService.getConfirmationPrintList(
+                bdDivisionDAO.getBDDivisionByPK(dsDivisionList.keySet().iterator().next()), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), selectOption1, user);
+
         logger.debug("Confirm Print List : items=" + printList.size());
 
         return "success";
     }
 
     /**
-     * Used in Pagination to move forward.
+     * Used to move forward when list more than 10
+     * in cetificate list.
      *
      * @return
      */
-    public String nextPage() {
+    public String cetificateNextPage() {
+        populate();
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = ((printStart + noOfRows) / noOfRows) + 1;
-        boolean printed = checkPrinted();
-        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed,user);
+        printList = birthRegistrationService.getBirthCertificatePrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, selectOption1, user);
         printStart += noOfRows;
         populate();
         return "success";
     }
 
     /**
-     * Used in Pagination to move backward.
+     * Used to move backward.
      *
      * @return
      */
-    public String previousPage() {
+    public String cetificatePreviousPage() {
+        populate();
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         int pageNo = printStart / noOfRows;
-        boolean printed = checkPrinted();
-        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed,user);
+        printList = birthRegistrationService.getBirthCertificatePrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, selectOption1, user);
         printStart -= noOfRows;
         populate();
         return "success";
     }
 
     /**
-     * Checks selected radio button option.
-     * If Printed selected return true else false.
+     * Used to move forward when list more than 10
+     * in confirmation list.
      *
-     * @return true if printed
+     * @return
      */
-    private boolean checkPrinted() {
-        return WebConstants.RADIO_ALREADY_PRINT.equals((String) session.get(WebConstants.RADIO_ALREADY_PRINT));
+    public String confirmNextPage() {
+        populate();
+        int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
+        int pageNo = ((printStart + noOfRows) / noOfRows) + 1;
+        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, selectOption1, user);
+        printStart += noOfRows;
+        populate();
+        return "success";
+    }
+
+    /**
+     * Used to move backward.
+     *
+     * @return
+     */
+    public String confirmPreviousPage() {
+        populate();
+        int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
+        int pageNo = printStart / noOfRows;
+        printList = birthRegistrationService.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, selectOption1, user);
+        printStart -= noOfRows;
+        populate();
+        return "success";
     }
 
     /**
@@ -208,14 +214,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.dsDivisionList = dsDivisionList;
     }
 
-    public String getSelectOption() {
-        return selectOption;
-    }
-
-    public void setSelectOption(String selectOption) {
-        this.selectOption = selectOption;
-    }
-
     public User getUser() {
         return user;
     }
@@ -239,7 +237,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public void setBdDivisionList(Map<Integer, String> bdDivisionList) {
         this.bdDivisionList = bdDivisionList;
     }
-     
+
     public int getBirthDivisionId() {
         return birthDivisionId;
     }
@@ -255,4 +253,14 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public void setPrintStart(int printStart) {
         this.printStart = printStart;
     }
+
+
+    public boolean isSelectOption1() {
+        return selectOption1;
+    }
+
+    public void setSelectOption1(boolean selectOption1) {
+        this.selectOption1 = selectOption1;
+    }
+
 }
