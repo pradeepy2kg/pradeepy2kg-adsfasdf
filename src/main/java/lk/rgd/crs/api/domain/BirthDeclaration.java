@@ -27,6 +27,10 @@ import java.util.Date;
         "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
         "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
 
+    @NamedQuery(name = "get.by.bddivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
     @NamedQuery(name = "get.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo"),
 

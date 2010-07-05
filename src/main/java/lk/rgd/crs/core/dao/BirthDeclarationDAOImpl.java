@@ -85,7 +85,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -99,13 +99,22 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                                       BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.confirmation.receive.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
         q.setParameter("status", status);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getByBirthDivision(BDDivision birthDivision) {
+        Query q = em.createNamedQuery("get.by.bddivision");
+        q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
     }
 }

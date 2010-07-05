@@ -15,6 +15,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 
 import java.util.Map;
 import java.util.Locale;
+import java.util.List;
 
 /**
  * @author Indunil Moremada
@@ -31,6 +32,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
+    private List<BirthDeclaration> searchResultList;
     private User user;
     private BirthDeclaration bdf;
 
@@ -57,8 +59,9 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Search method for searching based on SearialNo,
-     * district and bdDivision
+     * This method responsible for searching  Birth declaration based on searialNo,
+     * district and bdDivision. If serialNo is set to  0 search is done based on
+     * the birthDivision
      *
      * @return String
      */
@@ -66,8 +69,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
             birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
-            bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
-            setStatus("searchBDF.status." + bdf.getRegister().getStatus().ordinal());
+            if (serialNo != 0) {
+                bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
+                setStatus(bdf.getRegister().getStatus().toString());
+            } else {
+                searchResultList = service.getByBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), user);
+            }
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFBySerialNumber() SearchBDFBySerialNumber : {} ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
@@ -90,7 +97,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * search method to search particular BirthDeclaration
+     * This method is responsible for searching particular BirthDeclaration
      * based on IdUKey
      *
      * @return
@@ -99,7 +106,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside searchBDFByIdUKey() : search parameter idUKey {} recieved", idUKey);
         try {
             bdf = service.getById(idUKey, user);
-            setStatus("searchBDF.status." + bdf.getRegister().getStatus().ordinal());
+            setStatus(bdf.getRegister().getStatus().toString());
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
@@ -214,5 +221,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
         this.dsDivisionList = dsDivisionList;
+    }
+
+    public List<BirthDeclaration> getSearchResultList() {
+        return searchResultList;
+    }
+
+    public void setSearchResultList(List<BirthDeclaration> searchResultList) {
+        this.searchResultList = searchResultList;
     }
 }
