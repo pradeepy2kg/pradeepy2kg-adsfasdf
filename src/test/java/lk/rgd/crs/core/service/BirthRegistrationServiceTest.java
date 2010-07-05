@@ -221,7 +221,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertEquals("New name 1 of child", bdf1.getChild().getChildFullNameEnglish());
 
         // assert that the confirmed record now exists in the print queue
-        List<BirthDeclaration> printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, false);
+        List<BirthDeclaration> printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, false, deoColomboColombo);
         Assert.assertTrue(!printList.isEmpty());
         boolean found = false;
         for (BirthDeclaration b : printList) {
@@ -238,14 +238,14 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
 
         // assert that the printed record now does not exist in the print queue
-        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 100, false);
+        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 100, false, deoColomboColombo);
         for (BirthDeclaration b : printList) {
             if (b.getIdUKey() == bdf1.getIdUKey()) {
                 fail("The record when the confirmation is printed should not appear in the pending print list");
             }
         }
         // assert that the printed record will still appear if printed records are requested
-        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 100, true);
+        printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 100, true, deoColomboColombo);
         Assert.assertTrue(!printList.isEmpty());
         found = false;
         for (BirthDeclaration b : printList) {
@@ -270,7 +270,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         birthDeclarationDAO.updateBirthDeclaration(bdf1);
 
         // assert that the confirmed record now exists in the print queue for BC
-        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false);
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false, deoColomboColombo);
         Assert.assertTrue(!printList.isEmpty());
         found = false;
         for (BirthDeclaration b : printList) {
@@ -287,7 +287,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_PRINTED, bdf1.getRegister().getStatus());
 
         // assert that the printed record now does not exist in the print queue
-        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false);
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false, deoColomboColombo);
         found = false;
         for (BirthDeclaration b : printList) {
             if (b.getIdUKey() == bdf1.getIdUKey()) {
@@ -297,7 +297,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         Assert.assertTrue("confirmed record must not show up for BC printing", !found);
         
         // assert that the printed record will still appear if printed records are requested
-        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, true);
+        printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, true, deoColomboColombo);
         Assert.assertTrue(!printList.isEmpty());
         found = false;
         for (BirthDeclaration b : printList) {
