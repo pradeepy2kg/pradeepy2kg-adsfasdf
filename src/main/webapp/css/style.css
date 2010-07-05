@@ -3,7 +3,7 @@
 }
 
 /*To change background color of table, odd and even rows*/
-#approval-list-table, #confirm-list-table, #confirm-print-table, #birth-certificate-print table{margin:10px auto;}
+/*#approval-list-table, #confirm-list-table, #confirm-print-table, #birth-certificate-print table{margin:10px auto;}*/
 .table-title{background:url(../images/table-title.png); line-height:30px; color:#000;}
 .table-title th{text-align:center; text-transform:capitalize;}
 .table-row-index{text-align:center; width:40px;}
