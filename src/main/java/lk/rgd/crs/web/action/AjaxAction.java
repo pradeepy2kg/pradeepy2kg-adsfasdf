@@ -85,10 +85,63 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     }
 
     private void dsDivList() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        populateBasicLists(language);
-        populateDynamicLists(language);
+        populateDSDivList();
         logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
+    }
+
+    public String loadBDDivList() {
+        populateBDDivList();
+        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, birthDivisionId);
+        return "BDDivList";
+    }
+
+    private void populateDSDivList() {
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+
+        Object o = session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        if (o != null) {
+            try {
+                BirthDeclaration bdf = (BirthDeclaration) o;
+                BirthRegisterInfo register = bdf.getRegister();
+
+                dsDivisionId = register.getDsDivision().getDsDivisionUKey();
+                logger.debug(" DS division found from session {}", dsDivisionId);
+                return;
+            } catch (Exception e) {
+                logger.debug(" Problem with DS division in session. ignoring.. {} ", e);
+            }
+        }
+
+        if (!dsDivisionList.isEmpty()) {
+            dsDivisionId = dsDivisionList.keySet().iterator().next();
+            logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        }
+    }
+
+    private void populateBDDivList() {
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+
+        Object o = session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        if (o != null) {
+            try {
+                BirthDeclaration bdf = (BirthDeclaration) o;
+                BirthRegisterInfo register = bdf.getRegister();
+
+                birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
+                logger.debug(" BD division found from session {}", birthDivisionId);
+                return;
+            } catch (Exception e) {
+                logger.debug(" Problem with BD division in session. ignoring.. {} ", e);
+            }
+        }
+
+        if (!bdDivisionList.isEmpty()) {
+            birthDivisionId = bdDivisionList.keySet().iterator().next();
+            logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
+        }
     }
 
     public String loadDSDivList() {
@@ -110,23 +163,10 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         dsDivList();
         return "BirthCertificatePrint";
     }
-    
+
     public String loadDSDivListBDFConfirmation() {
         dsDivList();
         return "DSDivListBDFConfirmation";
-    }
-
-    public String loadBDDivList() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        if (dsDivisionId != 0) { // in case UI does not return a ID, (at page load) use the existing list
-            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        } else {
-            populateBasicLists(language);
-            populateDynamicLists(language);
-        }
-        birthDivisionId = bdDivisionList.keySet().iterator().next();
-        logger.debug("BD division list set from Ajax : {} {}", dsDivisionId, birthDivisionId);
-        return "BDDivList";
     }
 
     public String loadFatherInfo() {
@@ -174,59 +214,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             }
         }
         return "NotifyerInfo";
-    }
-
-    private void populateDynamicLists(String language) {
-//        if (birthDistrictId == 0) {
-//            if (!districtList.isEmpty()) {
-//                birthDistrictId = districtList.keySet().iterator().next();
-//                logger.debug("first allowed district in the list {} was set", birthDistrictId);
-//            }
-//        }
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-
-        Object o = session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        if (o != null) {
-            try {
-                BirthDeclaration bdf = (BirthDeclaration) o;
-                BirthRegisterInfo register = bdf.getRegister();
-
-                dsDivisionId = register.getBirthDivision().getDsDivision().getDsDivisionUKey();
-                logger.debug(" DS division found from session {}", dsDivisionId);
-
-                bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-
-                birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
-                logger.debug(" BD division found from session {}", birthDivisionId);
-            } catch (Exception e) {
-                logger.debug(" Problem with birth division from session. ignoring.. {} ", e);
-                dsDivisionId = 0;
-            }
-        }
-
-        if (dsDivisionId == 0) {
-            if (!dsDivisionList.isEmpty()) {
-                dsDivisionId = dsDivisionList.keySet().iterator().next();
-                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
-                bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-
-                birthDivisionId = bdDivisionList.keySet().iterator().next();
-                logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
-            }
-        }
-    }
-
-    private void populateBasicLists(String language) {
-        countryList = countryDAO.getCountries(language);
-        districtList = districtDAO.getDistrictNames(language, user);
-        raceList = raceDAO.getRaces(language);
-
-        /** getting full district list and DS list for mother info on page 4 */
-        allDistrictList = districtDAO.getDistrictNames(language, null);
-        if (!allDistrictList.isEmpty()) {
-            int selectedDistrictId = allDistrictList.keySet().iterator().next();
-            allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
-        }
     }
 
     public void setSession(Map map) {
