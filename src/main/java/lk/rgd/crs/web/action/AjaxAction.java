@@ -87,8 +87,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private void dsDivList() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-        dsDivisionId = dsDivisionList.keySet().iterator().next();
+        populateDynamicLists(language);
         logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
     }
 
@@ -178,25 +177,42 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     }
 
     private void populateDynamicLists(String language) {
-        if (birthDistrictId == 0) {
-            if (!districtList.isEmpty()) {
-                birthDistrictId = districtList.keySet().iterator().next();
-                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+//        if (birthDistrictId == 0) {
+//            if (!districtList.isEmpty()) {
+//                birthDistrictId = districtList.keySet().iterator().next();
+//                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+//            }
+//        }
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+
+        Object o = session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        if (o != null) {
+            try {
+                BirthDeclaration bdf = (BirthDeclaration) o;
+                BirthRegisterInfo register = bdf.getRegister();
+
+                dsDivisionId = register.getBirthDivision().getDsDivision().getDsDivisionUKey();
+                logger.debug(" DS division found from session {}", dsDivisionId);
+
+                bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+
+                birthDivisionId = register.getBirthDivision().getBdDivisionUKey();
+                logger.debug(" BD division found from session {}", birthDivisionId);
+            } catch (Exception e) {
+                logger.debug(" Problem with birth division from session. ignoring.. {} ", e);
+                dsDivisionId = 0;
             }
         }
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
 
         if (dsDivisionId == 0) {
             if (!dsDivisionList.isEmpty()) {
                 dsDivisionId = dsDivisionList.keySet().iterator().next();
                 logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
-            }
-        }
+                bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
 
-        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
-        if (birthDivisionId == 0) {
-            birthDivisionId = bdDivisionList.keySet().iterator().next();
-            logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
+                birthDivisionId = bdDivisionList.keySet().iterator().next();
+                logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
+            }
         }
     }
 
