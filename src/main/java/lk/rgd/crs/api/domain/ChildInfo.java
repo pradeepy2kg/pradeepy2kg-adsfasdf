@@ -76,6 +76,12 @@ public class ChildInfo implements Serializable {
     @Column(nullable = true)
     private Integer numberOfChildrenBorn;
 
+    /**
+     * Number of weeks pregnant at the time of still-birth
+     */
+    @Column(nullable = true)
+    private Integer weeksPregnant;
+
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -98,6 +104,7 @@ public class ChildInfo implements Serializable {
 
     /**
      * Returns the full name in the official language, limited to the maxLength. e.g. as "අසංඛ චමත් පෙ..."
+     *
      * @param maxLength the maximum length of the name to return
      * @return length limited name in the official language
      */
@@ -118,12 +125,13 @@ public class ChildInfo implements Serializable {
 
     /**
      * Returns the full name in English language, limited to the maxLength. e.g. as "ASANKHA CHAMATH P..."
+     *
      * @param maxLength maxLength the maximum length of the name to return
      * @return length limited name in the English language
      */
     public String getChildFullNameEnglishLangToLength(int maxLength) {
         if (childFullNameEnglish != null && childFullNameEnglish.length() > maxLength) {
-            return childFullNameEnglish.substring(0, maxLength-3) + "...";
+            return childFullNameEnglish.substring(0, maxLength - 3) + "...";
         }
         return childFullNameEnglish;
     }
@@ -186,5 +194,13 @@ public class ChildInfo implements Serializable {
 
     public void setChildGenderPrint(String childGenderPrint) {
         this.childGenderPrint = childGenderPrint;
+    }
+
+    public Integer getWeeksPregnant() {
+        return weeksPregnant;
+    }
+
+    public void setWeeksPregnant(Integer weeksPregnant) {
+        this.weeksPregnant = weeksPregnant;
     }
 }
