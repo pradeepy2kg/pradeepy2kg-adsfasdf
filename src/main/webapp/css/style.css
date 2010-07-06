@@ -1,0 +1,33 @@
+.alreadyPrinted{
+   color:red;
+}
+
+/*To change background color of table, odd and even rows*/
+/*#approval-list-table, #confirm-list-table, #confirm-print-table, #birth-certificate-print table{margin:10px auto;}*/
+.table-title{background:url(../images/table-title.png); line-height:30px; color:#000;}
+.table-title th{text-align:center; text-transform:capitalize;}
+.table-row-index{text-align:center; width:40px;}
+
+.odd{
+    background:url(../images/odd-row.png);
+    line-height:30px;
+}
+.even{
+    background:url(../images/even-row.png);
+    line-height:30px;
+}
+.odd img, .even img{width:20px;  height:20px; text-align:center; vertical-align:middle;}
+/* Styles for the birth register approval page. */
+#birth-register-approval, #birth-confirm-approval, #birth-confirm-print, #user-preference-outer, #birth-certificate-print{padding:10px;}
+#birth-register-approval .form-submit, #birth-confirm-approval .form-submit, #birth-confirm-print .form-submit, #birth-certificate-print .form-submit{float:left; margin-left:40px;}
+#birth-register-approval .next-previous, #birth-confirm-approval .next-previous, #birth-confirm-print .next-previous, #birth-certificate-print .next-previous, #birth-confirmation-form-outer .next-previous{float:right;}
+#birth-register-approval .next-previous img, #birth-confirm-approval .next-previous img, #birth-confirm-print .next-previous img, #birth-certificate-print .next-previous img, #birth-confirmation-form-outer .next-previous img{width:30px; height:25px;}
+
+#birth-certificate-outer .form-submit, #birth-confirmation-form-outer .form-submit{float:right; margin-top:15px;}
+
+.form-submit input, .button input{margin:10px 0; text-transform:capitalize; background:url(../images/button-bg.png) no-repeat; width:125px; height:30px; border:none; }
+.form-submit input:hover, .form-submit button:hover, .button input:hover{color:darkred; background:url(../images/button-bg-hover.png)   no-repeat;}
+
+.skip-validation{float:left; margin-top:15px; }
+.skip-validation label{float:right; line-height:20px;}
+
