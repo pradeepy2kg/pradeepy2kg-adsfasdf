@@ -25,9 +25,14 @@
 
 #birth-certificate-outer .form-submit, #birth-confirmation-form-outer .form-submit{float:right; margin-top:15px;}
 
-.form-submit input, .button input{margin:10px 0; text-transform:capitalize; background:url(../images/button-bg.png) no-repeat; width:125px; height:30px; border:none; }
-.form-submit input:hover, .form-submit button:hover, .button input:hover{color:darkred; background:url(../images/button-bg-hover.png)   no-repeat;}
+.form-submit input, .button input{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg.png) no-repeat; width:112px; height:30px; border:none; }
+.form-submit input:hover, .form-submit button:hover, .button input:hover{color:darkred; background:url(../images/button_bg_hover.png)   no-repeat;}
 
 .skip-validation{float:left; margin-top:15px; }
 .skip-validation label{float:right; line-height:20px;}
 
+#birth-registration-form-2-outer .next-previous, #birth-registration-form-2-outer .next-previous a{float:right; width:112px; height:30px; background:url(../images/button_bg.png) no-repeat; text-align:center; vertical-align:middle;}
+#birth-registration-form-2-outer .next-previous{margin-top:15px; background:none;}
+#birth-registration-form-2-outer .next-previous a{text-decoration:none; line-height:30px; color:#000;}
+#birth-registration-form-2-outer .next-previous a:hover{color:darkred; background:url(../images/button_bg_hover.png) no-repeat;}
+#birth-registration-form-2-outer .passport input{width:95%;}
