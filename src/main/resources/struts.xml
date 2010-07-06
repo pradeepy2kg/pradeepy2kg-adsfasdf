@@ -257,6 +257,11 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
+        <action name="eprDirectApproveIgnoreWarning" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction"
+                method="approveIgnoringWorning">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
         <!--PrintAction related actions-->
         <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.PrintAction" method="filterPrintList">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>

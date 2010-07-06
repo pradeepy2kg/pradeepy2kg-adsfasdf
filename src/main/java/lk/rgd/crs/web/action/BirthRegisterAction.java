@@ -150,6 +150,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 if (bdId == 0) {
                     service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
+                    addActionMessage(getText("saveSuccess.label"));
                 } else {
                     service.editLiveBirthDeclaration(bdf, true, user);
                 }
@@ -408,6 +409,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
             register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
+            register.setBirthType(oldBdf.getRegister().getBirthType());
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();

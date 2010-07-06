@@ -71,7 +71,7 @@ public class UserManagerImpl implements UserManager {
         try {
             sha = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException e) {
-            logger.warn("Cannot instantiate a SHA-1 message digest", e);
+            logger.warn("Cannot instantiate a SHA-1 message digest", e);                   
             throw new RGDRuntimeException("Cannot instantiate a SHA-1 message digest", e);
         }
         sha.reset();
