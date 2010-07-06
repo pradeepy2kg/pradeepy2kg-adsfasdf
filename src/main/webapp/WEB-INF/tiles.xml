@@ -23,7 +23,6 @@
 
     </definition>
 
-
     <definition name="epr.BirthCertificatePrint" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthCertificatePrint.jsp"/>
         <put-attribute name="title" value="BirthCertificatePrint.title"/>
@@ -53,6 +52,12 @@
     <definition name="epr.birthRegistration_details" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/BirthRegistrationFormDetails.jsp"/>
         <put-attribute name="title" value="BirthRegistrationDetails.title"/>
+    </definition>
+
+    <!--Still Birth related pages-->
+    <definition name="epr.stillBirthRegistration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/StillBirthRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="stillBirth.form1.title"/>
     </definition>
 
     <definition name="epr.birthConfirmation_form1" extends="epr.template">

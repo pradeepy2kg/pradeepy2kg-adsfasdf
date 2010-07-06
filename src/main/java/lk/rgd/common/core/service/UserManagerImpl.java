@@ -114,8 +114,8 @@ public class UserManagerImpl implements UserManager {
      */
     public void updateUser(User userToUpdate, User adminUser) {
 
-        // does user have authorization to update a user
-        if (!adminUser.isAuthorized(Permission.USER_MANAGEMENT)) {
+        // if one user tries to update another user, does the former have authorization to update a user
+        if (! ((adminUser.equals(userToUpdate) || adminUser.isAuthorized(Permission.USER_MANAGEMENT))) ) {
             handleException(adminUser.getUserName() + " doesn't have permission to update a user",
                 ErrorCodes.AUTHORIZATION_FAILS_USER_MANAGEMENT);
 
