@@ -190,12 +190,11 @@
         <td colspan="2"><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
         <td colspan="2"><s:textfield name="informant.informantEmail" id="informantEmail"/></td>
+
     </tr>
     <tr>
-        <td><label>(32) අත්සන<br>தகவல் ... <br>Signature</label></td>
-        <td colspan="2"><s:checkbox name="informant.informantSigned"/></td>
-        <td><label>දිනය <br>*in tamil<br>Date</label></td>
-        <td colspan="2"><sx:datetimepicker id="informDatePicker" name="informant.informantSignDate"
+        <td colspan="2"> <label>දිනය <br>*in tamil<br>Date</label></td>
+        <td colspan="4"><sx:datetimepicker id="informDatePicker" name="informant.informantSignDate"
                                            displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('secondDatePicker')"/></td>
     </tr>

@@ -34,7 +34,7 @@
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
-                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
+                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo" value=""/></td>
                 </tr>
             </table>
             <table class="table_reg_datePicker_page_01">
