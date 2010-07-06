@@ -100,7 +100,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.appParametersDAO = appParametersDAO;
-        child = new ChildInfo();
     }
 
     /**
