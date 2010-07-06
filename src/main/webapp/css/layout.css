@@ -60,8 +60,21 @@ body {
     margin-right: 10px;
 }
 
-#logout-button{float:right; text-transform:capitalize; margin:10px;}
-#logout-button:hover{color:darkred;}
+#logout-button {
+    float: right;
+    text-transform: capitalize;
+    width: 125px;
+    margin: 10px;
+    margin-right:0;
+    background: url(../images/button-bg.png) no-repeat;
+    height: 30px;
+    border: none;
+}
+
+#logout-button:hover {
+    color: darkred;
+    background: url(../images/button-bg-hover.png) no-repeat;
+}
 
 /* Styles for the Login Page */
 #login-form {
@@ -113,13 +126,18 @@ body {
 
 #login-form #login-form-body div input {
     float: right;
-    width: 100px;
-    margin: 5px 0;
     text-transform: uppercase;
+    width: 125px;
+    margin: 10px;
+    margin-right:0;
+    background: url(../images/button-bg.png) no-repeat;
+    height: 30px;
+    border: none;
 }
 
 #login-form #login-form-body div input:hover {
     color: darkred;
+    background: url(../images/button-bg-hover.png) no-repeat;
 }
 
 /* Styles for the Main-Menu */
@@ -159,7 +177,7 @@ body {
 .menu a:hover,
     .menu a:focus,
     .menu a:active {
-    background:url(../images/menu-hover.png) repeat;
+    background: url(../images/menu-hover.png) repeat;
     color: cornsilk;
 }
 
@@ -168,9 +186,9 @@ body {
 }
 
 .menu ul a {
-    background:url(../images/menu-2.png) repeat;
+    background: url(../images/menu-2.png) repeat;
     color: saddlebrown;
-    border-bottom:1px inset saddlebrown;
+    border-bottom: 1px inset saddlebrown;
 }
 
 .hidden {
