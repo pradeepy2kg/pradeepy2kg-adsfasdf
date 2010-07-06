@@ -126,9 +126,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 register.setStatus(bdf.getRegister().getStatus());
                 register.setComments(bdf.getRegister().getComments());
                 bdf.setRegister(register);
-                if (liveBirth) {
-                    bdf.getRegister().setBirthType(true);
-                }
+                bdf.getRegister().setBirthType(liveBirth);
                 break;
             case 2:
                 liveBirth = bdf.getRegister().getBirthType();
@@ -281,6 +279,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf = new BirthDeclaration();
             bdf.getRegister().setBirthType(true);
+            liveBirth = bdf.getRegister().getBirthType();
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -306,6 +305,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf = new BirthDeclaration();
             bdf.getRegister().setBirthType(false);
+            liveBirth = bdf.getRegister().getBirthType();
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
