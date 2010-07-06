@@ -61,7 +61,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
     }
 
-
     /**
      * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
      * Used in first page load and first division selection.
@@ -82,13 +81,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = birthRegistrationService.getConfirmationPrintList(
                     bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                     noOfRows, printed, user);
-            logger.debug("Confirm Print List : items=" + printList.size());
+            logger.debug("Confirm Print List() : {}  items found " + printList.size());
         } else {
             printList = birthRegistrationService.getBirthCertificatePrintList(
                     bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
 
-            logger.debug("Cetificate Print List : items {} ", printList.size());
+            logger.debug("Cetificate Print List : {} items found ", printList.size());
 
         }
         return "pageLoad";
