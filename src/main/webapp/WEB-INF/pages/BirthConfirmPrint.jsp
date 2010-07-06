@@ -28,8 +28,8 @@
                               onchange="javascript:view_DSDivs();return false;"
                               cssStyle="width:100%;"/>
                 </td>
-                <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="selectOption1" value="false" /></td>
-                 <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="selectOption1" /></td>
+                <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed" value="false" /></td>
+                 <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed" /></td>
                  </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
@@ -38,6 +38,7 @@
             </tr>
             <tr>
                 <td colspan="4" class="button" align="right">
+                    <s:hidden name="confirmListFlag" value="true"/>
                     <s:submit value="%{getText('view.label')}"></s:submit>
                 </td>
             </tr>
@@ -70,7 +71,7 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
+                            <s:url id="cetificatePrintUrl" action="eprBirthConfirmationListPage">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
@@ -93,22 +94,23 @@
                 <s:url id="previousUrl" action="eprPrintPrevious.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                    <s:param name="select" value="#request.select"/>
+                    <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:url id="nextUrl" action="eprPrintNext.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                    <s:param name="select" value="#request.select"/>
+                    <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:if test="printStart!=0 & printStart>0">
-                    <s:a href="%{previousUrl}"><img src="<s:url value='/images/previous.gif'/>"
-                                                    border="none"/></s:a><s:label value="%{getText('previous.label')}"/>
+                    <s:a href="%{previousUrl}" >
+                        <img src="<s:url value='/images/previous.gif'/>" border="none"/></s:a>
+                    <s:label value="%{getText('previous.label')}"/>
                 </s:if>
                 <s:if test="printList.size >= 10">
-                    <s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}"><img
-                        src="<s:url value='/images/next.gif'/>"border="none"/></s:a>
+                    <s:label value="%{getText('next.label')}" /><s:a href="%{nextUrl}">
+                    <img src="<s:url value='/images/next.gif'/>"border="none"/></s:a>
                 </s:if>
             </div>
         </s:else>

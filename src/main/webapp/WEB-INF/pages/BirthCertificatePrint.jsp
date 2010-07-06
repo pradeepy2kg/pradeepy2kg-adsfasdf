@@ -28,8 +28,8 @@
                               onchange="javascript:view_DSDivs();return false;"
                               cssStyle="width:100%;"/>
                 </td>
-                <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="selectOption1" value="false" /></td>
-                <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="selectOption1" /></td>
+                <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed" value="false"/></td>
+                <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed"/></td>
             </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
@@ -93,22 +93,27 @@
                 <s:url id="previousUrl" action="eprCertificatePrintPrevious.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                    <s:param name="selectOption1" value="#request.selectOption1"/>
+                    <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:url id="nextUrl" action="eprCertificatePrintNext.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                    <s:param name="selectOption1" value="#request.selectOption1"/>
+                    <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:if test="printStart!=0 & printStart>0">
-                    <s:a href="%{previousUrl}"><img src="<s:url value='/images/previous.gif'/>"
-                                                    border="none"/></s:a><s:label value="%{getText('previous.label')}"/>
+                    <s:a href="%{previousUrl}" >
+                        <img src="<s:url value='/images/previous.gif'/>" border="none" />
+                    </s:a>
+                    <s:label value="%{getText('previous.label')}"/>
                 </s:if>
                 <s:if test="printList.size >= 10">
-                    <s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}"><img
-                        src="<s:url value='/images/next.gif'/>"border="none"/></s:a>
+
+                    <s:a href="%{nextUrl}">
+                        <img src="<s:url value='/images/next.gif'/>" border="none"/>
+                        <s:label value="%{getText('next.label')}"/>
+                    </s:a>
                 </s:if>
             </div>
         </s:else>
