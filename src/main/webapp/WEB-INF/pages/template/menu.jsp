@@ -26,7 +26,7 @@ $(document).ready(function(){
 
     <ul class="menu">
         <s:iterator value="#session.allowed_menue" id="menue">
-            <s:if test="%{((value.size > 0)& (key== 'BIRTH'))||(#session.viewUsers=='ok')}">
+            <s:if test="%{((value.size > 0)& (key== '1BIRTH'))||(#session.viewUsers=='ok')}">
                 <li class="expand"><s:a href="eprBirthRegistrationHome.do">
                     <s:label value="%{getText('category_birth_registration')}"/></s:a>
                     <ul class="acitem">
@@ -37,7 +37,7 @@ $(document).ready(function(){
                     </ul>
                 </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == 'ADMIN')}">
+            <s:if test="%{(value.size > 0)& (key == '4ADMIN')}">
                 <li><a href="#"><s:label value="%{getText('category_admin_task')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
@@ -47,7 +47,7 @@ $(document).ready(function(){
                     </ul>
                 </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == 'DEATH')}">
+            <s:if test="%{(value.size > 0)& (key == '3DEATH')}">
 
                 <li><a href="#"><s:label value="%{getText('category_death_registraion')}"/> </a>
                     <ul class="acitem">
@@ -58,7 +58,7 @@ $(document).ready(function(){
                     </ul>
                 </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == 'MARRAGE')}">
+            <s:if test="%{(value.size > 0)& (key == '2MARRAGE')}">
                 <li><a href="#"><s:label value="%{getText('category_marrage_registraion')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
@@ -68,7 +68,7 @@ $(document).ready(function(){
                     </ul>
                 </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == 'REPORT')}">
+            <s:if test="%{(value.size > 0)& (key == '5REPORT')}">
                 <li><a href="#"><s:label value="%{getText('category_reports')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
@@ -78,7 +78,7 @@ $(document).ready(function(){
                     </ul>
                 </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == 'PREFERANCE')}">
+            <s:if test="%{(value.size > 0)& (key == '6PREFERANCE')}">
                 <li><a href="#"><s:label value="%{getText('category_user_preferance')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
