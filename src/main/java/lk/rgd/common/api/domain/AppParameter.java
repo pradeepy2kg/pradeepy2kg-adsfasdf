@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Table(name = "APP_PARAMETERS", schema = "COMMON")
 public class AppParameter implements Serializable {
 
+    /** The parameter key that holds the number of days for parental confirmation - before auto confirmation */
+    public static final String CRS_AUTO_CONFIRMATION_DAYS = "crs.birth.auto_confirmation_days";
     /** The parameter key that holds the number of days for a birth to be considered as a late registration */
     public static final String CRS_BIRTH_LATE_REG_DAYS = "crs.birth.late_reg_days";
     /** The parameter key that holds the number of days for a birth to be considered as a belated registration */
@@ -24,9 +26,9 @@ public class AppParameter implements Serializable {
     public static final String PASSWORD_EXPIRY_DAYS = "rgd.password_expiry_days";
     
     @Id
-    @Column(length = 30)
+    @Column(length = 100)
     private String name;
-    @Column(nullable = false, length = 80)
+    @Column(nullable = false, length = 100)
     private String value;
 
     public AppParameter() {}

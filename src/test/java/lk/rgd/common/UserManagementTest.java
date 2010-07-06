@@ -54,7 +54,7 @@ public class UserManagementTest extends TestCase {
         Assert.assertTrue(asankha.isAuthorized(Permission.APPROVE_BDF));
 
         List<User> rgs = userManager.getUsersByRole("RG");
-        Assert.assertEquals(1, rgs.size());
+        Assert.assertEquals(2, rgs.size());
 
         DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
         List<User> usersByAssignedBDDistrict = userManager.getUsersByAssignedBDDistrict(districtDAO.getDistrict(1));

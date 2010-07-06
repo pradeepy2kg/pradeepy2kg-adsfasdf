@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PINGenerator;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,22 +29,32 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     private final PersonDAO personDao;
+    private final PINGenerator pinGenerator;
 
-    public PopulationRegistryImpl(PersonDAO personDao) {
+    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator) {
         this.personDao = personDao;
+        this.pinGenerator = pinGenerator;
     }
 
     /**
      * @inheritDoc
      */
-    public void addPerson(Person person, User user) {
+    public long addPerson(Person person, User user) {
+        long pin = -1;
+
         if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+            // generate a PIN for a verified record
+            if (person.getStatus() == Person.Status.VERIFIED) {
+                pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
+                person.setPin(pin);
+            }
             personDao.addPerson(person);
         } else {
             logger.error("User : " + user.getUserId() + " is not allowed to add persons to the PRS");
             throw new PRSRuntimeException("User : " + user.getUserId() +
                 " is not allowed to add entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
+        return pin;
     }
 
     /**

@@ -208,6 +208,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             BitSet bs = new BitSet();
             // TODO add any DEO specific permissions
             bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
+            bs.set(Permission.PRS_ADD_PERSON);
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
 

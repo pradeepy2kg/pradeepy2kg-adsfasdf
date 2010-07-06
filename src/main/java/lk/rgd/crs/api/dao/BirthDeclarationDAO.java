@@ -120,5 +120,12 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBirthDivision(BDDivision birthDivision);
+
+    /**
+     * Get records that were registered prior to the given date - but still pending in the CONFIRMATION_PRINTED state
+     * @param date the earliest date to detrmine records for auto confirmation
+     * @return list of BDFs selected for auto confirmation and BC issuance
+     */
+    public List<BirthDeclaration> getUnconfirmedByRegistrationDate(Date date);
 }
 

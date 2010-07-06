@@ -35,7 +35,11 @@ import java.util.Date;
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo"),
 
     @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN ")
+        "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
+
+    @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.status = State.CONFIRMATION_PRINTED.ordinal() " +
+        "AND bdf.register.dateOfRegistration < :date")
 })
 public class BirthDeclaration implements Serializable {
 
