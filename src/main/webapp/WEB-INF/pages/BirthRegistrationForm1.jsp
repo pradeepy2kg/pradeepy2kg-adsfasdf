@@ -96,25 +96,25 @@
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      onchange="javascript:view_DSDivs();return false;"/></td>
+                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:98.5%;"/></td>
     </tr>
     <tr>
-        <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList" />
+            <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
-                <sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                        listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>
-        </td> 
+            <sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                    listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>
+        </td>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth"/></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
-        <td><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
@@ -126,21 +126,21 @@
         <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
         </label></td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"/></td>
+            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>(5) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for
             Birth Certificate </label></td>
         <td colspan="7"><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
-                                  name="register.preferredLanguage"></s:select></td>
+                                  name="register.preferredLanguage" cssStyle="width:190px; margin-left:5px;"></s:select></td>
     </tr>
     <tr>
         <td class="font-9"><label>(6)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
         <td colspan="3"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/></td>
+                name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"  cssStyle="width:190px; margin-left:5px;"/></td>
         <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
-        <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"/></td>
+        <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight" cssStyle="width:95%;"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
@@ -150,7 +150,7 @@
         <td colspan="2" class="font-9"><label>(9)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
             multiple births, number of children</label></td>
-        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn"/></td>
+        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" cssStyle="width:95%;"/></td>
     </tr>
 
     </tbody>
@@ -268,14 +268,14 @@
     }
 </script>
 
-<table style="border:none; margin-bottom:20px;" align="center" class="form-submit">
-    <tr>
-        <td><s:checkbox name="skipjavaScript" id="skipjs" value="false">
-            <s:label value="%{getText('skipvalidation.label')}"/>
-        </s:checkbox>
-            <s:submit value="%{getText('next.label')}"/></td>
-    </tr>
-</table>
-
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
+<div class="form-submit">
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
 </s:form>
 </div>
+<%-- Styling Completed --%>

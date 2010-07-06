@@ -28,9 +28,11 @@
     <col/>
     <col/>
     <col/>
+    <col/>
+    <col/>
     <tbody>
     <tr>
-        <td colspan="7" style="text-align:center;font-size:12pt">පි‍යාගේ විස්තර
+        <td colspan="9" style="text-align:center;font-size:12pt">පියාගේ විස්තර
             <br>தந்தை பற்றிய தகவல்
             <br>Details of the Father
         </td>
@@ -38,12 +40,13 @@
     <tr>
         <td rowspan="2"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td rowspan="2"><s:textfield name="parent.fatherNICorPIN"/>
-            <label onclick="javascript:view_FatherInfo();return false;">></label>
+        <td rowspan="2" width="230px"><s:textfield name="parent.fatherNICorPIN"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" 
+                 onclick="javascript:view_FatherInfo();return false;">
         </td>
         <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label></td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-        <td><s:select name="fatherCountry" list="countryList" headerKey="0"
+        <td colspan="2"><s:select name="fatherCountry" list="countryList" headerKey="0"
                       headerValue="%{getText('select_country.label')}"/>
         </td>
     </tr>
@@ -53,7 +56,7 @@
     </tr>
     <tr>
         <td><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
-        <td colspan="6">
+        <td colspan="8">
             <s:url id="loadFatherInfo" action="ajaxSupport_loadFatherInfo"/>
             <sx:div id="parent.fatherNICorPIN" href="%{loadFatherInfo}"
                     listenTopics="view_FatherInfo" formId="birth-registration-form-2" theme="ajax"></sx:div>
@@ -80,26 +83,7 @@
     </tbody>
 </table>
 
-<table style="border:none">
-    <tr>
-        <td></td>
-    </tr>
-
-</table>
-<table style="border:none">
-    <tr>
-        <td></td>
-    </tr>
-
-</table>
-<table style="border:none">
-    <tr>
-        <td></td>
-    </tr>
-
-</table>
-
-<table class="table_reg_page_02" cellspacing="0">
+<table class="table_reg_page_02" cellspacing="0" style="margin:0;">
     <caption></caption>
     <col/>
     <col/>
@@ -119,8 +103,10 @@
     <tr>
         <td rowspan="2"><label>(15)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td colspan="2" rowspan="2"><s:textfield name="parent.motherNICorPIN"/><label
-                onclick="javascript:view_MotherInfo();return false;">></label></td>
+        <td colspan="2" rowspan="2" width="250px"><s:textfield name="parent.motherNICorPIN"/>
+            <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" 
+                 onclick="javascript:view_MotherInfo();return false;">
+        </td>
         <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label></td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0"
@@ -234,7 +220,7 @@
 </div>
 
 <div class="form-submit">
-    <table style="border:none; margin-bottom:20px;" align="center" class="form-submit">
+    <table style="border:none; margin:0;" align="center" class="form-submit">
         <s:url id="backUrl" action="eprBirthRegistration">
             <s:param name="back" value="true"/>
             <s:param name="pageNo" value="{pageNo - 1}"/>

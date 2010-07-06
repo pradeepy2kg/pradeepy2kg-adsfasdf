@@ -1290,7 +1290,7 @@
 
 .table_reg_cell_02  select {
     float: left;
-    width: 590px;
+    width: 550px;
     margin: 2px 5px;
 }
 
@@ -1412,33 +1412,14 @@
 
 .cell_01 {
     width: 40px;
-    height:100px;
-    text-align:center;
-    margin-left:auto;
-    margin-right:auto;
-}
-/* Fix Confirmation page2 table hight*/
-.cell_012 {
-    width:40px;
-    height:150px;
-    text-align:center;
-    margin-left:auto;
-    margin-right:auto;
-}
-/* Fix Confirmation page1 table hight*/
-.cell_011 {
-    width:40px;
-    height:70px;
-    text-align:center;
-    margin-left:auto;
-    margin-right:auto;
-}
-;
-.cell_02 {
-    width: 300px
 }
 
-;
+
+.cell_02 {
+    width: 300px;
+}
+
+
 .cell_03 {
     width: 50px
 }
@@ -1456,7 +1437,6 @@
     border-right: none;
     border-bottom: none;
     font-size: 9pt;
-    margin-bottom: 30px;
 }
 
 .table_con_page_02 td {
@@ -1475,7 +1455,6 @@
     border-right: none;
     border-bottom: none;
     font-size: 9pt;
-    margin-bottom: 30px;
 }
 
 .table_con_page_03 td {
@@ -1494,7 +1473,6 @@
     border-bottom: none;
     font-size: 9pt;
     margin-bottom: 30px;
-    margin-top: 30px;
 }
 
 .table_con_page2_table td {
@@ -1545,3 +1523,5 @@
 #user-preference-outer table tr td select{float:right; width:300px;}
 #user-preference-outer table tr td input{text-transform:capitalize;}
 #user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}
+
+#birth-registration-form-2-outer table{margin:10px 0;}

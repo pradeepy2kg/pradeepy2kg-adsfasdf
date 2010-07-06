@@ -34,7 +34,7 @@
        </s:form>
     </div>
 </div>
-<div style="margin-left:auto; margin-right:auto; width:62%;">
+<div style="margin-left:auto; margin-right:auto; width:65%;">
     <img src="<s:url value="/images/icta-logo.jpg"/>">
     Copyright © 2010 ICTA » Information and Communication Technology Agency of Sri Lanka. All Rights Reserved.
 </div>
