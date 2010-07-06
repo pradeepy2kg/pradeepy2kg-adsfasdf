@@ -262,7 +262,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
-        Assert.assertEquals(BirthDeclaration.State.CONFIRMED_WITHOUT_CHANGES, bdf1.getRegister().getStatus());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_GENERATED, bdf1.getRegister().getStatus());
 
         // simulate the system generation of the PIN
         bdf1.getChild().setPin(1000100001L);

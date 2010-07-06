@@ -19,8 +19,9 @@ public interface PopulationRegistry {
      * Add a Person to the PRS
      * @param person the Person to be added
      * @param user the user performing this action
+     * @return the PIN number generated for the Person - for verified records, or -1 for any other
      */
-    public void addPerson(Person person, User user);
+    public long addPerson(Person person, User user);
 
     /**
      * Update a Person on the PRS

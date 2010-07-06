@@ -117,4 +117,13 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("birthDivision", birthDivision);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getUnconfirmedByRegistrationDate(Date date) {
+        Query q = em.createNamedQuery("filter.by.unconfirmed.by.register.date");
+        q.setParameter("date", date);
+        return q.getResultList();
+    }
 }

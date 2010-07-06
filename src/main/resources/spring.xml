@@ -76,12 +76,16 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="popRegService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="userManagerService"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
-    <bean id="popregService" class="lk.rgd.prs.core.service.PopulationRegistryImpl">
+    <bean id="popRegService" class="lk.rgd.prs.core.service.PopulationRegistryImpl">
         <constructor-arg ref="personDAOImpl"/>
+        <constructor-arg ref="pinGeneratorService"/>
     </bean>
     <bean id="pinGeneratorService" class="lk.rgd.prs.core.service.PINGeneratorImpl">
         <constructor-arg ref="pinNumberDAOImpl"/>
@@ -99,7 +103,7 @@
     </bean>
 
     <bean id="ajaxSupport" scope="prototype" class="lk.rgd.crs.web.action.AjaxAction">
-        <constructor-arg ref="popregService"/>
+        <constructor-arg ref="popRegService"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>

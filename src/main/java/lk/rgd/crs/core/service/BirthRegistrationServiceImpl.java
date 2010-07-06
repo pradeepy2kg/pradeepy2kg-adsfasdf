@@ -1,13 +1,13 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
-import lk.rgd.common.api.dao.CountryDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -16,14 +16,15 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * The central service managing the CRS Birth Registration process
@@ -38,16 +39,23 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final BDDivisionDAO bdDivisionDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
+    private final PopulationRegistry popreg;
+    private final AppParametersDAO appParametersDAO;
+    private final UserManager userManager;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO) {
+        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
+        PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
+        this.popreg = popreg;
+        this.appParametersDAO = appParametersDAO;
+        this.userManager = userManager;
     }
 
     /**
@@ -277,6 +285,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
                 ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
         }
+
+        // generate PIN number and add record to PRS
+        generatePINandAddToPRS(bdf, user);
     }
 
     /**
@@ -689,15 +700,179 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     /**
+     * Generates a PIN and adds the record to the PRS
+     */
+    private List<UserWarning> generatePINandAddToPRS(BirthDeclaration bdf, User user) {
+
+        logger.debug("Generating a PIN and adding record to the PRS for BDF UKey : {}", bdf.getIdUKey());
+
+        List<UserWarning> warnings = new ArrayList<UserWarning>();
+        ChildInfo childInfo = bdf.getChild();
+        Person child = new Person();
+
+        if (!isEmptyString(childInfo.getChildFullNameEnglish())) {
+            child.setFullNameInEnglishLanguage(childInfo.getChildFullNameEnglish());
+            String[] names = childInfo.getChildFullNameEnglish().split(" ");
+            child.setLastNameInEnglish(names[names.length-1]);
+            StringBuilder sb = new StringBuilder(16);
+            for (int i=0; i<names.length-2; i++) {
+                sb.append(names[i].charAt(0)).append(". ");
+            }
+            child.setInitialsInEnglish(sb.toString());
+            logger.debug("Derived child English initials as : {} and last name as : {}",
+                sb.toString(), names[names.length-1]);
+        }
+
+        if (!isEmptyString(childInfo.getChildFullNameOfficialLang())) {
+            child.setFullNameInOfficialLanguage(childInfo.getChildFullNameOfficialLang());
+            String[] names = childInfo.getChildFullNameOfficialLang().split(" ");
+            child.setLastNameInOfficialLanguage(names[names.length-1]);
+            StringBuilder sb = new StringBuilder(16);
+            for (int i=0; i<names.length-2; i++) {
+                sb.append(names[i].charAt(0)).append(". ");
+            }
+            child.setInitialsInOfficialLanguage(sb.toString());
+            logger.debug("Derived child Official language initials as : {} and last name as : {}",
+                sb.toString(), names[names.length-1]);
+        }
+
+        child.setDateOfBirth(childInfo.getDateOfBirth());
+        child.setCivilStatus(Person.CivilStatus.NEVER_MARRIED);
+        child.setGender(childInfo.getChildGender());
+        child.setLifeStatus(Person.LifeStatus.ALIVE);
+        child.setStatus(Person.Status.VERIFIED);
+        child.setPreferredLanguage(bdf.getRegister().getPreferredLanguage());
+
+        // check mother and father
+        ParentInfo parent = bdf.getParent();
+        if (bdf.getParent() != null) {
+            processMotherToPRS(user, child, parent);
+            processFatherToPRS(user, child, parent);
+        }
+
+        // generate a PIN number
+        long pin = popreg.addPerson(child, user);
+        childInfo.setPin(pin);
+        bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_GENERATED);
+
+        logger.debug("Generated PIN for record IDUKey : {} issued PIN : {}", bdf.getIdUKey(), pin);
+        birthDeclarationDAO.updateBirthDeclaration(bdf);
+
+        return warnings;
+    }
+
+    private void processMotherToPRS(User user, Person person, ParentInfo parent) {
+
+        String motherNICorPIN = parent.getMotherNICorPIN();
+        logger.debug("Processing details of the mother for NIC/PIN : {}", motherNICorPIN);
+
+        if (motherNICorPIN != null) {
+            Person mother = null;
+            try {
+                long pin = Long.parseLong(motherNICorPIN);
+                mother = popreg.findPersonByPIN(pin, user);
+                if (mother != null) {
+                    logger.debug("Found mother by PIN : {}", pin);
+                    person.setMother(mother);
+                }
+            } catch (NumberFormatException ignore) {
+                // this could be an NIC
+                List<Person> records = popreg.findPersonsByNIC(motherNICorPIN, user);
+                if (records != null && records.size() == 1) {
+                    logger.debug("Found mother by INC : {}", records.get(0).getNic());
+                    mother = records.get(0);
+                } else {
+                    logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
+                    // TODO issue a user warning
+                }
+            }
+
+            // if we couldn't locate the mother, add an unverified record to the PRS
+            if (mother == null && parent.getMotherFullName() != null) {
+                mother = new Person();
+                mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
+                mother.setDateOfBirth(parent.getMotherDOB());
+                mother.setGender(AppConstants.Gender.FEMALE.ordinal());
+                if (parent.getMotherAddress() != null) {
+                    Address mothersAddress = new Address();
+                    mothersAddress.setLine1(parent.getMotherAddress());
+                    Set<Address> addresses = new HashSet<Address>();
+                    addresses.add(mothersAddress);
+                    mother.setAddresses(addresses);
+                }
+                mother.setStatus(Person.Status.UNVERIFIED);
+                mother.setLifeStatus(Person.LifeStatus.ALIVE);
+                popreg.addPerson(mother, user);
+
+                logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
+            }
+        }
+    }
+
+    private void processFatherToPRS(User user, Person person, ParentInfo parent) {
+
+        String fatherNICorPIN = parent.getFatherNICorPIN();
+        if (fatherNICorPIN != null) {
+            Person father = null;
+            try {
+                long pin = Long.parseLong(fatherNICorPIN);
+                father = popreg.findPersonByPIN(pin, user);
+                if (father != null) {
+                    logger.debug("Found father by PIN : {}", pin);
+                    person.setFather(father);
+                }
+            } catch (NumberFormatException ignore) {
+                // this could be an NIC
+                List<Person> records = popreg.findPersonsByNIC(fatherNICorPIN, user);
+                if (records != null && records.size() == 1) {
+                    logger.debug("Found father by INC : {}", records.get(0).getNic());
+                    father = records.get(0);
+                } else {
+                    // TODO issue a user warning
+                    logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
+                }
+            }
+
+            // if we couldn't locate the father, add an unverified record to the PRS
+            if (father == null && parent.getFatherFullName() != null) {
+                father = new Person();
+                father.setFullNameInOfficialLanguage(parent.getFatherFullName());
+                father.setDateOfBirth(parent.getFatherDOB());
+                father.setGender(AppConstants.Gender.MALE.ordinal());
+                father.setStatus(Person.Status.UNVERIFIED);
+                father.setLifeStatus(Person.LifeStatus.ALIVE);
+                popreg.addPerson(father, user);
+
+                logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
+            }
+        }
+    }
+
+    /**
      * @inheritDoc
      */
     public void triggerScheduledJobs() {
         logger.info("Start executing Birth registration related scheduled tasks..");
-        try {
 
-        } catch (Exception e) {
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.add(Calendar.DATE, -1 * appParametersDAO.getIntParameter(AppParameter.CRS_AUTO_CONFIRMATION_DAYS));
 
+        User systemUser = userManager.getSystemUser();
+        List<BirthDeclaration> list = birthDeclarationDAO.getUnconfirmedByRegistrationDate(cal.getTime());
+        for (BirthDeclaration bdf : list) {
+            try {
+                List<UserWarning> warnings = generatePINandAddToPRS(bdf, systemUser);
+                for (UserWarning w : warnings) {
+                    logger.warn(w.getMessage());
+                }
+            } catch (Exception e) {
+                logger.error("Error occurred while auto confirming BDF : {} by the system", bdf.getIdUKey());
+            }
         }
-        logger.info("Start executing Birth registration related scheduled tasks..");
+        logger.info("Stopped executing Birth registration related scheduled tasks..");
+    }
+
+    private static boolean isEmptyString(String s) {
+        return s == null || s.trim().length() == 0;
     }
 }

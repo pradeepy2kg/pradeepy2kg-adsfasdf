@@ -23,6 +23,12 @@ public interface UserManager {
     User authenticateUser(String userName, String password) throws AuthorizationException;
 
     /**
+     * Internal API to access the System internal user
+     * @return the internal system user
+     */
+    public User getSystemUser();
+
+    /**
      * Return the list of non-deleted users playing the specified role
      *
      * @param roleId the role ID

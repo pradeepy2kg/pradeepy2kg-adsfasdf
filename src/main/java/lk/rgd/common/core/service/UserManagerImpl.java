@@ -33,6 +33,7 @@ public class UserManagerImpl implements UserManager {
     private final UserDAO userDao;
     private final RoleDAO roleDao;
     private final AppParametersDAO appParaDao;
+    private static final String SYSTEM_USER_NAME = "system";
 
     public UserManagerImpl(UserDAO userDao, RoleDAO roleDao, AppParametersDAO appParaDao) {
         this.userDao = userDao;
@@ -45,7 +46,9 @@ public class UserManagerImpl implements UserManager {
      */
     public User authenticateUser(String userId, String password) throws AuthorizationException {
         User user = userDao.getUserByPK(userId);
-        if (user != null && user.getStatus() == User.State.ACTIVE && password != null && user.getPasswordHash() != null) {
+        if (user != null && user.getStatus() == User.State.ACTIVE
+            && password != null && user.getPasswordHash() != null
+            && !SYSTEM_USER_NAME.equalsIgnoreCase(userId)) {
             if (user.getPasswordHash().equals(hashPassword(password))) {
                 return user;
             } else {
@@ -54,6 +57,13 @@ public class UserManagerImpl implements UserManager {
         }
         logger.warn("Attempt to authenticate non-existant or inactive user : {} or empty password", userId);
         throw new AuthorizationException("Invalid user ID, password or user : " + userId, ErrorCodes.INVALID_LOGIN);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public User getSystemUser() {
+        return userDao.getUserByPK(SYSTEM_USER_NAME);
     }
 
     /**
