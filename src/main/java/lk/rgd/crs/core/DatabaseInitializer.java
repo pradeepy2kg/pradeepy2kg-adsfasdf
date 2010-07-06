@@ -7,6 +7,7 @@ import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
+import lk.rgd.prs.api.domain.PINNumber;
 import lk.rgd.prs.api.domain.Person;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -61,6 +62,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(Address.class);
         entityClasses.add(Person.class);
         entityClasses.add(Marriage.class);
+        entityClasses.add(PINNumber.class);
     }
 
     public void setDataSource(DataSource dataSource) {
