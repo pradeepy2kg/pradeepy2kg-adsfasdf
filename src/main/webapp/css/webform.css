@@ -393,10 +393,6 @@
     margin: 0 10px;
 }
 
-#admitDatePicker {
-    margin-top: 25px;
-}
-
 /* Page three (Form 3) of the Birth Registration Form */
 #birth-registration-form-marriage-info-sub-title {
     margin-top: 0;
@@ -1525,3 +1521,6 @@
 #user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}
 
 #birth-registration-form-2-outer table{margin:10px 0;}
+
+.find-person img{width:20px; height:20px;}
+.find-person img:hover{width:25px; height:25px;}
