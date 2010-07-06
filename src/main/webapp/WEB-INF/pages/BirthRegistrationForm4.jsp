@@ -46,12 +46,8 @@
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/></td>
             </tr>
             <tr>
-                <td colspan="2" style="width:220px"><label>32) අත්සන හා නිල මුද්‍රාව<br>தகவல் ... <br>Signature and
-                    Official Seal (if available) of the
-                    Notifying Authority</label></td>
-                <td><s:checkbox name="notifyingAuthority.notifyingAuthoritySigned" id="notifyingAuthoritySigned"/></td>
-                <td><label>දිනය <br>*in tamil <br>Date</label></td>
-                <td><sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+                <td colspan="2"><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td colspan="4"><sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
                                        displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
             </tr>
