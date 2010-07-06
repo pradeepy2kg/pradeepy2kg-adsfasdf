@@ -212,7 +212,7 @@
     </tr>
     <tr>
         <td class="cell_011">7</td>
-        <td><label><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
+        <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11"></td>

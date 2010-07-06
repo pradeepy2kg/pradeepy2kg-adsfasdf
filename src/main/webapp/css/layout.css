@@ -15,8 +15,8 @@ body {
 }
 
 #layout-header {
-    width: 100%;
-    height: 150px;
+    width: 1250px;
+    height: 155px;
     background: url(../images/epr-header.png) no-repeat;
 }
 
@@ -67,7 +67,7 @@ body {
 #login-form {
     width: 40%;
     height: 150px;
-    margin: 23% auto;
+    margin: 16% auto;
     float: none;
     padding: 5px;
     background: url(../images/odd-row.png);

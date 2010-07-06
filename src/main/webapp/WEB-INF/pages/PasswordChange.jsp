@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+<img src="images/epr-header.png" />
 <div id="login-form">
     <div id="login-form-title">user password change</div>
     <div id="login-form-body">

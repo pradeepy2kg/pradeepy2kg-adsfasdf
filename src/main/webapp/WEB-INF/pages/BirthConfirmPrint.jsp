@@ -74,7 +74,7 @@
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
-                                <img src="<s:url value='/images/print_icon.png'/>" border="none" width="25"
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>
                         </td>
