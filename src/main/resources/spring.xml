@@ -36,6 +36,7 @@
     <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl"/>
     <bean id="birthDeclarationDAOImpl" class="lk.rgd.crs.core.dao.BirthDeclarationDAOImpl"/>
     <bean id="personDAOImpl" class="lk.rgd.prs.core.dao.PersonDAOImpl"/>
+    <bean id="pinNumberDAOImpl" class="lk.rgd.prs.core.dao.PINNumberDAOImpl"/>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
@@ -60,6 +61,9 @@
     the web interface as well as a Web Services interface -->
     <bean id="popregService" class="lk.rgd.prs.core.service.PopulationRegistryImpl">
         <constructor-arg ref="personDAOImpl"/>
+    </bean>
+    <bean id="pinGeneratorService" class="lk.rgd.prs.core.service.PINGeneratorImpl">
+        <constructor-arg ref="pinNumberDAOImpl"/>
     </bean>
 
     <!--Web module related classes-->
