@@ -21,7 +21,7 @@ import lk.rgd.Permission;
  *         of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
-    public static Map<Integer, Link> linkPermission = new HashMap<Integer, Link>();
+    public static Map<Integer, Link> linkPermission = new TreeMap<Integer, Link>();
     public Map<String, Map> allowedLinks = new HashMap<String, Map>();
     private List userRoles;
     private String userName;
@@ -76,12 +76,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return
      */
     private Map<String, Map> allowedLinks(User user) {
-        Map birthLink = new HashMap();
-        Map deathLink = new HashMap();
-        Map marrageLink = new HashMap();
-        Map reportLink = new HashMap();
-        Map adminLink = new HashMap();
-        Map preferanceLink = new HashMap();
+        Map birthLink = new TreeMap();
+        Map deathLink = new TreeMap();
+        Map marrageLink = new TreeMap();
+        Map reportLink = new TreeMap();
+        Map adminLink = new TreeMap();
+        Map preferanceLink = new TreeMap();
 
         for (Map.Entry<Integer, Link> e : linkPermission.entrySet()) {
             if (user.isAuthorized(e.getKey())) {
@@ -102,12 +102,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
         }
 
-        allowedLinks.put("BIRTH", birthLink);
-        allowedLinks.put("DEATH", deathLink);
-        allowedLinks.put("MARRAGE", marrageLink);
-        allowedLinks.put("REPORT", reportLink);
-        allowedLinks.put("ADMIN", adminLink);
-        allowedLinks.put("PREFERANCE", preferanceLink);
+        allowedLinks.put("1BIRTH", birthLink);
+        allowedLinks.put("3DEATH", deathLink);
+        allowedLinks.put("2MARRAGE", marrageLink);
+        allowedLinks.put("5REPORT", reportLink);
+        allowedLinks.put("4ADMIN", adminLink);
+        allowedLinks.put("6PREFERANCE", preferanceLink);
 
         return allowedLinks;
     }

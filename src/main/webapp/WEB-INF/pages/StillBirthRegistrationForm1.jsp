@@ -83,7 +83,7 @@
         </td>
     </tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="150px"><label>(1) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="7">
             <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
                                onchange="javascript:splitDate('datePicker')"/>
@@ -116,7 +116,7 @@
     </tr>
     <tr></tr>
     <tr>
-        <td class="font-9"><label>(3)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
+        <td class="font-9"><label>(3) ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
         <td colspan="3"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"/></td>
@@ -125,17 +125,30 @@
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label></td>
             <%--TODO attribute ?--%>
-        <td colspan="2"><s:textfield name="" id="childBirthWeight"/></td>
+        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant"/></td>
     </tr>
     <tr>
-        <td class="font-9"><label>(5)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි උපත ද? <br>பிறப்பு ஒழுங்கு <br>According
+        <td class="font-9"><label>(5) සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි උපත ද? <br>பிறப்பு ஒழுங்கு <br>According
             to Live Birth Order,
             number of children?</label></td>
         <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank"/></td>
-        <td colspan="2" class="font-9"><label>(6)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
+        <td colspan="2" class="font-9"><label>(6) නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
             multiple births, number of children</label></td>
         <td colspan="2"><s:textfield name="child.numberOfChildrenBorn"/></td>
+    </tr>
+    <tr>
+        <td class="font-9" colspan="3">
+            <label>(7) මවි පියන් විවාහකද?<br>* Tamil <br>Were Parents Married ?</label>
+        </td>
+        <td class="font-9" colspan="2">
+            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/>
+            <label> ඔවි/*in tamil / Yes</label>
+        </td>
+        <td class="font-9" colspan="3">
+            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/>
+            <label> නැත / *in tamil / No</label>
+        </td>
     </tr>
     </tbody>
 </table>
