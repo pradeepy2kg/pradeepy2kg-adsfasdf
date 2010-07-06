@@ -298,6 +298,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 bdId, confirmationApprovalFlag + " IgnoreWarnings " + ignoreWarning);
         }
         initPermission();
+        //direct birth approvalIgnoring warnings from birthDeclarationFormDetails page
+        if (!ignoreWarning && directDeclarationApprovalFlag) {
+            addActionError(getText("directApproveIgnoreWarning.faild.label"));
+            return "success";
+        }
         if (ignoreWarning) {
             bdf = service.getById(bdId, user);
             try {
