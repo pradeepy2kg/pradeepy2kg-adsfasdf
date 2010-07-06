@@ -24,6 +24,27 @@
         <property name="createCleanDB" value="false"/>
     </bean>
 
+    <!-- Schedule automated processing tasks -->
+    <bean id="scheduledBirthJobs" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="manageBirthService"/>
+        <property name="targetMethod" value="triggerScheduledJobs"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="cronTriggerBirth" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="scheduledBirthJobs"/>
+        <property name="cronExpression" value="0/20/40 * * ? * MON-FRI"/>
+    </bean>
+
+    <!-- Start the Triggers - use Cron trigger for production use with an appropriate schedule -->
+    <bean id="scheduleFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTriggerBirth"/>
+            </list>
+        </property>
+    </bean>
+
     <!--DAO Beans - These allow access to the lower levels of the application data-->
     <bean id="appParametersDAOImpl" class="lk.rgd.common.core.dao.AppParametersDAOImpl"/>
     <bean id="districtDAOImpl" class="lk.rgd.common.core.dao.DistrictDAOImpl"/>

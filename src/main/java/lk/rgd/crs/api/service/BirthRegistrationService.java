@@ -262,5 +262,12 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBirthDivision(BDDivision bdDivision, User user);
+
+    /**
+     * Entry point invoked by the scheduler to automate scheduled tasks related to birth registration such
+     * as the automatic generation of a birth certificate after approximately 28 days without hearing back
+     * from parents on confirmation details
+     */
+    public void triggerScheduledJobs();
 }
 

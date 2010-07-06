@@ -2,13 +2,13 @@ package lk.rgd;
 
 import junit.framework.TestCase;
 import lk.rgd.crs.core.DatabaseInitializer;
-import org.apache.lucene.analysis.WhitespaceAnalyzer;
-import org.apache.lucene.document.DateTools;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.NumericUtils;
+//import org.apache.lucene.analysis.WhitespaceAnalyzer;
+//import org.apache.lucene.document.DateTools;
+//import org.apache.lucene.document.Document;
+//import org.apache.lucene.document.Field;
+//import org.apache.lucene.index.IndexWriter;
+//import org.apache.lucene.store.FSDirectory;
+//import org.apache.lucene.util.NumericUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -42,9 +42,9 @@ public class UnitTestManager extends TestCase {
             ctx.refresh();
 
             // create Lucene indexes
-            createTestLuceneIndex(Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY) ?
+            /*createTestLuceneIndex(Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY) ?
                 "jdbc:derby://localhost:1527/unit-testing-jpa;create=true" :
-                "jdbc:derby:memory:unit-testing-jpa");
+                "jdbc:derby:memory:unit-testing-jpa");*/
             return ctx;
 
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class UnitTestManager extends TestCase {
         }
     }
 
-    private static void createTestLuceneIndex(String url) {
+    /*private static void createTestLuceneIndex(String url) {
 
         // delete any existing index
         File f = new File("/tmp/index/person");
@@ -122,5 +122,5 @@ public class UnitTestManager extends TestCase {
             logger.error("Error indexing the Person records of the PRS", e);
             throw new RuntimeException("Error indexing the Person records of the PRS", e);
         }
-    }
+    }*/
 }
