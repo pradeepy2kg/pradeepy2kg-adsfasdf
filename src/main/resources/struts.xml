@@ -109,7 +109,7 @@
             <result type="tiles" name="RGDerror">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmationListPage" class="lk.rgd.crs.web.action.BirthRegisterAction"
+        <action name="eprBirthConfirmationPrintPage" class="lk.rgd.crs.web.action.BirthRegisterAction"
                 method="confirmationPrintPageLoad">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
             <result type="tiles" name="error">epr.error</result>

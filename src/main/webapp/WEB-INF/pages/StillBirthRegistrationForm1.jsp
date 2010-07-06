@@ -33,7 +33,7 @@
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
-                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
+                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo" value=""/></td>
                 </tr>
             </table>
             <table class="table_reg_datePicker_page_01">
@@ -180,20 +180,9 @@
         var submit = new Date(submitDatePicker);
 
         //compare two days
-        if (birtdate.getTime() > submit.getTime())
+        if (birtdate.getTime() > submit.getTime()){
             errormsg = errormsg + "\n" + document.getElementById('error6').value;
-
-        //comparing 90 days delay
-        var one_day = 1000 * 60 * 60 * 24 ;
-        var numDays = Math.ceil((submit.getTime() - birtdate.getTime()) / (one_day));
-
-        if (numDays >= 90) {
-            if (numDays >= 365) {
-                errormsg = errormsg + "\n" + document.getElementById('error8').value;
-            } else {
-                errormsg = errormsg + "\n" + document.getElementById('error7').value;
-            }
-            lateOrbelate = true;
+            flag=true;
         }
 
         element = document.getElementById('bdfSerialNo');

@@ -32,7 +32,7 @@
                     <tr>
                         <td rowspan="2"><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
-                        <td><s:textfield name="bdId" id="SerialNo"/></td>
+                        <td><s:textfield name="bdId" id="SerialNo" value=""/></td>
                     </tr>
                     <tr>
                         <td align="right" class="button"><s:submit name="search" value="%{getText('searchButton.label')}" cssStyle="margin-right:10px;"/></td>
@@ -175,22 +175,22 @@
             <td></td>
             <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
             <td colspan="6"><s:textfield name="child.placeOfBirth" cssClass="disable" disabled="true" size="30"/></td>
-            <td colspan="6"><s:textfield name="child.placeOfBirth" size="35"/></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
-            <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
-            <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td><label><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
-            <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
-                                         disabled="true"/></td>
-            <td colspan="6"><s:select list="raceList" name="fatherRace"/></td>
-        </tr>
-        <tr>
+        <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
+        <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
+        <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td><label><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
+        <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
+                                     disabled="true"/></td>
+        <td colspan="6"><s:select list="raceList" name="fatherRace"/></td>
+    </tr>
+    <tr>
 
         <tr>
             <td>8</td>
@@ -211,46 +211,55 @@
             <td colspan="6"><s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"
                                          value="%{getText('marriedStatus'+marriage.parentsMarried+'.label')}"/></td>
             <td><label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label></td>
-            <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/></td>
-            <td><label class="label">*in sinhala<br>*in tamil<br>No</label></td>
-            <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
-            <td><label class="label">*in sinhala<br>*in tamil<br>Since Married</label></td>
-            <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
+        <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/></td>
+        <td><label class="label">*in sinhala<br>*in tamil<br>No</label></td>
+        <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'0':''}" /></td>
+        <td><label class="label">*in sinhala<br>*in tamil<br>Since Married</label></td>
+        <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'2':''}" /></td>
         </tr>
         </tbody>
     </table>
 
     <s:hidden name="pageNo" value="1"/>
 
-    <s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
+<s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
+<s:hidden id="p1error2" value="%{getText('cp1.placeOfBirth.error.value')}"/>
+<s:hidden id="p1error3" value="%{getText('cp1.date.error.value')}"/>
+<s:hidden id="p1error4" value="%{getText('cp1.parents.marriage.error.value')}"/>
 
-    <script type="text/javascript">
-        function validate()
-        {
-            var errormsg = "";
-            var element;
-            var returnval;
-            var check = document.getElementById('skipjs');
-            if (!check.checked) {
+<script type="text/javascript">
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
 
-                element = document.getElementById('SerialNo');
-                if (element.value == "") {
-                    errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
-                }
-
-            }
-            if (errormsg != "") {
-                alert(errormsg);
-                returnval = false;
-            }
-            return returnval;
+        /*date related validations*/
+        var submitDatePicker = dojo.widget.byId('submitDatePicker').inputNode.value;
+        var submit = new Date(submitDatePicker);
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
+            flag = true;
         }
-    </script>
-    <div class="skip-validation">
-        <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-            <s:label value="%{getText('skipvalidation.label')}"/>
-        </s:checkbox>
-    </div>
+        element = document.getElementById('SerialNo');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
+        }
+        element = document.getElementById('placeOfBirth');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
+            flag = true;
+        }
+
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
+</script>
+
     <div class="form-submit">
         <s:submit value="%{getText('next.label')}"/>
     </div>
