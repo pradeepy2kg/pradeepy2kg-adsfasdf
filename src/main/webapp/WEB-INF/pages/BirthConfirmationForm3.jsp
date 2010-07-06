@@ -55,8 +55,9 @@
 
 
         <s:hidden name="pageNo" value="3"/>
-        <s:hidden id="p1error1" value="%{getText('cp4.error.NIC.value')}"/>
-        <s:hidden id="p2error2" value="%{getText('cp4.error.FullName.value')}"/>
+        <s:hidden id="p3error1" value="%{getText('cp3.error.NIC.value')}"/>
+        <s:hidden id="p3error2" value="%{getText('cp3.error.FullName.value')}"/>
+        <s:hidden id="p3error3" value="%{getText('cp3.error.confirm.date.value')}"/>
 
         <script type="text/javascript">
             function validate()
@@ -64,17 +65,21 @@
                 var errormsg = "";
                 var element;
                 var returnval;
-                var check = document.getElementById('skipjs');
-                if (!check.checked) {
 
-                    element = document.getElementById('confirmantNICorPIN');
-                    if (element.value == "") {
-                        errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
-                    }
-                    element = document.getElementById('confirmantFullName');
-                    if (element.value == "") {
-                        errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
-                    }
+                /*date related validations*/
+                var submitDatePicker = dojo.widget.byId('datePicker').inputNode.value;
+                var submit = new Date(submitDatePicker);
+                if (!(submit.getTime())) {
+                    errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+                    flag = true;
+                }
+                element = document.getElementById('confirmantNICorPIN');
+                if (element.value == "") {
+                    errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+                }
+                element = document.getElementById('confirmantFullName');
+                if (element.value == "") {
+                    errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
                 }
                 if (errormsg != "") {
                     alert(errormsg);

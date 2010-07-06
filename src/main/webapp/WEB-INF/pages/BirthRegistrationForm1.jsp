@@ -187,9 +187,10 @@
         var submit = new Date(submitDatePicker);
 
         //compare two days
-        if (birtdate.getTime() > submit.getTime())
+        if (birtdate.getTime() > submit.getTime()){
             errormsg = errormsg + "\n" + document.getElementById('error6').value;
-
+            flag = true;
+        }
         //comparing 90 days delay
         var one_day = 1000 * 60 * 60 * 24 ;
         var numDays = Math.ceil((submit.getTime() - birtdate.getTime()) / (one_day));
@@ -197,8 +198,10 @@
         if (numDays >= 90) {
             if (numDays >= 365) {
                 errormsg = errormsg + "\n" + document.getElementById('error8').value;
+                flag=true;
             } else {
                 errormsg = errormsg + "\n" + document.getElementById('error7').value;
+                flag=true;
             }
             lateOrbelate = true;
         }
@@ -223,11 +226,7 @@
         }
 
         if (!check.checked) {
-            element = document.getElementById('bdfSerialNo');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error1').value;
-                flag = true;
-            }
+            
             element = document.getElementById('childFullNameOfficialLang');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error2').value;

@@ -59,8 +59,7 @@
 
         <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value')}"/>
         <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
-        <s:hidden id="p4error3" value="%{getText('p4.Signature.error.value')}"/>
-        <s:hidden id="p4error4" value="%{getText('p4.submitDate.error.value')}"/>
+        <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>
 
         <script type="text/javascript">
             function validate()
@@ -73,7 +72,7 @@
                 var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
                 var submit = new Date(submitDatePicker);
                 if (!(submit.getTime())) {
-                    errormsg = errormsg + "\n" + document.getElementById('p4error4').value;
+                    errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
                     flag = true;
                 }
                 element = document.getElementById('notifyingAuthorityPIN');
@@ -84,10 +83,7 @@
                 if (element.value == "") {
                     errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
                 }
-                element = document.getElementById('notifyingAuthoritySigned');
-                if (!element.checked) {
-                    errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
-                }
+
 
                 if (errormsg != "") {
                     alert(errormsg);
