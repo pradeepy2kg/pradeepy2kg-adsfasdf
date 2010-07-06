@@ -57,7 +57,7 @@
     <!--Still Birth related pages-->
     <definition name="epr.stillBirthRegistration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/StillBirthRegistrationForm1.jsp"/>
-        <put-attribute name="title" value="stillBirth.form1.title"/>
+        <put-attribute name="title" value="form1.title"/>
     </definition>
 
     <definition name="epr.birthConfirmation_form1" extends="epr.template">

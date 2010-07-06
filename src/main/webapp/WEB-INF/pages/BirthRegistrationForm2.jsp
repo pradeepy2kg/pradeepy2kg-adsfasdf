@@ -220,10 +220,17 @@
 </div>
 
 <div class="form-submit">
-    <table style="border:none; margin:0;" align="center" class="form-submit">
+    <s:if test="liveBirth">
+        <s:set name="pageNo" value="0"/>
+    </s:if>
+    <s:else>
+        <s:set name="pageNo" value="5"/>
+    </s:else>
+
+    <table style="border:none; margin-bottom:20px;" align="center" class="form-submit">
         <s:url id="backUrl" action="eprBirthRegistration">
             <s:param name="back" value="true"/>
-            <s:param name="pageNo" value="{pageNo - 1}"/>
+            <s:param name="pageNo" value="#pageNo"/>
         </s:url>
         <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
                                     border="none" title="Back"/></s:a>
