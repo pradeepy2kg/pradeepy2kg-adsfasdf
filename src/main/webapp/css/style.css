@@ -31,8 +31,8 @@
 .skip-validation{float:left; margin-top:15px; }
 .skip-validation label{float:right; line-height:20px;}
 
-#birth-registration-form-2-outer .next-previous, #birth-registration-form-2-outer .next-previous a{float:right; width:112px; height:30px; background:url(../images/button_bg.png) no-repeat; text-align:center; vertical-align:middle;}
-#birth-registration-form-2-outer .next-previous{margin-top:15px; background:none;}
-#birth-registration-form-2-outer .next-previous a{text-decoration:none; line-height:30px; color:#000;}
-#birth-registration-form-2-outer .next-previous a:hover{color:darkred; background:url(../images/button_bg_hover.png) no-repeat;}
+#birth-registration-form-2-outer .next-previous, #birth-registration-form-2-outer .next-previous a, #birth-registration-form-3-outer .next-previous, #birth-registration-form-3-outer .next-previous a, #birth-registration-form-4-outer .next-previous, #birth-registration-form-4-outer .next-previous a{float:right; width:112px; height:30px; background:url(../images/button_bg.png) no-repeat; text-align:center; vertical-align:middle;}
+#birth-registration-form-2-outer .next-previous, #birth-registration-form-3-outer .next-previous, #birth-registration-form-4-outer .next-previous{margin-top:15px; background:none;}
+#birth-registration-form-2-outer .next-previous a, #birth-registration-form-3-outer .next-previous a, #birth-registration-form-4-outer .next-previous a{text-decoration:none; line-height:30px; color:#000;}
+#birth-registration-form-2-outer .next-previous a:hover, #birth-registration-form-3-outer .next-previous a:hover, #birth-registration-form-4-outer .next-previous a:hover{color:darkred; background:url(../images/button_bg_hover.png) no-repeat;}
 #birth-registration-form-2-outer .passport input{width:95%;}

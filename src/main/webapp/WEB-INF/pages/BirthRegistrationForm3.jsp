@@ -27,7 +27,10 @@
             <td rowspan="2"><label>(25)මව්පියන් විවාහකද? <br>பெற்றோர்கள் மணம் முடித்தவர்களா? <br>Were Parent's
                 Married?</label></td>
             <td rowspan="2">
-                <table class="sub_table">
+                <table class="sub_table" width="100%">
+                    <col width="60px"/>
+                    <col width="20px" align="right"/>
+                    <tbody>
                     <tr>
                         <td><label>*in sinhala<br>*in tamil<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
@@ -44,10 +47,11 @@
                         <td><label>*in sinhala<br>*in tamil<br>Since Married</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"/></td>
                     </tr>
+                    </tbody>
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:textfield name="marriage.placeOfMarriage"/></td>
+            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" cssStyle="width:95%;"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -62,11 +66,11 @@
                 மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
                 parents are not married, signatures of mother and father to include father's particulars</label></td>
             <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
-            <td><s:checkbox name="marriage.motherSigned"/></td>
+            <td align="center"><s:checkbox name="marriage.motherSigned"/></td>
         </tr>
         <tr>
             <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
-            <td><s:checkbox name="marriage.fatherSigned"/></td>
+            <td align="center"><s:checkbox name="marriage.fatherSigned"/></td>
         </tr>
         </tbody>
     </table>
@@ -94,13 +98,13 @@
         <tr>
             <td rowspan="2" style="width:75px"></td>
             <td><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="3"><s:textarea name="grandFather.grandFatherFullName"/></td>
+            <td colspan="3"><s:textarea name="grandFather.grandFatherFullName" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthYear"/></td>
+            <td><s:textfield name="grandFather.grandFatherBirthYear" cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
+            <td><s:textfield name="grandFather.grandFatherBirthPlace" cssStyle="width:95%;"/></td>
         </tr>
         <tr>
             <td colspan="5"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
@@ -111,13 +115,13 @@
         <tr>
             <td rowspan="2"></td>
             <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-            <td colspan="3"><s:textarea name="grandFather.greatGrandFatherFullName"/></td>
+            <td colspan="3"><s:textarea name="grandFather.greatGrandFatherFullName" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthYear"/></td>
+            <td><s:textfield name="grandFather.greatGrandFatherBirthYear" cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthPlace"/></td>
+            <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:95%;"/></td>
         </tr>
         </tbody>
     </table>
@@ -144,7 +148,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="justify"><s:radio name="informant.informantType" list="#{'MOTHER':''}" onchange="javascript:setInformPerson('MOTHER',
+                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'MOTHER':''}" onchange="javascript:setInformPerson('MOTHER',
             '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
             '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
                 </tr>
@@ -154,7 +158,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="justify"><s:radio name="informant.informantType" list="#{'FATHER':''}" onchange="javascript:setInformPerson('FATHER',
+                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'FATHER':''}" onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
             '%{parent.fatherFullName}','','','')"/></td>
                 </tr>
@@ -164,7 +168,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
-                    <td align="justify">
+                    <td align="center" width="150px">
                         <s:radio name="informant.informantType" list="#{'GUARDIAN':''}"
                                  onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
                 </tr>
@@ -173,27 +177,27 @@
     </tr>
     <tr>
         <td colspan="2"><label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label></td>
-        <td colspan="4"><s:textarea name="informant.informantName" id="informantName"/></td>
+        <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
         <td colspan="3"><label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல் கொடுப்பவரின்
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3"><s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/></td>
+        <td colspan="3"><s:textfield name="informant.informantNICorPIN" id="informantNICorPIN" /></td>
     </tr>
     <tr>
         <td colspan="2"><label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
-        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"/></td>
+        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
-        <td colspan="2"><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"/></td>
+        <td colspan="2"><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo" cssStyle="width:95%;"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
-        <td colspan="2"><s:textfield name="informant.informantEmail" id="informantEmail"/></td>
+        <td colspan="2"><s:textfield name="informant.informantEmail" id="informantEmail" cssStyle="width:95%;"/></td>
 
     </tr>
     <tr>
-        <td colspan="2"> <label>දිනය <br>*in tamil<br>Date</label></td>
+        <td colspan="2"><label>දිනය <br>*in tamil<br>Date</label></td>
         <td colspan="4"><sx:datetimepicker id="informDatePicker" name="informant.informantSignDate"
                                            displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('secondDatePicker')"/></td>
@@ -221,19 +225,18 @@
     }
 
 </script>
-
-</div>
 <s:hidden name="pageNo" value="3"/>
 <div class="form-submit">
-    <table style="border:none; margin:12px;" align="center" class="form-submit">
-        <s:url id="backUrl" action="eprBirthRegistration">
-            <s:param name="back" value="true"/>
-            <s:param name="pageNo" value="{pageNo - 1}"/>
-        </s:url>
-        <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
-                                    border="none" title="Back"/></s:a>
-        <s:submit value="%{getText('next.label')}"/>
-    </table>
+    <s:submit value="%{getText('next.label')}"/>
+</div>
+<div class="next-previous">
+    <s:url id="backUrl" action="eprBirthRegistration">
+        <s:param name="back" value="true"/>
+        <s:param name="pageNo" value="{pageNo - 1}"/>
+    </s:url>
+    <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 </s:form>
+</div>
+<%-- Styling Completed --%>
 

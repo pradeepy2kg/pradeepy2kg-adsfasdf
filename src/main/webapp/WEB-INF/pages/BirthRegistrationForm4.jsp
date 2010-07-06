@@ -28,9 +28,10 @@
                 <td colspan="3"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
-                <td colspan="2">
+                <td colspan="2" class="find-person">
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
-                    <label onclick="javascript:view_NotifyerInfo();return false;">></label>
+                    <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                 onclick="javascript:view_NotifyerInfo();return false;">
                 </td>
             </tr>
             <tr>
@@ -114,14 +115,16 @@
             </div>
         </s:if>
 
-        <div class="form-submit">
-            <s:url id="backUrl" action="eprBirthRegistration">
+        <div class="form-submit">              
+            <s:submit value="%{getText('next.label')}"/>
+        </div>
+        <div class="next-previous">
+             <s:url id="backUrl" action="eprBirthRegistration">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
-            <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"
-                         border="none" title="Back"/></s:a>
-            <s:submit value="%{getText('next.label')}"/>
+            <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
         </div>
     </s:form>
 </div>
+<%-- Styling Completed --%>
