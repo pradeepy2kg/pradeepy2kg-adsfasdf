@@ -233,7 +233,6 @@
         <s:param name="pageNo" value="{pageNo - 1}"/>
     </s:url>
     <s:a href="%{backUrl}" ><s:label value="%{getText('previous.label')}"/></s:a>
-
 </div>
 </s:form>
 </div>
