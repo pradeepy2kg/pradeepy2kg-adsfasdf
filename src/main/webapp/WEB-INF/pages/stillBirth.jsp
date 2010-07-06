@@ -26,7 +26,7 @@
         background: url("images/still-birth-flow-detail.gif") no-repeat;
         width: 636px;
         height: 490px;
-       margin: 50px 0px 0px 150px;
+        margin: 50px 0px 0px 150px;
     }
 
     .stillBirthLink1 {
@@ -40,7 +40,7 @@
         position: absolute;
         width: 135px;
         height: 45px;
-        margin:306px 0px 0px 577px;
+        margin: 306px 0px 0px 577px;
     }
 
     .stillBirthLink3 {
@@ -53,7 +53,7 @@
 
 </style>
 <div class="birth-registration-outer">
-    <s:a href="eprBirthRegistration.do" >
+    <s:a href="eprBirthRegistration.do">
         <div class="stillBirthLink1"></div>
     </s:a><s:a href="eprBirthRegisterApproval.do">
     <div class="stillBirthLink2"></div>

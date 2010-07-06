@@ -5,7 +5,7 @@ package lk.rgd;
  */
 public final class Permission {
 
-    public static final int USER_MANAGEMENT =2;
+    public static final int USER_MANAGEMENT = 2;
     public static final int EDIT_BDF = 3;
     public static final int PRINT_BDF = 4;
     public static final int APPROVE_BDF = 5;
@@ -23,10 +23,10 @@ public final class Permission {
     public static final int PAGE_BIRTH_CONFIRMATION_SEARCH = 33;
     public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL = 34;
     public static final int PAGE_BIRTH_CERTIFICATE_PRINT = 35;
-
+    public static final int PAGE_STILL_BIRTH_REGISTRATION = 36;
 
     // permission for PRS
-    public static final int PRS_ADD_PERSON  = 50;
+    public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;
     public static final int PRS_LOOKUP_PERSON_BY_KEYS = 52;
 

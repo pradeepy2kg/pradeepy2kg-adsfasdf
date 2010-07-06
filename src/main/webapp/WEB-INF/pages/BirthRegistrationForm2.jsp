@@ -135,10 +135,20 @@
         <td><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
         <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
-        <td colspan="4"><label>(20) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
-            as at
-            the date of birth of child </label></td>
-        <td><s:textfield name="parent.motherAgeAtBirth"/></td>
+        <td colspan="4"><label>
+            <s:if test="liveBirth">
+                (20) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+                as at
+                the date of birth of child
+            </s:if>
+            <s:else>
+                (20) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
+                as at the date of still-birth of child
+            </s:else>
+        </label>
+        </td>
+            <%--<s:textfield name="parent.motherAgeAtBirth" value=""/>--%>
+        <td><s:textfield name="birthType" value=""/><s:property value="birthType"/></td>
     </tr>
     <tr>
         <td rowspan="3"><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>

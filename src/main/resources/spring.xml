@@ -76,8 +76,6 @@
     <bean id="ajaxSupport" scope="prototype" class="lk.rgd.crs.web.action.AjaxAction">
         <constructor-arg ref="popregService"/>
         <constructor-arg ref="districtDAOImpl"/>
-        <constructor-arg ref="countryDAOImpl"/>
-        <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
     </bean>
@@ -108,4 +106,11 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
     </bean>
+
+    <bean id="userPreferenceAction" class="lk.rgd.crs.web.action.UserPreferencesAction">
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="userManagerService"/>
+    </bean>
+
 </beans>

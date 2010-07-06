@@ -53,8 +53,18 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
 
         districtList = districtDAO.getDistrictNames(language, user);
-        int birthDistrictId = districtList.keySet().iterator().next();
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        if (user.getPrefBDDistrict() != null) {
+            prefDistrictId = user.getPrefBDDistrict().getDistrictUKey();
+        } else {
+            prefDistrictId = districtList.keySet().iterator().next();
+        }
+
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(prefDistrictId, language, user);
+        if (user.getPrefBDDSDivision() != null) {
+            prefDSDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
+        } else {
+            prefDSDivisionId = dsDivisionList.keySet().iterator().next();
+        }
 
         return "pageload";
     }
@@ -69,12 +79,10 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         user.setPrefBDDistrict(districtDAO.getDistrict(prefDistrictId));
         user.setPrefBDDSDivision(dsDivisionDAO.getDSDivisionByPK(prefDSDivisionId));
         session.put(WebConstants.SESSION_USER_BEAN, user);
-        // todo put new user object to session
-        // todo persist this user
+        userManager.updateUser(user, user);
 
         logger.debug("inside selectUserPreference() : {} passed.", prefLanguage);
-        logger.debug("inside selectUserPreference() : {} passed.", prefDistrictId);
-        logger.debug("inside selectUserPreference() : {} passed.", prefDSDivisionId);
+        logger.debug("inside selectUserPreference() District : {} and DS division {} passed.", prefDistrictId, prefDSDivisionId);
 
         return "success";
     }
