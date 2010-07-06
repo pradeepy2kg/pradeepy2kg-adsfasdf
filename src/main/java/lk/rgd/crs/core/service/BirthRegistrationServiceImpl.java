@@ -687,4 +687,17 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBirthDivision(bdDivision);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public void triggerScheduledJobs() {
+        logger.info("Start executing Birth registration related scheduled tasks..");
+        try {
+
+        } catch (Exception e) {
+
+        }
+        logger.info("Start executing Birth registration related scheduled tasks..");
+    }
 }

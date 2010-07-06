@@ -45,11 +45,11 @@
             <version>5.0.4</version>
         </dependency>
 
-        <!-- Lucene -->
+        <!--Quartz-->
         <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-            <version>3.0.2</version>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>1.7.2</version>
         </dependency>
 
         <!-- SLF4J + Log4J -->
