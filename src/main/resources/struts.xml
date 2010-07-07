@@ -59,13 +59,15 @@
             <result name="DSDivListBDFApproval">/WEB-INF/pages/template/DSDivBoxBDFApproval.jsp</result>
             <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
             <result name="NotifyerInfo">/WEB-INF/pages/template/NotifyerInfo.jsp</result>
-			<result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
+            <result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
         </action>
     </package>
 
     <package name="births" namespace="/births" extends="NG">
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclaration">
+            <result type="tiles" name="form5">epr.stillBirthRegistration_form1</result>
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.birthRegistration_form4</result>
@@ -124,7 +126,8 @@
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
-        <action name="eprApprovalNext" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction" method="nextPage">
+        <action name="eprApprovalNext" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="nextPage">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
@@ -158,7 +161,8 @@
             <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
         </action>
 
-        <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction" method="filter">
+        <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="filter">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
@@ -220,8 +224,15 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
+        <!--Still Birth approval and printing Still Birth Certificate-->
+        <action name="eprApprovePrintStillBirthCert" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveBirthDeclarationForm">
+            <result type="redirect" name="success">eprBirthCertificate</result>
+        </action>
+
         <!--PrintAction related actions-->
-        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction" method="filterPrintList">
+        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="filterPrintList">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -236,7 +247,8 @@
         <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
-        <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction" method="previousPage">
+        <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="previousPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
 
@@ -250,7 +262,8 @@
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-        <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.births.SearchAction" method="searchBDFByIdUKey">
+        <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="searchBDFByIdUKey">
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
@@ -263,7 +276,7 @@
             <result type="tiles" name="success">epr.stillBirth</result>
         </action>
     </package>
-    
+
     <package name="management" namespace="/management" extends="NG">
         <!-- user creation related-->
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"

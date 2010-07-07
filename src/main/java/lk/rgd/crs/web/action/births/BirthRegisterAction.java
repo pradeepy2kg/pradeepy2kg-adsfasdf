@@ -120,26 +120,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                liveBirth = bdf.getRegister().getBirthType();
+                liveBirth = bdf.getRegister().getLiveBirth();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
                 register.setComments(bdf.getRegister().getComments());
                 bdf.setRegister(register);
-                bdf.getRegister().setBirthType(liveBirth);
+                bdf.getRegister().setLiveBirth(liveBirth);
                 break;
             case 2:
-                liveBirth = bdf.getRegister().getBirthType();
+                liveBirth = bdf.getRegister().getLiveBirth();
                 bdf.setParent(parent);
                 break;
             case 3:
-                liveBirth = bdf.getRegister().getBirthType();
+                liveBirth = bdf.getRegister().getLiveBirth();
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
                 bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 break;
             case 4:
-                liveBirth = bdf.getRegister().getBirthType();
+                liveBirth = bdf.getRegister().getLiveBirth();
                 bdf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
@@ -278,8 +278,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
             bdf = new BirthDeclaration();
-            bdf.getRegister().setBirthType(true);
-            liveBirth = bdf.getRegister().getBirthType();
+            bdf.getRegister().setLiveBirth(true);
+            liveBirth = bdf.getRegister().getLiveBirth();
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -304,8 +304,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
             bdf = new BirthDeclaration();
-            bdf.getRegister().setBirthType(false);
-            liveBirth = bdf.getRegister().getBirthType();
+            bdf.getRegister().setLiveBirth(false);
+            liveBirth = bdf.getRegister().getLiveBirth();
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -408,7 +408,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
             register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
-            register.setBirthType(oldBdf.getRegister().getBirthType());
+            register.setLiveBirth(oldBdf.getRegister().getLiveBirth());
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
