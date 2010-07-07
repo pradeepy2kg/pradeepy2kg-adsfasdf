@@ -40,7 +40,8 @@
 * Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer, .still-birth-registration-form-outer, #bdaw-outer {
+.birth-registration-form-outer, #birth-confirmation-form-outer, .still-birth-registration-form-outer, #bdaw-outer
+{
     width: 1030px;
     background: #ffffff;
     padding: 10px;
@@ -1521,6 +1522,22 @@
 #user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}
 
 #birth-registration-form-2-outer table{margin:10px 0;}
-
+<<<<<<< local
+#uer-create-outer
+{
+    background-color:#ffffff;
+    width:60em;
+    float:left;
+}
+.user-create-table{width:35em;margin-left:12.5em;border:1px;}
+.user-create-table input{width:20em;margin:.5em;margin-left:1.5em;}
+.user-create-table select{width:20em;margin:.5em;margin-left:1.5em;}
+.view-users-table{width:1030px;}
+.view-users-table td {border:none;}
+.view-users-table select{width:250px;}=======
 .find-person img{width:20px; height:20px;}
 .find-person img:hover{width:25px; height:25px;}
+
+.search-option-table{width:1030px;}
+.search-option-table select{width:230px;}
+.search-option-table input{width:230px;}

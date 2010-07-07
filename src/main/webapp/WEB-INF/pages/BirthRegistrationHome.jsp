@@ -80,7 +80,8 @@
     }
 
     .link7 {
-        background-color:blue;
+        text-align:justify;
+        background-color:#fff;
         position: absolute;
         width: 135px;
         height: 45px;
@@ -89,7 +90,7 @@
 </style>
 <div class="birth-registration-outer">
     <s:a href="eprStillBirth.do">
-        <div class="link7"></div>
+        <div class="link7">fvgtv</div>
     </s:a>
     <s:a href="eprBirthRegistration.do">
         <div class="link1"></div>

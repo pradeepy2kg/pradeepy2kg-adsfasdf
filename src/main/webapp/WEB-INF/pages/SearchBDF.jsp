@@ -1,6 +1,32 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<style type="text/css" title="currentStyle">
+    @import "lib/datatables/media/css/demo_page.css";
+    @import "lib/datatables/media/css/demo_table.css";
+    @import "lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+</style>
+
+
+<script type="text/javascript" language="javascript" src="lib/jquery/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="lib/datatables/media/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#search-list-table').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
+    });
+</script>
+
+
 <div id="birth-confirmation-search">
     <script>
         function view_DSDivs() {
@@ -19,63 +45,52 @@
         <fieldset>
             <legend><s:label name="registrationSerchLegend"
                              value="%{getText('registrationSerchLegend.label')}"/></legend>
-            <table>
+
+            <table class="search-option-table">
+                <caption></caption>
+                <col/>
                 <col/>
                 <col/>
                 <col/>
                 <col/>
                 <tbody>
                 <tr>
-                    <td>
-                        <s:label name="declarationSearialNumber" value="%{getText('searchDeclarationSearial.label')}"/>
-                    </td>
-                    <td>
-                        <s:textfield name="serialNo"/></td>
-                    <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
-                    <td>
-                        <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                  onchange="javascript:view_DSDivs();return false;"/>
-                    </td>
+                    <td><s:label name="declarationSearialNumber"
+                                 value="%{getText('searchDeclarationSearial.label')}"/></td>
+                    <td width="360px"><s:textfield name="serialNo"/></td>
+                    <td width="200x"><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+                    <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+                                  onchange="javascript:view_DSDivs();return false;"/></td>
+
                 </tr>
                 <tr>
                     <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-                    <td colspan="3" class="table_reg_cell_01" id="table_reg_cell_01">
-                        <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div>
-                    </td>
+                    <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                                            listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div></td>
+
                 </tr>
                 <tr>
-                    <td></td>
+                    <td colspan="3"></td>
                     <td>
-                        <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
+                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search"/></div>
                     </td>
-                    <td></td>
                 </tr>
                 </tbody>
             </table>
         </fieldset>
     </s:form>
     <br/>
-
     <s:form action="eprBDFSearchByIdUKey.do" method="post">
         <fieldset>
             <legend><s:label name="confirmatinSearchLegend"
                              value="%{getText('confirmationSearchLegend.label')}"/></legend>
-            <table>
+            <table class="search-option-table">
                 <tr>
+                    <td width="300px"><s:label name="confirmationSearch"
+                                               value="%{getText('searchConfirmationSerial.label')}"/></td>
+                    <td width="250px"><s:textfield name="idUKey"/></td>
                     <td>
-                        <s:label name="confirmationSearch" value="%{getText('searchConfirmationSerial.label')}"/>
-                    </td>
-
-                    <td>
-                        <s:textfield name="idUKey"/>
-                    </td>
-                </tr>
-                <tr>
-
-                    <td></td>
-                    <td>
-                        <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
+                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search"/></div>
                     </td>
                 </tr>
             </table>
@@ -116,16 +131,20 @@
             <legend>
                 <s:label value="%{getText('searchResult.label')}"/>
             </legend>
-            <table align="center">
-                <s:if test="searchResultList.size>0">
-                    <th></th>
-                    </thead></s:if>
-                <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
-                <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
-                <th><s:label name="districtlbl" value="%{getText('district.label')}"/></th>
-                <th><s:label name="divisionlbl" value="%{getText('division.label')}"/></th>
-                <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
-
+            <table id="search-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+                <thead>
+                <tr>
+                    <s:if test="searchResultList.size>0">
+                        <th></th>
+                    </s:if>
+                    <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
+                    <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
+                    <th><s:label name="districtlbl" value="%{getText('district.label')}"/></th>
+                    <th><s:label name="divisionlbl" value="%{getText('division.label')}"/></th>
+                    <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
+                </tr>
+                </thead>
+                <tbody>
                 <s:if test="%{#request.bdf != null}">
                     <tr>
                         <td align="center"><s:label name="childName"
@@ -172,7 +191,7 @@
                         </tr>
                     </s:iterator>
                 </s:elseif>
-
+                </tbody>
             </table>
         </fieldset>
     </s:if>
