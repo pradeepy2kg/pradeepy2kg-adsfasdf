@@ -44,9 +44,11 @@
             </tr>
             </tbody>
         </table>
+        </s:form>
     </div>
 
     <div>
+        <s:form action="">
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>

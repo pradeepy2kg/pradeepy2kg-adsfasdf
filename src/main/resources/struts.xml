@@ -60,7 +60,8 @@
             <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
             <result name="NotifyerInfo">/WEB-INF/pages/template/NotifyerInfo.jsp</result>
             <result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
-           <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp</result> 
+            <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp
+            </result>
         </action>
     </package>
 
@@ -112,12 +113,6 @@
         <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthCetificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>
-
-        <action name="eprBirthCetificateList" class="lk.rgd.crs.web.action.births.PrintAction"
-                method="filterPrintList">
-            <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -230,24 +225,18 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
-        <!--PrintAction related actions-->
-        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction"
-                method="filterPrintList">
-            <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
-            <result type="tiles" name="error">epr.error</result>
-        </action>
+        <!--birth certificate print related actions-->
 
         <action name="eprBirthCertificateList" class="lk.rgd.crs.web.action.births.PrintAction"
-                method="filterPrintList">
+                method="intiPrint">
             <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprPrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
-            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
-        </action>
-        <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction" method="previousPage">
-            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+        <action name="eprFilterBirthCetificateList" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="filterPrintList">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
@@ -256,6 +245,21 @@
         <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="previousPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+        </action>
+
+       <!--birthconfirmation print related-->
+        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="intiPrint">
+            <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprPrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+        </action>
+
+        <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction" method="previousPage">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
         </action>
 
         <!-- Search related-->
