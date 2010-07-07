@@ -31,8 +31,8 @@ public class ChildInfo implements Serializable {
     /**
      * 0-Yes, 1-No
      */
-    @Column(nullable = true)
-    private Integer birthAtHospital;
+    @Column(nullable = true, columnDefinition = "integer default 1")
+    private boolean birthAtHospital = true;
 
     /**
      * Name in Sinhala or Tamil
@@ -172,11 +172,11 @@ public class ChildInfo implements Serializable {
         this.numberOfChildrenBorn = numberOfChildrenBorn;
     }
 
-    public Integer getBirthAtHospital() {
+    public boolean getBirthAtHospital() {
         return birthAtHospital;
     }
 
-    public void setBirthAtHospital(Integer birthAtHospital) {
+    public void setBirthAtHospital(boolean birthAtHospital) {
         this.birthAtHospital = birthAtHospital;
     }
 

@@ -84,9 +84,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     //decides request is from birth confirmation approval if confirmationApprovalFlag is set to true
     private boolean confirmationApprovalFlag;
     private boolean searchDateRangeFlag;
+    private boolean liveBirth;
+    private boolean approved;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -275,6 +277,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String approveBirthDeclarationForm() {
         bdf = service.getById(bdId, user);
+        liveBirth = bdf.getRegister().getLiveBirth();
         boolean caughtException = false;
         try {
             warnings = service.approveLiveBirthDeclaration(bdf, false, user);
@@ -289,12 +292,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionMessage((getText("approveSuccess.label")));
             setAllowApproveBDF(false);
         }
+        approved = true;
         return "success";
     }
 
-    public String approveIgnoringWorning() {
+    public String approveIgnoringWarning() {
         if (logger.isDebugEnabled()) {
-            logger.debug("inside approveIgnoringWorning() : bdId {} requested isBirthConfirmatinConfirmationApproval {} ",
+            logger.debug("inside approveIgnoringWarning() : bdId {} requested isBirthConfirmatinConfirmationApproval {} ",
                 bdId, confirmationApprovalFlag + " IgnoreWarnings " + ignoreWarning);
         }
         initPermission();
@@ -312,14 +316,14 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     service.approveLiveBirthDeclaration(bdf, true, user);
                     //checks whether the request is from immediately after entering a birth declaration
                     if (directDeclarationApprovalFlag) {
-                        logger.debug("inside approveIgnoringWorning() : directDeclarationApprovalFlag {}", directDeclarationApprovalFlag);
+                        logger.debug("inside approveIgnoringWarning() : directDeclarationApprovalFlag {}", directDeclarationApprovalFlag);
                         addActionMessage((getText("approveSuccess.label")));
                         setAllowApproveBDF(false);
                         return "success";
                     }
                 }
             } catch (CRSRuntimeException e) {
-                logger.error("inside approveIgnoringWorning() : {} ", e);
+                logger.error("inside approveIgnoringWarning() : {} ", e);
                 addActionError(getText("brapproval.ignoreWarningApproval.error." + e.getErrorCode()));
             }
         }
@@ -814,5 +818,21 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setDirectDeclarationApprovalFlag(boolean directDeclarationApprovalFlag) {
         this.directDeclarationApprovalFlag = directDeclarationApprovalFlag;
+    }
+
+    public boolean isLiveBirth() {
+        return liveBirth;
+    }
+
+    public void setLiveBirth(boolean liveBirth) {
+        this.liveBirth = liveBirth;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

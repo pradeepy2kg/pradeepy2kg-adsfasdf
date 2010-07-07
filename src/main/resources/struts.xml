@@ -102,7 +102,7 @@
             <result type="tiles" name="RGDerror">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmationListPage" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+        <action name="eprBirthConfirmationPage" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="confirmationPrintPageLoad">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
             <result type="tiles" name="error">epr.error</result>
@@ -172,7 +172,7 @@
         </action>
 
         <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="approveIgnoringWorning">
+                method="approveIgnoringWarning">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
@@ -209,7 +209,7 @@
         </action>
 
         <action name="eprConfirmationIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="approveIgnoringWorning">
+                method="approveIgnoringWarning">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
@@ -224,10 +224,9 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
-        <!--Still Birth approval and printing Still Birth Certificate-->
-        <action name="eprApprovePrintStillBirthCert" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="approveBirthDeclarationForm">
-            <result type="redirect" name="success">eprBirthCertificate</result>
+        <action name="eprDirectApproveIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
         <!--PrintAction related actions-->
