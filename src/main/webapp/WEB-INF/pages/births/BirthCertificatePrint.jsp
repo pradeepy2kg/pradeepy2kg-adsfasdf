@@ -12,10 +12,10 @@
     }
 </script>
 <div id="birth-certificate-print">
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListBCPrint"/>
+    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBCPrint"/>
     <div id="birth-certificate-print-header">
-        <s:form action="eprFilterBirthConfirmPrint.do" method="POST"
-                id="birth-confirmation-print-form">
+        <s:form action="eprBirthCetificateList.do" name="birth_register_approval_head" method="POST"
+                id="birth-certificate-print-form">
         <table width="100%" cellpadding="5" cellspacing="0">
             <col width="220px"/>
             <col/>
@@ -34,11 +34,10 @@
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
                 <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                        listenTopics="view_DSDivs" formId="birth-confirmation-print-form"></sx:div></td>
+                                        listenTopics="view_DSDivs" formId="birth-certificate-print-form"></sx:div></td>
             </tr>
             <tr>
                 <td colspan="4" class="button" align="right">
-                    <s:hidden name="confirmListFlag" value="true"/>
                     <s:submit value="%{getText('view.label')}"></s:submit>
                 </td>
             </tr>
@@ -46,7 +45,7 @@
         </table>
     </div>
 
-    <div>
+    <div id="birth-register-approval-body">
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>
@@ -71,7 +70,7 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprBirthConfirmationPrintPage">
+                            <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
@@ -91,33 +90,34 @@
                     <s:submit value="%{getText('print.label')}"/></s:label>
             </div>
             <div class="next-previous">
-                <s:url id="previousUrl" action="eprPrintPrevious.do">
-                    <s:param name="confirmListFlag" value="true"/>
+                <s:url id="previousUrl" action="eprCertificatePrintPrevious.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
-                <s:url id="nextUrl" action="eprPrintNext.do">
-                    <s:param name="confirmListFlag" value="true"/>
+                <s:url id="nextUrl" action="eprCertificatePrintNext.do">
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:if test="printStart!=0 & printStart>0">
-                    <s:a href="%{previousUrl}">
-                        <img src="<s:url value='/images/previous.gif'/>" border="none"/></s:a>
+                    <s:a href="%{previousUrl}" >
+                        <img src="<s:url value='/images/previous.gif'/>" border="none" />
+                    </s:a>
                     <s:label value="%{getText('previous.label')}"/>
                 </s:if>
                 <s:if test="printList.size >= 10">
-                    <s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}">
-                    <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a>
+
+                    <s:a href="%{nextUrl}">
+                        <img src="<s:url value='/images/next.gif'/>" border="none"/>
+                        <s:label value="%{getText('next.label')}"/>
+                    </s:a>
                 </s:if>
             </div>
         </s:else>
         </s:form>
     </div>
-    <div id="birth-register-approval-footer">
-    </div>
 </div>
+<%-- Styling Completed --%>

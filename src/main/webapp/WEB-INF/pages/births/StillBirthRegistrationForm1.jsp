@@ -97,7 +97,7 @@
                       onchange="javascript:view_DSDivs();return false;"/></td>
     </tr>
     <tr>
-            <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivList"/>
+            <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivList"/>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
             <sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
