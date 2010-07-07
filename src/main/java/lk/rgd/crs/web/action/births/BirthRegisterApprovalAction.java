@@ -1,4 +1,4 @@
-package lk.rgd.crs.web.action;
+package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -437,6 +437,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
         setInitialDistrict();
+        /*Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        if (!dsDivisionList.isEmpty()) {
+            int dsDivisionId = dsDivisionList.keySet().iterator().next();
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        }*/
     }
 
     /**

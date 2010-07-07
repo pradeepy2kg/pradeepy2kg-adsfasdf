@@ -31,7 +31,7 @@
     }
 
     .bg1 {
-        background: url("images/birth-flow-detail-pic.gif") no-repeat;
+        background: url('<s:url value="/images/birth-flow-detail-pic.gif"/>') no-repeat;
         width: 960px;
         height: 702px;
         margin: 20px 0px 0px 20px;

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.common.Constants;
+import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.service.UserManager;

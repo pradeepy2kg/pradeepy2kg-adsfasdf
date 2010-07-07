@@ -33,7 +33,7 @@
         dojo.event.topic.publish("view_BDDivs");
     }
 </script>
-<s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListBDFApproval"/>
+<s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFApproval"/>
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
 <div id="birth-register-approval-header">
     <table width="100%" cellpadding="5" cellspacing="0">

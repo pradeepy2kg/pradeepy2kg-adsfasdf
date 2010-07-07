@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: duminda
-  Date: May 13, 2010
-  Time: 12:43:43 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <style type="text/css">
@@ -23,7 +16,7 @@
     }
 
     .bg1 {
-        background: url("images/still-birth-flow-detail.gif") no-repeat;
+        background: url('<s:url value="/images/still-birth-flow-detail.gif"/>') no-repeat;
         width: 636px;
         height: 490px;
         margin: 50px 0px 0px 150px;
