@@ -34,7 +34,7 @@
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
-                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo" value=""/></td>
+                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
                 </tr>
             </table>
             <table class="table_reg_datePicker_page_01">
@@ -112,9 +112,9 @@
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
-        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்

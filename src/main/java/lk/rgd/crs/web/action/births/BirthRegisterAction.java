@@ -396,7 +396,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
-
+        liveBirth = bdf.getRegister().getLiveBirth();
         /**
          *  under "Add another mode", few special values need to be3 preserved from last entry .
          *  Pre setting serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
