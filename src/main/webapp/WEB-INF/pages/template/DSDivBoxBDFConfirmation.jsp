@@ -5,7 +5,7 @@
 <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="dsDivisionId"
           onchange="javascript:view_BDDivs();return false;" cssStyle="float:left;  width:240px;"/>
 
-<s:url id="loadBDDivList" action="../ajaxSupport_loadBDDivList"/>
+<s:url id="loadBDDivList" action="/ajaxSupport_loadBDDivList"/>
 <sx:div name="birthDivisionId" id="birthDivisionId" value="birthDivisionId" href="%{loadBDDivList}"
         theme="ajax" listenTopics="view_BDDivs" formId="birth-confirmation-approval-form">
 </sx:div>
