@@ -11,7 +11,7 @@
             dojo.event.topic.publish("view_BDDivs");
         }
     </script>
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListBDFConfirmation"/>
+    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFConfirmation"/>
     <s:form action="eprConfirmationApprovalRefresh" name="birth_register_approval_header"
             id="birth-confirmation-approval-form">
         <div id="birth-confirm-approval-header">

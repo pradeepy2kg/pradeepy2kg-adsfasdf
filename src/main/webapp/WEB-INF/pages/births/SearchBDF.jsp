@@ -37,7 +37,7 @@
             dojo.event.topic.publish("view_BDDivs");
         }
     </script>
-    <s:url id="loadDSDivList" action="ajaxSupport_loadDSDivListSearch"/>
+    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListSearch"/>
     <s:actionerror/>
     <br/>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"

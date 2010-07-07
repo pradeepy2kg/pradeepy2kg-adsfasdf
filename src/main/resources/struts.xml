@@ -37,7 +37,7 @@
             <interceptor-ref name="i18n"/>
             <interceptor-ref name="basicStack"/>
             <result type="tiles" name="success">epr.home</result>
-            <result name="expired">/WEB-INF/pages/PasswordChange.jsp</result>
+            <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
         </action>
 
@@ -298,7 +298,7 @@
         <!--change password action -->
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePassword">
             <result name="success" type="tiles">epr.home</result>
-            <result name="error">/WEB-INF/pages/PasswordChange.jsp</result>
+            <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 
         <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
@@ -307,7 +307,7 @@
 
         <!--user preferance  -->
         <action name="passChangePageLoad">
-            <result>/WEB-INF/pages/PasswordChange.jsp</result>
+            <result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 
         <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
