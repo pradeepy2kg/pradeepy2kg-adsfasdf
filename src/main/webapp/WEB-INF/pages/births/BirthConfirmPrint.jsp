@@ -12,7 +12,7 @@
     }
 </script>
 <div id="birth-certificate-print">
-    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBCPrint"/>
+    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFConfirmationPrint"/>
     <div id="birth-certificate-print-header">
         <s:form action="eprFilterBirthConfirmPrint.do" method="POST"
                 id="birth-confirmation-print-form">
