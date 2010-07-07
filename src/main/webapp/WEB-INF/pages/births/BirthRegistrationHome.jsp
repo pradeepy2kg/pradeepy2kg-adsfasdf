@@ -81,7 +81,7 @@
 
     .link7 {
         text-align:justify;
-        background-color:#fff;
+        background: url('<s:url value="/images/still-birth-link.gif"/> ') no-repeat;
         position: absolute;
         width: 135px;
         height: 45px;
@@ -90,7 +90,7 @@
 </style>
 <div class="birth-registration-outer">
     <s:a href="eprStillBirth.do">
-        <div class="link7">fvgtv</div>
+        <div class="link7"></div>
     </s:a>
     <s:a href="eprBirthRegistration.do">
         <div class="link1"></div>

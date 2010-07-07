@@ -1529,7 +1529,7 @@
     width:60em;
     float:left;
 }
-.user-create-table{width:35em;margin-left:12.5em;border:1px;}
+.user-create-table{width:35em;margin:2em;}
 .user-create-table input{width:20em;margin:.5em;margin-left:1.5em;}
 .user-create-table select{width:20em;margin:.5em;margin-left:1.5em;}
 .view-users-table{width:1030px;}
