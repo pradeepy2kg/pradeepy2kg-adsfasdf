@@ -101,7 +101,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 //allowedLinks.put(e.getKey(), e.getValue());
             }
         }
-
         allowedLinks.put("1births", birthLink);
         allowedLinks.put("3deaths", deathLink);
         allowedLinks.put("2marriages", marrageLink);
@@ -182,7 +181,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_VIEW_USERS, new Link("viewUsers.label", "5", "eprViewUsers.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH, new Link("search.label", "0", "eprSearchPageLoad.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "0", "eprBirthConfirmationApproval.do?confirmationApprovalFlag=true"));
-        linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT, new Link("print_birthcertificate.label", "0", "eprBirthCetificateList.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT, new Link("print_birthcertificate.label", "0", "eprBirthCertificateList.do"));
         linkPermission.put(Permission.PAGE_STILL_BIRTH_REGISTRATION, new Link("still_birth_registration.label", "0", "eprStillBirthRegistrationInit.do"));
     }
 }

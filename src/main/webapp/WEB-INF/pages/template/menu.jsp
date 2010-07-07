@@ -21,7 +21,8 @@
                     <s:label value="%{getText('category_birth_registration')}"/></s:a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/births/' + value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            <li><s:a href="%{'/popreg/births/' + value.action}"><s:property
+                                    value="%{getText(value.propertyKey)}"/>
                             </s:a></li>
                         </s:iterator>
                     </ul>
@@ -31,7 +32,8 @@
                 <li><a href="#"><s:label value="%{getText('category_admin_task')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/management/' + value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            <li><s:a href="%{'/popreg/management/' + value.action}"><s:property
+                                    value="%{getText(value.propertyKey)}"/>
                             </s:a></li>
                         </s:iterator>
                     </ul>
@@ -42,7 +44,8 @@
                 <li><a href="#"><s:label value="%{getText('category_death_registraion')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/deaths/' + value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            <li><s:a href="%{'/popreg/deaths/' + value.action}"><s:property
+                                    value="%{getText(value.propertyKey)}"/>
                             </s:a></li>
                         </s:iterator>
                     </ul>
@@ -52,17 +55,19 @@
                 <li><a href="#"><s:label value="%{getText('category_marrage_registraion')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/marriages/' + value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            <li><s:a href="%{'/popreg/marriages/' + value.action}"><s:property
+                                    value="%{getText(value.propertyKey)}"/>
                             </s:a></li>
                         </s:iterator>
                     </ul>
                 </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == '5reports')}">
+            <s:if test="%{(value.size > 0)& (key == '5reprots')}">
                 <li><a href="#"><s:label value="%{getText('category_reports')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/reports/' + value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            <li><s:a href="%{'/popreg/reports/' + value.action}"><s:property
+                                    value="%{getText(value.propertyKey)}"/>
                             </s:a></li>
                         </s:iterator>
                     </ul>
@@ -72,7 +77,8 @@
                 <li><a href="#"><s:label value="%{getText('category_user_preferance')}"/> </a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/preferences/' + value.action}"><s:property value="%{getText(value.propertyKey)}"/>
+                            <li><s:a href="%{'/popreg/preferences/' + value.action}"><s:property
+                                    value="%{getText(value.propertyKey)}"/>
                             </s:a></li>
                         </s:iterator>
                     </ul>
