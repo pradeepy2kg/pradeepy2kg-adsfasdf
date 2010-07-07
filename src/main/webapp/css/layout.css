@@ -16,8 +16,8 @@ body {
 
 #layout-header {
     width: 1250px;
-    height: 155px;
-    background: url(../images/epr-header.png) no-repeat;
+    height: 151px;
+    background:url(../images/epr-header.png) no-repeat;
 }
 
 #layout-body {
@@ -38,7 +38,7 @@ body {
 }
 
 #body-content-title {
-    background:lightgoldenrodyellow url(../images/title-bg.png);
+    background: url(../images/title-bg-1.png) repeat-x;
     text-align: center;
     text-transform: uppercase;
     line-height: 25px;
