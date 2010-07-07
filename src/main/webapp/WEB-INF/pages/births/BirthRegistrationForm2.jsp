@@ -114,7 +114,7 @@
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
-        <td colspan="2" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
+        <td colspan="2" class="passport"><s:textfield name="parent.parent.motherPassportNo"/></td>
     </tr>
     <tr>
         <td><label>(16)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
@@ -228,9 +228,16 @@
     <s:submit value="%{getText('next.label')}"/>
 </div>
 <div class="next-previous">
+	<s:if test="liveBirth">
+        <s:set name="pageNo" value="0"/>
+    </s:if>
+    <s:else>
+        <s:set name="pageNo" value="5"/>
+    </s:else>
+
     <s:url id="backUrl" action="eprBirthRegistration">
-        <s:param name="back" value="true"/>
-        <s:param name="pageNo" value="{pageNo - 1}"/>
+            <s:param name="back" value="true"/>
+            <s:param name="pageNo" value="#pageNo"/>
     </s:url>
     <s:a href="%{backUrl}" ><s:label value="%{getText('previous.label')}"/></s:a>
 </div>

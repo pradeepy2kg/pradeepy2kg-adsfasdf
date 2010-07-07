@@ -51,7 +51,7 @@
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" cssStyle="width:95%;"/></td>
+            <td colspan="2"><s:textfield name="marriage.placeOfMarriage"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -126,6 +126,36 @@
         </tbody>
     </table>
 </s:if>
+<s:else>
+    <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Details of the
+                Marriage
+            </td>
+        </tr>
+        <tr>
+            <td class="font-9" colspan="3">
+                <label>(25) මවි පියන් විවාහකද?<br>* Tamil <br>Were Parents Married ?</label>
+            </td>
+            <td class="font-9" colspan="1">
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/>
+                <label> ඔවි/*in tamil / Yes</label>
+            </td>
+            <td class="font-9" colspan="1">
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/>
+                <label> නැත / *in tamil / No</label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</s:else>
 
 <table class="table_reg_page_03" cellspacing="0">
     <caption></caption>
@@ -148,7 +178,8 @@
             <table class="sub_table">
                 <tr>
                     <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'MOTHER':''}" onchange="javascript:setInformPerson('MOTHER',
+                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'MOTHER':''}"
+                                                              onchange="javascript:setInformPerson('MOTHER',
             '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
             '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
                 </tr>
@@ -158,7 +189,8 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'FATHER':''}" onchange="javascript:setInformPerson('FATHER',
+                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'FATHER':''}"
+                                                              onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
             '%{parent.fatherFullName}','','','')"/></td>
                 </tr>
@@ -167,10 +199,18 @@
         <td>
             <table class="sub_table">
                 <tr>
-                    <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
-                    <td align="center" width="150px">
-                        <s:radio name="informant.informantType" list="#{'GUARDIAN':''}"
-                                 onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
+                    <s:if test="liveBirth">
+                        <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
+                        <td align="center" width="150px">
+                            <s:radio name="informant.informantType" list="#{'GUARDIAN':''}"
+                                     onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
+                    </s:if>
+                    <s:else>
+                        <td><label>නෑයන් <br> * In Tamil <br>Relative</label></td>
+                        <td align="center" width="150px">
+                            <s:radio name="informant.informantType" list="#{'RELATIVE':''}"
+                                     onchange="javascript:setInformPerson('RELATIVE','','','','','','')"/></td>
+                    </s:else>
                 </tr>
             </table>
         </td>
@@ -180,20 +220,24 @@
         <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td colspan="3"><label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல் கொடுப்பவரின்
+        <td colspan="3"><label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
+            கொடுப்பவரின்
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3"><s:textfield name="informant.informantNICorPIN" id="informantNICorPIN" /></td>
+        <td colspan="3"><s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/></td>
     </tr>
     <tr>
         <td colspan="2"><label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
-        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress" cssStyle="width:98%;"/></td>
+        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
+                                    cssStyle="width:98%;"/></td>
     </tr>
     <tr>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
-        <td colspan="2"><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo" cssStyle="width:95%;"/></td>
+        <td colspan="2"><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
+                                     cssStyle="width:95%;"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
-        <td colspan="2"><s:textfield name="informant.informantEmail" id="informantEmail" cssStyle="width:95%;"/></td>
+        <td colspan="2"><s:textfield name="informant.informantEmail" id="informantEmail"
+                                     cssStyle="width:95%;"/></td>
 
     </tr>
     <tr>

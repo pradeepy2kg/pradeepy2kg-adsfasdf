@@ -91,8 +91,8 @@ public class BirthRegisterInfo {
     /**
      * if normal birth - true, if still birth - false
      */
-    @Column(nullable = true)
-    private Boolean birthType;
+    @Column(nullable = false, columnDefinition = "integer default 1")
+    private boolean liveBirth = true;
 
     public String getComments() {
         return comments;
@@ -198,11 +198,11 @@ public class BirthRegisterInfo {
         this.districtPrint = districtPrint;
     }
 
-    public Boolean getBirthType() {
-        return birthType;
+    public boolean getLiveBirth() {
+        return liveBirth;
     }
 
-    public void setBirthType(Boolean birthType) {
-        this.birthType = birthType;
+    public void setLiveBirth(boolean liveBirth) {
+        this.liveBirth = liveBirth;
     }
 }

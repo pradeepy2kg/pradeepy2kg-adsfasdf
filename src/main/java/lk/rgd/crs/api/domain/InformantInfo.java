@@ -11,12 +11,13 @@ import java.util.Date;
 public class InformantInfo implements Serializable {
 
     /**
-     * 0 - father, 1 - mother, 2 - guardian
+     * 0 - father, 1 - mother, 2 - guardian, 3 - relative
      */
     public enum InformantType {
         FATHER,
         MOTHER,
-        GUARDIAN
+        GUARDIAN,
+        RELATIVE
     }
 
     @Column(nullable = false)

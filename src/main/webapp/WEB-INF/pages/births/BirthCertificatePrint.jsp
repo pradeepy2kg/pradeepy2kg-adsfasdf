@@ -103,8 +103,8 @@
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:if test="printStart!=0 & printStart>0">
-                    <s:a href="%{previousUrl}" >
-                        <img src="<s:url value='/images/previous.gif'/>" border="none" />
+                    <s:a href="%{previousUrl}">
+                        <img src="<s:url value='/images/previous.gif'/>" border="none"/>
                     </s:a>
                     <s:label value="%{getText('previous.label')}"/>
                 </s:if>

@@ -137,19 +137,6 @@
             multiple births, number of children</label></td>
         <td colspan="2"><s:textfield name="child.numberOfChildrenBorn"/></td>
     </tr>
-    <tr>
-        <td class="font-9" colspan="3">
-            <label>(7) මවි පියන් විවාහකද?<br>* Tamil <br>Were Parents Married ?</label>
-        </td>
-        <td class="font-9" colspan="2">
-            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/>
-            <label> ඔවි/*in tamil / Yes</label>
-        </td>
-        <td class="font-9" colspan="3">
-            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/>
-            <label> නැත / *in tamil / No</label>
-        </td>
-    </tr>
     </tbody>
 </table>
 
@@ -180,9 +167,9 @@
         var submit = new Date(submitDatePicker);
 
         //compare two days
-        if (birtdate.getTime() > submit.getTime()){
+        if (birtdate.getTime() > submit.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('error6').value;
-            flag=true;
+            flag = true;
         }
 
         element = document.getElementById('bdfSerialNo');

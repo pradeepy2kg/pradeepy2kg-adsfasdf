@@ -94,25 +94,27 @@
             }
         </script>
 
-        <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
-            <div id="late-belated-registration" class="font-9">
-                <div id="late-belated-registration-title" class="font-12">
-                    <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
-                    <s:else>Belated Registration</s:else>
+        <s:if test="liveBirth">
+            <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
+                <div id="late-belated-registration" class="font-9">
+                    <div id="late-belated-registration-title" class="font-12">
+                        <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
+                        <s:else>Belated Registration</s:else>
+                    </div>
+                    <div id="late-belated-case-file-num">
+                        <label>*in sinhala<br>*in tamil<br>Case File Number</label>
+                        <s:textfield name="caseFileNumber"/>
+                    </div>
+                    <div id="late-belated-prev-comments">
+                        <label>*in sinhala<br>* in tamil<br>Prevoius Comments </label>
+                        <s:textarea name="register.comments" disabled="true"/>
+                    </div>
+                    <div id="late-belated-new-comments">
+                        <label>*in sinhala<br>* in tamil<br>New Comments </label>
+                        <s:textarea name="newComment"/>
+                    </div>
                 </div>
-                <div id="late-belated-case-file-num">
-                    <label>*in sinhala<br>*in tamil<br>Case File Number</label>
-                    <s:textfield name="caseFileNumber"/>
-                </div>
-                <div id="late-belated-prev-comments">
-                    <label>*in sinhala<br>* in tamil<br>Prevoius Comments </label>
-                    <s:textarea name="register.comments" disabled="true"/>
-                </div>
-                <div id="late-belated-new-comments">
-                    <label>*in sinhala<br>* in tamil<br>New Comments </label>
-                    <s:textarea name="newComment"/>
-                </div>
-            </div>
+            </s:if>
         </s:if>
 
         <div class="form-submit">              
