@@ -3,14 +3,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <style type="text/css" title="currentStyle">
-    @import "lib/datatables/media/css/demo_page.css";
-    @import "lib/datatables/media/css/demo_table.css";
-    @import "lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+    @import "../lib/datatables/media/css/demo_page.css";
+    @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 
 
-<script type="text/javascript" language="javascript" src="lib/jquery/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/jquery/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
         $('#search-list-table').dataTable({
@@ -42,7 +42,7 @@
     <br/>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             method="post">
-        <fieldset>
+       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
             <legend><s:label name="registrationSerchLegend"
                              value="%{getText('registrationSerchLegend.label')}"/></legend>
 
@@ -81,7 +81,7 @@
     </s:form>
     <br/>
     <s:form action="eprBDFSearchByIdUKey.do" method="post">
-        <fieldset>
+       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
             <legend><s:label name="confirmatinSearchLegend"
                              value="%{getText('confirmationSearchLegend.label')}"/></legend>
             <table class="search-option-table">
@@ -127,7 +127,7 @@
 
 <div>
     <s:if test="#request.bdf != null || #request.searchResultList.size>0">
-        <fieldset>
+       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
             <legend>
                 <s:label value="%{getText('searchResult.label')}"/>
             </legend>

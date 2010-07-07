@@ -1,10 +1,10 @@
 <style type="text/css" title="currentStyle">
-    @import "lib/datatables/media/css/demo_page.css";
-    @import "lib/datatables/media/css/demo_table.css";
-    @import "lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+    @import "../lib/datatables/media/css/demo_page.css";
+    @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
-<script type="text/javascript" language="javascript" src="lib/jquery/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/jquery/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
         $('#approval-list-table').dataTable({
@@ -36,6 +36,8 @@
 <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFApproval"/>
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
 <div id="birth-register-approval-header">
+<fieldset style="margin-bottom:10px;margin-top:20px; border:none">
+        <legend></legend>
     <table width="100%" cellpadding="5" cellspacing="0">
         <col width="220px"/>
         <col/>
@@ -68,6 +70,7 @@
         </tr>
         </tbody>
     </table>
+        </fieldset>
     </s:form>
     <s:actionerror/>
     <s:if test="#request.warnings != null">
@@ -85,6 +88,8 @@
         <%--todo permission handling--%>
         <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
             <s:if test="approvalPendingList.size>0">
+                 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
+        <legend></legend>
                 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                 <thead>
                  <tr>
@@ -179,7 +184,7 @@
             </s:iterator>
             </tbody>
             </table>
-
+            </fieldset>
             <div class="form-submit">
                 <s:if test="#request.counter>1">
                     <s:label><s:checkbox

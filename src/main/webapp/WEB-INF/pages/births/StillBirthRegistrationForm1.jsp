@@ -91,7 +91,7 @@
     </tr>
     <tr>
         <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
-        <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+        <td width="220px"><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
                       onchange="javascript:view_DSDivs();return false;"/></td>
@@ -105,14 +105,14 @@
         </td>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth"/></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" size="75"/></td>
     </tr>
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
-        <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/></td>
+        <td colspan="1" width="260px"><label>ඔව් / *in Tamil / Yes </label></td>
+        <td style="width:75px;text-align:center;"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'0':''}"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
-        <td><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/></td>
+        <td style="width:75px;text-align:center;"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'1':''}"/></td>
     </tr>
     <tr></tr>
     <tr>
@@ -125,7 +125,7 @@
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label></td>
             <%--TODO attribute ?--%>
-        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant"/></td>
+        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" size="35"/></td>
     </tr>
     <tr>
         <td class="font-9"><label>(5) සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි උපත ද? <br>பிறப்பு ஒழுங்கு <br>According
@@ -135,7 +135,7 @@
         <td colspan="2" class="font-9"><label>(6) නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
             multiple births, number of children</label></td>
-        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn"/></td>
+        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" size="35"/></td>
     </tr>
     </tbody>
 </table>

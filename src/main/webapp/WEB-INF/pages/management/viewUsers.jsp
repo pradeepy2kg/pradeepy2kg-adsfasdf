@@ -1,7 +1,7 @@
 <style type="text/css" title="currentStyle">
-    @import "lib/datatables/media/css/demo_page.css";
-    @import "lib/datatables/media/css/demo_table.css";
-    @import "lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+    @import "../lib/datatables/media/css/demo_page.css";
+    @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 
 
@@ -10,8 +10,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
 
-<script type="text/javascript" language="javascript" src="lib/jquery/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/jquery/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
         $('#users-list-table').dataTable({
@@ -29,7 +29,7 @@
 
 
 <div id="view-users">
-    <fieldset style="margin-bottom:10px;margin-top:20px;">
+    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
         <legend>Search Options</legend>
         <s:form action="eprViewSelectedUsers.do" name="viewUsers" id="view_usrs_form" method="POST">
         <table>
@@ -66,8 +66,7 @@
     </fieldset>
 
 
-    <fieldset>
-        <legend>Search Results</legend>
+    <fieldset style="border:none">
             <s:form name="users_print" action="" method="POST">
                 <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                     <thead>
@@ -88,14 +87,14 @@
                                 <s:param name="userId" value="userId"/>
                             </s:url>
                             <td align="center"><s:a href="%{editSelected}"><img
-                                    src="<s:url value='/images/edit.jpg'/>" width="25" height="25"
+                                    src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                     border="none"/></s:a>
                             </td>
                             <s:url id="deleteSelected" action="eprdeleteUsers.do">
                                 <s:param name="userId" value="userId"/>
                             </s:url>
                             <td align="center"><s:a href="%{deleteSelected}"><img
-                                    src="<s:url value='/images/delete.png'/>" width="25" height="25"
+                                    src="<s:url value='/images/delete.gif'/>" width="25" height="25"
                                     border="none"/></s:a>
                             </td>
                         </tr>
