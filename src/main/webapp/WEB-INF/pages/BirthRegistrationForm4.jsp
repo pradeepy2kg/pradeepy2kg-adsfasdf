@@ -37,7 +37,7 @@
             <tr>
                 <td><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
-                    <s:url id="loadNotifyerInfo" action="ajaxSupport_loadNotifyerInfo"/>
+                    <s:url id="loadNotifyerInfo" action="../ajaxSupport_loadNotifyerInfo"/>
                     <sx:div id="notifyingAuthority.notifyingAuthorityPIN" href="%{loadNotifyerInfo}"
                             listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"></sx:div>
                 </td>

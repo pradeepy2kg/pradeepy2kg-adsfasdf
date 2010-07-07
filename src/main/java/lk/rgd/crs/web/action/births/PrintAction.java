@@ -1,4 +1,4 @@
-package lk.rgd.crs.web.action;
+package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.dao.DSDivisionDAO;

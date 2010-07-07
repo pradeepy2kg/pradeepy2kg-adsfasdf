@@ -92,7 +92,7 @@
     </bean>
 
     <!--Web module related classes-->
-    <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterAction">
+    <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterAction">
         <constructor-arg ref="manageBirthService"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
@@ -109,7 +109,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
     </bean>
 
-    <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.PrintAction">
+    <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
@@ -117,7 +117,7 @@
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
-    <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.BirthRegisterApprovalAction">
+    <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction">
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
@@ -129,7 +129,7 @@
         <constructor-arg ref="userManagerService"/>
     </bean>
 
-    <bean id="searchAction" class="lk.rgd.crs.web.action.SearchAction">
+    <bean id="searchAction" class="lk.rgd.crs.web.action.births.SearchAction">
         <constructor-arg ref="manageBirthService"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>

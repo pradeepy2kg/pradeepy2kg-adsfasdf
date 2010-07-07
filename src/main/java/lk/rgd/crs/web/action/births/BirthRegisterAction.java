@@ -1,4 +1,4 @@
-package lk.rgd.crs.web.action;
+package lk.rgd.crs.web.action.births;
 
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,7 +22,6 @@ import lk.rgd.crs.api.bean.UserWarning;
 
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
-import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
 /**

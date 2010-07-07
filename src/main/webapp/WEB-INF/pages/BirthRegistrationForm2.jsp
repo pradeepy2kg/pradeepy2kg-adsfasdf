@@ -57,7 +57,7 @@
     <tr>
         <td><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
-            <s:url id="loadFatherInfo" action="ajaxSupport_loadFatherInfo"/>
+            <s:url id="loadFatherInfo" action="../ajaxSupport_loadFatherInfo"/>
             <sx:div id="parent.fatherNICorPIN" href="%{loadFatherInfo}"
                     listenTopics="view_FatherInfo" formId="birth-registration-form-2" theme="ajax"></sx:div>
         </td>
@@ -119,7 +119,7 @@
     <tr>
         <td><label>(16)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
-            <s:url id="loadMotherInfo" action="ajaxSupport_loadMotherInfo"/>
+            <s:url id="loadMotherInfo" action="../ajaxSupport_loadMotherInfo"/>
             <sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}"
                     listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"></sx:div>
         </td>

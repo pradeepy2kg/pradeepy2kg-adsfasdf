@@ -102,12 +102,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
             }
         }
 
-        allowedLinks.put("1BIRTH", birthLink);
-        allowedLinks.put("3DEATH", deathLink);
-        allowedLinks.put("2MARRAGE", marrageLink);
-        allowedLinks.put("5REPORT", reportLink);
-        allowedLinks.put("4ADMIN", adminLink);
-        allowedLinks.put("6PREFERANCE", preferanceLink);
+        allowedLinks.put("1births", birthLink);
+        allowedLinks.put("3deaths", deathLink);
+        allowedLinks.put("2marriages", marrageLink);
+        allowedLinks.put("5reprots", reportLink);
+        allowedLinks.put("4management", adminLink);
+        allowedLinks.put("6preferences", preferanceLink);
 
         return allowedLinks;
     }

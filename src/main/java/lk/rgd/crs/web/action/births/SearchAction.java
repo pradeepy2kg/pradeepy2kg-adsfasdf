@@ -1,4 +1,4 @@
-package lk.rgd.crs.web.action;
+package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
 import org.slf4j.Logger;
