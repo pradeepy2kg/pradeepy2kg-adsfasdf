@@ -38,7 +38,7 @@ import java.util.Date;
         "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
 
     @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.status = State.CONFIRMATION_PRINTED.ordinal() " +
+        "WHERE bdf.register.status = 2 " +
         "AND bdf.register.dateOfRegistration < :date")
 })
 public class BirthDeclaration implements Serializable {

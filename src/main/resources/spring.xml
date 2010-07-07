@@ -33,7 +33,7 @@
 
     <bean id="cronTriggerBirth" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="scheduledBirthJobs"/>
-        <property name="cronExpression" value="0/20/40 * * ? * MON-FRI"/>
+        <property name="cronExpression" value="20 * * ? * MON-FRI"/>
     </bean>
 
     <!-- Start the Triggers - use Cron trigger for production use with an appropriate schedule -->
