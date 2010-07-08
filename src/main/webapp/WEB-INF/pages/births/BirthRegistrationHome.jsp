@@ -92,16 +92,16 @@
     <s:a href="eprStillBirth.do">
         <div class="link7"></div>
     </s:a>
-    <s:a href="eprBirthRegistration.do">
+    <s:a href="eprBirthRegistrationInit.do">
         <div class="link1"></div>
     </s:a><s:a href="eprBirthRegisterApproval.do">
     <div class="link2"></div>
 </s:a>
-    <s:a href="eprbirthCetificatePrint.do">
+    <s:a href="eprFilterBirthConfirmPrint.do?confirmListFlag=true">
         <div class="link3"></div>
-    </s:a><s:a href="eprBirthRegisterApproval.do">
+    </s:a><s:a href="eprBirthConfirmationInit.do">
     <div class="link4"></div>
-</s:a> <s:a href="eprbirthCetificatePrint.do">
+</s:a> <s:a href="eprBirthCertificateList.do">
     <div class="link5"></div>
 </s:a><s:a href="eprbirthCetificatePrint.do">
     <div class="link6"></div>

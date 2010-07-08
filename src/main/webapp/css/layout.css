@@ -28,7 +28,7 @@ body {
 #body-sidebar {
     width: 198px;
     float: left;
-    background: url("../images/sidebar-bg.png")
+    /*background: url("../images/sidebar-bg.png")*/
 }
 
 #body-content {
@@ -70,7 +70,7 @@ body {
     margin: 16% auto;
     float: none;
     padding: 5px;
-    background: url(../images/odd-row.png);
+   background: url(../images/odd-row.png);
 }
 
 #login-form #login-form-title {
@@ -81,7 +81,7 @@ body {
     font-size: 11pt;
     text-transform: capitalize;
     line-height: 30px;
-    color: #533517;
+    color:#0b54ee;
 }
 
 #login-form #login-form-body {
@@ -97,14 +97,14 @@ body {
     margin-bottom: 5px;
     height: 25px;
     font-size: 10pt;
-    color: #533517;
+    color:#178eed;
 }
 
 #login-form #login-form-body input {
     width: 45%;
     float: right;
     margin-bottom: 5px;
-    color: #533517;
+    color:#1baeeb;
 }
 
 #login-form #login-form-body div {
@@ -117,7 +117,7 @@ body {
     width: 111px;
     margin: 10px;
     margin-right:0;
-    background: url(../images/button_bg.png) no-repeat;
+    background: url(../images/button_bg.gif) no-repeat;
     height: 30px;
     border: none;
 }
