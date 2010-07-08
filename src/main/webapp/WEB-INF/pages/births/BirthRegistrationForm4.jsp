@@ -11,7 +11,7 @@
             }
         </script>
 
-        <table class="table_reg_page_04" cellspacing="0">
+        <table class="table_reg_page_04" width="100%" cellspacing="0">
             <caption></caption>
             <col/>
             <col/>
@@ -47,8 +47,11 @@
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/></td>
             </tr>
             <tr>
-                <td colspan="2"><label>දිනය <br>*in tamil <br>Date</label></td>
-                <td colspan="4"><sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
+                <td colspan="2" style="width:220px"><label>32) අත්සන හා නිලමුද්‍රාව<br>தகவல் ... <br>Signature and
+                    Official Seal (if available) of the Notifying Authority</label></td>
+                <td width="300px"></td>
+                <td ><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td ><sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
                                        displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
             </tr>

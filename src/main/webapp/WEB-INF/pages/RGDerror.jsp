@@ -8,4 +8,7 @@
     <s:property value="%{getText('RGDerror.'+ exception.getErrorCode())}" />
       <p></p>
       <hr/>
+    <h3>Technical Details</h3>
+      <p>
+    <s:property  value="%{exceptionStack}"/>
 </div>

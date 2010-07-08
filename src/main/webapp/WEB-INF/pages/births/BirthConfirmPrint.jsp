@@ -74,7 +74,7 @@
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
                         <td align="center"><s:property value="register.dateOfRegistration"/></td>
                         <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprBirthConfirmationPrintPage">
+                            <s:url id="cetificatePrintUrl" action="eprBirthConfirmationPage">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
