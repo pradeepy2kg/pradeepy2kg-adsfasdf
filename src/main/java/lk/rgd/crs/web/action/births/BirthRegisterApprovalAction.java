@@ -344,7 +344,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String which desides the next page
      */
     public String approveListOfEntries() {
-        //todo warning handling has to be checked when rejecting some records from the requested list
         initPermission();
         if (index != null) {
             logger.debug("inside approveListOfEntries() : {} records are requested to approve isBirthConfirmationApproval {}",
