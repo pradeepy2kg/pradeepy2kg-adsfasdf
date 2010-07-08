@@ -40,7 +40,7 @@
 * Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer,.birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer
+.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer,.still-birth-registration-form-outer, #bdaw-outer
 {
     width: 1030px;
     background: #ffffff;
@@ -1382,6 +1382,14 @@
 }
 
 /*styles for birth confirmation form 01*/
+.birth-confirmation-print-form-outer1,
+{
+    width: 1030px;
+    background: #ffffff;
+    padding: 10px;
+    
+}
+
 .table_con_page_01 {
     border: 1px solid #000000;;
     border-right: none;
@@ -1436,6 +1444,19 @@
     font-size: 9pt;
 }
 
+.cell_001 {
+    width: 40px;
+    height:150px;
+}
+.cell_011 {
+    height:60px;
+    width:40px;
+}
+.cell_012 {
+    width: 40px;
+    height:200px;
+}
+
 .table_con_page_02 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
@@ -1446,6 +1467,7 @@
 }
 
 /*styles for birth confirmation form 03*/
+
 .table_con_page_03 {
     width:100%;
     border: 1px solid #000000;;
@@ -1463,6 +1485,7 @@
     width: 750px;
 }
 /*Styyle for the Birth Confirmation  Print form*/
+
 .table_con_page2_table {
     width:100%;
     border: 1px solid #000000;;
@@ -1470,6 +1493,7 @@
     border-bottom: none;
     font-size: 9pt;
     margin-bottom: 30px;
+    float:left;
 }
 
 .table_con_page2_table td {

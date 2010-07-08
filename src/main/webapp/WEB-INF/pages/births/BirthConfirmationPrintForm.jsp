@@ -5,11 +5,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
-<div class="birth-confirmation-print-form-outer">
 <s:form action="eprFilterBirthConfirmPrint.do" name="birthConfirmationPrintForm1" id="birth-confirmation-print-form-1"
         method="POST">
-<div id="page1" style="page-break-after:always;">
-<table class="table_con_header_01">
+<div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
+<table style="width:65%;float:left;">
     <caption></caption>
     <col/>
     <col/>
@@ -25,29 +24,26 @@
                 <br>Confirmation of Birth by Parents / Guardian
 
             </label></td>
-        <td style="text-align:right;margin-left:auto;margin-right:0;">
+                </tbody>
+</table>
 
-            <table cellspacing="0"  style=" border: 1px solid #000000;height:60px">
+            <table cellspacing="0"  style="border: 1px solid #000000;height:60px;float:left;width:35%">
                 <caption></caption>
                 <col/>
                 <col/>
                 <tbody>
-                <tr width="200px">
+                <tr>
                     <td style="text-align:left;margin-left:0;margin-right:auto;width:150px;">
                         <label>අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</label>
                     </td>
-                    <td>
+                    <td style="text-align:right;width:100px">
                         <s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
                     </td>
                 </tr>
                 </tbody>
             </table>
-        </td>
-    </tr>
 
-    </tbody>
-</table>
-<table border="0" style="margin-bottom:10px">
+<table border="0" style="margin-bottom:10px;width:1030px;float:left;">
     <caption></caption>
     <col/>
     <tbody>
@@ -83,20 +79,20 @@
 </table>
 
 
-<table class="table_con_page_01" cellspacing="0">
+<table class="table_con_page_01" style="float:left;" width="100%" cellspacing="0">
     <caption></caption>
     <col/>
     <col/>
     <col/>
     <tbody>
     <tr>
-        <td class="cell_01">1</td>
+        <td class="cell_011">1</td>
         <td>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
             හා දිනය
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
-        <td><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
+        <td width="200px"><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
             <s:textfield cssClass="disable" disabled="true" name="register.dateOfRegistration"/></td>
     </tr>
     <tr>
@@ -111,7 +107,7 @@
     </tbody>
 </table>
 
-<table border="0" style="width: 100%">
+<table border="0" style="width: 100%; float:left;">
     <caption></caption>
     <col/>
     <tbody>
@@ -124,7 +120,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" cellspacing="0" style="margin-top:10px">
+<table class="table_con_page_01" width="100%" cellspacing="0" style="margin-top:10px;float:left;">
     <caption></caption>
     <col/>
     <col/>
@@ -245,14 +241,14 @@
 
 
 </div>
-<div id="page2" style="page-break-after:always;">
-    <table border="0" style="width: 100%">
+<div class="birth-confirmation-print-form-outer" id="page2" style="page-break-after:always;">
+    <table border="0" style="width: 100%;float:left; ;">
         <caption></caption>
         <col/>
         <tbody>
         <tr>
-            <td colspan="3" style="text-align:center;font-size:12pt">
-                <label>නම් වල වෙනස් වීම්<br> பெயரிலுள்ள மாற்றங்கள் <br> Changes in Names</label>
+            <td colspan="3" style="text-align:center;font-size:12pt;">
+                <label><br>නම් වල වෙනස් වීම් /  பெயரிலுள்ள மாற்றங்கள்/ Changes in Names</label>
             </td>
         </tr>
         </tbody>
@@ -265,7 +261,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_01">11</td>
+            <td class="cell_001">11</td>
             <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் /
                 தமிழ்)
                 <br>Childs name in the official languages (Sinhala / Tamil)</label>
@@ -306,7 +302,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_01">12</td>
+            <td class="cell_001">12</td>
             <td width="200px"><p></p>
                 <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
                     <br>பிறப்பு ...
@@ -348,7 +344,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_01">13</td>
+            <td class="cell_001">13</td>
             <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම
                 <br>தந்நையின் முழுப் பெயர
                 ்<br>Father's Full Name</label>
@@ -388,7 +384,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_01">14</td>
+            <td class="cell_001">14</td>
             <td width="200px"><p></p><label>මවගේ සම්පූර්ණ නම
                 <br>தாயின் முழுப் பெயர
                 ்<br>Mother's Full Name</label>
@@ -424,9 +420,9 @@
 
 </div>
 
-<div id="page3" class="page_break">
+<div class="birth-confirmation-print-form-outer" id="page3" class="page_break">
 
-    <table border="0" style="width: 100%">
+    <table border="0" style="width: 100% ;float:left;">
         <caption></caption>
         <col/>
         <tbody>
@@ -444,7 +440,7 @@
         </tbody>
     </table>
 
-    <table class="table_con_page_03" cellspacing="0">
+    <table class="table_con_page_03" cellspacing="0" style="float:left; margin-bottom:30px;">
         <caption></caption>
         <col/>
         <col/>
@@ -454,7 +450,7 @@
         <tbody>
 
         <tr>
-            <td class="cell_01">15</td>
+            <td height="80px">15</td>
             <td colspan="3">
                 <p></p>
                 <label>
@@ -497,7 +493,7 @@
         </tr>
 
         <tr>
-            <td rowspan="2" class="cell_01">17</td>
+            <td rowspan="2" class="cell_001">17</td>
             <td rowspan="2">
                 <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
@@ -515,10 +511,9 @@
         </tr>
         </tbody>
     </table>
-    <hr>
-    <br><br>
-
-    <table border="0" style="width: 100%">
+     
+    <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+    <table border="0" style="width: 100%;">
         <caption></caption>
         <col/>
         <tbody>
@@ -534,7 +529,7 @@
         </tbody>
     </table>
 
-    <table class="table_con_page_03" cellspacing="0" style="margin-top:20px ; margin-bottom:30px">
+    <table class="table_con_page_03" cellspacing="0" style="margin-top:20px ; margin-bottom:30px;">
         <caption></caption>
         <col/>
         <col/>
@@ -543,7 +538,7 @@
         <tbody>
 
         <tr>
-            <td rowspan="2" class="cell_01">18</td>
+            <td rowspan="2" class="cell_001">18</td>
             <td rowspan="2"><p></p><label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
                 (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
                 மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
@@ -567,7 +562,7 @@
         </tbody>
     </table>
 
-    <table border="0" cellspacing="0">
+    <table border="0" cellspacing="0" >
         <caption></caption>
         <col/>
         <col/>
@@ -615,5 +610,4 @@
     <s:submit value="%{getText('print.label')}" onclick="print()" type="button" cssClass="button_print"/>
 </div>
 </s:form>
-</div>
 

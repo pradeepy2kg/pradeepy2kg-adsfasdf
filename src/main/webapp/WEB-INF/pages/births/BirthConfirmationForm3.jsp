@@ -47,9 +47,10 @@
                                                    onmouseover="javascript:splitDate('datePicker')"
                                                    value="%{'today'}"/></td>
             </tr>
-            <tr>
-                <td colspan="4" style="height:75px"></td>
-            </tr>
+           <tr>
+            <td colspan="2" style="height:75px">අත්සන<br>கையொப்பம்<br>Signature</td>
+            <td colspan="2" style="height:75px"></td>
+        </tr>
             </tbody>
         </table>
 
