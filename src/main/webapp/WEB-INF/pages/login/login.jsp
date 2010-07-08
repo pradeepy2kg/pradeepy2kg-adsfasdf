@@ -22,6 +22,7 @@
 <body onload="setFocus()">
 <img src="images/epr-header.png"/>
 <div id="login-form">
+    <s:actionerror/>
     <div id="login-form-title">user login</div>
     <div id="login-form-body">
         <s:form action="eprLogin.do" method="POST"

@@ -5,37 +5,42 @@
 <struts>
     <include file="struts-default.xml"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
-    <constant name="struts.devMode" value="true"/>
     <constant name="struts.custom.i18n.resources" value="textproperties"/>
     <constant name="struts.action.extension" value="do"/>
     <constant name="struts.objectFactory" value="spring"/>
+    <!--<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />-->
     <constant name="struts.devMode" value="true"/>
 
     <package name="NG" namespace="/NG" extends="struts-default">
         <result-types>
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
-    </package>
 
-    <package name="epr" namespace="/" extends="NG">
         <interceptors>
             <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
+            <interceptor name="security" class="lk.rgd.crs.web.action.SecurityInterceptor"/>
+            <interceptor-stack name="default">
+                <interceptor-ref name="exception" />
+                <interceptor-ref name="security" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
         </interceptors>
 
         <!--<default-interceptor-ref name="exception"/>-->
         <global-results>
             <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="RGDerror">epr.error</result>
+            <result type="strutsRedirect" name="login">eprLogin</result>
         </global-results>
 
         <global-exception-mappings>
             <exception-mapping exception="lk.rgd.common.RGDRuntimeException" result="RGDError"></exception-mapping>
             <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
         </global-exception-mappings>
+    </package>
 
+    <package name="epr" namespace="/" extends="NG">
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
-            <interceptor-ref name="i18n"/>
-            <interceptor-ref name="basicStack"/>
             <result type="tiles" name="success">epr.home</result>
             <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
@@ -47,6 +52,7 @@
         </action>
 
         <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
+            <interceptor-ref name="default"/>
             <result type="tiles" name="success">epr.welcome</result>
         </action>
 
@@ -66,6 +72,8 @@
     </package>
 
     <package name="births" namespace="/births" extends="NG">
+        <default-interceptor-ref name="default"/>
+
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclaration">
             <result type="tiles" name="form5">epr.stillBirthRegistration_form1</result>
@@ -288,7 +296,8 @@
     </package>
 
     <package name="management" namespace="/management" extends="NG">
-        <!-- user creation related-->
+        <default-interceptor-ref name="default"/>
+
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>
@@ -318,7 +327,8 @@
     </package>
 
     <package name="preferences" namespace="/preferences" extends="NG">
-        <!--change password action -->
+        <default-interceptor-ref name="default"/>
+
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePassword">
             <result name="success" type="tiles">epr.home</result>
             <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
@@ -328,7 +338,6 @@
             <result name="pageload" type="tiles">epr.UserPreferences</result>
         </action>
 
-        <!--user preferance  -->
         <action name="passChangePageLoad">
             <result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
@@ -342,6 +351,5 @@
                 method="selectUserPreference">
             <result type="tiles" name="success">epr.home</result>
         </action>
-
     </package>
 </struts>

@@ -17,7 +17,9 @@
     <ul class="menu">
         <s:iterator value="#session.allowed_menue" id="menue">
             <s:if test="%{((value.size > 0)& (key== '1births'))||(#session.viewUsers=='ok')}">
-                <li class="expand"><s:a href="/popreg/births/eprBirthRegistrationHome.do">
+                <%--<s:if test="%{#request.contextPath.contains('births')}">--%>
+                <li class="expand">
+                <s:a href="/popreg/births/eprBirthRegistrationHome.do">
                     <s:label value="%{getText('category_birth_registration')}"/></s:a>
                     <ul class="acitem">
                         <s:iterator value="value" id="x">
