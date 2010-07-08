@@ -25,7 +25,7 @@
     <s:actionerror/>
     <div id="login-form-title">user login</div>
     <div id="login-form-body">
-        <s:form action="eprLogin.do" method="POST"
+        <s:form action="/eprLogin.do" method="POST"
                 name="eprLogin">
                 <s:label value="User Name: "></s:label>
                 <s:textfield name="userName"></s:textfield>
