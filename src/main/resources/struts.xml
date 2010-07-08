@@ -30,7 +30,7 @@
         <global-results>
             <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="RGDerror">epr.error</result>
-            <result type="strutsRedirect" name="login">eprLogin</result>
+            <result name="login">/WEB-INF/pages/login/login.jsp</result>
         </global-results>
 
         <global-exception-mappings>
