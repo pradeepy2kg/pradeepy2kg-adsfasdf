@@ -5,6 +5,7 @@ import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.PINNumber;
@@ -107,6 +108,10 @@ public class DatabaseInitializer implements ApplicationContextAware {
             dao.preload();
         }
         logger.info("Pre-loaded master tables ...");
+
+        BirthRecordsIndexer birthIndexer = (BirthRecordsIndexer) ctx.getBean("birthRecordsIndexer");
+        birthIndexer.indexAll();
+        logger.info("Re-indexed DB contents...");
     }
 
     private void recreateCleanDB(boolean mysql) {

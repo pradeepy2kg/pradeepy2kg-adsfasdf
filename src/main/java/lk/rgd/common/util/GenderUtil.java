@@ -11,6 +11,16 @@ public class GenderUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(GenderUtil.class);
 
+    public static String getGenderString(int code) {
+        switch (code) {
+            case 0: return "පිරිම / #Male# / Male";
+            case 1: return "ගැහැණු / #Female# / Female";
+            case 2: return "නොදත් / #Unknown# / Unknown";
+        }
+        logger.error("Invalid gender code : {}", code);
+        throw new IllegalArgumentException("Invalid gender code : {}");
+    }
+
     public static String getGender(int code, String language) {
 
         if (AppConstants.SINHALA.equals(language)) {

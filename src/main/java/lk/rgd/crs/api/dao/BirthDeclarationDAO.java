@@ -34,6 +34,12 @@ public interface BirthDeclarationDAO {
     public void deleteBirthDeclaration(long idUKey);
 
     /**
+     * Return all records - for indexing only
+     * @return all records
+     */
+    public List<BirthDeclaration> findAll();
+
+    /**
      * Returns a limited set of BirthDeclarations for which the confirmation form is not yet printed. The
      * results are ordered on the descending dateOfRegistration and optionally already printed records may
      * again be requested for re-print

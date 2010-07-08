@@ -32,6 +32,12 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         em.remove(getById(idUKey));
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<BirthDeclaration> findAll() {
+        Query q = em.createNamedQuery("findAll");
+        return q.getResultList();
+    }
+
     // TODO move to service class
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {

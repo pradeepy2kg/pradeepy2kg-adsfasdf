@@ -58,6 +58,10 @@ public class SearchAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
+    public String advancedSearch() {
+        return "success";
+    }
+
     /**
      * This method responsible for searching  Birth declaration based on searialNo,
      * district and bdDivision. If serialNo is set to  0 search is done based on

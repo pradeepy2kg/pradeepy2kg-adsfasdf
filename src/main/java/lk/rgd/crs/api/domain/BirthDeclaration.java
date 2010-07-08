@@ -39,7 +39,9 @@ import java.util.Date;
 
     @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.status = 2 " +
-        "AND bdf.register.dateOfRegistration < :date")
+        "AND bdf.register.dateOfRegistration < :date"),
+
+    @NamedQuery(name = "findAll", query = "SELECT bdf FROM BirthDeclaration bdf")
 })
 public class BirthDeclaration implements Serializable {
 
