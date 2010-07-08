@@ -290,9 +290,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         initPermission();
         if (!caughtException && (warnings != null && warnings.isEmpty())) {
             addActionMessage((getText("approveSuccess.label")));
-            setAllowApproveBDF(false);
+            approved = true;
+            liveBirth = bdf.getRegister().getLiveBirth();
+            setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
         }
-        approved = true;
         return "success";
     }
 
@@ -318,7 +319,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     if (directDeclarationApprovalFlag) {
                         logger.debug("inside approveIgnoringWarning() : directDeclarationApprovalFlag {}", directDeclarationApprovalFlag);
                         addActionMessage((getText("approveSuccess.label")));
-                        setAllowApproveBDF(false);
+                        setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
+                        approved=true;
+                        liveBirth = bdf.getRegister().getLiveBirth();
                         return "success";
                     }
                 }

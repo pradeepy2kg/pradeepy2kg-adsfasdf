@@ -10,8 +10,8 @@
 </style>
 
 <div id="birth-certificate-outer">
-<s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"
-        id="birth-certificate-print-form" method="POST">
+<%--<s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"--%>
+        <%--id="birth-certificate-print-form" method="POST">--%>
 
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
@@ -72,7 +72,7 @@
             <td>සහතිකයේ වෙනස්කම් <br>நிறைவேற்றிய மாற்றங்கள் <br>Changes performed
             </td>
             <%--TODO fill variable--%>
-            <td><s:label name="" value="%{#register}"/></td>
+            <td><s:label name="" value="%{}"/></td>
         </s:if>
     </tr>
     </tbody>
@@ -227,9 +227,16 @@
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
 
+<s:if test="directPrint">
+    <s:url id="print" action="eprDirectPrintStillBirthCertificate.do"/>
+</s:if>
+<s:else>
+    <%--TODO correct this link--%>
+    <s:url id="print" action="eprBirthCertificateList.do"/>
+</s:else>
 <div class="form-submit">
-    <s:submit value="%{getText('print.label')}" onclick="print()" type="button" cssClass="button_print"/>
+    <s:a href="%{print}" onclick="print()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-</s:form>
+<%--</s:form>--%>
 </div>
 <%-- Styling Completed --%>

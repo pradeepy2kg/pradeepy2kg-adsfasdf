@@ -41,10 +41,10 @@ public class BirthRegistrationServiceTest extends TestCase {
         super.setUp();
 
         birthDeclarationDAO = (BirthDeclarationDAO)
-                ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+            ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
 
         // delete records we may have added
-        for (int i=2010101; i<2010110; i++) {
+        for (int i = 2010101; i < 2010110; i++) {
             deleteBDF(colomboBDDivision, i);
         }
     }
@@ -84,17 +84,20 @@ public class BirthRegistrationServiceTest extends TestCase {
         try {
             birthRegSvc.approveLiveBirthDeclaration(bdf1, false, deoColomboColombo);
             fail("DEO cannot approve BDFs");
-        } catch (Exception expected) {}
+        } catch (Exception expected) {
+        }
         // negambo deo cannot approve either
         try {
             birthRegSvc.approveLiveBirthDeclaration(bdf1, false, deoGampahaNegambo);
             fail("Negambo DEO cannot approve BDFs of Colombo BD division");
-        } catch (Exception expected) {}
+        } catch (Exception expected) {
+        }
         // negambo adr cannot approve either
         try {
             birthRegSvc.approveLiveBirthDeclaration(bdf1, false, adrGampahaNegambo);
             fail("Negambo ADR cannot approve BDFs of Colombo BD division");
-        } catch (Exception expected) {}
+        } catch (Exception expected) {
+        }
 
         // colombo ADR approves - should raise warnings
         List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, false, adrColomboColombo);
@@ -117,11 +120,11 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // add another record for the same mother, and check if the duplication warning was issued
         BirthDeclaration bdf1 = getMinimalBDF(2010102, dob.getTime(), colomboBDDivision);
-        dob.add(Calendar.DATE, -30*27);
+        dob.add(Calendar.DATE, -30 * 27);
         BirthDeclaration bdf2 = getMinimalBDF(2010103, dob.getTime(), colomboBDDivision);
-        dob.add(Calendar.DATE, 2*30*27);
+        dob.add(Calendar.DATE, 2 * 30 * 27);
         BirthDeclaration bdf3 = getMinimalBDF(2010104, dob.getTime(), colomboBDDivision);
-        dob.add(Calendar.DATE, 30*12);
+        dob.add(Calendar.DATE, 30 * 12);
         BirthDeclaration bdf4 = getMinimalBDF(2010105, dob.getTime(), colomboBDDivision);
 
         bdf1.getParent().setMotherNICorPIN("755010001V");
@@ -183,7 +186,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
 
         // delete records we may have added
-        for (int i=2010102; i<2010105; i++) {
+        for (int i = 2010102; i < 2010105; i++) {
             deleteBDF(colomboBDDivision, i);
         }
     }
@@ -214,7 +217,8 @@ public class BirthRegistrationServiceTest extends TestCase {
             bdf1.getChild().setChildFullNameEnglish("New name 2 of child");
             birthRegSvc.editLiveBirthDeclaration(bdf1, true, deoColomboColombo);
             fail("Should not allow edits for approved records");
-        } catch (Exception expected) {}
+        } catch (Exception expected) {
+        }
 
         // reload again and check for updated name
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
@@ -295,7 +299,7 @@ public class BirthRegistrationServiceTest extends TestCase {
             }
         }
         Assert.assertTrue("confirmed record must not show up for BC printing", !found);
-        
+
         // assert that the printed record will still appear if printed records are requested
         printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, true, deoColomboColombo);
         Assert.assertTrue(!printList.isEmpty());
@@ -382,7 +386,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         deleteBDF(colomboBDDivision, 2010107);
     }
 
-    private BirthDeclaration getMinimalBDF(int serial, Date dob, BDDivision bdDivision) {
+    private BirthDeclaration getMinimalBDF(long serial, Date dob, BDDivision bdDivision) {
 
         Date today = new Date();
         BirthDeclaration bdf = new BirthDeclaration();
@@ -409,6 +413,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         try {
             birthDeclarationDAO.deleteBirthDeclaration(
                 birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial).getIdUKey());
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 }

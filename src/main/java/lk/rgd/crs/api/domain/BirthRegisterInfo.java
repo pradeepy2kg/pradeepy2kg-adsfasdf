@@ -22,7 +22,7 @@ public class BirthRegisterInfo {
      * This is the serial number captured from the BDF
      */
     @Column(nullable = false, updatable = false)
-    private long bdfSerialNo;
+    private Long bdfSerialNo;
 
     /**
      * The Birth/Death registration division where the birth is registered (Includes District)
@@ -138,7 +138,7 @@ public class BirthRegisterInfo {
         return bdfSerialNo;
     }
 
-    public void setBdfSerialNo(long bdfSerialNo) {
+    public void setBdfSerialNo(Long bdfSerialNo) {
         this.bdfSerialNo = bdfSerialNo;
     }
 

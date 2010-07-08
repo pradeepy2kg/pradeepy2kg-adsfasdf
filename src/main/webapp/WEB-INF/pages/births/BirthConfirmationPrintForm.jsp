@@ -5,8 +5,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
-<s:form action="eprFilterBirthConfirmPrint.do" name="birthConfirmationPrintForm1" id="birth-confirmation-print-form-1"
-        method="POST">
+<div class="birth-confirmation-print-form-outer">
+<%--TODO uncomment form--%>
+<%--<s:form action="eprFilterBirthConfirmPrint.do" name="birthConfirmationPrintForm1" id="birth-confirmation-print-form-1"--%>
+<%--method="POST">--%>
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
 <table style="width:65%;float:left;">
     <caption></caption>
@@ -604,10 +606,16 @@
         </tr>
         </tbody>
     </table>
-
 </div>
+<s:if test="directPrint">
+    <s:url id="print" action="eprDirectPrintBirthConfirmation.do"/>
+</s:if>
+<s:else>
+    <%--TODO correct this link--%>
+    <s:url id="print" action="eprFilterBirthConfirmPrint.do"/>
+</s:else>
 <div class="form-submit">
-    <s:submit value="%{getText('print.label')}" onclick="print()" type="button" cssClass="button_print"/>
+    <s:a href="%{print}" onclick="print()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-</s:form>
+</div>
 
