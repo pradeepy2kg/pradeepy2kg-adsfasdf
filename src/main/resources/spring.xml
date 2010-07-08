@@ -91,6 +91,15 @@
         <constructor-arg ref="pinNumberDAOImpl"/>
     </bean>
 
+    <!--Solr index manager-->
+    <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
+        <constructor-arg value="http://localhost:8983/solr"/>
+    </bean>
+    <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
+        <constructor-arg ref="solrIndexManager"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+    </bean>
+
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterAction">
         <constructor-arg ref="manageBirthService"/>

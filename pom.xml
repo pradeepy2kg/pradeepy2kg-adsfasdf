@@ -52,6 +52,13 @@
             <version>1.7.2</version>
         </dependency>
 
+        <!--Solr-->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
         <!-- SLF4J + Log4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
