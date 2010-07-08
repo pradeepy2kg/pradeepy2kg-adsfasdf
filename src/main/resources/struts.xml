@@ -20,9 +20,9 @@
             <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
             <interceptor name="security" class="lk.rgd.crs.web.action.SecurityInterceptor"/>
             <interceptor-stack name="default">
-                <interceptor-ref name="exception" />
-                <interceptor-ref name="security" />
-                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="security"/>
+                <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
         </interceptors>
 
@@ -109,16 +109,24 @@
         <action name="eprBirthConfirmationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthConfirmationInit">
             <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
-            <result type="tiles" name="error">epr.error</result>            
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmationPage" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+        <!--<action name="eprBirthConfirmationPage" class="lk.rgd.crs.web.action.births.BirthRegisterAction"-->
+        <action name="eprBirthConfirmationPrintPage" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="confirmationPrintPageLoad">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthCetificatePrint">
+            <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <!--TODO print still birth certificate-->
+        <action name="eprStillBirthCertificatePrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthCetificatePrint">
             <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
             <result type="tiles" name="error">epr.error</result>
@@ -233,8 +241,21 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
-        <!--birth certificate print related actions-->
+        <!--TODO-->
+        <!--Action for Print Button in direct printing birth confirmation in batch mode -->
+        <action name="eprDirectPrintBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="pageLoad">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
 
+        <!--TODO-->
+        <!--Action for Print Button in direct printing still birth certificate in batch mode -->
+        <action name="eprDirectPrintStillBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="pageLoad">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
+        <!--birth certificate print related actions-->
         <action name="eprBirthCertificateList" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="intiPrint">
             <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
@@ -355,6 +376,7 @@
 
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePassword">
             <result name="success" type="tiles">epr.home</result>
+            <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 

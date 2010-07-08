@@ -32,10 +32,12 @@
         <%--TODO shoud be redirected to confirmationPrinting... aproveAnd print--%>
         <s:url id="printBirthConfirmation" action="eprBirthConfirmationPrintPage.do">
             <s:param name="bdId" value="#request.bdId"/>
+            <s:param name="directPrint" value="true"/>
         </s:url>
         <%--TODO--%>
-        <s:url id="printStillBirthCertificate" action="eprBirthCertificate.do">
+        <s:url id="printStillBirthCertificate" action="eprStillBirthCertificatePrint.do">
             <s:param name="bdId" value="#request.bdId"/>
+            <s:param name="directPrint" value="true"/>
         </s:url>
         <s:url id="mainUrl" action="eprHome.do"/>
 
@@ -72,20 +74,21 @@
     <div id="birth-register-approval-footer">
         <s:a href="%{newBDFUrl}"><s:label value="%{getText('addNewBDF_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:if test="#request.allowApproveBDF">
-            <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
             <s:if test="approved">
-                <s:if test="liveBirth">
+                <s:if test="#request.liveBirth">
                     <s:a href="%{printBirthConfirmation}">
                         <s:label value="%{getText('printConfirmation_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
                 </s:if>
                 <s:else>
                     <s:a href="%{printStillBirthCertificate}"><s:label
-                            value="%{getText('printStllBirthCert.label')}"/></s:a>
+                            value="%{getText('printStillBirthCert.label')}"/></s:a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                 </s:else>
             </s:if>
+            <s:else>
+                <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </s:else>
         </s:if>
-
         <s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
     </div>
 </div>
