@@ -14,7 +14,8 @@
 <div id="birth-certificate-print">
     <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFConfirmationPrint"/>
     <div id="birth-certificate-print-header">
-        <s:form action="eprFilterBirthConfirmPrint.do" method="POST"
+        <s:actionerror/>
+        <s:form action="eprFilterBirthConfirmationPrint.do" method="POST"
                 id="birth-confirmation-print-form">
         <table width="100%" cellpadding="5" cellspacing="0">
             <col width="220px"/>
@@ -48,7 +49,7 @@
     </div>
 
     <div>
-        <s:form action="">
+        <s:form action="eprBirthConfirmationBulkPrint" name="birth_confirm_print">
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>
@@ -64,10 +65,10 @@
                 </tr>
 
                     <%--following code used for pagination--%>
-                <s:iterator status="printStatus" value="printList">
+                <s:iterator status="printStatus" value="printList" id="printListId">
                     <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                         <td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>
-                        <td><s:checkbox name="index"
+                        <td><s:checkbox name="index" fieldValue="%{#printListId.idUKey}" value="%{#index}"
                                         onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
                         <td align="center"><s:property value="register.bdfSerialNo"/></td>
                         <td><s:property value="child.childFullNameOfficialLang"/></td>
@@ -90,11 +91,17 @@
                                      onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
                     <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
                 <s:label><span><s:label name="print_selected" value="%{getText('print_selected.label')}"/></span>
+                    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+                    <s:hidden name="confirmListFlag" value="true"/>
+                    <s:hidden name="printed" value="%{#request.printed}"/>
+                    <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
+                    <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:submit value="%{getText('print.label')}"/></s:label>
             </div>
             <div class="next-previous">
                 <s:url id="previousUrl" action="eprPrintPrevious.do">
                     <s:param name="confirmListFlag" value="true"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="printed" value="#request.printed"/>
@@ -102,6 +109,7 @@
                 </s:url>
                 <s:url id="nextUrl" action="eprPrintNext.do">
                     <s:param name="confirmListFlag" value="true"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="printed" value="#request.printed"/>

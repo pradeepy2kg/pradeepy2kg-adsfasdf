@@ -247,6 +247,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="printBulkOfEntries">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
@@ -262,8 +268,14 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+        <action name="eprFilterBirthConfirmationPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="filterPrintList">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="printBulkOfEntries">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
