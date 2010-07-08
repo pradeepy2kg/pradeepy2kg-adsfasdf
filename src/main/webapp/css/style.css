@@ -25,7 +25,7 @@
 
 #birth-certificate-outer .form-submit, #birth-confirmation-form-outer .form-submit{float:right; margin-top:15px;}
 
-.form-submit input, .button input{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg.png) no-repeat; width:112px; height:30px; border:none; }
+.form-submit input, .button input{margin:10px 0 10px 5px; text-transform:capitalize; background:url(../images/button_bg.gif) no-repeat; width:112px; height:31px; border:none; }
 .form-submit input:hover, .form-submit button:hover, .button input:hover{color:darkred; background:url(../images/button_bg_hover.png)   no-repeat;}
 
 .skip-validation{float:left; margin-top:15px; }

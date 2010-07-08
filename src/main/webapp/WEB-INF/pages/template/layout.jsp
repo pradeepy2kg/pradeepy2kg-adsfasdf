@@ -37,15 +37,15 @@
         ;
             src: url(eot/LATHA0.eot)
         ;
-        
+
         }
     </style>
     <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
     <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
     <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-    
+
 </head>
-<body >
+<body>
 <div id="wrapper">
     <%-- Header  --%>
     <div id="layout-header">
@@ -58,7 +58,9 @@
             <br>
             <%if (((User) session.getAttribute(WebConstants.SESSION_USER_BEAN)).getUserName() != null) { %>
             <s:form action="eprLogout.do" method="POST" name="eprLogout">
-                <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
+                <div class="form-submit">
+                    <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
+                </div>
             </s:form>
             <% } %>
         </div>
