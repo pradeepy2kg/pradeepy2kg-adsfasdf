@@ -27,6 +27,12 @@
         <put-attribute name="title" value="error.title"/>
     </definition>
 
+
+    <definition name="epr.rgdError" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/RGDerror.jsp"/>
+        <put-attribute name="title" value="RGDerror.title"/>
+    </definition>   
+
     <!--  Birth Registration Tiles -->
     <definition name="epr.newBirthCertificate" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/newBirthCertificate.jsp"/>
@@ -36,7 +42,6 @@
     <definition name="epr.BirthCertificatePrint" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthCertificatePrint.jsp"/>
         <put-attribute name="title" value="BirthCertificatePrint.title"/>
-
     </definition>
 
     <definition name="epr.birthRegistration_form1" extends="epr.template">
