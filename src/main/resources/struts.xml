@@ -255,10 +255,16 @@
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
 
-       <!--birthconfirmation print related-->
-        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+        <!--birthconfirmation print related-->
+        <action name="eprBirthConfirmationPrintList" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="intiPrint">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprFilterBirthConfirmPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="filterPrintList">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

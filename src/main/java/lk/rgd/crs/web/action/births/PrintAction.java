@@ -49,6 +49,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
+    private int dsDivisionId;
     private int birthDivisionId;
     private int printStart;
     private int pageNo;
@@ -62,6 +63,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
     }
 
+    /**
+     * This method responsible for initially loading birth certificates or birth confirmations
+     * which are not already printed. If confirmListFlag is set to true loads the birth
+     * confirmations else laod the birth certificates. Returns a list of BirthDeclarations.
+     *
+     * @return
+     */
     public String intiPrint() {
         populate();
 
@@ -81,31 +89,29 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = birthRegistrationService.getConfirmationPrintList(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 noOfRows, printed, user);
-            logger.debug("Confirmation Print list initializing with {} items ", printList.size());
+            logger.debug("Initializing confirmation Print list with {} items ", printList.size());
         } else {
             printList = birthRegistrationService.getBirthCertificatePrintList(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
-            logger.debug("Certificate Print list initializing with {} items ", printList.size());
+            logger.debug("Initializing certificate Print list with {} items ", printList.size());
         }
         return "pageLoad";
     }
 
     /**
-     * Filter print list view by Not Printed and Printed. By default viwing Not Printed Confirmation List.
-     * Used in first page load and first division selection.
-     * Selected birthDivisionId and selected option(Not Printed or Printed) used in pagination.
-     * returned List<BirthDeclaration >
+     * This method responsible for filtering the displaying data based on
+     * birth division and also it filters list as printed or Not-printed.
+     * finally returns a list of BirthDeclarations according to the request.
      *
      * @return String success
      */
 
     public String filterPrintList() {
-        //todo commenting and debug statement handling
         populate();
         setPageNo(1);
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
-        logger.debug("birthDivision {} selected isPrinted {}", birthDivisionId, printed);
+        logger.debug("Filtering list with birthDivision {} and printedFlag {}", birthDivisionId, printed);
         if (confirmListFlag) {
             printList = birthRegistrationService.getConfirmationPrintList(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
@@ -121,7 +127,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Used to move forward when list more than 10
+     * Used to move forward when list grows more than 10 records.
      *
      * @return
      */
@@ -174,9 +180,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-
     /**
-     * Populate District list and Division list
+     * Populate District list and Division list based on user
      */
     private void populate() {
         language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
@@ -291,5 +296,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public int getDsDivisionId() {
+        return dsDivisionId;
+    }
+
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
     }
 }
