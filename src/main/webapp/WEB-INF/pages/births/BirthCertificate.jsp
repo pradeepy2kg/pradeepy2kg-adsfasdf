@@ -22,7 +22,7 @@
     <tr>
         <td rowspan="3"></td>
         <td rowspan="2" align="center">
-            <img alt="Official Logo" src="<s:url value="images/official-logo.png" />"
+            <img src="<s:url value="images/official-logo.png" />"
                  style="display: block; text-align: center;" width="80" height="100">
         </td>
         <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
