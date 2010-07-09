@@ -28,6 +28,14 @@ public class BirthRecordsIndexer {
     }
 
     public void indexAll() {
+
+        // delete all existing
+        try {
+            solrIndexManager.getServer().deleteByQuery("*:*");
+        } catch (Exception e) {
+            logger.error("Error deleting existing records off Solr index");
+        }
+
         List<BirthDeclaration> bdfList = birthDeclarationDAO.findAll();
 
         int count = 0;

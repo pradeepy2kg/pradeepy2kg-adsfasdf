@@ -368,15 +368,15 @@ any data added to them will be ignored outright.  -->
         <field name="bdfSerialNo" type="slong" indexed="true" stored="true" omitNorms="true"/>
         <field name="dateOfRegistration" type="pdate" indexed="true" stored="true" omitNorms="true"/>
 
-        <field name="birthDistrict" type="string" indexed="true" stored="false" omitNorms="true"/>
-        <field name="birthDivision" type="string" indexed="true" stored="false" omitNorms="true"/>
+        <field name="birthDistrict" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="birthDivision" type="string" indexed="true" stored="true" omitNorms="true"/>
 
         <field name="childFullNameEnglish" type="string" indexed="true" stored="true" omitNorms="true"/>
         <field name="childFullNameOfficialLang" type="string" indexed="true" stored="true" omitNorms="true"/>
         <field name="dateOfBirth" type="tdate" indexed="true" stored="true" omitNorms="true"/>
 
         <field name="birthAtHospital" type="boolean" indexed="true" stored="true" omitNorms="true"/>
-        <field name="childGender" type="string" indexed="true" stored="false" omitNorms="true"/>
+        <field name="childGender" type="string" indexed="true" stored="true" omitNorms="true"/>
         <field name="pin" type="string" indexed="true" stored="true" omitNorms="true"/>
         <field name="placeOfBirth" type="string" indexed="true" stored="true" omitNorms="true"/>
 
