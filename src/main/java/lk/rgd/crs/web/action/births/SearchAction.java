@@ -97,7 +97,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
-        setInitialDistrict();
+        setBirthDistrictId(birthDistrictId);
     }
 
     /**
@@ -120,18 +120,6 @@ public class SearchAction extends ActionSupport implements SessionAware {
         }
         populate();
         return "success";
-    }
-
-    /**
-     * initial district is set to the
-     * first district of the allowed
-     * district list of a perticular
-     * user
-     */
-    public void setInitialDistrict() {
-        if (!getDistrictList().isEmpty()) {
-            setBirthDistrictId(getDistrictList().keySet().iterator().next());
-        }
     }
 
     public long getSerialNo() {
