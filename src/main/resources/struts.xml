@@ -133,7 +133,7 @@
 
         <!--BirthDeclaration Approval related actions-->
         <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="birthRegisterApproval">
+                method="initBirthDeclarationApproval">
             <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
         </action>
 
@@ -189,7 +189,7 @@
 
         <!--Birth Confirmation Approval related actions-->
         <action name="eprBirthConfirmationApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="birthRegisterApproval">
+                method="initBirthConfirmationApproval">
             <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
         </action>
 
@@ -256,7 +256,7 @@
 
         <!--birth certificate print related actions-->
         <action name="eprBirthCertificateList" class="lk.rgd.crs.web.action.births.PrintAction"
-                method="intiPrint">
+                method="loadBirthCertificatePrintList">
             <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -284,7 +284,7 @@
 
         <!--birthconfirmation print related-->
         <action name="eprBirthConfirmationPrintList" class="lk.rgd.crs.web.action.births.PrintAction"
-                method="intiPrint">
+                method="loadConfirmationPrintList">
             <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
