@@ -29,13 +29,15 @@
                               onchange="javascript:view_DSDivs();return false;"
                               cssStyle="width:240px;"/>
                 </td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed" value="false"/></td>
+                <td align="right"><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed"
+                                           value="false"/></td>
                 <td align="right"><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed"/></td>
             </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
                 <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                        listenTopics="view_DSDivs" formId="birth-certificate-print-form"></sx:div></td>
+                                        listenTopics="view_DSDivs" formId="birth-certificate-print-form"
+                                        ></sx:div></td>
             </tr>
             <tr>
                 <td colspan="4" class="button" align="right">

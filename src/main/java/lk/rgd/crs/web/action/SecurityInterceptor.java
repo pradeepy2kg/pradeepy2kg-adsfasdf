@@ -15,7 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 /**
  * This Struts Interceptor will be executed before all action calls to ensure the user has logged in and has priviledges to where he is going
-  */
+ */
 public class SecurityInterceptor extends AbstractInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
 
@@ -23,14 +23,14 @@ public class SecurityInterceptor extends AbstractInterceptor {
         Map session = invocation.getInvocationContext().getSession();
         Object obj = session.get(WebConstants.SESSION_USER_BEAN);
         String actionName = invocation.getInvocationContext().getName() + ".do";
-        if( obj == null) {
+        if (obj == null) {
             logger.debug("User not logged in. : {}", actionName);
             addActionError(invocation, "authenticate.required.message");
             return Action.LOGIN;
         }
 
         Map<String, Map> map = (Map<String, Map>) session.get(WebConstants.SESSION_USER_MENUE_LIST);
-        User user =  (User) obj;
+        User user = (User) obj;
         boolean found = false;
         String cat = null;
         int key = 0;
@@ -38,7 +38,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
             cat = category.getKey();
 
             Map<Integer, Link> links = (Map<Integer, Link>) category.getValue();
-            for (Map.Entry<Integer,Link> entry : links.entrySet()) {
+            for (Map.Entry<Integer, Link> entry : links.entrySet()) {
                 key = entry.getKey();
                 Link link = entry.getValue();
                 if (actionName.equals(link.getAction())) {
@@ -64,7 +64,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
     private void addActionError(ActionInvocation invocation, String message) {
         Object action = invocation.getAction();
         if (action instanceof ValidationAware) {
-            ((ValidationAware) action).addActionError(((TextProvider)invocation.getAction()).getText(message));
+            ((ValidationAware) action).addActionError(((TextProvider) invocation.getAction()).getText(message));
         }
     }
 }

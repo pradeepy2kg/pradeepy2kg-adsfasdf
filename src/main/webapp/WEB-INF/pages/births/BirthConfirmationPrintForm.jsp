@@ -613,22 +613,15 @@
     </s:url>
 </s:if>
 <s:else>
-    <%--TODO correct this link--%>
+    <%--TODO remove unused parameters--%>
     <s:url id="print" action="eprFilterBirthConfirmationPrint.do">
         <s:param name="bdId" value="#request.bdId"/>
         <s:param name="confirmListFlag" value="true"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-        <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
-
-        <%--<s:param name="confirmListFlag" value="true"/>--%>
-        <%--<s:param name="pageNo" value="%{#request.pageNo}"/>--%>
-        <%--<s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>--%>
-        <%--<s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>--%>
-        <%--<s:param name="printed" value="#request.printed"/>--%>
-        <%--<s:param name="printStart" value="#request.printStart"/>--%>
     </s:url>
 </s:else>
 <div class="form-submit">

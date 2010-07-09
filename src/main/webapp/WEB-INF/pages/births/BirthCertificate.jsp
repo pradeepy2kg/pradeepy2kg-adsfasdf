@@ -233,7 +233,7 @@
     </s:url>
 </s:if>
 <s:else>
-    <%--TODO correct this link--%>
+    <%--TODO remove unused parameters--%>
     <s:url id="print" action="eprFilterBirthCetificateList.do">
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>

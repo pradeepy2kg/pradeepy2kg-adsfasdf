@@ -225,14 +225,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 service.captureLiveBirthConfirmationChanges(bdf, user);
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         }
-        //}
 
         if (pageNo != 3) {
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
         }
         populate(bdf);
         return "form" + pageNo;
-        //}
     }
 
     /**
@@ -246,7 +244,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf = service.getById(bdId, user);
             bdf = service.loadValuesForPrint(bdf, user);
             bdId = bdf.getIdUKey();
-            
+            populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
@@ -271,6 +269,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    /**
+     * Used in direct direct printing birth confirmation and still birth certificate page redirecting
+     *
+     * @return
+     */
     public String pageLoad() {
         BirthDeclaration bdf = service.getById(bdId, user);
         bdId = bdf.getIdUKey();
