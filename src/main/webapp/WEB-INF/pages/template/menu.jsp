@@ -1,10 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<script src="lib/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="js/menu.js" type="text/javascript"></script>
-
-<link rel="stylesheet" type="text/css" href='<s:url value="/css/menu.css"/>'/>
+<link rel="stylesheet" type="text/css" href='/popreg/css/menu.css'/>
+<script src="/popreg/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/popreg/js/menu.js" type="text/javascript"></script>
 
 <div id="xmain-menu">
     <ul class="menu">
