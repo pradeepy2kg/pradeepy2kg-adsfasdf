@@ -46,7 +46,26 @@
     background: #ffffff;
     padding: 10px;
 }
-
+#birth-declaration-approval-warning-outer
+{
+    width:1030;
+    padding: 10px;
+}
+.birth-declaration-approval-warning-table
+{
+    margin-left:50px;
+    font-size:11pt;
+    color:red;
+}
+.birth-declaration-reject-outer
+{
+    width:980px;
+    margin:20px;
+}
+.birth-declaration-reject-outer textarea{
+    width:500px;
+    height:120px;
+}
 /* Styles for the header area of the Birth Registration Form */
 #birth-registration-form-header {
     margin-bottom: 10px;
