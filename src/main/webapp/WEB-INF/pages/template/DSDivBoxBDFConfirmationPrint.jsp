@@ -8,5 +8,5 @@
 <sx:div name="birthDivisionId" id="birthDivisionId" value="birthDivisionId" href="%{loadBDDivList}"
         theme="ajax" listenTopics="view_BDDivs" formId="birth-confirmation-print-form">
 </sx:div>
-<label style="float:right; line-height:25px; vertical-align:middle;">කොට්ඨාශය /பிரிவு /Division</label>
+<label style="float:right; line-height:25px; vertical-align:middle; margin-right:5px;">කොට්ඨාශය /பிரிவு /Division</label>
 

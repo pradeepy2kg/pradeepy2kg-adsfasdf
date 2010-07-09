@@ -27,10 +27,10 @@
                     <td><s:label name="district" value="%{getText('district.label')}"/></td>
                     <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
                                   onchange="javascript:view_DSDivs();return false;"
-                                  cssStyle="width:100%;"/>
+                                  cssStyle="width:240px;"/>
                     </td>
-                    <td><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed" value="false"/></td>
-                    <td><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed"/></td>
+                    <td align="right"><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed" value="false"/></td>
+                    <td align="right"><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed"/></td>
                 </tr>
                 <tr>
                     <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
