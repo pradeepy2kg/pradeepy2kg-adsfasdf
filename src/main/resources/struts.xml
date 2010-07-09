@@ -166,13 +166,6 @@
             <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
         </action>
 
-        <action name="eprBirthDeclarationApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="birthRegisterApproval">
-            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
-            <result type="tiles" name="success">epr.home</result>
-            <result type="tiles" name="error">epr.welcome</result>
-        </action>
-
         <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="approve">
             <result type="tiles" name="success">epr.birthRegisterApproval</result>

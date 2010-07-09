@@ -183,6 +183,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "/popreg/births/", "eprBirthConfirmationApproval.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT, new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do"));
         linkPermission.put(Permission.PAGE_STILL_BIRTH_REGISTRATION, new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do"));
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH, new Link("advanceSearch.label", "/popreg/births/", "eprAdvancedSearch.do"));
 
         //non displayable (in the menu) pages
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link(null, "/popreg/births/", "eprBirthRegistration.do"));
@@ -198,9 +199,35 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO, new Link(null, "/popreg/births/", "eprBDFSearchBySerialNo.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY, new Link(null, "/popreg/births/", "eprBDFSearchByIdUKey.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT, new Link(null, "/popreg/births/", "eprConfirmationApprovalNext.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_PREVIOUS, new Link(null, "/popreg/births/", "eprConfirmationApprovalPrevious.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_HOME, new Link(null, "/popreg/births/", "eprBirthRegistrationHome.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME, new Link(null, "/popreg/births/", "eprStillBirth.do"));
-
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVE_BULK, new Link(null, "/popreg/births/", "eprApproveConfirmationBulk.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_BULK, new Link(null, "/popreg/births/", "eprApproveBulk.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVE_SELECTED, new Link(null, "/popreg/births/", "eprApproveBirthDeclaration.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT, new Link(null, "/popreg/births/", "eprStillBirthCertificatePrint.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_NEXT, new Link(null, "/popreg/births/", "eprApprovalNext.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_PREVIOUS, new Link(null, "/popreg/births/", "eprApprovalPrevious.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_DELETE, new Link(null, "/popreg/births/", "eprDeleteApprovalPending.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_IGNORING_WARNING, new Link(null, "/popreg/births/", "eprIgnoreWarning.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED, new Link(null, "/popreg/births/", "eprApproveBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING, new Link(null, "/popreg/births/", "eprConfirmationIgnoreWarning.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED, new Link(null, "/popreg/births/", "eprRejectBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVE, new Link(null, "/popreg/births/", "eprDirectApprove.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVAL_IGNORING_WARNINGS, new Link(null, "/popreg/births/", "eprDirectApproveIgnoreWarning.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT, new Link(null, "/popreg/births/", "eprDirectPrintBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT, new Link(null, "/popreg/births/", "eprDirectPrintStillBirthCertificate.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_NEXT, new Link(null, "/popreg/births/", "eprCertificatePrintNext.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS, new Link(null, "/popreg/births/", "eprCertificatePrintPrevious.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT, new Link(null, "/popreg/births/", "eprPrintNext.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS, new Link(null, "/popreg/births/", "eprPrintPrevious.do"));
+        linkPermission.put(Permission.PAGE_USER_CREATION, new Link(null, "/popreg/management/", "eprUserCreation.do"));
+        linkPermission.put(Permission.DELETE_USER, new Link(null, "/popreg/management/", "eprdeleteUsers.do"));
+        linkPermission.put(Permission.VIEW_SELECTED_USERS, new Link(null, "/popreg/management/", "eprViewSelectedUsers.do"));
+        linkPermission.put(Permission.CHANGE_PASSWORD, new Link(null, "/popreg/preferences/", "eprChangePass.do"));
+        linkPermission.put(Permission.BACK_CHANGE_PASSWORD, new Link(null, "/popreg/preferences/", "eprBackChangePass.do"));
+        linkPermission.put(Permission.CHANGE_PASSWORD_PAGE_LOAD, new Link(null, "/popreg/preferences/", "passChangePageLoad.do"));
+        linkPermission.put(Permission.PAGE_USER_PREFERENCE_INIT, new Link(null, "/popreg/preferences/", "eprUserPreferencesAction.do"));
 
     }
 }
