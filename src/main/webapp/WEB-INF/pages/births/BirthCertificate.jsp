@@ -11,7 +11,7 @@
 
 <div id="birth-certificate-outer">
 <%--<s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"--%>
-        <%--id="birth-certificate-print-form" method="POST">--%>
+<%--id="birth-certificate-print-form" method="POST">--%>
 
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
@@ -228,11 +228,19 @@
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
 
 <s:if test="directPrint">
-    <s:url id="print" action="eprDirectPrintStillBirthCertificate.do"/>
+    <s:url id="print" action="eprDirectPrintStillBirthCertificate.do">
+        <s:param name="bdId" value="#request.bdId"/>
+    </s:url>
 </s:if>
 <s:else>
     <%--TODO correct this link--%>
-    <s:url id="print" action="eprBirthCertificateList.do"/>
+    <s:url id="print" action="eprFilterBirthCetificateList.do">
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="printed" value="#request.printed"/>
+        <s:param name="printStart" value="#request.printStart"/>
+    </s:url>
 </s:else>
 <div class="form-submit">
     <s:a href="%{print}" onclick="print()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;

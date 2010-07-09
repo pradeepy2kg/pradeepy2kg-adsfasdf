@@ -46,12 +46,12 @@
 
 </style>
 <div class="birth-registration-outer">
-    <s:a href="eprBirthRegistration.do">
+    <s:a href="eprStillBirthRegistrationInit.do">
         <div class="stillBirthLink1"></div>
-    </s:a><s:a href="eprBirthRegisterApproval.do">
+    </s:a><s:a href="#">
     <div class="stillBirthLink2"></div>
 </s:a>
-    <s:a href="eprbirthCetificatePrint.do">
+    <s:a href="#">
         <div class="stillBirthLink3"></div>
     </s:a>
 

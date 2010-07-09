@@ -75,6 +75,11 @@
                         <td align="center">
                             <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                                 <s:param name="bdId" value="idUKey"/>
+                                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                                <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                                <s:param name="printed" value="#request.printed"/>
+                                <s:param name="printStart" value="#request.printStart"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
