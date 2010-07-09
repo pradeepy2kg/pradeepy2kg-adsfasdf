@@ -96,6 +96,17 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.service = service;
     }
 
+    public String initBirthConfirmationApproval(){
+        setConfirmationApprovalFlag(true);
+        birthRegisterApproval();
+     return "pageLoad";
+    }
+
+    public String initBirthDeclarationApproval(){
+        birthRegisterApproval();
+        return "pageLoad";
+    }
+
     /**
      * if confirmationFlag is set to true gets the BirthDeclarations
      * which were confirmed by the parents else gets the BirthDeclarations
@@ -108,7 +119,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      *
      * @return String
      */
-    public String birthRegisterApproval() {
+    private void birthRegisterApproval() {
         initPermission();
         populate();
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
@@ -134,7 +145,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         paginationHandler(approvalPendingList.size());
         setPreviousFlag(false);
-        return "pageLoad";
     }
 
     /**
@@ -221,7 +231,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         paginationHandler(approvalPendingList.size());
         setRecordCounter(0);
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -264,7 +274,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 setPageNo(getPageNo() - 1);
             }
             populate();
-            return "success";
+            return SUCCESS;
         } else {
             return "approvalRejected";
         }
@@ -294,7 +304,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             liveBirth = bdf.getRegister().getLiveBirth();
             setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
         }
-        return "success";
+        return SUCCESS;
     }
 
     public String approveIgnoringWarning() {
@@ -306,7 +316,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //direct birth approvalIgnoring warnings from birthDeclarationFormDetails page
         if (!ignoreWarning && directDeclarationApprovalFlag) {
             addActionError(getText("directApproveIgnoreWarning.faild.label"));
-            return "success";
+            return SUCCESS;
         }
         if (ignoreWarning) {
             bdf = service.getById(bdId, user);
@@ -322,7 +332,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
                         approved = true;
                         liveBirth = bdf.getRegister().getLiveBirth();
-                        return "success";
+                        return SUCCESS;
                     }
                 }
             } catch (CRSRuntimeException e) {
@@ -340,7 +350,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         paginationHandler(approvalPendingList.size());
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -373,7 +383,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 pageNo, noOfRows, user);
         }
         paginationHandler(approvalPendingList.size());
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -432,7 +442,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE), user);
         paginationHandler(approvalPendingList.size());
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -490,7 +500,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         setPreviousFlag(true);
         setRecordCounter(getRecordCounter() + noOfRows);
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -549,7 +559,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             setRecordCounter(getRecordCounter() - noOfRows);
         }
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
