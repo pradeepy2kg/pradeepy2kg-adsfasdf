@@ -26,24 +26,24 @@
                 <br>Confirmation of Birth by Parents / Guardian
 
             </label></td>
-                </tbody>
+    </tbody>
 </table>
 
-            <table cellspacing="0"  style="border: 1px solid #000000;height:60px;float:left;width:35%">
-                <caption></caption>
-                <col/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td style="text-align:left;margin-left:0;margin-right:auto;width:150px;">
-                        <label>අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</label>
-                    </td>
-                    <td style="text-align:right;width:100px">
-                        <s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<table cellspacing="0" style="border: 1px solid #000000;height:60px;float:left;width:35%">
+    <caption></caption>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td style="text-align:left;margin-left:0;margin-right:auto;width:150px;">
+            <label>අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</label>
+        </td>
+        <td style="text-align:right;width:100px">
+            <s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <table border="0" style="margin-bottom:10px;width:1030px;float:left;">
     <caption></caption>
@@ -250,7 +250,7 @@
         <tbody>
         <tr>
             <td colspan="3" style="text-align:center;font-size:12pt;">
-                <label><br>නම් වල වෙනස් වීම් /  பெயரிலுள்ள மாற்றங்கள்/ Changes in Names</label>
+                <label><br>නම් වල වෙනස් වීම් / பெயரிலுள்ள மாற்றங்கள்/ Changes in Names</label>
             </td>
         </tr>
         </tbody>
@@ -513,7 +513,7 @@
         </tr>
         </tbody>
     </table>
-     
+
     <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
     <table border="0" style="width: 100%;">
         <caption></caption>
@@ -564,7 +564,7 @@
         </tbody>
     </table>
 
-    <table border="0" cellspacing="0" >
+    <table border="0" cellspacing="0">
         <caption></caption>
         <col/>
         <col/>
@@ -608,11 +608,28 @@
     </table>
 </div>
 <s:if test="directPrint">
-    <s:url id="print" action="eprDirectPrintBirthConfirmation.do"/>
+    <s:url id="print" action="eprDirectPrintBirthConfirmation.do">
+        <s:param name="bdId" value="#request.bdId"/>
+    </s:url>
 </s:if>
 <s:else>
     <%--TODO correct this link--%>
-    <s:url id="print" action="eprFilterBirthConfirmPrint.do"/>
+    <s:url id="print" action="eprFilterBirthConfirmationPrint.do">
+        <s:param name="bdId" value="#request.bdId"/>
+        <s:param name="confirmListFlag" value="true"/>
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+        <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+        <s:param name="printed" value="#request.printed"/>
+        <s:param name="printStart" value="#request.printStart"/>
+
+        <%--<s:param name="confirmListFlag" value="true"/>--%>
+        <%--<s:param name="pageNo" value="%{#request.pageNo}"/>--%>
+        <%--<s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>--%>
+        <%--<s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>--%>
+        <%--<s:param name="printed" value="#request.printed"/>--%>
+        <%--<s:param name="printStart" value="#request.printStart"/>--%>
+    </s:url>
 </s:else>
 <div class="form-submit">
     <s:a href="%{print}" onclick="print()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;

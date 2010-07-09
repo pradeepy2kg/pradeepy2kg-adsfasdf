@@ -91,7 +91,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int rgdErrorCode;
 
     public String welcome() {
-        return "success";
+        return SUCCESS;
     }
 
     public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
@@ -120,7 +120,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "form" + pageNo;
         }
         if (pageNo < 1) {
-            return "error";
+            return ERROR;
         }
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
@@ -190,7 +190,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "form" + pageNo;
         }
         if (pageNo < 1) {
-            return "error";
+            return ERROR;
         }
 
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
@@ -246,9 +246,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
             bdf = service.loadValuesForPrint(bdf, user);
+            bdId = bdf.getIdUKey();
+            
+
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
-                return "error";
+                return ERROR;
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
                 beanPopulate(bdf);
@@ -256,20 +259,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         } catch (Exception e) {
             handleErrors(e);
-            return "error";
+            return ERROR;
         }
 
     }
 
     public String initBirthRegistration() {
-        return "success";
+        return SUCCESS;
     }
 
     public String initStillBirth() {
-        return "success";
+        return SUCCESS;
     }
 
     public String pageLoad() {
+        BirthDeclaration bdf = service.getById(bdId, user);
+        bdId = bdf.getIdUKey();
+        populate(bdf);
         return SUCCESS;
     }
 
@@ -297,7 +303,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                 addActionError(getText("p1.editNotAllowed"));
-                return "error";
+                return ERROR;
             }
         }
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
@@ -322,7 +328,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                 addActionError(getText("p1.editNotAllowed"));
-                return "error";
+                return ERROR;
             }
         }
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
@@ -348,7 +354,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                 addActionError(getText("cp1.error.editNotAllowed"));
-                return "error";
+                return ERROR;
             }
         } else {
             bdf = new BirthDeclaration(); // just go to the confirmation 1 page
@@ -372,7 +378,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (liveBirth) {
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED ||
                     bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED)) {
-                    return "error";
+                    return ERROR;
                 } else {
                     service.markLiveBirthCertificateAsPrinted(bdf, user);
                     beanPopulate(bdf);
@@ -384,7 +390,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
         } catch (Exception e) {
             handleErrors(e);
-            return "error";
+            return ERROR;
         }
     }
 
