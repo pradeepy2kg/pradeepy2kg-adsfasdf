@@ -1565,7 +1565,7 @@
 #user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}
 
 #birth-registration-form-2-outer table{margin:10px 0;}
-<<<<<<< local
+
 #uer-create-outer
 {
     background-color:#ffffff;
@@ -1577,7 +1577,7 @@
 .user-create-table select{width:20em;margin:.5em;margin-left:1.5em;}
 .view-users-table{width:1030px;}
 .view-users-table td {border:none;}
-.view-users-table select{width:250px;}=======
+.view-users-table select{width:250px;}
 .find-person img{width:20px; height:20px;}
 .find-person img:hover{width:25px; height:25px;}
 

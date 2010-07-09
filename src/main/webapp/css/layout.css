@@ -17,7 +17,7 @@ body {
 #layout-header {
     width: 1250px;
     height: 151px;
-    background:url(../images/epr-header.png) no-repeat;
+    background: url(../images/epr-header.png) no-repeat;
 }
 
 #layout-body {
@@ -27,8 +27,7 @@ body {
 
 #body-sidebar {
     width: 198px;
-    float: left;
-    /*background: url("../images/sidebar-bg.png")*/
+    float: left; /*background: url("../images/sidebar-bg.png")*/
 }
 
 #body-content {
@@ -60,8 +59,15 @@ body {
     margin-right: 10px;
 }
 
-#logout-button{float:right; text-transform:capitalize; margin:10px;}
-#logout-button:hover{color:darkred;}
+#logout-button {
+    float: right;
+    text-transform: capitalize;
+    margin: 10px 0;
+}
+
+#logout-button:hover {
+    color: darkred;
+}
 
 /* Styles for the Login Page */
 #login-form {
@@ -70,18 +76,21 @@ body {
     margin: 16% auto;
     float: none;
     padding: 5px;
-   background: url(../images/odd-row.png);
+    background: url(../images/login-form-bg.png) repeat;
 }
 
 #login-form #login-form-title {
     width: 100%;
     height: 30px;
     text-align: center;
-    background:lightgoldenrodyellow url(../images/title-bg.png);
+    background: lightgoldenrodyellow url(../images/login-title-bg.png);
     font-size: 11pt;
     text-transform: capitalize;
     line-height: 30px;
-    color:#0b54ee;
+    margin-top: -5px;
+    margin-left: -5px;
+    padding-left: 10px;
+    color: #3c3c3c;
 }
 
 #login-form #login-form-body {
@@ -97,14 +106,14 @@ body {
     margin-bottom: 5px;
     height: 25px;
     font-size: 10pt;
-    color:#178eed;
+    color: #3c3c3c;
 }
 
 #login-form #login-form-body input {
     width: 45%;
     float: right;
     margin-bottom: 5px;
-    
+
 }
 
 #login-form #login-form-body div {
@@ -113,18 +122,17 @@ body {
 
 #login-form #login-form-body div input {
     float: right;
-    text-transform: uppercase;
+    text-transform: capitalize;
     width: 111px;
-    margin: 10px;
-    margin-right:0;
-    background: url(../images/button_bg.gif) no-repeat;
+    margin: 10px 0;
+    background: url(../images/button_bg_hover_1.png) no-repeat;
     height: 30px;
     border: none;
 }
 
 #login-form #login-form-body div input:hover {
     color: darkred;
-    background: url(../images/button_bg_hover.png) no-repeat;
+    background: url(../images/button_bg_hover_2.png) no-repeat;
 }
 
 /* Styles for the Main-Menu */
@@ -164,7 +172,6 @@ body {
 .menu a:hover,
     .menu a:focus,
     .menu a:active {
-    background: url(../images/menu-hover.png) repeat;
     color: cornsilk;
 }
 
