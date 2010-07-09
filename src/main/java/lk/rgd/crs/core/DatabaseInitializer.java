@@ -243,9 +243,11 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_SELECTED_ENTRY);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_BULK_PRINT);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_BULK_PRINT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_HOME);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME);
-
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 
