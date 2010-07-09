@@ -94,19 +94,21 @@
     </s:a>
     <s:a href="eprBirthRegistrationInit.do">
         <div class="link1"></div>
-    </s:a><s:a href="eprBirthRegisterApproval.do">
-    <div class="link2"></div>
-</s:a>
-    <s:a href="eprFilterBirthConfirmPrint.do?confirmListFlag=true">
+    </s:a>
+    <s:a href="eprBirthRegisterApproval.do">
+        <div class="link2"></div>
+    </s:a>
+    <s:a href="eprBirthConfirmationPrintList.do?confirmListFlag=true">
         <div class="link3"></div>
-    </s:a><s:a href="eprBirthConfirmationInit.do">
-    <div class="link4"></div>
-</s:a> <s:a href="eprBirthCertificateList.do">
-    <div class="link5"></div>
-</s:a><s:a href="eprbirthCetificatePrint.do">
-    <div class="link6"></div>
-</s:a>
-
-
+    </s:a>
+    <s:a href="eprBirthRegisterApproval.do">
+        <div class="link4"></div>
+    </s:a>
+    <s:a href="eprBirthCertificateList.do">
+        <div class="link5"></div>
+    </s:a>
+    <s:a href="eprBirthConfirmationInit.do">
+        <div class="link6"></div>
+    </s:a>
     <div class="bg1"></div>
 </div>

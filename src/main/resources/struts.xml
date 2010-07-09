@@ -8,7 +8,6 @@
     <constant name="struts.custom.i18n.resources" value="textproperties"/>
     <constant name="struts.action.extension" value="do"/>
     <constant name="struts.objectFactory" value="spring"/>
-    <!--<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />-->
     <constant name="struts.devMode" value="true"/>
 
     <package name="NG" namespace="/NG" extends="struts-default">
@@ -277,6 +276,7 @@
         <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
+
         <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="previousPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
@@ -334,6 +334,7 @@
                 method="initBirthRegistration">
             <result type="tiles" name="success">epr.birthRegistrationHome</result>
         </action>
+
         <action name="eprStillBirth" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="initStillBirth">
             <result type="tiles" name="success">epr.stillBirth</result>
