@@ -39,6 +39,36 @@ public final class Permission {
     public static final int PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO = 49;
     public static final int PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY = 70;
     public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT = 71;
+    public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL_PREVIOUS = 71;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVE_BULK = 72;
+    public static final int PAGE_BIRTH_CONFIRMATION_APPROVE_BULK = 73;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVE_SELECTED = 74;
+    public static final int PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT = 75;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVAL_NEXT = 76;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVAL_PREVIOUS = 77;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVAL_DELETE = 78;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVAL_REJECT = 79;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVAL_IGNORING_WARNING = 80;
+    public static final int PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED = 81;
+    public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING = 82;
+    public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED = 83;
+    public static final int PAGE_BIRTH_REGISTRATON_DIRECT_APPROVE = 84;
+    public static final int PAGE_BIRTH_REGISTRATON_DIRECT_APPROVAL_IGNORING_WARNINGS = 85;
+    public static final int PAGE_BIRTH_REGISTRATON_DIRECT_PRINT = 86;
+    public static final int PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT = 87;
+    public static final int PAGE_BIRTH_CERTIFICATE_PRINT_LIST_NEXT = 88;
+    public static final int PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS = 89;
+    public static final int PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT = 90;
+    public static final int PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS = 91;
+    public static final int PAGE_ADVANCE_SEARCH = 92;
+    public static final int DELETE_USER = 93;
+    public static final int PAGE_USER_CREATION = 94;
+    public static final int VIEW_SELECTED_USERS = 95;
+    public static final int CHANGE_PASSWORD = 96;
+    public static final int BACK_CHANGE_PASSWORD = 97;
+    public static final int CHANGE_PASSWORD_PAGE_LOAD = 98;
+    public static final int PAGE_USER_PREFERENCE_INIT = 99;
+    
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;

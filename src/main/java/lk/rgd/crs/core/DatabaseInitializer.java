@@ -246,8 +246,39 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_HOME);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVE_BULK);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVE_SELECTED);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_BULK);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_NEXT);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_PREVIOUS);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_DELETE);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT);
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_IGNORING_WARNING);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVE);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVAL_IGNORING_WARNINGS);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT);
+            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_NEXT);
+            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
+            bs.set(Permission.PAGE_ADVANCE_SEARCH);
+            bs.set(Permission.PAGE_USER_CREATION);
+            bs.set(Permission.DELETE_USER);
+            bs.set(Permission.VIEW_SELECTED_USERS);
+            bs.set(Permission.CHANGE_PASSWORD);
+            bs.set(Permission.BACK_CHANGE_PASSWORD);
+            bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
+            bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
+
+
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 
