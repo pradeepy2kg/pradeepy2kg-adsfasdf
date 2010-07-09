@@ -26,7 +26,6 @@
         width: 135px;
         height: 45px;
         margin: 5px 0px 0px 800px;
-        background-color: aqua;
 
     }
 
@@ -34,7 +33,7 @@
         background: url('<s:url value="/images/birth-flow-detail-pic.gif"/>') no-repeat;
         width: 960px;
         height: 702px;
-        margin: 20px 0px 0px 20px;
+        margin: 40px 0px 0px 60px;
     }
 
     .link1 {
@@ -42,7 +41,6 @@
         width: 135px;
         height: 45px;
         margin: 150px 0px 0px 435px;
-
     }
 
     .link2 {
@@ -50,7 +48,6 @@
         width: 135px;
         height: 45px;
         margin: 220px 0px 0px 435px;
-
     }
 
     .link3 {
@@ -58,7 +55,6 @@
         width: 135px;
         height: 45px;
         margin: 285px 0px 0px 435px;
-
     }
 
     .link4 {
@@ -66,7 +62,6 @@
         width: 135px;
         height: 45px;
         margin: 370px 0px 0px 435px;
-
     }
 
     .link5 {
@@ -74,7 +69,6 @@
         width: 135px;
         height: 45px;
         margin: 448px 0px 0px 435px;
-
     }
 
     .link6 {
@@ -82,7 +76,6 @@
         width: 135px;
         height: 45px;
         margin: 355px 0px 0px 220px;
-
     }
 
     .link7 {

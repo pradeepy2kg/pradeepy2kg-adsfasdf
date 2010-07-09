@@ -24,7 +24,7 @@
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
-        $('#users-list-table').dataTable({
+        $('#com-print-list-table').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
@@ -84,7 +84,7 @@
             </s:if>
             <s:else>
                 <fieldset style="border:none">
-                 <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+                 <table id="com-print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                      <thead>
                     <tr >
                         <th></th>
@@ -161,7 +161,7 @@
                             <img src="<s:url value='/images/previous.gif'/>" border="none"/></s:a>
                         <s:label value="%{getText('previous.label')}"/>
                     </s:if>
-                    <s:if test="printList.size >= 10">
+                    <s:if test="printList.size >= 50">
                         <s:label value="%{getText('next.label')}"/><s:a href="%{nextUrl}">
                         <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a>
                     </s:if>

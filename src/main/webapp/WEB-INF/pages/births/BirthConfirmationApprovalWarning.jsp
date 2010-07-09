@@ -8,7 +8,7 @@
                 <tr>
                     <td><s:property value="message"/></td>
                 </tr>
-            </s:iterator>
+            </s:iterator>                                     
         </table>
     </div>
     <div id="bdaw-action">

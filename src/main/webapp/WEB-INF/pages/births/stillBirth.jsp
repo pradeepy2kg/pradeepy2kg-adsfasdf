@@ -27,7 +27,7 @@
         width: 135px;
         height: 45px;
         margin: 245px 0px 0px 577px;
-       
+
     }
 
     .stillBirthLink2 {
