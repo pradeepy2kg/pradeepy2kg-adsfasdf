@@ -31,6 +31,7 @@
         <global-results>
             <result type="tiles" name="error">epr.error</result>
             <result type="tiles" name="RGDerror">epr.rgdError</result>
+            <result type="tiles" name="none">epr.home</result>
             <result name="login">/WEB-INF/pages/login/login.jsp</result>
         </global-results>
 
@@ -42,12 +43,16 @@
 
     <package name="epr" namespace="/" extends="NG">
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="cacheControl"/>
             <result type="tiles" name="success">epr.home</result>
             <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
             <result name="error">/WEB-INF/pages/login/login.jsp</result>
         </action>
 
         <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="cacheControl"/>
             <result name="success">/WEB-INF/pages/login/login.jsp</result>
             <result type="tiles" name="error">epr.home</result>
         </action>
