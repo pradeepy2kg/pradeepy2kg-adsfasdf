@@ -88,7 +88,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean approved;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -320,7 +320,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         logger.debug("inside approveIgnoringWarning() : directDeclarationApprovalFlag {}", directDeclarationApprovalFlag);
                         addActionMessage((getText("approveSuccess.label")));
                         setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
-                        approved=true;
+                        approved = true;
                         liveBirth = bdf.getRegister().getLiveBirth();
                         return "success";
                     }
@@ -442,7 +442,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
-        setInitialDistrict();
+        if (pageNo == 0) {
+            setInitialDistrict();
+        }
     }
 
     /**
