@@ -7,7 +7,8 @@
 
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
-<s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3" method="POST">
+<s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3" method="POST"
+        onsubmit="javascript:return validate()">
 
 <s:if test="liveBirth">
     <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
@@ -250,6 +251,11 @@
 </table>
 
 
+<s:hidden id="p3error1" value="%{getText('p3.person.error.value')}"/>
+<s:hidden id="p3error2" value="%{getText('p3.Informent.Name.error.value')}"/>
+<s:hidden id="p3error3" value="%{getText('p3.Informent.Address.error.value')}"/>
+<s:hidden id="p3error4" value="%{getText('p3.Inform.Date.error.value')}"/>
+
 <script type="text/javascript">
     var informPerson;
     function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
@@ -268,6 +274,42 @@
         informantEmail.value = email;
     }
 
+    /**
+     * validate for informent details
+     */
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
+
+        /*date related validations*/
+        var submitDatePicker = dojo.widget.byId('informDatePicker').inputNode.value;
+        var submit = new Date(submitDatePicker);
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+            flag = true;
+        }
+
+        element = document.getElementById('informantType');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+        }
+        element = document.getElementById('informantName');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+        }
+        element = document.getElementById('informantAddress');
+        if (!element.checked) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+        }
+        
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
 </script>
 <s:hidden name="pageNo" value="3"/>
 <div class="form-submit">
