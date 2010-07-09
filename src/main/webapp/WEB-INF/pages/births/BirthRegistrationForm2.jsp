@@ -133,7 +133,7 @@
         <td><label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="3"><sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('motherDatePicker')"/></td>
-        <td colspan="4" width="100px"><label>
+        <td colspan="3" width="100px"><label>
             <s:if test="liveBirth">
                 (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
                 as at
@@ -145,16 +145,15 @@
             </s:else>
         </label>
         </td>
-        <td><s:textfield name="parent.motherAgeAtBirth" value=""/></td>
-        <td class="passport"><s:textfield name="birthType" value=""/><s:property value="birthType"/></td>
-
+        <td class="passport"><s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"
+                                          onclick="javascript:motherage('%{child.dateOfBirth}')"/></td>
     </tr>
     <tr>
         <td><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
         <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
 
-        <td colspan="2"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="3"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
         <td colspan="3" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
@@ -200,6 +199,7 @@
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
 <s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
+<s:hidden id="mother_age" value="%{getText('p2.motherAge.error.value')}"/>
 
 <script type="text/javascript">
     function validate()
@@ -224,6 +224,18 @@
             returnval = false;
         }
         return returnval;
+    }
+    function motherage(child_bday) {
+        var mother_dob = dojo.widget.byId('motherDatePicker').inputNode.value;
+        mother_dob = new Date(mother_dob);
+        var child_dob = new Date(child_bday);
+        var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
+        var mother_age = 100 - (mother_dob.getYear() - child_dob.getYear());
+        if (mother_age < 10) {
+            alert(document.getElementById('mother_age').value);
+            return false;
+        }
+        mother_age_at_birth.value = mother_age;
     }
 </script>
 
