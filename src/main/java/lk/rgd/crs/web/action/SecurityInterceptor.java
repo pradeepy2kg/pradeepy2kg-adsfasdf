@@ -48,7 +48,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
             }
             if (found) break;
         }
-        
+
         if (found && user.isAuthorized(key)) {
             session.put(WebConstants.SESSION_REQUEST_CONTEXT, cat);         // for the menu to expand
             invocation.getInvocationContext().setSession(session);
