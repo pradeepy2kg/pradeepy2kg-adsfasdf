@@ -29,7 +29,8 @@
                                   onchange="javascript:view_DSDivs();return false;"
                                   cssStyle="width:240px;"/>
                     </td>
-                    <td align="right"><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed" value="false"/></td>
+                    <td align="right"><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed"
+                                               value="false"/></td>
                     <td align="right"><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed"/></td>
                 </tr>
                 <tr>

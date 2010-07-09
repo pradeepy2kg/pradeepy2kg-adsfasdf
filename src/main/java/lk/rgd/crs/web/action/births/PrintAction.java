@@ -56,7 +56,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private long[] index;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -127,7 +127,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
      */
 
     public String filterPrintList() {
-        populate();
         setPageNo(1);
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         logger.debug("Filtering list with birthDivision {} and printedFlag {}", birthDivisionId, printed);
@@ -142,6 +141,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
+        // TODO remove this
+        populate();
         return SUCCESS;
     }
 
@@ -241,6 +242,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private void populate() {
         language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         setDistrictList(districtDAO.getDistrictNames(language, user));
+        //TODO checking district loading
+        setBirthDistrictId(birthDistrictId);
     }
 
     public List<BirthDeclaration> getPrintList() {
