@@ -26,10 +26,19 @@ public final class Permission {
     public static final int PAGE_STILL_BIRTH_REGISTRATION = 36;
     public static final int PAGE_BIRTH_REGISTRATON = 37;
     public static final int PAGE_BIRTH_CONFIRMATION = 38;
+    public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL_REFRESH = 39;
+    public static final int PAGE_BIRTH_DECLARATION_APPROVAL_REFRESH=40;
+    public static final int PAGE_BIRTH_CERTIFICATE_PRINT_LIST_REFRESH=41;
+    public static final int PAGE_BIRTH_CONFIRMATION_PRINT_LIST_REFRESH=42;
+    public static final int PAGE_BIRTH_CERTIFICATE_PRINT_SELECTED_ENTRY=43;
+    public static final int PAGE_BIRTH_CONFIRMATION_PRINT_SELECTED_ENTRY = 44;
+    public static final int PAGE_BIRTH_CONFIRMATION_BULK_PRINT =45 ;
+    public static final int PAGE_BIRTH_CERTIFICATE_BULK_PRINT = 46;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;
     public static final int PRS_LOOKUP_PERSON_BY_KEYS = 52;
+
 
 }
