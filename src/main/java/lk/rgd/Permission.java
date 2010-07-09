@@ -73,6 +73,5 @@ public final class Permission {
     public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;
     public static final int PRS_LOOKUP_PERSON_BY_KEYS = 52;
-
-
+    public static final int PAGE_ADVANCE_SEARCH_PRS = 53;
 }

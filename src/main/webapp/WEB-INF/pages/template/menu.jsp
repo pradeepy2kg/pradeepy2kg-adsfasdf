@@ -37,6 +37,10 @@
                     <a href="#"><s:label value="%{getText('category_user_preferance')}"/></a>
                 </s:if>
 
+                <s:if test="%{key == '6prs'}">
+                    <a href="#"><s:label value="%{getText('category_prs')}"/></a>
+                </s:if>
+
                 <ul class="acitem">
                     <s:iterator value="value" id="x">
                         <s:if test="%{value.propertyKey != null}">

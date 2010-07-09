@@ -279,6 +279,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
             bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED); 
 
+            bs.set(Permission.PAGE_ADVANCE_SEARCH_PRS);
 
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
