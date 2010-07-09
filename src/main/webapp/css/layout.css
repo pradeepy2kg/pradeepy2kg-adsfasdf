@@ -27,7 +27,8 @@ body {
 
 #body-sidebar {
     width: 198px;
-    float: left; /*background: url("../images/sidebar-bg.png")*/
+    float: left;
+    background: url("../images/login-form-bg.png") repeat;
 }
 
 #body-content {
@@ -62,7 +63,7 @@ body {
 #logout-button {
     float: right;
     text-transform: capitalize;
-    margin: 10px 0;
+    margin: 10px 5px 5px 0;
 }
 
 #logout-button:hover {
