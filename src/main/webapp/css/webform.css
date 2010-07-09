@@ -1466,14 +1466,17 @@
 .cell_001 {
     width: 40px;
     height:150px;
+    text-align:center;
 }
 .cell_011 {
     height:60px;
     width:40px;
+    text-align:center;
 }
 .cell_012 {
     width: 40px;
     height:200px;
+    text-align:center;
 }
 
 .table_con_page_02 td {

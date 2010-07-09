@@ -14,7 +14,6 @@ import java.util.List;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
-import lk.rgd.common.RGDRuntimeException;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;

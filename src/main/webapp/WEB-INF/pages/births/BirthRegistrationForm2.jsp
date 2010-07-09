@@ -133,26 +133,29 @@
         <td><label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="3"><sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('motherDatePicker')"/></td>
-        <td colspan="2"><label>(18)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
+        <td colspan="4" width="100px"><label>
+            <s:if test="liveBirth">
+                (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+                as at
+                the date of birth of child
+            </s:if>
+            <s:else>
+                (18) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
+                as at the date of still-birth of child
+            </s:else>
+        </label>
+        </td>
+        <td><s:textfield name="parent.motherAgeAtBirth" value=""/></td>
+        <td class="passport"><s:textfield name="birthType" value=""/><s:property value="birthType"/></td>
+
     </tr>
     <tr>
         <td><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
         <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
-        <td colspan="4"><label>
-            <s:if test="liveBirth">
-                (20) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
-                as at
-                the date of birth of child
-            </s:if>
-            <s:else>
-                (20) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
-                as at the date of still-birth of child
-            </s:else>
-        </label>
-        </td>
-        <td class="passport"><s:textfield name="parent.motherAgeAtBirth"/><s:property value="birthType"/></td>
+
+        <td colspan="2"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="3" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
         <td rowspan="3"><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>

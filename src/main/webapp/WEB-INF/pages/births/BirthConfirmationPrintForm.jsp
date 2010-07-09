@@ -74,7 +74,7 @@
             appearing in the given details, make the necessary corrections in the relevant
             place and submit to me within 14 days. If I do not receive this form within
             the specified period, the birth particulars in the Civil Registration System will
-            be confirmed as accurate and the birth will be registered.<br><br>
+            be confirmed as accurate and the birth will be registered.<br>
         </label></td>
     </tr>
     </tbody>
@@ -98,7 +98,7 @@
             <s:textfield cssClass="disable" disabled="true" name="register.dateOfRegistration"/></td>
     </tr>
     <tr>
-        <td>2</td>
+        <td style="text-align:center">2</td>
         <td><label>
             *in Sinhala
             <br>* in Tamil
@@ -452,7 +452,7 @@
         <tbody>
 
         <tr>
-            <td height="80px">15</td>
+            <td height="80px" style="text-align:center">15</td>
             <td colspan="3">
                 <p></p>
                 <label>

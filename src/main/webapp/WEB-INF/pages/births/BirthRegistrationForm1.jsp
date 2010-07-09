@@ -92,7 +92,7 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="4"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
@@ -120,8 +120,9 @@
         <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
             / தமிழ்) <br>Name in
             any of the official languages (Sinhala / Tamil)</label></td>
-        <td colspan="7"><s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"/></td>
+        <td colspan="7"><s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:98.2%;"/></td>
     </tr>
+    
     <tr>
         <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
         </label></td>
@@ -129,9 +130,9 @@
             <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;"/></td>
     </tr>
     <tr>
-        <td class="font-9"><label>(5) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for
+        <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for
             Birth Certificate </label></td>
-        <td colspan="7"><s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
+        <td colspan="6"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
                                   name="register.preferredLanguage" cssStyle="width:190px; margin-left:5px;"></s:select></td>
     </tr>
     <tr>
@@ -145,7 +146,7 @@
     <tr>
         <td class="font-9"><label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
             to Live Birth Order,
-            number of children?</label></td>
+            rank of the child?</label></td>
         <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank"/></td>
         <td colspan="2" class="font-9"><label>(9)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
