@@ -3,12 +3,6 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="lk.rgd.crs.web.WebConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--
-  User: chathuranga
-  Date: May 13, 2010
-  Time: 10:38:39 AM
-  Birth Registration Confirmation Page 1
---%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <div id="birth-confirmation-form-outer">

@@ -144,9 +144,20 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public String logout() {
         if (session.containsKey(WebConstants.SESSION_USER_BEAN)) {
             logger.debug("Inside logout : {} is going to logout.", ((User) session.get(WebConstants.SESSION_USER_BEAN)).getUserName());
-            session.remove(WebConstants.SESSION_USER_BEAN);
+
+            if (session instanceof org.apache.struts2.dispatcher.SessionMap) {
+                try {
+                    ((org.apache.struts2.dispatcher.SessionMap) session).invalidate();
+                } catch (IllegalStateException e) {
+                    logger.error("Incorrect Session", e);
+                }
+            } else {
+                session = null;
+            }
+
             return "success";
         }
+
         return "error";
     }
 
