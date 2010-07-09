@@ -29,7 +29,7 @@
 
 
 <div id="view-users">
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
+    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend>Search Options</legend>
         <s:form action="eprViewSelectedUsers.do" name="viewUsers" id="view_usrs_form" method="POST">
         <table>

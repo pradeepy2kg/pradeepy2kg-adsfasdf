@@ -42,7 +42,7 @@
     <br/>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             method="post">
-       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
+       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="registrationSerchLegend"
                              value="%{getText('registrationSerchLegend.label')}"/></legend>
 
@@ -81,7 +81,7 @@
     </s:form>
     <br/>
     <s:form action="eprBDFSearchByIdUKey.do" method="post">
-       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
+       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="confirmatinSearchLegend"
                              value="%{getText('confirmationSearchLegend.label')}"/></legend>
             <table class="search-option-table">
@@ -127,7 +127,7 @@
 
 <div>
     <s:if test="#request.bdf != null || #request.searchResultList.size>0">
-       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #aaf4ff;">
+       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend>
                 <s:label value="%{getText('searchResult.label')}"/>
             </legend>
