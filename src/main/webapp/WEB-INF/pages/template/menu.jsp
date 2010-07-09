@@ -39,9 +39,13 @@
 
             <ul class="acitem">
                 <s:iterator value="value" id="x">
-                    <li><s:a href="%{value.category+value.action}"><s:property
-                            value="%{getText(value.propertyKey)}"/>
-                    </s:a></li>
+                    <s:if test="%{value.propertyKey != null}"> 
+                        <li>
+                            <s:a href="%{value.category+value.action}">
+                                <s:property value="%{getText(value.propertyKey)}"/>
+                            </s:a>
+                        </li>
+                    </s:if>
                 </s:iterator>
             </ul>
         </li>
