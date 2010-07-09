@@ -208,6 +208,7 @@
                         </goals>
                         <configuration>
                             <src>src/main/resources</src>
+                            <includes>*.properties</includes>
                             <dest>target/classes</dest>
                             <encoding>UTF8</encoding>
                         </configuration>
