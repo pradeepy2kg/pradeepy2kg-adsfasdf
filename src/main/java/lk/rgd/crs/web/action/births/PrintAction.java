@@ -64,12 +64,22 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
     }
 
+    /**
+     * Responsible for loading the birth confirmation print list
+     *
+     * @return
+     */
     public String loadConfirmationPrintList() {
         setConfirmListFlag(true);
         intiPrint();
         return "pageLoad";
     }
 
+    /**
+     * Responsible for loading the birth certificate print list
+     *
+     * @return
+     */
     public String loadBirthCertificatePrintList() {
         intiPrint();
         return "pageLoad";
@@ -79,8 +89,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * This method responsible for initially loading birth certificates or birth confirmations
      * which are not already printed. If confirmListFlag is set to true loads the birth
      * confirmations else laod the birth certificates. Returns a list of BirthDeclarations.
-     *
-     * @return
      */
     private void intiPrint() {
         populateInitialDistrict();

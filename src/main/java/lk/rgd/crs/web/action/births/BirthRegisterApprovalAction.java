@@ -96,13 +96,23 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.service = service;
     }
 
-    public String initBirthConfirmationApproval(){
+    /**
+     * Responsible for loading the birth confirmation approval list
+     *
+     * @return
+     */
+    public String initBirthConfirmationApproval() {
         setConfirmationApprovalFlag(true);
         birthRegisterApproval();
-     return "pageLoad";
+        return "pageLoad";
     }
 
-    public String initBirthDeclarationApproval(){
+    /**
+     * Responsible for loading the birth declaration approval list
+     *
+     * @return
+     */
+    public String initBirthDeclarationApproval() {
         birthRegisterApproval();
         return "pageLoad";
     }
