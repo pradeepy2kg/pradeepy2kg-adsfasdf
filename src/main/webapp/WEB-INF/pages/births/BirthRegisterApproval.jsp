@@ -45,9 +45,9 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="2"><s:label name="district" value="%{getText('district.label')}"/></td>
-            <td colspan="2"><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:100%;"/></td>
+            <td><s:label name="district" value="%{getText('district.label')}"/></td>
+            <td colspan="3"><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+                                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:240px;"/></td>
         </tr>
         <tr>
             <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
@@ -57,9 +57,9 @@
         <tr>
             <td><s:label value="%{getText('serial.label')}"/></td>
             <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;"/></td>
-            <td align="right"><s:label value="%{getText('date.from.label')}"/><sx:datetimepicker name="searchStartDate"
+            <td align="right"><s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/><sx:datetimepicker name="searchStartDate"
                                                                                                  displayFormat="yyyy-MM-dd"/></td>
-            <td align="right"><s:label value="%{getText('date.to.label')}"/><sx:datetimepicker name="searchEndDate"
+            <td align="right"><s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/><sx:datetimepicker name="searchEndDate"
                                                                                                displayFormat="yyyy-MM-dd"/></td>
         </tr>
         <tr>
