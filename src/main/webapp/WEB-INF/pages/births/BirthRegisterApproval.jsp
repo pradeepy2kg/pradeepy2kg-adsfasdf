@@ -93,8 +93,8 @@
                 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                 <thead>
                  <tr>
-                    <th>x</th>
-                    <th>y</th>
+                    <th></th>
+                    <th></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
