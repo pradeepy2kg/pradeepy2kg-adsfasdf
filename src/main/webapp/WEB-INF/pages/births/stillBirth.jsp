@@ -26,21 +26,21 @@
         position: absolute;
         width: 135px;
         height: 45px;
-        margin: 240px 0px 0px 577px;
+        margin: 245px 0px 0px 577px;
     }
 
     .stillBirthLink2 {
         position: absolute;
         width: 135px;
         height: 45px;
-        margin: 306px 0px 0px 577px;
+        margin: 311px 0px 0px 577px;
     }
 
     .stillBirthLink3 {
         position: absolute;
         width: 140px;
         height: 45px;
-        margin: 375px 0px 0px 577px;
+        margin: 380px 0px 0px 577px;
     }
 
 
