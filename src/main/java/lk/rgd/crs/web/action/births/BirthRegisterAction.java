@@ -119,7 +119,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             return "form" + pageNo;
         }
-
+        if (pageNo < 1) {
+            return "error";
+        }
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
@@ -187,6 +189,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
             return "form" + pageNo;
         }
+        if (pageNo < 1) {
+            return "error";
+        }
 
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         switch (pageNo) {
@@ -221,12 +226,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 service.captureLiveBirthConfirmationChanges(bdf, user);
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         }
+        //}
 
         if (pageNo != 3) {
             session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
         }
         populate(bdf);
         return "form" + pageNo;
+        //}
     }
 
     /**
