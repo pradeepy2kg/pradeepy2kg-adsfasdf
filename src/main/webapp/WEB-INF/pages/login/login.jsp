@@ -14,25 +14,28 @@
         }
     </style>
     <script type="text/javascript">
-    function setFocus() {
-        document.forms[0].userName.focus();
-    }
+        function setFocus() {
+            document.forms[0].userName.focus();
+        }
     </script>
 </head>
 <body onload="setFocus()">
-<img src="images/epr-header.png"/>
+<img src="<s:url value="/images/epr-header.png" />"/>
+
+<div id="login-error" style="text-align:center; margin:150px auto -170px auto;">
+    <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt;"/>
+</div>
 <div id="login-form">
-    <s:actionerror/>
     <div id="login-form-title">user login</div>
     <div id="login-form-body">
         <s:form action="/eprLogin.do" method="POST"
                 name="eprLogin">
-                <s:label value="User Name: "></s:label>
-                <s:textfield name="userName"></s:textfield>
-                <s:label value="Password: "></s:label>
-                <s:password name="password"></s:password>
-                <div><s:submit value="login"></s:submit></div>
-       </s:form>
+            <s:label value="User Name: "></s:label>
+            <s:textfield name="userName"></s:textfield>
+            <s:label value="Password: "></s:label>
+            <s:password name="password"></s:password>
+            <div><s:submit value="login"></s:submit></div>
+        </s:form>
     </div>
 </div>
 <div style="margin-left:auto; margin-right:auto; width:65%;">
