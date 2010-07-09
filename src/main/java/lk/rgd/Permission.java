@@ -34,6 +34,8 @@ public final class Permission {
     public static final int PAGE_BIRTH_CONFIRMATION_PRINT_SELECTED_ENTRY = 44;
     public static final int PAGE_BIRTH_CONFIRMATION_BULK_PRINT =45 ;
     public static final int PAGE_BIRTH_CERTIFICATE_BULK_PRINT = 46;
+    public static final int PAGE_BIRTH_REGISTRATON_HOME = 47;
+    public static final int PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME = 48;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;

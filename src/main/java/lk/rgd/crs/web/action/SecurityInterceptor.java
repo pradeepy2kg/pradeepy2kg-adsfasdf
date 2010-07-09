@@ -55,7 +55,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
         } else {
             logger.debug("User not authorised to access : {} - {}", actionName, found);
             addActionError(invocation, "permission.notavailalbe.message");
-            return Action.SUCCESS;
+            return Action.NONE;
         }
 
         return invocation.invoke();
