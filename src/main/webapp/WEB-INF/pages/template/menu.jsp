@@ -7,85 +7,44 @@
 <link rel="stylesheet" type="text/css" href='<s:url value="/css/menu.css"/>'/>
 
 <div id="xmain-menu">
-    <s:if test="{#session.check=='ok'}">
-        <s:set name="checkPage" value="menu1"/>
-    </s:if>
-    <s:else>
-        <s:set name="checkPage" value="menu"/>
-    </s:else>
-
     <ul class="menu">
         <s:iterator value="#session.allowed_menue" id="menue">
-            <s:if test="%{((value.size > 0)& (key== '1births'))||(#session.viewUsers=='ok')}">
-                <%--<s:if test="%{#request.contextPath.contains('births')}">--%>
-                <li class="expand">
-                <s:a href="/popreg/births/eprBirthRegistrationHome.do">
-                    <s:label value="%{getText('category_birth_registration')}"/></s:a>
-                    <ul class="acitem">
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/births/' + value.action}"><s:property
-                                    value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
-            <s:if test="%{(value.size > 0)& (key == '4management')}">
-                <li><a href="#"><s:label value="%{getText('category_admin_task')}"/> </a>
-                    <ul class="acitem">
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/management/' + value.action}"><s:property
-                                    value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
-            </s:if>
-            <s:if test="%{(value.size > 0)& (key == '3deaths')}">
+            <s:if test="%{#session.context==key}"><li class="expand"></s:if><s:else><li></s:else>
 
-                <li><a href="#"><s:label value="%{getText('category_death_registraion')}"/> </a>
-                    <ul class="acitem">
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/deaths/' + value.action}"><s:property
-                                    value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
+            <s:if test="%{(value.size > 0) & (key=='0births')}">
+                <s:a href="/popreg/births/eprBirthRegistrationHome.do">
+                    <s:label value="%{getText('category_birth_registration')}"/>
+                </s:a>
             </s:if>
+
+            <s:if test="%{(value.size > 0)& (key == '5management')}">
+                <a href="#"><s:label value="%{getText('category_admin_task')}"/></a>
+            </s:if>
+
+            <s:if test="%{(value.size > 0)& (key == '1deaths')}">
+                <li><a href="#"><s:label value="%{getText('category_death_registraion')}"/> </a>
+            </s:if>
+
             <s:if test="%{(value.size > 0)& (key == '2marriages')}">
                 <li><a href="#"><s:label value="%{getText('category_marrage_registraion')}"/> </a>
-                    <ul class="acitem">
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/marriages/' + value.action}"><s:property
-                                    value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == '5reprots')}">
-                <li><a href="#"><s:label value="%{getText('category_reports')}"/> </a>
-                    <ul class="acitem">
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/reports/' + value.action}"><s:property
-                                    value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
+
+            <s:if test="%{(value.size > 0)& (key == '4reprots')}">
+                <a href="#"><s:label value="%{getText('category_reports')}"/></a>
             </s:if>
-            <s:if test="%{(value.size > 0)& (key == '6preferences')}">
-                <li><a href="#"><s:label value="%{getText('category_user_preferance')}"/> </a>
-                    <ul class="acitem">
-                        <s:iterator value="value" id="x">
-                            <li><s:a href="%{'/popreg/preferences/' + value.action}"><s:property
-                                    value="%{getText(value.propertyKey)}"/>
-                            </s:a></li>
-                        </s:iterator>
-                    </ul>
-                </li>
+
+            <s:if test="%{(value.size > 0)& (key == '3preferences')}">
+                <a href="#"><s:label value="%{getText('category_user_preferance')}"/></a>
             </s:if>
+
+            <ul class="acitem">
+                <s:iterator value="value" id="x">
+                    <li><s:a href="%{value.category+value.action}"><s:property
+                            value="%{getText(value.propertyKey)}"/>
+                    </s:a></li>
+                </s:iterator>
+            </ul>
+        </li>
         </s:iterator>
     </ul>
 </div>
