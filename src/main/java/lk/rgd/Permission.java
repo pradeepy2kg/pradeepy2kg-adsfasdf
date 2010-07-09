@@ -13,10 +13,10 @@ public final class Permission {
 
     //permission for pages
     public static final int PAGE_CREATE_USER = 25;
-    public static final int PAGE_BIRTH_REGISTRATON = 26;
+    public static final int PAGE_BIRTH_REGISTRATON_INIT = 26;
     public static final int PAGE_BIRTH_CONFIRMATION_REPORT = 34;
     public static final int PAGE_BIRTH_CONFIRMATION_PRINT = 28;
-    public static final int PAGE_BIRTH_CONFIRMATION = 29;
+    public static final int PAGE_BIRTH_CONFIRMATION_INIT = 29;
     public static final int PAGE_BIRTH_REGISTRATION_APPROVAL = 27;
     public static final int PAGE_USER_PREFERANCE_SELECT = 31;
     public static final int PAGE_VIEW_USERS = 32;
@@ -24,6 +24,8 @@ public final class Permission {
     public static final int PAGE_BIRTH_CONFIRMATION_APPROVAL = 30;
     public static final int PAGE_BIRTH_CERTIFICATE_PRINT = 33;
     public static final int PAGE_STILL_BIRTH_REGISTRATION = 36;
+    public static final int PAGE_BIRTH_REGISTRATON = 37;
+    public static final int PAGE_BIRTH_CONFIRMATION = 38;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
