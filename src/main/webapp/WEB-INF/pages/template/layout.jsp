@@ -57,7 +57,7 @@
             <tiles:insertAttribute name="menu"/>
             <br>
             <%if (((User) session.getAttribute(WebConstants.SESSION_USER_BEAN)).getUserName() != null) { %>
-            <s:form action="eprLogout.do" method="POST" name="eprLogout">
+            <s:form action="/eprLogout.do" method="POST" name="eprLogout">
                 <div class="form-submit">
                     <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
                 </div>
