@@ -18,10 +18,12 @@
         <interceptors>
             <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
             <interceptor name="security" class="lk.rgd.crs.web.action.SecurityInterceptor"/>
+            <interceptor name="cacheControl" class="lk.rgd.crs.web.action.CacheControlInterceptor"/>
             <interceptor-stack name="default">
                 <interceptor-ref name="exception"/>
                 <interceptor-ref name="security"/>
                 <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="cacheControl"/>
             </interceptor-stack>
         </interceptors>
 
