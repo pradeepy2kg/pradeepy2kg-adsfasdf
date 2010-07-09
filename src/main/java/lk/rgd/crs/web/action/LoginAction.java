@@ -210,6 +210,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_PREVIOUS, new Link(null, "/popreg/births/", "eprApprovalPrevious.do"));
         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_DELETE, new Link(null, "/popreg/births/", "eprDeleteApprovalPending.do"));
         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_IGNORING_WARNING, new Link(null, "/popreg/births/", "eprIgnoreWarning.do"));
+         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED, new Link(null, "/popreg/births/", "eprRejectBirthDeclaration.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED, new Link(null, "/popreg/births/", "eprApproveBirthConfirmation.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING, new Link(null, "/popreg/births/", "eprConfirmationIgnoreWarning.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED, new Link(null, "/popreg/births/", "eprRejectBirthConfirmation.do"));
