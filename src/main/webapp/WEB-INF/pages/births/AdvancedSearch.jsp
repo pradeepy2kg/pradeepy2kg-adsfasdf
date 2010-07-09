@@ -11,8 +11,6 @@
 <link rel="stylesheet" type="text/css" href="ext/smoothness/jquery-ui.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="ext/smoothness/ui.theme.css" media="screen"/>
 
-<script type="text/javascript" language="javascript" src="../lib/jquery/jquery.js"></script>
-
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 
 <script type="text/javascript" src="../lib/ajaxsolr/core/Core.js"></script>
@@ -28,22 +26,16 @@
 <script type="text/javascript" src="../lib/jqueryui/jquery-ui.min.js"></script>
 
 <script type="text/javascript" src="../js/solrsearch.theme.js"></script>
-<script type="text/javascript" src="../js/solrsearch.js"></script>
+<script type="text/javascript" src="../js/birthsearch.js"></script>
 
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/jquery/PagerWidget.js"></script>
-<script type="text/javascript" src="../lib/ajaxsolr/widgets/ResultWidget.js"></script>
+<script type="text/javascript" src="../lib/ajaxsolr/widgets/BirthResultWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/CalendarWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TagcloudWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/CurrentSearchWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TextWidget.js"></script>
 
 <div id="wrap">
-    <div id="header">
-        <h1>ePopulation Registry1</h1>
-
-        <h2>Search Persons</h2>
-    </div>
-
     <div id="queryPane">
         <h2>Current Selection</h2>
         <ul id="selection"></ul>
@@ -60,9 +52,15 @@
         </ul>
 
         <h2>Top Gender</h2>
-
-        <div class="tagcloud" id="gender"></div>
-
+        <div class="tagcloud" id="childGender"></div>
+        <div class="clear"></div>
+        <h2>Top District</h2>
+        <div class="tagcloud" id="birthDistrict"></div>
+        <div class="clear"></div>
+        <h2>Top Division</h2>
+        <div class="tagcloud" id="birthDivision"></div>
+        <div class="clear"></div>
+        
         <h2>By Date Of Birth</h2>
         <div id="calendar"></div>
         <div class="clear"></div>
