@@ -64,6 +64,17 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
     }
 
+    public String loadConfirmationPrintList() {
+        setConfirmListFlag(true);
+        intiPrint();
+        return "pageLoad";
+    }
+
+    public String loadBirthCertificatePrintList() {
+        intiPrint();
+        return "pageLoad";
+    }
+
     /**
      * This method responsible for initially loading birth certificates or birth confirmations
      * which are not already printed. If confirmListFlag is set to true loads the birth
@@ -71,8 +82,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
-    public String intiPrint() {
-        populate();
+    private void intiPrint() {
+        populateInitialDistrict();
 
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         if (!dsDivisionList.isEmpty()) {
@@ -97,7 +108,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             logger.debug("Initializing certificate Print list with {} items ", printList.size());
         }
-        return "pageLoad";
     }
 
     /**
@@ -124,7 +134,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -154,7 +164,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = service.getBirthCertificatePrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
         }
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -163,7 +173,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String nextPage() {
-        populate();
         if (logger.isDebugEnabled()) {
             logger.debug("inside nextPage() : birthDivision {} selected isPrinted {}" + " current pageNo " + pageNo);
         }
@@ -181,7 +190,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         }
         printStart += noOfRows;
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -190,7 +199,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String previousPage() {
-        populate();
         if (logger.isDebugEnabled()) {
             logger.debug("inside previousPage() : birthDivision {} selected isPrinted {}" + " current pageNo " + pageNo);
         }
@@ -208,19 +216,23 @@ public class PrintAction extends ActionSupport implements SessionAware {
         }
         printStart -= noOfRows;
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
      * Populate District list and Division list based on user
      */
-    private void populate() {
-        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        setDistrictList(districtDAO.getDistrictNames(language, user));
+    private void populateInitialDistrict() {
+        populate();
         if (!getDistrictList().isEmpty()) {
             setBirthDistrictId(getDistrictList().keySet().iterator().next());
         }
         logger.debug("inside populate() : birthDistrictId {} selected", birthDistrictId);
+    }
+
+    private void populate() {
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        setDistrictList(districtDAO.getDistrictNames(language, user));
     }
 
     public List<BirthDeclaration> getPrintList() {
