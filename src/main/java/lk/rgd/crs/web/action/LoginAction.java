@@ -82,6 +82,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         Map reportLink = new TreeMap();
         Map adminLink = new TreeMap();
         Map preferanceLink = new TreeMap();
+        Map prsLink = new TreeMap();
 
         for (Map.Entry<Integer, Link> e : linkPermission.entrySet()) {
             if (user.isAuthorized(e.getKey())) {
@@ -101,6 +102,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     adminLink.put(key, link);
                 } else if (category.equals("/popreg/preferences/")) {
                     preferanceLink.put(key, link);
+                } else if (category.equals("/popreg/prs/")) {
+                    prsLink.put(key, link);
                 }
                 logger.debug("put link {} as category {}", e.getValue().getAction(), e.getValue().getCategory());
             }
@@ -111,6 +114,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         allowedLinks.put("4reprots", reportLink);
         allowedLinks.put("5management", adminLink);
         allowedLinks.put("3preferences", preferanceLink);
+        allowedLinks.put("6prs", prsLink);
         return allowedLinks;
     }
 
@@ -221,7 +225,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_PREVIOUS, new Link(null, "/popreg/births/", "eprApprovalPrevious.do"));
         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_DELETE, new Link(null, "/popreg/births/", "eprDeleteApprovalPending.do"));
         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_IGNORING_WARNING, new Link(null, "/popreg/births/", "eprIgnoreWarning.do"));
-         linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED, new Link(null, "/popreg/births/", "eprRejectBirthDeclaration.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED, new Link(null, "/popreg/births/", "eprRejectBirthDeclaration.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED, new Link(null, "/popreg/births/", "eprApproveBirthConfirmation.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING, new Link(null, "/popreg/births/", "eprConfirmationIgnoreWarning.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED, new Link(null, "/popreg/births/", "eprRejectBirthConfirmation.do"));
@@ -241,5 +245,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.CHANGE_PASSWORD_PAGE_LOAD, new Link(null, "/popreg/preferences/", "passChangePageLoad.do"));
         linkPermission.put(Permission.PAGE_USER_PREFERENCE_INIT, new Link(null, "/popreg/preferences/", "eprUserPreferencesAction.do"));
 
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("advanceSearch.label", "/popreg/prs/", "eprAdvancedSearch.do"));
     }
 }
