@@ -57,7 +57,9 @@
             <tiles:insertAttribute name="menu"/>
             <br>
             <s:form action="/eprLogout.do" method="POST" name="eprLogout">
+                <div class="form-submit">
                 <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
+                    </div>
             </s:form>
         </div>
         <div id="body-content">
