@@ -22,6 +22,7 @@ import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -785,7 +786,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
                     // TODO issue a user warning
                 }
-            }
+            } catch (NoResultException ignore) {}
 
             // if we couldn't locate the mother, add an unverified record to the PRS
             if (mother == null && parent.getMotherFullName() != null) {
@@ -831,7 +832,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     // TODO issue a user warning
                     logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
                 }
-            }
+            } catch (NoResultException ignore) {}
 
             // if we couldn't locate the father, add an unverified record to the PRS
             if (father == null && parent.getFatherFullName() != null) {
@@ -866,7 +867,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     logger.warn(w.getMessage());
                 }
             } catch (Exception e) {
-                logger.error("Error occurred while auto confirming BDF : {} by the system", bdf.getIdUKey());
+                logger.error("Error occurred while auto confirming BDF : " + bdf.getIdUKey() + " by the system", e);
             }
         }
         logger.info("Stopped executing Birth registration related scheduled tasks..");
