@@ -85,7 +85,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 logger.debug(" DS division found from session {}", dsDivisionId);
                 return;
             } catch (Exception e) {
-                logger.debug(" Problem with DS division in session. ignoring.. {} ", e);
+                logger.debug(" Problem with DS division in session. ignoring.. {} ", e.getMessage());
             }
         }
 
@@ -110,7 +110,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 logger.debug(" BD division found from session {}", birthDivisionId);
                 return;
             } catch (Exception e) {
-                logger.debug(" Problem with BD division in session. ignoring.. {} ", e);
+                logger.debug(" Problem with BD division in session. ignoring.. {} ", e.getMessage());
             }
         }
 
