@@ -35,6 +35,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.userManager = userManager;
     }
 
+    public Locale getLocale() {
+         return (Locale) session.get(WebConstants.SESSION_USER_LANG);
+    }
+
     /**
      * Handles the login process of the EPR system
      * if login is success user is redirected
@@ -44,7 +48,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String login() {
-        logger.debug("detected useName : {} and password : {}", userName, password);
+        logger.debug("detected useName : {} ", userName);
         try {
             // change password and continue
             User user = userManager.authenticateUser(userName, password);
@@ -134,14 +138,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
             return "expired";
         }
         // if status are OK
-        logger.info("users status OK------");
+        logger.debug("users status OK");
         return "success";
 
     }
 
     /**
-     * logout action whch invalidate the session of
-     * the user
+     * logout action which invalidates the session of the user
      *
      * @return String
      */
@@ -152,16 +155,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (session instanceof org.apache.struts2.dispatcher.SessionMap) {
                 try {
                     ((org.apache.struts2.dispatcher.SessionMap) session).invalidate();
+                    logger.debug("Session invalidated");
                 } catch (IllegalStateException e) {
                     logger.error("Incorrect Session", e);
                 }
             } else {
                 session = null;
             }
-
             return "success";
         }
-
         return "error";
     }
 

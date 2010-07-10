@@ -40,7 +40,7 @@ body {
 #body-content-title {
     background: url(../images/title-bg-1.png) repeat-x;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: capitalize;
     line-height: 25px;
     font-size: 11pt;
     padding: 3px 0;
@@ -173,7 +173,8 @@ body {
 .menu a:hover,
     .menu a:focus,
     .menu a:active {
-    color: cornsilk;
+    color: black;
+    border-left:5px solid #9933ff;
 }
 
 .menu ul li {
