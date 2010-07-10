@@ -25,13 +25,13 @@ ul.menu li {
 
 ul.menu li a, ul.menu ul.menu li a {
     background:#99CCFF;
-    color: #fff;
+    color: #000;
     padding: 0.5em;
 }
 
 ul.menu li a:hover, ul.menu ul.menu li a:hover {
     background:#6699ff;
-    border-left:none;
+    border-left:5px solid #000000;
 }
 
 ul.menu li ul li a, ul.menu ul.menu li ul li a {
@@ -41,9 +41,10 @@ ul.menu li ul li a, ul.menu ul.menu li ul li a {
 }
 
 ul.menu li ul li a:hover, ul.menu ul.menu li ul li a:hover {
-    background: #33ccff;
-    border-left:none;
-    padding-left:10px;
+    background: #6699ff;
+    border-left:2px solid #000000;
+    /*padding-left:10px;*/
+    color: black;
 }
 
 ul.menu ul.menu li a:hover {
@@ -58,7 +59,8 @@ ul.menu ul.menu {
 ul.menu a.active, ul.menu ul.menu li a.active, ul.menu a.active:hover, ul.menu ul.menu li a.active:hover {
     /*text-decoration: underline;*/
     font-weight: bold;
-    /*background:#3399ff;*/
+    background: #6666ff;
+    border-left:5px solid #000000;
 }
 
 div.panel {

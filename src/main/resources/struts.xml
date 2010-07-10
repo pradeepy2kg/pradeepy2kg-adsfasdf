@@ -53,7 +53,7 @@
         <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="cacheControl"/>
-            <result name="success">/WEB-INF/pages/login/login.jsp</result>
+            <result type="redirect" name="success">eprLogin.do</result>
             <result type="tiles" name="error">epr.home</result>
         </action>
 

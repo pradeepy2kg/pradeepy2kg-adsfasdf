@@ -201,15 +201,18 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>native2ascii-maven-plugin</artifactId>
+                <version>1.0-alpha-1</version>
+                <configuration>
+                    <dest>target/classes</dest>
+                    <src>src/main/resources</src>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>native2ascii</goal>
                         </goals>
                         <configuration>
-                            <src>src/main/resources</src>
-                            <includes>*.properties</includes>
-                            <dest>target/classes</dest>
+                            <includes>**/*_*.properties</includes>
                             <encoding>UTF8</encoding>
                         </configuration>
                     </execution>
