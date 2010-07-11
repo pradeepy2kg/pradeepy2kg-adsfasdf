@@ -166,6 +166,14 @@
             </analyzer>
         </fieldType>
 
+        <!-- A text field that only splits on whitespace for exact matching of words -->
+        <fieldType name="rgd_str" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
         <!-- A text field that uses WordDelimiterFilter to enable splitting and matching of
         words on case-change, alpha numeric boundaries, and non-alphanumeric chars,
         so that a query of "wifi" or "wi fi" could match a document containing "Wi-Fi".
@@ -368,23 +376,23 @@ any data added to them will be ignored outright.  -->
         <field name="bdfSerialNo" type="slong" indexed="true" stored="true" omitNorms="true"/>
         <field name="dateOfRegistration" type="pdate" indexed="true" stored="true" omitNorms="true"/>
 
-        <field name="birthDistrict" type="string" indexed="true" stored="true" omitNorms="true"/>
-        <field name="birthDivision" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="birthDistrict" type="rgd_str" indexed="true" stored="true" omitNorms="true"/>
+        <field name="birthDivision" type="rgd_str" indexed="true" stored="true" omitNorms="true"/>
 
-        <field name="childFullNameEnglish" type="string" indexed="true" stored="true" omitNorms="true"/>
-        <field name="childFullNameOfficialLang" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="childFullNameEnglish" type="textgen" indexed="true" stored="true"/>
+        <field name="childFullNameOfficialLang" type="textgen" indexed="true" stored="true"/>
         <field name="dateOfBirth" type="tdate" indexed="true" stored="true" omitNorms="true"/>
 
         <field name="birthAtHospital" type="boolean" indexed="true" stored="true" omitNorms="true"/>
-        <field name="childGender" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="childGender" type="rgd_str" indexed="true" stored="true" omitNorms="true"/>
         <field name="pin" type="string" indexed="true" stored="true" omitNorms="true"/>
-        <field name="placeOfBirth" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="placeOfBirth" type="textgen" indexed="true" stored="true" omitNorms="true"/>
 
-        <dynamicField name="mother*" type="string" indexed="true" stored="true"/>
-        <dynamicField name="father*" type="string" indexed="true" stored="true"/>
-        <dynamicField name="informant*" type="string" indexed="true" stored="true"/>
-        <dynamicField name="grand*" type="string" indexed="true" stored="true"/>
-        <dynamicField name="great*" type="string" indexed="true" stored="true"/>
+        <dynamicField name="mother*" type="textgen" indexed="true" stored="true"/>
+        <dynamicField name="father*" type="textgen" indexed="true" stored="true"/>
+        <dynamicField name="informant*" type="textgen" indexed="true" stored="true"/>
+        <dynamicField name="grand*" type="textgen" indexed="true" stored="true"/>
+        <dynamicField name="great*" type="textgen" indexed="true" stored="true"/>
 
 
         <!-- Valid attributes for fields:

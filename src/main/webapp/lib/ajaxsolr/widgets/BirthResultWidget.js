@@ -30,13 +30,13 @@
             $(this.target).empty();
 
             var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead>' +
-            '<tr><th>PIN</th><th>DOB</th><th>Gender</th><th>Name in English</th><th>Name in Official Language</th>' +
+            '<tr><th>IDUKey</th><th>PIN</th><th>DOB</th><th>Gender</th><th>Name in English</th><th>Name in Official Language</th>' +
             '<th>Division</th><th>District</th></tr></thead>';
 
             for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
                 var doc = this.manager.response.response.docs[i];
 
-                table += '<tr><td>' + doc.pin + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) +
+                table += '<tr><td><a href="eprBirthRegistrationInit.do?bdId=' + doc.idUKey + '">' + doc.idUKey + '</a></td><td>' + doc.pin + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) +
                 '</td><td>' + doc.childGender + '</td><td>' + doc.childFullNameEnglish +
                 '</td><td>' + doc.childFullNameOfficialLang + '</td><td>' + doc.birthDivision +
                 '</td><td>' + doc.birthDistrict + '</td></tr>';

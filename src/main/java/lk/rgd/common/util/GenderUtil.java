@@ -13,7 +13,7 @@ public class GenderUtil {
 
     public static String getGenderString(int code) {
         switch (code) {
-            case 0: return "පිරිම / #Male# / Male";
+            case 0: return "පිරිමි / #Male# / Male";
             case 1: return "ගැහැණු / #Female# / Female";
             case 2: return "නොදත් / #Unknown# / Unknown";
         }
