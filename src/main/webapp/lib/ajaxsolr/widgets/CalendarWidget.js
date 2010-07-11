@@ -6,7 +6,7 @@ AjaxSolr.CalendarWidget = AjaxSolr.AbstractFacetWidget.extend({
 
     $(this.target).datepicker('destroy').datepicker({
       dateFormat: 'yy-mm-dd',
-      defaultDate: new Date(1987, 2, 1),
+      defaultDate: new Date(), //1987, 2, 1
       maxDate: $.datepicker.parseDate('yy-mm-dd', this.manager.store.get('facet.date.end').val().substr(2, 10)),
       minDate: $.datepicker.parseDate('yy-mm-dd', this.manager.store.get('facet.date.start').val().substr(2, 10)),
       nextText: '&gt;',

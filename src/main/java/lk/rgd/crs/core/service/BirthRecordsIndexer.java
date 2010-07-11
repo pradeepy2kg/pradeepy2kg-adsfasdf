@@ -53,13 +53,13 @@ public class BirthRecordsIndexer {
                 d.addField("originalBCDateOfIssue", regInfo.getOriginalBCDateOfIssue());
                 //d.addField("originalBCPlaceOfIssue", regInfo.getOriginalBCPlaceOfIssue());
                 d.addField("birthDistrict",
-                    regInfo.getBirthDistrict().getEnDistrictName() + " " +
-                        regInfo.getBirthDistrict().getSiDistrictName() + " " +
-                        regInfo.getBirthDistrict().getTaDistrictName() + " ");
+                    regInfo.getBirthDistrict().getEnDistrictName() + " / " +
+                        regInfo.getBirthDistrict().getSiDistrictName() + " / " +
+                        regInfo.getBirthDistrict().getTaDistrictName() + " / ");
                 d.addField("birthDivision",
-                    regInfo.getBirthDivision().getEnDivisionName() + " " +
-                        regInfo.getBirthDivision().getSiDivisionName() + " " +
-                        regInfo.getBirthDivision().getTaDivisionName() + " ");
+                    regInfo.getBirthDivision().getEnDivisionName() + " / " +
+                        regInfo.getBirthDivision().getSiDivisionName() + " / " +
+                        regInfo.getBirthDivision().getTaDivisionName() + " / ");
 
                 // add child details
                 ChildInfo child = bdf.getChild();
@@ -112,7 +112,9 @@ public class BirthRecordsIndexer {
                 count++;
             }
 
+            solrIndexManager.getServer().optimize();
             solrIndexManager.getServer().commit();
+            
             logger.info("Successfully indexed : " + count + " documents..");
 
         // TODO we do not print the stack trace for now..

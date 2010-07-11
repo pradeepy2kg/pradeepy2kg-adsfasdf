@@ -20,8 +20,8 @@ AjaxSolr.theme.prototype.snippet = function (doc) {
   return output;
 };
 
-AjaxSolr.theme.prototype.tag = function (value, weight, handler) {
-  return $('<a href="#" class="tagcloud_item"/>').text(value).addClass('tagcloud_size_' + weight).click(handler);
+AjaxSolr.theme.prototype.tag = function (value, weight, count, handler) {
+  return $('<a href="#" class="tagcloud_item"/>').text(value).append(' (' + count + ') ').addClass('tagcloud_size_' + weight).click(handler);
 };
 
 AjaxSolr.theme.prototype.facet_link = function (value, handler) {

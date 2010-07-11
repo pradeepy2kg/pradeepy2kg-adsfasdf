@@ -72,7 +72,7 @@ a:hover {
   display: inline;
 }
 #selection {
-  padding: 10px 15px 0;
+  /*padding: 10px 15px 0;*/
 }
 #selection li {
   list-style-type: none;

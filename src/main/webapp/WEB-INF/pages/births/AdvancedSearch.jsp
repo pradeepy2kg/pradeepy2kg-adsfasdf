@@ -30,40 +30,88 @@
 
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/jquery/PagerWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/BirthResultWidget.js"></script>
-<script type="text/javascript" src="../lib/ajaxsolr/widgets/CalendarWidget.js"></script>
+<script type="text/javascript" src="../lib/ajaxsolr/widgets/DateRangeWidget.js"></script>
+<script type="text/javascript" src="../lib/ajaxsolr/widgets/AdvancedSearchWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TagcloudWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/CurrentSearchWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TextWidget.js"></script>
 
+<script type="text/javascript" src="../lib/daterangepicker/daterangepicker.jQuery.js"></script>
+<link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css" />
+
+<script>
+  $(document).ready(function() {
+    $("#tabs").tabs();
+    $('#queryDOBRange').daterangepicker({arrows:true});
+  });
+</script>
+
+
 <div id="wrap">
+
     <div id="queryPane">
-        <h2>Current Selection</h2>
-        <ul id="selection"></ul>
 
-        <h2>Search</h2>
-        <!--<span id="search_help">(press ESC to close suggestions)</span>-->
-        <ul id="searchEnglish">
-            <span>Search full name in English</span>
-            <input type="text" id="queryEnglish" name="queryEnglish"/>
-        </ul>
-        <ul id="searchOfficial">
-            <span>Search full name in Official Language</span>
-            <input type="text" id="queryOfficial" name="queryOfficial"/>
-        </ul>
+        <div id="tabs">
+            <ul>
+                <li><a href="#fragment-1"><span>Basic Search</span></a></li>
+                <li><a href="#fragment-2"><span>Name</span></a></li>
+                <li><a href="#fragment-3"><span>Gender</span></a></li>
+                <li><a href="#fragment-4"><span>District</span></a></li>
+                <li><a href="#fragment-5"><span>Division</span></a></li>
+                <li><a href="#fragment-6"><span>Date</span></a></li>
+                <li><a href="#fragment-7"><span>Advanced Search</span></a></li>
+            </ul>
+            <div id="fragment-1">
+                <div id="searchPIN">
+                    <span>Search PIN Number</span>
+                    <input type="text" id="queryPIN" name="queryPIN"/>
+                </div>
+                <div id="searchMothersNICorPIN">
+                    <span>Search by Mothers NIC or PIN</span>
+                    <input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN"/>
+                </div>
+            </div>
+            <div id="fragment-2">
+                <div id="searchEnglish">
+                    <span>Search full name in English</span>
+                    <input type="text" id="queryEnglish" name="queryEnglish"/>
+                </div>
+                <div id="searchOfficial">
+                    <span>Search full name in Official Language</span>
+                    <input type="text" id="queryOfficial" name="queryOfficial"/>
+                </div>
+            </div>
+            <div id="fragment-3">
+                <span>Gender</span>
+                <div class="tagcloud" id="childGender"></div>
+                <div class="clear"></div>
+            </div>
+            <div id="fragment-4">
+                <span>Registration District</span>
+                <div class="tagcloud" id="birthDistrict"></div>
+                <div class="clear"></div>
+            </div>
+            <div id="fragment-5">
+                <span>Registration  Division</span>
+                <div class="tagcloud" id="birthDivision"></div>
+                <div class="clear"></div>
+            </div>
+            <div id="fragment-6">
+                <div id="searchDOBRange">
+                    <span>Choose Date of Birth Range</span>
+                    <input type="text" id="queryDOBRange" name="queryDOBRange"/>
+                </div>
+            </div>
+            <div id="fragment-7">
+                <div id="searchAdvanced">
+                    <span>Advanced Search</span>
+                    <input type="text" id="queryAdvanced" name="queryAdvanced" size="117"/>
+                </div>
+            </div>
+        </div>
 
-        <h2>Top Gender</h2>
-        <div class="tagcloud" id="childGender"></div>
-        <div class="clear"></div>
-        <h2>Top District</h2>
-        <div class="tagcloud" id="birthDistrict"></div>
-        <div class="clear"></div>
-        <h2>Top Division</h2>
-        <div class="tagcloud" id="birthDivision"></div>
-        <div class="clear"></div>
-        
-        <h2>By Date Of Birth</h2>
-        <div id="calendar"></div>
-        <div class="clear"></div>
+    <ul id="selection"></ul>
+
     </div>
 
     <div id="result">

@@ -20,7 +20,7 @@ var Manager;
             nextLabel: '&gt;',
             innerWindow: 1,
             renderHeader: function (perPage, offset, total) {
-                $('#pager-header').html($('<span/>').text('displaying ' + Math.min(total, offset + 1) + ' to ' + Math.min(total, offset + perPage) + ' of ' + total));
+                $('#pager-header').html($('<span/>').text('Selected record bundle shown below contains ' + Math.min(total, offset + 1) + ' to ' + Math.min(total, offset + perPage) + ' of ' + total + ' records'));
             }
         }));
 
