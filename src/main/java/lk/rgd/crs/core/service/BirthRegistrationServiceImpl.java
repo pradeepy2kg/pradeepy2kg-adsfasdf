@@ -247,10 +247,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setConfirmationPrintDate(new Date());
         existing.getRegister().setConfirmationPrintUser(user);
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CONFIRMATION_DAYS_PRINTED));
-        existing.getRegister().setLastDayForConfirmation(cal.getTime());
-        logger.debug("Set last day for confirmation as : {} for record : {}", cal.getTime(), existing.getIdUKey());
         existing.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_PRINTED);
         birthDeclarationDAO.updateBirthDeclaration(existing);
         logger.debug("Marked confirmation printed for live birth declaration record : {}", bdf.getIdUKey());
