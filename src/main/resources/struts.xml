@@ -222,7 +222,7 @@
         <action name="eprApproveBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="approve">
             <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
-            <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
+            <result type="tiles" name="approvalRejected">epr.confirmationApprovalWorning</result>
         </action>
 
         <action name="eprApproveConfirmationBulk" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"

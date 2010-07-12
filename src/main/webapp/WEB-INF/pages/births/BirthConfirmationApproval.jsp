@@ -107,7 +107,7 @@
                                     <s:param name="recordCounter" value="#request.recordCounter"/>
                                 </s:url><s:a href="%{approveSelected}"
                                              title="%{getText('approveTooltip.label')}">
-                                <img src="<s:url value='/images/approve.png'/>" width="25" height="25"
+                                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                                      border="none"/></s:a>
                             </s:if> </s:if>
                     </td>

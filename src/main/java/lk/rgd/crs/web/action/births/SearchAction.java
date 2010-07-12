@@ -42,7 +42,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int birthDivisionId;
 
     private long serialNo;
-    private long idUKey;
+    private Long idUKey;
     private String childName;
     private String status;
 

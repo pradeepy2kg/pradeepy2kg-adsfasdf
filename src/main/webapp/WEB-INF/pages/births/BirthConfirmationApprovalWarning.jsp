@@ -8,18 +8,17 @@
                 <tr>
                     <td><s:property value="message"/></td>
                 </tr>
-            </s:iterator>                                     
+            </s:iterator>
         </table>
     </div>
     <div id="bdaw-action">
         <s:form action="eprConfirmationIgnoreWarning" name="birthConfirmationApprovalWarningForm">
             <fieldset>
                 <legend><s:label
-                             value="%{getText('approvalIgnorWarning.label')}"/></legend>
-                <s:hidden value="%{#request.bdId}" name="bdId"/>
+                        value="%{getText('approvalIgnorWarning.label')}"/></legend>
                 <table align="center" border="0">
                     <tr>
-                        <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
+                        <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWarning"/></td>
                         <td><s:checkbox name="ignoreWarning"/></td>
                     </tr>
                     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
@@ -28,7 +27,8 @@
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                    <s:hidden name="confirmationApprovalFlag" value="%{#request.confirmationApprovalFlag}"/>
+                    <s:hidden value="%{#request.bdId}" name="bdId"/>
+                    <s:hidden name="confirmationApprovalFlag" value="true"/>
                         <%--<tr>
                             <td><s:label value="%{getText('comment.label')}" name="comment"/></td>
                             <td><s:textarea name="comments"/> </td>
