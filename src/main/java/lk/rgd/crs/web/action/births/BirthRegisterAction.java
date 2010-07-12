@@ -195,8 +195,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         switch (pageNo) {
             case 1:
-                bdf.getRegister().setBdfSerialNo(register.getBdfSerialNo());
-                bdf.getRegister().setDateOfRegistration(register.getDateOfRegistration());
                 bdf.getRegister().setBirthDivision(register.getBirthDivision());
 
                 bdf.getChild().setDateOfBirth(child.getDateOfBirth());

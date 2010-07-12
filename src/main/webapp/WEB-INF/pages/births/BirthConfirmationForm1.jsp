@@ -27,7 +27,7 @@
                     <tr>
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
-                        <td><s:textfield name="bdId" id="SerialNo" value=""/></td>
+                        <td><s:textfield name="bdId" id="SerialNo" value="%{#request.bdId}"/></td>
                     </tr>
                 </table>
                 <table style=" width:300px">
