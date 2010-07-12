@@ -156,6 +156,11 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         return "DSDivListBDFConfirmation";
     }
 
+    public String loadDSDivListUserPreferences() {
+        dsDivList();
+        return "DSDivListUserPreference";
+    }
+
     public String loadFatherInfo() {
         String pin = parent.getFatherNICorPIN();
         if (!"".equals(pin)) {

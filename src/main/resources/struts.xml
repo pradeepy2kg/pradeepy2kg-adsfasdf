@@ -74,6 +74,7 @@
             <result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
             <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp
             </result>
+            <result name="DSDivListUserPreference">/WEB-INF/pages/template/DSDivBoxUserPreference.jsp</result>
         </action>
     </package>
 
