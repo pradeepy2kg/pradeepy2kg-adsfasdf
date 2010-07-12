@@ -190,7 +190,7 @@
     <tr>
         <td></td>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirth" cssClass="disable" disabled="true" size="30"/></td>
+        <td colspan="6"><s:textarea name="child.placeOfBirth" cssClass="disable" disabled="true" cols="38"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
