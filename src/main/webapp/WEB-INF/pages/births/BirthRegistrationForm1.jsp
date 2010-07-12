@@ -120,9 +120,10 @@
         <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
             / தமிழ்) <br>Name in
             any of the official languages (Sinhala / Tamil)</label></td>
-        <td colspan="7"><s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:98.2%;"/></td>
+        <td colspan="7"><s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
+                                    cssStyle="width:98.2%;"/></td>
     </tr>
-    
+
     <tr>
         <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
         </label></td>
@@ -130,16 +131,19 @@
             <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;"/></td>
     </tr>
     <tr>
-        <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for
+        <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred
+            Language for
             Birth Certificate </label></td>
         <td colspan="6"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
-                                  name="register.preferredLanguage" cssStyle="width:190px; margin-left:5px;"></s:select></td>
+                                  name="register.preferredLanguage"
+                                  cssStyle="width:190px; margin-left:5px;"></s:select></td>
     </tr>
     <tr>
         <td class="font-9"><label>(6)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
         <td colspan="3"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"  cssStyle="width:190px; margin-left:5px;"/></td>
+                name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                cssStyle="width:190px; margin-left:5px;"/></td>
         <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight" cssStyle="width:95%;"/></td>
     </tr>
@@ -188,7 +192,7 @@
         var submit = new Date(submitDatePicker);
 
         //compare two days
-        if (birtdate.getTime() > submit.getTime()){
+        if (birtdate.getTime() > submit.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('error6').value;
             flag = true;
         }
@@ -199,10 +203,8 @@
         if (numDays >= 90) {
             if (numDays >= 365) {
                 errormsg = errormsg + "\n" + document.getElementById('error8').value;
-                flag=true;
             } else {
                 errormsg = errormsg + "\n" + document.getElementById('error7').value;
-                flag=true;
             }
             lateOrbelate = true;
         }
@@ -227,7 +229,7 @@
         }
 
         if (!check.checked) {
-            
+
             element = document.getElementById('childFullNameOfficialLang');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('error2').value;
