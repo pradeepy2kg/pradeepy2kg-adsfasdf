@@ -23,8 +23,8 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private String newPassword;
     private String retypeNewPassword;
     private String prefLanguage;
-    private int prefDistrictId;
-    private int prefDSDivisionId;
+    private int birthDistrictId;
+    private int dsDivisionId;
 
     private Map session;
 
@@ -54,16 +54,16 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
         districtList = districtDAO.getDistrictNames(language, user);
         if (user.getPrefBDDistrict() != null) {
-            prefDistrictId = user.getPrefBDDistrict().getDistrictUKey();
+            birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
         } else {
-            prefDistrictId = districtList.keySet().iterator().next();
+            birthDistrictId = districtList.keySet().iterator().next();
         }
 
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(prefDistrictId, language, user);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         if (user.getPrefBDDSDivision() != null) {
-            prefDSDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
+            dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
         } else {
-            prefDSDivisionId = dsDivisionList.keySet().iterator().next();
+            dsDivisionId = dsDivisionList.keySet().iterator().next();
         }
 
         return "pageload";
@@ -76,13 +76,13 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         session.put(WebConstants.SESSION_USER_LANG, newLocale);
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setPrefLanguage(prefLanguage);
-        user.setPrefBDDistrict(districtDAO.getDistrict(prefDistrictId));
-        user.setPrefBDDSDivision(dsDivisionDAO.getDSDivisionByPK(prefDSDivisionId));
+        user.setPrefBDDistrict(districtDAO.getDistrict(birthDistrictId));
+        user.setPrefBDDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
         session.put(WebConstants.SESSION_USER_BEAN, user);
         userManager.updateUser(user, user);
 
         logger.debug("inside selectUserPreference() : {} passed.", prefLanguage);
-        logger.debug("inside selectUserPreference() District : {} and DS division {} passed.", prefDistrictId, prefDSDivisionId);
+        logger.debug("inside selectUserPreference() District : {} and DS division {} passed.", birthDistrictId, dsDivisionId);
 
         return "success";
     }
@@ -130,20 +130,20 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         this.prefLanguage = prefLanguage;
     }
 
-    public int getPrefDistrictId() {
-        return prefDistrictId;
+    public int getBirthDistrictId() {
+        return birthDistrictId;
     }
 
-    public void setPrefDistrictId(int prefDistrictId) {
-        this.prefDistrictId = prefDistrictId;
+    public void setBirthDistrictId(int birthDistrictId) {
+        this.birthDistrictId = birthDistrictId;
     }
 
-    public int getPrefDSDivisionId() {
-        return prefDSDivisionId;
+    public int getDsDivisionId() {
+        return dsDivisionId;
     }
 
-    public void setPrefDSDivisionId(int prefDSDivisionId) {
-        this.prefDSDivisionId = prefDSDivisionId;
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
     }
 
     public String getNewPassword() {

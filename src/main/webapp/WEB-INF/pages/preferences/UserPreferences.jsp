@@ -1,8 +1,17 @@
 <%@ page import="lk.rgd.crs.web.action.UserPreferencesAction" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+ <script>
+        function view_DSDivs() {
+            dojo.event.topic.publish("view_DSDivs");
+        }
 
+        function view_BDDivs() {
+            dojo.event.topic.publish("view_BDDivs");
+        }
+    </script>
+    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListUserPreferences"/>
 
 <div id="user-preference-outer">
     <s:form action="eprUserPreferencesAction" name="user_preference_form" id="user_preference" method="POST">
@@ -23,7 +32,8 @@
                         <label>දිස්ත්‍රික්කය / மாவட்டம் / District</label>
                     </div>
                 </td>
-                <td><s:select name="prefDistrictId" list="districtList" value="prefDistrictId"/>
+                <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+                                  onchange="javascript:view_DSDivs();return false;"/>
                 </td>
             </tr>
             <tr>
@@ -32,7 +42,8 @@
                         <label>D.S.කොට්ඨාශය / பிரிவு / D.S. Division</label>
                     </div>
                 </td>
-                <td><s:select name="prefDSDivisionId" list="dsDivisionList" value="prefDSDivisionId"/>
+                <td><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                                            listenTopics="view_DSDivs" formId="user_preference"></sx:div>
                 </td>
             </tr>
             <tr>
