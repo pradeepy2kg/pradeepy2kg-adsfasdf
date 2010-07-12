@@ -15,7 +15,7 @@
 
 <div id="user-preference-outer">
     <s:form action="eprUserPreferencesAction" name="user_preference_form" id="user_preference" method="POST">
-        <table width="100%" cellpadding="0" cellspacing="5">
+        <table width="100%" cellpadding="0" cellspacing="5" class="user-preference-table">
             <tr>
                 <td>
                     <div id="set-language" class="font-10">
@@ -33,7 +33,7 @@
                     </div>
                 </td>
                 <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                  onchange="javascript:view_DSDivs();return false;"/>
+                                  onchange="javascript:view_DSDivs();return false;" />
                 </td>
             </tr>
             <tr>
@@ -42,7 +42,7 @@
                         <label>D.S.කොට්ඨාශය / பிரிவு / D.S. Division</label>
                     </div>
                 </td>
-                <td><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                <td width="250px"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
                                             listenTopics="view_DSDivs" formId="user_preference"></sx:div>
                 </td>
             </tr>
