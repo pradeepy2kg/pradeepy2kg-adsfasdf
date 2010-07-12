@@ -8,10 +8,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Locale;
-import java.util.List;
+import java.util.*;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
@@ -253,12 +250,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
-            Calendar cal1 = Calendar.getInstance();
+            Calendar cal1 = new GregorianCalendar();
             cal1.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CONFIRMATION_DAYS_PRINTED));
-            Calendar cal2 = Calendar.getInstance();
+            Calendar cal2 =  new GregorianCalendar();
             cal2.setTime(bdf.getRegister().getDateOfRegistration());
-            cal1.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_AUTO_CONFIRMATION_DAYS));
-            bdf.getRegister().setLastDayForConfirmation(cal1.before(cal2) ? cal1.getTime() : cal2.getTime());
+            cal2.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_AUTO_CONFIRMATION_DAYS));
+            Calendar cal = cal1.getTime().before(cal2.getTime()) ? cal1 : cal2;
+            bdf.getRegister().setLastDayForConfirmation(cal.getTime());
+            logger.debug("Set last day for confirmation as : {} for record : {}", cal.getTime(), bdf.getIdUKey());
 
             bdf = service.loadValuesForPrint(bdf, user);
             bdId = bdf.getIdUKey();
