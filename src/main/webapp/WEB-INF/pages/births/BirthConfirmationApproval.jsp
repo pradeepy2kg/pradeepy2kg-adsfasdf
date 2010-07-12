@@ -1,6 +1,29 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<style type="text/css" title="currentStyle">
+    @import "../lib/datatables/media/css/demo_page.css";
+    @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+</style>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#confirm-list-table').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
+    });
+</script>
+
 <div id="birth-confirm-approval">
     <script>
         function view_DSDivs() {
@@ -56,10 +79,12 @@
             </table>
         </div>
     </s:if>
+    <fieldset style="border:none">
     <div id="birth-confirm-approval-body">
         <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="post">
             <s:if test="approvalPendingList.size>0">
                 <table id="confirm-list-table" width="100%" cellpadding="0" cellspacing="0">
+                <thead>
                 <tr class="table-title">
                     <th></th>
                     <th width="30px"></th>
@@ -70,7 +95,9 @@
                     <th></th>
                     <th></th>
                 </tr>
+                </thead>
             </s:if>
+            <tbody>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
                 <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
                     <td class="table-row-index"><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
@@ -136,7 +163,7 @@
             counter is greater than one--%>
                 <s:set name="counter" scope="request" value="#approvalStatus.count"/>
             </s:iterator>
-            <tr></tr>
+            </tbody>
             </table>
 
             <div class="form-submit">
@@ -189,5 +216,6 @@
             </div>
         </s:form>
     </div>
+    </fieldset>
 </div>
 <%-- Styling Completed --%>
