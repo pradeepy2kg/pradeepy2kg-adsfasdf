@@ -214,6 +214,9 @@ public class DatabaseInitializer implements ApplicationContextAware {
             // TODO add any DEO specific permissions
             bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
             bs.set(Permission.PRS_ADD_PERSON);
+            bs.set(Permission.CHANGE_PASSWORD);
+            bs.set(Permission.BACK_CHANGE_PASSWORD);
+            bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
 
@@ -309,9 +312,14 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs = new BitSet();
             //        bs.or(rgRole.getPermBitSet());
             bs.set(Permission.PAGE_CREATE_USER);
+            bs.set(Permission.PAGE_USER_CREATION);
             bs.set(Permission.USER_MANAGEMENT);
             bs.set(Permission.PAGE_VIEW_USERS);
+            bs.set(Permission.VIEW_SELECTED_USERS);
             bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
+            bs.set(Permission.CHANGE_PASSWORD);
+            bs.set(Permission.BACK_CHANGE_PASSWORD);
+            bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);
