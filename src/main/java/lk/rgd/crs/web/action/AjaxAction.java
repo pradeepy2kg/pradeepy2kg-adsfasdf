@@ -73,7 +73,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     private void populateDSDivList() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        this.getDSDivisionNames(language);
 
         Object o = session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         if (o != null) {
@@ -93,6 +93,15 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
             logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        }
+    }
+
+    private void getDSDivisionNames(String language) {
+        this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        logger.debug("DS Divisions are selected for the birth district: {} ", birthDistrictId);
+        if (!dsDivisionList.isEmpty()) {
+            dsDivisionId = dsDivisionList.keySet().iterator().next();
+            logger.debug("And set DS division: {} as the first element of the list.", dsDivisionId);
         }
     }
 
@@ -131,11 +140,6 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         return "DSDivList";
     }
 
-    public String loadDSDivListOnly() {
-        dsDivList();
-        return "DSDivListOnly";
-    }
-
     public String loadDSDivListSearch() {
         dsDivList();
         return "DSDivListSearch";
@@ -151,7 +155,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         return "BirthCertificatePrint";
     }
 
-    public String loadDSDivListBDFConfirmationPrint(){
+    public String loadDSDivListBDFConfirmationPrint() {
         dsDivList();
         return "DSDivListBDFConfirmationPrint";
     }
@@ -162,7 +166,9 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     }
 
     public String loadDSDivListUserPreferences() {
-        dsDivList();
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        this.getDSDivisionNames(language);
+        logger.debug("DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
         return "DSDivListUserPreference";
     }
 
