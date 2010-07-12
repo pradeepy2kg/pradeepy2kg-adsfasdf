@@ -579,10 +579,10 @@
             <td rowspan="8"></td>
         </tr>
         <tr>
-            <td colspan="2">&lt;Informant name&gt;</td>
+            <td colspan="2"><s:textfield name="informant.informantName" cssClass="disable" disabled="true"/></td>
         </tr>
         <tr>
-            <td colspan="2">&lt;Informant Address&gt;</td>
+            <td colspan="2"><s:textfield name="informant.informantAddress" cssClass="disable" disabled="true"/></td>
         </tr>
         <tr>
             <td colspan="2"><p></p></td>
@@ -598,8 +598,8 @@
         </tr>
         <tr>
             <td>Printed On</td>
-            <td style="text-align:right;margin-left:auto;margin-right:0;">&lt;Date
-                printed&gt;</td>
+            <td style="text-align:right;margin-left:auto;margin-right:0;"><%= new java.util.Date() %>
+</td>
         </tr>
         </tbody>
     </table>
