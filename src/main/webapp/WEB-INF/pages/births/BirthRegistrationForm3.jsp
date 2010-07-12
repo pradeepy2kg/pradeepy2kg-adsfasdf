@@ -99,10 +99,6 @@
             <td colspan="3"><s:textarea name="grandFather.grandFatherFullName" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
-            <td><label>පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය (තිබේ නම්)
-                <br>தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
-                <br>PIN / NIC Number (if available)</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthYear" </td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthYear" /></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>

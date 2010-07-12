@@ -178,7 +178,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public String loadMotherDSDivList(){
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        this.getDSDivisionNames(language, motherDistrictId);
+        getDSDivisionNames(language, motherDistrictId);
         if (!dsDivisionList.isEmpty())
             motherDSDivisionId = dsDivisionList.keySet().iterator().next();
         logger.debug("Mother DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
@@ -193,6 +193,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 Person father = registryService.findPersonByPINorNIC(pin, user);
                 parent.setFatherFullName(father.getFullNameInOfficialLanguage());
                 parent.setFatherDOB(father.getDateOfBirth());
+                parent.setFatherPlaceOfBirth(father.getPlaceOfBirth());
                 logger.debug("Father info set from Ajax : {} {}", pin, parent.getFatherFullName());
                 return "FatherInfo";
             } catch (Exception e) {
@@ -203,9 +204,14 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         // NIC/pin either not entered (ajax preload at page load) or lookup failed. trying to salvage users existing data
         try {
             BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-            ParentInfo parent = bdf.getParent();
+            ParentInfo parentSession = bdf.getParent();
+            if (parentSession != null) {
+                parent= parentSession;
+                parent.setFatherNICorPIN(pin);
+            }
         } catch (Exception e) {
-            
+            // ignore
+            logger.debug("No session info for Father");
         }
 
         return "FatherInfo";
@@ -219,21 +225,30 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 Person mother = registryService.findPersonByPINorNIC(pin, user);
                 parent.setMotherFullName(mother.getFullNameInOfficialLanguage());
                 parent.setMotherDOB(mother.getDateOfBirth());
-                Set<Address> set = mother.getAddresses();
-                if ((set != null) && !set.isEmpty()) {
-                    Address address = mother.getAddresses().iterator().next();
-                    StringBuffer buffer = new StringBuffer();
-                    buffer.append(address.getLine1());
-                    buffer.append(address.getLine2());
-                    buffer.append(address.getCity());
-                    buffer.append(address.getPostcode());
-                    parent.setMotherAddress(buffer.toString());
+                Address address = mother.getLastAddress();
+                if (address != null) {
+                    parent.setMotherAddress(address.toString());
                 }    
                 logger.debug("Mother info set from Ajax : {} {}", pin, parent.getMotherFullName());
+                return "MotherInfo";
             } catch (Exception e) {
                 logger.debug("No match from Ajax for Mother PIN/NIC : {}", pin);
             }
         }
+
+        // NIC/pin either not entered (ajax preload at page load) or lookup failed. trying to salvage users existing data
+        try {
+            BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            ParentInfo parentSession = bdf.getParent();
+            if (parentSession != null) {
+                parent= parentSession;
+                parent.setMotherNICorPIN(pin);
+            }
+        } catch (Exception e) {
+            // ignore
+            logger.debug("No session info for Mother");
+        }
+
         return "MotherInfo";
     }
 
@@ -244,11 +259,30 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             try {
                 Person notifyer = registryService.findPersonByPINorNIC(pin, user);
                 notifyingAuthority.setNotifyingAuthorityName(notifyer.getFullNameInOfficialLanguage());
+                Address address =notifyer.getLastAddress();
+                if (address != null) {
+                    notifyingAuthority.setNotifyingAuthorityAddress(address.toString());
+                }    
                 logger.debug("Notifyer info set from Ajax : {} {}", pin, notifyer.getFullNameInOfficialLanguage());
+                return "NotifyerInfo";
             } catch (Exception e) {
                 logger.debug("No match from Ajax for Notifyer PIN/NIC : {}", pin);
             }
         }
+
+        // NIC/pin either not entered (ajax preload at page load) or lookup failed. trying to salvage users existing data
+        try {
+            BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            NotifyingAuthorityInfo notifyerSession = bdf.getNotifyingAuthority();
+            if (notifyerSession != null) {
+                notifyingAuthority = notifyerSession;
+                notifyingAuthority.setNotifyingAuthorityPIN(pin);
+            }
+        } catch (Exception e) {
+            // ignore
+            logger.debug("No session info for Notifyer");
+        }
+
         return "NotifyerInfo";
     }
 
