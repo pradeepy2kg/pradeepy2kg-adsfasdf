@@ -386,7 +386,6 @@
         <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePassword">
             <result name="success" type="tiles">epr.home</result>
             <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
-            <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 
         <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
