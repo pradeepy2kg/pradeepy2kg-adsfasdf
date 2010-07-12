@@ -56,20 +56,26 @@
     <col>
     <tbody>
     <tr>
-        <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
+        <td width="175px" height="80px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
         </td>
-        <td><s:label name=""
+        <td width="300px"><s:label name=""
                      value="%{#request.register.birthDivision.dsDivision.district.siDistrictName}"/></td>
-        <td>කොට්ඨාශය<br>பிரிவு <br>D.S. Division
+        <td width="200px">ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+<br> பிரிவு
+<br> Divisional Secretariat
         </td>
         <td><s:label name="" value="%{#request.register.birthDivision.dsDivision.siDivisionName}"/></td>
     </tr>
     <tr>
-        <td>කොට්ඨාශය<br>பிரிவு <br>Division
+        <td width="200px" height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+<br>பிரிவு
+<br>Registration Division
         </td>
-        <td><s:label name="" value="%{#request.register.birthDivision.siDivisionName}"/></td>
+        <td ><s:label name="" value="%{#request.register.birthDivision.siDivisionName}"/></td>
         <s:if test="liveBirth">
-            <td>සහතිකයේ වෙනස්කම් <br>நிறைவேற்றிய மாற்றங்கள் <br>Changes performed
+            <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
+<br> நிறைவேற்றிய மாற்றங்கள்
+<br> Changes after first registration
             </td>
             <%--TODO fill variable--%>
             <td><s:label name="" value="%{}"/></td>
@@ -88,15 +94,15 @@
     <tbody>
     <s:if test="liveBirth">
         <tr>
-            <td>පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)
+            <td height="80px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)
             </td>
             <td><s:label name="" value="%{#request.child.pin}"/></td>
-            <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
+            <td width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
             </td>
-            <td><s:label name="" value="%{#request.child.dateOfBirth}"/></td>
+            <td width="150px"><s:label name="" value="%{#request.child.dateOfBirth}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
-            <td>
+            <td width="150px">
                 <s:if test="child.childGender == 0">
                     <s:label name="" value="%{getText('male.label')}"/>
                 </s:if>
@@ -111,12 +117,12 @@
     </s:if>
     <s:else>
         <tr>
-            <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
+            <td height="80px" width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
             </td>
             <td><s:label name="" value="%{#request.child.dateOfBirth}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
-            <td>
+            <td width="150px">
                 <s:if test="child.childGender == 0">
                     <s:label name="" value="%{getText('male.label')}"/>
                 </s:if>
@@ -136,7 +142,7 @@
         </tr>
     </s:else>
     <tr>
-        <td>උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
+        <td height="70px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
         </td>
         <td colspan="2"><s:label name="" value="%{#request.child.placeOfBirth}"/></td>
         <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா? <br>Were Parents Married?
@@ -145,14 +151,14 @@
     </tr>
     <s:if test="liveBirth">
         <tr>
-            <td height="100px">නම <br>பெயர் <br>Name
+            <td height="120px">නම <br>பெயர் <br>Name
             </td>
             <td colspan="5" class="bc-name" style="font-size:10pt">
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
-            <td height="100px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
+            <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
             <td colspan="5" class="bc-name" style="font-size:10pt">
                 <s:label name="" value="%{#request.child.childFullNameEnglish}"/>
@@ -160,7 +166,7 @@
         </tr>
     </s:if>
     <tr>
-        <td>පියාගේ අනන්‍යතා අංකය <br>தந்தையின் அடையாள எண் <br> Father's PIN
+        <td height="70px">පියාගේ අනන්‍යතා අංකය <br>தந்தையின் அடையாள எண் <br> Father's PIN
         </td>
         <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
         <td>පියාගේ ජාතිය<br>தந்தையின் இனம் <br> Father's Race
@@ -168,14 +174,14 @@
         <td colspan="3"><s:label name="" value="%{#request.parent.fatherRace.siRaceName}"/></td>
     </tr>
     <tr>
-        <td height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
         <td colspan="5" class="bc-name" style="font-size:10pt">
             <s:label name="" value="%{#request.parent.fatherFullName}"/>
         </td>
     </tr>
     <tr>
-        <td>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் அடையாள எண் <br> Mother's PIN
+        <td height="70px">ම‌වගේ අනන්‍යතා අංකය <br>தாயின் அடையாள எண் <br> Mother's PIN
         </td>
         <td><s:label name="" value="%{#request.parent.motherNICorPIN}"/></td>
         <td>මවගේ ජාතිය<br>தாயின் இனம் <br> Mother's Race
@@ -183,6 +189,9 @@
         <td colspan="3"><s:label name="" value="%{#request.parent.motherRace.siRaceName}"/></td>
     </tr>
     <tr>
+        <td height="120px">මවගේ සම්පූර්ණ නම
+           <br> தாயின் முழுப் பெயர்
+           <br> Mother's Full Name
         </td>
         <td colspan="5" class="bc-name" style="font-size:10pt">
             <s:label name="" value="%{#request.parent.motherFullName}"/>
@@ -198,7 +207,7 @@
     <col>
     <tbody>
     <tr>
-        <td>ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
+        <td height="70px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
         </td>
         <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
@@ -206,7 +215,7 @@
         <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
     </tr>
     <tr>
-        <td colspan="2" height="100px">
+        <td colspan="2" height="120px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
@@ -215,9 +224,9 @@
                                                         value="%{#request.register.confirmantFullName}"/></td>
     </tr>
     <tr>
-        <td colspan="2">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+        <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2"><s:label name="" value="%{#request.register.dateOfRegistration}"/></td>
+        <td colspan="2"><s:label name="" value="%{#request.child.placeOfBirth}"/></td>
     </tr>
     </tbody>
 </table>
