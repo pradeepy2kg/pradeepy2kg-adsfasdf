@@ -153,7 +153,7 @@
                             <s:param name="reject" value="true"/>
                         </s:url><s:a href="%{rejectSelected}"
                                      title="%{getText('rejectTooltip.label')}"><img
-                            src="<s:url value='/images/reject.png'/>" width="25" height="25"
+                            src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                             border="none"/></s:a>
                     </td>
                     </s:if>
