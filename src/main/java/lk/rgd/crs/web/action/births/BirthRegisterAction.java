@@ -8,6 +8,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
@@ -240,6 +241,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CONFIRMATION_DAYS_PRINTED));
+            bdf.getRegister().setLastDayForConfirmation(cal.getTime());
+
             bdf = service.loadValuesForPrint(bdf, user);
             bdId = bdf.getIdUKey();
             populate(bdf);
