@@ -221,7 +221,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
             bdf.getRegister().setApproveDate(new Date());
-            bdf.getRegister().setApprovePIN(user.getPin());
+            bdf.getRegister().setApproveUser(user);
             birthDeclarationDAO.updateBirthDeclaration(bdf);
             logger.debug("Approved live birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
         } else {
@@ -245,6 +245,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // does the user have access to the existing BDF (if district and division is changed somehow)
         validateAccessOfUser(user, existing);
 
+        existing.getRegister().setConfirmationPrintDate(new Date());
+        existing.getRegister().setConfirmationPrintUser(user);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CONFIRMATION_DAYS_PRINTED));
+        existing.getRegister().setLastDayForConfirmation(cal.getTime());
+        logger.debug("Set last day for confirmation as : {} for record : {}", cal.getTime(), existing.getIdUKey());
         existing.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_PRINTED);
         birthDeclarationDAO.updateBirthDeclaration(existing);
         logger.debug("Marked confirmation printed for live birth declaration record : {}", bdf.getIdUKey());
@@ -372,6 +378,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_PRINTED);
         existing.getRegister().setOriginalBCDateOfIssue(new Date());
+        existing.getRegister().setOriginalBCPrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing);
 
@@ -412,7 +419,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             if (warnings.isEmpty() || ignoreWarnings) {
                 bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_APPROVED);
                 bdf.getRegister().setApproveDate(new Date());
-                bdf.getRegister().setApprovePIN(user.getPin());
+                bdf.getRegister().setApproveUser(user);
                 birthDeclarationDAO.updateBirthDeclaration(bdf);
                 logger.debug("Approved confirmation changes for record : {}", bdf.getIdUKey());
             }

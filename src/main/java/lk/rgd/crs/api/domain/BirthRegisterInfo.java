@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -62,14 +63,28 @@ public class BirthRegisterInfo {
     @Enumerated
     private BirthDeclaration.State status;
 
-    /** The PIN of the ADR approving the BDF  */
-    @Column(nullable = true, length = 10)
-    private Long approvePIN;
+    /** The ADR or higher approving the record  */
+    @OneToOne
+    @JoinColumn(name = "approveUser")
+    private User approveUser;
 
-    /** The timestamp when an ADR or higher approves the BDF  */
+    /** The timestamp when an ADR or higher approves the record  */
     @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date approveDate;
+
+    /** The user printing the confirmation */
+    @OneToOne
+    @JoinColumn(name = "confirmationPrintUser")
+    private User confirmationPrintUser;
+
+    /** The timestamp when confirmation is printed for this record */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date confirmationPrintDate;
+
+    @Transient
+    private Date lastDayForConfirmation;
 
     /**
      * Status comment - e.g. reason for rejection due to duplicate
@@ -78,11 +93,16 @@ public class BirthRegisterInfo {
     @Column(nullable = true, length = 4096)
     private String comments;
 
+    /** The user printing the original BC */
+    @OneToOne
+    @JoinColumn(name = "originalBCPrintUser")
+    private User originalBCPrintUser;
+
     /**
      * The date of issue for the original birth certificate - free copy
      */
     @Column(nullable = true, updatable = false)
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date originalBCDateOfIssue;
 
     /**
@@ -215,12 +235,12 @@ public class BirthRegisterInfo {
         this.liveBirth = liveBirth;
     }
 
-    public Long getApprovePIN() {
-        return approvePIN;
+    public User getApproveUser() {
+        return approveUser;
     }
 
-    public void setApprovePIN(Long approvePIN) {
-        this.approvePIN = approvePIN;
+    public void setApproveUser(User approveUser) {
+        this.approveUser = approveUser;
     }
 
     public Date getApproveDate() {
@@ -229,5 +249,37 @@ public class BirthRegisterInfo {
 
     public void setApproveDate(Date approveDate) {
         this.approveDate = approveDate;
+    }
+
+    public User getConfirmationPrintUser() {
+        return confirmationPrintUser;
+    }
+
+    public void setConfirmationPrintUser(User confirmationPrintUser) {
+        this.confirmationPrintUser = confirmationPrintUser;
+    }
+
+    public Date getConfirmationPrintDate() {
+        return confirmationPrintDate;
+    }
+
+    public void setConfirmationPrintDate(Date confirmationPrintDate) {
+        this.confirmationPrintDate = confirmationPrintDate;
+    }
+
+    public Date getLastDayForConfirmation() {
+        return lastDayForConfirmation;
+    }
+
+    public void setLastDayForConfirmation(Date lastDayForConfirmation) {
+        this.lastDayForConfirmation = lastDayForConfirmation;
+    }
+
+    public User getOriginalBCPrintUser() {
+        return originalBCPrintUser;
+    }
+
+    public void setOriginalBCPrintUser(User originalBCPrintUser) {
+        this.originalBCPrintUser = originalBCPrintUser;
     }
 }
