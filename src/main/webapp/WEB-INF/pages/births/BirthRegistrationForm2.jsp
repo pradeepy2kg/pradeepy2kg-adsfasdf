@@ -52,32 +52,21 @@
                                   headerValue="%{getText('select_country.label')}" cssStyle="width:97%;"/>
         </td>
     </tr>
+    <s:url id="loadFatherInfo" action="../ajaxSupport_loadFatherInfo"/>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
         <td class="passport"><s:textfield name="parent.fatherPassportNo"/></td>
     </tr>
+    </tbody>
+    </table>
+
+    <sx:div id="test" href="%{loadFatherInfo}" listenTopics="view_FatherInfo" formId="birth-registration-form-2"
+            theme="ajax"/>
+
+    <table  class="table_reg_page_02" cellspacing="0" style="border-top:none;">
+    <tbody>
     <tr>
-        <td><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
-        <td colspan="8">
-            <s:url id="loadFatherInfo" action="../ajaxSupport_loadFatherInfo"/>
-            <sx:div id="parent.fatherNICorPIN" href="%{loadFatherInfo}"
-                    listenTopics="view_FatherInfo" formId="birth-registration-form-2" theme="ajax"></sx:div>
-        </td>
-    </tr>
-    <tr>
-        <td><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
-        <td colspan="2">
-            <sx:div theme="ajax" id="parent.fatherNICorPIN" listenTopics="view_FatherInfo"
-                    formId="birth-registration-form-2">
-                <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
-                                   onmouseover="javascript:splitDate('fatherDatePicker')"/>
-            </sx:div>
-        </td>
-        <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
-        <td colspan="2"><s:textfield name="parent.fatherPlaceOfBirth" cssStyle="width:95%;"/></td>
-    </tr>
-    <tr>
-        <td><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
+        <td width="200px"><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
         <td colspan="6" class="table_reg_cell_02">
             <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
@@ -126,7 +115,7 @@
         <td colspan="8">
             <s:url id="loadMotherInfo" action="../ajaxSupport_loadMotherInfo"/>
             <sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}"
-                    listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"></sx:div>
+                    listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"/>
         </td>
     </tr>
     <tr>
