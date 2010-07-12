@@ -104,7 +104,7 @@
             <br>* in Tamil
             <br>Last date by which changes should be received by the registrar generals office.
         </label></td>
-        <td><s:textfield cssClass="disable" disabled="true" value=""/></td>
+        <td><s:textfield cssClass="disable" disabled="true" name="register.lastDayForConfirmation"/></td>
     </tr>
     </tbody>
 </table>

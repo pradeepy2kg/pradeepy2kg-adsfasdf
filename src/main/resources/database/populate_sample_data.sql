@@ -2,6 +2,7 @@
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('rgd.password_expiry_days', '30');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.late_reg_days', '90');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.auto_confirmation_days', '28');
+INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.confirmation_days_printed', '14');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.birth.belated_reg_days', '365');
 INSERT INTO COMMON.APP_PARAMETERS(NAME, VALUE) VALUES('crs.br_approval_rows_per_page', '50');
 
