@@ -22,8 +22,8 @@
 <body onload="setFocus()">
 <img src="<s:url value="/images/epr-header.png" />"/>
 
-<div id="login-error" style="text-align:center; margin:150px auto -170px auto;">
-    <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt;"/>
+<div id="login-error" style="text-align:center;">
+    <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt; margin:150px auto -170px auto;"/>
 </div>
 <div id="login-form">
     <div id="login-form-title">user login</div>

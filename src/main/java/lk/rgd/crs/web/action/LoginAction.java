@@ -248,5 +248,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_USER_PREFERENCE_INIT, new Link(null, "/popreg/preferences/", "eprUserPreferencesAction.do"));
 
         linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("advanceSearch.label", "/popreg/prs/", "eprAdvancedSearch.do"));
+
+        
     }
 }
