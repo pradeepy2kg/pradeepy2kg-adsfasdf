@@ -175,6 +175,7 @@
 <s:hidden id="error10" value="%{getText('p1.dob.error.value')}"/>
 <s:hidden id="error11" value="%{getText('p1.placeOfBirth.error.value')}"/>
 
+
 <script type="text/javascript">
     function validate()
     {

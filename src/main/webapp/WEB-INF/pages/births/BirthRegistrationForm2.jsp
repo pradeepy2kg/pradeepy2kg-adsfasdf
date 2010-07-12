@@ -177,7 +177,7 @@
 <s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
 <s:hidden id="mother_age" value="%{getText('p2.motherAge.error.value')}"/>
 <s:hidden id="mother_birth_day_empty" value="%{getText('p2.motherAge.empty.error.value')}"/>
-
+<s:hidden id="childDateOfBirth" value="%{child.dateOfBirth}"/>
 <script type="text/javascript">
     function validate()
     {
@@ -202,7 +202,9 @@
         }
         return returnval;
     }
-    function motherage(child_bday) {
+    function motherage() {
+        child_bday=document.getElementById('childDateOfBirth').value;
+        alert(child_bday);
         var mother_dob = dojo.widget.byId('motherDatePicker').inputNode.value;
         var check_mother_dob = mother_dob;
         mother_dob = new Date(mother_dob);
@@ -213,13 +215,12 @@
             if (check_mother_dob.length == 0)
             {
                 alert(document.getElementById('mother_birth_day_empty').value);
-                return false;
+
             }
             else if (confirm(document.getElementById('mother_age').value + mother_age)) {
                 mother_age_at_birth.value = mother_age;
-                return false;
             }
-
+          return false;
         }
         else {
             mother_age_at_birth.value = mother_age;

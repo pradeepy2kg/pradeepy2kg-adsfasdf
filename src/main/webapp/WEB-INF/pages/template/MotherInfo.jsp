@@ -27,7 +27,7 @@
     </label>
     </td>
     <td class="passport"><s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"
-                                      onclick="javascript:motherage('%{child.dateOfBirth}')"/></td>
+                                      onclick="javascript:motherage()"/></td>
 </tr>
 <tr>
     <td ><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>
