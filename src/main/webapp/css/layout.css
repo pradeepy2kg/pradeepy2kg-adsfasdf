@@ -125,7 +125,7 @@ body {
     float: right;
     text-transform: capitalize;
     width: 111px;
-    margin: 10px 0;
+    margin: 10px 0 10px 5px;
     background: url(../images/button_bg_hover_1.png) no-repeat;
     height: 30px;
     border: none;
