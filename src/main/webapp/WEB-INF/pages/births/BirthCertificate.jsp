@@ -29,7 +29,7 @@
         </td>
     </tr>
     <tr>
-        <td><s:label name="" value="%{#request.register.bdfSerialNo}"/></td>
+        <td><s:label name="bdId" /></td>
     </tr>
     <tr>
         <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
@@ -59,23 +59,23 @@
         <td width="175px" height="80px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
         </td>
         <td width="300px"><s:label name=""
-                     value="%{#request.register.birthDivision.dsDivision.district.siDistrictName}"/></td>
+                                   value="%{#request.register.birthDivision.dsDivision.district.siDistrictName}"/></td>
         <td width="200px">ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-<br> பிரிவு
-<br> Divisional Secretariat
+            <br> பிரிவு
+            <br> Divisional Secretariat
         </td>
         <td><s:label name="" value="%{#request.register.birthDivision.dsDivision.siDivisionName}"/></td>
     </tr>
     <tr>
         <td width="200px" height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
-<br>பிரிவு
-<br>Registration Division
+            <br>பிரிவு
+            <br>Registration Division
         </td>
-        <td ><s:label name="" value="%{#request.register.birthDivision.siDivisionName}"/></td>
+        <td><s:label name="" value="%{#request.register.birthDivision.siDivisionName}"/></td>
         <s:if test="liveBirth">
             <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
-<br> நிறைவேற்றிய மாற்றங்கள்
-<br> Changes after first registration
+                <br> நிறைவேற்றிய மாற்றங்கள்
+                <br> Changes after first registration
             </td>
             <%--TODO fill variable--%>
             <td><s:label name="" value="%{}"/></td>
@@ -99,7 +99,7 @@
             <td><s:label name="" value="%{#request.child.pin}"/></td>
             <td width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
             </td>
-            <td width="150px"><s:label name="" value="%{#request.child.dateOfBirth}"/></td>
+            <td width="150px"><s:label name="" value="%{#request.child.childDateOfBirthForPrint}" /></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
             <td width="150px">
@@ -166,6 +166,13 @@
         </tr>
     </s:if>
     <tr>
+        <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        </td>
+        <td colspan="5" class="bc-name" style="font-size:10pt">
+            <s:label name="" value="%{#request.parent.fatherFullName}"/>
+        </td>
+    </tr>
+    <tr>
         <td height="70px">පියාගේ අනන්‍යතා අංකය <br>தந்தையின் அடையாள எண் <br> Father's PIN
         </td>
         <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
@@ -173,11 +180,14 @@
         </td>
         <td colspan="3"><s:label name="" value="%{#request.parent.fatherRace.siRaceName}"/></td>
     </tr>
+
     <tr>
-        <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="120px">මවගේ සම්පූර්ණ නම
+            <br> தாயின் முழுப் பெயர்
+            <br> Mother's Full Name
         </td>
         <td colspan="5" class="bc-name" style="font-size:10pt">
-            <s:label name="" value="%{#request.parent.fatherFullName}"/>
+            <s:label name="" value="%{#request.parent.motherFullName}"/>
         </td>
     </tr>
     <tr>
@@ -188,15 +198,7 @@
         </td>
         <td colspan="3"><s:label name="" value="%{#request.parent.motherRace.siRaceName}"/></td>
     </tr>
-    <tr>
-        <td height="120px">මවගේ සම්පූර්ණ නම
-           <br> தாயின் முழுப் பெயர்
-           <br> Mother's Full Name
-        </td>
-        <td colspan="5" class="bc-name" style="font-size:10pt">
-            <s:label name="" value="%{#request.parent.motherFullName}"/>
-        </td>
-    </tr>
+
     </tbody>
 </table>
 
@@ -212,7 +214,7 @@
         <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
         </td>
-        <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
+        <td><s:label><%= new java.util.Date() %></s:label></td>
     </tr>
     <tr>
         <td colspan="2" height="120px">
@@ -226,7 +228,7 @@
     <tr>
         <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2"><s:label name="" value="%{#request.child.placeOfBirth}"/></td>
+        <td colspan="2"><s:label name="" /></td>
     </tr>
     </tbody>
 </table>
