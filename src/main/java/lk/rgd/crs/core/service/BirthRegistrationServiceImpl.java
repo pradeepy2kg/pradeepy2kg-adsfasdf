@@ -220,6 +220,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
+            bdf.getRegister().setApproveDate(new Date());
+            bdf.getRegister().setApprovePIN(user.getPin());
             birthDeclarationDAO.updateBirthDeclaration(bdf);
             logger.debug("Approved live birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
         } else {
@@ -409,6 +411,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             List<UserWarning> warnings = prepareForConfirmation(bdf, ignoreWarnings, user);
             if (warnings.isEmpty() || ignoreWarnings) {
                 bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_APPROVED);
+                bdf.getRegister().setApproveDate(new Date());
+                bdf.getRegister().setApprovePIN(user.getPin());
                 birthDeclarationDAO.updateBirthDeclaration(bdf);
                 logger.debug("Approved confirmation changes for record : {}", bdf.getIdUKey());
             }

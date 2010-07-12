@@ -62,6 +62,15 @@ public class BirthRegisterInfo {
     @Enumerated
     private BirthDeclaration.State status;
 
+    /** The PIN of the ADR approving the BDF  */
+    @Column(nullable = true, length = 10)
+    private Long approvePIN;
+
+    /** The timestamp when an ADR or higher approves the BDF  */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date approveDate;
+
     /**
      * Status comment - e.g. reason for rejection due to duplicate
      */
@@ -204,5 +213,21 @@ public class BirthRegisterInfo {
 
     public void setLiveBirth(boolean liveBirth) {
         this.liveBirth = liveBirth;
+    }
+
+    public Long getApprovePIN() {
+        return approvePIN;
+    }
+
+    public void setApprovePIN(Long approvePIN) {
+        this.approvePIN = approvePIN;
+    }
+
+    public Date getApproveDate() {
+        return approveDate;
+    }
+
+    public void setApproveDate(Date approveDate) {
+        this.approveDate = approveDate;
     }
 }

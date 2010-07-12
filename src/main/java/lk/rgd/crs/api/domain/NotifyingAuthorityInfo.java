@@ -20,15 +20,6 @@ public class NotifyingAuthorityInfo implements Serializable {
     @Column(nullable = false, length = 120)
     private String notifyingAuthorityName;
 
-    /** The PIN of the ADR approving the BDF  */
-    @Column(nullable = true, length = 10)
-    private String approvePIN;
-
-    /** The date when an ADR or higher approves the BDF  */
-    @Column(nullable = true)
-    @Temporal(value = TemporalType.DATE)
-    private Date approveDate;
-
     /** The notifying authority Address */
     @Column(nullable = false, length = 255)
     private String notifyingAuthorityAddress;

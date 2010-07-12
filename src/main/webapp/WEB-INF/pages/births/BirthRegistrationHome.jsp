@@ -101,7 +101,7 @@
     <s:a href="eprBirthConfirmationPrintList.do?confirmListFlag=true">
         <div class="link3"></div>
     </s:a>
-    <s:a href="eprBirthRegisterApproval.do">
+    <s:a href="eprBirthConfirmationApproval.do">
         <div class="link4"></div>
     </s:a>
     <s:a href="eprBirthCertificateList.do">
