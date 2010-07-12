@@ -5,7 +5,7 @@
 * It includes styles for the,
 *       1. Birth Registration Form (4 pages)
 *       2. Birth Confirmation Form (3 pages)
-* To change the styles in those web forms, use the styles that are applied in this css.
+* To change the styles in those web forms, use the styles that are applied in this css.  form-submit
 * Styles for each page are done in a seperate area of the css file.
 */
 
@@ -1406,7 +1406,7 @@
     width: 1030px;
     background: #ffffff;
     padding: 10px;
-    
+
 }
 
 .table_con_page_01 {
@@ -1588,3 +1588,8 @@
 .search-option-table select{width:230px;}
 .search-option-table input{width:230px;}
 .next-table{background-image:url("")}
+
+/* style used to hide print button text in printed document */
+@media print {
+  .form-submit a{display:none;}
+}

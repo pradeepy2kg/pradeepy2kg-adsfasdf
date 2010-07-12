@@ -5,6 +5,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
+    <%--<style type="text/css">--%>
+        <%--@media print {--%>
+            <%--.form-submit a{display:none;}--%>
+        <%--}--%>
+    <%--</style>--%>
 <div class="birth-confirmation-print-form-outer">
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
 <table style="width:65%;float:left;">
