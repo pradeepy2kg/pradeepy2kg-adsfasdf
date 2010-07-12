@@ -3,4 +3,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-          cssStyle="float:left; width:240px;"/>
+          cssStyle="float:right; width:300px;"/>
