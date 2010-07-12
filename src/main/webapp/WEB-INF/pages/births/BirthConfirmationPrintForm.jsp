@@ -6,9 +6,6 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <div class="birth-confirmation-print-form-outer">
-<%--TODO uncomment form--%>
-<%--<s:form action="eprFilterBirthConfirmPrint.do" name="birthConfirmationPrintForm1" id="birth-confirmation-print-form-1"--%>
-<%--method="POST">--%>
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
 <table style="width:65%;float:left;">
     <caption></caption>
@@ -233,7 +230,7 @@
     <tr>
         <td class="cell_011">10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
-        <td colspan="6"><s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"
+        <td colspan="6"><s:textfield cssClass="disable" disabled="true"
                                      value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>
         <td colspan="11"></td>
     </tr>
