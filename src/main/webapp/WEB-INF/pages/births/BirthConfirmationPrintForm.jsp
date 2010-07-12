@@ -41,7 +41,7 @@
             <label>අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</label>
         </td>
         <td style="text-align:right;width:100px">
-            <s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
+            <s:textfield cssClass="disable" disabled="true" name="bdId"/>
         </td>
     </tr>
     </tbody>
