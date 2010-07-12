@@ -11,7 +11,7 @@ INSERT INTO PRS.ADDRESS (ADDRESSUKEY, LINE1, CITY, PERSONUKEY) VALUES(1, '65 C �
 ;
 UPDATE PRS.PERSON SET lastAddressUKey = 1 WHERE personUKey = 2
 ;
-INSERT INTO PRS.ADDRESS (ADDRESSUKEY, LINE1, CITY, PERSONUKEY) VALUES(1, '32 වේවා පාර','කොට්ටාව', 3)
+INSERT INTO PRS.ADDRESS (ADDRESSUKEY, LINE1, CITY, PERSONUKEY) VALUES(2, '32 වේවා පාර','කොට්ටාව', 3)
 ;
 UPDATE PRS.PERSON SET lastAddressUKey = 2 WHERE personUKey = 3
 ;
