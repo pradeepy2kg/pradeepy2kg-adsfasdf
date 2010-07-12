@@ -15,12 +15,12 @@
     </style>
 </head>
 <body>
-<img src="../images/epr-header.png" />
+<img src="<s:url value="/images/epr-header.png" />" />
 <div id="login-form">
     <div id="login-form-title">user password change</div>
     <div id="login-form-body">
-        <s:form action="eprChangePass.do" method="POST"
-                name="eprChangePass">
+        <s:form action="preferences/eprChangePass.do" method="POST"
+                name="eprChangePass" >
             <!--password change -->
 
                 <s:label value="New Password"/>
