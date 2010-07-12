@@ -131,6 +131,11 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         return "DSDivList";
     }
 
+    public String loadDSDivListOnly() {
+        dsDivList();
+        return "DSDivListOnly";
+    }
+
     public String loadDSDivListSearch() {
         dsDivList();
         return "DSDivListSearch";
