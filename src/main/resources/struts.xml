@@ -76,6 +76,7 @@
             <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp
             </result>
             <result name="DSDivListUserPreference">/WEB-INF/pages/template/DSDivBoxUserPreference.jsp</result>
+            <result name="MotherDSDivList">/WEB-INF/pages/template/DSDivBoxMother.jsp</result>
         </action>
     </package>
 

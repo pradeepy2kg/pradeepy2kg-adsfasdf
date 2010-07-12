@@ -4,6 +4,16 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script>
+    function view_DSDivs() {
+        dojo.event.topic.publish("view_DSDivs");
+    }
+
+    function view_BDDivs() {
+        dojo.event.topic.publish("view_BDDivs");
+    }
+</script>
+<s:url id="loadDSDivList" action="../ajaxSupport_loadMotherDSDivList"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm2" id="birth-registration-form-2" method="POST"
@@ -104,7 +114,7 @@
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0"
-                                  headerValue="%{getText('select_country.label')}"/></td>
+                                  headerValue="%{getText('select_country.label')}" /></td>
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
@@ -149,17 +159,18 @@
         <td rowspan="3"><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>
         </td>
         <td colspan="2" class="table_reg_cell_02"><label>*in Sinhala/*in English/District</label></td>
-        <td colspan="6" class="table_reg_cell_02"><s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
-                                                            headerValue="%{getText('select_district.label')}"
-                                                            cssStyle="width:99%;"/></td>
+        <td colspan="6" class="table_reg_cell_02">
+            <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
+                      headerValue="%{getText('select_district.label')}"
+                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
     </tr>
     <tr>
 
         <td colspan="2"><label>*in Sinhala/*in English/D.S Division</label></td>
-        <td colspan="7" class="table_reg_cell_02"><s:select name="motherDSDivisionId" list="allDSDivisionList"
-                                                            headerKey="0"
-                                                            headerValue="%{getText('select_ds_division.label')}"
-                                                            cssStyle="width:99%;"/></td>
+        <td colspan="7" class="table_reg_cell_02">
+            <sx:div id="motherDSDivisionId" value="motherDSDivisionId" href="%{loadDSDivList}" theme="ajax"
+                    listenTopics="view_DSDivs" formId="birth-registration-form-2"></sx:div>
+        </td>
     </tr>
     <tr>
 
