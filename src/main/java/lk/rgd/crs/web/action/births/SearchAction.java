@@ -41,7 +41,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int birthDivisionId;
 
-    private long serialNo;
+    private Long serialNo;
     private Long idUKey;
     private String childName;
     private String status;
@@ -73,7 +73,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
             birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
-            if (serialNo != 0) {
+            if (serialNo !=null) {
                 bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 setStatus(bdf.getRegister().getStatus().toString());
             } else {

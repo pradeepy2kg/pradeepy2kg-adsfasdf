@@ -63,7 +63,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private User user;
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
-    private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
+    private Long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private long oldBdId;    // bdId of previously persisted birth declaration, used in add neew entry in batch mode
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
 
@@ -153,7 +153,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 // all pages captured, proceed to persist after validations
                 // todo data validations, exception handling and error reporting
                 bdId = bdf.getIdUKey();
-                if (bdId == 0) {
+                if (bdId ==null) {
                     service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                     addActionMessage(getText("saveSuccess.label"));
@@ -312,7 +312,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String birthDeclaratinInit() {
         BirthDeclaration bdf;
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-        if (bdId == 0) {
+        if (bdId ==null) {
             if (!addNewMode) {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
@@ -337,7 +337,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String stillBirthDeclarationInit() {
         BirthDeclaration bdf;
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-        if (bdId == 0) {
+        if (bdId ==null) {
             if (!addNewMode) {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
@@ -369,7 +369,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration bdf;
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-        if (bdId != 0) {
+        if (bdId !=null) {
             try {
                 bdf = service.getById(bdId, user);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
