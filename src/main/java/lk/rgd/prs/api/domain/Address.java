@@ -133,4 +133,31 @@ public class Address {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        if ((line1 != null) && (!"".equals(line1))) {
+            buffer.append(line1);
+            buffer.append(", " );
+        }
+        if ((line2 != null) && (!"".equals(line2))) {
+            buffer.append(line2);
+            buffer.append(", " );
+        }
+
+        if ((city != null) && (!"".equals(city))) {
+            buffer.append(city);
+            // in the very likely case of postcode being absent,, we don't want to look silly by
+            // printing a comma in the end.
+            if ((postcode != null) && (!"".equals(postcode))) {
+                buffer.append(", " );
+            }
+        }
+
+        if ((postcode != null) && (!"".equals(postcode))) {
+            buffer.append(postcode);
+        }
+
+        return buffer.toString();
+    }
 }
