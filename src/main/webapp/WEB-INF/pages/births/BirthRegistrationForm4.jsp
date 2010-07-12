@@ -68,6 +68,8 @@
                 var errormsg = "";
                 var element;
                 var returnval;
+                var dat=document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
+                alert(dat);
 
                 /*date related validations*/
                 var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
