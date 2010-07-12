@@ -30,18 +30,42 @@ var Manager;
         }));
 
         Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchPIN',
+            target: '#searchPIN',
+            field: 'pin'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
+            id: 'searchMothersNICorPIN',
+            target: '#searchMothersNICorPIN',
+            field: 'motherNICorPIN'
+        }));
+
+        Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchEnglish',
             target: '#searchEnglish',
-            field: 'fullNameInEnglishLanguage'
+            field: 'childFullNameEnglish'
         }));
 
         Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchOfficial',
             target: '#searchOfficial',
-            field: 'fullNameInOfficialLanguage'
+            field: 'childFullNameOfficialLang'
         }));
 
-        var fields = [ 'gender' ];
+        Manager.addWidget(new AjaxSolr.AdvancedSearchWidget({
+            id: 'searchAdvanced',
+            target: '#searchAdvanced',
+            field: '*'
+        }));
+
+        Manager.addWidget(new AjaxSolr.DateRangeWidget({
+            id: 'searchDOBRange',
+            target: '#searchDOBRange',
+            field: 'dateOfBirth'
+        }));
+
+        var fields = [ 'childGender', 'birthDistrict', 'birthDivision' ];
         for (var i = 0, l = fields.length; i < l; i++) {
             Manager.addWidget(new AjaxSolr.TagcloudWidget({
                 id: fields[i],
@@ -50,26 +74,16 @@ var Manager;
             }));
         }
 
-        Manager.addWidget(new AjaxSolr.CalendarWidget({
-            id: 'calendar',
-            target: '#calendar',
-            field: 'dateOfBirth'
-        }));
-
         Manager.init();
         Manager.store.addByValue('q', '*:*');
         var params = {
             facet: true,
             'rows' : 100,
-            'facet.field': [ 'gender'],
+            'facet.field': [ 'childGender', 'birthDistrict', 'birthDivision' ],
             'facet.limit': 20,
             'facet.mincount': 1,
             'f.topics.facet.limit': 50,
-            'json.nl': 'map',
-            'facet.date': 'dateOfBirth',
-            'facet.date.start': '1987-01-01T00:00:00.000Z/DAY',
-            'facet.date.end': '1987-12-31T00:00:00.000Z/DAY+1DAY',
-            'facet.date.gap': '+1DAY'
+            'json.nl': 'map'
         };
         for (var name in params) {
             Manager.store.addByValue(name, params[name]);

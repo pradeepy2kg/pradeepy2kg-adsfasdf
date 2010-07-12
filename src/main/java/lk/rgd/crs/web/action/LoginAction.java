@@ -200,7 +200,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "/popreg/births/", "eprBirthConfirmationApproval.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT, new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do"));
         linkPermission.put(Permission.PAGE_STILL_BIRTH_REGISTRATION, new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do"));
-        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH, new Link("advanceSearch.label", "/popreg/births/", "eprAdvancedSearch.do"));
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH, new Link("advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
 
         //non displayable (in the menu) pages
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link(null, "/popreg/births/", "eprBirthRegistration.do"));
@@ -247,8 +247,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.CHANGE_PASSWORD_PAGE_LOAD, new Link(null, "/popreg/preferences/", "passChangePageLoad.do"));
         linkPermission.put(Permission.PAGE_USER_PREFERENCE_INIT, new Link(null, "/popreg/preferences/", "eprUserPreferencesAction.do"));
 
-        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("advanceSearch.label", "/popreg/prs/", "eprAdvancedSearch.do"));
-
-        
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("advanceSearch.label", "/popreg/prs/", "eprPRSAdvancedSearch.do"));
     }
 }

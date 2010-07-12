@@ -1,4 +1,10 @@
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, initialsInEnglish, initialsInOfficialLanguage, lastNameInEnglish, lastNameInOfficialLanguage, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
+  VALUES(NULL, '1981-07-28', NULL, 'JAYARATHNA BANDARALAGE SAMAN KUMARA JAYASINGHE', 'ජයරත්න බණ්ඩාරලාගේ සමන් කුමාර ජයසිංහ', 0, 'J. B. S. K.', 'ජ. බ. ස. කු.', 'JAYASINGHE', 'ජයසිංහ', NULL, '812114132V', NULL, 'රාගම රෝහල', 'si', NULL, NULL)
+;
+INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, initialsInEnglish, initialsInOfficialLanguage, lastNameInEnglish, lastNameInOfficialLanguage, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
+  VALUES(NULL, '1985-01-01', NULL, 'KUSUMAWATHIE RAMYA JAYASINGHE', 'කුසුමාවතී රාම්‍යා ජයසිංහ', 0, 'K. R.', 'කු. ර.', 'JAYASINGHE', 'ජයසිංහ', NULL, '855012132V', NULL, 'මාතර', 'si', NULL, NULL)
+;
+INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, initialsInEnglish, initialsInOfficialLanguage, lastNameInEnglish, lastNameInOfficialLanguage, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
   VALUES(NULL, '1970-09-30', NULL, 'SUDERE NADARAJAH', 'සුෙඩිර් නඩරාජා', 0, 'S', 'ඒස්', 'NADARAJAH', 'නඩරාජා', NULL, '702742846V', NULL, NULL, 'si', NULL, NULL)
 ;
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, initialsInEnglish, initialsInOfficialLanguage, lastNameInEnglish, lastNameInOfficialLanguage, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)

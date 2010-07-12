@@ -82,9 +82,9 @@
     <package name="prs" namespace="/prs" extends="NG">
         <default-interceptor-ref name="default"/>
 
-        <action name="eprAdvancedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+        <action name="eprPRSAdvancedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
                 method="advancedSearch">
-            <result type="tiles" name="success">epr.AdvancedSearch</result>
+            <result type="tiles" name="success">epr.PRSAdvancedSearch</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
     </package>
@@ -333,9 +333,9 @@
             <result type="tiles" name="success">epr.BDFSearch</result>
         </action>
 
-        <action name="eprAdvancedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+        <action name="eprBirthsAdvancedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
                 method="advancedSearch">
-            <result type="tiles" name="success">epr.AdvancedSearch</result>
+            <result type="tiles" name="success">epr.BirthsAdvancedSearch</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

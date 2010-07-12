@@ -8,6 +8,8 @@
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+
 
 <script>
     function view_DSDivs() {
@@ -19,9 +21,6 @@
     }
 </script>
 
-
-<script type="text/javascript" language="javascript" src="../lib/jquery/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
         $('#com-print-list-table').dataTable({

@@ -26,7 +26,7 @@
 <script type="text/javascript" src="../lib/jqueryui/jquery-ui.min.js"></script>
 
 <script type="text/javascript" src="../js/solrsearch.theme.js"></script>
-<script type="text/javascript" src="../js/birthsearch.js"></script>
+<script type="text/javascript" src="../js/prssearch.js"></script>
 
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/jquery/PagerWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/BirthResultWidget.js"></script>
@@ -110,17 +110,18 @@
             </div>
         </div>
 
-    <ul id="selection"></ul>
+        <ul id="selection"></ul>
 
     </div>
 
-    <div id="result">
-        <div id="navigation">
-            <ul id="pager"></ul>
-            <div id="pager-header"></div>
+    <fieldset style="border:none">
+        <div id="result">
+            <div id="navigation">
+                <ul id="pager"></ul>
+                <div id="pager-header"></div>
+            </div>
+            <div id="docs"></div>
         </div>
-        <div id="docs"></div>
-    </div>
-
-    <div class="clear"></div>
+        <div class="clear"></div>
+    </fieldset>
 </div>
