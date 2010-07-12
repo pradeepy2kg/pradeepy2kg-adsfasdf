@@ -34,7 +34,7 @@ import lk.rgd.Permission;
 
 public class BirthRegisterApprovalAction extends ActionSupport implements SessionAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterApprovalAction.class);
 
 
     private final DistrictDAO districtDAO;
@@ -352,6 +352,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
+            logger.debug("helelelele");
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                 pageNo, noOfRows, user);
         } else {
