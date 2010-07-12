@@ -90,6 +90,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean directPrint;
     private int rgdErrorCode;
 
+    private boolean skipConfirmationChages;
+
     public String welcome() {
         return SUCCESS;
     }
@@ -209,19 +211,29 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                 break;
             case 2:
-                bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
-                bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
+                if (!skipConfirmationChages) {
+                    bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
+                    bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
 
-                bdf.getParent().setFatherFullName(parent.getFatherFullName());
-                bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                    bdf.getParent().setFatherFullName(parent.getFatherFullName());
+                    bdf.getParent().setMotherFullName(parent.getMotherFullName());
+                }
                 break;
             case 3:
                 bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
                 bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                 bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
-
+                logger.debug("skipConfirmationChanges {}", skipConfirmationChages);
                 //todo exception handling, validations and error reporting
-                service.captureLiveBirthConfirmationChanges(bdf, user);
+                if (skipConfirmationChages) {
+                    if (bdf.getRegister().getBirthDivision() == null) {
+                        return ERROR;
+                    } else {
+                        service.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf, user);
+                    }
+                } else {
+                    service.captureLiveBirthConfirmationChanges(bdf, user);
+                }
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         }
 
@@ -940,5 +952,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDirectPrint(boolean directPrint) {
         this.directPrint = directPrint;
+    }
+
+    public boolean isSkipConfirmationChages() {
+        return skipConfirmationChages;
+    }
+
+    public void setSkipConfirmationChages(boolean skipConfirmationChages) {
+        this.skipConfirmationChages = skipConfirmationChages;
     }
 }

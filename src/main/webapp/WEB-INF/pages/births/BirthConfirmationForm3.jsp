@@ -56,6 +56,7 @@
 
 
         <s:hidden name="pageNo" value="3"/>
+        <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
         <s:hidden id="p3error1" value="%{getText('cp3.error.NIC.value')}"/>
         <s:hidden id="p3error2" value="%{getText('cp3.error.FullName.value')}"/>
         <s:hidden id="p3error3" value="%{getText('cp3.error.confirm.date.value')}"/>
@@ -101,6 +102,7 @@
             <s:url id="backUrl" action="eprBirthConfirmation">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
+                <s:param name="skipConfirmationChages" value="#request.skipConfirmationChages"/>
             </s:url>
             <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" border="none"
                                         style="margin-top:10px;"/></s:a>

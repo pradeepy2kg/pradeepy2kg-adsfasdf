@@ -23,7 +23,7 @@
         <td>
             <form action="eprBirthConfirmationInit.do" method="post">
                 <table style=" border:1px solid #000000; width:300px">
-                    <tr><s:actionerror /></tr>
+                    <tr><s:actionerror/></tr>
                     <tr>
                         <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                         </td>
@@ -37,14 +37,28 @@
                         <td width="200px"></td>
                         <td align="right" class="button"><s:submit name="search"
                                                                    value="%{getText('searchButton.label')}"
-                                                                   cssStyle="margin-right:10px;"/></td></tr>
-             </table>
+                                                                   cssStyle="margin-right:10px;"/></td>
+                    </tr>
+                </table>
+            </form>
+            <form action="eprBirthConfirmation.do">
+                <table style=" border:1px solid #000000; width:300px">
+                    <tr>
+                        <td><s:label value="%{getText('noConfirmationChanges.label')}"/></td>
+                        <td><s:checkbox name="skipConfirmationChages"/></td>
+                    </tr>
+                    <tr> <s:hidden name="pageNo" value="2"/>
+                        <td width="170px"></td>
+                        <td align="left" class="button"><s:submit name="search"
+                                                                   value="%{getText('skip.label')}"
+                                                                   cssStyle="margin-right:8px;"/></td>
+                    </tr>
+                </table>
             </form>
 
-
-</td>
-</tr>
-</tbody>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
 
