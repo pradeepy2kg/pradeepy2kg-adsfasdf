@@ -43,11 +43,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final PopulationRegistry popreg;
     private final AppParametersDAO appParametersDAO;
     private final UserManager userManager;
+    private final BirthRecordsIndexer birthRecordsIndexer;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
-        PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager) {
+        PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
+        BirthRecordsIndexer birthRecordsIndexer) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -57,6 +59,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         this.popreg = popreg;
         this.appParametersDAO = appParametersDAO;
         this.userManager = userManager;
+        this.birthRecordsIndexer = birthRecordsIndexer;
     }
 
     /**
@@ -316,7 +319,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.updateBirthDeclaration(existing);
 
             // add new record
-            bdf.setIdUKey(0); // force addition
+            bdf.setIdUKey(null); // force addition
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
             birthDeclarationDAO.addBirthDeclaration(bdf);
             logger.debug("Changes captured as birth record : {} and the old record : {} archived",
@@ -378,6 +381,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing);
 
+        // index record
+        birthRecordsIndexer.add(existing);
+
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
     }
 
@@ -418,6 +424,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 bdf.getRegister().setApproveUser(user);
                 birthDeclarationDAO.updateBirthDeclaration(bdf);
                 logger.debug("Approved confirmation changes for record : {}", bdf.getIdUKey());
+
+                // generate PIN number and add record to PRS
+                generatePINandAddToPRS(bdf, user);
             }
             return warnings;
 

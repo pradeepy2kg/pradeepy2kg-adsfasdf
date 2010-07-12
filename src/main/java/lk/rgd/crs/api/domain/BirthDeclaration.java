@@ -105,7 +105,7 @@ public class BirthDeclaration implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUKey;
+    private Long idUKey;
 
     @Embedded
     private ChildInfo child = new ChildInfo();
@@ -131,11 +131,11 @@ public class BirthDeclaration implements Serializable {
     @Embedded
     private ConfirmantInfo confirmant = new ConfirmantInfo();
 
-    public long getIdUKey() {
+    public Long getIdUKey() {
         return idUKey;
     }
 
-    public void setIdUKey(long idUKey) {
+    public void setIdUKey(Long idUKey) {
         this.idUKey = idUKey;
     }
 

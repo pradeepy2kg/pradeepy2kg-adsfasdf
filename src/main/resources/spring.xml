@@ -79,6 +79,7 @@
         <constructor-arg ref="popRegService"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
+        <constructor-arg ref="birthRecordsIndexer"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
