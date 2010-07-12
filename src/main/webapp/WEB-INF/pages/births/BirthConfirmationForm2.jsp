@@ -1,18 +1,10 @@
-<%--<html>   --%>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--
- @author chathuranga
- @author Duminda Dharmakeerthi
---%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div id="birth-confirmation-form-outer">
     <s:form action="eprBirthConfirmation" name="birthConfirmation_form2" id="birth-confirmation-form-2" method="POST">
-
-
         <table class="table_con_page_02" cellspacing="0">
             <caption></caption>
             <col/>
