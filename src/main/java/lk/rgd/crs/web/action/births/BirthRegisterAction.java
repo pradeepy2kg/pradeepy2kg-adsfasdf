@@ -352,11 +352,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId != 0) {
-            bdf = service.getById(bdId, user);
-            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
-                addActionError(getText("cp1.error.editNotAllowed"));
-                return ERROR;
+            try {
+                bdf = service.getById(bdId, user);
+                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                    addActionError(getText("cp1.error.editNotAllowed"));
+                    return ERROR;
+                }
+            } catch (NullPointerException e) {
+                handleErrors(e);
+                addActionError(getText("cp1.error.entryNotAvailable"));
+                bdf = new BirthDeclaration();
             }
         } else {
             bdf = new BirthDeclaration(); // just go to the confirmation 1 page
