@@ -13,7 +13,6 @@
         dojo.event.topic.publish("view_BDDivs");
     }
 </script>
-<s:url id="loadDSDivList" action="../ajaxSupport_loadMotherDSDivList"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm2" id="birth-registration-form-2" method="POST"
@@ -68,12 +67,12 @@
         <td class="passport"><s:textfield name="parent.fatherPassportNo"/></td>
     </tr>
     </tbody>
-    </table>
+</table>
 
-    <sx:div id="test" href="%{loadFatherInfo}" listenTopics="view_FatherInfo" formId="birth-registration-form-2"
-            theme="ajax"/>
+<sx:div id="test" href="%{loadFatherInfo}" listenTopics="view_FatherInfo" formId="birth-registration-form-2"
+        theme="ajax"/>
 
-    <table  class="table_reg_page_02" cellspacing="0" style="border-top:none;">
+<table class="table_reg_page_02" cellspacing="0" style="border-top:none;">
     <tbody>
     <tr>
         <td width="200px"><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
@@ -114,36 +113,28 @@
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
         <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0"
-                                  headerValue="%{getText('select_country.label')}" /></td>
+                                  headerValue="%{getText('select_country.label')}"/></td>
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
         <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo"/></td>
     </tr>
     </tbody>
-    </table>
+</table>
 
-    <s:url id="loadMotherInfo" action="../ajaxSupport_loadMotherInfo"/>
-    <sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}"
-            listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"/>
+<s:url id="loadMotherInfo" action="../ajaxSupport_loadMotherInfo"/>
+<sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}"
+        listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"/>
 
-  <table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none;">
+<table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none;">
+    <s:url id="loadDSDivList" action="../ajaxSupport_loadMotherDSDivList"/>
     <tbody>
     <tr>
-        <td width="200px"><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
-        <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
-                                  headerValue="%{getText('select_race.label')}"/></td>
-
-        <td colspan="3"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
-    </tr>
-    <tr>
-        <td rowspan="3"><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label></td>
         <td colspan="2" class="table_reg_cell_02"><label>*in Sinhala/*in English/District</label></td>
-        <td colspan="6" class="table_reg_cell_02">
+        <td colspan="7" class="table_reg_cell_02">
             <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
                       headerValue="%{getText('select_district.label')}"
-                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td> 
+                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
     </tr>
     <tr>
 
@@ -153,8 +144,13 @@
                     listenTopics="view_DSDivs" formId="birth-registration-form-2"></sx:div>
         </td>
     </tr>
-    <tr>                                                                                            
-        <td colspan="8"><s:textarea name="parent.motherAddress" cssStyle="width:98%;"/></td>
+    <tr>
+        <td width="200px"><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
+        <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
+                                  headerValue="%{getText('select_race.label')}"/></td>
+
+        <td colspan="3"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="3" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
         <td><label>(22)රෝහලට ඇතුලත් කිරිමේ අංකය<br>*in tamil<br>Hospital Admission Number</label></td>
@@ -173,7 +169,7 @@
         <td colspan="2" class="passport"><s:textfield name="parent.motherEmail"/></td>
     </tr>
     </tbody>
-  </table>
+</table>
 
 <s:hidden name="pageNo" value="2"/>
 
@@ -214,19 +210,19 @@
         var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
         var mother_age = 100 - (mother_dob.getYear() - child_dob.getYear());
         if (mother_age <= 10 || check_mother_dob.length == 0) {
-            if(check_mother_dob.length == 0)
+            if (check_mother_dob.length == 0)
             {
                 alert(document.getElementById('mother_birth_day_empty').value);
                 return false;
             }
-           else if (confirm(document.getElementById('mother_age').value + mother_age)) {
+            else if (confirm(document.getElementById('mother_age').value + mother_age)) {
                 mother_age_at_birth.value = mother_age;
                 return false;
             }
 
         }
-        else{
-             mother_age_at_birth.value = mother_age;
+        else {
+            mother_age_at_birth.value = mother_age;
             return true;
         }
     }

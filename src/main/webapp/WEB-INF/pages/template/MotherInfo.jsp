@@ -29,6 +29,12 @@
     <td class="passport"><s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"
                                       onclick="javascript:motherage('%{child.dateOfBirth}')"/></td>
 </tr>
+<tr>
+    <td ><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>
+    </td>
+    <td colspan="8"><s:textarea name="parent.motherAddress" cssStyle="width:98%;"/></td>
+</tr>
+
 </tbody>
 </table>
 
