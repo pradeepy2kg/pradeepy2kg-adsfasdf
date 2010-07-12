@@ -99,15 +99,20 @@
             <td colspan="3"><s:textarea name="grandFather.grandFatherFullName" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
+            <td><label>පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය (තිබේ නම්)
+                <br>தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
+                <br>PIN / NIC Number (if available)</label></td>
+            <td><s:textfield name="grandFather.grandFatherBirthYear" </td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthYear" cssStyle="width:95%;"/></td>
+            <td><s:textfield name="grandFather.grandFatherBirthYear" /></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthPlace" cssStyle="width:95%;"/></td>
+            <td><s:textfield name="grandFather.grandFatherBirthPlace" /></td>
         </tr>
         <tr>
             <td colspan="5"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
                 தந்தை
-                இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள்<br>If the father was not
+                இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
+                ்<br>If the father was not
                 born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
         </tr>
         <tr>
@@ -300,7 +305,7 @@
         if (!element.checked) {
             errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
         }
-        
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
