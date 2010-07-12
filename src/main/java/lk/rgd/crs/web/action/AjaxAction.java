@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
+import java.util.Set;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
@@ -27,6 +28,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.core.service.PopulationRegistryImpl;
 import lk.rgd.prs.core.dao.PersonDAOImpl;
 
@@ -192,10 +194,20 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 parent.setFatherFullName(father.getFullNameInOfficialLanguage());
                 parent.setFatherDOB(father.getDateOfBirth());
                 logger.debug("Father info set from Ajax : {} {}", pin, parent.getFatherFullName());
+                return "FatherInfo";
             } catch (Exception e) {
                 logger.debug("No match from Ajax for Father PIN/NIC : {}", pin);
             }
         }
+
+        // NIC/pin either not entered (ajax preload at page load) or lookup failed. trying to salvage users existing data
+        try {
+            BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            ParentInfo parent = bdf.getParent();
+        } catch (Exception e) {
+            
+        }
+
         return "FatherInfo";
     }
 
@@ -207,6 +219,16 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 Person mother = registryService.findPersonByPINorNIC(pin, user);
                 parent.setMotherFullName(mother.getFullNameInOfficialLanguage());
                 parent.setMotherDOB(mother.getDateOfBirth());
+                Set<Address> set = mother.getAddresses();
+                if ((set != null) && !set.isEmpty()) {
+                    Address address = mother.getAddresses().iterator().next();
+                    StringBuffer buffer = new StringBuffer();
+                    buffer.append(address.getLine1());
+                    buffer.append(address.getLine2());
+                    buffer.append(address.getCity());
+                    buffer.append(address.getPostcode());
+                    parent.setMotherAddress(buffer.toString());
+                }    
                 logger.debug("Mother info set from Ajax : {} {}", pin, parent.getMotherFullName());
             } catch (Exception e) {
                 logger.debug("No match from Ajax for Mother PIN/NIC : {}", pin);
@@ -258,6 +280,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public void setParent(ParentInfo parent) {
         this.parent = parent;
+        logger.debug("parent received. father Name : {},  mother name : {}", parent.getFatherFullName(), parent.getMotherFullName());
     }
 
     public NotifyingAuthorityInfo getNotifyingAuthority() {
