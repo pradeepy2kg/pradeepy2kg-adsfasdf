@@ -737,7 +737,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             child.setLastNameInOfficialLanguage(names[names.length-1]);
             StringBuilder sb = new StringBuilder(16);
             for (int i=0; i<names.length-2; i++) {
-                sb.append(names[i].charAt(0)).append(". ");
+                if (!isEmptyString(names[i])) {
+                    sb.append(names[i].charAt(0)).append(". ");
+                }
             }
             child.setInitialsInOfficialLanguage(sb.toString());
             logger.debug("Derived child Official language initials as : {} and last name as : {}",
