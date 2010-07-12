@@ -69,6 +69,7 @@ public final class Permission {
     public static final int CHANGE_PASSWORD_PAGE_LOAD = 98;
     public static final int PAGE_USER_PREFERENCE_INIT = 99;
     public static final int PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED=100;
+    public static final int PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES=101;
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;

@@ -280,7 +280,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.BACK_CHANGE_PASSWORD);
             bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
             bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED); 
+            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
 
             bs.set(Permission.PAGE_ADVANCE_SEARCH_PRS);
 

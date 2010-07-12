@@ -89,9 +89,9 @@
                 </s:else>
             </s:if>
             <s:else>
-                <s:if test="#request.warnings.size==0">
+
                     <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-                </s:if>
+                
             </s:else>
         </s:if>
         <s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>

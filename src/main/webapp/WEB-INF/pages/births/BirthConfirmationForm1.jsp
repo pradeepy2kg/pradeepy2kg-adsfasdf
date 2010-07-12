@@ -41,17 +41,18 @@
                     </tr>
                 </table>
             </form>
-            <form action="eprBirthConfirmation.do">
+            <form action="eprBirthConfirmationSkipChanges.do" onsubmit="javascript:return validateSkipChanges()">
                 <table style=" border:1px solid #000000; width:300px">
                     <tr>
                         <td><s:label value="%{getText('noConfirmationChanges.label')}"/></td>
-                        <td><s:checkbox name="skipConfirmationChages"/></td>
+                        <td><s:checkbox name="skipConfirmationChages" id="skipChangesCBox"/></td>
                     </tr>
-                    <tr> <s:hidden name="pageNo" value="2"/>
+                    <tr><s:hidden name="pageNo" value="2"/>
+                        <s:hidden name="bdId" value="%{#request.bdId}"/>
                         <td width="170px"></td>
                         <td align="left" class="button"><s:submit name="search"
-                                                                   value="%{getText('skip.label')}"
-                                                                   cssStyle="margin-right:8px;"/></td>
+                                                                  value="%{getText('skip.label')}"
+                                                                  cssStyle="margin-right:8px;"/></td>
                     </tr>
                 </table>
             </form>
@@ -243,6 +244,7 @@
 <s:hidden id="p1error2" value="%{getText('cp1.placeOfBirth.error.value')}"/>
 <s:hidden id="p1error3" value="%{getText('cp1.date.error.value')}"/>
 <s:hidden id="p1error4" value="%{getText('cp1.parents.marriage.error.value')}"/>
+<s:hidden id="p1errorckbx" value="%{getText('cp1.skipChanges.checked.error.value')}"/>
 
 <script type="text/javascript">
     function validate()
@@ -274,6 +276,21 @@
             returnval = false;
         }
         return returnval;
+    }
+
+    function validateSkipChanges() {
+        var noSerialEntered=document.getElementById('p1error1').value;
+        var notChecked=document.getElementById('p1errorckbx').value;
+        var serial=document.getElementById('SerialNo');
+        var skipChanges=document.getElementById('skipChangesCBox');
+        if(serial.value==""){
+            alert(noSerialEntered);
+            return false;
+        }
+        if(!skipChanges.checked ){
+           alert(notChecked);
+            return false;
+        }
     }
 </script>
 
