@@ -202,7 +202,7 @@
     </tr>
     <tr>
         <td>7</td>
-        <td><label><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
+        <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:select list="raceList" name="fatherRace"/></td>
@@ -226,7 +226,7 @@
         <td>10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6"><s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"
-                                     value="%{getText('marriedStatus'+marriage.parentsMarried+'.label')}"/></td>
+                                     value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
         <td><label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label></td>
         <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
                      value="1"/></td>
