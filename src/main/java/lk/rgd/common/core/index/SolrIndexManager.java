@@ -28,7 +28,7 @@ public class SolrIndexManager {
                 logger.info("Successfully connected to Solr at : " + solrURL);
             }
         } catch (Exception e) {
-            logger.error("Failed to connect to Solr at : " + solrURL);
+            logger.error("Failed to connect to Solr at : " + solrURL + " - " + e.getMessage());
         }
     }
 
