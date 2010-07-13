@@ -263,6 +263,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 if (address != null) {
                     notifyingAuthority.setNotifyingAuthorityAddress(address.toString());
                 }    
+
                 logger.debug("Notifyer info set from Ajax : {} {}", pin, notifyer.getFullNameInOfficialLanguage());
                 return "NotifyerInfo";
             } catch (Exception e) {
