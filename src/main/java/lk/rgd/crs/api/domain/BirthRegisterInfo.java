@@ -184,7 +184,11 @@ public class BirthRegisterInfo {
     public Date getDateOfRegistration() {
         return dateOfRegistration;
     }
-
+    public String getDateOfRegistrationForPrint() {
+        synchronized (dfm) {
+            return dfm.format(dateOfRegistration);
+        }
+    }
     public void setDateOfRegistration(Date dateOfRegistration) {
         this.dateOfRegistration = dateOfRegistration;
     }

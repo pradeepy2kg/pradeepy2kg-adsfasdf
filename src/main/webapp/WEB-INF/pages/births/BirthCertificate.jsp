@@ -212,7 +212,7 @@
     <tr>
         <td height="70px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
         </td>
-        <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
+        <td><s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
         </td>
         <td><s:label name="" value="%{#request.register.originalBCDateOfIssueForPrint}"/></td>
