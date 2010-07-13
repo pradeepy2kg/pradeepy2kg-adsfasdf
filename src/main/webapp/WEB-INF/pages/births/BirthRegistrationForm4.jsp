@@ -29,7 +29,7 @@
                 <td colspan="3"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
-                <td colspan="2" class="find-person">
+                <td colspan="2" class="find-person" width="200px">
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          onclick="javascript:view_NotifyerInfo();return false;">
@@ -42,10 +42,10 @@
         <sx:div id="notifyingAuthority.notifyingAuthorityPIN" href="%{loadNotifyerInfo}"
                 listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"/>
 
-        <table class="table_reg_page_04" width="100%" cellspacing="0">
+        <table class="table_reg_page_04" width="100%" cellspacing="0" style="border-top:none;">
           <tbody>
             <tr>
-                <td><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td width="200px"><label>දිනය <br>*in tamil <br>Date</label></td>
                 <td colspan="4"><sx:datetimepicker id="modifiedDatePicker"
                                                    name="notifyingAuthority.notifyingAuthoritySignDate"
                                                    displayFormat="yyyy-MM-dd"
