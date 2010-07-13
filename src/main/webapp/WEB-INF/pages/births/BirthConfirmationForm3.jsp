@@ -1,8 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %><script>
+    function view_ConfirmantInfo() {
+        dojo.event.topic.publish("view_ConfirmentInfo");
+    }
+</script>
 <div id="birth-confirmation-form-outer">
-    <s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST"
+    <s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST" id="birth-confirmation-form3"
             onsubmit="javascript:return validate()">
 
         <table class="table_con_page_03" cellspacing="0">
@@ -20,25 +24,24 @@
                 </td>
             </tr>
             <tr>
-                <td class="cell_01">15</td>
+                <td class="cell_01" width="40px">15</td>
                 <td colspan="3"><label>
                     උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
                     <br>PIN / NIC of person confirming the birth details
                 </label></td>
-                <td><s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" size="50"/></td>
+                <td><s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" size="45"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                 onclick="javascript:view_ConfirmantInfo();return false;"></td>
             </tr>
+            </tbody>
+            </table>
+             <s:url id="loadConfirmantInfo" action="../ajaxSupport_loadConfirmantInfo"/>
+            <sx:div id="test" href="%{loadConfirmantInfo}" listenTopics="view_ConfirmentInfo" formId="birth-confirmation-form3"
+        theme="ajax"/>
+        <table class="table_con_page_03" cellspacing="0" style="border-top:none;">
+            <tbody>
             <tr>
-                <td>16</td>
-                <td><label>
-                    උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
-                    <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
-                    <br>Full Name of the person confirming the birth details</label></td>
-                <td colspan="3"><s:textarea name="confirmant.confirmantFullName"
-                                            id="confirmantFullName"></s:textarea></td>
-            </tr>
-            <tr>
-                <td rowspan="2">17</td>
+                <td rowspan="2" width="40px">17</td>
                 <td rowspan="2"><label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct </label></td>
