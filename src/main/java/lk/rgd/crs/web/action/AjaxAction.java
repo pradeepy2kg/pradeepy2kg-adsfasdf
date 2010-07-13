@@ -54,6 +54,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private ParentInfo parent;
     private InformantInfo informant;
     private NotifyingAuthorityInfo notifyingAuthority;
+    private ConfirmantInfo confirmant;
     private User user;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
@@ -176,7 +177,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
         return "DSDivListUserPreference";
     }
 
-    public String loadMotherDSDivList(){
+    public String loadMotherDSDivList() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         getDSDivisionNames(language, motherDistrictId);
         if (!dsDivisionList.isEmpty())
@@ -206,7 +207,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             ParentInfo parentSession = bdf.getParent();
             if (parentSession != null) {
-                parent= parentSession;
+                parent = parentSession;
                 parent.setFatherNICorPIN(pin);
             }
         } catch (Exception e) {
@@ -228,7 +229,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
                 Address address = mother.getLastAddress();
                 if (address != null) {
                     parent.setMotherAddress(address.toString());
-                }    
+                }
                 logger.debug("Mother info set from Ajax : {} {}", pin, parent.getMotherFullName());
                 return "MotherInfo";
             } catch (Exception e) {
@@ -241,7 +242,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             ParentInfo parentSession = bdf.getParent();
             if (parentSession != null) {
-                parent= parentSession;
+                parent = parentSession;
                 parent.setMotherNICorPIN(pin);
             }
         } catch (Exception e) {
@@ -259,10 +260,10 @@ public class AjaxAction extends ActionSupport implements SessionAware {
             try {
                 Person notifyer = registryService.findPersonByPINorNIC(pin, user);
                 notifyingAuthority.setNotifyingAuthorityName(notifyer.getFullNameInOfficialLanguage());
-                Address address =notifyer.getLastAddress();
+                Address address = notifyer.getLastAddress();
                 if (address != null) {
                     notifyingAuthority.setNotifyingAuthorityAddress(address.toString());
-                }    
+                }
 
                 logger.debug("Notifyer info set from Ajax : {} {}", pin, notifyer.getFullNameInOfficialLanguage());
                 return "NotifyerInfo";
@@ -286,6 +287,38 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
         return "NotifyerInfo";
     }
+
+    public String loadConfirmantInfo() {
+        String pin = confirmant.getConfirmantNICorPIN();
+        if (!"".equals(pin)) {
+            logger.debug("Confirmant NIC/PIN received : {}", pin);
+            try {
+                Person confirmantAuthority = registryService.findPersonByPINorNIC(pin, user);
+                confirmant.setConfirmantFullName(confirmantAuthority.getFullNameInOfficialLanguage());
+                logger.debug("Confirmant info set from Ajax : {} {}", pin, confirmantAuthority.getFullNameInOfficialLanguage());
+
+                return "ConfirmantInfo";
+            } catch (Exception e) {
+                logger.debug("No match from Ajax for Confirmant PIN/NIC : {}", pin);
+            }
+        }
+        // NIC/pin either not entered (ajax preload at page load) or lookup failed. trying to salvage users existing data
+        try {
+            BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+            ConfirmantInfo confirmantSession = bdf.getConfirmant();
+            if (confirmantSession != null) {
+                confirmant = confirmantSession;
+                confirmant.setConfirmantNICorPIN(pin);
+            }
+        } catch (Exception e) {
+            // ignore
+            logger.debug("No session info for Confirmant");
+        }
+
+        return "ConfirmantInfo";
+
+    }
+
 
     public void setSession(Map map) {
         this.session = map;
@@ -394,5 +427,13 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public int getMotherDSDivisionId() {
         return motherDSDivisionId;
-    }       
+    }
+
+    public ConfirmantInfo getConfirmant() {
+        return confirmant;
+    }
+
+    public void setConfirmant(ConfirmantInfo confirmant) {
+        this.confirmant = confirmant;
+    }
 }

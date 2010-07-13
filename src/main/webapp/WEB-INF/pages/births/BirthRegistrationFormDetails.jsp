@@ -46,7 +46,7 @@
             <div id="bdaw-action">
                 <s:form action="eprDirectApproveIgnoreWarning">
                     <fieldset>
-                        <legend><s:label value="%{getText('ignoreWorning.label')}"/></legend>
+                        <legend><s:label value="%{getText('directApprovalWarning.label')}"/></legend>
                         <table>
                             <s:iterator value="#request.warnings">
                                 <tr>
