@@ -4,7 +4,6 @@
 
    <tr>
         <td align="left">
-        Welcome!
         </td>
    </tr>
 </table>
