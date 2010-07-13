@@ -5,7 +5,7 @@ var Manager;
     $(function () {
 
         Manager = new AjaxSolr.Manager({
-            solrUrl: 'http://localhost:8983/solr/'
+            solrUrl: 'http://localhost:8983/solr/prs/'
         });
 
         Manager.addWidget(new AjaxSolr.ResultWidget({
@@ -29,7 +29,7 @@ var Manager;
             target: '#selection'
         }));
 
-        Manager.addWidget(new AjaxSolr.TextWidget({
+        /*Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchPIN',
             target: '#searchPIN',
             field: 'pin'
@@ -39,18 +39,18 @@ var Manager;
             id: 'searchMothersNICorPIN',
             target: '#searchMothersNICorPIN',
             field: 'motherNICorPIN'
-        }));
+        }));*/
 
         Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchEnglish',
             target: '#searchEnglish',
-            field: 'childFullNameEnglish'
+            field: 'fullNameInEnglishLanguage'
         }));
 
         Manager.addWidget(new AjaxSolr.TextWidget({
             id: 'searchOfficial',
             target: '#searchOfficial',
-            field: 'childFullNameOfficialLang'
+            field: 'fullNameInOfficialLanguage'
         }));
 
         Manager.addWidget(new AjaxSolr.AdvancedSearchWidget({
@@ -65,7 +65,7 @@ var Manager;
             field: 'dateOfBirth'
         }));
 
-        var fields = [ 'childGender', 'birthDistrict', 'birthDivision' ];
+        var fields = [ 'gender' ];
         for (var i = 0, l = fields.length; i < l; i++) {
             Manager.addWidget(new AjaxSolr.TagcloudWidget({
                 id: fields[i],
@@ -79,7 +79,7 @@ var Manager;
         var params = {
             facet: true,
             'rows' : 100,
-            'facet.field': [ 'childGender', 'birthDistrict', 'birthDivision' ],
+            'facet.field': [ 'gender' ],
             'facet.limit': 20,
             'facet.mincount': 1,
             'f.topics.facet.limit': 50,

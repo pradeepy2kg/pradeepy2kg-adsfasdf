@@ -29,11 +29,11 @@
         afterRequest: function () {
             $(this.target).empty();
 
-            var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead><tr><th>NIC</th><th>DOB</th><th>Name in English</th><th>Name in Official Language</th></tr></thead>';
+            var table = '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"><thead><tr><th>UKey</th><th>DOB</th><th>Name in English</th><th>Name in Official Language</th><th>Gender</th><th>NIC</th></tr></thead>';
             for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
                 var doc = this.manager.response.response.docs[i];
 
-                table += '<tr><td>' + doc.nic + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) + '</td><td>' + doc.fullNameInEnglishLanguage + '</td><td>' + doc.fullNameInOfficialLanguage + '</td></tr>';
+                table += '<tr><td>' + doc.personUKey + '</td><td>' + (doc.dateOfBirth == null ? "" : doc.dateOfBirth.substring(0,10)) + '</td><td>' + doc.fullNameInEnglishLanguage + '</td><td>' + doc.fullNameInOfficialLanguage  + '</td><td>' + doc.gender + '</td><td>' + doc.nic + '</td></tr>';
             }
             table += '</table>';
 

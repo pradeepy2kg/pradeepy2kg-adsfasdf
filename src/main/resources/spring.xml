@@ -79,6 +79,7 @@
         <constructor-arg ref="popRegService"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
+        <constructor-arg ref="birthRecordsIndexer"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
@@ -93,7 +94,7 @@
 
     <!--Solr index manager-->
     <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
-        <constructor-arg value="http://localhost:8983/solr"/>
+        <constructor-arg value="http://localhost:8983/solr/births/"/>
     </bean>
     <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
         <constructor-arg ref="solrIndexManager"/>
