@@ -319,7 +319,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             birthDeclarationDAO.updateBirthDeclaration(existing);
 
             // add new record
-            bdf.setIdUKey(null); // force addition
+            bdf.setIdUKey(0); // force addition
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
             birthDeclarationDAO.addBirthDeclaration(bdf);
             logger.debug("Changes captured as birth record : {} and the old record : {} archived",
@@ -336,7 +336,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
     }
 
-    /**
+    /**                                       B
      * @inheritDoc
      */
     public List<UserWarning> approveConfirmationChangesForIDList(long[] approvalDataList, User user) {

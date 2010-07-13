@@ -37,6 +37,7 @@ public class BirthDeclarationValidator {
      * Validate if the record satisfy the minimum requirements for acceptance and storage. These checks does not
      * even mandate the name of the child being registered - but simply the declaration division, serial, date, sex
      * informant and the notifying authority
+     *
      * @param bdf the BDF to validate
      */
     public static void validateMinimalRequirements(BirthDeclaration bdf) {
@@ -72,10 +73,11 @@ public class BirthDeclarationValidator {
 
     /**
      * Validate typical requirements for a birth registration
+     *
      * @param birthDeclarationDAO the BirthDeclarationDAO
-     * @param bdf the BDF to validate
-     * @param user the user initiating the validation.
-     * The resulting warnings will be in the language preferred by the user
+     * @param bdf                 the BDF to validate
+     * @param user                the user initiating the validation.
+     *                            The resulting warnings will be in the language preferred by the user
      * @return a list of warnings issued against the BDF
      */
     public static List<UserWarning> validateStandardRequirements(
@@ -122,10 +124,10 @@ public class BirthDeclarationValidator {
                 start.getTime(), end.getTime(), bdf.getParent().getMotherNICorPIN());
 
             for (BirthDeclaration b : existingRecords) {
-                if (!b.getIdUKey().equals(bdf.getIdUKey())) {
+                if (b.getIdUKey() != bdf.getIdUKey()) {
                     warnings.add(
                         new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
-                            new Object[] {b.getIdUKey(), b.getRegister().getDateOfRegistration(),
+                            new Object[]{b.getIdUKey(), b.getRegister().getDateOfRegistration(),
                                 b.getChild().getChildFullNameOfficialLangToLength(20)})));
                 }
             }
@@ -148,5 +150,5 @@ public class BirthDeclarationValidator {
     private static boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }
-    
+
 }

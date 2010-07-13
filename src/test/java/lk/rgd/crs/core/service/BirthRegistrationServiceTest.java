@@ -370,7 +370,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // approve the changes by ADR
         birthRegSvc.approveConfirmationChanges(bdf1, true, adrColomboColombo);
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_APPROVED, bdf1.getRegister().getStatus());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_GENERATED, bdf1.getRegister().getStatus());
 
         // simulate the system generation of the PIN
         bdf1.getChild().setPin(1000100002L);
