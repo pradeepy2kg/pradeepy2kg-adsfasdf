@@ -35,18 +35,15 @@
                          onclick="javascript:view_NotifyerInfo();return false;">
                 </td>
             </tr>
-            <tr>
-                <td><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
-                <td colspan="4">
-                    <s:url id="loadNotifyerInfo" action="../ajaxSupport_loadNotifyerInfo"/>
-                    <sx:div id="notifyingAuthority.notifyingAuthorityPIN" href="%{loadNotifyerInfo}"
-                            listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"></sx:div>
-                </td>
-            </tr>
-            <tr>
-                <td><label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
-                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/></td>
-            </tr>
+            </tbody>
+        </table>
+
+        <s:url id="loadNotifyerInfo" action="../ajaxSupport_loadNotifyerInfo"/>
+        <sx:div id="notifyingAuthority.notifyingAuthorityPIN" href="%{loadNotifyerInfo}"
+                listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"/>
+
+        <table class="table_reg_page_04" width="100%" cellspacing="0">
+          <tbody>
             <tr>
                 <td><label>දිනය <br>*in tamil <br>Date</label></td>
                 <td colspan="4"><sx:datetimepicker id="modifiedDatePicker"
@@ -54,9 +51,8 @@
                                                    displayFormat="yyyy-MM-dd"
                                                    onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
             </tr>
-            </tbody>
-        </table>
-
+        </tbody>
+      </table>
 
         <s:hidden name="pageNo" value="4"/>
 
