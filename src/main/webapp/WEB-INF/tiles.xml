@@ -151,12 +151,12 @@
 
     <definition name="epr.birthRegistrationHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationHome.jsp"/>
-        <put-attribute name="title" value="Birth Registration"/>
+        <put-attribute name="title" value="birth_registration.label"/>
     </definition>
 
     <definition name="epr.stillBirth" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/stillBirth.jsp"/>
-        <put-attribute name="title" value="still Birth Registration"/>
+        <put-attribute name="title" value="still_birth_registration.label"/>
     </definition>
 
     <!--  User Management Tiles -->
