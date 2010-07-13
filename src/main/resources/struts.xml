@@ -94,6 +94,10 @@
     <package name="births" namespace="/births" extends="NG">
         <default-interceptor-ref name="default"/>
 
+        <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclaration">
             <result type="tiles" name="form5">epr.stillBirthRegistration_form1</result>
