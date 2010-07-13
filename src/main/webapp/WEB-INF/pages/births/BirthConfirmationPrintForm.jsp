@@ -230,8 +230,7 @@
     <tr>
         <td class="cell_011">10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
-        <td colspan="6"><s:textfield cssClass="disable" disabled="true"
-                                     value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>
+        <td colspan="6"><s:textfield cssClass="disable" disabled="true" name="marriage.parentsMarried" value=""/></td>
         <td colspan="11"></td>
     </tr>
 

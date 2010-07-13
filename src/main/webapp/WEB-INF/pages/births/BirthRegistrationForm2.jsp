@@ -203,8 +203,7 @@
         return returnval;
     }
     function motherage() {
-        child_bday=document.getElementById('childDateOfBirth').value;
-        alert(child_bday);
+        var child_bday = document.getElementById('childDateOfBirth').value;
         var mother_dob = dojo.widget.byId('motherDatePicker').inputNode.value;
         var check_mother_dob = mother_dob;
         mother_dob = new Date(mother_dob);
@@ -220,7 +219,7 @@
             else if (confirm(document.getElementById('mother_age').value + mother_age)) {
                 mother_age_at_birth.value = mother_age;
             }
-          return false;
+            return false;
         }
         else {
             mother_age_at_birth.value = mother_age;

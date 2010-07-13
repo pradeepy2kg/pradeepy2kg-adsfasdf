@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="4"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>*in tamil<br>No</label></td>
@@ -50,7 +50,7 @@
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:textfield name="marriage.placeOfMarriage"/></td>
+            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -65,11 +65,11 @@
                 மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
                 parents are not married, signatures of mother and father to include father's particulars</label></td>
             <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
-            <td align="center"><s:checkbox name="marriage.motherSigned"/></td>
+            <td align="center"><s:checkbox name="marriage.motherSigned" id="motherSigned"/></td>
         </tr>
         <tr>
             <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
-            <td align="center"><s:checkbox name="marriage.fatherSigned"/></td>
+            <td align="center"><s:checkbox name="marriage.fatherSigned" id="fatherSigned"/></td>
         </tr>
         </tbody>
     </table>
@@ -254,7 +254,10 @@
 <s:hidden id="p3error2" value="%{getText('p3.Informent.Name.error.value')}"/>
 <s:hidden id="p3error3" value="%{getText('p3.Informent.Address.error.value')}"/>
 <s:hidden id="p3error4" value="%{getText('p3.Inform.Date.error.value')}"/>
-
+<s:hidden id="p3error5" value="%{getText('p3.Marriage.Date.value')}"/>
+<s:hidden id="p3error6" value="%{getText('p3.Marriage.place.value')}"/>
+<s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
+<s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <script type="text/javascript">
     var informPerson;
     function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
@@ -281,7 +284,6 @@
         var errormsg = "";
         var element;
         var returnval;
-
         /*date related validations*/
         var submitDatePicker = dojo.widget.byId('informDatePicker').inputNode.value;
         var submit = new Date(submitDatePicker);
@@ -290,8 +292,8 @@
             flag = true;
         }
 
-        element = document.getElementById('informantType');
-        if (element.value == "") {
+        element = document.getElementsByName("informant.informantType");
+        if (element.checked) {
             errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
         }
         element = document.getElementById('informantName');
@@ -299,10 +301,35 @@
             errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
         }
         element = document.getElementById('informantAddress');
-        if (!element.checked) {
+        if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
         }
+        element = document.getElementsByName("marriage.parentsMarried")[1];
+        if (element.checked)
+        {
+            element = document.getElementById('placeOfMarriage');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
+            }
 
+            submitDatePicker = dojo.widget.byId('marriageDatePicker').inputNode.value;
+            submit = new Date(submitDatePicker);
+            if (!(submit.getTime())) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
+                flag = true;
+            }
+            element = document.getElementById('motherSigned');
+            if(!element.checked)
+            {
+               errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
+            }
+            element = document.getElementById('fatherSigned');
+            if(!element.checked)
+            {
+               errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+            }
+
+        }
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
