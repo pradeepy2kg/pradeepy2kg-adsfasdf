@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %><script>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<script>
     function view_ConfirmantInfo() {
         dojo.event.topic.publish("view_ConfirmentInfo");
     }
@@ -30,14 +31,16 @@
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
                     <br>PIN / NIC of person confirming the birth details
                 </label></td>
-                <td><s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" size="45"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                 onclick="javascript:view_ConfirmantInfo();return false;"></td>
+                <td><s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN" size="45"/><img
+                        src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                        onclick="javascript:view_ConfirmantInfo();return false;"></td>
             </tr>
             </tbody>
-            </table>
-             <s:url id="loadConfirmantInfo" action="../ajaxSupport_loadConfirmantInfo"/>
-            <sx:div id="test" href="%{loadConfirmantInfo}" listenTopics="view_ConfirmentInfo" formId="birth-confirmation-form3"
-        theme="ajax"/>
+        </table>
+        <s:url id="loadConfirmantInfo" action="../ajaxSupport_loadConfirmantInfo"/>
+        <sx:div id="test" href="%{loadConfirmantInfo}" listenTopics="view_ConfirmentInfo"
+                formId="birth-confirmation-form3"
+                theme="ajax"/>
         <table class="table_con_page_03" cellspacing="0" style="border-top:none;">
             <tbody>
             <tr>
@@ -106,8 +109,9 @@
                 <s:param name="pageNo" value="{pageNo - 1}"/>
                 <s:param name="skipConfirmationChages" value="#request.skipConfirmationChages"/>
             </s:url>
-            <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" border="none"
-                                        style="margin-top:10px;"/></s:a>
+            <s:if test="#request.skipConfirmationChages==false">
+                <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" border="none"
+                                            style="margin-top:10px;"/></s:a> </s:if>
         </div>
     </s:form>
 </div>
