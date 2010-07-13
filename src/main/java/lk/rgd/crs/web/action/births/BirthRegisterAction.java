@@ -221,13 +221,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("skipConfirmationChanges {}", skipConfirmationChages);
                 //todo exception handling, validations and error reporting
                 if (skipConfirmationChages) {
+                    //no confirmation changes by skipping 2 of 3BDC
                     if (bdf.getRegister().getBirthDivision() == null) {
+                        //skip without selecting a valid Birth Declaration
+                        addActionError(getText("cp3.confirmation.changes.invalid.operation"));
                         return ERROR;
                     } else {
                         service.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf, user);
+                        addActionMessage(getText("cp3.confirmation.changes.success"));
                     }
                 } else {
                     service.captureLiveBirthConfirmationChanges(bdf, user);
+                    addActionMessage(getText("cp3.confirmation.changes.success"));
                 }
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         }
@@ -387,6 +392,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return "form0";
     }
 
+    /**
+     * This is responsible for skipping the 2 of 3BDC
+     * if there is no confirmation changes recieved.
+     *
+     * @return
+     */
     public String skipConfirmationChanges() {
         BirthDeclaration bdf;
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);

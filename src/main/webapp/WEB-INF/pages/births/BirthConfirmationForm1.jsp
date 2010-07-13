@@ -283,7 +283,7 @@
         var notChecked=document.getElementById('p1errorckbx').value;
         var serial=document.getElementById('SerialNo');
         var skipChanges=document.getElementById('skipChangesCBox');
-        if(serial.value==""){
+        if(serial.value==0){
             alert(noSerialEntered);
             return false;
         }
