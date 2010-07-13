@@ -36,7 +36,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     }
 
     public Locale getLocale() {
-         return (Locale) session.get(WebConstants.SESSION_USER_LANG);
+        return (Locale) session.get(WebConstants.SESSION_USER_LANG);
     }
 
     /**
@@ -203,6 +203,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_ADVANCE_SEARCH, new Link("advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
 
         //non displayable (in the menu) pages
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME, new Link(null, "/popreg/births/", "eprHome.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link(null, "/popreg/births/", "eprBirthRegistration.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION, new Link(null, "/popreg/births/", "eprBirthConfirmation.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REFRESH, new Link(null, "/popreg/births/", "eprConfirmationApprovalRefresh.do"));
@@ -246,7 +247,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.BACK_CHANGE_PASSWORD, new Link(null, "/popreg/preferences/", "eprBackChangePass.do"));
         linkPermission.put(Permission.CHANGE_PASSWORD_PAGE_LOAD, new Link(null, "/popreg/preferences/", "passChangePageLoad.do"));
         linkPermission.put(Permission.PAGE_USER_PREFERENCE_INIT, new Link(null, "/popreg/preferences/", "eprUserPreferencesAction.do"));
-         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES, new Link(null, "/popreg/births/", "eprBirthConfirmationSkipChanges.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES, new Link(null, "/popreg/births/", "eprBirthConfirmationSkipChanges.do"));
         linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("advanceSearch.label", "/popreg/prs/", "eprPRSAdvancedSearch.do"));
     }
 }
