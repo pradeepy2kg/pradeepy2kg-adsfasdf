@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%-- @author Duminda Dharmakeerthi. --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -214,7 +215,7 @@
         <td><s:label name="" value="%{#request.register.lastDateForConfirmation}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
         </td>
-        <td><s:label><%= new java.util.Date() %></s:label></td>
+        <td><s:label name="" value="%{#request.register.originalBCDateOfIssueForPrint}"/></td>
     </tr>
     <tr>
         <td colspan="2" height="120px">

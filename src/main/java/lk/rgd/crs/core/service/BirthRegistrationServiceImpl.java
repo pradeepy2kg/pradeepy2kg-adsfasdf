@@ -376,8 +376,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, existing);
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_PRINTED);
-        existing.getRegister().setOriginalBCDateOfIssue(new Date());
+        final Date originalBCDateOfIssue = new Date();
+        existing.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
+        bdf.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
         existing.getRegister().setOriginalBCPrintUser(user);
+        bdf.getRegister().setOriginalBCPrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing);
 

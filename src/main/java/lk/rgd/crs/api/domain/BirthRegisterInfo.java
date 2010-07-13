@@ -6,6 +6,8 @@ import lk.rgd.common.api.domain.User;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * An instance representing birth registration process specific official information
@@ -13,6 +15,8 @@ import java.util.Date;
  */
 @Embeddable
 public class BirthRegisterInfo {
+    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+
     /**
      * The preferred language of for the record
      */
@@ -133,6 +137,12 @@ public class BirthRegisterInfo {
 
     public Date getOriginalBCDateOfIssue() {
         return originalBCDateOfIssue;
+    }
+
+    public String getOriginalBCDateOfIssueForPrint() {
+        synchronized (dfm) {
+            return dfm.format(originalBCDateOfIssue);
+        }
     }
 
     public void setOriginalBCDateOfIssue(Date originalBCDateOfIssue) {

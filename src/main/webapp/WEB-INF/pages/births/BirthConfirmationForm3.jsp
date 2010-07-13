@@ -14,7 +14,8 @@
             <col/>
             <tbody>
             <tr>
-                <td colspan="5" style="text-align:center;font-size:12pt"> උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil
+                <td colspan="5" style="text-align:center;font-size:12pt"> උපත තහවුරු කරන්නාගේ විස්තර
+                    <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவர்
                     <br>Person confirming the birth details
                 </td>
             </tr>
