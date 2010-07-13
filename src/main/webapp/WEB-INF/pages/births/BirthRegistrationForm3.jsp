@@ -17,8 +17,9 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Details of the
-                Marriage
+            <td colspan="5" style="text-align:center;font-size:12pt">විවාහයේ විස්තර
+                <br>திருமணத்தின் விபரங்கள்
+                <br>Details of the Marriage
             </td>
         </tr>
         <tr>
@@ -30,19 +31,19 @@
                     <col width="20px" align="right"/>
                     <tbody>
                     <tr>
-                        <td><label>*in sinhala<br>*in tamil<br>Unknown</label></td>
+                        <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
                     </tr>
                     <tr>
-                        <td><label>*in sinhala<br>*in tamil<br>Yes</label></td>
+                        <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/></td>
                     </tr>
                     <tr>
-                        <td><label>*in sinhala<br>*in tamil<br>No</label></td>
+                        <td><label>නැත<br>*in tamil<br>No</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
                     </tr>
                     <tr>
-                        <td><label>*in sinhala<br>*in tamil<br>Since Married</label></td>
+                        <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"/></td>
                     </tr>
                     </tbody>
@@ -83,9 +84,9 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt">*in Sinhala<br>*in Tamil<br>Details of the Grand
-                Father
-                / Great Grand Father
+            <td colspan="5" style="text-align:center;font-size:12pt">සීයාගේ / මී මුත්තා ගේ විස්තර
+                <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
+                <br>Details of the Grand Father / Great Grand Father
             </td>
         </tr>
         <tr>
@@ -100,9 +101,9 @@
         </tr>
         <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthYear" /></td>
+            <td><s:textfield name="grandFather.grandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthPlace" /></td>
+            <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
         </tr>
         <tr>
             <td colspan="5"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
