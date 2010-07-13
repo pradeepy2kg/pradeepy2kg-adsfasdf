@@ -27,21 +27,26 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     private final Map<Integer, Map<Integer, String>> enNames = new HashMap<Integer, Map<Integer, String>>();
     private final Map<Integer, Map<Integer, String>> taNames = new HashMap<Integer, Map<Integer, String>>();
 
+
+    /**
+     * @inheritDoc
+     * This method is there for getting all t he DS division names for a given district
+     * Without restricting on user/role permissions. This is needed to capture mothers DS division in
+     * Birth dicration data entry.
+     */
+    public Map<Integer, String> getAllDSDivisionNames(int districtUKey, String language, User user) {
+        Map<Integer, String> result = getAllDSDivisionNames(districtUKey, language);
+        // todo auditing for user
+        return result;
+    }
+
+
     /**
      * @inheritDoc
      */
     public Map<Integer, String> getDSDivisionNames(int districtUKey, String language, User user) {
 
-        Map<Integer, String> result = null;
-        if (AppConstants.SINHALA.equals(language)) {
-            result = getDSDivisionNamesImpl(siNames, districtUKey);
-        } else if (AppConstants.ENGLISH.equals(language)) {
-            result = getDSDivisionNamesImpl(enNames, districtUKey);
-        } else if (AppConstants.TAMIL.equals(language)) {
-            result = getDSDivisionNamesImpl(taNames, districtUKey);
-        } else {
-            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
-        }
+        Map<Integer, String> result = getAllDSDivisionNames(districtUKey, language);
 
         if (user == null) {
             return result;
@@ -63,6 +68,20 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
             }
             return filteredResult;
         }
+    }
+
+    private Map<Integer, String> getAllDSDivisionNames(int districtUKey, String language) {
+        Map<Integer, String> result = null;
+        if (AppConstants.SINHALA.equals(language)) {
+            result = getDSDivisionNamesImpl(siNames, districtUKey);
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            result = getDSDivisionNamesImpl(enNames, districtUKey);
+        } else if (AppConstants.TAMIL.equals(language)) {
+            result = getDSDivisionNamesImpl(taNames, districtUKey);
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return result;
     }
 
     public String getNameByPK(int dsDivisionUKey, String language) {

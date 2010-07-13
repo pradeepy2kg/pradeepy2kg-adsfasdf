@@ -190,3 +190,13 @@ body {
 .hidden {
     display: none;
 }
+
+#home-page-outer{
+    padding:10px;
+    text-align:center;
+}
+
+#home-page-outer img{
+    margin:auto;
+    clear:both;
+}

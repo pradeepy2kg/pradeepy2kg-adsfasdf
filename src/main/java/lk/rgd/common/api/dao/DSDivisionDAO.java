@@ -21,6 +21,16 @@ public interface DSDivisionDAO {
     public Map<Integer, String> getDSDivisionNames(int districtId, String language, User user);
 
     /**
+     * Returns All the DS Divisions.
+     *
+     * @param districtUKey
+     * @param language
+     * @param user
+     * @return
+     */
+    public Map<Integer, String> getAllDSDivisionNames(int districtUKey, String language, User user);
+
+    /**
      * Return the name of the D.S Division in the given language
      * @param dsDivisionUKey the unique DS Division ID
      * @param language selected language to return the name

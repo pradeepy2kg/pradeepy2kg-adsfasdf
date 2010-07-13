@@ -104,10 +104,16 @@ public class AjaxAction extends ActionSupport implements SessionAware {
     private void getDSDivisionNames(String language, int BDId) {
         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
         logger.debug("DS Divisions are selected for the birth district: {} ", BDId);
+
         if (!dsDivisionList.isEmpty()) {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
             logger.debug("And set DS division: {} as the first element of the list.", dsDivisionId);
         }
+    }
+
+    private void getAllDSDivisionNames(String language, int BDId) {
+        this.dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(BDId, language, user);
+        logger.debug("DS Divisions are selected for the birth district {}.", BDId);
     }
 
     private void populateBDDivList() {
@@ -179,9 +185,25 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
     public String loadMotherDSDivList() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        getDSDivisionNames(language, motherDistrictId);
+        this.getAllDSDivisionNames(language, motherDistrictId);
+
+        Object o = session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        if (o != null) {
+            try {
+                BirthDeclaration bdf = (BirthDeclaration) o;
+                ParentInfo parentInfo = bdf.getParent();
+                if (parentInfo.getMotherDSDivision() != null) {
+                    motherDSDivisionId = parentInfo.getMotherDSDivision().getDsDivisionUKey();
+                    return "MotherDSDivList";
+                }
+            } catch (Exception e) {
+                logger.debug(" Problem with BD division in session. ignoring.. {} ", e.getMessage());
+            }
+        }
+        
         if (!dsDivisionList.isEmpty())
             motherDSDivisionId = dsDivisionList.keySet().iterator().next();
+
         logger.debug("Mother DS division list set from Ajax : {} {}", birthDistrictId, dsDivisionId);
         return "MotherDSDivList";
     }
