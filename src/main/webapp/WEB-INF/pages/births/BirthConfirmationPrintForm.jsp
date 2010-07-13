@@ -1,3 +1,5 @@
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.util.Date" %>
 <%--
  @author amith jayasekara
 --%>
@@ -560,7 +562,7 @@
         </tbody>
     </table>
 
-    <table border="1" cellspacing="0">
+    <table border="0" cellspacing="0">
         <caption></caption>
         <col/>
         <col/>
@@ -598,7 +600,7 @@
         <tr>
             <td>Printed On</td>
 
-            <td style="text-align:right;margin-left:auto;margin-right:0;"><%= new java.util.Date() %>
+            <td style="text-align:right;margin-left:auto;margin-right:0;"><%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()) %>
 </td>
         </tr>
         </tbody>
