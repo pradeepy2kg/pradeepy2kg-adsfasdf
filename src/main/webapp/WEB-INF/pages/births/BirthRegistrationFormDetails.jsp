@@ -54,7 +54,7 @@
             <div id="bdaw-action">
                 <s:form action="eprDirectApproveIgnoreWarning">
                     <fieldset>
-                        <legend><s:label value="%{getText('ignoreWorning.label')}"/> </legend>
+                        <legend><s:label value="%{getText('ignoreWorning.label')}"/></legend>
                         <table border="0">
                             <tr>
                                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
@@ -63,7 +63,8 @@
                             <tr>
                                 <s:hidden value="%{#request.bdId}" name="bdId"/>
                                 <s:hidden value="true" name="directDeclarationApprovalFlag"/>
-                                <td colspan="4" class="button" align="left"><s:submit name="approve" value="%{getText('approve.label')}"/></td>
+                                <td colspan="4" class="button" align="left">
+                                    <s:submit name="approve" value="%{getText('approve.label')}"/></td>
                             </tr>
                         </table>
                     </fieldset>
@@ -89,9 +90,7 @@
                 </s:else>
             </s:if>
             <s:else>
-
-                    <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
-                
+                <s:a href="%{approveUrl}"><s:label value="%{getText('approve_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
             </s:else>
         </s:if>
         <s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
