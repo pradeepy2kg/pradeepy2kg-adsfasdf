@@ -29,7 +29,7 @@
 <script type="text/javascript" src="../js/prssearch.js"></script>
 
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/jquery/PagerWidget.js"></script>
-<script type="text/javascript" src="../lib/ajaxsolr/widgets/BirthResultWidget.js"></script>
+<script type="text/javascript" src="../lib/ajaxsolr/widgets/PRSResultWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/DateRangeWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/AdvancedSearchWidget.js"></script>
 <script type="text/javascript" src="../lib/ajaxsolr/widgets/TagcloudWidget.js"></script>
@@ -53,24 +53,11 @@
 
         <div id="tabs">
             <ul>
-                <li><a href="#fragment-1"><span>Basic Search</span></a></li>
                 <li><a href="#fragment-2"><span>Name</span></a></li>
                 <li><a href="#fragment-3"><span>Gender</span></a></li>
-                <li><a href="#fragment-4"><span>District</span></a></li>
-                <li><a href="#fragment-5"><span>Division</span></a></li>
                 <li><a href="#fragment-6"><span>Date</span></a></li>
                 <li><a href="#fragment-7"><span>Advanced Search</span></a></li>
             </ul>
-            <div id="fragment-1">
-                <div id="searchPIN">
-                    <span>Search PIN Number</span>
-                    <input type="text" id="queryPIN" name="queryPIN"/>
-                </div>
-                <div id="searchMothersNICorPIN">
-                    <span>Search by Mothers NIC or PIN</span>
-                    <input type="text" id="queryMothersNICorPIN" name="queryMothersNICorPIN"/>
-                </div>
-            </div>
             <div id="fragment-2">
                 <div id="searchEnglish">
                     <span>Search full name in English</span>
@@ -83,17 +70,7 @@
             </div>
             <div id="fragment-3">
                 <span>Gender</span>
-                <div class="tagcloud" id="childGender"></div>
-                <div class="clear"></div>
-            </div>
-            <div id="fragment-4">
-                <span>Registration District</span>
-                <div class="tagcloud" id="birthDistrict"></div>
-                <div class="clear"></div>
-            </div>
-            <div id="fragment-5">
-                <span>Registration  Division</span>
-                <div class="tagcloud" id="birthDivision"></div>
+                <div class="tagcloud" id="gender"></div>
                 <div class="clear"></div>
             </div>
             <div id="fragment-6">

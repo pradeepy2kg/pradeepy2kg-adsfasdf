@@ -122,7 +122,7 @@ public class BirthDeclarationValidator {
                 start.getTime(), end.getTime(), bdf.getParent().getMotherNICorPIN());
 
             for (BirthDeclaration b : existingRecords) {
-                if (b.getIdUKey() != bdf.getIdUKey()) {
+                if (!b.getIdUKey().equals(bdf.getIdUKey())) {
                     warnings.add(
                         new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
                             new Object[] {b.getIdUKey(), b.getRegister().getDateOfRegistration(),
