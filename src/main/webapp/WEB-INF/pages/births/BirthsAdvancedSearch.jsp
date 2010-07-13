@@ -82,19 +82,25 @@
                 </div>
             </div>
             <div id="fragment-3">
+                <fieldset style="border:none">
                 <span>Gender</span>
                 <div class="tagcloud" id="childGender"></div>
                 <div class="clear"></div>
+                </fieldset>
             </div>
             <div id="fragment-4">
+                <fieldset style="border:none">
                 <span>Registration District</span>
                 <div class="tagcloud" id="birthDistrict"></div>
                 <div class="clear"></div>
+                </fieldset>
             </div>
             <div id="fragment-5">
+                <fieldset style="border:none">
                 <span>Registration  Division</span>
                 <div class="tagcloud" id="birthDivision"></div>
                 <div class="clear"></div>
+                </fieldset>
             </div>
             <div id="fragment-6">
                 <div id="searchDOBRange">
