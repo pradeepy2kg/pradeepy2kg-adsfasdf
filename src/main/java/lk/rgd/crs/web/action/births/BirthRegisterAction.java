@@ -12,6 +12,7 @@ import java.util.*;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -267,7 +268,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
@@ -375,7 +376,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             try {
                 bdf = service.getById(bdId, user);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -418,7 +419,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             liveBirth = bdf.getRegister().getLiveBirth();
             if (liveBirth) {
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED)) {
                     return ERROR;
                 } else {
                     service.markLiveBirthCertificateAsPrinted(bdf, user);
@@ -543,11 +544,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
 
             if (parent.getMotherDSDivision() != null) {
-                motherDistrictId = parent.getMotherDSDivision().getDsDivisionUKey();
-            }
-
-            if (parent.getMotherDSDivision() != null) {
                 motherDSDivisionId = parent.getMotherDSDivision().getDsDivisionUKey();
+            }
+            DSDivision ds = parent.getMotherDSDivision();
+            if (ds != null) {
+                motherDSDivisionId = ds.getDsDivisionUKey();
+                motherDistrictId = ds.getDistrict().getDistrictUKey();
             }
         }
     }

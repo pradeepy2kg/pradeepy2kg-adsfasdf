@@ -130,16 +130,22 @@
     <s:url id="loadDSDivList" action="../ajaxSupport_loadMotherDSDivList"/>
     <tbody>
     <tr>
-        <td colspan="2" class="table_reg_cell_02"><label>*in Sinhala/*in English/District</label></td>
-        <td colspan="7" class="table_reg_cell_02">
+        <td width="200px" style="border-top:none; border-bottom:none;"></td>
+        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>*in Sinhala/*in English/District</label></td>
+        <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
+            <s:if test="#parent.motherDSDivision.district.districtUKey >0" >
+            <s:select name="motherDistrictId" list="allDistrictList" onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
+        </s:if>
+        <s:else>
             <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
                       headerValue="%{getText('select_district.label')}"
                       onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
+        </s:else>
     </tr>
     <tr>
-
+        <td width="200px" style="border-top:none;"></td>
         <td colspan="2"><label>*in Sinhala/*in English/D.S Division</label></td>
-        <td colspan="7" class="table_reg_cell_02">
+        <td colspan="6" class="table_reg_cell_02">
             <sx:div id="motherDSDivisionId" value="motherDSDivisionId" href="%{loadDSDivList}" theme="ajax"
                     listenTopics="view_DSDivs" formId="birth-registration-form-2"></sx:div>
         </td>
