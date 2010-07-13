@@ -20,8 +20,9 @@
             <col/>
             <tbody>
             <tr>
-                <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Notifying
-                    Authority
+                <td colspan="5" style="text-align:center;font-size:12pt"> තොරතුරු වාර්තා කරන පාර්ශවය
+                    <br>அதிகாரியிடம் தெரிவித்தல்
+                    <br>Notifying Authority
                 </td>
             </tr>
             <tr>
@@ -31,7 +32,7 @@
                 <td colspan="2" class="find-person">
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                 onclick="javascript:view_NotifyerInfo();return false;">
+                         onclick="javascript:view_NotifyerInfo();return false;">
                 </td>
             </tr>
             <tr>
@@ -47,10 +48,11 @@
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"/></td>
             </tr>
             <tr>
-                <td ><label>දිනය <br>*in tamil <br>Date</label></td>
-                <td colspan="4"><sx:datetimepicker id="modifiedDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
-                                       displayFormat="yyyy-MM-dd"
-                                       onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
+                <td><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td colspan="4"><sx:datetimepicker id="modifiedDatePicker"
+                                                   name="notifyingAuthority.notifyingAuthoritySignDate"
+                                                   displayFormat="yyyy-MM-dd"
+                                                   onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
             </tr>
             </tbody>
         </table>
@@ -68,9 +70,8 @@
                 var errormsg = "";
                 var element;
                 var returnval;
-                var dat=document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
-                alert(dat);
-
+                var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
+                
                 /*date related validations*/
                 var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
                 var submit = new Date(submitDatePicker);
@@ -119,11 +120,11 @@
             </s:if>
         </s:if>
 
-        <div class="form-submit">              
+        <div class="form-submit">
             <s:submit value="%{getText('next.label')}"/>
         </div>
         <div class="next-previous">
-             <s:url id="backUrl" action="eprBirthRegistration">
+            <s:url id="backUrl" action="eprBirthRegistration">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
