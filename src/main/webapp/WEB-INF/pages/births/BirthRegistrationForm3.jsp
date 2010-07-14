@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="4"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>*in tamil<br>No</label></td>
