@@ -21,6 +21,9 @@ public class GrandFatherInfo implements Serializable {
     @Column(nullable = true, length = 60)
     private String grandFatherBirthPlace;
 
+    @Column(nullable = true, length = 10)
+    private String grandFatherNICorPIN;
+
     // If the father was not born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's details
     @Column(nullable = true, length = 600)
     private String greatGrandFatherFullName;
@@ -30,6 +33,9 @@ public class GrandFatherInfo implements Serializable {
 
     @Column(nullable = true, length = 60)
     private String greatGrandFatherBirthPlace;
+
+    @Column(nullable = true, length = 10)
+    private String greatGrandFatherNICorPIN;
 
     public String getGrandFatherFullName() {
         return grandFatherFullName;
@@ -77,5 +83,21 @@ public class GrandFatherInfo implements Serializable {
 
     public void setGreatGrandFatherBirthPlace(String greatGrandFatherBirthPlace) {
         this.greatGrandFatherBirthPlace = greatGrandFatherBirthPlace;
+    }
+
+    public String getGrandFatherNICorPIN() {
+        return grandFatherNICorPIN;
+    }
+
+    public void setGrandFatherNICorPIN(String grandFatherNICorPIN) {
+        this.grandFatherNICorPIN = grandFatherNICorPIN;
+    }
+
+    public String getGreatGrandFatherNICorPIN() {
+        return greatGrandFatherNICorPIN;
+    }
+
+    public void setGreatGrandFatherNICorPIN(String greatGrandFatherNICorPIN) {
+        this.greatGrandFatherNICorPIN = greatGrandFatherNICorPIN;
     }
 }

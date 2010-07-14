@@ -34,6 +34,12 @@ public class ChildInfo implements Serializable {
     private String placeOfBirth;
 
     /**
+     * The place of birth in English - usually the village or hospital name
+     */
+    @Column(nullable = true, length = 255)
+    private String placeOfBirthEnglish;
+
+    /**
      * 0-Yes, 1-No
      */
     @Column(nullable = true, columnDefinition = "integer default 1")
@@ -214,5 +220,13 @@ public class ChildInfo implements Serializable {
 
     public void setWeeksPregnant(Integer weeksPregnant) {
         this.weeksPregnant = weeksPregnant;
+    }
+
+    public String getPlaceOfBirthEnglish() {
+        return placeOfBirthEnglish;
+    }
+
+    public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
+        this.placeOfBirthEnglish = placeOfBirthEnglish;
     }
 }
