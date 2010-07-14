@@ -334,7 +334,6 @@
         element = document.getElementsByName("marriage.parentsMarried")[2];
         if(element.checked ){
             element = document.getElementById('fatherName');
-            alert(element.value);
             if(!element.checked && element.value.length>0)
             {
                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
