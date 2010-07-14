@@ -103,15 +103,17 @@
         <div class="form-submit">
             <s:submit value="%{getText('next.label')}"/>
         </div>
+        <s:if test="#request.skipConfirmationChages==false">
         <div class="next-previous">
             <s:url id="backUrl" action="eprBirthConfirmation">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
                 <s:param name="skipConfirmationChages" value="#request.skipConfirmationChages"/>
             </s:url>
-            <s:if test="#request.skipConfirmationChages==false">
-                <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" border="none"
-                                            style="margin-top:10px;"/></s:a> </s:if>
+
+               <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a> </s:if>
+
+
         </div>
     </s:form>
 </div>

@@ -234,6 +234,7 @@
     }
 </script>
 
+
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
         <s:label value="%{getText('skipvalidation.label')}"/>

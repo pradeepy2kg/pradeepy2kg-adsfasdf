@@ -66,13 +66,14 @@
             <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
             <s:submit value="%{getText('next.label')}"/>
         </div>
+
         <div class="next-previous">
             <s:url id="backUrl" action="eprBirthConfirmation">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
                 <s:param name="skipConfirmationChages" value="#request.skipConfirmationChages"/>
             </s:url>
-            <s:a href="%{backUrl}"><img src="<s:url value='/images/previous.gif'/>" border="none" style="margin-top:10px;"/></s:a>
+            <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
         </div>
     </s:form>
 </div>
