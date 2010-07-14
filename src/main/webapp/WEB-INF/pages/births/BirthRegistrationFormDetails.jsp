@@ -47,23 +47,21 @@
                 <s:form action="eprDirectApproveIgnoreWarning">
                     <fieldset>
                         <legend><s:label value="%{getText('directApprovalWarning.label')}"/></legend>
-                        <table>
+                        <table class="birth-registration-form-details-warning-table">
                             <s:iterator value="#request.warnings">
                                 <tr>
                                     <td><s:property value="message"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
-                        <table border="0" align="center">
+                        <table class="birth-registration-form-details-button-table">
                             <tr>
                                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
                                 <td><s:checkbox name="ignoreWarning"/></td>
-                            </tr>
-                            <tr>
                                 <s:hidden value="%{#request.bdId}" name="bdId"/>
                                 <s:hidden value="true" name="directDeclarationApprovalFlag"/>
-                                <td colspan="4" class="button" align="left"><s:submit name="approve"
-                                                                                      value="%{getText('approve.label')}"/></td>
+                                <td class="button" align="left"><s:submit name="approve"
+                                                                          value="%{getText('approve.label')}"/></td>
                             </tr>
                         </table>
                     </fieldset>
