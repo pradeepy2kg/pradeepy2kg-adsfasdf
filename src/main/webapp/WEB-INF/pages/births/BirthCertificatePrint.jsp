@@ -43,8 +43,8 @@
         <table width="100%" cellpadding="5" cellspacing="0">
             <col width="220px"/>
             <col/>
-            <col width="120px"/>
-            <col width="120px"/>
+            <col width="160px"/>
+            <col width="160px"/>
             <tbody>
             <tr>
                 <td><s:label name="district" value="%{getText('district.label')}"/></td>
@@ -52,9 +52,9 @@
                               onchange="javascript:view_DSDivs();return false;"
                               cssStyle="width:240px;"/>
                 </td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'false':'Not Printed'}" name="printed"
+                <td align="right"><s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}" name="printed"
                                            value="false"/></td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'true':'Printed'}" name="printed"/></td>
+                <td align="right"><s:radio list="#@java.util.HashMap@{'true':getText('printed.label')}" name="printed"/></td>
             </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
