@@ -110,7 +110,7 @@
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
-        <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
+        <td colspan="3"><label> රෝහලේදී /*in Tamil/In a Hospital</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
         <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}" value="true"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
