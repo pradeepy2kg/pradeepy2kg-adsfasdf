@@ -2,8 +2,7 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.*;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +18,13 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthDeclaration(BirthDeclaration bdf) {
+        setBlankStringsAsNull(bdf);
         em.persist(bdf);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateBirthDeclaration(BirthDeclaration bdf) {
+        setBlankStringsAsNull(bdf);
         em.merge(bdf);
     }
 
@@ -131,5 +132,97 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         Query q = em.createNamedQuery("filter.by.unconfirmed.by.register.date");
         q.setParameter("date", date);
         return q.getResultList();
+    }
+
+    /**
+     * Sets fields that are "" or one or more spaces to null
+     * @param bdf the BDF to update
+     */
+    private void setBlankStringsAsNull(BirthDeclaration bdf) {
+        BirthRegisterInfo register = bdf.getRegister();
+        if (isBlankString(register.getComments())) {
+            register.setComments(null);
+        }
+
+        ChildInfo child = bdf.getChild();
+        if (isBlankString(child.getChildFullNameEnglish())) {
+            child.setChildFullNameEnglish(null);
+        }
+        if (isBlankString(child.getChildFullNameOfficialLang())) {
+            child.setChildFullNameOfficialLang(null);
+        }
+
+        ParentInfo parent = bdf.getParent();
+        if (isBlankString(parent.getFatherNICorPIN())) {
+            parent.setFatherNICorPIN(null);
+        }
+        if (isBlankString(parent.getFatherPassportNo())) {
+            parent.setFatherPassportNo(null);
+        }
+        if (isBlankString(parent.getFatherPlaceOfBirth())) {
+            parent.setFatherPlaceOfBirth(null);
+        }
+        if (isBlankString(parent.getFatherFullName())) {
+            parent.setFatherFullName(null);
+        }
+
+        if (isBlankString(parent.getMotherNICorPIN())) {
+            parent.setMotherNICorPIN(null);
+        }
+        if (isBlankString(parent.getMotherPassportNo())) {
+            parent.setMotherPassportNo(null);
+        }
+        if (isBlankString(parent.getMotherFullName())) {
+            parent.setMotherFullName(null);
+        }
+        if (isBlankString(parent.getMotherPlaceOfBirth())) {
+            parent.setMotherPlaceOfBirth(null);
+        }
+        if (isBlankString(parent.getMotherAdmissionNo())) {
+            parent.setMotherAdmissionNo(null);
+        }
+        if (isBlankString(parent.getMotherAddress())) {
+            parent.setMotherAddress(null);
+        }
+        if (isBlankString(parent.getMotherPhoneNo())) {
+            parent.setMotherPhoneNo(null);
+        }
+        if (isBlankString(parent.getMotherEmail())) {
+            parent.setMotherEmail(null);
+        }
+
+        MarriageInfo marriage = bdf.getMarriage();
+        if (isBlankString(marriage.getPlaceOfMarriage())) {
+            marriage.setPlaceOfMarriage(null);
+        }
+
+        GrandFatherInfo grandFather = bdf.getGrandFather();
+        if (isBlankString(grandFather.getGrandFatherFullName())) {
+            grandFather.setGrandFatherFullName(null);
+        }
+        if (isBlankString(grandFather.getGrandFatherBirthPlace())) {
+            grandFather.setGrandFatherBirthPlace(null);
+        }
+        if (isBlankString(grandFather.getGreatGrandFatherFullName())) {
+            grandFather.setGreatGrandFatherFullName(null);
+        }
+        if (isBlankString(grandFather.getGreatGrandFatherBirthPlace())) {
+            grandFather.setGreatGrandFatherBirthPlace(null);
+        }
+
+        InformantInfo informant = bdf.getInformant();
+        if (isBlankString(informant.getInformantNICorPIN())) {
+            informant.setInformantNICorPIN(null);
+        }
+        if (isBlankString(informant.getInformantPhoneNo())) {
+            informant.setInformantPhoneNo(null);
+        }
+        if (isBlankString(informant.getInformantEmail())) {
+            informant.setInformantEmail(null);
+        }
+    }
+
+    private static boolean isBlankString(String s) {
+        return s != null && s.trim().length() == 0;
     }
 }

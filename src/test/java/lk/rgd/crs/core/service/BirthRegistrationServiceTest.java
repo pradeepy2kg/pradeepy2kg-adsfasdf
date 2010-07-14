@@ -222,7 +222,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // reload again and check for updated name
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals("New name 1 of child", bdf1.getChild().getChildFullNameEnglish());
+        Assert.assertEquals("NEW NAME 1 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
 
         // assert that the confirmed record now exists in the print queue
         List<BirthDeclaration> printList = birthRegSvc.getConfirmationPrintList(colomboBDDivision, 1, 10, false, deoColomboColombo);
@@ -334,7 +334,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // reload again and check for updated name
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
-        Assert.assertEquals("New name 1 of child", bdf1.getChild().getChildFullNameEnglish());
+        Assert.assertEquals("NEW NAME 1 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
 
         // DEO prints confirmation - mark confirmation as printed
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
@@ -351,12 +351,12 @@ public class BirthRegistrationServiceTest extends TestCase {
         // reload again and check for update of old record which should now be archived
         BirthDeclaration bdfOld = birthRegSvc.getById(idUKeyToArchive, deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CORRECTED, bdfOld.getRegister().getStatus());
-        Assert.assertEquals("New name 1 of child", bdfOld.getChild().getChildFullNameEnglish());
+        Assert.assertEquals("NEW NAME 1 OF CHILD", bdfOld.getChild().getChildFullNameEnglish());
 
         // reload new record with confirmation changes
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
-        Assert.assertEquals("New name 2 of child", bdf1.getChild().getChildFullNameEnglish());
+        Assert.assertEquals("NEW NAME 2 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
         Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, bdf1.getRegister().getStatus());
 
         // update the child name again for a second time
@@ -364,7 +364,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         birthRegSvc.captureLiveBirthConfirmationChanges(bdf1, deoColomboColombo);
         // the status should remain as confirmation changes captured with only the name updated
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals("New name 3 of child", bdf1.getChild().getChildFullNameEnglish());
+        Assert.assertEquals("NEW NAME 3 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
         Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, bdf1.getRegister().getStatus());
 
         // approve the changes by ADR
