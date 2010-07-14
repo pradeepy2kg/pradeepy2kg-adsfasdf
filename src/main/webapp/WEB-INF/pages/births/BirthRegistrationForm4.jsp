@@ -43,7 +43,7 @@
                 listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"/>
 
         <table class="table_reg_page_04" width="100%" cellspacing="0" style="border-top:none;">
-          <tbody>
+            <tbody>
             <tr>
                 <td width="200px"><label>දිනය <br>*in tamil <br>Date</label></td>
                 <td colspan="4"><sx:datetimepicker id="modifiedDatePicker"
@@ -51,8 +51,8 @@
                                                    displayFormat="yyyy-MM-dd"
                                                    onmouseover="javascript:splitDate('modifiedDatePicker')"/></td>
             </tr>
-        </tbody>
-      </table>
+            </tbody>
+        </table>
 
         <s:hidden name="pageNo" value="4"/>
 
@@ -67,7 +67,7 @@
                 var element;
                 var returnval;
                 var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
-                
+
                 /*date related validations*/
                 var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
                 var submit = new Date(submitDatePicker);
@@ -95,24 +95,42 @@
 
         <s:if test="liveBirth">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
-                <div id="late-belated-registration" class="font-9">
-                    <div id="late-belated-registration-title" class="font-12">
-                        <s:if test="bdfLateOrBelated==1">Late Registration</s:if>
-                        <s:else>Belated Registration</s:else>
-                    </div>
-                    <div id="late-belated-case-file-num">
-                        <label>*in sinhala<br>*in tamil<br>Case File Number</label>
-                        <s:textfield name="caseFileNumber"/>
-                    </div>
-                    <div id="late-belated-prev-comments">
-                        <label>*in sinhala<br>* in tamil<br>Prevoius Comments </label>
-                        <s:textarea name="register.comments" disabled="true"/>
-                    </div>
-                    <div id="late-belated-new-comments">
-                        <label>*in sinhala<br>* in tamil<br>New Comments </label>
-                        <s:textarea name="newComment"/>
-                    </div>
-                </div>
+                <table class="table_reg_page_04" width="100%" cellspacing="0" style="margin-top:20px;">
+                    <caption></caption>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align:center;font-size:12pt">
+                            <s:if test="bdfLateOrBelated==1">
+                                *Sinhala
+                                <br>* Tamil
+                                <br>Late Registration
+                            </s:if>
+                            <s:else>
+                                *Sinhala
+                                <br>*Tamil
+                                <br>Belated Registration
+                            </s:else>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200px"><label>*in sinhala<br>*in tamil<br>Case File Number</label></td>
+                        <td colspan="2"><s:textfield name="caseFileNumber"/></td>
+                    </tr>
+                    <tr>
+                        <td><label>*in sinhala<br>* in tamil<br>Prevoius Comments </label></td>
+                        <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
+                    </tr>
+                    <tr>
+                        <td><label>*in sinhala<br>* in tamil<br>New Comments </label></td>
+                        <td><s:textarea name="newComment" cssStyle="width:98%;"/></td>
+                    </tr>
+                    </tbody>
+                </table>
             </s:if>
         </s:if>
 

@@ -145,7 +145,7 @@
                 <label>(25) මවි පියන් විවාහකද?<br>* Tamil <br>Were Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/>
                 <label> ඔවි/*in tamil / Yes</label>
             </td>
             <td class="font-9" colspan="1">
