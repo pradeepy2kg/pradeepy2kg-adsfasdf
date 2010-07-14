@@ -258,6 +258,7 @@
 <s:hidden id="p3error6" value="%{getText('p3.Marriage.place.value')}"/>
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
+<s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <script type="text/javascript">
     var informPerson;
     function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
@@ -318,7 +319,7 @@
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
                 flag = true;
             }
-            element = document.getElementById('motherSigned');
+           /* element = document.getElementById('motherSigned');
             if(!element.checked)
             {
                errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
@@ -327,9 +328,19 @@
             if(!element.checked)
             {
                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-            }
+            }*/
 
         }
+        element = document.getElementsByName("marriage.parentsMarried")[2];
+        if(element.checked ){
+            element = document.getElementById('fatherName');
+            alert(element.value);
+            if(!element.checked && element.value.length>0)
+            {
+               errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+            }
+        }
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
