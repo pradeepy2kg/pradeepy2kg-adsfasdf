@@ -31,13 +31,13 @@
             <tr>
                 <td>12</td>
                 <td><label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு ... <br>Childs name in English</label></td>
-                <td><s:textarea cssClass="disable" disabled="true"
+                <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
                                  name="child.childFullNameEnglish"/></td>
             </tr>
             <tr>
                 <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
-                <td><s:textarea name="child.childFullNameEnglish"></s:textarea></td>
+                <td><s:textarea name="child.childFullNameEnglish" cssStyle="text-transform: uppercase;"></s:textarea></td>
             </tr>
             <tr>
                 <td>13</td>

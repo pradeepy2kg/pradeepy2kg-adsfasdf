@@ -217,6 +217,34 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.CHANGE_PASSWORD);
             bs.set(Permission.BACK_CHANGE_PASSWORD);
             bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
+            bs.set(Permission.EDIT_BDF);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_REPORT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON);
+            bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH);
+            bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_INIT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_INIT);
+            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_REFRESH);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_REFRESH);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_SELECTED_ENTRY);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_BULK_PRINT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_HOME);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
+            bs.set(Permission.PAGE_ADVANCE_SEARCH);
+            bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
+            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME);
+
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
 
