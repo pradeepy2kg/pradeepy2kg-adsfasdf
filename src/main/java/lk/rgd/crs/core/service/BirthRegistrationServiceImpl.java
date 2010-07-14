@@ -67,8 +67,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
                                                      String caseFileNumber, String additionalDocumentsComment) {
-
         logger.debug("Adding a new live birth declaration");
+        // ensure name is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
+
         // does the user have access to the BDF being added (i.e. check district and DS division)
         // TODO if a mother is specified, is she alive? etc
         // TODO add case file number and additional document list as comments
@@ -120,6 +125,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public void editLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         logger.debug("Attempt to edit live birth declaration record : {}", bdf.getIdUKey());
+        // ensure name in english is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
 
         // does the user have access to the BDF being updated
         validateAccessOfUser(user, bdf);
@@ -172,7 +182,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         logger.debug("Attempt to approve live birth declaration : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
-
+        // ensure name in english is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
+        
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
 
@@ -304,6 +319,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public void captureLiveBirthConfirmationChanges(BirthDeclaration bdf, User user) {
 
         logger.debug("Attempt to capture changes for birth record : {} ", bdf.getIdUKey());
+        // ensure name in english is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
 
         // does the user have access to the BDF being confirmed (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -336,7 +356,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
     }
 
-    /**                                       B
+    /**
      * @inheritDoc
      */
     public List<UserWarning> approveConfirmationChangesForIDList(long[] approvalDataList, User user) {
@@ -409,6 +429,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         logger.debug("Request to approve confirmation changes for record : {}", bdf.getIdUKey());
+        // ensure name in english is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
 
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
@@ -483,6 +508,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
 
         logger.debug("Request to reject birth declaration record : {}", bdf.getIdUKey());
+        // ensure name in english is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
 
         if (comments == null || comments.trim().length() < 1) {
             handleException("A comment is required to reject a birth declaration",
