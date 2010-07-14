@@ -112,7 +112,7 @@
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"/></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}" value="true"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
         <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>
     </tr>
