@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div>
+<div id="error-page-outer">
     <s:actionerror/>
     <hr/>
-    <h3>Error Message</h3>
-    <s:property value="%{exception.message}"/>
+<div class="error-title" > Error Message</div>
+   <div class="error"> <s:property value="%{exception.message}"/> </div>
       </p>
       <hr/>
-      <h3>Technical Details</h3>
+      <div class="technical-msg-title">Technical Details</div>
       <p>
-    <s:property  value="%{exceptionStack}"/>
+   <div class="technical-error-msg"> <s:property  value="%{exceptionStack}"/></div>
 </div>

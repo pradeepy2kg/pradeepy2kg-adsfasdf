@@ -1545,3 +1545,9 @@
 @media print {
   .form-submit a{display:none;}
 }
+.birth-registration-form-details-warning-table{
+    margin-left:40px;
+}
+.birth-registration-form-details-button-table{
+    float:right;
+}
