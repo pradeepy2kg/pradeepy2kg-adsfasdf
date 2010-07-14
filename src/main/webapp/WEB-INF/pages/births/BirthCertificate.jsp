@@ -162,7 +162,7 @@
             <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
             <td colspan="5" class="bc-name" style="font-size:10pt">
-                <s:label name="" value="%{#request.child.childFullNameEnglish}"/>
+                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             </td>
         </tr>
     </s:if>

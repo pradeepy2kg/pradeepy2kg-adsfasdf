@@ -311,7 +311,7 @@
                 </label>
 
                 <p></p></td>
-            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameEnglish">
+            <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;" name="child.childFullNameEnglish">
             </s:textarea></td>
         </tr>
         <tr>
