@@ -5,7 +5,7 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 
     <s:form action="eprViewBDFInNonEditableMode" name="nonEditableBirthRegistrationForm1" method="POST">
-
+    <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
     <table class="table_reg_header_01" style="font-size:9pt">
         <caption></caption>
         <col/>
@@ -82,10 +82,10 @@
             <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
             <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <s:if test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+                <s:if test="#userPreferedLang == 'si'">
                     <s:label
                             value="%{#session.birthRegister.register.birthDivision.dsDivision.district.siDistrictName}"/></s:if>
-                <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:elseif test="#userPreferedLang == 'en'">
                     <s:label
                             value="%{#session.birthRegister.register.birthDivision.dsDivision.district.enDistrictName}"/>
                 </s:elseif>
@@ -96,16 +96,20 @@
         </tr>
         <tr>
             <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-            <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><s:if test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+            <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><s:if
+                    test="#userPreferedLang == 'si'">
+                <s:label
+                        value="%{#session.birthRegister.register.birthDivision.dsDivision.siDivisionName}"
+                        cssStyle="float:left;  width:240px;"/></s:if>
+                <s:elseif test="#userPreferedLang == 'en'">
                     <s:label
-                            value="%{#session.birthRegister.register.birthDivision.dsDivision.siDivisionName}" cssStyle="float:left;  width:240px;"/></s:if>
-                <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
-                    <s:label
-                            value="%{#session.birthRegister.register.birthDivision.dsDivision.enDivisionName}" cssStyle="float:left;  width:240px;"/>
+                            value="%{#session.birthRegister.register.birthDivision.dsDivision.enDivisionName}"
+                            cssStyle="float:left;  width:240px;"/>
                 </s:elseif>
                 <s:else>
                     <s:label
-                            value="%{#session.birthRegister.register.birthDivision.dsDivision.taDivisionName}" cssStyle="float:left;  width:240px;"/>
+                            value="%{#session.birthRegister.register.birthDivision.dsDivision.taDivisionName}"
+                            cssStyle="float:left;  width:240px;"/>
                 </s:else>
             </td>
         <tr>
@@ -118,7 +122,6 @@
             <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirthEnglish}"
                                      id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
         </tr>
-            <%--todo following and language specifically load the district and division--%>
         <tr>
             <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
             <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
@@ -152,7 +155,7 @@
             <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
                 <br>Preferred
                 Language for
-                Birth Certificate </label></td> 
+                Birth Certificate </label></td>
             <s:set name="lang" value="%{#session.birthRegister.register.preferredLanguage}"/>
             <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
         </tr>
