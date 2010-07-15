@@ -429,9 +429,13 @@
             <result type="tiles" name="pageload">epr.UserPreferences</result>
         </action>
 
+        <!-- -->
         <action name="eprUserPreferencesAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="selectUserPreference">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="redirectAction">
+                <param name="actionName">eprHome</param>
+                <param name="namespace">/births</param>
+            </result>
         </action>
     </package>
 </struts>
