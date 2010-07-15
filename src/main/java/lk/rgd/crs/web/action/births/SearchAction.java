@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
@@ -35,7 +36,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private List<BirthDeclaration> searchResultList;
     private User user;
     private BirthDeclaration bdf;
-
+    private BirthCertificateSearch certSearch;
 
     private int birthDistrictId;
     private int dsDivisionId;
@@ -45,6 +46,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private Long idUKey;
     private String childName;
     private String status;
+    private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
         this.service = service;
@@ -128,7 +130,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String birthCertificateSearch() {
-        return SUCCESS;
+        logger.debug("birth certificate search: Page {}", pageNo);
+        // TODO Still implementing
+        if (pageNo == 1) {
+            BirthCertificateSearch search = certSearch;
+        }
+        return "page" + pageNo;
     }
 
     public long getSerialNo() {
@@ -230,5 +237,21 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setSearchResultList(List<BirthDeclaration> searchResultList) {
         this.searchResultList = searchResultList;
+    }
+
+    public BirthCertificateSearch getCertSearch() {
+        return certSearch;
+    }
+
+    public void setCertSearch(BirthCertificateSearch certSearch) {
+        this.certSearch = certSearch;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
     }
 }
