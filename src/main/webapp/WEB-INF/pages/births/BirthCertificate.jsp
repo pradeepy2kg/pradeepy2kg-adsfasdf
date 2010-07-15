@@ -145,7 +145,10 @@
     <tr>
         <td height="70px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
         </td>
-        <td colspan="2"><s:label name="" value="%{#request.child.placeOfBirth}"/></td>
+        <td colspan="2">
+            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}"/><br>
+            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"/>
+        </td>
         <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா? <br>Were Parents Married?
         </td>
         <td><s:label name="" value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>

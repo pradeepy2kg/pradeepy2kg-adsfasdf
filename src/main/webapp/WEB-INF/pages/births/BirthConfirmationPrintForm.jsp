@@ -202,6 +202,12 @@
         <td colspan="11"></td>
     </tr>
     <tr>
+        <td></td>
+        <td><label>*in sinhala<br>*in tamil<br>Place in English</label></td>
+        <td colspan="6"><s:textarea name="child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
+        <td colspan="11"></td>
+    </tr>
+    <tr>
         <td class="cell_011">6</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
