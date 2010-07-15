@@ -78,7 +78,7 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="4"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:label value="%{#session.birthRegister.register.birthDivision.dsDivision.district.siDistrictName}" /></td>
@@ -91,6 +91,10 @@
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
         <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirth}" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
+    </tr>
+    <tr>
+        <td><label>*in sinhala/ *in tamil/ Place in English</label></td>
+        <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirthEnglish}" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
     </tr>
     <%--todo following and language specifically load the district and division--%>
     <tr>

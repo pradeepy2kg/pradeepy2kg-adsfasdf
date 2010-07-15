@@ -92,7 +92,7 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="4"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
@@ -108,6 +108,10 @@
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
+    </tr>
+    <tr>
+        <td><label>*in sinhala/*in tamil/ Place in English</label></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
         <td colspan="3"><label> රෝහලේදී /*in Tamil/In a Hospital</label></td>
