@@ -386,7 +386,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
             } else if (pageNo == 3) {
                 bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-                bdfLateOrBelated=checkDateLateOrBelated(bdf);
+                bdfLateOrBelated = checkDateLateOrBelated(bdf);
             }
             return "form" + pageNo;
         }
