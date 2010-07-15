@@ -76,7 +76,8 @@
 
 
     <table class="table_reg_page_03" cellspacing="0">
-        <caption></caption>
+        <col/>
+        <col/>
         <col/>
         <col/>
         <col/>
@@ -84,40 +85,49 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt">සීයාගේ / මී මුත්තා ගේ විස්තර
+            <td colspan="7" style="text-align:center;font-size:12pt">සීයාගේ / මී මුත්තා ගේ විස්තර
                 <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
                 <br>Details of the Grand Father / Great Grand Father
             </td>
         </tr>
         <tr>
-            <td colspan="5"><label>(27)ළමයාගේ මුත්තා ශ්‍රී ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
+            <td colspan="7"><label>(27)ළමයාගේ මුත්තා ශ්‍රී ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
                 பிறந்திருந்தால் <br>If
                 grandfather of the child born in Sri Lanka</label></td>
         </tr>
         <tr>
-            <td rowspan="2" style="width:75px"></td>
-            <td><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="3"><s:textarea name="grandFather.grandFatherFullName" cssStyle="width:98%;"/></td>
+            <td rowspan="2" style="width:75px" colspan="1"></td>
+            <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
+            <td colspan="5"><s:textarea name="grandFather.grandFatherFullName" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
+            <td>අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
+            அடையாள அட்டை
+            இலக்கம்<br>PIN / NIC Number</td>
+            <td><s:textfield name="grandFather.grandFatherNICorPIN" /></td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
         </tr>
         <tr>
-            <td colspan="5"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
+            <td colspan="7"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
                 தந்தை
                 இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
                 ்<br>If the father was not
                 born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
         </tr>
         <tr>
-            <td rowspan="2"></td>
-            <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-            <td colspan="3"><s:textarea name="grandFather.greatGrandFatherFullName" cssStyle="width:98%;"/></td>
+            <td rowspan="2" colspan="1"></td>
+            <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
+            <td colspan="5"><s:textarea name="grandFather.greatGrandFatherFullName" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
+            <td>අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
+            அடையாள அட்டை
+            இலக்கம்<br>PIN / NIC Number</td>
+            <td><s:textfield name="grandFather.greatGrandFatherNICorPIN" /></td>
+            
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthYear" cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
