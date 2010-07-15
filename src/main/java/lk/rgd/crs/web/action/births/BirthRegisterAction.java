@@ -360,6 +360,36 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
+     * Responsible for loading the 4BDF in non editable mode
+     *
+     * @return
+     */
+    public String viewInNonEditableMode() {
+        logger.debug("Non Editable Mode Step {} of 4 ", pageNo);
+        BirthDeclaration bdf;
+        if (back) {
+            populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+            return "form" + pageNo;
+        } else {
+            if (pageNo < 0 || pageNo > 3) {
+                return ERROR;
+            }
+                if (pageNo == 0) {
+                    logger.debug("initializing non editable mode for bdId {}", bdId);
+                    try {
+                        bdf = service.getById(bdId, user);
+                        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+                    } catch (Exception e) {
+                        handleErrors(e);
+                        addActionError(getText("p1.invalid.Entry"));
+                        return ERROR;
+                    }
+                }
+            return "form" + pageNo;
+        }
+    }
+
+    /**
      * This method is responsible for loading 1 of the 3 BDC pages.
      * If bdId is 0 it is a fresh birth confirmation, else it is for
      * edit. In edit mode checks wheather requested birthDeclaration

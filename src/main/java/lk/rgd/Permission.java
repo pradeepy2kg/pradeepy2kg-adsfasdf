@@ -71,7 +71,9 @@ public final class Permission {
     public static final int PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED = 100;
     public static final int PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES = 101;
     public static final int PAGE_BIRTH_REGISTRATON_DIRECT_HOME = 102;
+    public static final int PAGE_BIRTH_REGISTRATION_SEARCH_VIEW_NON_EDITABLE_MODE = 104;
     public static final int PAGE_BIRTH_CERTIFICATE_SEARCH = 103;
+
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;

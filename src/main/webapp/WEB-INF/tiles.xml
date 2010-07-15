@@ -64,6 +64,26 @@
         <put-attribute name="title" value="form4.title"/>
     </definition>
 
+    <definition name="epr.non_editable_birthRegistration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="form1.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="form2.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form3" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm3.jsp"/>
+        <put-attribute name="title" value="form3.title"/>
+    </definition>
+
+    <definition name="epr.non_editable_birthRegistration_form4" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/NonEditableBirthRegistrationForm4.jsp"/>
+        <put-attribute name="title" value="form4.title"/>
+    </definition>
+
     <definition name="epr.birthRegistration_details" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegistrationFormDetails.jsp"/>
         <put-attribute name="title" value="BirthRegistrationDetails.title"/>
