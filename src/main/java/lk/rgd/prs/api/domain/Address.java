@@ -135,7 +135,7 @@ public class Address {
     }
 
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         if ((line1 != null) && (!"".equals(line1))) {
             buffer.append(line1);
             buffer.append(", " );
