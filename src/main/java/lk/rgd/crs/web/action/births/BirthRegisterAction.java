@@ -374,17 +374,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             if (pageNo < 0 || pageNo > 3) {
                 return ERROR;
             }
-                if (pageNo == 0) {
-                    logger.debug("initializing non editable mode for bdId {}", bdId);
-                    try {
-                        bdf = service.getById(bdId, user);
-                        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-                    } catch (Exception e) {
-                        handleErrors(e);
-                        addActionError(getText("p1.invalid.Entry"));
-                        return ERROR;
-                    }
+            if (pageNo == 0) {
+                logger.debug("initializing non editable mode for bdId {}", bdId);
+                try {
+                    bdf = service.getById(bdId, user);
+                    session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+                } catch (Exception e) {
+                    handleErrors(e);
+                    addActionError(getText("p1.invalid.Entry"));
+                    return ERROR;
                 }
+            } else if (pageNo == 3) {
+                bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                bdfLateOrBelated=checkDateLateOrBelated(bdf);
+            }
             return "form" + pageNo;
         }
     }

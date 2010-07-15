@@ -106,7 +106,7 @@
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.motherCountry}"/></td>
+        <td colspan="2"><s:label value="%{#session.birthRegister.parent.motherCountry.siCountryName}"/></td>
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
@@ -127,7 +127,7 @@
         <td width="200px"><label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="3"><s:label value="%{#session.birthRegister.parent.motherDOB}" cssStyle="width:50%;"/></td>
         <td colspan="3" width="100px"><label>
-            <s:if test="%{#session.birthRegister.register.liveBirth}">
+            <s:if test="session.birthRegister.register.liveBirth">
                 (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
                 as at
                 the date of birth of child

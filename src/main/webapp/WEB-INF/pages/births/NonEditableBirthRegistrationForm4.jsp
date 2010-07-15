@@ -66,15 +66,11 @@
                     </div>
                     <div id="late-belated-case-file-num">
                         <label>*in sinhala<br>*in tamil<br>Case File Number</label>
-                        <s:textfield name="caseFileNumber"/>
+                        <s:label name="caseFileNumber"/>
                     </div>
                     <div id="late-belated-prev-comments">
-                        <label>*in sinhala<br>* in tamil<br>Prevoius Comments </label>
-                        <s:textarea name="register.comments" disabled="true"/>
-                    </div>
-                    <div id="late-belated-new-comments">
-                        <label>*in sinhala<br>* in tamil<br>New Comments </label>
-                        <s:textarea name="newComment"/>
+                        <label>*in sinhala<br>* in tamil<br>Comments </label>
+                        <s:label name="%{#session.birthRegister.register.comments}" />
                     </div>
                 </div>
             </s:if>
