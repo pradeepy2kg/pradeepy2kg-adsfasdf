@@ -20,6 +20,16 @@
         <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
     </filter>
 
+    <servlet>
+      <servlet-name>PersonLookupService</servlet-name>
+      <servlet-class>lk.rgd.prs.web.JSONPersonLookupService</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PersonLookupService</servlet-name>
+        <url-pattern>/prs/PersonLookupService</url-pattern>
+    </servlet-mapping>
+
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>

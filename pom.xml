@@ -193,6 +193,18 @@
             <version>10.6.1.0</version>
         </dependency>
 
+        <!--JSON-->
+        <dependency>
+            <groupId>jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
