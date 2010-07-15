@@ -34,7 +34,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final UserManager userManager;
-    private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
 
     public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
