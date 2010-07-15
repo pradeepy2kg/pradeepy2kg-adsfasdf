@@ -38,8 +38,20 @@
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.parent.fatherCountry.siCountryName}"
-                                 cssStyle="width:97%;"/>
+        <td colspan="2"><s:if test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+            <s:label
+                    value="%{#session.birthRegister.parent.fatherCountry.siCountryName}"
+                    cssStyle="width:97%;"/></s:if>
+            <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:label
+                        value="%{#session.birthRegister.parent.fatherCountry.enCountryName}"
+                        cssStyle="width:97%;"/>
+            </s:elseif>
+            <s:else>
+                <s:label
+                        value="%{#session.birthRegister.parent.fatherCountry.taCountryName}"
+                        cssStyle="width:97%;"/>
+            </s:else>
         </td>
     </tr>
     <tr>
@@ -71,8 +83,17 @@
     <tbody>
     <tr>
         <td width="200px"><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
-        <td colspan="6" class="table_reg_cell_02">
-            <s:label value="%{#session.birthRegister.parent.fatherRace.siRaceName}" cssStyle="width:200px;"/>
+        <td colspan="6" class="table_reg_cell_02"><s:if test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+            <s:label
+                    value="%{#session.birthRegister.parent.fatherRace.siRaceName}" cssStyle="width:200px;"/></s:if>
+            <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:label
+                        value="%{#session.birthRegister.parent.fatherRace.enRaceName}" cssStyle="width:200px;"/>
+            </s:elseif>
+            <s:else>
+                <s:label
+                        value="%{#session.birthRegister.parent.fatherRace.taRaceName}" cssStyle="width:200px;"/>
+            </s:else>
         </td>
     </tr>
     </tbody>
@@ -106,7 +127,17 @@
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.parent.motherCountry.siCountryName}"/></td>
+        <td colspan="2"><s:if test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+            <s:label
+                    value="%{#session.birthRegister.parent.motherCountry.siCountryName}"/></s:if>
+            <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:label
+                        value="%{#session.birthRegister.parent.motherCountry.enCountryName}"/>
+            </s:elseif>
+            <s:else>
+                <s:label
+                        value="%{#session.birthRegister.parent.motherCountry.taCountryName}"/>
+            </s:else></td>
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
@@ -158,18 +189,51 @@
         <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>*in Sinhala/*in
             English/District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
-                <s:label value="%{#session.birthRegister.parent.motherDSDivision.district.siDistrictName}" cssStyle="width:99%;"/>
+            <s:if
+                    test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+                <s:label value="%{#session.birthRegister.parent.motherDSDivision.district.siDistrictName}"
+                         cssStyle="width:99%;"/>
+            </s:if>
+            <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:label value="%{#session.birthRegister.parent.motherDSDivision.district.enDistrictName}"
+                         cssStyle="width:99%;"/>
+
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#session.birthRegister.parent.motherDSDivision.district.taDistrictName}"
+                         cssStyle="width:99%;"/>
+            </s:else></td>
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>
         <td colspan="2"><label>*in Sinhala/*in English/D.S Division</label></td>
         <td colspan="6" class="table_reg_cell_02">
-            <s:label value="%{#session.birthRegister.parent.motherDSDivision.siDivisionName}"/>
+            <s:if
+                    test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+                <s:label value="%{#session.birthRegister.parent.motherDSDivision.siDivisionName}"/>
+            </s:if>
+            <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:label value="%{#session.birthRegister.parent.motherDSDivision.enDivisionName}"/>
+
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#session.birthRegister.parent.motherDSDivision.taDivisionName}"/>
+            </s:else>
         </td>
     </tr>
     <tr>
         <td width="200px"><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
-        <td colspan="3"><s:label value="%{#session.birthRegister.parent.motherRace.siRaceName}"/></td>
+        <td colspan="3">
+            <s:if
+                    test="session.WW_TRANS_I18N_LOCALE.language == 'si'">
+                <s:label value="%{#session.birthRegister.parent.motherRace.siRaceName}"/>
+            </s:if>
+            <s:elseif test="session.WW_TRANS_I18N_LOCALE.language == 'en'">
+                <s:label value="%{#session.birthRegister.parent.motherRace.enRaceName}"/>
+            </s:elseif>
+            <s:else>
+                <s:label value="%{#session.birthRegister.parent.motherRace.taRaceName}"/>
+            </s:else></td>
 
         <td colspan="3"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
         <td colspan="3" class="passport"><s:label value="%{#session.birthRegister.parent.motherPlaceOfBirth}"/></td>
