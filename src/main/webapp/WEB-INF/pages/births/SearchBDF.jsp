@@ -171,7 +171,7 @@
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
                             <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
-                                <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
                                      border="none"/></s:a></td>
                         </tr>
                     </s:iterator>
