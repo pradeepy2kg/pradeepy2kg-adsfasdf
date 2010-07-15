@@ -25,7 +25,7 @@
     font-family: BhashitaComplex;
 }
 
- .font-10 {
+.font-10 {
     font-size: 10pt;
     font-family: BhashitaComplex;
 }
@@ -40,32 +40,33 @@
 * Styles for the Birth Registration Form applys according to the 4 pages in 4 seperate sections.
 */
 
-.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer,.still-birth-registration-form-outer, #bdaw-outer
-{
+.birth-registration-form-outer, #birth-confirmation-form-outer, .birth-confirmation-print-form-outer, .still-birth-registration-form-outer, #bdaw-outer, .birth-certificate-search-form-outer {
     width: 1030px;
     background: #ffffff;
     padding: 10px;
 }
-#birth-declaration-approval-warning-outer
-{
-    width:1030;
+
+#birth-declaration-approval-warning-outer {
+    width: 1030;
     padding: 10px;
 }
-.birth-declaration-approval-warning-table
-{
-    margin-left:50px;
-    font-size:11pt;
-    color:red;
+
+.birth-declaration-approval-warning-table {
+    margin-left: 50px;
+    font-size: 11pt;
+    color: red;
 }
-.birth-declaration-reject-outer
-{
-    width:980px;
-    margin:20px;
+
+.birth-declaration-reject-outer {
+    width: 980px;
+    margin: 20px;
 }
-.birth-declaration-reject-outer textarea{
-    width:500px;
-    height:120px;
+
+.birth-declaration-reject-outer textarea {
+    width: 500px;
+    height: 120px;
 }
+
 /* Styles for the header area of the Birth Registration Form */
 #birth-registration-form-header {
     margin-bottom: 10px;
@@ -119,7 +120,10 @@
     margin-top: 5px;
 }
 
-.next-previous{float:left; margin-top:5px;}
+.next-previous {
+    float: left;
+    margin-top: 5px;
+}
 
 #page_breake {
     page-break-after: always;
@@ -1202,7 +1206,9 @@
     border: none;
 }
 
-#table_reg_cell_01 #birthDivisionId{float:right;}
+#table_reg_cell_01 #birthDivisionId {
+    float: right;
+}
 
 #left-right-border {
     border-left: 1px solid #000;
@@ -1373,28 +1379,28 @@
     border-bottom: 1px solid #000000;
 }
 
-.table_con_page_01 select, .table_con_page_01 input{
-    width:95%;
+.table_con_page_01 select, .table_con_page_01 input {
+    width: 95%;
     margin: 2px 5px;
 }
 
-.table_con_page_01 input{width:93%;}
+.table_con_page_01 input {
+    width: 93%;
+}
 
 .table_con_header_01 {
     width: 1030px;
     border: none;
-    margin-bottom:15px;
+    margin-bottom: 15px;
 }
 
 .cell_01 {
     width: 40px;
 }
 
-
 .cell_02 {
     width: 300px;
 }
-
 
 .cell_03 {
     width: 50px
@@ -1417,18 +1423,20 @@
 
 .cell_001 {
     width: 40px;
-    height:150px;
-    text-align:center;
+    height: 150px;
+    text-align: center;
 }
+
 .cell_011 {
-    height:60px;
-    width:40px;
-    text-align:center;
+    height: 60px;
+    width: 40px;
+    text-align: center;
 }
+
 .cell_012 {
     width: 40px;
-    height:200px;
-    text-align:center;
+    height: 200px;
+    text-align: center;
 }
 
 .table_con_page_02 td {
@@ -1443,7 +1451,7 @@
 /*styles for birth confirmation form 03*/
 
 .table_con_page_03 {
-    width:100%;
+    width: 100%;
     border: 1px solid #000000;;
     border-right: none;
     border-bottom: none;
@@ -1458,16 +1466,17 @@
 .table_con_page_03 textarea {
     width: 750px;
 }
+
 /*Styyle for the Birth Confirmation  Print form*/
 
 .table_con_page2_table {
-    width:100%;
+    width: 100%;
     border: 1px solid #000000;;
     border-right: none;
     border-bottom: none;
     font-size: 9pt;
     margin-bottom: 30px;
-    float:left;
+    float: left;
 }
 
 .table_con_page2_table td {
@@ -1478,6 +1487,7 @@
 .table_con_page2_table textarea {
     width: 750px;
 }
+
 /* Styles for the Birth Certificate begins here. */
 #birth-certificate-outer {
     width: auto;
@@ -1515,39 +1525,95 @@
 
 /* Styles for the user preferences. */
 
-#user-preference-outer table tr td select{float:right; width:300px;}
-#user-preference-outer table tr td input{text-transform:capitalize;}
-#user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover{color:darkred;}
-
-#birth-registration-form-2-outer table{margin:10px 0;}
-
-#uer-create-outer
-{
-    background-color:#ffffff;
-    width:60em;
-    float:left;
+#user-preference-outer table tr td select {
+    float: right;
+    width: 300px;
 }
-.user-create-table{width:35em;margin:2em;}
-.user-create-table input{width:20em;margin:.5em;margin-left:1.5em;}
-.user-create-table select{width:20em;margin:.5em;margin-left:1.5em;}
-.view-users-table{width:1030px;}
-.view-users-table td {border:none;}
-.view-users-table select{width:250px;}
-.find-person img{width:20px; height:20px;}
-.find-person img:hover{width:25px; height:25px;}
 
-.search-option-table{width:1030px;}
-.search-option-table select{width:230px;}
-.search-option-table input{width:230px;}
-.next-table{background-image:url("")}
+#user-preference-outer table tr td input {
+    text-transform: capitalize;
+}
+
+#user-preference-outer table tr td input:hover, #user-preference-outer table tr td a:hover {
+    color: darkred;
+}
+
+#birth-registration-form-2-outer table {
+    margin: 10px 0;
+}
+
+#uer-create-outer {
+    background-color: #ffffff;
+    width: 60em;
+    float: left;
+}
+
+.user-create-table {
+    width: 35em;
+    margin: 2em;
+}
+
+.user-create-table input {
+    width: 20em;
+    margin: .5em;
+    margin-left: 1.5em;
+}
+
+.user-create-table select {
+    width: 20em;
+    margin: .5em;
+    margin-left: 1.5em;
+}
+
+.view-users-table {
+    width: 1030px;
+}
+
+.view-users-table td {
+    border: none;
+}
+
+.view-users-table select {
+    width: 250px;
+}
+
+.find-person img {
+    width: 20px;
+    height: 20px;
+}
+
+.find-person img:hover {
+    width: 25px;
+    height: 25px;
+}
+
+.search-option-table {
+    width: 1030px;
+}
+
+.search-option-table select {
+    width: 230px;
+}
+
+.search-option-table input {
+    width: 230px;
+}
+
+.next-table {
+    background-image: url("")
+}
 
 /* style used to hide print button text in printed document */
 @media print {
-  .form-submit a{display:none;}
+    .form-submit a {
+        display: none;
+    }
 }
-.birth-registration-form-details-warning-table{
-    margin-left:40px;
+
+.birth-registration-form-details-warning-table {
+    margin-left: 40px;
 }
-.birth-registration-form-details-button-table{
-    float:right;
+
+.birth-registration-form-details-button-table {
+    float: right;
 }
