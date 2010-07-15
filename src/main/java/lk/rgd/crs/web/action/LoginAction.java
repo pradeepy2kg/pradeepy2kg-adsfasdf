@@ -217,6 +217,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_BULK_PRINT, new Link(null, "/popreg/births/", "eprBirthCertificateBulkPrint.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO, new Link(null, "/popreg/births/", "eprBDFSearchBySerialNo.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY, new Link(null, "/popreg/births/", "eprBDFSearchByIdUKey.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_VIEW_NON_EDITABLE_MODE, new Link(null, "/popreg/births/", "eprViewBDFInNonEditableMode.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT, new Link(null, "/popreg/births/", "eprConfirmationApprovalNext.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_PREVIOUS, new Link(null, "/popreg/births/", "eprConfirmationApprovalPrevious.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_HOME, new Link(null, "/popreg/births/", "eprBirthRegistrationHome.do"));

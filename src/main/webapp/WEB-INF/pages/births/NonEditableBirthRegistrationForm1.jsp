@@ -1,0 +1,164 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
+
+<s:form action="eprViewBDFInNonEditableMode" name="nonEditableBirthRegistrationForm1"  method="POST">
+
+<table class="table_reg_header_01" style="font-size:9pt">
+    <caption></caption>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td width="300px"></td>
+        <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
+                                                                    alt=""/><br><label>
+            උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
+            <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
+            <br>Particulars for Registration of a Birth</label></td>
+        <td>
+            <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    </td>
+                    <td><s:label value="%{#session.birthRegister.register.bdfSerialNo}"/></td>
+                </tr>
+            </table>
+            <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <td><label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
+                    </td>
+                    <td><s:label value="%{#session.birthRegister.register.dateOfRegistration}" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
+            යුතුය. මෙම
+            තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+            <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+            சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+            <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
+            forwarded
+            to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
+            information provided in this form.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<table class="table_reg_page_01" cellspacing="0" cellpadding="0">
+
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td class="font-9" colspan="8" style="text-align:center;">
+            ළම‌යාගේ විස්තර
+            <br>பிள்ளை பற்றிய தகவல்
+            <br>Child's Information
+        </td>
+    </tr>
+    <tr style="border-left:1px solid #000000;">
+        <td width="150px"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+        <td colspan="7">
+            <s:label value="%{#session.birthRegister.child.dateOfBirth}"  />
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="4"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+        <td colspan="6" class="table_reg_cell_01">
+            <s:label value="%{#session.birthRegister.register.birthDivision.dsDivision.district.siDistrictName}" /></td>
+    </tr>
+    <tr>
+        <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
+        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
+            <s:label value="%{#session.birthRegister.register.birthDivision.dsDivision.siDivisionName}" cssStyle="float:left;  width:240px;"/>
+        </td>
+    <tr>
+        <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
+        <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirth}" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
+    </tr>
+    <%--todo following and language specifically load the district and division--%>
+    <tr>
+                <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
+        <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
+        <td><s:if test="session.birthRegister.child.birthAtHospital ==true">
+            <s:label value="%{getText('yes.label')}"/> </td>
+        </s:if>
+        <s:else>
+            <s:label value="%{getText('no.label')}"/>
+        </s:else>
+
+        <%--<td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}" value="true"/></td>
+        <td><label>නැත / *in Tamil / No</label></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>--%>
+    </tr>
+    <tr>
+        <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
+            / தமிழ்) <br>Name in
+            any of the official languages (Sinhala / Tamil)</label></td>
+        <td colspan="7"><s:label value="%{#session.birthRegister.child.childFullNameOfficialLang}"
+                                    cssStyle="width:98.2%;"/></td>
+    </tr>
+
+    <tr>
+        <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
+        </label></td>
+        <td colspan="7">
+            <s:label value="%{#session.birthRegister.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
+    </tr>
+    <tr>
+        <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred
+            Language for
+            Birth Certificate </label></td>
+        <td colspan="6"><s:label value="%{#session.birthRegister.register.preferredLanguage}"  cssStyle="width:190px; margin-left:5px;"/></td>
+    </tr>
+    <tr>
+        <td class="font-9"><label>(6)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
+        <td colspan="3"> <s:if test="session.birthRegister.child.childGender == 0">
+                    <s:label name="" value="%{getText('male.label')}"/>
+                </s:if>
+                <s:elseif test="session.birthRegister.child.childGender == 1">
+                    <s:label name="" value="%{getText('female.label')}"/>
+                </s:elseif>
+                <s:elseif test="session.birthRegister.child.childGender == 2">
+                    <s:label name="" value="%{getText('unknown.label')}"/>
+                </s:elseif></td>
+        <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
+        <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}" cssStyle="width:95%;"/></td>
+    </tr>
+    <tr>
+        <td class="font-9"><label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
+            to Live Birth Order,
+            rank of the child?</label></td>
+        <td colspan="3" class="font-9"><s:label value="%{#session.birthRegister.child.childRank}"/></td>
+        <td colspan="2" class="font-9"><label>(9)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
+            எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
+            multiple births, number of children</label></td>
+        <td colspan="2"><s:label value="%{#session.birthRegister.child.numberOfChildrenBorn}" cssStyle="width:95%;"/></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<s:hidden name="pageNo" value="1"/>
+
+<div class="form-submit">
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
+</s:form>
+

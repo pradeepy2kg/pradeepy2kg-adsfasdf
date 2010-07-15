@@ -94,32 +94,6 @@
             </table>
         </fieldset>
     </s:form>
-    <%--<br/>
-        <s:form action="eprBDFSearchByChildName.do" method="post">
-            <fieldset>
-                <legend><s:label name="nameSearchLegend" value="%{getText('nameSearchLegend.label')}"/></legend>
-                <table>
-                    <tr>
-                        <td>
-                            <s:label name="childName" value="%{getText('childName.label')}"/>
-                        </td>
-
-                        <td>
-                            <s:textfield name="childName"/>
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <td></td>
-                        <td>
-                            <s:submit value="%{getText('bdfSearch.button')}" name="search"/>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </s:form>
-    </div>
-    <br/>--%>
 </div>
 <br/>
 
@@ -140,6 +114,7 @@
                     <th><s:label name="districtlbl" value="%{getText('district.label')}"/></th>
                     <th><s:label name="divisionlbl" value="%{getText('division.label')}"/></th>
                     <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
+                    <th><s:label name="viewlbl" value="%{getText('view.label')}"/> </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -163,6 +138,12 @@
                                                     value="%{#request.divisionList.get(#request.bdf.register.getBirthDivision().bdDivisionUKey)}"/></td>
                         <td align="center">
                             <s:label value="%{getText(status)}"/></td>
+                        <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
+                                <s:param name="bdId" value="%{#request.bdf.idUKey}"/>
+                            </s:url>
+                        <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                                <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                     border="none"/></s:a></td>
                     </tr>
                 </s:if>
                 <s:elseif test="searchResultList.size>0">
@@ -186,6 +167,12 @@
                                     value="%{#request.districtList.get(register.getBirthDivision().bdDivisionUKey)}"/></td>
                             <s:set value="getRegister().getStatus()" name="status"/>
                             <td><s:label value="%{getText(#status)}"/></td>
+                            <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
+                                <s:param name="bdId" value="idUKey"/>
+                            </s:url>
+                            <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                                <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                     border="none"/></s:a></td>
                         </tr>
                     </s:iterator>
                 </s:elseif>

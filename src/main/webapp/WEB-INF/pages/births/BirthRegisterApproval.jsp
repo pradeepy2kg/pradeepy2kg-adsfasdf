@@ -97,10 +97,10 @@
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
                     <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
-                    <th width="50px">edit</th>
-                    <th width="50px">approve</th>
-                    <th width="50px">reject</th>
-                    <th width="50px">delete</th>
+                    <th width="50px"><s:label name="edit" value="%{getText('edit.label')}"/></th>
+                    <th width="50px"><s:label name="approve" value="%{getText('approve.label')}"/></th>
+                    <th width="50px"><s:label name="reject" value="%{getText('reject.label')}"/></th>
+                    <th width="50px"><s:label name="delete" value="%{getText('delete.label')}"/></th>
                  </tr>
                 </thead>
             </s:if>

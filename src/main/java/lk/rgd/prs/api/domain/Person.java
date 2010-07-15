@@ -24,32 +24,42 @@ public class Person {
      * Unverified records may be inaccurate
      */
     public enum Status {
-        UNVERIFIED      /** 0 - Record may be inaccurate */,        
+        UNVERIFIED      /** 0 - Record may be inaccurate */
+        ,
         VERIFIED        /** 1 - Record is confirmed to be accurate */
-    }
+        }
 
     /**
      * The life status
      */
     public enum LifeStatus {
-        UNKNOWN         /** 0 - Current whereabouts are unknown */,
-        ALIVE           /** 1 - Is known to be born and not known to be dead */,
-        DEAD            /** 2 - Is known to be dead */,
-        MISSING         /** 3 - Reported as missing */,
+        UNKNOWN         /** 0 - Current whereabouts are unknown */
+        ,
+        ALIVE           /** 1 - Is known to be born and not known to be dead */
+        ,
+        DEAD            /** 2 - Is known to be dead */
+        ,
+        MISSING         /** 3 - Reported as missing */
+        ,
         NON_RESIDENT    /** 4 - Reported as not living within Sri Lanka anymore */
-    }
+        }
 
     /**
      * The civil status
      */
     public enum CivilStatus {
-        NEVER_MARRIED   /** 0 - Never known to be married */,
-        MARRIED         /** 1 - Currently married */,
-        ANNULLED        /** 2 - Currently married */,
-        SEPARATED       /** 3 - Living separately from spouse. Cannot re-marry - TODO is this necessary? */,
-        DIVORCED        /** 4 - Legally divorced from the spouse. Can re-marry */,
+        NEVER_MARRIED   /** 0 - Never known to be married */
+        ,
+        MARRIED         /** 1 - Currently married */
+        ,
+        ANNULLED        /** 2 - Currently married */
+        ,
+        SEPARATED       /** 3 - Living separately from spouse. Cannot re-marry - TODO is this necessary? */
+        ,
+        DIVORCED        /** 4 - Legally divorced from the spouse. Can re-marry */
+        ,
         WIDOWED         /** 5 - Spouse has died */
-    }
+        }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,7 +82,7 @@ public class Person {
     /**
      * The preferred language of for the record
      */
-    @Column (nullable = false, columnDefinition="char(2) default 'si'")
+    @Column(nullable = false, columnDefinition = "char(2) default 'si'")
     private String preferredLanguage;
     /**
      * The full name in the official language
@@ -129,7 +139,7 @@ public class Person {
     /**
      * Record status - unverified (default) or verified
      */
-    @Column(columnDefinition="smallint not null default 0")
+    @Column(columnDefinition = "smallint not null default 0")
     private Status status;
     /**
      * Current civil status - maybe unknown / null
@@ -158,8 +168,8 @@ public class Person {
      */
     @OneToMany
     @JoinTable(schema = "PRS", name = "PERSON_CITIZENSHIP",
-        joinColumns = @JoinColumn(name="personUKey"),
-        inverseJoinColumns = @JoinColumn(name="countryId"))
+        joinColumns = @JoinColumn(name = "personUKey"),
+        inverseJoinColumns = @JoinColumn(name = "countryId"))
     private Set<Country> citizenship;
     /**
      * List of addresses
@@ -176,9 +186,9 @@ public class Person {
      * List of marriages
      */
     @ManyToMany
-	@JoinTable(schema = "PRS", name = "PERSON_MARRIAGE",
-        joinColumns = @JoinColumn(name="personUKey"),
-        inverseJoinColumns = @JoinColumn(name="marriageUKey"))
+    @JoinTable(schema = "PRS", name = "PERSON_MARRIAGE",
+        joinColumns = @JoinColumn(name = "personUKey"),
+        inverseJoinColumns = @JoinColumn(name = "marriageUKey"))
     private Set<Marriage> marriages;
     /**
      * The last marriage for this person for quick access
