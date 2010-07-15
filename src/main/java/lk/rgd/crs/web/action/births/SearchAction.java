@@ -55,11 +55,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public String welcome() {
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     public String advancedSearch() {
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -73,7 +73,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
             birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
-            if (serialNo !=null) {
+            if (serialNo != null) {
                 bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 setStatus(bdf.getRegister().getStatus().toString());
             } else {
@@ -87,7 +87,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
             addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();
-        return "success";
+        return SUCCESS;
     }
 
     /**
@@ -119,7 +119,16 @@ public class SearchAction extends ActionSupport implements SessionAware {
             addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();
-        return "success";
+        return SUCCESS;
+    }
+
+    /**
+     * Used to search birth certificates or search of registers
+     *
+     * @return
+     */
+    public String birthCertificateSearch() {
+        return SUCCESS;
     }
 
     public long getSerialNo() {

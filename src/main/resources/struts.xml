@@ -360,6 +360,12 @@
                 method="initStillBirth">
             <result type="tiles" name="success">epr.stillBirth</result>
         </action>
+
+        <!--Birth Certificate Search-->
+        <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="birthCertificateSearch">
+            <result type="tiles" name="success">epr.birthCertificateSearch</result>
+        </action>
     </package>
 
     <package name="management" namespace="/management" extends="NG">

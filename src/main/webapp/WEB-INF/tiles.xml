@@ -31,7 +31,7 @@
     <definition name="epr.rgdError" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/RGDerror.jsp"/>
         <put-attribute name="title" value="RGDerror.title"/>
-    </definition>   
+    </definition>
 
     <!--  Birth Registration Tiles -->
     <definition name="epr.newBirthCertificate" extends="epr.template">
@@ -132,6 +132,11 @@
     <definition name="epr.BirthsAdvancedSearch" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthsAdvancedSearch.jsp"/>
         <put-attribute name="title" value="search.title"/>
+    </definition>
+
+    <definition name="epr.birthCertificateSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/SearchBirthCertificate.jsp"/>
+        <put-attribute name="title" value="BirthCertificateSearch.title"/>
     </definition>
 
     <definition name="epr.PRSAdvancedSearch" extends="epr.template">
