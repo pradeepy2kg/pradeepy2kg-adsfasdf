@@ -131,10 +131,12 @@
     <tbody>
     <tr>
         <td width="200px" style="border-top:none; border-bottom:none;"></td>
-        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>*in Sinhala/*in English/District</label></td>
+        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>*in Sinhala/*in
+            English/District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
-            <s:if test="#parent.motherDSDivision.district.districtUKey >0" >
-            <s:select name="motherDistrictId" list="allDistrictList" onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
+            <s:if test="#parent.motherDSDivision.district.districtUKey >0">
+            <s:select name="motherDistrictId" list="allDistrictList" onchange="javascript:view_DSDivs();return false;"
+                      cssStyle="width:99%;"/></td>
         </s:if>
         <s:else>
             <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"

@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
