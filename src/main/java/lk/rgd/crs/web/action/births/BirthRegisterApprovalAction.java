@@ -220,6 +220,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
                     bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
             }
+            addActionMessage("select according to date");
         } else {
             if (bdfSerialNo > 0) {
                 try {
@@ -262,10 +263,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 warnings = service.approveLiveBirthDeclaration(bdf, false, user);
                 logger.debug("inside approve() : requested to approve birth registratin bdId {} ", bdId);
             }
+            addActionMessage(getText("message.approval.Success"));
         }
         catch (CRSRuntimeException e) {
             logger.error("inside approve BirthRegistration/BirthConfirmation : {} ", e);
             addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
+            addActionMessage(getText("message.approval.Rejected"));
             caughtException = true;
         }
 
@@ -284,6 +287,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 setPageNo(getPageNo() - 1);
             }
             populate();
+
             return SUCCESS;
         } else {
             return "approvalRejected";
@@ -363,6 +367,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         return SUCCESS;
                     }
                 }
+                addActionMessage((getText("message.approval.Success")));
             } catch (CRSRuntimeException e) {
                 logger.error("inside approveIgnoringWarning() : {} ", e);
                 addActionError(getText("brapproval.ignoreWarningApproval.error." + e.getErrorCode()));
@@ -370,7 +375,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
-            logger.debug("helelelele");
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                 pageNo, noOfRows, user);
         } else {
@@ -396,10 +400,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 } else {
                     warnings = service.approveLiveBirthDeclarationIdList(index, user);
                 }
+                addActionMessage(getText("message.approval.Success"));
             }
             catch (CRSRuntimeException e) {
                 logger.error("inside approveListOfEntries : {} ", e);
                 addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
+                addActionMessage(getText("message.approval.Rejected"));
             }
         }
         populate();
@@ -428,6 +434,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             logger.debug("inside reject() : bdId {} requested to reject, is birthConfirmationReject {} ", bdId, confirmationApprovalFlag);
             try {
                 service.rejectBirthDeclaration(bdf, comments, user);
+                
             }
             catch (Exception e) {
                 logger.error("failed to reject birth declaration/confirmation {}", e);
@@ -441,11 +448,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                     pageNo, noOfRows, user);
                 paginationHandler(approvalPendingList.size());
+                addActionMessage(getText("message.success.ConfirmationReject"));
                 return "successConfirmationReject";
             } else {
                 approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                     pageNo, noOfRows, user);
                 paginationHandler(approvalPendingList.size());
+                addActionMessage(getText("message.success.DeclarationReject"));
                 return "successDeclarationReject";
             }
         }
@@ -471,6 +480,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE), user);
         paginationHandler(approvalPendingList.size());
         populate();
+        addActionMessage(getText("message.success.Declaration.delete"));
         return SUCCESS;
     }
 
