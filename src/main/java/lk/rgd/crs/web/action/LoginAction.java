@@ -48,29 +48,39 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String login() {
-        logger.debug("detected useName : {} ", userName);
+        logger.debug("detected userName : {} ", userName);
+        User user;
         try {
-            // change password and continue
-            User user = userManager.authenticateUser(userName, password);
+            user = userManager.authenticateUser(userName, password);
+        } catch (AuthorizationException e) {
+            logger.error("{} : {}", e.getMessage(), e);
+            return "error";
+        }
+
+        try {
             String language = user.getPrefLanguage();
             String country = "LK";
             if (language.equals("en")) {
                 country = "US";
             }
             HashMap map = (HashMap) allowedLinks(user);
+            logger.debug(" menu links set.");
+
             if (map != null) {
                 session.put(WebConstants.SESSION_USER_MENUE_LIST, map);
             } else {
                 return "error";
             }
+
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
             session.put(WebConstants.SESSION_USER_BEAN, user);
-            session.put("page_title", "home");
             logger.debug(" user {} logged in. language {}", userName, language);
-            return checkUserStatus(user);
-            // return "success";
-        } catch (AuthorizationException e) {
-            logger.error("{} : {}", e.getMessage(), e);
+
+            String result = checkUserStatus(user);
+            logger.debug("Returned result : {}", result);
+            return result;
+        } catch (Exception e) {
+            logger.error("Exception {} {} ", e, e.toString());
             return "error";
         }
     }
@@ -139,7 +149,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         }
         // if status are OK
         logger.debug("users status OK");
-        return "success";
+        return SUCCESS;
 
     }
 
@@ -184,9 +194,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
     }
 
     public void setSession(Map map) {
+        logger.debug("Set session {}", map);
         this.session = map;
     }
 
+    public Map getSession() {
+        return session;    
+    }
 
     static {
         linkPermission.put(Permission.PAGE_CREATE_USER, new Link("creat_user.label", "/popreg/management/", "eprInitUserCreation.do"));
