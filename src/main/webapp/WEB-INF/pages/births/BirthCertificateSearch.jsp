@@ -51,17 +51,17 @@
 
         <table class="table_reg_page_01" cellspacing="0" cellpadding="0">
             <tr>
-                <td class="font-9" width="400px"><label>(1) *Sinhala<br>*Tamil<br>
+                <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරැගේ සම්පූර්ණ නම<br>*Tamil<br>
                     Full Name of the Applicant</label></td>
                 <td colspan="6"><s:textarea name="bcSearch.applicantFullName" id="applicantFullName"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label> *Sinhala<br>*Tamil<br>
+                <td class="font-9"><label> ඉල්ලුම්කරැගේ ලිපිනය<br>*Tamil<br>
                     Address of the Applicant</label></td>
                 <td colspan="6"><s:textarea name="bcSearch.applicantAddress" id="applicantAddress"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label>(2) *Sinhala<br>*Tamil<br>
+                <td class="font-9"><label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම<br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made ?
                 </label></td>
                 <td colspan="6"><s:textarea name="bcSearch.fullName" id="fullName"/></td>
@@ -76,37 +76,38 @@
                 <td><s:textfield name="bcSearch.noOfCopies" id="noOfCopies"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label>(3) *Sinhala<br>*Tamil<br>
+                <td class="font-9"><label>(3) පියාගේ සම්පූර්ණ නම<br>*Tamil<br>
                     Father's Full Name
                 </label></td>
                 <td colspan="6">
                     <s:textarea name="bcSearch.fatherFullName" id="fatherFullName"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label>(4) *Sinhala<br>*Tamil<br>
+                <td class="font-9"><label>(4) මවගේ සම්පූර්ණ නම<br>*Tamil<br>
                     Mother's Full Name (maiden name)
                 </label></td>
                 <td colspan="6">
                     <s:textarea name="bcSearch.motherFullName" id="motherFullName"/></td>
             </tr>
             <tr style="border-left:1px solid #000000;">
-                <td width="150px"><label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+                <td class="font-9" width="150px"><label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
                 <td>
                     <sx:datetimepicker id="datePicker" name="bcSearch.dateOfBirth" displayFormat="yyyy-MM-dd"
                                        onchange="javascript:splitDate('datePicker')"/>
                 </td>
-                <td><label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+                <td class="font-9"><label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
                 <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth"/></td>
             </tr>
             <tr>
-                <td><label><span class="font-8">(6) *Sinhala<br>*Tamil<br>Registrar's Division</span></label></td>
+                <td class="font-9"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's Division</label></td>
                 <td colspan="6" align="center">DS Division List here</td>
             </tr>
             <tr>
-                <td><label><span class="font-8">(7) *Sinhala<br>*Tamil<br>Birth Certificate Number</span></label>
+                <td class="font-9"><label>
+                    (7) උප්පැන්න සහතිකයේ අංකය<br>*Tamil<br>Birth Certificate Number</label>
                 </td>
                 <td><s:textfield name="bcSearch.certificateNo" id="certificateNo"/></td>
-                <td width="150px"><label>* Sinhala<br>* Tamil<br>Date of Issue</label></td>
+                <td class="font-9" width="150px"><label>නිකුත් කළ දිනය<br>* Tamil<br>Date of Issue</label></td>
                 <td>
                     <sx:datetimepicker id="datePicker" name="bcSearch.certificateIssueDate" displayFormat="yyyy-MM-dd"
                                        onchange="javascript:splitDate('datePicker')"/>
