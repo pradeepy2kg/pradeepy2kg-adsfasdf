@@ -76,7 +76,6 @@
             </result>
             <result name="DSDivListUserPreference">/WEB-INF/pages/template/DSDivBoxUserPreference.jsp</result>
             <result name="MotherDSDivList">/WEB-INF/pages/template/DSDivBoxMother.jsp</result>
-            <result name="ConfirmantInfo">/WEB-INF/pages/template/ConfirmantInfo.jsp</result>
         </action>
     </package>
 
