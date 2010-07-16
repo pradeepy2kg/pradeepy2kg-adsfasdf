@@ -86,6 +86,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private boolean liveBirth;
     private boolean directPrint;
+    private boolean directPrintBirthCertificate;
     private int rgdErrorCode;
 
     private boolean skipConfirmationChages;
@@ -249,7 +250,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         populate(bdf);
         return "form" + pageNo;
     }
-
+     //todo move following method to PrintAction
     /**
      * Load  List page which needs changes by parents
      *
@@ -1020,5 +1021,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSkipConfirmationChages(boolean skipConfirmationChages) {
         this.skipConfirmationChages = skipConfirmationChages;
+    }
+
+    public boolean isDirectPrintBirthCertificate() {
+        return directPrintBirthCertificate;
+    }
+
+    public void setDirectPrintBirthCertificate(boolean directPrintBirthCertificate) {
+        this.directPrintBirthCertificate = directPrintBirthCertificate;
     }
 }

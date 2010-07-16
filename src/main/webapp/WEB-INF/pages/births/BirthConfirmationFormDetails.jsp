@@ -51,6 +51,7 @@
         <s:url id="printBirthCertificate" action="eprBirthCertificatDirectPrint.do">
             <s:param name="bdId" value="#request.bdId"/>
             <s:param name="directPrint" value="true"/>
+            <s:param name="directPrintBirthCertificate" value="true"/>
         </s:url>
 
         <s:url id="mainUrl" action="eprHome.do"/>

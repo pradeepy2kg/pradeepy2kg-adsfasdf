@@ -315,13 +315,14 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         initPermission();
         if (!caughtException && (warnings != null && warnings.isEmpty())) {
-            addActionMessage((getText("approveSuccess.label")));
             approved = true;
             if (confirmationApprovalFlag) {
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
+                addActionMessage((getText("confirmationApprovedSuccess.label")));
             } else {
                 liveBirth = bdf.getRegister().getLiveBirth();
                 setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
+                addActionMessage((getText("approveSuccess.label")));
             }
         }
         return SUCCESS;
@@ -345,7 +346,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     service.approveConfirmationChanges(bdf, true, user);
                     if (directApprovalFlag) {
                         logger.debug("inside approveIgnoringWarning() : directApprovalFlag {}", directApprovalFlag);
-                        addActionMessage((getText("approveSuccess.label")));
+                        addActionMessage((getText("confirmationApprovedSuccess.label")));
                         setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION));
                         approved = true;
                         return SUCCESS;

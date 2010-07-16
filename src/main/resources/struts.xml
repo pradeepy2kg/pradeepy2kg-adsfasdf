@@ -271,12 +271,17 @@
 
         <action name="eprBirthCertificatDirectPrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthCetificatePrint">
-            <result type="tiles" name="pageLoad">epr.birthConfirmation_details</result>
+            <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
         </action>
 
         <action name="ConfirmationDirectApprovalIngoreWarning"
                 class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.birthConfirmation_details</result>
+        </action>
+
+        <action name="eprDirectPrintBirthCertificate" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="directPrintBirthCertificate">
             <result type="tiles" name="success">epr.birthConfirmation_details</result>
         </action>
 
