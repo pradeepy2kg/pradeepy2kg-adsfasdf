@@ -76,7 +76,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean nextFlag;
     private boolean previousFlag;
     private boolean ignoreWarning;
-    private boolean directDeclarationApprovalFlag;
+    private boolean directApprovalFlag;
     private boolean allowEditBDF;
     private boolean allowApproveBDF;
     private boolean allowApproveBDFConfirmation;
@@ -334,7 +334,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         initPermission();
         //direct birth approvalIgnoring warnings from birthDeclarationFormDetails page
-        if (!ignoreWarning && directDeclarationApprovalFlag) {
+        if (!ignoreWarning && directApprovalFlag) {
             addActionError(getText("directApproveIgnoreWarning.faild.label"));
             return SUCCESS;
         }
@@ -343,11 +343,18 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             try {
                 if (confirmationApprovalFlag) {
                     service.approveConfirmationChanges(bdf, true, user);
+                    if (directApprovalFlag) {
+                        logger.debug("inside approveIgnoringWarning() : directApprovalFlag {}", directApprovalFlag);
+                        addActionMessage((getText("approveSuccess.label")));
+                        setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION));
+                        approved = true;
+                        return SUCCESS;
+                    }
                 } else {
                     service.approveLiveBirthDeclaration(bdf, true, user);
                     //checks whether the request is from immediately after entering a birth declaration
-                    if (directDeclarationApprovalFlag) {
-                        logger.debug("inside approveIgnoringWarning() : directDeclarationApprovalFlag {}", directDeclarationApprovalFlag);
+                    if (directApprovalFlag) {
+                        logger.debug("inside approveIgnoringWarning() : directApprovalFlag {}", directApprovalFlag);
                         addActionMessage((getText("approveSuccess.label")));
                         setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
                         approved = true;
@@ -842,12 +849,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.dsDivisionId = dsDivisionId;
     }
 
-    public boolean isDirectDeclarationApprovalFlag() {
-        return directDeclarationApprovalFlag;
+    public boolean isDirectApprovalFlag() {
+        return directApprovalFlag;
     }
 
-    public void setDirectDeclarationApprovalFlag(boolean directDeclarationApprovalFlag) {
-        this.directDeclarationApprovalFlag = directDeclarationApprovalFlag;
+    public void setDirectApprovalFlag(boolean directApprovalFlag) {
+        this.directApprovalFlag = directApprovalFlag;
     }
 
     public boolean isLiveBirth() {
