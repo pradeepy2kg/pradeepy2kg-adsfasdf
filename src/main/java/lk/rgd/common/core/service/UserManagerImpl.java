@@ -45,11 +45,23 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     public User authenticateUser(String userId, String password) throws AuthorizationException {
+        if (password == null) {
+            logger.warn("Attempt to authenticate non-existant or inactive user : {} or empty password", userId);
+            throw new AuthorizationException("Invalid user ID, password or user : " + userId, ErrorCodes.INVALID_LOGIN);
+        }
+
+        return secureAuthenticateUser(userId, hashPassword(password));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public User secureAuthenticateUser(String userId, String passwordHash) throws AuthorizationException {
         User user = userDao.getUserByPK(userId);
         if (user != null && user.getStatus() == User.State.ACTIVE
-            && password != null && user.getPasswordHash() != null
+            && passwordHash != null && user.getPasswordHash() != null
             && !SYSTEM_USER_NAME.equalsIgnoreCase(userId)) {
-            if (user.getPasswordHash().equals(hashPassword(password))) {
+            if (user.getPasswordHash().equals(passwordHash)) {
                 return user;
             } else {
                 logger.debug("Password mismatch for user : {}", userId);

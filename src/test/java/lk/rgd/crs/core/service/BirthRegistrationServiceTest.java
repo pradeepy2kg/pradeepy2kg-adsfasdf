@@ -191,8 +191,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
     }
 
-    // todo : make public after fixing
-    private void testConfirmationWithoutChanges() throws Exception {
+    public void testConfirmationWithoutChanges() throws Exception {
         Calendar dob = Calendar.getInstance();
         // test saving of a minimal BDF for colombo by DEO
         dob.add(Calendar.DATE, -3);
@@ -315,8 +314,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         deleteBDF(colomboBDDivision, 2010106);
     }
 
-    // todo : make public after fixing
-    private void testConfirmationWithChanges() throws Exception {
+    public void testConfirmationWithChanges() throws Exception {
         Calendar dob = Calendar.getInstance();
         // test saving of a minimal BDF for colombo by DEO
         dob.add(Calendar.DATE, -3);

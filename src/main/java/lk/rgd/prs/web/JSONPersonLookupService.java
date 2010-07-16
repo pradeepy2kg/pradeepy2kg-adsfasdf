@@ -46,15 +46,13 @@ public class JSONPersonLookupService extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String pinOrNic = request.getParameter("pinOrNic");
         logger.debug("Received Pin/NIC : " + pinOrNic);
         User user = null;
         try {
             HttpSession session = request.getSession();
             user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
-            // todo : a getPassword method or an authentication method with the hashed password is needed.
-            user = userManager.authenticateUser(user.getUserId(), "password");
+            user = userManager.secureAuthenticateUser(user.getUserId(), user.getPasswordHash());
         } catch (Exception e) {
             e.printStackTrace();
         }

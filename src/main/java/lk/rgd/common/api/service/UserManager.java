@@ -15,12 +15,22 @@ public interface UserManager {
     /**
      * Authenticate user credentials
      *
-     * @param userName the user name
+     * @param userId the user Id
      * @param password the password
      * @return the User object if authorization succeeds
      * @throws AuthorizationException if authorization fails
      */
-    User authenticateUser(String userName, String password) throws AuthorizationException;
+    User authenticateUser(String userId, String password) throws AuthorizationException;
+
+    /**
+     * Authenticate user credentials  securely without transmitting clear text passwords.
+     *
+     * @param userId the user Id
+     * @param passwordHash the hash of the password
+     * @return the User object if authorization succeeds
+     * @throws AuthorizationException if authorization fails
+     */
+    User secureAuthenticateUser(String userId, String passwordHash) throws AuthorizationException;
 
     /**
      * Internal API to access the System internal user
