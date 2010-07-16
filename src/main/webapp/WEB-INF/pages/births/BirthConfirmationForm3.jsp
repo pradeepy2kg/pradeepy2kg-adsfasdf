@@ -2,9 +2,15 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <script>
-    function view_ConfirmantInfo() {
-        dojo.event.topic.publish("view_ConfirmentInfo");
-    }
+    $(function() {
+        $('img#confirmant_lookup').bind('click', function(evt1) {
+            var id1 = $("input#confirmantNICorPIN").attr("value");
+            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
+                    });
+        });
+    })
 </script>
 <div id="birth-confirmation-form-outer">
     <s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST" id="birth-confirmation-form3"
@@ -49,27 +55,29 @@
             </tr>
             <tr>
                 <td width="10px">15</td>
-                <td colspan="4"><label>
+                <td colspan="5"><label>
                     උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
                     <br>PIN / NIC of person confirming the birth details
                 </label></td>
-                <td colspan="4"><s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN"
-                                             size="45"/><img
-                        src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                        onclick="javascript:view_ConfirmantInfo();return false;"></td>
+                <td colspan="3" class="find-person" width="250px" ><s:textfield name="confirmant.confirmantNICorPIN"
+                                                                               id="confirmantNICorPIN"/>
+                    <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                         id="confirmant_lookup"/>
+                </td>
             </tr>
-            </tbody>
-        </table>
-        <s:url id="loadConfirmantInfo" action="../ajaxSupport_loadConfirmantInfo"/>
-        <sx:div id="test" href="%{loadConfirmantInfo}" listenTopics="view_ConfirmentInfo"
-                formId="birth-confirmation-form3"
-                theme="ajax"/>
-        <table class="table_con_page_03" cellspacing="0" style="border-top:none;">
-            <tbody>
+            <tr>
+                <td width="40px">16</td>
+                <td colspan="3"><label>
+                    උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
+                    <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
+                    <br>Full Name of the person confirming the birth details</label></td>
+                <td colspan="5"><s:textarea name="confirmant.confirmantFullName"
+                                            id="confirmantFullName"/></td>
+            </tr>
             <tr>
                 <td rowspan="2" width="40px">17</td>
-                <td rowspan="2"><label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
+                <td rowspan="2" colspan="5"><label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct </label></td>
                 <td width="150px"><label>දිනය <br>திகதி <br>Date </label></td>
