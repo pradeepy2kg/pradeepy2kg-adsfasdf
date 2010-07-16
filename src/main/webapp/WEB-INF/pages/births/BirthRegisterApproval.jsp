@@ -155,7 +155,7 @@
                         </s:url>
                         <td align="center"><s:a href="%{rejectSelected}"
                                                 title="%{getText('rejectTooltip.label')}"><img
-                                src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                src="<s:url value='/images/reject.gif'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>
                     </s:if>
@@ -172,7 +172,7 @@
                         </s:url>
                         <td align="center"><s:a href="%{deleteSelected}"
                                                 title="%{getText('deleteToolTip.label')}"><img
-                                src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                src="<s:url value='/images/delete.gif'/>" width="25" height="25"
                                 border="none"/></s:a>
                         </td>
                     </s:if>

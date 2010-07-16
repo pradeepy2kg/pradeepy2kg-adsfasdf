@@ -367,6 +367,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String viewInNonEditableMode() {
+        //todo add support for belated registration after finishing the backend
         logger.debug("Non Editable Mode Step {} of 4 ", pageNo);
         BirthDeclaration bdf;
         if (back) {
@@ -374,6 +375,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return "form" + pageNo;
         } else {
             if (pageNo < 0 || pageNo > 3) {
+                addActionError(getText("p1.invalid.Entry"));
                 return ERROR;
             }
             if (pageNo == 0) {
