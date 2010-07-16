@@ -416,12 +416,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String birthConfirmationInit() {
-        BirthDeclaration bdf;
+        BirthDeclaration bdf,bcf;
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId != 0) {
             try {
                 bdf = service.getById(bdId, user);
+                bcf = service.getById(bdId, user);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                     bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
@@ -431,11 +432,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 handleErrors(e);
                 addActionError(getText("cp1.error.entryNotAvailable"));
                 bdf = new BirthDeclaration();
+                bcf = new BirthDeclaration();
             }
         } else {
             bdf = new BirthDeclaration(); // just go to the confirmation 1 page
+            bcf = new BirthDeclaration();
         }
         session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdf);
+        session.put(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN, bcf);
         populate(bdf);
         return "form0";
     }

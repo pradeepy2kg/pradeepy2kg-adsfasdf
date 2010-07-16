@@ -80,8 +80,8 @@
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
-        <td><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
-            <s:textfield cssClass="disable" disabled="true" name="register.dateOfRegistration"/></td>
+        <td><s:textfield cssClass="disable" disabled="true" name="#session.birthConfirmation_db.register.bdfSerialNo" />
+            <s:textfield cssClass="disable" disabled="true" name="#session.birthConfirmation_db.register.dateOfRegistration"/></td>
     </tr>
     <tr>
         <td>2</td>
@@ -134,13 +134,13 @@
         <td class="cell_01">3</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
         <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Year</label></td>
-        <td class="cell_03"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
+        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
                                          size="4"/></td>
         <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Month</label></td>
-        <td class="cell_03"><s:textfield value="%{child.dateOfBirth.month+1}" cssClass="disable" disabled="true"
+        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.month+1}" cssClass="disable" disabled="true"
                                          size="4"/></td>
         <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Day</label></td>
-        <td class="cell_03"><s:textfield value="%{child.dateOfBirth.date}" cssClass="disable" disabled="true"
+        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}" cssClass="disable" disabled="true"
                                          size="4"/></td>
         <td colspan="6" width="350px"><sx:datetimepicker id="submitDatePicker" name="child.dateOfBirth"
                                                          displayFormat="yyyy-MM-dd"
@@ -150,13 +150,13 @@
     <tr>
         <td>4</td>
         <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
-        <td colspan="6"><s:if test="child.childGender == 0">
+        <td colspan="6"><s:if test="#session.birthConfirmation_db.child.childGender == 0">
             <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
         </s:if>
-            <s:elseif test="child.childGender == 1">
+            <s:elseif test="#session.birthConfirmation_db.child.childGender == 1">
                 <s:textfield value="%{getText('female.label')}" cssClass="disable" disabled="true"/>
             </s:elseif>
-            <s:elseif test="child.childGender == 2">
+            <s:elseif test="#session.birthConfirmation_db.child.childGender == 2">
                 <s:textfield value="%{getText('unknown.label')}" cssClass="disable" disabled="true"/>
             </s:elseif></td>
         <td colspan="6"><s:select
@@ -191,19 +191,19 @@
     <tr>
         <td></td>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
-        <td colspan="6"><s:textarea name="child.placeOfBirth" cssClass="disable" disabled="true" cols="38"/></td>
+        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable" disabled="true" cols="38"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
         <td></td>
         <td><label>*in sinhala<br>*in tamil<br>Place in English</label></td>
-        <td colspan="6"><s:textarea name="child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
+        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"/></td>
     </tr>
     <tr>
         <td>6</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
-        <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
     </tr>
     <tr>
@@ -218,7 +218,7 @@
     <tr>
         <td>8</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
-        <td colspan="6"><s:textfield name="parent.motherNICorPIN" cssClass="disable" disabled="true"/></td>
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35"/></td>
     </tr>
     <tr>
@@ -231,7 +231,7 @@
     <tr>
         <td>10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
-        <td colspan="6"><s:textfield name="marriage.parentsMarried" cssClass="disable" disabled="true"
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable" disabled="true"
                                      value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
         <td><label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label></td>
         <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
