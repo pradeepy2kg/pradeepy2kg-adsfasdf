@@ -15,6 +15,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
+import lk.rgd.crs.api.dao.BCSearchDAO;
 
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
@@ -44,12 +45,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final AppParametersDAO appParametersDAO;
     private final UserManager userManager;
     private final BirthRecordsIndexer birthRecordsIndexer;
+    private final BCSearchDAO bcSearchDAO;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
         PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
-        BirthRecordsIndexer birthRecordsIndexer) {
+        BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -60,13 +62,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         this.appParametersDAO = appParametersDAO;
         this.userManager = userManager;
         this.birthRecordsIndexer = birthRecordsIndexer;
+        this.bcSearchDAO = bcSearchDAO;
     }
 
     /**
      * @inheritDoc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-                                                     String caseFileNumber, String additionalDocumentsComment) {
+        String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
         // ensure name is in upper case
         ChildInfo child = bdf.getChild();
@@ -187,7 +190,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         if (child.getChildFullNameEnglish() != null) {
             child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
         }
-        
+
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
 
@@ -410,7 +413,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
     }
 
-    /**                                                      BirthRegistrationServiceImpl
+    /**
+     * BirthRegistrationServiceImpl
+     *
      * @inheritDoc
      */
     public void markLiveBirthCertificateIDsAsPrinted(long[] printedIDList, User user) {
@@ -553,15 +558,15 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         if (!(User.State.ACTIVE == user.getStatus()
-              &&
-              (Role.ROLE_RG.equals(user.getRole().getName())
-              ||
-              (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                  &&
-               user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
-              )
-              )
-            )) {
+            &&
+            (Role.ROLE_RG.equals(user.getRole().getName())
+                ||
+                (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
+                    &&
+                    user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                )
+            )
+        )) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
@@ -657,7 +662,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
@@ -673,7 +678,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
@@ -763,29 +768,29 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         if (!isEmptyString(childInfo.getChildFullNameEnglish())) {
             child.setFullNameInEnglishLanguage(childInfo.getChildFullNameEnglish());
             String[] names = childInfo.getChildFullNameEnglish().split(" ");
-            child.setLastNameInEnglish(names[names.length-1]);
+            child.setLastNameInEnglish(names[names.length - 1]);
             StringBuilder sb = new StringBuilder(16);
-            for (int i=0; i<names.length-2; i++) {
+            for (int i = 0; i < names.length - 2; i++) {
                 sb.append(names[i].charAt(0)).append(". ");
             }
             child.setInitialsInEnglish(sb.toString());
             logger.debug("Derived child English initials as : {} and last name as : {}",
-                sb.toString(), names[names.length-1]);
+                sb.toString(), names[names.length - 1]);
         }
 
         if (!isEmptyString(childInfo.getChildFullNameOfficialLang())) {
             child.setFullNameInOfficialLanguage(childInfo.getChildFullNameOfficialLang());
             String[] names = childInfo.getChildFullNameOfficialLang().split(" ");
-            child.setLastNameInOfficialLanguage(names[names.length-1]);
+            child.setLastNameInOfficialLanguage(names[names.length - 1]);
             StringBuilder sb = new StringBuilder(16);
-            for (int i=0; i<names.length-2; i++) {
+            for (int i = 0; i < names.length - 2; i++) {
                 if (!isEmptyString(names[i])) {
                     sb.append(names[i].charAt(0)).append(". ");
                 }
             }
             child.setInitialsInOfficialLanguage(sb.toString());
             logger.debug("Derived child Official language initials as : {} and last name as : {}",
-                sb.toString(), names[names.length-1]);
+                sb.toString(), names[names.length - 1]);
         }
 
         child.setDateOfBirth(childInfo.getDateOfBirth());
@@ -837,7 +842,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
                     // TODO issue a user warning
                 }
-            } catch (NoResultException ignore) {}
+            } catch (NoResultException ignore) {
+            }
 
             // if we couldn't locate the mother, add an unverified record to the PRS
             if (mother == null && parent.getMotherFullName() != null) {
@@ -883,7 +889,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     // TODO issue a user warning
                     logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
                 }
-            } catch (NoResultException ignore) {}
+            } catch (NoResultException ignore) {
+            }
 
             // if we couldn't locate the father, add an unverified record to the PRS
             if (father == null && parent.getFatherFullName() != null) {
@@ -926,5 +933,20 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private static boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void addBirthCertificateSearch(BirthCertificateSearch bcs, User user) {
+        logger.debug("Adding a new birth certificate search entry");
+
+        // set user perform searching and the timestamp
+        bcs.setSearchUser(user);
+        bcs.setSearchPerformDate(new Date());
+
+        bcSearchDAO.addBirthCertificateSearch(bcs);
+        logger.debug("Added a new birth certificate search entry. SearchUKey : {} by User", bcs.getSearchUKey(),
+            bcs.getSearchUser().getUserId());
     }
 }

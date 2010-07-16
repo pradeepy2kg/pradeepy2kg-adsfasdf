@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthCertificateSearch;
 
 import java.util.List;
 import java.util.Date;
@@ -27,7 +28,7 @@ public interface BirthRegistrationService {
      *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-                                                     String caseFileNumber, String additionalDocumentsComment);
+        String caseFileNumber, String additionalDocumentsComment);
 
     /**
      * Update an existing BDF for a Live birth by a DEO or ADR <b>before</b> approval
@@ -236,7 +237,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -252,13 +253,13 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
      *
      * @param bdDivision the birth division
-     * @param user          the user initiating the action
+     * @param user       the user initiating the action
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBirthDivision(BDDivision bdDivision, User user);
@@ -269,5 +270,13 @@ public interface BirthRegistrationService {
      * from parents on confirmation details
      */
     public void triggerScheduledJobs();
+
+    /**
+     * Add a birth certificate search entry to the system. This operation is maintained for auditing purposes.
+     *
+     * @param bcs  the Birth certificate search to be added
+     * @param user the user initiate the action
+     */
+    public void addBirthCertificateSearch(BirthCertificateSearch bcs, User user);
 }
 

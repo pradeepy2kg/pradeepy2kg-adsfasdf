@@ -28,11 +28,11 @@ public class BirthCertificateSearch implements Serializable {
     private Long applicationNo;
 
     /**
-     * The date which the birth certificate search performed
+     * The date which the birth certificate search form is submitted
      */
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dateOfSearch;
+    private Date dateOfSubmittion;
 
     /**
      * This is the applicants full name
@@ -50,13 +50,13 @@ public class BirthCertificateSearch implements Serializable {
      * This is the full name of whose birth certificate being searched
      */
     @Column(nullable = true, length = 600)
-    private String searchFullName;
+    private String fullName;
 
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
      */
     @Column(nullable = true)
-    private int searchGender;
+    private int gender;
 
     /**
      * Number of birth certificate copies required
@@ -81,40 +81,48 @@ public class BirthCertificateSearch implements Serializable {
      */
     @Column(nullable = true)
     @Temporal(TemporalType.DATE)
-    private Date searchDateOfBirth;
+    private Date dateOfBirth;
 
     /**
      * This is the place of birth - Hospital, House No. and Street, Town or Village or name of Estate
      */
     @Column(nullable = true, length = 255)
-    private String searchPlaceOfBirth;
+    private String placeOfBirth;
 
     /**
      * The Birth/Death registration division where the birth is registered
      */
     @ManyToOne
-    @JoinColumn(name = "bdDivisionUKey", nullable = false)
+    @JoinColumn(name = "bdDivisionUKey", nullable = true)
+    // TODO change to nullable = true
     private BDDivision birthDivision;
 
     /**
      * This is the number of the birth certificate
      */
     @Column(nullable = true)
-    private long searchCertificateNo;
+    private Long certificateNo;
 
     /**
      * This is the date of birth certificate issued
      */
     @Column(nullable = true)
     @Temporal(TemporalType.DATE)
-    private Date searchDateOfIssue;
+    private Date certificateIssueDate;
 
     /**
-     * The user searching the birth certificate
+     * The user performed the birth certificate search
      */
     @OneToOne
     @JoinColumn(name = "searchUser")
     private User searchUser;
+
+    /**
+     * The timestamp when a birth certificate search performed
+     */
+    @Column(nullable = true, updatable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date searchPerformDate;
 
     public long getSearchUKey() {
         return searchUKey;
@@ -132,12 +140,12 @@ public class BirthCertificateSearch implements Serializable {
         this.applicationNo = applicationNo;
     }
 
-    public Date getDateOfSearch() {
-        return dateOfSearch;
+    public Date getDateOfSubmittion() {
+        return dateOfSubmittion;
     }
 
-    public void setDateOfSearch(Date dateOfSearch) {
-        this.dateOfSearch = dateOfSearch;
+    public void setDateOfSubmittion(Date dateOfSubmittion) {
+        this.dateOfSubmittion = dateOfSubmittion;
     }
 
     public String getApplicantFullName() {
@@ -156,20 +164,20 @@ public class BirthCertificateSearch implements Serializable {
         this.applicantAddress = applicantAddress;
     }
 
-    public String getSearchFullName() {
-        return searchFullName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setSearchFullName(String searchFullName) {
-        this.searchFullName = searchFullName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public int getSearchGender() {
-        return searchGender;
+    public int getGender() {
+        return gender;
     }
 
-    public void setSearchGender(int searchGender) {
-        this.searchGender = searchGender;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public int getNoOfCopies() {
@@ -196,20 +204,20 @@ public class BirthCertificateSearch implements Serializable {
         this.motherFullName = motherFullName;
     }
 
-    public Date getSearchDateOfBirth() {
-        return searchDateOfBirth;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setSearchDateOfBirth(Date searchDateOfBirth) {
-        this.searchDateOfBirth = searchDateOfBirth;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public String getSearchPlaceOfBirth() {
-        return searchPlaceOfBirth;
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
     }
 
-    public void setSearchPlaceOfBirth(String searchPlaceOfBirth) {
-        this.searchPlaceOfBirth = searchPlaceOfBirth;
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
     public BDDivision getBirthDivision() {
@@ -220,20 +228,20 @@ public class BirthCertificateSearch implements Serializable {
         this.birthDivision = birthDivision;
     }
 
-    public long getSearchCertificateNo() {
-        return searchCertificateNo;
+    public Long getCertificateNo() {
+        return certificateNo;
     }
 
-    public void setSearchCertificateNo(long searchCertificateNo) {
-        this.searchCertificateNo = searchCertificateNo;
+    public void setCertificateNo(Long certificateNo) {
+        this.certificateNo = certificateNo;
     }
 
-    public Date getSearchDateOfIssue() {
-        return searchDateOfIssue;
+    public Date getCertificateIssueDate() {
+        return certificateIssueDate;
     }
 
-    public void setSearchDateOfIssue(Date searchDateOfIssue) {
-        this.searchDateOfIssue = searchDateOfIssue;
+    public void setCertificateIssueDate(Date certificateIssueDate) {
+        this.certificateIssueDate = certificateIssueDate;
     }
 
     public User getSearchUser() {
@@ -242,5 +250,13 @@ public class BirthCertificateSearch implements Serializable {
 
     public void setSearchUser(User searchUser) {
         this.searchUser = searchUser;
+    }
+
+    public Date getSearchPerformDate() {
+        return searchPerformDate;
+    }
+
+    public void setSearchPerformDate(Date searchPerformDate) {
+        this.searchPerformDate = searchPerformDate;
     }
 }
