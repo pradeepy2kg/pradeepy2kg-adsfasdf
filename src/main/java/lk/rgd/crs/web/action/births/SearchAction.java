@@ -8,6 +8,7 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.BCSearchDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
@@ -29,6 +30,8 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
+    private final BCSearchDAO bcSearchDAO;
+
     private Map session;
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
@@ -36,7 +39,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private List<BirthDeclaration> searchResultList;
     private User user;
     private BirthDeclaration bdf;
-    private BirthCertificateSearch certSearch;
+    private BirthCertificateSearch bcSearch;
 
     private int birthDistrictId;
     private int dsDivisionId;
@@ -48,11 +51,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private String status;
     private int pageNo;
 
-    public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
+    public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+        BDDivisionDAO bdDivisionDAO, BCSearchDAO bcSearchDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.bcSearchDAO = bcSearchDAO;
     }
 
     public String welcome() {
@@ -125,7 +130,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Used to search birth certificates or search of registers
+     * Used to search birth certificates or search of registers flow.
      *
      * @return
      */
@@ -133,7 +138,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("birth certificate search: Page {}", pageNo);
         // TODO Still implementing
         if (pageNo == 1) {
-            BirthCertificateSearch search = certSearch;
+            service.addBirthCertificateSearch(bcSearch, user);
         }
         return "page" + pageNo;
     }
@@ -239,12 +244,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.searchResultList = searchResultList;
     }
 
-    public BirthCertificateSearch getCertSearch() {
-        return certSearch;
+    public BirthCertificateSearch getBcSearch() {
+        return bcSearch;
     }
 
-    public void setCertSearch(BirthCertificateSearch certSearch) {
-        this.certSearch = certSearch;
+    public void setBcSearch(BirthCertificateSearch bcSearch) {
+        this.bcSearch = bcSearch;
     }
 
     public int getPageNo() {

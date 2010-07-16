@@ -58,6 +58,7 @@
     <bean id="birthDeclarationDAOImpl" class="lk.rgd.crs.core.dao.BirthDeclarationDAOImpl"/>
     <bean id="personDAOImpl" class="lk.rgd.prs.core.dao.PersonDAOImpl"/>
     <bean id="pinNumberDAOImpl" class="lk.rgd.prs.core.dao.PINNumberDAOImpl"/>
+    <bean id="bcSearchDAOImpl" class="lk.rgd.crs.core.dao.BCSearchDAOImpl"/>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
@@ -80,6 +81,7 @@
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="birthRecordsIndexer"/>
+        <constructor-arg ref="bcSearchDAOImpl"/>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
@@ -144,6 +146,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="bcSearchDAOImpl"/>
     </bean>
 
     <bean id="userPreferenceAction" class="lk.rgd.crs.web.action.UserPreferencesAction">

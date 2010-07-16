@@ -165,7 +165,7 @@
     </definition>
 
     <definition name="epr.birthCertificateSearch" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/births/SearchBirthCertificate.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthCertificateSearch.jsp"/>
         <put-attribute name="title" value="BirthCertificateSearch.title"/>
     </definition>
 

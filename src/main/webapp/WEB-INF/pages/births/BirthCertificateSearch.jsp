@@ -25,14 +25,14 @@
                         <tr>
                             <td><label><span class="font-8">*Sinhala<br>*Tamil<br>Application No</span></label>
                             </td>
-                            <td><s:textfield name="certSearch.applicationNo" id="applicationNo"/></td>
+                            <td><s:textfield name="bcSearch.applicationNo" id="applicationNo"/></td>
                         </tr>
                     </table>
                     <table class="table_reg_datePicker_page_01">
                         <tr>
                             <td><label><span class="font-8">යොමුකළ දිනය<br>*Tamil<br>Submitted Date</span></label>
                             </td>
-                            <td><sx:datetimepicker id="searchDatePicker" name="certSearch.dateOfSearch"
+                            <td><sx:datetimepicker id="dateOfSubmittion" name="bcSearch.dateOfSubmittion"
                                                    displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate()"/>
                             </td>
                         </tr>
@@ -53,50 +53,50 @@
             <tr>
                 <td class="font-9" width="400px"><label>(1) *Sinhala<br>*Tamil<br>
                     Full Name of the Applicant</label></td>
-                <td colspan="6"><s:textarea name="certSearch.applicantFullName" id="applicantFullName"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.applicantFullName" id="applicantFullName"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label> *Sinhala<br>*Tamil<br>
                     Address of the Applicant</label></td>
-                <td colspan="6"><s:textarea name="certSearch.applicantAddress" id="applicantAddress"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.applicantAddress" id="applicantAddress"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>(2) *Sinhala<br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made ?
                 </label></td>
-                <td colspan="6"><s:textarea name="certSearch.searchFullName" id="searchFullName"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.fullName" id="fullName"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
                 <td><s:select
                         list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                        name="certSearch.searchGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                        name="bcSearch.gender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                         cssStyle="width:190px; margin-left:5px;"/></td>
                 <td><label> * Sinhala<br>* Tamil<br>No. of Copies required</label></td>
-                <td><s:textfield name="certSearch.noOfCopies" id="noOfCopies"/></td>
+                <td><s:textfield name="bcSearch.noOfCopies" id="noOfCopies"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>(3) *Sinhala<br>*Tamil<br>
                     Father's Full Name
                 </label></td>
                 <td colspan="6">
-                    <s:textarea name="certSearch.fatherFullName" id="fatherFullName"/></td>
+                    <s:textarea name="bcSearch.fatherFullName" id="fatherFullName"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>(4) *Sinhala<br>*Tamil<br>
                     Mother's Full Name (maiden name)
                 </label></td>
                 <td colspan="6">
-                    <s:textarea name="certSearch.motherFullName" id="motherFullName"/></td>
+                    <s:textarea name="bcSearch.motherFullName" id="motherFullName"/></td>
             </tr>
             <tr style="border-left:1px solid #000000;">
                 <td width="150px"><label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
                 <td>
-                    <sx:datetimepicker id="datePicker" name="certSearch.searchDateOfBirth" displayFormat="yyyy-MM-dd"
+                    <sx:datetimepicker id="datePicker" name="bcSearch.dateOfBirth" displayFormat="yyyy-MM-dd"
                                        onchange="javascript:splitDate('datePicker')"/>
                 </td>
                 <td><label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
-                <td><s:textfield name="certSearch.searchPlaceOfBirth" id="searchPlaceOfBirth"/></td>
+                <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth"/></td>
             </tr>
             <tr>
                 <td><label><span class="font-8">(6) *Sinhala<br>*Tamil<br>Registrar's Division</span></label></td>
@@ -105,10 +105,10 @@
             <tr>
                 <td><label><span class="font-8">(7) *Sinhala<br>*Tamil<br>Birth Certificate Number</span></label>
                 </td>
-                <td><s:textfield name="certSearch.searchCertificateNo" id="searchCertificateNo"/></td>
+                <td><s:textfield name="bcSearch.certificateNo" id="certificateNo"/></td>
                 <td width="150px"><label>* Sinhala<br>* Tamil<br>Date of Issue</label></td>
                 <td>
-                    <sx:datetimepicker id="datePicker" name="certSearch.searchDateOfIssue" displayFormat="yyyy-MM-dd"
+                    <sx:datetimepicker id="datePicker" name="bcSearch.certificateIssueDate" displayFormat="yyyy-MM-dd"
                                        onchange="javascript:splitDate('datePicker')"/>
                 </td>
             </tr>
