@@ -291,19 +291,25 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * Used for direct BirthDeclaration Registration after filling BDFs
+     * responsible for apprve BDF immediately after filling the form.
+     * if confirmationApprovalFlag is set to true it is for Birth
+     * Confirmation changes direct approval purposes.
      *
      * @return
      */
-    public String approveBirthDeclarationForm() {
+    public String directApprove() {
         bdf = service.getById(bdId, user);
         liveBirth = bdf.getRegister().getLiveBirth();
         boolean caughtException = false;
         try {
-            warnings = service.approveLiveBirthDeclaration(bdf, false, user);
+            if (confirmationApprovalFlag) {
+                warnings = service.approveConfirmationChanges(bdf, false, user);
+            } else {
+                warnings = service.approveLiveBirthDeclaration(bdf, false, user);
+            }
         }
         catch (CRSRuntimeException e) {
-            logger.error("inside approveBirthDeclarationForm() : {} ", e);
+            logger.error("inside directApprove() : {} ", e);
             addActionError(getText("brapproval.approval.error." + Integer.toString(e.getErrorCode())));
             caughtException = true;
         }
@@ -311,8 +317,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (!caughtException && (warnings != null && warnings.isEmpty())) {
             addActionMessage((getText("approveSuccess.label")));
             approved = true;
-            liveBirth = bdf.getRegister().getLiveBirth();
-            setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
+            if (confirmationApprovalFlag) {
+                allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
+            } else {
+                liveBirth = bdf.getRegister().getLiveBirth();
+                setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
+            }
         }
         return SUCCESS;
     }

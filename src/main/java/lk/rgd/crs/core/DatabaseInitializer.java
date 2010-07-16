@@ -82,7 +82,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // detect the target DB
         EntityManagerFactoryInfo emf = (EntityManagerFactoryInfo) ctx.getBean("entityManagerFactory");
         if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
-                getProperty("hibernate.dialect"))) {
+            getProperty("hibernate.dialect"))) {
             mysql = true;
         }
 
@@ -124,7 +124,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/drop_mysql_databases.sql"), false);
+                    new ClassPathResource("database/drop_mysql_databases.sql"), false);
                 logger.info("Drop existing MySQL databases : COMMON, CRS, PRS");
             } catch (Exception ignore) {
                 logger.warn("Exception while dropping existing MySQL databases", ignore);
@@ -135,7 +135,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/create_mysql_databases.sql"), false);
+                    new ClassPathResource("database/create_mysql_databases.sql"), false);
                 logger.info("Created MySQL databases : COMMON, CRS, PRS");
             } catch (Exception e) {
                 logger.error("Error creating MySQL databases - COMMON, CRS and PRS", e);
@@ -144,7 +144,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         } else {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/create_schemas.sql"), false);
+                    new ClassPathResource("database/create_schemas.sql"), false);
                 logger.info("Created the schemas : COMMON, CRS, PRS");
             } catch (Exception ignore) {
             }
@@ -162,7 +162,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if (!mysql) {
             try {
                 SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new FileSystemResource(fileName[1]), false);
+                    new FileSystemResource(fileName[1]), false);
                 logger.info("Drop existing tables using generated script : " + fileName[1]);
             } catch (Exception e) {
                 logger.debug("Exception while dropping existing tables using script : " + fileName[1]);
@@ -172,7 +172,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         // create tables
         try {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new FileSystemResource(fileName[0]), false);
+                new FileSystemResource(fileName[0]), false);
             logger.info("Created tables using generated script : " + fileName[0]);
 
         } catch (Exception e) {
@@ -188,15 +188,15 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             // populate with sample data
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("database/populate_sample_data.sql"), false);
+                new ClassPathResource("database/populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("database/populate_sample_crs.sql"), false);
+                new ClassPathResource("database/populate_sample_crs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
 
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                    new ClassPathResource("database/populate_sample_prs.sql"), false);
+                new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
 
         } catch (Exception e) {
@@ -267,7 +267,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
-            
+
             //Birth Registration
             bs.set(Permission.PAGE_BIRTH_REGISTRATON);
             bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
@@ -284,15 +284,16 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_BULK_PRINT);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_SELECTED_ENTRY);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_DIRECT_PRINT_BIRTH_CERTIFICATE);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_NEXT);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT);
 
-
             //Approval
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT);
@@ -313,6 +314,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_APPROVAL);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVE);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVAL_IGNORING_WARNINGS);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL_IGNORING_WARNINGS);
             bs.set(Permission.APPROVE_BDF);
             bs.set(Permission.APPROVE_BDF_CONFIRMATION);
 
@@ -323,7 +325,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
             bs.set(Permission.PAGE_ADVANCE_SEARCH);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_SEARCH);
-            
+
             //User preferance
             bs.set(Permission.CHANGE_PASSWORD);
             bs.set(Permission.BACK_CHANGE_PASSWORD);
