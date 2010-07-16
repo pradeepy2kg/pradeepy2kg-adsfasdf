@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
+import lk.rgd.crs.web.WebConstants;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -46,9 +48,13 @@ public class JSONPersonLookupService extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String pinOrNic = request.getParameter("pinOrNic");
+        logger.debug("Received Pin/NIC : " + pinOrNic);
         User user = null;
         try {
-            user = userManager.authenticateUser("adr-colombo-colombo", "password");
+            HttpSession session = request.getSession();
+            user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
+            // todo : a getPassword method or an authentication method with the hashed password is needed.
+            user = userManager.authenticateUser(user.getUserId(), "password");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,7 +72,12 @@ public class JSONPersonLookupService extends HttpServlet {
         untyped.put("gender", person.getGender());
         untyped.put("dateOfBirth", person.getDateOfBirth());
         untyped.put("placeOfBirth", person.getPlaceOfBirth());
-        untyped.put("lastAddress", person.getLastAddress().toString());
+
+        if (person.getLastAddress() != null) {
+            untyped.put("lastAddress", person.getLastAddress().toString());
+        } else {
+            untyped.put("lastAddress", "");
+        }
 
         mapper.writeValue(out, untyped);
         out.flush();

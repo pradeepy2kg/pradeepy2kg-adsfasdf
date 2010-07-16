@@ -17,6 +17,18 @@ import lk.rgd.common.api.domain.User;
 
 public class LoginActionTest extends StrutsSpringTestCase {
     private static final Logger logger = LoggerFactory.getLogger(LoginActionTest.class);
+    private ActionProxy proxy;
+    private LoginAction action;
+
+    private String initAndExucute(String mapping) throws Exception {
+        proxy = getActionProxy(mapping);
+        action = (LoginAction) proxy.getAction();
+        ActionContext.getContext().setSession(new HashMap<String, Object>());
+        String result = proxy.execute();
+
+        logger.debug("result for mapping {} is {}", mapping, result);
+        return result;
+    }
 
 	@Override
 	public String getContextLocations() {
@@ -41,14 +53,7 @@ public class LoginActionTest extends StrutsSpringTestCase {
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
 
-        ActionProxy proxy = getActionProxy("/eprLogin.do");
-        LoginAction action = (LoginAction) proxy.getAction();
-
-        ActionContext.getContext().setSession(new HashMap<String, Object>());
-        String result = proxy.execute();
-
-        logger.debug("result {}", result);
-
+        String result = initAndExucute("/eprLogin.do");
         // todo uncomment this line after fixing testing framework bug -always return 'ERROR' forward.
         //assertEquals("success not returned.", Action.SUCCESS, result);
 
