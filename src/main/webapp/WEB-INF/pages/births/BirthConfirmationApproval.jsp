@@ -109,7 +109,7 @@
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td><s:property value="confirmant.confirmationReceiveDate"/></td>
-                    <td>
+                    <td align="center">
                         <s:if test="#request.allowEditBDF">
                             <s:url id="editSelected" action="eprBirthConfirmationInit.do">
                                 <s:param name="bdId" value="idUKey"/>
@@ -120,7 +120,7 @@
                                      border="none"/></s:a>
                         </s:if>
                     </td>
-                    <td>
+                    <td align="center">
                         <s:if test="#request.allowApproveBDFConfirmation">
                             <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
                                 <s:url id="approveSelected" action="eprApproveBirthConfirmation.do">
@@ -138,7 +138,7 @@
                                      border="none"/></s:a>
                             </s:if> </s:if>
                     </td>
-                    <td>
+                    <td align="center">
                         <s:if test="#request.allowApproveBDFConfirmation">
                         <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
                         <s:url id="rejectSelected" action="eprRejectBirthConfirmation.do">
