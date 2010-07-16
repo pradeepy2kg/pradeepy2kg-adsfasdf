@@ -23,7 +23,7 @@
                                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
                                 <td><s:checkbox name="ignoreWarning"/></td>
                                 <s:hidden value="%{#request.bdId}" name="bdId"/>
-                                <s:hidden value="true" name="directDeclarationApprovalFlag"/>
+                                <s:hidden value="true" name="directApprovalFlag"/>
                                 <s:hidden value="true" name="confirmationApprovalFlag"/>
                                 <td class="button" align="left"><s:submit name="approve"
                                                                           value="%{getText('approve.label')}"/></td>
