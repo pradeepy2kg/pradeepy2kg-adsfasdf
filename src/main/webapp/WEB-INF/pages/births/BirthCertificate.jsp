@@ -30,7 +30,7 @@
         </td>
     </tr>
     <tr>
-        <td><s:label name="bdId" /></td>
+        <td><s:label name="bdId"/></td>
     </tr>
     <tr>
         <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
@@ -100,7 +100,7 @@
             <td><s:label name="" value="%{#request.child.pin}"/></td>
             <td width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
             </td>
-            <td width="150px"><s:label name="" value="%{#request.child.childDateOfBirthForPrint}" /></td>
+            <td width="150px"><s:label name="" value="%{#request.child.childDateOfBirthForPrint}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
             <td width="150px">
@@ -232,7 +232,7 @@
     <tr>
         <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2"><s:label name="" /></td>
+        <td colspan="2"><s:label name=""/></td>
     </tr>
     </tbody>
 </table>
@@ -247,12 +247,17 @@
         <s:param name="bdId" value="#request.bdId"/>
     </s:url>
 </s:if>
+<s:elseif test="directPrintBirthCertificate">
+    <s:url id="print" action="eprDirectPrintBirthCertificate.do">
+        <s:param name="bdId" value="#request.bdId"/>
+    </s:url>
+</s:elseif>
 <s:else>
     <%--TODO remove unused parameters--%>
     <s:url id="print" action="eprFilterBirthCetificateList.do">
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivisio\n.dsDivisionUKey"/>
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>

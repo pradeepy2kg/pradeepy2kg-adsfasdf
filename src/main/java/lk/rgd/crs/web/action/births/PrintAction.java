@@ -56,7 +56,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private long[] index;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -225,6 +225,16 @@ public class PrintAction extends ActionSupport implements SessionAware {
         }
         printStart -= noOfRows;
         populate();
+        return SUCCESS;
+    }
+
+    /**
+     * simple method to load the birth confirmation form detail
+     * after printing the birth certificate
+     *
+     * @return
+     */
+    public String directPrintBirthCertificate() {
         return SUCCESS;
     }
 
