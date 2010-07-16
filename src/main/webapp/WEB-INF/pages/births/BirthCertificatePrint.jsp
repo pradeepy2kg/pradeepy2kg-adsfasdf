@@ -37,7 +37,7 @@
 <div id="birth-certificate-print">
     <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBCPrint"/>
     <div id="birth-certificate-print-header">
-        <s:actionerror/>
+
         <s:form action="eprFilterBirthCetificateList.do" name="birth_register_approval_head" method="POST"
                 id="birth-certificate-print-form">
         <table width="100%" cellpadding="5" cellspacing="0">
@@ -73,6 +73,9 @@
     </s:form>
     <s:form action="eprBirthCertificateBulkPrint" name="birth_confirm_print">
     <div id="birth-register-approval-body">
+        <s:actionerror/>
+        <s:actionmessage/>
+        
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>

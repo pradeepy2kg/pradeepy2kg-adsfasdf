@@ -172,7 +172,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
         } else {
             printList = service.getBirthCertificatePrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+
         }
+        addActionMessage(getText("print.markedPage.message"));
         return SUCCESS;
     }
 
