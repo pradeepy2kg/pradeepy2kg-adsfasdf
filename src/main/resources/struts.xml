@@ -71,7 +71,6 @@
             <result name="DSDivListSearch">/WEB-INF/pages/template/DSDivBoxSearch.jsp</result>
             <result name="DSDivListBDFApproval">/WEB-INF/pages/template/DSDivBoxBDFApproval.jsp</result>
             <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
-            <result name="NotifyerInfo">/WEB-INF/pages/template/NotifyerInfo.jsp</result>
             <result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
             <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp
             </result>
