@@ -1,6 +1,18 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript">
+    $(function() {
+        $('img#notifier_lookup').bind('click', function(evt1) {
+            var id1 = $("input#notifyingAuthorityPIN").attr("value");
+            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
+                    });
+        });
+    })
+</script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST"
@@ -26,24 +38,27 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
+                <td colspan="4"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
-                <td colspan="2" class="find-person" width="200px">
+                <td colspan="1" class="find-person" width="250px">
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                         onclick="javascript:view_NotifyerInfo();return false;">
+                         id="notifier_lookup"/>
                 </td>
             </tr>
-            </tbody>
-        </table>
-
-        <s:url id="loadNotifyerInfo" action="../ajaxSupport_loadNotifyerInfo"/>
-        <sx:div id="notifyingAuthority.notifyingAuthorityPIN" href="%{loadNotifyerInfo}"
-                listenTopics="view_NotifyerInfo" formId="birth-registration-form-4" theme="ajax"/>
-
-        <table class="table_reg_page_04" width="100%" cellspacing="0" style="border-top:none;">
-            <tbody>
+            <tr>
+                <td width="200px" colspan="1"><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+                <td colspan="4">
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
+                                cssStyle="width:98%;"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="200px"><label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
+                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"  id="notifyingAuthorityAddress"
+                                            cssStyle="width:98%;"/></td>
+            </tr>
             <tr>
                 <td width="200px"><label>දිනය <br>*in tamil <br>Date</label></td>
                 <td colspan="4"><sx:datetimepicker id="modifiedDatePicker"
