@@ -46,7 +46,7 @@ public class JSONPersonLookupService extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pinOrNic = request.getParameter("pinOrNic");
+        String pinOrNic = request.getParameter(WebConstants.REQUEST_PIN_NIC);
         logger.debug("Received Pin/NIC : " + pinOrNic);
         User user = null;
         try {
