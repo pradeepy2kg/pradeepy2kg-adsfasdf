@@ -229,12 +229,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         return ERROR;
                     } else {
                         service.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf, user);
-                        addActionMessage(getText("cp3.confirmation.changes.success"));
+                        //todo meaning ful message should be given
+                        addActionMessage(getText("cp3.no.confirmation.changes.success"));
                     }
                 } else {
                     service.captureLiveBirthConfirmationChanges(bdf, user);
+                    //setting permission for BirthConfirmationDetails page
+                    allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
                     addActionMessage(getText("cp3.confirmation.changes.success"));
                 }
+                //jpa gives the newly added entries bdId instead of archived entry
+                bdId = bdf.getIdUKey();
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         }
 

@@ -137,7 +137,7 @@
             <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
             <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
             <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
-            <result type="tiles" name="form3">epr.welcome</result>
+            <result type="tiles" name="form3">epr.birthConfirmation_details</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
@@ -262,9 +262,27 @@
             <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
         </action>
 
-        <!--Direct Approval through BirthRegisterFoemDeails page -->
+        <!--Direct Approval through BirthConfirmationFormDetails page -->
+        <action name="eprConfrimationChangesDirectApproval"
+                class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="directApprove">
+            <result type="tiles" name="success">epr.birthConfirmation_details</result>
+        </action>
+
+        <action name="eprBirthCertificatDirectPrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthCetificatePrint">
+            <result type="tiles" name="pageLoad">epr.birthConfirmation_details</result>
+        </action>
+
+        <action name="ConfirmationDirectApprovalIngoreWarning"
+                class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.birthConfirmation_details</result>
+        </action>
+
+        <!--Direct Approval through BirthRegisterFormDetails page -->
         <action name="eprDirectApprove" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
-                method="approveBirthDeclarationForm">
+                method="directApprove">
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
