@@ -11,16 +11,26 @@
     }
 
     $(function() {
-        $('img#lookup').bind('click', function(evt) {
-            var id=$("input#pinOrNic").attr("value");
-            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id},
-                    function(data) {
-                        $("textarea#fatherFullName").val(data.fullNameInOfficialLanguage);
-                        $("input#fatherPlaceOfBirth").val(data.placeOfBirth);
-                        dojo.widget.byId('fatherDatePicker').setValue(data.dateOfBirth);
+        $('img#father_lookup').bind('click', function(evt1) {
+            var id1=$("input#father_pinOrNic").attr("value");
+            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                        $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                        dojo.widget.byId('fatherDatePicker').setValue(data1.dateOfBirth);
+                    });
+        });
+
+        $('img#mother_lookup').bind('click', function(evt2) {
+            var id2=$("input#mother_pinOrNic").attr("value");
+            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id2},
+                    function(data2) {
+                        $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                        $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
+                        $("textarea#motherAddress").val(data2.lastAddress);
+                        dojo.widget.byId('motherDatePicker').setValue(data2.dateOfBirth);
                     });
         })
-
     })
 </script>
 
@@ -60,8 +70,8 @@
         <td rowspan="2" width="200px"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td rowspan="2" width="230px" class="find-person"><s:textfield id="pinOrNic" name="parent.fatherNICorPIN"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="lookup">
+        <td rowspan="2" width="230px" class="find-person"><s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
@@ -128,9 +138,9 @@
         <td rowspan="2" width="200px"><label>(15)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td colspan="2" rowspan="2" width="230px" class="find-person"><s:textfield name="parent.motherNICorPIN"/>
-            <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;"
-                 onclick="javascript:view_MotherInfo();return false;">
+        <td colspan="2" rowspan="2" width="230px" class="find-person">
+            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN"/>
+            <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
@@ -145,9 +155,43 @@
     </tbody>
 </table>
 
-<s:url id="loadMotherInfo" action="../ajaxSupport_loadMotherInfo"/>
-<sx:div id="parent.motherNICorPIN" href="%{loadMotherInfo}"
-        listenTopics="view_MotherInfo" formId="birth-registration-form-2" theme="ajax"/>
+<table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none; border-bottom:none;">
+    <tbody>
+    <tr>
+        <td width="200px"><label>(16)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
+        <td colspan="8">
+            <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td width="200px"><label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
+        <td colspan="3"><sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
+                                           onmouseover="javascript:splitDate('motherDatePicker')"/></td>
+        <td colspan="3" width="100px"><label>
+            <s:if test="%{#session.birthRegister.register.liveBirth}">
+                (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+                as at
+                the date of birth of child
+            </s:if>
+            <s:else>
+                (18) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
+                as at the date of still-birth of child
+            </s:else>
+        </label>
+        </td>
+        <td class="passport"><s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"
+                                          onclick="javascript:motherage()"/></td>
+    </tr>
+    <tr style="border-bottom:none;">
+        <td style="border-bottom:none;" ><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>
+        </td>
+        <td colspan="8" style="border-bottom:none;">
+            <s:textarea id="motherAddress" name="parent.motherAddress" cssStyle="width:98%;"/>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
 
 <table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none;">
     <s:url id="loadDSDivList" action="../ajaxSupport_loadMotherDSDivList"/>
@@ -158,14 +202,14 @@
             English/District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
-            <s:select name="motherDistrictId" list="allDistrictList" onchange="javascript:view_DSDivs();return false;"
+                <s:select name="motherDistrictId" list="allDistrictList" onchange="javascript:view_DSDivs();return false;"
                       cssStyle="width:99%;"/></td>
-        </s:if>
-        <s:else>
-            <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
+            </s:if>
+            <s:else>
+                <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
                       headerValue="%{getText('select_district.label')}"
                       onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
-        </s:else>
+            </s:else>
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>
@@ -181,7 +225,7 @@
                                   headerValue="%{getText('select_race.label')}"/></td>
 
         <td colspan="3"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
-        <td colspan="3" class="passport"><s:textfield name="parent.motherPlaceOfBirth"/></td>
+        <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
         <td><label>(22)රෝහලට ඇතුලත් කිරිමේ අංකය<br>*in tamil<br>Hospital Admission Number</label></td>

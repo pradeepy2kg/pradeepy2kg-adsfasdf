@@ -65,9 +65,6 @@ public class JSONPersonLookupService extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         HashMap<String,Object> untyped = new HashMap<String,Object>();
-        untyped.put("fullNameInOfficialLanguage", "name");
-        untyped.put("address", "address");
-
         untyped.put("fullNameInOfficialLanguage", person.getFullNameInOfficialLanguage());
         untyped.put("gender", person.getGender());
         untyped.put("dateOfBirth", person.getDateOfBirth());
