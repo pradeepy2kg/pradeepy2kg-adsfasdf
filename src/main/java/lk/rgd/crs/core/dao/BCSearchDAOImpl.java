@@ -24,7 +24,7 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
     /**
      * Ensure persisted fields in upper case
      *
-     * @param bcs
+     * @param bcs the birth certificate search entry to be updated
      */
     private void changeToUpper(BirthCertificateSearch bcs) {
         if (bcs.getApplicantFullName() != null) {
@@ -50,7 +50,7 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
     /**
      * Sets fields that are "" or one or more spaces to null
      *
-     * @param bcs
+     * @param bcs the birth certificate search entry to be updated
      */
     private void setBlankStringsAsNull(BirthCertificateSearch bcs) {
         if (isBlankString(bcs.getFullName())) {

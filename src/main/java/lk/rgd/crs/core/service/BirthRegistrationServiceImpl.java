@@ -946,7 +946,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         bcs.setSearchPerformDate(new Date());
 
         bcSearchDAO.addBirthCertificateSearch(bcs);
-        logger.debug("Added a new birth certificate search entry. SearchUKey : {} by User", bcs.getSearchUKey(),
-            bcs.getSearchUser().getUserId());
+        logger.debug("Added a new birth certificate search entry. SearchUKey : {} by UserID", bcs.getSearchUKey(),
+            user.getUserId());
     }
 }
