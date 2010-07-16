@@ -360,7 +360,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Responsible for loading the 4BDF in non editable mode
+     * Responsible for loading the 4BDF in non editable mode if
+     * the requested BirthDeclaration is a belated or Still Birth
+     * related those will also be processed by this method
      *
      * @return
      */
@@ -379,6 +381,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 try {
                     bdf = service.getById(bdId, user);
                     session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+                    if (!bdf.getRegister().getLiveBirth()) {
+                        //still birth related
+                        return "form5";
+                    }
                 } catch (Exception e) {
                     handleErrors(e);
                     addActionError(getText("p1.invalid.Entry"));

@@ -5,7 +5,7 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 
     <s:form action="eprViewBDFInNonEditableMode" name="nonEditableBirthRegistrationForm1" method="POST">
-    <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
+        <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
     <table class="table_reg_header_01" style="font-size:9pt">
         <caption></caption>
         <col/>
