@@ -30,4 +30,5 @@ public class WebConstants {
     public static final String DEFAULT_PASS="password";
     public static final String SESSION_REQUEST_CONTEXT = "context";
     public static final String SESSION_BIRTH_CONFIRMATION_DB_BEAN = "birthConfirmation_db";
+    public static final String REQUEST_PIN_NIC = "pinOrNic";
 }

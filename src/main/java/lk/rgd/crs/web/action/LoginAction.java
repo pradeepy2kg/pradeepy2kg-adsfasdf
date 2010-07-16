@@ -64,7 +64,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 country = "US";
             }
             HashMap map = (HashMap) allowedLinks(user);
-            logger.debug(" menu links set.");
 
             if (map != null) {
                 session.put(WebConstants.SESSION_USER_MENUE_LIST, map);
@@ -77,7 +76,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
             logger.debug(" user {} logged in. language {}", userName, language);
 
             String result = checkUserStatus(user);
-            logger.debug("Returned result : {}", result);
             return result;
         } catch (Exception e) {
             logger.error("Exception {} {} ", e, e.toString());
