@@ -13,7 +13,7 @@
     $(function() {
         $('img#father_lookup').bind('click', function(evt1) {
             var id1=$("input#father_pinOrNic").attr("value");
-            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                         $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
@@ -23,7 +23,7 @@
 
         $('img#mother_lookup').bind('click', function(evt2) {
             var id2=$("input#mother_pinOrNic").attr("value");
-            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id2},
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
                     function(data2) {
                         $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                         $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
@@ -33,6 +33,8 @@
         })
     })
 </script>
+
+<s:url var="jsonUrl" includeContext="true" anchor="/prs/PersonLookupService"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm2" id="birth-registration-form-2" method="POST"
