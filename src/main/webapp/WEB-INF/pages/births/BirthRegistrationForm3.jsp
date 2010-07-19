@@ -1,7 +1,18 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<script type="text/javascript">
+    $(function() {
+        $('img#informant_lookup').bind('click', function(evt1) {
+            var id1 = $("input#informantNICorPIN").attr("value");
+            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#informantAddress").val(data1.lastAddress);
+                    });
+        });
+    })
+</script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm3" id="birth-registration-form-3" method="POST"
@@ -230,7 +241,11 @@
             கொடுப்பவரின்
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3"><s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/></td>
+        <td colspan="3" class="find-person">
+            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                         id="informant_lookup"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2"><label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label></td>
