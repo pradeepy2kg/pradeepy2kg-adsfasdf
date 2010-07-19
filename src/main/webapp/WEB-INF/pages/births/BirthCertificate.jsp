@@ -59,13 +59,14 @@
     <tr>
         <td width="175px" height="80px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
         </td>
-        <td width="300px"><s:label name=""
-                                   value="%{#request.register.birthDivision.dsDivision.district.siDistrictName}"/></td>
+        <td width="300px"><s:label name="" value="%{childDistrict}"/><br/>
+            <s:label name="" value="%{childDistrictEn}"/></td>
         <td width="200px">ප්‍රාදේශීය ලේකම් කොට්ඨාශය
             <br> பிரிவு
             <br> Divisional Secretariat
         </td>
-        <td><s:label name="" value="%{#request.register.birthDivision.dsDivision.siDivisionName}"/></td>
+        <td><s:label name="" value="%{childDsDivision}"/><br/>
+            <s:label name="" value="%{childDsDivisionEn}"/></td>
     </tr>
     <tr>
         <td width="200px" height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
@@ -104,15 +105,17 @@
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
             <td width="150px">
-                <s:if test="child.childGender == 0">
-                    <s:label name="" value="%{getText('male.label')}"/>
-                </s:if>
-                <s:elseif test="child.childGender == 1">
-                    <s:label name="" value="%{getText('female.label')}"/>
-                </s:elseif>
-                <s:elseif test="child.childGender == 2">
-                    <s:label name="" value="%{getText('unknown.label')}"/>
-                </s:elseif>
+                    <%-- <s:if test="child.childGender == 0">
+                       <s:label name="" value="%{getText('male.label')} \n Male "/>
+                   </s:if>
+                   <s:elseif test="child.childGender == 1">
+                       <s:label name="" value="%{getText('female.label')}"/>
+                   </s:elseif>
+                   <s:elseif test="child.childGender == 2">
+                       <s:label name="" value="%{getText('unknown.label')}"/>
+                   </s:elseif> --%>
+                <s:label name="" value="%{gender}"/><br/>
+                <s:label name="" value="%{genderEn}"/>
             </td>
         </tr>
     </s:if>
@@ -124,15 +127,17 @@
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
             <td width="150px">
-                <s:if test="child.childGender == 0">
-                    <s:label name="" value="%{getText('male.label')}"/>
-                </s:if>
-                <s:elseif test="child.childGender == 1">
-                    <s:label name="" value="%{getText('female.label')}"/>
-                </s:elseif>
-                <s:elseif test="child.childGender == 2">
-                    <s:label name="" value="%{getText('unknown.label')}"/>
-                </s:elseif>
+                    <%--  <s:if test="child.childGender == 0">
+                        <s:label name="" value="%{getText('male.label')}"/>
+                    </s:if>
+                    <s:elseif test="child.childGender == 1">
+                        <s:label name="" value="%{getText('female.label')}"/>
+                    </s:elseif>
+                    <s:elseif test="child.childGender == 2">
+                        <s:label name="" value="%{getText('unknown.label')}"/>
+                    </s:elseif>--%>
+                <s:label name="" value="%{gender}"/><br/>
+                <s:label name="" value="%{genderEn}"/>
             </td>
             <td>දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
@@ -182,7 +187,9 @@
         <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
         <td>පියාගේ ජාතිය<br>தந்தையின் இனம் <br> Father's Race
         </td>
-        <td colspan="3"><s:label name="" value="%{#request.parent.fatherRace.siRaceName}"/></td>
+        <td colspan="3"><s:label name="" value="%{fatherRacePrint}"/><br/><s:label name=""
+                                                                                   value="%{fatherRacePrintEn}"/></td>
+
     </tr>
 
     <tr>
@@ -200,7 +207,8 @@
         <td><s:label name="" value="%{#request.parent.motherNICorPIN}"/></td>
         <td>මවගේ ජාතිය<br>தாயின் இனம் <br> Mother's Race
         </td>
-        <td colspan="3"><s:label name="" value="%{#request.parent.motherRace.siRaceName}"/></td>
+        <td colspan="3"><s:label name="" value="%{motherRacePrint}"/><br/>
+            <s:label name="" value="%{motherRacePrintEn}"/></td>
     </tr>
 
     </tbody>
