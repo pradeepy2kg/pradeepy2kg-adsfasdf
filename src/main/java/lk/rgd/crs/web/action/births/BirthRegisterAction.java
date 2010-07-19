@@ -13,6 +13,7 @@ import java.util.*;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.util.GenderUtil;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -22,6 +23,7 @@ import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
 import lk.rgd.Permission;
+import lk.rgd.AppConstants;
 
 /**
  * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
@@ -90,6 +92,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int rgdErrorCode;
 
     private boolean skipConfirmationChages;
+
+
+    private String gender;
+    private String genderEn;
+    private String childDistrict;
+    private String childDistrictEn;
+    private String childDsDivision;
+    private String childDsDivisionEn;
+    private String fatherRacePrint;
+    private String fatherRacePrintEn;
+    private String motherRacePrint;
+    private String motherRacePrintEn;
+    private String marriedStatusPrint;
+
 
     public String welcome() {
         return SUCCESS;
@@ -250,14 +266,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         populate(bdf);
         return "form" + pageNo;
     }
-     //todo move following method to PrintAction
+
+    //todo move following method to PrintAction
     /**
      * Load  List page which needs changes by parents
      *
      * @return pageLoad
      */
     public String confirmationPrintPageLoad() {
-
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
             Calendar cal1 = new GregorianCalendar();
@@ -418,7 +434,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String birthConfirmationInit() {
-        BirthDeclaration bdf,bcf;
+        BirthDeclaration bdf, bcf;
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId != 0) {
@@ -465,7 +481,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      * @return pageLoad
      */
     public String birthCetificatePrint() {
-
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
             bdf = service.loadValuesForPrint(bdf, user);
@@ -477,7 +492,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 } else {
                     service.markLiveBirthCertificateAsPrinted(bdf, user);
                     beanPopulate(bdf);
+
+
+                    gender = child.getChildGenderPrint();
+                    genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
+                    childDistrict = register.getDistrictPrint();
+                    childDistrictEn = register.getBirthDistrict().getEnDistrictName();
+                    childDsDivision = register.getDsDivisionPrint();
+                    childDsDivisionEn = register.getDsDivision().getEnDivisionName();
+                    fatherRacePrint = parent.getFatherRacePrint();
+                    fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
+                    motherRacePrint = parent.getMotherRacePrint();
+                    motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
+
                     addActionMessage("message.print.success");
+
                     return "pageLoad";
                 }
             } else {
@@ -485,7 +514,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 addActionMessage("message.print.success");
                 return "pageLoad";
             }
-            
+
         } catch (Exception e) {
             handleErrors(e);
             addActionError(getText("error.print.notSuccess"));
@@ -1033,11 +1062,108 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.skipConfirmationChages = skipConfirmationChages;
     }
 
+
+    public String getGender() {
+        return gender;
+    }
+
     public boolean isDirectPrintBirthCertificate() {
         return directPrintBirthCertificate;
+
+    }
+
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public void setDirectPrintBirthCertificate(boolean directPrintBirthCertificate) {
         this.directPrintBirthCertificate = directPrintBirthCertificate;
+
+    }
+
+
+    public String getChildDistrict() {
+        return childDistrict;
+    }
+
+    public void setChildDistrict(String childDistrict) {
+        this.childDistrict = childDistrict;
+    }
+
+    public String getChildDsDivision() {
+        return childDsDivision;
+    }
+
+    public void setChildDSDivision(String childDsDivision) {
+        this.setChildDsDivision(childDsDivision);
+    }
+
+    public String getFatherRacePrint() {
+        return fatherRacePrint;
+    }
+
+    public void setFatherRacePrint(String fatherRacePrint) {
+        this.fatherRacePrint = fatherRacePrint;
+    }
+
+    public String getMotherRacePrint() {
+        return motherRacePrint;
+    }
+
+    public void setMotherRacePrint(String motherRacePrint) {
+        this.motherRacePrint = motherRacePrint;
+    }
+
+    public String getMarriedStatusPrint() {
+        return marriedStatusPrint;
+    }
+
+    public void setMarriedStatusPrint(String marriedStatusPrint) {
+        this.marriedStatusPrint = marriedStatusPrint;
+    }
+
+    public String getGenderEn() {
+        return genderEn;
+    }
+
+    public void setGenderEn(String genderEn) {
+        this.genderEn = genderEn;
+    }
+
+    public String getChildDistrictEn() {
+        return childDistrictEn;
+    }
+
+    public void setChildDistrictEn(String childDistrictEn) {
+        this.childDistrictEn = childDistrictEn;
+    }
+
+    public void setChildDsDivision(String childDsDivision) {
+        this.childDsDivision = childDsDivision;
+    }
+
+    public String getChildDsDivisionEn() {
+        return childDsDivisionEn;
+    }
+
+    public void setChildDsDivisionEn(String childDsDivisionEn) {
+        this.childDsDivisionEn = childDsDivisionEn;
+    }
+
+    public String getFatherRacePrintEn() {
+        return fatherRacePrintEn;
+    }
+
+    public void setFatherRacePrintEn(String fatherRacePrintEn) {
+        this.fatherRacePrintEn = fatherRacePrintEn;
+    }
+
+    public String getMotherRacePrintEn() {
+        return motherRacePrintEn;
+    }
+
+    public void setMotherRacePrintEn(String motherRacePrintEn) {
+        this.motherRacePrintEn = motherRacePrintEn;
     }
 }

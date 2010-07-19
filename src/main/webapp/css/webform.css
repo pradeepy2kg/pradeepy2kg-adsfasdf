@@ -1614,6 +1614,7 @@
     margin-left: 40px;
 }
 
-.birth-registration-form-details-button-table {
-    float: right;
+.birth-registration-form-details-button-table{
+    float:left;
+
 }
