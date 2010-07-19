@@ -39,8 +39,7 @@
     </div>
 </div>
 <div style="margin-left:auto; margin-right:auto; width:55%;">
-    <img src="<s:url value="/images/icta-logo.jpg"/>">
-    Copyright © 2010 » ICTA &amp; Registrar General&apos;s Department of Sri Lanka. All Rights Reserved.
+    Copyright © 2010 » Registrar General&apos;s Department of Sri Lanka. All Rights Reserved.
 </div>
 </body>
 </html>
