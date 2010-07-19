@@ -92,7 +92,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -106,7 +106,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-                                                                                       BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.confirmation.receive.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -136,6 +136,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
 
     /**
      * Sets fields that are "" or one or more spaces to null
+     *
      * @param bdf the BDF to update
      */
     private void setBlankStringsAsNull(BirthDeclaration bdf) {
@@ -150,6 +151,12 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         }
         if (isBlankString(child.getChildFullNameOfficialLang())) {
             child.setChildFullNameOfficialLang(null);
+        }
+        if (isBlankString(child.getPlaceOfBirth())) {
+            child.setPlaceOfBirth(null);
+        }
+        if (isBlankString(child.getPlaceOfBirthEnglish())) {
+            child.setPlaceOfBirthEnglish(null);
         }
 
         ParentInfo parent = bdf.getParent();
@@ -200,11 +207,17 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         if (isBlankString(grandFather.getGrandFatherFullName())) {
             grandFather.setGrandFatherFullName(null);
         }
+        if (isBlankString(grandFather.getGrandFatherNICorPIN())) {
+            grandFather.setGrandFatherNICorPIN(null);
+        }
         if (isBlankString(grandFather.getGrandFatherBirthPlace())) {
             grandFather.setGrandFatherBirthPlace(null);
         }
         if (isBlankString(grandFather.getGreatGrandFatherFullName())) {
             grandFather.setGreatGrandFatherFullName(null);
+        }
+        if (isBlankString(grandFather.getGreatGrandFatherNICorPIN())) {
+            grandFather.setGreatGrandFatherNICorPIN(null);
         }
         if (isBlankString(grandFather.getGreatGrandFatherBirthPlace())) {
             grandFather.setGreatGrandFatherBirthPlace(null);
@@ -219,6 +232,11 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         }
         if (isBlankString(informant.getInformantEmail())) {
             informant.setInformantEmail(null);
+        }
+
+        NotifyingAuthorityInfo notifyingAuthority = bdf.getNotifyingAuthority();
+        if (isBlankString(notifyingAuthority.getNotifyingAuthorityAddress())) {
+            notifyingAuthority.setNotifyingAuthorityAddress(null);
         }
     }
 
