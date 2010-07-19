@@ -436,7 +436,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             logger.debug("inside reject() : bdId {} requested to reject, is birthConfirmationReject {} ", bdId, confirmationApprovalFlag);
             try {
                 service.rejectBirthDeclaration(bdf, comments, user);
-                
+
             }
             catch (Exception e) {
                 logger.error("failed to reject birth declaration/confirmation {}", e);
