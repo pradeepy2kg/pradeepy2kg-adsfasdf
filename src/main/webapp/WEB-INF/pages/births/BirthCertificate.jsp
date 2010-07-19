@@ -105,15 +105,6 @@
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
             <td width="150px">
-                    <%-- <s:if test="child.childGender == 0">
-                       <s:label name="" value="%{getText('male.label')} \n Male "/>
-                   </s:if>
-                   <s:elseif test="child.childGender == 1">
-                       <s:label name="" value="%{getText('female.label')}"/>
-                   </s:elseif>
-                   <s:elseif test="child.childGender == 2">
-                       <s:label name="" value="%{getText('unknown.label')}"/>
-                   </s:elseif> --%>
                 <s:label name="" value="%{gender}"/><br/>
                 <s:label name="" value="%{genderEn}"/>
             </td>
@@ -127,15 +118,7 @@
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
             <td width="150px">
-                    <%--  <s:if test="child.childGender == 0">
-                        <s:label name="" value="%{getText('male.label')}"/>
-                    </s:if>
-                    <s:elseif test="child.childGender == 1">
-                        <s:label name="" value="%{getText('female.label')}"/>
-                    </s:elseif>
-                    <s:elseif test="child.childGender == 2">
-                        <s:label name="" value="%{getText('unknown.label')}"/>
-                    </s:elseif>--%>
+
                 <s:label name="" value="%{gender}"/><br/>
                 <s:label name="" value="%{genderEn}"/>
             </td>

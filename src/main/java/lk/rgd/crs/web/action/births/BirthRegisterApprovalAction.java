@@ -556,7 +556,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 + " requested from pageNo " + pageNo);
         }
         /**
-         * UI related. decides whether to display 
+         * UI related. decides whether to display
          * next and previous links
          */
         if (previousFlag && getPageNo() == 2) {
