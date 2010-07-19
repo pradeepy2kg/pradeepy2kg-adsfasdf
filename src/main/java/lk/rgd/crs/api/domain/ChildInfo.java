@@ -202,7 +202,7 @@ public class ChildInfo implements Serializable {
     }
 
     public void setPin(Long pin) {
-        
+
         this.pin = pin;
     }
 
