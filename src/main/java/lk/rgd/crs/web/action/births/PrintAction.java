@@ -160,7 +160,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 if (confirmListFlag) {
                     service.markLiveBirthConfirmationIDsAsPrinted(index, user);
                 }
+                addActionMessage(getText("print.markedPage.message"));
                 logger.debug("marked {} items as printed", index.length);
+            } else {
+                addActionMessage(getText("messege.noSelected.items"));
             }
         } else {
             addActionError(getText("print.alreadyPrinted.error"));
@@ -169,12 +172,12 @@ public class PrintAction extends ActionSupport implements SessionAware {
         if (confirmListFlag) {
             printList = service.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+
         } else {
             printList = service.getBirthCertificatePrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
 
         }
-        addActionMessage(getText("print.markedPage.message"));
         return SUCCESS;
     }
 
