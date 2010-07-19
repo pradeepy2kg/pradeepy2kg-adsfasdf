@@ -407,6 +407,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
                 addActionMessage(getText("message.approval.Rejected"));
             }
+        } else {
+            addActionMessage(getText("messege.noSelected.items"));
         }
         populate();
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
