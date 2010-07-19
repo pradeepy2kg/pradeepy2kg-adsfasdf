@@ -19,8 +19,8 @@ import java.util.List;
  * This is the main service interface for the PRS
  *
  * @author asankha
- *
- * TODO Autit calls and log metrics of use
+ *         <p/>
+ *         TODO Autit calls and log metrics of use
  */
 public class PopulationRegistryImpl implements PopulationRegistry {
 
@@ -120,7 +120,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
         } catch (NumberFormatException ignore) {
             // this is a nic, if multiple rows match, just return the first
             List<Person> results = findPersonsByNIC(pinOrNic, user);
-            if (results!= null && !results.isEmpty()) {
+            if (results != null && !results.isEmpty() && results.size() == 1) {
                 return results.get(0);
             }
         }
