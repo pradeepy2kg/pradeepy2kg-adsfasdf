@@ -7,10 +7,6 @@ import java.util.Date;
 @Embeddable
 public class ConfirmantInfo implements Serializable {
 
-    /** Has the confirmation for parents been printed ? */
-    @Column(nullable = true)
-    private boolean confirmationPrinted;
-
     /** The last date for confirmation - set as 14 days from confirmation print date */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
@@ -33,14 +29,6 @@ public class ConfirmantInfo implements Serializable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date confirmationReceiveDate;
-
-    public boolean isConfirmationPrinted() {
-        return confirmationPrinted;
-    }
-
-    public void setConfirmationPrinted(boolean confirmationPrinted) {
-        this.confirmationPrinted = confirmationPrinted;
-    }
 
     public Date getLastDateForConfirmation() {
         return lastDateForConfirmation;
