@@ -134,7 +134,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration bdf;
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-            return "form" + pageNo;     
+            return "form" + pageNo;
         }
         if (pageNo < 1) {
             return ERROR;
@@ -169,7 +169,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 // todo data validations, exception handling and error reporting
                 bdId = bdf.getIdUKey();
                 if (bdId == 0) {
-                    service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
+                    if (liveBirth) {
+                        service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
+                    } else {
+                        service.addStillBirthDeclaration(bdf, true, user);
+                    }
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
