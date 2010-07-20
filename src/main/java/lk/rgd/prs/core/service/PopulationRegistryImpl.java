@@ -2,6 +2,7 @@ package lk.rgd.prs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
@@ -114,16 +115,24 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      */
     public Person findPersonByPINorNIC(String pinOrNic, User user) {
         try {
-            long pin = Long.parseLong(pinOrNic);
-            // this is a pin
-            return findPersonByPIN(pin, user);
+            if (!isBlankString(pinOrNic)) {
+                long pin = Long.parseLong(pinOrNic);
+                // this is a pin
+                return findPersonByPIN(pin, user);
+            } else {
+                throw new IllegalArgumentException();
+            }
         } catch (NumberFormatException ignore) {
             // this is a nic, if multiple rows match, just return the first
             List<Person> results = findPersonsByNIC(pinOrNic, user);
-            if (results != null && !results.isEmpty() && results.size() == 1) {
+            if (results != null && !results.isEmpty()) {
                 return results.get(0);
             }
         }
         return null;
+    }
+
+    private boolean isBlankString(String s) {
+        return s != null && s.trim().length() == 0;
     }
 }
