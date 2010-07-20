@@ -71,6 +71,34 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
+
+        // TODO add case file number and additional document list as comments
+        addBirthDeclaration(bdf, ignoreWarnings, user);
+        logger.debug("Added a new live birth declaration. IDUKey : {}", bdf.getIdUKey());
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<UserWarning> addStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        logger.debug("Adding a new still birth declaration");
+
+        // TODO still bith specific validations
+        addBirthDeclaration(bdf, ignoreWarnings, user);
+        logger.debug("Added a new still birth declaration. IDUKey : {}", bdf.getIdUKey());
+        return null;
+    }
+
+    /**
+     * Set of common actions to both Live and Still birth declaration adding
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     * @return a list of warnings if applicable for the record
+     */
+    private List<UserWarning> addBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         // ensure name is in upper case
         ChildInfo child = bdf.getChild();
         if (child.getChildFullNameEnglish() != null) {
@@ -79,16 +107,15 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         // TODO if a mother is specified, is she alive? etc
-        // TODO add case file number and additional document list as comments
         if (!ignoreWarnings) {
             // TODO more validations .. like bdf.getParent().getMotherFullName() != null etc
         }
         validateAccessOfUser(user, bdf);
         bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
         birthDeclarationDAO.addBirthDeclaration(bdf);
-        logger.debug("Added a new live birth declaration. IDUKey : {}", bdf.getIdUKey());
         return null;
     }
+
 
     /**
      * @inheritDoc
@@ -949,4 +976,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Added a new birth certificate search entry. SearchUKey : {} by UserID", bcs.getSearchUKey(),
             user.getUserId());
     }
+
+
 }

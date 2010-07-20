@@ -31,6 +31,17 @@ public interface BirthRegistrationService {
         String caseFileNumber, String additionalDocumentsComment);
 
     /**
+     * Add a Still Birth declaration to the system.
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
+     *         Warnings maybe if a mother specified is known to be dead etc
+     */
+    public List<UserWarning> addStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
      * Update an existing BDF for a Live birth by a DEO or ADR <b>before</b> approval
      *
      * @param bdf            the BDF to be updated
