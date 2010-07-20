@@ -129,19 +129,11 @@
         </td>
     </tr>
     <tr>
-            <%--<s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivList"/>--%>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="float:left;  width:240px;"/>
-
-            <%--<s:url id="loadBDDivList" action="/ajaxSupport_loadBDDivList"/>--%>
-            <%--<sx:div name="birthDivisionId" id="birthDivisionId" value="%{birthDivisionId}" href="%{loadBDDivList}"--%>
-                    <%--theme="ajax" listenTopics="view_BDDivs" formId="birth-registration-form-1">--%>
-            <%--</sx:div>--%>
             <label style="float:right; line-height:25px; vertical-align:middle; margin-right:5px;">කොට්ඨාශය /பிரிவு /Division</label>
-            <%--<sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"--%>
-                    <%--listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>--%>
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList" cssStyle=" width:240px;float:right;" />
         </td>
     <tr>
