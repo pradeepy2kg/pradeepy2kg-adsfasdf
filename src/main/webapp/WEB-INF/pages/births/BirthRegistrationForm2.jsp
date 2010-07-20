@@ -22,11 +22,22 @@
                         $("textarea#motherAddress").val(data2.lastAddress);
                         dojo.widget.byId('motherDatePicker').setValue(data2.dateOfBirth);
                     });
-        })
+        });
+
+        $('select#motherDistrictId').bind('change', function(evt3) {
+            var id=$("select#motherDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:1},
+                function(data) {
+                    var options = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#motherDSDivisionId").html(options);
+                });
+        });
     })
 </script>
-
-<s:url var="jsonUrl" includeContext="true" anchor="/prs/PersonLookupService"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm2" id="birth-registration-form-2" method="POST"
@@ -178,7 +189,6 @@
 </table>
 
 <table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none;">
-    <s:url id="loadDSDivList" action="../ajaxSupport_loadMotherDSDivList"/>
     <tbody>
     <tr>
         <td width="200px" style="border-top:none; border-bottom:none;"></td>
@@ -186,21 +196,19 @@
             English/District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
-                <s:select name="motherDistrictId" list="allDistrictList" onchange="javascript:view_DSDivs();return false;"
-                      cssStyle="width:99%;"/></td>
+                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
             </s:if>
             <s:else>
-                <s:select name="motherDistrictId" list="allDistrictList" headerKey="0"
-                      headerValue="%{getText('select_district.label')}"
-                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:99%;"/></td>
+                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
+                          headerValue="%{getText('select_district.label')}" cssStyle="width:99%;"/></td>
             </s:else>
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>
         <td colspan="2"><label>*in Sinhala/*in English/D.S Division</label></td>
         <td colspan="6" class="table_reg_cell_02">
-            <sx:div id="motherDSDivisionId" value="motherDSDivisionId" href="%{loadDSDivList}" theme="ajax"
-                    listenTopics="view_DSDivs" formId="birth-registration-form-2"></sx:div>
+            <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="dsDivisionList"
+                      headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
         </td>
     </tr>
     <tr>
