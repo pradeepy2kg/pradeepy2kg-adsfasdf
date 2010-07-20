@@ -205,7 +205,6 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.5.0</version>
         </dependency>
-
     </dependencies>
 
     <build>

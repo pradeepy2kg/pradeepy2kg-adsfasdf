@@ -88,8 +88,7 @@ public class AjaxAction extends ActionSupport implements SessionAware {
 
                 dsDivisionId = register.getDsDivision().getDsDivisionUKey();
                 logger.debug(" DS division found from session {}", dsDivisionId);
-                return;
-            } catch (Exception e) {
+                return;                                                                              } catch (Exception e) {
                 logger.debug(" Problem with DS division in session. ignoring.. {} ", e.getMessage());
             }
         }
