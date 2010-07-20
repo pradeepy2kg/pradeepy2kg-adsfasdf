@@ -65,6 +65,6 @@ public interface PopulationRegistry {
      * @param user the user performing this action
      * @return the matching person
      */
-    public Person findPersonByPINorNIC(String pinOrNic, User user);
+    public Person findPersonByPINorNIC(String pinOrNic, User user) ;
 
 }
