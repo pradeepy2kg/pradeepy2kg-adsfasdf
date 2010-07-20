@@ -54,32 +54,29 @@ public class JSONPersonLookupService extends HttpServlet {
             user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
             user = userManager.secureAuthenticateUser(user.getUserId(), user.getPasswordHash());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fatal Error : {}", e);
+            return;
         }
 
-        try {
-            Person person = popReg.findPersonByPINorNIC(pinOrNic, user);
-            logger.debug("Loaded person : " + person.getFullNameInOfficialLanguage());
+        Person person = popReg.findPersonByPINorNIC(pinOrNic, user);
+        logger.debug("Loaded person : " + person.getFullNameInOfficialLanguage());
 
-            response.setContentType("application/json; charset=utf-8");
-            PrintWriter out = response.getWriter();
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = response.getWriter();
 
-            HashMap<String, Object> untyped = new HashMap<String, Object>();
-            untyped.put("fullNameInOfficialLanguage", person.getFullNameInOfficialLanguage());
-            untyped.put("gender", person.getGender());
-            untyped.put("dateOfBirth", person.getDateOfBirth());
-            untyped.put("placeOfBirth", person.getPlaceOfBirth());
+        HashMap<String,Object> untyped = new HashMap<String,Object>();
+        untyped.put("fullNameInOfficialLanguage", person.getFullNameInOfficialLanguage());
+        untyped.put("gender", person.getGender());
+        untyped.put("dateOfBirth", person.getDateOfBirth());
+        untyped.put("placeOfBirth", person.getPlaceOfBirth());
 
-            if (person.getLastAddress() != null) {
-                untyped.put("lastAddress", person.getLastAddress().toString());
-            } else {
-                untyped.put("lastAddress", "");
-            }
-
-            mapper.writeValue(out, untyped);
-            out.flush();
-        } catch (IllegalArgumentException e) {
-            logger.error("Blank String used for pinOrNic");
+        if (person.getLastAddress() != null) {
+            untyped.put("lastAddress", person.getLastAddress().toString());
+        } else {
+            untyped.put("lastAddress", "");
         }
+
+        mapper.writeValue(out, untyped);
+        out.flush();
     }
 }

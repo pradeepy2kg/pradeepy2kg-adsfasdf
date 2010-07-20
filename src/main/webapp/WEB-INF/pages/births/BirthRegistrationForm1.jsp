@@ -4,13 +4,43 @@
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
-    function view_DSDivs() {
-        dojo.event.topic.publish("view_DSDivs");
-    }
+    // mode 1 = passing District, will return DS list
+    // mode 2 = passing DsDivision, will return BD list
+    // any other = passing district, will return DS list and the BD list for the first DS
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var id=$("select#districtId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-    function view_BDDivs() {
-        dojo.event.topic.publish("view_BDDivs");
-    }
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options2);
+                });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id=$("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options);
+                });
+        })
+    })
 </script>
 
 
@@ -95,15 +125,24 @@
         <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:98.5%;"/></td>
+            <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId" cssStyle="width:98.5%;"/>
+        </td>
     </tr>
     <tr>
-            <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivList"/>
+            <%--<s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivList"/>--%>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
-            <sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                    listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                      cssStyle="float:left;  width:240px;"/>
+
+            <%--<s:url id="loadBDDivList" action="/ajaxSupport_loadBDDivList"/>--%>
+            <%--<sx:div name="birthDivisionId" id="birthDivisionId" value="%{birthDivisionId}" href="%{loadBDDivList}"--%>
+                    <%--theme="ajax" listenTopics="view_BDDivs" formId="birth-registration-form-1">--%>
+            <%--</sx:div>--%>
+            <label style="float:right; line-height:25px; vertical-align:middle; margin-right:5px;">කොට්ඨාශය /பிரிவு /Division</label>
+            <%--<sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"--%>
+                    <%--listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>--%>
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList" cssStyle=" width:240px;float:right;" />
         </td>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>

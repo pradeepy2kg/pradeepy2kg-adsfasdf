@@ -2,14 +2,6 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
-    function view_DSDivs() {
-        dojo.event.topic.publish("view_DSDivs");
-    }
-
-    function view_BDDivs() {
-        dojo.event.topic.publish("view_BDDivs");
-    }
-
     $(function() {
         $('img#father_lookup').bind('click', function(evt1) {
             var id1=$("input#father_pinOrNic").attr("value");
@@ -39,16 +31,6 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm2" id="birth-registration-form-2" method="POST"
         onsubmit="javascript:return validate()">
-
-<script>
-    function view_FatherInfo() {
-        dojo.event.topic.publish("view_FatherInfo");
-    }
-
-    function view_MotherInfo() {
-        dojo.event.topic.publish("view_MotherInfo");
-    }
-</script>
 
 <table class="table_reg_page_02" cellspacing="0">
     <caption></caption>
