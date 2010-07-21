@@ -248,7 +248,8 @@
     <s:url id="print" action="eprFilterBirthCetificateList.do">
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivisio\n.dsDivisionUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>

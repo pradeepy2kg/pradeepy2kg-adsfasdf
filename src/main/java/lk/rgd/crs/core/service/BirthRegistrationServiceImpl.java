@@ -206,7 +206,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, existing);
 
         // TODO check validations as per addStillBirthDeclaration
-
         // a still BDF can be edited by a ADR only before being approved
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (currentState == BirthDeclaration.State.DATA_ENTRY) {
@@ -264,7 +263,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // a still BDF can be edited by a ADR only before being approved
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
-        if (!isLiveBirth(existing) && currentState == BirthDeclaration.State.DATA_ENTRY) {
+        if (currentState == BirthDeclaration.State.DATA_ENTRY) {
             birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
             logger.debug("Deleted still birth declaration record : {} in data entry state", bdf.getIdUKey());
 
@@ -372,11 +371,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 ErrorCodes.PERMISSION_DENIED);
         }
 
-        // TODO remove
         // is the BDF currently existing in a state for approval
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (BirthDeclaration.State.DATA_ENTRY != currentState) {
-            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+            handleException("Cannot approve still birth declaration : " + bdf.getIdUKey() + " Illegal state : " + currentState,
                 ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
         }
 
@@ -408,7 +406,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         if (warnings.isEmpty() || ignoreWarnings) {
-            bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);      //TODO is this right?
+            bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
             bdf.getRegister().setApproveDate(new Date());
             bdf.getRegister().setApproveUser(user);
             birthDeclarationDAO.updateBirthDeclaration(bdf);
@@ -727,7 +725,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
 
-        validateBirthType(bdf, true);
         logger.debug("Request to reject birth declaration record : {}", bdf.getIdUKey());
         // ensure name in english is in upper case
         ChildInfo child = bdf.getChild();
@@ -744,7 +741,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
         validateAccessOfUser(user, existing);
 
         // check state of record

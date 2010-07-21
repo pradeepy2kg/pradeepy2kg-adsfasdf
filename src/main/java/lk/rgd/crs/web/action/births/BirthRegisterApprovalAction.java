@@ -488,8 +488,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         logger.debug("inside delete() : bdId {} requested to delete", bdId);
         initPermission();
         bdf = service.getById(bdId, user);
+        liveBirth = bdf.getRegister().isLiveBirth();
         try {
-            service.deleteLiveBirthDeclaration(bdf, false, user);
+            if (liveBirth) {
+                service.deleteLiveBirthDeclaration(bdf, false, user);
+            } else {
+                service.deleteStillBirthDeclaration(bdf, false, user);
+            }
         }
         catch (CRSRuntimeException e) {
             addActionError(getText("brapproval.delete.error." + e.getErrorCode()));

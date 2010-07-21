@@ -183,7 +183,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     } else {
                         service.editStillBirthDeclaration(bdf, true, user);
                     }
-                }                
+                }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
                 // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
@@ -494,15 +494,19 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf = service.getById(bdId, user);
             bdf = service.loadValuesForPrint(bdf, user);
             liveBirth = bdf.getRegister().isLiveBirth();
-            if (liveBirth) {
-                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
-                    return ERROR;
+
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                return ERROR;
+            } else {
+                if (liveBirth) {
+                    service.markLiveBirthCertificateAsPrinted(bdf, user);
                 } else {
-                    service.markLiveBirthCertificateAsPrinted(bdf, user);     // TODO for still birth
-                    beanPopulate(bdf);
+                    service.markStillBirthCertificateAsPrinted(bdf, user);
+                }
+                beanPopulate(bdf);
 
-
+                if (liveBirth) {
                     gender = child.getChildGenderPrint();
                     genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
                     childDistrict = register.getDistrictPrint();
@@ -513,24 +517,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
                     motherRacePrint = parent.getMotherRacePrint();
                     motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
-
-                    addActionMessage("message.print.success");
-
-                    return "pageLoad";
                 }
-            } else {
-                beanPopulate(bdf);
+                // TODO else part needed ??
+
                 addActionMessage("message.print.success");
                 return "pageLoad";
             }
-
         } catch (Exception e) {
             handleErrors(e);
             addActionError(getText("error.print.notSuccess"));
             return ERROR;
         }
     }
-
 
     /**
      * Populate BDF for pages
