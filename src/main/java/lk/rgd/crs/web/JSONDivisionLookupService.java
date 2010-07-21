@@ -64,7 +64,10 @@ public class JSONDivisionLookupService extends HttpServlet {
             } else if ("2".equals(mode)) {
                 // passing dsDivisionId, return the BD list
                 optionLists.put("bdDivisionList", getBDDivisions(lang, divisionId, user));
-            } else {
+            } else if("3".equals(mode)){
+                // passing districtId, return all DSDivision list.
+                optionLists.put("dsDivisionList", getAllDSDivisions(lang, divisionId, user));
+            }else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = ((SelectOption) ds.get(0)).getOptionValue();
@@ -89,6 +92,13 @@ public class JSONDivisionLookupService extends HttpServlet {
         logger.debug("Loaded BD list : {}", bdDivisionList);
 
         return getList(bdDivisionList);
+    }
+
+    private List getAllDSDivisions(String language, int BDId, User user) {
+        Map<Integer, String> dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(BDId, language, user);
+        logger.debug("Loaded DS list : {}", dsDivisionList);
+
+        return getList(dsDivisionList);
     }
 
     private List getDSDivisions(String language, int BDId, User user) {
