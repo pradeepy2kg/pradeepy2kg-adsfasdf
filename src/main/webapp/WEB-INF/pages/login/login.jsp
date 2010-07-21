@@ -39,7 +39,7 @@
         </s:form>
     </div>
 </div>
-<div style="margin-left:auto; margin-right:auto; width:55%;">
+<div style="margin-left:auto; margin-right:auto; width:42%;">
     Copyright © 2010 » Registrar General&apos;s Department of Sri Lanka. All Rights Reserved.
 </div>
 </body>
