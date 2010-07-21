@@ -142,7 +142,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                liveBirth = bdf.getRegister().getLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
                 register.setComments(bdf.getRegister().getComments());
@@ -150,24 +150,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getRegister().setLiveBirth(liveBirth);
                 break;
             case 2:
-                liveBirth = bdf.getRegister().getLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setParent(parent);
                 break;
             case 3:
-                liveBirth = bdf.getRegister().getLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
                 bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 break;
             case 4:
-                liveBirth = bdf.getRegister().getLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
                 // all pages captured, proceed to persist after validations
                 // todo data validations, exception handling and error reporting
                 bdId = bdf.getIdUKey();
+
                 if (bdId == 0) {
                     if (liveBirth) {
                         service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
@@ -177,8 +178,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
-                    service.editLiveBirthDeclaration(bdf, true, user);
-                }
+                    if (liveBirth) {
+                        service.editLiveBirthDeclaration(bdf, true, user);
+                    } else {
+                        service.editStillBirthDeclaration(bdf, true, user);
+                    }
+                }                
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
                 // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
@@ -349,7 +354,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf = new BirthDeclaration();
             bdf.getRegister().setLiveBirth(true);
-            liveBirth = bdf.getRegister().getLiveBirth();
+            liveBirth = bdf.getRegister().isLiveBirth();
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -374,7 +379,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             }
             bdf = new BirthDeclaration();
             bdf.getRegister().setLiveBirth(false);
-            liveBirth = bdf.getRegister().getLiveBirth();
+            liveBirth = bdf.getRegister().isLiveBirth();
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -411,7 +416,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 try {
                     bdf = service.getById(bdId, user);
                     session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-                    if (!bdf.getRegister().getLiveBirth()) {
+                    if (!bdf.getRegister().isLiveBirth()) {
                         //still birth related
                         return "form5";
                     }
@@ -488,13 +493,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
             bdf = service.loadValuesForPrint(bdf, user);
-            liveBirth = bdf.getRegister().getLiveBirth();
+            liveBirth = bdf.getRegister().isLiveBirth();
             if (liveBirth) {
-                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_BC_PRINTED)) {
+                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                     return ERROR;
                 } else {
-                    service.markLiveBirthCertificateAsPrinted(bdf, user);
+                    service.markLiveBirthCertificateAsPrinted(bdf, user);     // TODO for still birth
                     beanPopulate(bdf);
 
 
@@ -552,7 +557,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
-        liveBirth = bdf.getRegister().getLiveBirth();
+        liveBirth = bdf.getRegister().isLiveBirth();
         /**
          *  under "Add another mode", few special values need to be3 preserved from last entry .
          *  Pre setting serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
@@ -564,7 +569,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
             register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
-            register.setLiveBirth(oldBdf.getRegister().getLiveBirth());
+            register.setLiveBirth(oldBdf.getRegister().isLiveBirth());
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();

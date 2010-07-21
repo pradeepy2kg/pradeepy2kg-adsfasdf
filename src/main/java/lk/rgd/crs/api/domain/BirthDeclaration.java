@@ -87,11 +87,11 @@ public class BirthDeclaration implements Serializable {
         /**
          * 8 - A BDF for which a PIN is generated
          */
-        ARCHIVED_BC_GENERATED,
+        ARCHIVED_CERT_GENERATED,
         /**
          * 9 - A BDF for which the BC is printed
          */
-        ARCHIVED_BC_PRINTED,
+        ARCHIVED_CERT_PRINTED,
         /**
          * 10 - A BDF archived after an alteration is performed after initial BC. New
          * record is captured as ARCHIVED_BC_GENERATED

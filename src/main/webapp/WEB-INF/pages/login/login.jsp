@@ -20,6 +20,7 @@
     </script>
 </head>
 <body onload="setFocus()">
+
 <img src="<s:url value="/images/epr-header.png" />"/>
 
 <div id="login-error" style="text-align:center;">

@@ -241,7 +241,7 @@ public class BirthRegisterInfo {
         this.districtPrint = districtPrint;
     }
 
-    public boolean getLiveBirth() {
+    public boolean isLiveBirth() {
         return liveBirth;
     }
 

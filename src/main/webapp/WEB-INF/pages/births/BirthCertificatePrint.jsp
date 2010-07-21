@@ -20,18 +20,17 @@
 <script>
     $(document).ready(function() {
         $('#print-list-table').dataTable({
-                "bPaginate": true,
-                "bLengthChange": false,
-                "bFilter": true,
-                "bSort": true,
-                "bInfo": false,
-                "bAutoWidth": false,
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-            });
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
     });
 </script>
-
 
 
 <div id="birth-certificate-print">
@@ -52,15 +51,17 @@
                               onchange="javascript:view_DSDivs();return false;"
                               cssStyle="width:240px;"/>
                 </td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}" name="printed"
+                <td align="right"><s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}"
+                                           name="printed"
                                            value="false"/></td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'true':getText('printed.label')}" name="printed"/></td>
+                <td align="right"><s:radio list="#@java.util.HashMap@{'true':getText('printed.label')}"
+                                           name="printed"/></td>
             </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
                 <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
                                         listenTopics="view_DSDivs" formId="birth-certificate-print-form"
-                                        ></sx:div></td>
+                        ></sx:div></td>
             </tr>
             <tr>
                 <td colspan="4" class="button" align="right">
@@ -75,53 +76,63 @@
     <div id="birth-register-approval-body">
         <s:actionerror/>
         <s:actionmessage/>
-        
+
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>
         <s:else>
             <fieldset style="border:none">
-            <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th width="30px"></th>
-                    <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
-                    <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                    <th width="110px"><s:label name="registered_date" value="%{getText('registered_date.label')}"/></th>
-                    <th width="100px"><s:label value="%{getText('print.label')}"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                    <%--following code used for pagination--%>
-                <s:iterator status="printStatus" value="printList" id="printListId">
-                    <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                        <td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>
-                        <td><s:checkbox name="index"
-                                        onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
-                                        fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
-                        <td align="center"><s:property value="register.bdfSerialNo"/></td>
-                        <td><s:property value="child.childFullNameOfficialLang"/></td>
-                        <td align="center"><s:property value="register.dateOfRegistration"/></td>
-                        <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
-                                <s:param name="bdId" value="idUKey"/>
-                                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                                <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                                <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                                <s:param name="printed" value="#request.printed"/>
-                                <s:param name="printStart" value="#request.printStart"/>
-                            </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
-                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                                     height="25"/>
-                            </s:a>
-                        </td>
+                <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th width="30px"></th>
+                        <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                        <th><s:label name="name" value="%{getText('name.label')}"/></th>
+                        <th width="110px"><s:label name="registered_date"
+                                                   value="%{getText('registered_date.label')}"/></th>
+                        <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                        <th width="100px"><s:label value="%{getText('print.label')}"/></th>
                     </tr>
-                </s:iterator>
-                </tbody>
-            </table>
-           </fieldset>
+                    </thead>
+                    <tbody>
+                        <%--following code used for pagination--%>
+                    <s:iterator status="printStatus" value="printList" id="printListId">
+                        <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                            <td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>
+                            <td><s:checkbox name="index"
+                                            onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
+                                            fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
+                            <td align="center"><s:property value="register.bdfSerialNo"/></td>
+                            <td><s:property value="child.childFullNameOfficialLang"/></td>
+                            <td align="center"><s:property value="register.dateOfRegistration"/></td>
+                            <td align="center">
+                                <s:if test="register.liveBirth">
+                                    <s:label value="%{getText('yes.label')}"/>
+                                </s:if>
+                                <s:else>
+                                    <s:label value="%{getText('no.label')}"/>
+                                </s:else>
+                            </td>
+                            <td align="center">
+                                <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
+                                    <s:param name="bdId" value="idUKey"/>
+                                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                                    <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                                    <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                                    <s:param name="printed" value="#request.printed"/>
+                                    <s:param name="printStart" value="#request.printStart"/>
+                                </s:url>
+                                <s:a href="%{cetificatePrintUrl}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                         height="25"/>
+                                </s:a>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                    </tbody>
+                </table>
+            </fieldset>
             <div class="form-submit">
                 <s:label><s:checkbox name="allCheck"
                                      onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>

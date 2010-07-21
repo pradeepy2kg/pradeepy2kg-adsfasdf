@@ -156,7 +156,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         if (!printed) {
             if (index != null) {
                 logger.debug("bddivision {} and current pageNo {} detected", birthDivisionId);
-                service.markLiveBirthCertificateIDsAsPrinted(index, user);
+                service.markBirthCertificateIDsAsPrinted(index, user);
                 if (confirmListFlag) {
                     service.markLiveBirthConfirmationIDsAsPrinted(index, user);
                 }
