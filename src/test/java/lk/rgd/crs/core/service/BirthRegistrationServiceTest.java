@@ -266,11 +266,11 @@ public class BirthRegistrationServiceTest extends TestCase {
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
-        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_GENERATED, bdf1.getRegister().getStatus());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf1.getRegister().getStatus());
 
         // simulate the system generation of the PIN
         bdf1.getChild().setPin(1000100001L);
-        bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_GENERATED);
+        bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
         birthDeclarationDAO.updateBirthDeclaration(bdf1);
 
         // assert that the confirmed record now exists in the print queue for BC
@@ -288,7 +288,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_PRINTED, bdf1.getRegister().getStatus());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
 
         // assert that the printed record now does not exist in the print queue
         printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false, deoColomboColombo);
@@ -370,18 +370,18 @@ public class BirthRegistrationServiceTest extends TestCase {
         // approve the changes by ADR
         birthRegSvc.approveConfirmationChanges(bdf1, true, adrColomboColombo);
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_GENERATED, bdf1.getRegister().getStatus());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf1.getRegister().getStatus());
 
         // simulate the system generation of the PIN
         bdf1.getChild().setPin(1000100002L);
-        bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_BC_GENERATED);
+        bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
         birthDeclarationDAO.updateBirthDeclaration(bdf1);
 
         // DEO prints BC - mark BC as printed
         birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_BC_PRINTED, bdf1.getRegister().getStatus());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
 
         deleteBDF(colomboBDDivision, 2010107);
     }

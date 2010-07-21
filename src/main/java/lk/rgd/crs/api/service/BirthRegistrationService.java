@@ -51,7 +51,16 @@ public interface BirthRegistrationService {
     public void editLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
-     * Remove an existing BDF by a DEO or ADR <b>before</b> approval
+     * Update an existing BDF for a Still birth by a ADR <b>before</b> approval
+     *
+     * @param bdf            the BDF to be updated
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     */
+    public void editStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Remove an existing BDF for a Live birth by a DEO or ADR <b>before</b> approval
      *
      * @param bdf            the BDF to be added
      * @param ignoreWarnings an explicit switch to disable optional validations
@@ -60,14 +69,23 @@ public interface BirthRegistrationService {
     public void deleteLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
-     * Approve a list of BDF forms for Live births. Will only approve those that triggers no warnings. The result
+     * Remove an existing BDF for a Still birth by a ADR <b>before</b> approval
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     */
+    public void deleteStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Approve a list of BDF forms for Live and Still births. Will only approve those that triggers no warnings. The result
      * will contain information on the warnings returned.
      *
      * @param approveIDList a list of the unique BDF IDs to be approved in batch
      * @param user          the user approving the BDFs
      * @return a list of warnings for those that trigger warnings during approval
      */
-    public List<UserWarning> approveLiveBirthDeclarationIdList(long[] approveIDList, User user);
+    public List<UserWarning> approveBirthDeclarationIdList(long[] approveIDList, User user);
 
     /**
      * Approve a single BDF for a Live birth by an ADR or higher authority
@@ -78,6 +96,16 @@ public interface BirthRegistrationService {
      * @return a list of warnings, if ignoreWarnings is false
      */
     public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Approve a single BDF for a Still birth by an ADR or higher authority
+     *
+     * @param bdf            the BDF to be approved
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param user           the user initiating the action
+     * @return a list of warnings, if ignoreWarnings is false
+     */
+    public List<UserWarning> approveStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Mark that the confirmation form for the BDF has been printed
@@ -141,12 +169,20 @@ public interface BirthRegistrationService {
     public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
 
     /**
-     * Mark that the Birth Certificates for the BDF IDs given has been printed
+     * Mark that the Still Birth Certificate for the BDF has been printed
+     *
+     * @param bdf  the BDF for which the BC has been printed
+     * @param user the user initiating the action
+     */
+    public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
+
+    /**
+     * Mark that the Birth Certificates(Live/Still) for the BDF IDs given has been printed
      *
      * @param printedIDList the list of unique BDF IDs that have the BC now printed
      * @param user          the user initiating the action
      */
-    public void markLiveBirthCertificateIDsAsPrinted(long[] printedIDList, User user);
+    public void markBirthCertificateIDsAsPrinted(long[] printedIDList, User user);
 
     /**
      * Reject a birth declaration by an ADR or higher authority. This should be used to reject a BDF even after

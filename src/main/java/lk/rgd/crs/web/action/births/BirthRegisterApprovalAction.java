@@ -88,7 +88,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean approved;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -254,14 +254,20 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String approve() {
         initPermission();
         bdf = service.getById(bdId, user);
+        liveBirth = bdf.getRegister().isLiveBirth();
         boolean caughtException = false;
         try {
             if (confirmationApprovalFlag) {
                 warnings = service.approveConfirmationChanges(bdf, false, user);
                 logger.debug("inside approve() : requested to approve birth confirmation bdId {} ", bdId);
             } else {
-                warnings = service.approveLiveBirthDeclaration(bdf, false, user);
-                logger.debug("inside approve() : requested to approve birth registratin bdId {} ", bdId);
+                if (liveBirth) {
+                    warnings = service.approveLiveBirthDeclaration(bdf, false, user);
+                    logger.debug("inside approve() : requested to approve live birth declaration bdId {} ", bdId);
+                } else {
+                    warnings = service.approveStillBirthDeclaration(bdf, false, user);
+                    logger.debug("inside approve() : requested to approve still birth declaration bdId {} ", bdId);
+                }
             }
             addActionMessage(getText("message.approval.Success"));
         }
@@ -303,13 +309,19 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String directApprove() {
         bdf = service.getById(bdId, user);
-        liveBirth = bdf.getRegister().getLiveBirth();
+        liveBirth = bdf.getRegister().isLiveBirth();
         boolean caughtException = false;
         try {
             if (confirmationApprovalFlag) {
                 warnings = service.approveConfirmationChanges(bdf, false, user);
             } else {
-                warnings = service.approveLiveBirthDeclaration(bdf, false, user);
+                if (liveBirth) {
+                    warnings = service.approveLiveBirthDeclaration(bdf, false, user);
+                    logger.debug("inside directApprove() : direct approve live birth declaration with bdId : {} ", bdId);
+                } else {
+                    warnings = service.approveStillBirthDeclaration(bdf, false, user);
+                    logger.debug("inside directApprove() : direct approve still birth declaration with bdId : {} ", bdId);
+                }
             }
         }
         catch (CRSRuntimeException e) {
@@ -324,7 +336,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
                 addActionMessage((getText("confirmationApprovedSuccess.label")));
             } else {
-                liveBirth = bdf.getRegister().getLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth();
                 setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
                 addActionMessage((getText("approveSuccess.label")));
             }
@@ -345,6 +357,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         if (ignoreWarning) {
             bdf = service.getById(bdId, user);
+            liveBirth = bdf.getRegister().isLiveBirth();
             try {
                 if (confirmationApprovalFlag) {
                     service.approveConfirmationChanges(bdf, true, user);
@@ -356,14 +369,18 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         return SUCCESS;
                     }
                 } else {
-                    service.approveLiveBirthDeclaration(bdf, true, user);
+                    if (liveBirth) {
+                        service.approveLiveBirthDeclaration(bdf, true, user);
+                    } else {
+                        service.approveStillBirthDeclaration(bdf, true, user);
+                    }
                     //checks whether the request is from immediately after entering a birth declaration
                     if (directApprovalFlag) {
                         logger.debug("inside approveIgnoringWarning() : directApprovalFlag {}", directApprovalFlag);
                         addActionMessage((getText("approveSuccess.label")));
                         setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
                         approved = true;
-                        liveBirth = bdf.getRegister().getLiveBirth();
+                        liveBirth = bdf.getRegister().isLiveBirth();
                         return SUCCESS;
                     }
                 }
@@ -398,7 +415,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 if (confirmationApprovalFlag) {
                     warnings = service.approveConfirmationChangesForIDList(index, user);
                 } else {
-                    warnings = service.approveLiveBirthDeclarationIdList(index, user);
+                    warnings = service.approveBirthDeclarationIdList(index, user);
                 }
                 addActionMessage(getText("message.approval.Success"));
             }
