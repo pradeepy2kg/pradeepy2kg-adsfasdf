@@ -1,9 +1,11 @@
 package lk.rgd.crs.web;
 
+import java.io.Serializable;
+
 /**
  *@author amith jayasekara
  */
-public class Link {
+public class Link implements Serializable {
     private String propertyKey;
     private String category;
     private String action;
