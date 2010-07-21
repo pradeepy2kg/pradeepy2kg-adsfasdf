@@ -7,9 +7,7 @@ import java.io.Serializable;
  * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
  */
 @Entity
-@Table(name = "BIRTH_REGISTER", schema = "CRS",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"bdDivisionUKey", "bdfSerialNo", "status"})})
+@Table(name = "BIRTH_REGISTER", schema = "CRS")
 
 @NamedQueries({
     @NamedQuery(name = "filter.by.division.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
