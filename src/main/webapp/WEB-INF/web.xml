@@ -25,6 +25,11 @@
       <servlet-class>lk.rgd.prs.web.JSONPersonLookupService</servlet-class>
     </servlet>
 
+    <servlet>
+      <servlet-name>DivisionLookupService</servlet-name>
+      <servlet-class>lk.rgd.crs.web.JSONDivisionLookupService</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>PersonLookupService</servlet-name>
         <url-pattern>/prs/PersonLookupService</url-pattern>
@@ -34,11 +39,6 @@
         <servlet-name>DivisionLookupService</servlet-name>
         <url-pattern>/crs/DivisionLookupService</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-      <servlet-name>DivisionLookupService</servlet-name>
-      <servlet-class>lk.rgd.crs.web.JSONDivisionLookupService</servlet-class>
-    </servlet>
 
     <filter-mapping>
         <filter-name>struts2</filter-name>
