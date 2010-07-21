@@ -128,9 +128,16 @@
                     </s:else>
                 </td>
                 <s:if test="#request.allowEditBDF">
-                    <s:url id="editSelected" action="eprBirthRegistrationInit.do">
-                        <s:param name="bdId" value="idUKey"/>
-                    </s:url>
+                    <s:if test="register.liveBirth">
+                        <s:url id="editSelected" action="eprBirthRegistrationInit.do">
+                            <s:param name="bdId" value="idUKey"/>
+                        </s:url>
+                    </s:if>
+                    <s:else>
+                        <s:url id="editSelected" action="eprStillBirthRegistrationInit.do">
+                            <s:param name="bdId" value="idUKey"/>
+                        </s:url>
+                    </s:else>
                     <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                         <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                              border="none"/></s:a>
