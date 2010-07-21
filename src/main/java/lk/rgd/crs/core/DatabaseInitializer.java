@@ -77,6 +77,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 
+        logger.info("Starting the database initialization..");
+
         boolean mysql = false;
 
         // detect the target DB
@@ -84,11 +86,13 @@ public class DatabaseInitializer implements ApplicationContextAware {
         if ("org.hibernate.dialect.MySQLDialect".equals(emf.getPersistenceUnitInfo().getProperties().
             getProperty("hibernate.dialect"))) {
             mysql = true;
+            logger.debug("Detected MySQL as the target database");
         }
 
         // decide if DB is to be recreated
         boolean recreateDb = false;
         if (Boolean.getBoolean(USE_NW_DERBY)) {
+            logger.debug("Networked Derby selected as the target database..");
             try {
                 SimpleJdbcTestUtils.countRowsInTable(new SimpleJdbcTemplate(dataSource), "PRS.PERSON");
             } catch (Exception ignore) {
@@ -98,7 +102,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             recreateDb = !mysql || createCleanDB;    // recreate for derby or for MySQL when explicitly requested
         }
 
-        if (recreateDb) {
+        if (recreateDb || Boolean.getBoolean("recreatedb")) {
+            logger.info("Recreating a new database..");
             recreateCleanDB(mysql);
             // perform additional initialization with Java code
             additionalInitialization(ctx);
@@ -192,12 +197,12 @@ public class DatabaseInitializer implements ApplicationContextAware {
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                new ClassPathResource("database/populate_sample_crs.sql"), false);
-            logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
-
-            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                 new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
+
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new ClassPathResource("database/populate_sample_crs.sql"), false);
+            logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
 
         } catch (Exception e) {
             logger.error("Error populating the database with initial data from : populate_sample_data/crs/prs.sql", e);
