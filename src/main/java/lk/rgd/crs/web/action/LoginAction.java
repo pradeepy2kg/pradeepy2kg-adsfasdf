@@ -38,7 +38,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public Locale getLocale() {
         return (Locale) session.get(WebConstants.SESSION_USER_LANG);
     }
-
+    
     /**
      * Handles the login process of the EPR system
      * if login is success user is redirected
@@ -53,6 +53,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         try {
             user = userManager.authenticateUser(userName, password);
         } catch (AuthorizationException e) {
+            addActionError("Incorrect username or password.");
             logger.error("{} : {}", e.getMessage(), e);
             return "error";
         }
