@@ -26,7 +26,7 @@
 
         $('select#motherDistrictId').bind('change', function(evt3) {
             var id=$("select#motherDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:1},
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:3},
                 function(data) {
                     var options = '';
                     var ds = data.dsDivisionList;
