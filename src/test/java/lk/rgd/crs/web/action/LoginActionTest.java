@@ -1,21 +1,18 @@
 package lk.rgd.crs.web.action;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionProxy;
+import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.web.WebConstants;
+import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.apache.struts2.StrutsSpringTestCase;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import com.opensymphony.xwork2.ActionProxy;
-import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionContext;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.common.api.domain.User;
-
-public class LoginActionTest extends StrutsSpringTestCase {
+public class LoginActionTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(LoginActionTest.class);
     private ActionProxy proxy;
     private LoginAction action;
@@ -30,10 +27,6 @@ public class LoginActionTest extends StrutsSpringTestCase {
         return result;
     }
 
-	@Override
-	public String getContextLocations() {
-		return "unitTest_applicationContext.xml";
-	}
 
     public void testActionMappingProxy() {
         ActionMapping mapping = getActionMapping("/eprLogin.do");
@@ -62,7 +55,7 @@ public class LoginActionTest extends StrutsSpringTestCase {
         // check for proper values in session after login
         Map session = action.getSession();
         Object obj = session.get(WebConstants.SESSION_USER_BEAN);
-        assertNotNull("Session User object peresence.", obj );
+        assertNotNull("Session User object peresence.", obj);
         User user = (User) obj;
         assertEquals("Correctness of User object", "rg", user.getUserId());
 
@@ -100,7 +93,7 @@ public class LoginActionTest extends StrutsSpringTestCase {
     public void testFirstTimeLogin() throws Exception {
     }
 
-    
+
 //        assertTrue("Problem There were no errors present in fieldErrors but there should have been one error present",
 //                action.getFieldErrors().size() == 1);
 //		assertTrue("Problem field answer not present in fieldErrors but it should have been",
