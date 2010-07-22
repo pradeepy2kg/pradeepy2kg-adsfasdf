@@ -2,6 +2,7 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
     // mode 1 = passing District, will return DS list
@@ -39,7 +40,32 @@
                     }
                     $("select#birthDivisionId").html(options);
                 });
-        })
+        });
+
+        $('img#childName').bind('click', function(evt4) {
+            var id=$("textarea#childFullNameOfficialLang").attr("value");
+            var wsMethod = "transliterate";
+            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+            var soapBody = new SOAPObject("transliterate"); //Create a new request object
+            soapBody.ns=soapNs;  
+            soapBody.appendChild(new SOAPObject('InputName')).val(id);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(1);
+            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(2);
+            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //Create a new SOAP Request
+            var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
+
+            //Lets send it
+            SOAPClient.Proxy = "http://localhost:8080/TransliterationWebService/TransliterationService";
+            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+        });
+
+        function processResponse(respObj) {
+            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+            $("textarea#childFullNameEnglish").val(respObj);
+        }
     })
 </script>
 
@@ -155,8 +181,10 @@
         <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
             / தமிழ்) <br>Name in
             any of the official languages (Sinhala / Tamil)</label></td>
-        <td colspan="7"><s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
-                                    cssStyle="width:98.2%;"/></td>
+        <td colspan="7">
+            <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:98.2%;"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
+        </td>
     </tr>
 
     <tr>
