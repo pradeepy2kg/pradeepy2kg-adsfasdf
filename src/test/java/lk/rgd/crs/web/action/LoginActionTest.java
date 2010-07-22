@@ -73,6 +73,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
     }
 
+    
     public void testADRLogin() throws Exception {
         request.setParameter("userName", "adr-colombo-colombo");
         request.setParameter("password", "password");
@@ -83,6 +84,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         assertTrue(((Map) menu.get("0births")).containsKey(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL));  // check birth confirmation approval link is there
     }
 
+    
     public void testDEOLogin() throws Exception {
         request.setParameter("userName", "deo-gampaha-negambo");
         request.setParameter("password", "password");
@@ -94,6 +96,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         assertFalse(((Map) menu.get("0births")).containsKey(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL));  // check birth registration approval link is not there.
     }
 
+   
     public void testAdminLogin() throws Exception {
         request.setParameter("userName", "admin");
         request.setParameter("password", "password");
@@ -105,6 +108,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         assertFalse(((Map) menu.get("0births")).containsKey(Permission.PAGE_BIRTH_REGISTRATON));     // check birth menu links are not there
     }
 
+    
     public void testLogout() throws Exception {
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
