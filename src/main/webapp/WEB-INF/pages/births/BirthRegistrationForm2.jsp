@@ -4,7 +4,7 @@
 <script>
     $(function() {
         $('img#father_lookup').bind('click', function(evt1) {
-            var id1=$("input#father_pinOrNic").attr("value");
+            var id1 = $("input#father_pinOrNic").attr("value");
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
@@ -14,7 +14,7 @@
         });
 
         $('img#mother_lookup').bind('click', function(evt2) {
-            var id2=$("input#mother_pinOrNic").attr("value");
+            var id2 = $("input#mother_pinOrNic").attr("value");
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
                     function(data2) {
                         $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
@@ -25,16 +25,16 @@
         });
 
         $('select#motherDistrictId').bind('change', function(evt3) {
-            var id=$("select#motherDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:3},
-                function(data) {
-                    var options = '';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#motherDSDivisionId").html(options);
-                });
+            var id = $("select#motherDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:1},
+                    function(data) {
+                        var options = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#motherDSDivisionId").html(options);
+                    });
         });
     })
 </script>
@@ -65,7 +65,8 @@
         <td rowspan="2" width="200px"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td rowspan="2" width="230px" class="find-person"><s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN"/>
+        <td rowspan="2" width="230px" class="find-person"><s:textfield id="father_pinOrNic"
+                                                                       name="parent.fatherNICorPIN"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
@@ -82,22 +83,23 @@
     </tbody>
 </table>
 
-<table  class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
-<tr>
-    <td width="200px"><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
-    <td colspan="8">
-        <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
-    </td>
-</tr>
-<tr>
-    <td width="200px"><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
-    <td colspan="2">
+<table class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
+    <tr>
+        <td width="200px"><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
+        <td colspan="8">
+            <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
+        </td>
+    </tr>
+    <tr>
+        <td width="200px"><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
+        <td colspan="2">
             <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('fatherDatePicker')"/>
-    </td>
-    <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
-    <td colspan="2"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth" cssStyle="width:95%;"/></td>
-</tr>
+        </td>
+        <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="2"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth"
+                                     cssStyle="width:95%;"/></td>
+    </tr>
 </table>
 
 <table class="table_reg_page_02" cellspacing="0" style="border-top:none;">
@@ -178,7 +180,8 @@
                                           onclick="javascript:motherage()"/></td>
     </tr>
     <tr style="border-bottom:none;">
-        <td style="border-bottom:none;" ><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address of the Mother</label>
+        <td style="border-bottom:none;"><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
+            Address of the Mother</label>
         </td>
         <td colspan="8" style="border-bottom:none;">
             <s:textarea id="motherAddress" name="parent.motherAddress" cssStyle="width:98%;"/>
@@ -196,12 +199,12 @@
             English/District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
-                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
-            </s:if>
-            <s:else>
-                <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
-                          headerValue="%{getText('select_district.label')}" cssStyle="width:99%;"/></td>
-            </s:else>
+            <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
+        </s:if>
+        <s:else>
+            <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" headerKey="0"
+                      headerValue="%{getText('select_district.label')}" cssStyle="width:99%;"/></td>
+        </s:else>
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>

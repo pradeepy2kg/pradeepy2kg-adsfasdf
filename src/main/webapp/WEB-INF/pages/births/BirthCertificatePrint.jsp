@@ -2,15 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
-<script>
-    function view_DSDivs() {
-        dojo.event.topic.publish("view_DSDivs");
-    }
-
-    function view_BDDivs() {
-        dojo.event.topic.publish("view_BDDivs");
-    }
-</script>
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -30,6 +21,44 @@
             "sPaginationType": "full_numbers"
         });
     });
+
+
+    $(function() {
+        $('select#birthDistrictId').bind('change', function(evt1) {
+            var id = $("select#birthDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        })
+    });
+
+
 </script>
 
 
@@ -47,9 +76,10 @@
             <tbody>
             <tr>
                 <td><s:label name="district" value="%{getText('district.label')}"/></td>
-                <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                              onchange="javascript:view_DSDivs();return false;"
-                              cssStyle="width:240px;"/>
+                <td>
+                    <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                              value="birthDistrictId" cssStyle="width:240px;"/>
+
                 </td>
                 <td align="right"><s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}"
                                            name="printed"
@@ -59,9 +89,13 @@
             </tr>
             <tr>
                 <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
-                <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                        listenTopics="view_DSDivs" formId="birth-certificate-print-form"
-                        ></sx:div></td>
+                <td colspan="3">
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                              cssStyle="float:left;  width:240px;"/>
+                    <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                              list="bdDivisionList"
+                              cssStyle=" width:240px;float:right;"/>
+                </td>
             </tr>
             <tr>
                 <td colspan="4" class="button" align="right">
@@ -76,7 +110,6 @@
     <div id="birth-register-approval-body">
         <s:actionerror/>
         <s:actionmessage/>
-
         <s:if test="printList.size==0 && printStart==0">
             <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>
@@ -91,7 +124,6 @@
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
                         <th width="110px"><s:label name="registered_date"
                                                    value="%{getText('registered_date.label')}"/></th>
-                        <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
                         <th width="100px"><s:label value="%{getText('print.label')}"/></th>
                     </tr>
                     </thead>
@@ -106,14 +138,6 @@
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="child.childFullNameOfficialLang"/></td>
                             <td align="center"><s:property value="register.dateOfRegistration"/></td>
-                            <td align="center">
-                                <s:if test="register.liveBirth">
-                                    <s:label value="%{getText('yes.label')}"/>
-                                </s:if>
-                                <s:else>
-                                    <s:label value="%{getText('no.label')}"/>
-                                </s:else>
-                            </td>
                             <td align="center">
                                 <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                                     <s:param name="bdId" value="idUKey"/>

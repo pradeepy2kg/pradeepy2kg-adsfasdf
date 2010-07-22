@@ -4,6 +4,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
 <html>
 <head>
     <title>EPR Login</title>
@@ -20,6 +21,7 @@
     </script>
 </head>
 <body onload="setFocus()">
+<!--check is seesion is alive -->
 
 <img src="<s:url value="/images/epr-header.png" />"/>
 
@@ -39,9 +41,11 @@
         </s:form>
     </div>
 </div>
-<div style="margin-left:auto; margin-right:auto; width:42%;">
+<div style="margin-left:auto; margin-right:auto; width:55%;">
     Copyright © 2010 » Registrar General&apos;s Department of Sri Lanka. All Rights Reserved.
 </div>
 </body>
 </html>
+
+
 <%-- Styling Completed --%>

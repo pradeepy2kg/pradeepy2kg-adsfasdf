@@ -8,6 +8,8 @@
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 
+<!--//todo not completed JSON -->
+
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
@@ -22,6 +24,42 @@
             "sPaginationType": "full_numbers"
         });
     });
+
+    $(function() {
+        $('select#birthDistrictId').bind('change', function(evt1) {
+            var id = $("select#birthDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        })
+    });
+
 </script>
 
 
@@ -40,7 +78,7 @@
     <br/>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             method="post">
-       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="registrationSerchLegend"
                              value="%{getText('registrationSerchLegend.label')}"/></legend>
 
@@ -57,14 +95,30 @@
                                  value="%{getText('searchDeclarationSearial.label')}"/></td>
                     <td width="360px"><s:textfield name="serialNo"/></td>
                     <td width="200x"><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
-                    <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                  onchange="javascript:view_DSDivs();return false;"/></td>
+                    <td>
+                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                  value="birthDistrictId" cssStyle="width:240px;"/>
+
+                    </td>
 
                 </tr>
                 <tr>
                     <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-                    <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                            listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div></td>
+                    <td colspan="3">
+                            <%--                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                           cssStyle="float:left;  width:240px;"/>
+                 <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                           list="bdDivisionList"
+                           cssStyle=" width:240px;float:right;"/>
+                        <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+                                listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div>  --%>
+
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                                  cssStyle="float:left;  width:240px;"/>
+                        <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                                  list="bdDivisionList"
+                                  cssStyle=" width:240px;float:right;"/>
+                    </td>
 
                 </tr>
                 <tr>
@@ -79,7 +133,7 @@
     </s:form>
     <br/>
     <s:form action="eprBDFSearchByIdUKey.do" method="post">
-       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="confirmatinSearchLegend"
                              value="%{getText('confirmationSearchLegend.label')}"/></legend>
             <table class="search-option-table">
@@ -99,7 +153,7 @@
 
 <div>
     <s:if test="#request.bdf != null || #request.searchResultList.size>0">
-       <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend>
                 <s:label value="%{getText('searchResult.label')}"/>
             </legend>
@@ -114,7 +168,7 @@
                     <th><s:label name="districtlbl" value="%{getText('district.label')}"/></th>
                     <th><s:label name="divisionlbl" value="%{getText('division.label')}"/></th>
                     <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
-                    <th><s:label name="viewlbl" value="%{getText('view.label')}"/> </th>
+                    <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -139,11 +193,11 @@
                         <td align="center">
                             <s:label value="%{getText(status)}"/></td>
                         <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
-                                <s:param name="bdId" value="%{#request.bdf.idUKey}"/>
-                            </s:url>
+                            <s:param name="bdId" value="%{#request.bdf.idUKey}"/>
+                        </s:url>
                         <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
-                                <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                     border="none"/></s:a></td>
+                            <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/></s:a></td>
                     </tr>
                 </s:if>
                 <s:elseif test="searchResultList.size>0">
