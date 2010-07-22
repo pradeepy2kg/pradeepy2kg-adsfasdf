@@ -27,14 +27,13 @@ public class JSONDivisionLookupService extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(JSONDivisionLookupService.class);
     private final ObjectMapper mapper = new ObjectMapper();
 
-    private WebApplicationContext context;
     private DSDivisionDAO dsDivisionDAO;
     private BDDivisionDAO bdDivisionDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        context = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+        WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         dsDivisionDAO = (DSDivisionDAO) context.getBean("dsDivisionDAOImpl");
         bdDivisionDAO = (BDDivisionDAO) context.getBean("bdDivisionDAOImpl");
     }

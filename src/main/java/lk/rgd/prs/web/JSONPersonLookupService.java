@@ -29,16 +29,14 @@ public class JSONPersonLookupService extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(JSONPersonLookupService.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private WebApplicationContext context;
     private PopulationRegistry popReg;
-    private UserManager userManager;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        context = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+        WebApplicationContext context =
+            WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         popReg = (PopulationRegistry) context.getBean("popRegService");
-        userManager = (UserManager) context.getBean("userManagerService");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,16 +44,21 @@ public class JSONPersonLookupService extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String pinOrNic = request.getParameter(WebConstants.REQUEST_PIN_NIC);
         logger.debug("Received Pin/NIC : " + pinOrNic);
+
         User user = null;
-        try {
-            HttpSession session = request.getSession();
-            user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
-            user = userManager.secureAuthenticateUser(user.getUserId(), user.getPasswordHash());
-        } catch (Exception e) {
-            logger.error("Fatal Error : {}", e);
+        HttpSession session = request.getSession(false);
+        if (session == null || session.isNew()) {
+            logger.warn("User has not logged onto the system to invoke this service");
             return;
+        } else {
+            user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
+            if (user == null) {
+                logger.warn("Unexpected - User object is not present in the session");
+                return;
+            }
         }
 
         Person person = popReg.findPersonByPINorNIC(pinOrNic, user);
