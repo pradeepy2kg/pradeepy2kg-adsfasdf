@@ -50,6 +50,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
 
             for (Map.Entry<Integer, String> e : result.entrySet()) {
                 if (user.isAllowedAccessToBDDistrict(e.getKey())) {
+                   
                     filteredResult.put(e.getKey(), e.getValue());
                 }
             }

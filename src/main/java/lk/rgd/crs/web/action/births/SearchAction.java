@@ -52,7 +52,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, BCSearchDAO bcSearchDAO) {
+                        BDDivisionDAO bdDivisionDAO, BCSearchDAO bcSearchDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -78,7 +78,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
      */
     public String searchBDFBySerialNumber() {
         logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
-            birthDivisionId, serialNo, birthDistrictId + " recieved");
+                birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
             if (serialNo != null) {
                 bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
@@ -104,7 +104,18 @@ public class SearchAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
+        //intial birth district id
+        if (districtList != null) {
+            birthDistrictId = districtList.keySet().iterator().next();
+        }
         setBirthDistrictId(birthDistrictId);
+        //dsDivisions
+        this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        //setting bdDivisions
+        if (!dsDivisionList.isEmpty()) {
+            dsDivisionId = dsDivisionList.keySet().iterator().next();
+            bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        }
     }
 
     /**

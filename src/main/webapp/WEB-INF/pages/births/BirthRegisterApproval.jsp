@@ -17,21 +17,49 @@
             "sPaginationType": "full_numbers"
         });
     });
+
+    $(function() {
+        $('select#birthDistrictId').bind('change', function(evt1) {
+            var id = $("select#birthDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        })
+    });
+
+
 </script>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
-<script>
-    function view_DSDivs() {
-        dojo.event.topic.publish("view_DSDivs");
-    }
-
-    function view_BDDivs() {
-        dojo.event.topic.publish("view_BDDivs");
-    }
-</script>
 <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFApproval"/>
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
 <div id="birth-register-approval-header">
@@ -45,13 +73,21 @@
         <tbody>
         <tr>
             <td><s:label name="district" value="%{getText('district.label')}"/></td>
-            <td colspan="3"><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                      onchange="javascript:view_DSDivs();return false;" cssStyle="width:240px;"/></td>
+            <td colspan="3">
+                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                          value="birthDistrictId" cssStyle="width:240px;"/>
+            </td>
         </tr>
         <tr>
             <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
-            <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                    listenTopics="view_DSDivs" formId="birth-register-approval-form"></sx:div></td>
+            <td colspan="3">
+                <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                          cssStyle="float:left;  width:240px;"/>
+                <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                          list="bdDivisionList"
+                          cssStyle=" width:240px;float:right;"/>
+            </td>
+
         </tr>
         <tr>
             <td><s:label value="%{getText('serial.label')}"/></td>
@@ -100,11 +136,10 @@
                 <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
                 <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
-                <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th width="50px"><s:label name="edit" value="%{getText('edit.label')}"/></th>
+                <th width="50px"><s:label name="approve" value="%{getText('approve.label')}"/></th>
+                <th width="50px"><s:label name="reject" value="%{getText('reject.label')}"/></th>
+                <th width="50px"><s:label name="delete" value="%{getText('delete.label')}"/></th>
             </tr>
             </thead>
         </s:if>
@@ -119,25 +154,10 @@
                 <td><s:property value="register.bdfSerialNo"/></td>
                 <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
-                <td align="center">
-                    <s:if test="register.liveBirth">
-                        <s:label value="%{getText('yes.label')}"/>
-                    </s:if>
-                    <s:else>
-                        <s:label value="%{getText('no.label')}"/>
-                    </s:else>
-                </td>
                 <s:if test="#request.allowEditBDF">
-                    <s:if test="register.liveBirth">
-                        <s:url id="editSelected" action="eprBirthRegistrationInit.do">
-                            <s:param name="bdId" value="idUKey"/>
-                        </s:url>
-                    </s:if>
-                    <s:else>
-                        <s:url id="editSelected" action="eprStillBirthRegistrationInit.do">
-                            <s:param name="bdId" value="idUKey"/>
-                        </s:url>
-                    </s:else>
+                    <s:url id="editSelected" action="eprBirthRegistrationInit.do">
+                        <s:param name="bdId" value="idUKey"/>
+                    </s:url>
                     <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                         <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                              border="none"/></s:a>

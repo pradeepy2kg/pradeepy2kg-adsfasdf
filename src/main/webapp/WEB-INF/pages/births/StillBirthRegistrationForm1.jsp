@@ -4,13 +4,40 @@
 
 <div class="still-birth-registration-form-outer" id="still-birth-registration-form-1-outer">
 <script>
-    function view_DSDivs() {
-        dojo.event.topic.publish("view_DSDivs");
-    }
+    $(function() {
+        $('select#birthDistrictId').bind('change', function(evt1) {
+            var id = $("select#birthDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
 
-    function view_BDDivs() {
-        dojo.event.topic.publish("view_BDDivs");
-    }
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        })
+    });
 </script>
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
@@ -93,15 +120,24 @@
         <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td width="220px"><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      onchange="javascript:view_DSDivs();return false;"/></td>
+            <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                      value="birthDistrictId" cssStyle="width:240px;"/>
+                <%--            <s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
+               onchange="javascript:view_DSDivs();return false;"/>--%>
+        </td>
     </tr>
     <tr>
             <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivList"/>
         <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
-            <sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                    listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>
+
+                <%--            <sx:div name="dsDivisionId" id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
+               listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>--%>
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                      cssStyle="float:left;  width:240px;"/>
+             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                      list="bdDivisionList"
+                      cssStyle=" width:240px;float:right;"/>
         </td>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
@@ -110,9 +146,11 @@
     <tr>
         <td colspan="3"><label> රෝහලේදී /*in Tamil/In a Hospital</label></td>
         <td colspan="1" width="260px"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td style="width:75px;text-align:center;"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"/></td>
+        <td style="width:75px;text-align:center;"><s:radio name="child.birthAtHospital"
+                                                           list="#@java.util.HashMap@{'true':''}"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
-        <td style="width:75px;text-align:center;"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>
+        <td style="width:75px;text-align:center;"><s:radio name="child.birthAtHospital"
+                                                           list="#@java.util.HashMap@{'false':''}"/></td>
     </tr>
     <tr></tr>
     <tr>

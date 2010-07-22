@@ -48,6 +48,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String login() {
+
         logger.debug("detected userName : {} ", userName);
         User user;
         try {

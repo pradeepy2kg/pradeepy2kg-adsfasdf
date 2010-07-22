@@ -42,6 +42,7 @@
     </package>
 
     <package name="epr" namespace="/" extends="NG">
+
         <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="cacheControl"/>
@@ -56,6 +57,8 @@
             <result name="success">/WEB-INF/pages/login/login.jsp</result>
             <result type="tiles" name="error">epr.home</result>
         </action>
+
+        <!--check here -->
 
         <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
             <interceptor-ref name="default"/>

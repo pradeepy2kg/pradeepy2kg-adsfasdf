@@ -10,17 +10,6 @@
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 
-
-<script>
-    function view_DSDivs() {
-        dojo.event.topic.publish("view_DSDivs");
-    }
-
-    function view_BDDivs() {
-        dojo.event.topic.publish("view_BDDivs");
-    }
-</script>
-
 <script>
     $(document).ready(function() {
         $('#com-print-list-table').dataTable({
@@ -33,7 +22,45 @@
             "bJQueryUI": true,
             "sPaginationType": "full_numbers"
         });
+
     });
+
+    $(function() {
+        $('select#birthDistrictId').bind('change', function(evt1) {
+            var id = $("select#birthDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        })
+    })
+
+
 </script>
 
 
@@ -50,9 +77,9 @@
                 <tbody>
                 <tr>
                     <td><s:label name="district" value="%{getText('district.label')}"/></td>
-                    <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                  onchange="javascript:view_DSDivs();return false;"
-                                  cssStyle="width:240px;"/>
+                    <td>
+                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                  value="birthDistrictId" cssStyle="width:240px;"/>
                     </td>
                     <td align="right"><s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}"
                                                name="printed"
@@ -62,9 +89,14 @@
                 </tr>
                 <tr>
                     <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
-                    <td colspan="3"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                            listenTopics="view_DSDivs"
-                                            formId="birth-confirmation-print-form"></sx:div></td>
+                    <td colspan="3">
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                                  cssStyle="float:left;  width:240px;"/>
+                        <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                                  list="bdDivisionList"
+                                  cssStyle=" width:240px;float:right;"/>
+                        -
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4" class="button" align="right">
