@@ -9,22 +9,12 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.apache.struts2.StrutsSpringTestCase;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import com.opensymphony.xwork2.ActionProxy;
-import com.opensymphony.xwork2.ActionContext;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.service.UserManager;
 import lk.rgd.Permission;
 
-import javax.servlet.http.HttpSession;
-
-public class LoginActionTest extends StrutsSpringTestCase {
+public class LoginActionTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(LoginActionTest.class);
     private ActionProxy proxy;
     private LoginAction action;
@@ -38,11 +28,6 @@ public class LoginActionTest extends StrutsSpringTestCase {
 
         logger.debug("result for mapping {} is {}", mapping, result);
         return result;
-    }
-
-    @Override
-    public String getContextLocations() {
-        return "unitTest_applicationContext.xml";
     }
 
     public void testActionMappingProxy() {
