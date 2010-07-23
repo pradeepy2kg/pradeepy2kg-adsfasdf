@@ -146,7 +146,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 1:
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setChild(child);
-                register.setStatus(bdf.getRegister().getStatus());
+                register.setStatus(bdf.getRegister().getStatus()); 
                 register.setComments(bdf.getRegister().getComments());
                 bdf.setRegister(register);
                 bdf.getRegister().setLiveBirth(liveBirth);
@@ -155,7 +155,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setParent(parent);
                 break;
-            case 3:
+            case 3:     
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
@@ -194,7 +194,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (!addNewMode && (pageNo != 4)) {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
         }
-
         if (logger.isDebugEnabled()) {
             logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
         }
@@ -221,7 +220,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (pageNo < 1) {
             return ERROR;
         }
-
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         switch (pageNo) {
             case 1:
@@ -656,7 +654,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int checkDateLateOrBelated(BirthDeclaration bdf) {
         long maxLateDays = appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_LATE_REG_DAYS);
         long maxBelatedDays = appParametersDAO.getIntParameter(AppParameter.CRS_BELATED_MAX_DAYS);
-        long registerDate = bdf.getRegister().getDateOfRegistration().getTime();
+        long registerDate = bdf.getRegister().getDateOfRegistration().getTime();  
         long birthDate = bdf.getChild().getDateOfBirth().getTime();
         long milliSecPerDay = 1000 * 60 * 60 * 24;
 
