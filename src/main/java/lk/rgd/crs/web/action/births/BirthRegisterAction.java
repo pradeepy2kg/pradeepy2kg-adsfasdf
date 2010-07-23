@@ -134,6 +134,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration bdf;
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+            if (pageNo == 1)
+                populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             return "form" + pageNo;
         }
         if (pageNo < 1) {
@@ -196,8 +198,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (logger.isDebugEnabled()) {
             logger.debug("DistrictId: " + birthDistrictId + " ,BDDivisionId: " + birthDivisionId + " ,DSDivisionId: " + dsDivisionId);
         }
-
         populate(bdf);
+        if (pageNo == 1 && parent != null && parent.getMotherDSDivision() != null && parent.getMotherDSDivision().getDistrict() != null)
+            populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
         logger.debug("Birth Declaration: PageNo=" + pageNo);
         return "form" + pageNo;
     }
@@ -299,7 +302,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
@@ -451,7 +454,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = service.getById(bdId, user);
                 bcf = service.getById(bdId, user);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -496,7 +499,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             liveBirth = bdf.getRegister().isLiveBirth();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 if (liveBirth) {
@@ -706,6 +709,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             int selectedDistrictId = allDistrictList.keySet().iterator().next();
             allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
         }
+    }
+
+    private void populateAllDSDivisionList(int districtID, String language) {
+        allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtID, language, user);
     }
 
     public int getPageNo() {

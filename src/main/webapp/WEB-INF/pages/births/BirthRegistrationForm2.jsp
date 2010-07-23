@@ -26,10 +26,12 @@
 
         $('select#motherDistrictId').bind('change', function(evt3) {
             var id = $("select#motherDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:1},
+            var label = $("input#dsDivisionLabel").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:3},
                     function(data) {
                         var options = '';
                         var ds = data.dsDivisionList;
+                        options += '<option value="-1">' + label + '</option>';
                         for (var i = 0; i < ds.length; i++) {
                             options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
@@ -210,8 +212,15 @@
         <td width="200px" style="border-top:none;"></td>
         <td colspan="2"><label>*in Sinhala/*in English/D.S Division</label></td>
         <td colspan="6" class="table_reg_cell_02">
-            <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="dsDivisionList"
-                      headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
+            <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
+                <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                          headerKey="#parent.motherDSDivision.dsDivisionUKey" cssStyle="width:99%;"/>
+            </s:if>
+            <s:else>
+                <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
+                          headerKey="0" headerValue="%{getText('select_ds_division.label')}" cssStyle="width:99%;"/>
+            </s:else>
+            <s:textfield id="dsDivisionLabel" value="%{getText('select_ds_division.label')}" cssStyle="display:none;"/>
         </td>
     </tr>
     <tr>
