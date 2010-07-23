@@ -25,6 +25,7 @@ import lk.rgd.UnitTestManager;
 
 /**
  * @author Indunil Moremada
+ * @author amith jayasekara
  */
 public class BirthRegisterActionTest extends StrutsSpringTestCase {
 
@@ -231,8 +232,7 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         }
         return date;
     }
-
-    private String convertDateToString(Date date) {
+private String convertDateToString(Date date) {
         DateFormat formatter;
         String str_date;
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -240,4 +240,38 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         logger.debug("Date in String : " + str_date);
         return str_date;
     }
+    /**
+     * testing birth cetficate print
+     *
+     * @author amith jayasekara
+     */
+    //todo create a sample data that can be print
+    /*
+ public void testBirthCetificatePrint() throws Exception {
+     //loggin as rg
+     login("rg", "password");
+
+     //setting buid to find BD for live biirth
+     request.setParameter("bdId", "165");
+     initAndExucute("/births/eprBirthCertificate.do");
+    assertEquals("No Action Errors", 0, action.getActionErrors());
+     //check BDF data
+     assertNotNull("Child object", action.getChild());
+     assertNotNull("Parent object", action.getParent());
+     assertNotNull("GrandFather object", action.getGrandFather());
+     assertNotNull("Marrage object", action.getMarriage());
+     assertNotNull("Informant object", action.getInformant());
+     assertNotNull("Confirmant object", action.getConfirmant());
+     assertNotNull("Register object", action.getRegister());
+     assertNotNull("Notify Authority", action.getNotifyingAuthority());
+
+     //testing bdid =0
+     request.setParameter("bdId", "0");
+     initAndExucute("/births/eprBirthCertificate.do");
+
+     assertNotNull("Action Errors", action.getActionErrors());
+     assertNull("BirthDeclaration ", action.getChild());
+
+ }
+    */
 }
