@@ -31,6 +31,21 @@ public class LoginAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(LoginAction.class);
     //private UserPreferencesAction userPreferencesAction = new UserPreferencesAction();
 
+
+    //for home page charts
+    private int totalDeclarations;
+    private int totalDecArrivals;
+    private int approvalPendings;
+    private int totalConfirmChages;
+    private int confirmApproved;
+    private int confirmApprovedPending;
+    private int confirmPrinted;
+    private int confimPrintingPending;
+    private int BCprinted;
+    private int BCPrintPendings;
+    private int stillBirths;
+    private int SBPendingApprovals;
+
     public LoginAction(UserManager userManager) {
         this.userManager = userManager;
     }
@@ -38,7 +53,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
     public Locale getLocale() {
         return (Locale) session.get(WebConstants.SESSION_USER_LANG);
     }
-    
+
     /**
      * Handles the login process of the EPR system
      * if login is success user is redirected
@@ -76,9 +91,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
             session.put(WebConstants.SESSION_USER_LANG, new Locale(language, country));
             session.put(WebConstants.SESSION_USER_BEAN, user);
             logger.debug(" user {} logged in. language {}", userName, language);
+            String userRole = user.getRole().getRoleId();
+            logger.debug("Role of the {} is :{}", user.getUserName(), userRole);
 
+                totalDeclarations =10;
+                totalDecArrivals = 11;
+                approvalPendings = 12;
+                totalConfirmChages = 13;
+                confirmApproved = 14;
+                confirmApprovedPending =15;
+                confirmPrinted = 16;
+                confimPrintingPending =17;
+                BCprinted = 18;
+                BCPrintPendings =19;
+                stillBirths =20;
+                SBPendingApprovals =21;
+           
             String result = checkUserStatus(user);
-            return result;
+            return result + userRole;
         } catch (Exception e) {
             logger.error("Exception {} {} ", e, e.toString());
             return "error";
@@ -296,5 +326,102 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT, new Link(null, "/popreg/births/", "eprStillBirthCertificatePrint.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT, new Link(null, "/popreg/births/", "eprDirectPrintStillBirthCertificate.do"));
 
+    }
+
+
+    public int getTotalDeclarations() {
+        return totalDeclarations;
+    }
+
+    public void setTotalDeclarations(int totalDeclarations) {
+        this.totalDeclarations = totalDeclarations;
+    }
+
+    public int getTotalDecArrivals() {
+        return totalDecArrivals;
+    }
+
+    public void setTotalDecArrivals(int totalDecArrivals) {
+        this.totalDecArrivals = totalDecArrivals;
+    }
+
+    public int getApprovalPendings() {
+        return approvalPendings;
+    }
+
+    public void setApprovalPendings(int approvalPendings) {
+        this.approvalPendings = approvalPendings;
+    }
+
+    public int getTotalConfirmChages() {
+        return totalConfirmChages;
+    }
+
+    public void setTotalConfirmChages(int totalConfirmChages) {
+        this.totalConfirmChages = totalConfirmChages;
+    }
+
+    public int getConfirmApproved() {
+        return confirmApproved;
+    }
+
+    public void setConfirmApproved(int confirmApproved) {
+        this.confirmApproved = confirmApproved;
+    }
+
+    public int getConfirmApprovedPending() {
+        return confirmApprovedPending;
+    }
+
+    public void setConfirmApprovedPending(int confirmApprovedPending) {
+        this.confirmApprovedPending = confirmApprovedPending;
+    }
+
+    public int getConfirmPrinted() {
+        return confirmPrinted;
+    }
+
+    public void setConfirmPrinted(int confirmPrinted) {
+        this.confirmPrinted = confirmPrinted;
+    }
+
+    public int getConfimPrintingPending() {
+        return confimPrintingPending;
+    }
+
+    public void setConfimPrintingPending(int confimPrintingPending) {
+        this.confimPrintingPending = confimPrintingPending;
+    }
+
+    public int getBCprinted() {
+        return BCprinted;
+    }
+
+    public void setBCprinted(int BCprinted) {
+        this.BCprinted = BCprinted;
+    }
+
+    public int getBCPrintPendings() {
+        return BCPrintPendings;
+    }
+
+    public void setBCPrintPendings(int BCPrintPendings) {
+        this.BCPrintPendings = BCPrintPendings;
+    }
+
+    public int getStillBirths() {
+        return stillBirths;
+    }
+
+    public void setStillBirths(int stillBirths) {
+        this.stillBirths = stillBirths;
+    }
+
+    public int getSBPendingApprovals() {
+        return SBPendingApprovals;
+    }
+
+    public void setSBPendingApprovals(int SBPendingApprovals) {
+        this.SBPendingApprovals = SBPendingApprovals;
     }
 }

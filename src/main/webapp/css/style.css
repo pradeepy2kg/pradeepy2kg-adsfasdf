@@ -53,3 +53,5 @@
 #error-page-outer .error{margin-left:20px;font-size:12pt;color:black;}
 #error-page-outer .technical-msg-title{margin-left:20px;font-size:15pt;color:#FFFFFF;text-align:justify;}
 #error-page-outer .technical-error-msg{margin-left:20px;font-size:10pt;color:#FFFFFF}
+
+#ADR-home-page-outer{width:1030px;float:right;}

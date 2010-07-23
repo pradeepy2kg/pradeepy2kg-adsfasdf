@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <style type="text/css">
 .birth-registration-outer {
+
     background: none;
     width: 960px;
     height: 702px;

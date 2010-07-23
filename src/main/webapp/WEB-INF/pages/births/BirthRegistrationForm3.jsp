@@ -344,16 +344,7 @@
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
                 flag = true;
             }
-           /* element = document.getElementById('motherSigned');
-            if(!element.checked)
-            {
-               errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
-            }
-            element = document.getElementById('fatherSigned');
-            if(!element.checked)
-            {
-               errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-            }*/
+           
 
         }
         element = document.getElementsByName("marriage.parentsMarried")[2];
