@@ -327,7 +327,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             }
         }
         catch (CRSRuntimeException e) {
-            logger.error("inside directApprove() : {} ", e);
+            logger.error("inside directApprove() error handle : {} ", e.getMessage());
             addActionError(getText("brapproval.approval.error." + Integer.toString(e.getErrorCode())));
             caughtException = true;
         }

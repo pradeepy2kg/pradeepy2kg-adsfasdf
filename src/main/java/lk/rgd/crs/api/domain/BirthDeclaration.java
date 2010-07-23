@@ -69,7 +69,7 @@ public class BirthDeclaration implements Serializable {
          */
         ARCHIVED_CORRECTED,
         /**
-         * 5 - A BDF for which the parent confirmation changes has been captured
+         * 5 - A BDF for which the parent c
          */
         CONFIRMATION_CHANGES_CAPTURED,
         /**
