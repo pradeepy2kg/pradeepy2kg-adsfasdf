@@ -51,7 +51,7 @@
             var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
             soapBody.attr("xmlns:trans",soapNs);
             soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(1);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
             soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
             soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
@@ -65,8 +65,7 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            alert(respObj.Body.toString());
-            $("textarea#childFullNameEnglish").val(respObj.Body);
+            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
         }
     })
 </script>
