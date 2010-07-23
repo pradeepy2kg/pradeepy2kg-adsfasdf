@@ -490,9 +490,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      *
      * @return pageLoad
      */
+    //todo amith
     public String birthCetificatePrint() {
         try {
             BirthDeclaration bdf = service.getById(bdId, user);
+
             bdf = service.loadValuesForPrint(bdf, user);
             liveBirth = bdf.getRegister().isLiveBirth();
 
