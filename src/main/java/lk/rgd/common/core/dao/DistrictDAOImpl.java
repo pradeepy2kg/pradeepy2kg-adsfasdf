@@ -26,6 +26,18 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
 
     /**
      * @inheritDoc
+     * This method is there for getting all the district names for a given district
+     * Without restricting on user/role permissions. This is needed to capture mothers district in
+     * Birth dicration data entry.
+     */
+    public Map<Integer, String> getAllDistrictNames(String language, User user) {
+        Map<Integer, String> result = getAllDistrictNames(language);
+        // todo auditing for user
+        return result;
+    }
+
+    /**
+     * @inheritDoc
      */
     public Map<Integer, String> getDistrictNames(String language, User user) {
 
@@ -41,7 +53,8 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         }
 
         if (user == null) {
-            return result;
+            logger.error("Error getting DistrictNames using null for User");
+            throw new IllegalArgumentException("User can not be null");
         } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // admins and RG has full access
             return result;
@@ -56,6 +69,20 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
             }
             return filteredResult;
         }
+    }
+
+    private Map<Integer, String> getAllDistrictNames(String language) {
+        Map<Integer, String> result = null;
+        if (AppConstants.SINHALA.equals(language)) {
+            result = siDistricts;
+        } else if (AppConstants.ENGLISH.equals(language)) {
+            result = enDistricts;
+        } else if (AppConstants.TAMIL.equals(language)) {
+            result = taDistricts;
+        } else {
+            handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
+        }
+        return result;
     }
 
     public String getNameByPK(int districtUKey, String language) {
@@ -86,7 +113,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
 
         for (District d : results) {
             final int districtId = d.
-                    getDistrictId();
+                getDistrictId();
             final int districtUKey = d.getDistrictUKey();
             districtsByPK.put(districtUKey, d);
             siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());

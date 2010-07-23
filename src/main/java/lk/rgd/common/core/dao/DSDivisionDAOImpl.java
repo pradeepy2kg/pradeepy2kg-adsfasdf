@@ -49,7 +49,8 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         Map<Integer, String> result = getAllDSDivisionNames(districtUKey, language);
 
         if (user == null) {
-            return result;
+            logger.error("Error getting DSDivisionNames using null for User");
+            throw new IllegalArgumentException("User can not be null");
         } else if (Role.ROLE_RG.equals(user.getRole().getRoleId())) {
             // Admin, RG and has full access
             return result;

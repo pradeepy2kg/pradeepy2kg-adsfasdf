@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
@@ -144,7 +145,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private void populate() {
         String language = "en";//((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (districtList == null)
-            districtList = districtDAO.getDistrictNames(language, null);
+            districtList = districtDAO.getAllDistrictNames(language, user);
         if (roleList == null)
             roleList = roleDAO.getRoleList();
     }

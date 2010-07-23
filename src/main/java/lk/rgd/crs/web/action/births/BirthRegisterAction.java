@@ -701,10 +701,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         raceList = raceDAO.getRaces(language);
 
         /** getting full district list and DS list for mother info on page 4 */
-        allDistrictList = districtDAO.getDistrictNames(language, null);
+        allDistrictList = districtDAO.getAllDistrictNames(language, user);
         if (!allDistrictList.isEmpty()) {
             int selectedDistrictId = allDistrictList.keySet().iterator().next();
-            allDSDivisionList = dsDivisionDAO.getDSDivisionNames(selectedDistrictId, language, null);
+            allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
         }
     }
 

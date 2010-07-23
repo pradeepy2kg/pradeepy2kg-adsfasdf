@@ -9,16 +9,6 @@
     <div id="birth-register-approval-header">
         <s:actionmessage/>
         <s:actionerror/>
-        <%--<s:if test="#request.warnings.size>0">
-        <table width="100%" cellpadding="0" cellspacing="0">
-            <table>
-                <s:iterator value="#request.warnings">
-                    <tr>
-                        <td><s:property value="message"/></td>
-                    </tr>
-                </s:iterator>
-            </table>
-            </s:if>--%>
     </div>
 
     <div id="birth-register-approval-body">
