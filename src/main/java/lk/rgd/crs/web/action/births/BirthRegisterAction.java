@@ -223,8 +223,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         switch (pageNo) {
             case 1:
+                logger.debug("Step {} of 3 ", pageNo);
                 bdf.getRegister().setBirthDivision(register.getBirthDivision());
-
                 bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                 bdf.getChild().setChildGender(child.getChildGender());
                 bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
@@ -236,6 +236,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getMarriage().setParentsMarried(marriage.getParentsMarried());
                 break;
             case 2:
+                logger.debug("Step {} of 3 ", pageNo);
                 bdf.getChild().setChildFullNameOfficialLang(child.getChildFullNameOfficialLang());
                 bdf.getChild().setChildFullNameEnglish(child.getChildFullNameEnglish());
 
@@ -243,9 +244,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getParent().setMotherFullName(parent.getMotherFullName());
                 break;
             case 3:
+                logger.debug("Step {} of 3 ", pageNo);
                 bdf.getConfirmant().setConfirmantNICorPIN(confirmant.getConfirmantNICorPIN());
                 bdf.getConfirmant().setConfirmantFullName(confirmant.getConfirmantFullName());
                 bdf.getConfirmant().setConfirmantSignDate(confirmant.getConfirmantSignDate());
+
                 logger.debug("skipConfirmationChanges {}", skipConfirmationChages);
                 //todo exception handling, validations and error reporting
                 if (skipConfirmationChages) {
@@ -451,6 +454,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             try {
                 bdf = service.getById(bdId, user);
                 bcf = service.getById(bdId, user);
+                logger.debug("bdId is {} ",bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                         bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
