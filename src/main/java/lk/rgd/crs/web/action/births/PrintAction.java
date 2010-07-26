@@ -264,16 +264,28 @@ public class PrintAction extends ActionSupport implements SessionAware {
         setDistrictList(districtDAO.getDistrictNames(language, user));
         //TODO checking district loading
         if (!getDistrictList().isEmpty()) {
-            setBirthDistrictId(getDistrictList().keySet().iterator().next());
+            if (birthDistrictId > 0)
+                setBirthDistrictId(birthDistrictId);
+            else
+                setBirthDistrictId(getDistrictList().keySet().iterator().next());
         }
         //dsDivisions
 
         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         //setting bdDivisions
         if (!dsDivisionList.isEmpty()) {
-            dsDivisionId = dsDivisionList.keySet().iterator().next();
+            if (dsDivisionId > 0)
+                setDsDivisionId(dsDivisionId);
+            else
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
             bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         }
+        if (!bdDivisionList.isEmpty())
+            if (birthDivisionId > 0)
+                setBirthDivisionId(birthDivisionId);
+            else
+                birthDivisionId = bdDivisionList.keySet().iterator().next();
+
     }
 
     public List<BirthDeclaration> getPrintList() {
