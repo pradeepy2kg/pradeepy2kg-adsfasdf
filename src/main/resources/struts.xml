@@ -443,8 +443,14 @@
     <package name="preferences" namespace="/preferences" extends="NG">
         <default-interceptor-ref name="default"/>
 
-        <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="changePassword">
-            <result name="success" type="tiles">epr.home</result>
+        <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                method="changePassword">
+            <result type="tiles" name="successADMIN">epr.home</result>
+            <result type="tiles" name="successRG">epr.rghome</result>
+            <result type="tiles" name="successARG">epr.home</result>
+            <result type="tiles" name="successDR">epr.home</result>
+            <result type="tiles" name="successADR">epr.adrhome</result>
+            <result type="tiles" name="successDEO">epr.deohome</result>
             <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
 

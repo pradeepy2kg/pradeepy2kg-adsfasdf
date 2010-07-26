@@ -36,6 +36,20 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private final UserManager userManager;
     private static final Logger logger = LoggerFactory.getLogger(UserPreferencesAction.class);
 
+    //for home page charts
+    private int totalDeclarations;
+    private int totalDecArrivals;
+    private int approvalPendings;
+    private int totalConfirmChages;
+    private int confirmApproved;
+    private int confirmApprovedPending;
+    private int confirmPrinted;
+    private int confimPrintingPending;
+    private int BCprinted;
+    private int BCPrintPendings;
+    private int stillBirths;
+    private int SBPendingApprovals;
+
 
     public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
         this.districtDAO = districtDAO;
@@ -97,7 +111,22 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         if (newPassword.equals(retypeNewPassword)) {
             User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
             userManager.updatePassword(newPassword, user);
-            return "success";
+            String userRole = user.getRole().getRoleId();
+
+            totalDeclarations = 10;
+            totalDecArrivals = 11;
+            approvalPendings = 12;
+            totalConfirmChages = 13;
+            confirmApproved = 14;
+            confirmApprovedPending = 15;
+            confirmPrinted = 16;
+            confimPrintingPending = 17;
+            BCprinted = 18;
+            BCPrintPendings = 19;
+            stillBirths = 20;
+            SBPendingApprovals = 21;
+            logger.debug("return value of change password method is,","success" + userRole);
+            return "success" + userRole;
         }
         return "error";
     }
@@ -160,6 +189,104 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setRetypeNewPassword(String retypeNewPassword) {
         this.retypeNewPassword = retypeNewPassword;
+    }
+
+
+
+    public int getTotalDeclarations() {
+        return totalDeclarations;
+    }
+
+    public void setTotalDeclarations(int totalDeclarations) {
+        this.totalDeclarations = totalDeclarations;
+    }
+
+    public int getTotalDecArrivals() {
+        return totalDecArrivals;
+    }
+
+    public void setTotalDecArrivals(int totalDecArrivals) {
+        this.totalDecArrivals = totalDecArrivals;
+    }
+
+    public int getApprovalPendings() {
+        return approvalPendings;
+    }
+
+    public void setApprovalPendings(int approvalPendings) {
+        this.approvalPendings = approvalPendings;
+    }
+
+    public int getTotalConfirmChages() {
+        return totalConfirmChages;
+    }
+
+    public void setTotalConfirmChages(int totalConfirmChages) {
+        this.totalConfirmChages = totalConfirmChages;
+    }
+
+    public int getConfirmApproved() {
+        return confirmApproved;
+    }
+
+    public void setConfirmApproved(int confirmApproved) {
+        this.confirmApproved = confirmApproved;
+    }
+
+    public int getConfirmApprovedPending() {
+        return confirmApprovedPending;
+    }
+
+    public void setConfirmApprovedPending(int confirmApprovedPending) {
+        this.confirmApprovedPending = confirmApprovedPending;
+    }
+
+    public int getConfirmPrinted() {
+        return confirmPrinted;
+    }
+
+    public void setConfirmPrinted(int confirmPrinted) {
+        this.confirmPrinted = confirmPrinted;
+    }
+
+    public int getConfimPrintingPending() {
+        return confimPrintingPending;
+    }
+
+    public void setConfimPrintingPending(int confimPrintingPending) {
+        this.confimPrintingPending = confimPrintingPending;
+    }
+
+    public int getBCprinted() {
+        return BCprinted;
+    }
+
+    public void setBCprinted(int BCprinted) {
+        this.BCprinted = BCprinted;
+    }
+
+    public int getBCPrintPendings() {
+        return BCPrintPendings;
+    }
+
+    public void setBCPrintPendings(int BCPrintPendings) {
+        this.BCPrintPendings = BCPrintPendings;
+    }
+
+    public int getStillBirths() {
+        return stillBirths;
+    }
+
+    public void setStillBirths(int stillBirths) {
+        this.stillBirths = stillBirths;
+    }
+
+    public int getSBPendingApprovals() {
+        return SBPendingApprovals;
+    }
+
+    public void setSBPendingApprovals(int SBPendingApprovals) {
+        this.SBPendingApprovals = SBPendingApprovals;
     }
 
 }

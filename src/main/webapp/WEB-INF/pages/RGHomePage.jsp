@@ -39,12 +39,10 @@
     <s:hidden id="BCPrintPendings" value="%{BCPrintPendings}"/>
     <s:hidden id="stillBirths" value="%{stillBirths}"/>
     <s:hidden id="SBPendingApprovals" value="%{SBPendingApprovals}"/>
-
-
+    
     <script type="text/javascript">
         $(document).ready(function() {
             $.jqplot.config.enablePlugins = true;
-
             line = [
                 ['Total <br/> Declarations <br/> This Month', document.getElementById("totalDeclarations").value],
                 ['Total <br/> Declaration <br/> Arrivals', document.getElementById("totalDecArrivals").value],
@@ -87,6 +85,7 @@
         });
 
     </script>
+
     <div class="jqplot" id="chart1"></div>
 
 </div>

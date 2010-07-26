@@ -61,7 +61,7 @@
             ];
 
 
-            plot1 = $.jqplot('chart1', [line], {
+            plot1 = $.jqplot('ADR-home-chart', [line], {
                 title: 'ADR',
                 series:[
                     {
@@ -89,8 +89,8 @@
     </script>
     <div class="jqplot" id="chart1"></div>
 
-<div id="ADR-home-page-outer">
-    <div class="jqplot" id="chart1"></div>
+    <div id="ADR-home-page-outer">
+        <div class="jqplot" id="ADR-home-chart"></div>
 
-</div>
+    </div>
    

@@ -72,6 +72,18 @@ public class PrintActionTest extends CustomStrutsTestCase {
 
     }
 
+    public void testBirthConfirmationPrintList() throws Exception {
+        //loggin as a rg
+        login("rg", "password");
+        initAndExucute("/births/eprBirthConfirmationPrintList.do");
+        //check no action errors
+        assertEquals("No Action erros.", 0, action.getActionErrors().size());
+        populateList();
+
+        logger.info("testing LoadBirthCertificatePrintList completed");
+
+    }
+
     public void testFilterPrintList() throws Exception {
         //login and init as rg
         login("rg", "password");
