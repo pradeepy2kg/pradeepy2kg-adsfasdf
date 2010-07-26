@@ -267,6 +267,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             setBirthDistrictId(getDistrictList().keySet().iterator().next());
         }
         //dsDivisions
+
         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         //setting bdDivisions
         if (!dsDivisionList.isEmpty()) {

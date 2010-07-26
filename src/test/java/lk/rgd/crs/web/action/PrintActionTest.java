@@ -90,7 +90,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
     public void testPrintBulkOfEntries() throws Exception {
         login("rg", "password");
         request.setParameter("printed", "false");
-        String[] index = new String[]{"167"};
+        String[] index = new String[]{"164"};
         request.setParameter("index", index);
         request.setParameter("birthDivisionId", "1");
         initAndExucute("/births/eprBirthCertificateBulkPrint.do");
@@ -98,6 +98,36 @@ public class PrintActionTest extends CustomStrutsTestCase {
         //check for invalide data
 
         logger.info("testing LoadBirthCertificatePrintList completed");
+    }
+
+    public void testNext() throws Exception {
+        login("rg", "password");
+        commanPreNext();
+        initAndExucute("/births/eprPrintNext.do");
+        commanPreNextCheck();
+    }
+
+    public void testPrevious() throws Exception {
+        login("rg", "password");
+        commanPreNext();
+        initAndExucute("/births/eprPrintPrevious.do");
+        commanPreNextCheck();
+    }
+
+    private void commanPreNext() {
+        request.setParameter("pageNo", "2");
+        request.setParameter("birthDivisionId", "1");
+        request.setParameter("printed", "true");
+        request.setParameter("printStart", "5");
+    }
+
+    private void commanPreNextCheck() {
+        assertEquals("No Action Errors", 0, action.getActionErrors().size());
+        assertNotNull("Request Page number", action.getPageNo());
+        assertNotNull("Request BirthDivisionID", action.getBirthDivisionId());
+        assertNotNull("Request Printed", action.isPrinted());
+        assertNotNull("Request Print Start", action.getPrintStart());
+        logger.info("page number : {}", action.getPageNo());
     }
 
     private void comman() {
