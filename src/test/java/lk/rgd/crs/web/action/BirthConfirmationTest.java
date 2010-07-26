@@ -28,6 +28,7 @@ import java.util.Calendar;
  * Date: Jul 20, 2010
  * Time: 11:52:16 AM
  * To change this template use File | Settings | File Templates.
+ * @author Janith Widarshana. 
  */
 public class BirthConfirmationTest extends StrutsSpringTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthConfirmationTest.class);
@@ -144,10 +145,7 @@ public class BirthConfirmationTest extends StrutsSpringTestCase {
         request.setParameter("birthDivisionId", "3");
 
         request.setParameter("pageNo", "1");
-        initAndExucute("/births/eprBirthConfirmation.do");
-        assertNotNull("Session bdf presence", bdf);
         assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-        session = registerAction.getSession();
         assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
 
         request.setParameter("child.childFullNameOfficialLang", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක");
@@ -156,34 +154,17 @@ public class BirthConfirmationTest extends StrutsSpringTestCase {
         request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
 
         request.setParameter("pageNo", "2");
-        initAndExucute("/births/eprBirthConfirmation.do");
         assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-        session = registerAction.getSession();
-        assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
-        logger.debug("cccchhhhhh nann  {} ", bdf.getChild().getChildFullNameOfficialLang());
-        assertNotNull("Session bdf presence", bdf);
         request.setParameter("confirmantRadio", "GUARDIAN");
         request.setParameter("confirmant.confirmantNICorPIN", "GUARDIAN");
         request.setParameter("confirmant.confirmantFullName", "GUARDIAN");
 
         request.setParameter("pageNo", "3");
-        initAndExucute("/births/eprBirthConfirmation.do");
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-        session = registerAction.getSession();
-        assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
-        assertNotNull("Session bdf presence", bdf);
-
-        initAndExucute("/births/eprHome.do");
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-        ActionContext.getContext().setSession(session);
-        try {
-            proxy.execute();
-        } catch (Exception e) {
-            logger.error("Handle Error {} : {}", e.getMessage(), e);
-        }
-        logger.debug("State of data  {} ", bdf.getRegister().getStatus().ordinal());
-
-        /*proxy = getActionProxy("/births/eprConfrimationChangesDirectApproval.do");
+       
+        //testing for Approve Button
+        request.setParameter("confirmationApprovalFlag","true");
+        request.setParameter("bdId","165");
+        proxy = getActionProxy("/births/eprConfrimationChangesDirectApproval.do");
         BirthRegisterApprovalAction approvalAction = (BirthRegisterApprovalAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
@@ -192,27 +173,21 @@ public class BirthConfirmationTest extends StrutsSpringTestCase {
         } catch (Exception e) {
             logger.error("Handle Error {} : {}", e.getMessage(), e);
         }
-        request.setParameter("confirmationApprovalFlag","true");
-        request.setParameter("bdId","167");
-        
-        logger.debug("Seeeeeeeeeeee  {} ", bdf.getRegister().getStatus().ordinal());
         assertEquals("No Action erros.", 0, approvalAction.getActionErrors().size());
-        //session = approvalAction.getSession();
-        //assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
-        //assertNotNull("Session bdf presence", bdf);
 
-        
-
-        
-        /*
-        bdf.getConfirmant().setConfirmantNICorPIN("853303399v");
-        registerAction.getConfirmant().setConfirmantNICorPIN("444444444444444");
-        logger.debug("PIN  nnnnnnnnnnnnnnnnnnnnnn {} ",registerAction.getConfirmant().getConfirmantNICorPIN());
-        assertEquals("Confirment NIC/PIN", "853303399v", bdf.getConfirmant().getConfirmantNICorPIN());
-        bdf.getConfirmant().setConfirmantFullName("ජනිත් විදර්ශන");
-        assertEquals("Confirment Full Name","ජනිත් විදර්ශන", bdf.getConfirmant().getConfirmantFullName());
-        bdf.getConfirmant().setConfirmantSignDate(new Date());
-        assertEquals("Confirment Sign Date", new Date(), bdf.getConfirmant().getConfirmantSignDate());   */
+        request.setParameter("directPrintBirthCertificate","true");
+        request.setParameter("bdId","165");
+        proxy = getActionProxy("/births/eprBirthCertificatDirectPrint.do");
+        registerAction = (BirthRegisterAction) proxy.getAction();
+        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
+        ActionContext.getContext().setSession(session);
+        try {
+            proxy.execute();
+        } catch (Exception e) {
+            logger.error("Handle Error {} : {}", e.getMessage(), e);
+        }
+        assertEquals("No Action erros.", 0, approvalAction.getActionErrors().size());
+        logger.debug("Status of the tested data : {}",registerAction.getRegister().getStatus().ordinal());
     }
 
 }
