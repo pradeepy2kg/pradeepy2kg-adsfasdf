@@ -65,10 +65,9 @@
         </action>
 
         <!--check here -->
-
         <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
             <interceptor-ref name="default"/>
-            <result type="tiles" name="success">epr.welcome</result>
+            <result type="tiles" name="success">epr.home</result>
         </action>
 
         <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.AjaxAction" method="{1}">

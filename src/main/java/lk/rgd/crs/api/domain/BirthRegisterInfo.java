@@ -8,13 +8,14 @@ import javax.persistence.*;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.io.Serializable;
 
 /**
  * An instance representing birth registration process specific official information
  * and statuses for a given birth registration/declaration.
  */
 @Embeddable
-public class BirthRegisterInfo {
+public class BirthRegisterInfo implements Serializable {
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
