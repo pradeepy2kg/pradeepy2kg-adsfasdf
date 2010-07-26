@@ -88,7 +88,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean approved;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -182,6 +182,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String filter() {
+        logger.info("confermation flag : {}", confirmationApprovalFlag);
         //todo
         setPageNo(1);
         initPermission();
@@ -211,7 +212,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                         pageNo, noOfRows, user);
             }
-        } else if (searchStartDate != null && searchEndDate != null) {
+        } else if (searchStartDate != null && searchEndDate != null && bdfSerialNo == 0) {
             // searching according to selected date range in BDF approval page and Confirmation approval page
             searchDateRangeFlag = true;
             if (confirmationApprovalFlag) {
@@ -294,8 +295,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             } else {
                 setPageNo(getPageNo() - 1);
             }
-            populate();
 
+            logger.debug("remaining approvals : {} ", approvalPendingList.size());
+            populate();
+            logger.debug("returning success");
             return SUCCESS;
         } else {
             return "approvalRejected";
