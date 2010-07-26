@@ -1181,4 +1181,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Added a new birth certificate search entry. SearchUKey : {} by UserID", bcs.getSearchUKey(),
                 user.getUserId());
     }
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user) {
+        logger.debug("searching archived BirthDeclaration for Serial number : {} and birth division  : {}", serialNo, bdDivision.getBdDivisionUKey());
+        validateAccessToBDDivision(user, bdDivision);
+        return birthDeclarationDAO.getArchivedCorrectedEntriesForGivenSerialNo(bdDivision, serialNo);
+    }
 }

@@ -22,6 +22,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.UnitTestManager;
+import lk.rgd.Permission;
 
 /**
  * @author Indunil Moremada
@@ -70,10 +71,27 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
     }
 
     public void testBirthDeclaratinInitializer() throws Exception {
+        Object obj;
+        login("indunil", "indunil");
+        initAndExecute("/births/eprBirthRegistrationInit.do");
+        assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
+
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+
+        obj = session.get(WebConstants.SESSION_USER_LANG);
+        assertNotNull("Session User Local Presence", obj);
+        assertNotNull("Request District List Presence", action.getDistrictList());
+        assertNotNull("Request Race List Presence", action.getRaceList());
+
+        //check whether required beans are populated
+        assertEquals("Request child Bean is Populated", bd.getChild(), action.getChild());
+        assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
+
         //todo
     }
 
     public void testBirthDeclarationInitializerInEditMode() throws Exception {
+        //todo set date values to request 
         Object obj;
         login("indunil", "indunil");
         request.setParameter("bdId", "166");
@@ -91,7 +109,7 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         //check whether required beans are populated
         assertEquals("Request child Bean is Populated", bd.getChild(), action.getChild());
         assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
-        
+
         logger.debug("IsLiveBirth {}", action.isLiveBirth());
 
         assertEquals("Request birthDistrictId is set to existing district", action.getRegister().getBirthDistrict().getDistrictUKey(),
@@ -105,16 +123,23 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         assertEquals("Request father Race", action.getFatherRace(), bd.getParent().getFatherRace().getRaceId());
         assertEquals("Request Mother Country", action.getMotherCountry(), bd.getParent().getMotherCountry().getCountryId());
         assertEquals("Request Mother Race", action.getMotherRace(), bd.getParent().getMotherRace().getRaceId());
-
+        //String date=convertDateToString(bd.getRegister().getDateOfRegistration());
+        //convertStingToDate(date);
         //for 2 of 4BDF
         //todo handle null pointer in birthregister action register bean
         request.setParameter("pageNo", "1");
-        long serialNo = bd.getRegister().getBdfSerialNo();
-        //request.setParameter("register.bdfSerialNo", Double.toString(serialNo));
+        //long serialNo = bd.getRegister().getBdfSerialNo();
+        request.setParameter("register.bdfSerialNo", "12345");
         //request.setParameter("register.dateOfRegistration", convertDateToString(bd.getRegister().getDateOfRegistration()));
-        request.setParameter("parent.motherAgeAtBirth", bd.getParent().getMotherAgeAtBirth().toString());   
+
+        /*BirthRegisterInfo bri=bd.getRegister();
+        bri.setDateOfRegistration(bd.getRegister().getDateOfRegistration());
+        action.setRegister(bri);
+*/
+        request.setParameter("parent.motherAgeAtBirth", bd.getParent().getMotherAgeAtBirth().toString());
         //request.setAttribute("child.dateOfBirth", convertStingToDate("2010-07-10"));
-        
+        action.getRegister().setDateOfRegistration(bd.getRegister().getDateOfRegistration());
+
         request.setParameter("birthDistrictId", "1");
         request.setParameter("child.placeOfBirth", "මාතර");
         request.setParameter("child.placeOfBirthEnglish", "Matara");
@@ -167,23 +192,23 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         request.setParameter("motherRace", "1");
         request.setParameter("parent.motherPlaceOfBirth", "kandana");
         request.setParameter("parent.motherAdmissionNo", "125");
-         request.setParameter("parent.motherEmail", "sanguni@gmail.com");
+        request.setParameter("parent.motherEmail", "sanguni@gmail.com");
         //request.setParameter("parent.motherAdmissionDate", "2010-06-27");
         request.setParameter("parent.motherPhoneNo", "0112345678");
 
         initAndExecute("/births/eprBirthRegistration.do");
         assertEquals("Action erros for 3 of 4BDF", 0, action.getActionErrors().size());
-        
+
         assertEquals("Request marriage Bean population faild", bd.getMarriage(), action.getMarriage());
         assertEquals("Request grandFather Bean population faild", bd.getGrandFather(), action.getGrandFather());
         assertEquals("Request informant Bean population faild", bd.getInformant(), action.getInformant());
 
         //for 4 of 4BDF
-        request.setParameter("pageNo","3");
+        request.setParameter("pageNo", "3");
         request.setParameter("marriage.parentsMarried", "1");
         request.setParameter("marriage.placeOfMarriage", "Kaduwela");
         //request.setParameter("marriage.dateOfMarriage", "2008-09-02");
-        request.setParameter("marriage.motherSigned", "0"); 
+        request.setParameter("marriage.motherSigned", "0");
         request.setParameter("marriage.fatherSigned", "0");
         request.setParameter("grandFather.grandFatherFullName", "Grand Father Full Name");
         request.setParameter("grandFather.grandFatherNICorPIN", "2238485f85V");
@@ -201,13 +226,18 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         request.setParameter("informant.informantAddress", "Kandy Road Matale");
         request.setParameter("informant.informantPhoneNo", "081234567");
         request.setParameter("informant.informantEmail", "sanguni@gmail.com");
-        request.setParameter("informant.informantSignDate", "2010-07-21");
+        //request.setParameter("informant.informantSignDate", "2010-07-21");
 
         initAndExecute("/births/eprBirthRegistration.do");
         assertEquals("Action erros for 4 of 4BDF", 0, action.getActionErrors().size());
 
         //assertEquals("Request notifyingAuthority Bean population faild", bd.getNotifyingAuthority(), action.getNotifyingAuthority());
 
+        //BirthDeclaration Form Details
+        request.setParameter("pageNo", "4");
+        initAndExecute("/births/eprBirthRegistration.do");
+        assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
+        assertNotNull("Approval Permission Faild for the user", action.isAllowApproveBDF());
     }
 
     private void login(String userName, String password) throws Exception {

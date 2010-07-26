@@ -28,7 +28,7 @@ public interface BirthRegistrationService {
      *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-        String caseFileNumber, String additionalDocumentsComment);
+                                                     String caseFileNumber, String additionalDocumentsComment);
 
     /**
      * Add a Still Birth declaration to the system.
@@ -284,7 +284,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -300,7 +300,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -325,5 +325,17 @@ public interface BirthRegistrationService {
      * @param user the user initiate the action
      */
     public void addBirthCertificateSearch(BirthCertificateSearch bcs, User user);
+
+    /**
+     * Returns related BirthDeclarations which are in ARCHIVED_CORRECTED
+     * for given birthDivision and SerialNo of any BirthDeclaration which
+     * is in CONFIRMATION_CHANGES_CAPTURED state
+     *
+     * @param bdDivision the birth division
+     * @param serialNo      BirthDeclaration serial number
+     * @param user          the user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user);
 }
 

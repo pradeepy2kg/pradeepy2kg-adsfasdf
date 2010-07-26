@@ -35,6 +35,7 @@ public interface BirthDeclarationDAO {
 
     /**
      * Return all records - for indexing only
+     *
      * @return all records
      */
     public List<BirthDeclaration> findAll();
@@ -129,9 +130,21 @@ public interface BirthDeclarationDAO {
 
     /**
      * Get records that were registered prior to the given date - but still pending in the CONFIRMATION_PRINTED state
+     *
      * @param date the earliest date to detrmine records for auto confirmation
      * @return list of BDFs selected for auto confirmation and BC issuance
      */
     public List<BirthDeclaration> getUnconfirmedByRegistrationDate(Date date);
+
+    /**
+     * Returns related BirthDeclarations which are in ARCHIVED_CORRECTED
+     * for given birthDivision and SerialNo of any BirthDeclaration which
+     * is in CONFIRMATION_CHANGES_CAPTURED state
+     *
+     * @param birthDivision the birth division
+     * @param serialNo      the BirthDeclaration serial number
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision birthDivision, long serialNo);
 }
 

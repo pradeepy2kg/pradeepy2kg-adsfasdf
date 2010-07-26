@@ -195,9 +195,10 @@
                         <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                             <s:param name="bdId" value="%{#request.bdf.idUKey}"/>
                         </s:url>
-                        <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                        <td>
+                        <s:if test="bdf.register.status.ordinal() !=4"><s:a href="%{viewSelected}" title="%{getText('view.label')}">
                             <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                 border="none"/></s:a></td>
+                                 border="none"/></s:a></s:if></td> 
                     </tr>
                 </s:if>
                 <s:elseif test="searchResultList.size>0">
@@ -224,9 +225,10 @@
                             <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
-                            <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                            <td>
+                            <s:if test="register.status.ordinal() !=4"><s:a href="%{viewSelected}" title="%{getText('view.label')}">
                                 <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
-                                     border="none"/></s:a></td>
+                                     border="none"/></s:a></s:if></td>
                         </tr>
                     </s:iterator>
                 </s:elseif>

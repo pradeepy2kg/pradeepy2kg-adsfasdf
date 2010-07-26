@@ -92,7 +92,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -106,7 +106,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                                       BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.confirmation.receive.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -131,6 +131,16 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     public List<BirthDeclaration> getUnconfirmedByRegistrationDate(Date date) {
         Query q = em.createNamedQuery("filter.by.unconfirmed.by.register.date");
         q.setParameter("date", date);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision birthDivision, long serialNo) {
+        Query q = em.createNamedQuery("get.archived.corrected.by.bddivision.and.serialNo");
+        q.setParameter("birthDivision",birthDivision);
+        q.setParameter("bdfSerialNo",serialNo);
         return q.getResultList();
     }
 

@@ -87,10 +87,10 @@ public class SearchAction extends ActionSupport implements SessionAware {
                 searchResultList = service.getByBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), user);
             }
         } catch (CRSRuntimeException e) {
-            logger.error("inside searchBDFBySerialNumber() SearchBDFBySerialNumber : {} ", e);
+            logger.error("inside searchBDFBySerialNumber() ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
         } catch (Exception e) {
-            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
+            logger.error("inside searchBDFBySerialNumber() ", e);
             addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();
@@ -130,10 +130,10 @@ public class SearchAction extends ActionSupport implements SessionAware {
             bdf = service.getById(idUKey, user);
             setStatus(bdf.getRegister().getStatus().toString());
         } catch (CRSRuntimeException e) {
-            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
+            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : ", e);
             addActionError(getText("SearchBDF.error." + e.getErrorCode()));
         } catch (Exception e) {
-            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey : {} ", e);
+            logger.error("inside searchBDFByIdUKey() SearchBDFByIdUKey :  ", e);
             addActionError(getText("SearchBDF.error.NoResult"));
         }
         populate();

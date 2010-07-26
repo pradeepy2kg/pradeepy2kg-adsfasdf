@@ -48,6 +48,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
     private List<UserWarning> warnings;
+    private List<BirthDeclaration> archivedEntryList;
 
     private String scopeKey;
     private Map session;
@@ -144,7 +145,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                liveBirth = bdf.getRegister().isLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth();       
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus()); 
                 register.setComments(bdf.getRegister().getComments());
@@ -419,6 +420,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("initializing non editable mode for bdId {}", bdId);
                 try {
                     bdf = service.getById(bdId, user);
+                    if(bdf.getRegister().getStatus().ordinal()==5){
+                        logger.debug("serching rivisions for bdId {} ",bdId);
+                        archivedEntryList=service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(),bdf.getRegister().getBdfSerialNo(),user);
+                    }
                     session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
                     if (!bdf.getRegister().isLiveBirth()) {
                         //still birth related
@@ -1187,5 +1192,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setMotherRacePrintEn(String motherRacePrintEn) {
         this.motherRacePrintEn = motherRacePrintEn;
+    }
+
+    public List<BirthDeclaration> getArchivedEntryList() {
+        return archivedEntryList;
+    }
+
+    public void setArchivedEntryList(List<BirthDeclaration> archivedEntryList) {
+        this.archivedEntryList = archivedEntryList;
     }
 }
