@@ -78,7 +78,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
      */
     public String searchBDFBySerialNumber() {
         logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
-                birthDivisionId, serialNo, birthDistrictId + " recieved");
+            birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
             if (serialNo != null) {
                 bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);

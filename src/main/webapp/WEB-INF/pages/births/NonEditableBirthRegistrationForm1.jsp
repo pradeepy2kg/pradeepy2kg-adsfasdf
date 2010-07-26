@@ -5,8 +5,8 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 
 <s:if test="#request.archivedEntryList.size>0">
-<fieldset style="border:4px inset red; color:red;" >
-    <legend>
+<fieldset style="border:2px inset red; width:280px;" >
+    <legend style="color:red;">
         <s:label value="%{getText('ArchivedData.label')}"/>
     </legend>
     <table>
