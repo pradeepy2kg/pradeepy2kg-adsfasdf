@@ -10,6 +10,14 @@
     }
 </style>
 
+<script type="text/javascript">
+    function printPage() {
+        window.print();
+        var res = confirm(document.getElementById("printMessage").value);
+        if (res)
+            history.go(0);
+    }
+</script>
 <div id="birth-certificate-outer">
 <%--<s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"--%>
 <%--id="birth-certificate-print-form" method="POST">--%>
@@ -255,7 +263,8 @@
     </s:url>
 </s:else>
 <div class="form-submit">
-    <s:a href="%{print}" onclick="print()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:a href="%{print}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
 <%--</s:form>--%>
 </div>

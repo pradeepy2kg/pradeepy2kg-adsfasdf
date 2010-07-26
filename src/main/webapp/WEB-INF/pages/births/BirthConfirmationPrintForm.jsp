@@ -7,6 +7,15 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
+<script type="text/javascript">
+    function printPage(){
+        window.print();
+        var res = confirm(document.getElementById("printMessage").value);
+        if(res)
+            history.go(0);
+    }
+</script>
+
 <div class="birth-confirmation-print-form-outer">
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
 <table style="width:65%;float:left;">
@@ -635,12 +644,3 @@
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
 </div>
-
-<script type="text/javascript">
-    function printPage(){
-        window.print();
-        var res = confirm(document.getElementById("printMessage").value);
-        if(res)
-            history.go(0);
-    }
-</script>
