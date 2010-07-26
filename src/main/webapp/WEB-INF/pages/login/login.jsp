@@ -22,6 +22,11 @@
 </head>
 <body onload="setFocus()">
 <!--check is seesion is alive -->
+    <%
+        if (session.getAttribute("user_bean") != null) {
+            response.sendRedirect("/popreg/eprHome.do");
+        }
+    %>
 
 <img src="<s:url value="/images/epr-header.png" />"/>
 
