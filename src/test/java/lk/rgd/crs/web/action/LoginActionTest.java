@@ -145,7 +145,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         request.setParameter("password", "password");
 
         String result = initAndExucute("/eprLogin.do", session);
-        assertEquals(result, "expired");
+        assertEquals("expired", result);
     }
 
 

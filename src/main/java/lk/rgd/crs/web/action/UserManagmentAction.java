@@ -154,9 +154,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private void generateDSDivisions() {
         for (int i = 0; i < assignedDistricts.length; i++) {
             if (i == 0) {
-                setDivisionList(dsDivisionDAO.getDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), null));
+                setDivisionList(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
             } else {
-                divisionList.putAll(dsDivisionDAO.getDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), null));
+                divisionList.putAll(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
             }
         }
     }

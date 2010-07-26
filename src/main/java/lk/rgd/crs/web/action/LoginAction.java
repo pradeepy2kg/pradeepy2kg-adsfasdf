@@ -94,21 +94,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
             String userRole = user.getRole().getRoleId();
             logger.debug("Role of the {} is :{}", user.getUserName(), userRole);
 
-                totalDeclarations =10;
-                totalDecArrivals = 11;
-                approvalPendings = 12;
-                totalConfirmChages = 13;
-                confirmApproved = 14;
-                confirmApprovedPending =15;
-                confirmPrinted = 16;
-                confimPrintingPending =17;
-                BCprinted = 18;
-                BCPrintPendings =19;
-                stillBirths =20;
-                SBPendingApprovals =21;
-           
+            totalDeclarations = 10;
+            totalDecArrivals = 11;
+            approvalPendings = 12;
+            totalConfirmChages = 13;
+            confirmApproved = 14;
+            confirmApprovedPending = 15;
+            confirmPrinted = 16;
+            confimPrintingPending = 17;
+            BCprinted = 18;
+            BCPrintPendings = 19;
+            stillBirths = 20;
+            SBPendingApprovals = 21;
+
             String result = checkUserStatus(user);
-            return result + userRole;
+            if (result.equals(SUCCESS))
+                return result + userRole;
+            else
+                return result;
         } catch (Exception e) {
             logger.error("Exception {} {} ", e, e.toString());
             return "error";
