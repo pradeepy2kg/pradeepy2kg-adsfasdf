@@ -9,10 +9,21 @@
 
 <script type="text/javascript">
     function printPage(){
-        window.print();
+        //window.print();
+
+        // set page header
+        jsPrintSetup.setOption('headerStrLeft', '');
+        jsPrintSetup.setOption('headerStrCenter', '');
+        jsPrintSetup.setOption('headerStrRight', '');
+        // set empty page footer
+        jsPrintSetup.setOption('footerStrLeft', '');
+        jsPrintSetup.setOption('footerStrCenter', '');
+        jsPrintSetup.setOption('footerStrRight', '');
+
+        jsPrintSetup.print();
         var res = confirm(document.getElementById("printMessage").value);
         if(res)
-            history.go(0);
+            history.go(0);      
     }
 </script>
 
