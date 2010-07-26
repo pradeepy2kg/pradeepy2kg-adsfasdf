@@ -274,4 +274,39 @@ private String convertDateToString(Date date) {
 
  }
     */
+
+
+    public void testStillBirthDeclarationInit() throws Exception {
+        login("duminda", "duminda");
+        BirthDeclaration bdOld = new BirthDeclaration();
+        ChildInfo ciOld = new ChildInfo();
+        ciOld.setChildFullNameEnglish("old name");
+        bdOld.setChild(ciOld);
+        request.setAttribute(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdOld);
+        initAndExecute("/births/eprStillBirthRegistrationInit.do");
+        BirthDeclaration bdNew = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertFalse("Not a live birth: ",bdNew.getRegister().isLiveBirth());
+        assertNotSame(bdOld.getChild().getChildFullNameEnglish(), bdNew.getChild().getChildFullNameEnglish());
+
+        // Still birth page one
+        request.setParameter("register.bdfSerialNo", "123");
+        request.setParameter("register.dateOfRegistration", "2010-07-23");
+        request.setParameter("child.dateOfBirth", "2010-07-20");
+        request.setParameter("birthDistrictId","1");
+        request.setParameter("dsDivisionId", "2");
+        request.setParameter("birthDivisionId", "1");
+        request.setParameter("child.placeOfBirth", "Colombo Fort (Medical)");
+        request.setParameter("child.birthAtHospital", "true");
+        request.setParameter("child.childGender", "0");
+        request.setParameter("child.weeksPregnant", "15");
+        request.setParameter("child.childRank", "1");
+        request.setParameter("child.numberOfChildrenBorn", "1");
+        request.setParameter("pageNo", "1");
+        initAndExecute("/births/eprBirthRegistration.do");
+        assertFalse("Not a live birth:", action.isLiveBirth());
+        assertSame("Child ds division id: ", action.getDsDivisionId(), 2);
+
+        // Still birth page two
+        
+    }
 }
