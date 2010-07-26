@@ -334,7 +334,7 @@ private String convertDateToString(Date date) {
         request.setParameter("pageNo", "1");
         initAndExecute("/births/eprBirthRegistration.do");
         assertFalse("Not a live birth:", action.isLiveBirth());
-        assertSame("Child ds division id: ", action.getDsDivisionId(), 2);
+        assertSame("Child ds division id: ", 2, action.getDsDivisionId());
 
         // Still birth page two
         
