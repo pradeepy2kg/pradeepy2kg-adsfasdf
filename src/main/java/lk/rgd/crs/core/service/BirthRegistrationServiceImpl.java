@@ -48,10 +48,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final BCSearchDAO bcSearchDAO;
 
     public BirthRegistrationServiceImpl(
-        BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
-        PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
-        BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO) {
+            BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
+            BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
+            PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
+            BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -69,7 +69,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-        String caseFileNumber, String additionalDocumentsComment) {
+                                                     String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
 
         // ensure name is in upper case
@@ -126,7 +126,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("The user : " + user.getUserId() +
-                " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to approve birth declarations", ErrorCodes.PERMISSION_DENIED);
         }
 
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -141,7 +141,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration ID : " + id +
-                    " must be approved after validating warnings"));
+                        " must be approved after validating warnings"));
             }
         }
 
@@ -185,7 +185,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot modify live birth declaration : " + existing.getIdUKey() +
-                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -214,7 +214,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot modify still birth declaration : " + existing.getIdUKey() +
-                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -241,7 +241,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot delete birth declaration " + existing.getIdUKey() +
-                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -269,7 +269,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot delete still birth declaration " + existing.getIdUKey() +
-                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }
 
@@ -298,14 +298,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
 
         // is the BDF currently existing in a state for approval
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (BirthDeclaration.State.DATA_ENTRY != currentState) {
             handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
-                ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
+                    ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
         }
 
         // validate if the minimum required fields are adequately filled
@@ -324,7 +324,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // SimpleDateFormat is not thread-safe
             synchronized (dfm) {
                 sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
+                        append(user.getUserId()).append("\n");
             }
 
             for (UserWarning w : warnings) {
@@ -368,14 +368,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject still birth declarations",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
 
         // is the BDF currently existing in a state for approval
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (BirthDeclaration.State.DATA_ENTRY != currentState) {
             handleException("Cannot approve still birth declaration : " + bdf.getIdUKey() + " Illegal state : " + currentState,
-                ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
+                    ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
         }
 
         // validate if the minimum required fields are adequately filled
@@ -394,7 +394,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // SimpleDateFormat is not thread-safe
             synchronized (dfm) {
                 sb.append(dfm.format(new Date())).append(" - Approved still birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
+                        append(user.getUserId()).append("\n");
             }
 
             for (UserWarning w : warnings) {
@@ -479,7 +479,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
-                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
+                    ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
         }
 
         // generate PIN number and add record to PRS
@@ -518,7 +518,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
             birthDeclarationDAO.addBirthDeclaration(bdf);
             logger.debug("Changes captured as birth record : {} and the old record : {} archived",
-                bdf.getIdUKey(), existing.getIdUKey());
+                    bdf.getIdUKey(), existing.getIdUKey());
 
         } else if (BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
@@ -527,7 +527,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot capture confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
-                ErrorCodes.INVALID_STATE_FOR_CONFIRMATION_CHANGES);
+                    ErrorCodes.INVALID_STATE_FOR_CONFIRMATION_CHANGES);
         }
     }
 
@@ -540,7 +540,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth confirmation",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
 
         List<UserWarning> warnings = new ArrayList<UserWarning>();
@@ -549,7 +549,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             List<UserWarning> w = approveConfirmationChanges(bdf, false, user);
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration Confirmation with ID : " + id +
-                    " must be approved after validating warnings"));
+                        " must be approved after validating warnings"));
             }
         }
         return warnings;
@@ -625,15 +625,18 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public void markBirthCertificateIDsAsPrinted(long[] printedIDList, User user) {
-
         logger.debug("Request to mark as Birth certificate printed for records : {}", printedIDList);
-
+        logger.info("finished1");
         for (long l : printedIDList) {
             BirthDeclaration bdf = birthDeclarationDAO.getById(l);
+            logger.info("BDF is still or Live : {}", bdf.getRegister().isLiveBirth());
+
             if (isLiveBirth(bdf)) {
                 markLiveBirthCertificateAsPrinted(bdf, user);
+                logger.info("finished2");
             } else {
                 markStillBirthCertificateAsPrinted(bdf, user);
+                logger.info("finished3");
             }
         }
     }
@@ -654,12 +657,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth confirmation",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
 
         final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
         if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState ||
-            BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
+                BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
 
             List<UserWarning> warnings = prepareForConfirmation(bdf, ignoreWarnings, user);
             if (warnings.isEmpty() || ignoreWarnings) {
@@ -676,7 +679,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
-                ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
+                    ErrorCodes.INVALID_STATE_FOR_BDF_CONFIRMATION);
         }
         return null;
     }
@@ -707,7 +710,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // SimpleDateFormat is not thread-safe
             synchronized (dfm) {
                 sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
+                        append(user.getUserId()).append("\n");
             }
 
             for (UserWarning w : warnings) {
@@ -734,7 +737,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (comments == null || comments.trim().length() < 1) {
             handleException("A comment is required to reject a birth declaration",
-                ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
+                    ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
         }
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
@@ -746,13 +749,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // check state of record
         BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState ||
-            BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState ||
-            BirthDeclaration.State.DATA_ENTRY == currentState) {
+                BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState ||
+                BirthDeclaration.State.DATA_ENTRY == currentState) {
 
             // check approve/reject permission
             if (!user.isAuthorized(Permission.APPROVE_BDF)) {
                 handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
-                    ErrorCodes.PERMISSION_DENIED);
+                        ErrorCodes.PERMISSION_DENIED);
             }
             bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_REJECTED);
             birthDeclarationDAO.updateBirthDeclaration(bdf);
@@ -760,7 +763,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         } else {
             handleException("Cannot reject birth declaration / confirmation : " + bdf.getIdUKey() +
-                " Illegal state : " + currentState, ErrorCodes.INVALID_STATE_FOR_BDF_REJECTION);
+                    " Illegal state : " + currentState, ErrorCodes.INVALID_STATE_FOR_BDF_REJECTION);
         }
     }
 
@@ -771,19 +774,19 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(user.getRole().getName())
-                ||
-                (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                    &&
-                    user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                &&
+                (Role.ROLE_RG.equals(user.getRole().getName())
+                        ||
+                        (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
+                                &&
+                                user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                        )
                 )
-            )
         )) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+                    bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                    bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 
@@ -822,41 +825,41 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmations pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(
-            bdDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
+                bdDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
     }
 
     /**
      * @inheritDoc
      */
     public List<BirthDeclaration> getConfirmationPrintList(
-        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
+            BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending confirmation printing by BDDivision ID : " +
-                bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
-            printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
+                printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
     }
 
     /**
      * @inheritDoc
      */
     public List<BirthDeclaration> getBirthCertificatePrintList(
-        BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
+            BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth certificate list print by BDDivision ID : " +
-                bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    bdDivision.getBdDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows,
-            printed ? BirthDeclaration.State.ARCHIVED_CERT_PRINTED : BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
+                printed ? BirthDeclaration.State.ARCHIVED_CERT_PRINTED : BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
     }
 
     /**
@@ -865,7 +868,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getPaginatedListForState(bdDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
@@ -875,32 +878,32 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
-                " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
-                " with number of rows per page : " + noOfRows);
+                    " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
+                    " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndRegisterDateRange(
-            bdDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
+                bdDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
     }
 
     /**
      * @inheritDoc
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
-                bdDivision.getBdDivisionUKey() + " and date range : " + startDate + " to " + endDate +
-                " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    bdDivision.getBdDivisionUKey() + " and date range : " + startDate + " to " + endDate +
+                    " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndConfirmationReceiveDateRange(
-            bdDivision, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, startDate, endDate, pageNo, noOfRows);
+                bdDivision, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, startDate, endDate, pageNo, noOfRows);
     }
 
     /**
@@ -932,26 +935,26 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         if (parent != null) {
             if (parent.getFatherCountry() != null) {
                 parent.setFatherCountryPrint(
-                    countryDAO.getNameByPK(parent.getFatherCountry().getCountryId(), prefLanguage));
+                        countryDAO.getNameByPK(parent.getFatherCountry().getCountryId(), prefLanguage));
             }
             if (parent.getMotherCountry() != null) {
                 parent.setMotherCountryPrint(
-                    countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), prefLanguage));
+                        countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), prefLanguage));
             }
             if (parent.getFatherRace() != null) {
                 parent.setFatherRacePrint(
-                    raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), prefLanguage));
+                        raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), prefLanguage));
             }
             if (parent.getMotherRace() != null) {
                 parent.setMotherRacePrint(
-                    raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), prefLanguage));
+                        raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), prefLanguage));
             }
 
             if (parent.getMotherDSDivision() != null) {
                 parent.setMotherDistrictPrint(
-                    districtDAO.getNameByPK(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), prefLanguage));
+                        districtDAO.getNameByPK(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), prefLanguage));
                 parent.setMotherDsDivisionPrint(
-                    dsDivisionDAO.getNameByPK(parent.getMotherDSDivision().getDsDivisionUKey(), prefLanguage));
+                        dsDivisionDAO.getNameByPK(parent.getMotherDSDivision().getDsDivisionUKey(), prefLanguage));
             }
         }
 
@@ -988,7 +991,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
             child.setInitialsInEnglish(sb.toString());
             logger.debug("Derived child English initials as : {} and last name as : {}",
-                sb.toString(), names[names.length - 1]);
+                    sb.toString(), names[names.length - 1]);
         }
 
         if (!isEmptyString(childInfo.getChildFullNameOfficialLang())) {
@@ -1003,7 +1006,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             }
             child.setInitialsInOfficialLanguage(sb.toString());
             logger.debug("Derived child Official language initials as : {} and last name as : {}",
-                sb.toString(), names[names.length - 1]);
+                    sb.toString(), names[names.length - 1]);
         }
 
         child.setDateOfBirth(childInfo.getDateOfBirth());
@@ -1156,11 +1159,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         boolean valid = (liveBirth ^ isLiveBirth(bdf)) ? false : true;
         if (!valid) {
             handleException("Live birth : " + bdf.getRegister().isLiveBirth() + ", BDF : " + bdf.getIdUKey() +
-                " in invalid context", ErrorCodes.ILLEGAL_STATE);
+                    " in invalid context", ErrorCodes.ILLEGAL_STATE);
         }
         if (logger.isDebugEnabled()) {
             logger.debug("bith type checking for BDF : " + bdf.getIdUKey() + " passed for live birth : " +
-                bdf.getRegister().isLiveBirth());
+                    bdf.getRegister().isLiveBirth());
         }
     }
 
@@ -1176,6 +1179,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         bcSearchDAO.addBirthCertificateSearch(bcs);
         logger.debug("Added a new birth certificate search entry. SearchUKey : {} by UserID", bcs.getSearchUKey(),
-            user.getUserId());
+                user.getUserId());
     }
 }
