@@ -137,14 +137,12 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getUnconfirmedByRegistrationDate(Date date);
 
     /**
-     * Returns related BirthDeclarations which are in ARCHIVED_CORRECTED
-     * for given birthDivision and SerialNo of any BirthDeclaration which
-     * is in CONFIRMATION_CHANGES_CAPTURED state
+     * Returns historical records for the given BD Division and Serial number
      *
      * @param birthDivision the birth division
      * @param serialNo      the BirthDeclaration serial number
-     * @return the birth declaration results
+     * @return the related historical records - if any
      */
-    public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision birthDivision, long serialNo);
+    public List<BirthDeclaration> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo);
 }
 

@@ -327,14 +327,11 @@ public interface BirthRegistrationService {
     public void addBirthCertificateSearch(BirthCertificateSearch bcs, User user);
 
     /**
-     * Returns related BirthDeclarations which are in ARCHIVED_CORRECTED
-     * for given birthDivision and SerialNo of any BirthDeclaration which
-     * is in CONFIRMATION_CHANGES_CAPTURED state
+     * Returns historical records for the given BD Division and Serial number
      *
      * @param bdDivision the birth division
-     * @param serialNo      BirthDeclaration serial number
-     * @param user          the user initiating the action
-     * @return the birth declaration results
+     * @param serialNo      the BirthDeclaration serial number
+     * @return the related historical records - if any
      */
     public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user);
 }

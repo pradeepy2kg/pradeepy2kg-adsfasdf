@@ -19,12 +19,15 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthDeclaration(BirthDeclaration bdf) {
         setBlankStringsAsNull(bdf);
+        bdf.setLastUpdatedTime(new Date());
+        bdf.setActiveRecord(true);
         em.persist(bdf);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateBirthDeclaration(BirthDeclaration bdf) {
         setBlankStringsAsNull(bdf);
+        bdf.setLastUpdatedTime(new Date());
         em.merge(bdf);
     }
 
@@ -137,8 +140,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision birthDivision, long serialNo) {
-        Query q = em.createNamedQuery("get.archived.corrected.by.bddivision.and.serialNo");
+    public List<BirthDeclaration> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo) {
+        Query q = em.createNamedQuery("get.historical.records.by.bddivision.and.serialNo");
         q.setParameter("birthDivision",birthDivision);
         q.setParameter("bdfSerialNo",serialNo);
         return q.getResultList();
