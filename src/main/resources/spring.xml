@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+       default-init-method="init" default-destroy-method="destroy">
+
+    <!--Performs injection of an EntityManager into JPA code-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--A special bean that initializes the in-memory test database with populate_database.sql-->
+    <bean id="dbInit" class="lk.rgd.crs.core.DatabaseInitializer">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="createCleanDB" value="false"/>
+    </bean>
+
+    <!-- Schedule automated processing tasks -->
+    <bean id="scheduledBirthJobs" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="manageBirthService"/>
+        <property name="targetMethod" value="triggerScheduledJobs"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="cronTriggerBirth" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="scheduledBirthJobs"/>
+        <property name="cronExpression" value="0 20 * ? * MON-FRI"/>
+    </bean>
+
+    <!-- Start the Triggers - use Cron trigger for production use with an appropriate schedule -->
+    <bean id="scheduleFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTriggerBirth"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--DAO Beans - These allow access to the lower levels of the application data-->
+    <bean id="appParametersDAOImpl" class="lk.rgd.common.core.dao.AppParametersDAOImpl"/>
+    <bean id="districtDAOImpl" class="lk.rgd.common.core.dao.DistrictDAOImpl"/>
+    <bean id="dsDivisionDAOImpl" class="lk.rgd.common.core.dao.DSDivisionDAOImpl"/>
+    <bean id="gnDivisionDAOImpl" class="lk.rgd.common.core.dao.GNDivisionDAOImpl"/>
+    <bean id="countryDAOImpl" class="lk.rgd.common.core.dao.CountryDAOImpl"/>
+    <bean id="raceDAOImpl" class="lk.rgd.common.core.dao.RaceDAOImpl"/>
+    <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
+    <bean id="userDAOImpl" class="lk.rgd.common.core.dao.UserDAOImpl"/>
+    <bean id="roleDAOImpl" class="lk.rgd.common.core.dao.RoleDAOImpl"/>
+    <bean id="birthDeclarationDAOImpl" class="lk.rgd.crs.core.dao.BirthDeclarationDAOImpl"/>
+    <bean id="personDAOImpl" class="lk.rgd.prs.core.dao.PersonDAOImpl"/>
+    <bean id="pinNumberDAOImpl" class="lk.rgd.prs.core.dao.PINNumberDAOImpl"/>
+    <bean id="bcSearchDAOImpl" class="lk.rgd.crs.core.dao.BCSearchDAOImpl"/>
+
+    <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
+    the web interface as well as a Web Services interface -->
+    <bean id="userManagerService" class="lk.rgd.common.core.service.UserManagerImpl">
+        <constructor-arg ref="userDAOImpl"/>
+        <constructor-arg ref="roleDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+    </bean>
+
+    <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
+    the web interface as well as a Web Services interface -->
+    <bean id="manageBirthService" class="lk.rgd.crs.core.service.BirthRegistrationServiceImpl">
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="popRegService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="userManagerService"/>
+        <constructor-arg ref="birthRecordsIndexer"/>
+        <constructor-arg ref="bcSearchDAOImpl"/>
+    </bean>
+
+    <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
+    the web interface as well as a Web Services interface -->
+    <bean id="popRegService" class="lk.rgd.prs.core.service.PopulationRegistryImpl">
+        <constructor-arg ref="personDAOImpl"/>
+        <constructor-arg ref="pinGeneratorService"/>
+    </bean>
+    <bean id="pinGeneratorService" class="lk.rgd.prs.core.service.PINGeneratorImpl">
+        <constructor-arg ref="pinNumberDAOImpl"/>
+    </bean>
+
+    <!--Solr index manager-->
+    <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
+        <constructor-arg value="http://localhost:8983/solr/births/"/>
+    </bean>
+    <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
+        <constructor-arg ref="solrIndexManager"/>
+        <constructor-arg ref="birthDeclarationDAOImpl"/>
+    </bean>
+
+    <!--Web module related classes-->
+    <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterAction">
+        <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+    </bean>
+
+    <bean id="ajaxSupport" scope="prototype" class="lk.rgd.crs.web.action.AjaxAction">
+        <constructor-arg ref="popRegService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+    </bean>
+
+    <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+    </bean>
+
+    <bean id="birthApprovalAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction">
+        <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="manageBirthService"/>
+    </bean>
+
+    <bean id="loginAction" class="lk.rgd.crs.web.action.LoginAction">
+        <constructor-arg ref="userManagerService"/>
+    </bean>
+
+    <bean id="searchAction" class="lk.rgd.crs.web.action.births.SearchAction">
+        <constructor-arg ref="manageBirthService"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="bcSearchDAOImpl"/>
+    </bean>
+
+    <bean id="userPreferenceAction" class="lk.rgd.crs.web.action.UserPreferencesAction">
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="userManagerService"/>
+    </bean>
+
+</beans>
