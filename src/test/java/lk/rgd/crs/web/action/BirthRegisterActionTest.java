@@ -164,18 +164,18 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         //check whether the birth declaration session bean is updated with the previous request values
         assertEquals("failed to update birth declaration session with father NIC/PIN", "530232026V", bd.getParent().getFatherNICorPIN());
-        assertEquals("failed to update birth declaration session with father country",1, bd.getParent().getFatherCountry().getCountryId());
-        assertEquals("failed to update birth declaration session with father passport number","4832", bd.getParent().getFatherPassportNo());
+        assertEquals("failed to update birth declaration session with father country", 1, bd.getParent().getFatherCountry().getCountryId());
+        assertEquals("failed to update birth declaration session with father passport number", "4832", bd.getParent().getFatherPassportNo());
         assertEquals("failed to update birth declaration session with father full name", "ලෝගේස්වරන් යුවන් ශන්කර්", bd.getParent().getFatherFullName());
         //assertSame("failed to update birth declaration session with father DOB","1964-07-02", bd.getParent().getFatherDOB());
-        assertEquals("failed to update birth declaration session with father place of birth","Kandy", bd.getParent().getFatherPlaceOfBirth());
+        assertEquals("failed to update birth declaration session with father place of birth", "Kandy", bd.getParent().getFatherPlaceOfBirth());
         assertEquals("failed to update birth declaration session with father Race", 1, bd.getParent().getFatherRace().getRaceId());
 
-        assertEquals("failed to update birth declaration session with mother NIC/PIN","685031035V",bd.getParent().getMotherNICorPIN());
-        assertEquals("failed to update birth declaration session with mother country", 2,bd.getParent().getMotherCountry().getCountryId());
-        assertEquals("failed to update birth declaration session with mother passport number", "5999",bd.getParent().getMotherPassportNo());
-       /* assertEquals("failed to update birth declaration session with mother NIC/PIN", bd.getInformant(), action.getInformant());
-        assertEquals("failed to update birth declaration session with mother NIC/PIN", bd.getInformant(), action.getInformant());*/
+        assertEquals("failed to update birth declaration session with mother NIC/PIN", "685031035V", bd.getParent().getMotherNICorPIN());
+        assertEquals("failed to update birth declaration session with mother country", 2, bd.getParent().getMotherCountry().getCountryId());
+        assertEquals("failed to update birth declaration session with mother passport number", "5999", bd.getParent().getMotherPassportNo());
+        /* assertEquals("failed to update birth declaration session with mother NIC/PIN", bd.getInformant(), action.getInformant());
+assertEquals("failed to update birth declaration session with mother NIC/PIN", bd.getInformant(), action.getInformant());*/
 
 
     }
@@ -201,11 +201,11 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
 
         assertEquals("Request birthDistrictId is set to existing district", action.getRegister().getBirthDistrict().getDistrictUKey(),
-            action.getBirthDistrictId());
+                action.getBirthDistrictId());
         assertEquals("Request birthDivisionId is set to existing birthDivision", action.getRegister().getBirthDivision().getBdDivisionUKey(),
-            action.getBirthDivisionId());
+                action.getBirthDivisionId());
         assertEquals("Request dsDivisionId is set to existing dsDivision", action.getRegister().getDsDivision().getDsDivisionUKey(),
-            action.getDsDivisionId());
+                action.getDsDivisionId());
         assertEquals("Request father Country", action.getFatherCountry(), bd.getParent().getFatherCountry().getCountryId());
         assertEquals("Request father Race", action.getFatherRace(), bd.getParent().getFatherRace().getRaceId());
         assertEquals("Request Mother Country", action.getMotherCountry(), bd.getParent().getMotherCountry().getCountryId());
@@ -373,25 +373,19 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
     public void testStillBirthDeclarationInit() throws Exception {
         Map session = login("duminda", "duminda");
 
-        BirthDeclaration bdOld = new BirthDeclaration();
-        ChildInfo ciOld = new ChildInfo();
-        ciOld.setChildFullNameEnglish("old name");
-        bdOld.setChild(ciOld);
-        request.setAttribute(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdOld);
-        initAndExecute("/births/eprStillBirthRegistrationInit.do", session);
+        String result = initAndExecute("/births/eprStillBirthRegistrationInit.do", session);
         session = action.getSession();
-
-        BirthDeclaration bdNew = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth: ", bdNew.getRegister().isLiveBirth());
-        assertNotSame(bdOld.getChild().getChildFullNameEnglish(), bdNew.getChild().getChildFullNameEnglish());
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertFalse("Not a live birth: ", bd.getRegister().isLiveBirth());
+        //assertEquals("form0", result);
 
         // Still birth page one
         request.setParameter("register.bdfSerialNo", "123");
-        request.setParameter("register.dateOfRegistration", "2010-07-23");
-        request.setParameter("child.dateOfBirth", "2010-07-20");
+        request.setParameter("register.dateOfRegistration", "2010-07-14T00:00:00+05:30");
+        request.setParameter("child.dateOfBirth", "2010-07-14T00:00:00+05:30");
         request.setParameter("birthDistrictId", "1");
         request.setParameter("dsDivisionId", "2");
-        request.setParameter("birthDivisionId", "1");
+        request.setParameter("birthDivisionId", "6");
         request.setParameter("child.placeOfBirth", "Colombo Fort (Medical)");
         request.setParameter("child.birthAtHospital", "true");
         request.setParameter("child.childGender", "0");
@@ -399,11 +393,77 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("child.childRank", "1");
         request.setParameter("child.numberOfChildrenBorn", "1");
         request.setParameter("pageNo", "1");
-        initAndExecute("/births/eprBirthRegistration.do", session);
+        result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertFalse("Not a live birth:", action.isLiveBirth());
-        assertSame("Child ds division id: ", 2, action.getDsDivisionId());
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Child Birth Division", 6, bd.getRegister().getBirthDivision().getBdDivisionUKey());
+        assertEquals("Date of registration", "Wed Jul 14 00:00:00 IST 2010", bd.getChild().getDateOfBirth().toString());
+        assertEquals("No action errors", 0, action.getActionErrors().size());
+        //assertEquals("form1", result);
 
-        // todo Still birth page two
+
+        // Still birth page two
+        request.setParameter("parent.fatherNICorPIN", "11111111v");
+        request.setParameter("parent.fatherFullName", "father full name");
+        request.setParameter("parent.fatherDOB", "1965-07-14T00:00:00+05:30");
+        request.setParameter("parent.fatherPlaceOfBirth", "father birth place");
+        request.setParameter("fatherRace", "1");
+        request.setParameter("parent.motherNICorPIN", "22222222v");
+        request.setParameter("parent.motherFullName", "mother full name");
+        request.setParameter("parent.motherDOB", "1970-07-14T00:00:00+05:30");
+        request.setParameter("parent.motherAgeAtBirth", "40");
+        request.setParameter("parent.motherAddress", "mother address");
+        request.setParameter("motherDistrictId", "1");
+        request.setParameter("motherDSDivisionId", "1");
+        request.setParameter("motherRace", "1");
+        request.setParameter("motherPlaceOfBirth", "mother birth place");
+        request.setParameter("parent.motherAdmissionNo", "222");
+        request.setParameter("parent.motherPhoneNo", "0789456123");
+        request.setParameter("pageNo", "2");
+        result = initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Father NIC", "11111111v", bd.getParent().getFatherNICorPIN());
+        assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
+        assertEquals("No action errors", 0, action.getActionErrors().size());
+
+        // Still birth page three.
+        request.setParameter("marriage.parentsMarried", "1");
+        request.setParameter("informant.informantType", "GUARDIAN");
+        request.setParameter("informant.informantNICorPIN", "33333333v");
+        request.setParameter("informant.informantName", "informant name");
+        request.setParameter("informant.informantAddress", "informant address");
+        request.setParameter("informant.informantPhoneNo", "0123456789");
+        request.setParameter("informant.informantEmail", "informant@email.mail");
+        request.setParameter("informant.informantSignDate", "2010-07-14T00:00:00+05:30");
+        request.setParameter("pageNo", "3");
+        result = initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Father NIC", "11111111v", bd.getParent().getFatherNICorPIN());
+        assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
+        assertEquals("Informant NIC: ", "33333333v", bd.getInformant().getInformantNICorPIN());
+        assertEquals("No action errors", 0, action.getActionErrors().size());
+
+        // Still birth page four.
+        request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "44444444v");
+        request.setParameter("notifyingAuthority.notifyingAuthorityName", "notifier name");
+        request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "notifier address");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-14T00:00:00+05:30");
+        request.setParameter("pageNo", "4");
+        result = initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Father NIC", "11111111v", bd.getParent().getFatherNICorPIN());
+        assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
+        assertEquals("Informant NIC: ", "33333333v", bd.getInformant().getInformantNICorPIN());
+        assertEquals("Notifier NIC: ", "44444444v", bd.getNotifyingAuthority().getNotifyingAuthorityPIN());
+        assertEquals("Notifier sign date: ", "Wed Jul 14 00:00:00 IST 2010", bd.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString());
+        assertEquals("No action errors", 0, action.getActionErrors().size());
+
     }
 }
