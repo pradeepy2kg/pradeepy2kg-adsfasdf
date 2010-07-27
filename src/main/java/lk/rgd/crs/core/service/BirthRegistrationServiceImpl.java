@@ -1032,8 +1032,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // check mother and father
         ParentInfo parent = bdf.getParent();
         if (bdf.getParent() != null) {
-            processMotherToPRS(user, child, parent);
-            processFatherToPRS(user, child, parent);
+            processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
+            processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
         }
 
         // generate a PIN number
@@ -1047,7 +1047,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         return warnings;
     }
 
-    private void processMotherToPRS(User user, Person person, ParentInfo parent) {
+    private void processMotherToPRS(User user, Person person, ParentInfo parent, String prefLanguage) {
 
         String motherNICorPIN = parent.getMotherNICorPIN();
         logger.debug("Processing details of the mother for NIC/PIN : {}", motherNICorPIN);
@@ -1080,6 +1080,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
                 mother.setDateOfBirth(parent.getMotherDOB());
                 mother.setGender(AppConstants.Gender.FEMALE.ordinal());
+                mother.setPreferredLanguage(prefLanguage);
                 if (parent.getMotherAddress() != null) {
                     Address mothersAddress = new Address();
                     mothersAddress.setLine1(parent.getMotherAddress());
@@ -1096,7 +1097,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
     }
 
-    private void processFatherToPRS(User user, Person person, ParentInfo parent) {
+    private void processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage) {
 
         String fatherNICorPIN = parent.getFatherNICorPIN();
         if (fatherNICorPIN != null) {
@@ -1127,6 +1128,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 father.setFullNameInOfficialLanguage(parent.getFatherFullName());
                 father.setDateOfBirth(parent.getFatherDOB());
                 father.setGender(AppConstants.Gender.MALE.ordinal());
+                father.setPreferredLanguage(prefLanguage);
                 father.setStatus(Person.Status.UNVERIFIED);
                 father.setLifeStatus(Person.LifeStatus.ALIVE);
                 popreg.addPerson(father, user);

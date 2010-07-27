@@ -77,7 +77,7 @@
             </tr>
         </table>
     </div>
-</div>
+</div>                                                          
 
 <%-- <s:url id="printBirthCertificate" action=".do">
             <s:param name="bdId" value="#request.bdId"/>

@@ -13,17 +13,12 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/popreg/</td>
+	<td>/popreg/eprLogout.do</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>eprLogin_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='xmain-menu']/ul/li[3]/a/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -501,26 +496,7 @@
 	<td>birthDivisionId</td>
 	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-confirmation-print-form_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprBirthConfirmationBulkPrint_index</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//input[@id='eprBirthConfirmationBulkPrint_index' and @name='index' and @value='166']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprBirthConfirmationBulkPrint_0</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>link=උපත් තහවුරු කිරීම</td>

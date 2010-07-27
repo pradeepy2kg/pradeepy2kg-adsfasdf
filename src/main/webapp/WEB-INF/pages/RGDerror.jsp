@@ -5,10 +5,13 @@
     <s:actionerror/>
     <hr>
     <h3>RGD Error Message</h3>
-    <s:property value="%{getText('RGDerror.'+ exception.getErrorCode())}" />
-      <p></p>
-      <hr/>
+    <s:property value="%{getText('RGDerror.'+ exception.getErrorCode())}"/>
+    <p></p>
+    <hr/>
     <h3>Technical Details</h3>
-      <p>
-    <s:property  value="%{exceptionStack}"/>
-</div>
+
+    <p>
+
+    <div class="technical-error-msg">
+        <s:property value="%{exceptionStack}"/>
+    </div>
