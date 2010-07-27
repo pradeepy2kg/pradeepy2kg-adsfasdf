@@ -25,7 +25,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateBirthDeclaration(BirthDeclaration bdf) {
+    public void updateBirthDeclaration(BirthDeclaration bdf) { 
         setBlankStringsAsNull(bdf);
         bdf.setLastUpdatedTime(new Date());
         em.merge(bdf);
