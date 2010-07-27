@@ -34,7 +34,7 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>201007271</td>
+	<td>201007272</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -439,6 +439,31 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-confirmation-form3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-certificate-print-form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthCertificateBulkPrint_index</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthCertificateBulkPrint_0</td>
 	<td></td>
 </tr>
 
