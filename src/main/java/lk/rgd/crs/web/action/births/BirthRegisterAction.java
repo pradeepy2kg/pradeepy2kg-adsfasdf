@@ -144,7 +144,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
-            case 1:                 
+            case 1:
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
@@ -152,7 +152,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setRegister(register);
                 bdf.getRegister().setLiveBirth(liveBirth);
                 break;
-            case 2:   
+            case 2:
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setParent(parent);
                 break;
@@ -164,7 +164,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 break;
             case 4:
-                liveBirth = bdf.getRegister().isLiveBirth(); 
+                liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
@@ -182,7 +182,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
                     if (liveBirth) {
-                        service.editLiveBirthDeclaration(bdf, true, user); 
+                        service.editLiveBirthDeclaration(bdf, true, user);
                     } else {
                         service.editStillBirthDeclaration(bdf, true, user);
                     }
@@ -303,7 +303,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
@@ -419,10 +419,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("initializing non editable mode for bdId {}", bdId);
                 try {
                     bdf = service.getById(bdId, user);
-                    if (bdf.getRegister().getStatus().ordinal() == 5) {
-                        logger.debug("serching rivisions for bdId {} ", bdId);
-                        archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
-                    }
+                    archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
                     session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
                     if (!bdf.getRegister().isLiveBirth()) {
                         //still birth related
@@ -460,7 +457,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -507,7 +504,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             liveBirth = bdf.getRegister().isLiveBirth();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 if (liveBirth) {
