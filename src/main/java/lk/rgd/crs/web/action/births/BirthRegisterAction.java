@@ -303,7 +303,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
@@ -392,12 +392,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("initializing non editable mode for bdId {}", bdId);
                 try {
                     bdf = service.getById(bdId, user);
-                    archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
-                    session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-                    if (!bdf.getRegister().isLiveBirth()) {
-                        //still birth related
-                        return "form5";
+                    liveBirth = bdf.getRegister().isLiveBirth();
+                    if (bdf.getRegister().getStatus().ordinal() == 5) {
+                        logger.debug("serching rivisions for bdId {} ", bdId);
+                        archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
                     }
+                    session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
                 } catch (Exception e) {
                     handleErrors(e);
                     addActionError(getText("p1.invalid.Entry"));
@@ -430,7 +430,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -477,7 +477,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             liveBirth = bdf.getRegister().isLiveBirth();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 if (liveBirth) {

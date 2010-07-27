@@ -135,7 +135,6 @@
             <result type="tiles" name="form1">epr.non_editable_birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.non_editable_birthRegistration_form3</result>
             <result type="tiles" name="form3">epr.non_editable_birthRegistration_form4</result>
-            <result type="tiles" name="form5">epr.non_editable_stillBirthRegistration_form1</result>
             <result type="tiles" name="success"></result>
             <result type="tiles" name="error">epr.error</result>
         </action>
