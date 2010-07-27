@@ -1,7 +1,7 @@
 package lk.rgd.crs.web.action;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionProxy;
+import com.opensymphony.xwork2.ActionContext;
 import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.WebConstants;
@@ -18,15 +18,14 @@ public class LoginActionTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(LoginActionTest.class);
     private ActionProxy proxy;
     private LoginAction action;
-    private Map session = new HashMap<String, Object>();
 
-    private String initAndExucute(String mapping, Map session) throws Exception {
-        proxy = getActionProxy(mapping);
+    private String login() throws Exception {
+        proxy = getActionProxy("/eprLogin.do");
         action = (LoginAction) proxy.getAction();
-        ActionContext.getContext().setSession(session);
+        ActionContext.getContext().setSession(new HashMap<String, Object>());
         String result = proxy.execute();
 
-        logger.debug("result for mapping {} is {}", mapping, result);
+        logger.debug("result for mapping eprLogin.do is {}", result);
         return result;
     }
 
@@ -48,7 +47,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
 
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
         // todo uncomment this line after fixing testing framework bug -always return 'ERROR' forward.
         //assertEquals("success not returned.", Action.SUCCESS, result);
 
@@ -77,8 +76,9 @@ public class LoginActionTest extends CustomStrutsTestCase {
     public void testADRLogin() throws Exception {
         request.setParameter("userName", "adr-colombo-colombo");
         request.setParameter("password", "password");
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
 
+        Map session = action.getSession();
         Map menu = (Map) session.get(WebConstants.SESSION_USER_MENUE_LIST);
         assertTrue(menu.containsKey("0births"));
         assertTrue(((Map) menu.get("0births")).containsKey(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL));  // check birth confirmation approval link is there
@@ -88,8 +88,9 @@ public class LoginActionTest extends CustomStrutsTestCase {
     public void testDEOLogin() throws Exception {
         request.setParameter("userName", "deo-gampaha-negambo");
         request.setParameter("password", "password");
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
 
+        Map session = action.getSession();
         Map menu = (Map) session.get(WebConstants.SESSION_USER_MENUE_LIST);
         assertTrue(menu.containsKey("0births"));
         assertTrue(((Map) menu.get("0births")).containsKey(Permission.PAGE_BIRTH_REGISTRATON));             // check birth registration link is there
@@ -100,8 +101,9 @@ public class LoginActionTest extends CustomStrutsTestCase {
     public void testAdminLogin() throws Exception {
         request.setParameter("userName", "admin");
         request.setParameter("password", "password");
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
 
+        Map session = action.getSession();
         Map menu = (Map) session.get(WebConstants.SESSION_USER_MENUE_LIST);
         assertTrue(menu.containsKey("5management"));
         assertTrue(((Map) menu.get("5management")).containsKey(Permission.PAGE_CREATE_USER));        // check admin menu is there
@@ -112,12 +114,16 @@ public class LoginActionTest extends CustomStrutsTestCase {
     public void testLogout() throws Exception {
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
-        String result = initAndExucute("/eprLogin.do", session);
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        request.setAttribute(WebConstants.SESSION_USER_BEAN, user);
-        result = initAndExucute("/eprLogout.do", session);
-        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        assertNull(user);
+        String result = login();
+        Map session = action.getSession();
+
+        ActionProxy logoutProxy = getActionProxy("/eprLogout.do");
+        LoginAction action = (LoginAction) proxy.getAction();
+        ActionContext.getContext().setSession(session);
+        result = logoutProxy.execute();
+        session = action.getSession();
+
+        assertEquals("Session User is Null : ", null, session.get(WebConstants.SESSION_USER_BEAN));
         assertEquals("No Action erros.", 0, action.getActionErrors().size());
     }
 
@@ -125,7 +131,9 @@ public class LoginActionTest extends CustomStrutsTestCase {
         // with incorrect password
         request.setParameter("userName", "rg");
         request.setParameter("password", "passward");  // 'a' instead of 'o'
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
+        Map session = action.getSession();
+
         assertEquals("One Action error.", 1, action.getActionErrors().size());
         assertEquals("Menu list should be empty", null, session.get(WebConstants.SESSION_USER_MENUE_LIST));
     }
@@ -134,7 +142,9 @@ public class LoginActionTest extends CustomStrutsTestCase {
         // with incorrect user name
         request.setParameter("userName", " rg");       // space before username.
         request.setParameter("password", "password");
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
+        Map session = action.getSession();
+
         assertEquals("One Action error.", 1, action.getActionErrors().size());
         assertEquals("Menu list should be empty", null, session.get(WebConstants.SESSION_USER_MENUE_LIST));
     }
@@ -144,7 +154,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         request.setParameter("userName", "firstuser");
         request.setParameter("password", "password");
 
-        String result = initAndExucute("/eprLogin.do", session);
+        String result = login();
         assertEquals("expired", result);
     }
 
