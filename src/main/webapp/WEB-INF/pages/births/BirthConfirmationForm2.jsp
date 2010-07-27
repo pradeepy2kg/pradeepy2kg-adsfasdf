@@ -3,6 +3,38 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+
+<script>
+$(function() {
+    $('img#childName').bind('click', function(evt) {
+        var id=$("textarea#childFullNameOfficialLang").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans",soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+    });
+
+    function processResponse(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
+})
+</script>
+
 <div id="birth-confirmation-form-outer">
     <s:form action="eprBirthConfirmation" name="birthConfirmation_form2" id="birth-confirmation-form-2" method="POST">
         <table class="table_con_page_02" cellspacing="0">
@@ -26,7 +58,7 @@
             <tr>
                 <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
-                <td><s:textarea name="child.childFullNameOfficialLang"></s:textarea></td>
+                <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang"/></td>
             </tr>
             <tr>
                 <td>12</td>
@@ -37,7 +69,10 @@
             <tr>
                 <td></td>
                 <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
-                <td><s:textarea name="child.childFullNameEnglish" cssStyle="text-transform: uppercase;"></s:textarea></td>
+                <td>
+                    <s:textarea id="childFullNameEnglish" name="child.childFullNameEnglish" cssStyle="text-transform: uppercase;"/>
+                    <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
+                </td>
             </tr>
             <tr>
                 <td>13</td>
