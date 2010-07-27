@@ -161,13 +161,13 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Action erros for 3 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-
+        //convertStringDateToDate("1964-June-02");
         //check whether the birth declaration session bean is updated with the previous request values
         assertEquals("failed to update birth declaration session with father NIC/PIN", "530232026V", bd.getParent().getFatherNICorPIN());
         assertEquals("failed to update birth declaration session with father country", 1, bd.getParent().getFatherCountry().getCountryId());
         assertEquals("failed to update birth declaration session with father passport number", "4832", bd.getParent().getFatherPassportNo());
         assertEquals("failed to update birth declaration session with father full name", "ලෝගේස්වරන් යුවන් ශන්කර්", bd.getParent().getFatherFullName());
-        //assertSame("failed to update birth declaration session with father DOB","1964-07-02", bd.getParent().getFatherDOB());
+        assertEquals("failed to update birth declaration session with father DOB", convertStringDateToDate("1964-july-02"), bd.getParent().getFatherDOB());
         assertEquals("failed to update birth declaration session with father place of birth", "Kandy", bd.getParent().getFatherPlaceOfBirth());
         assertEquals("failed to update birth declaration session with father Race", 1, bd.getParent().getFatherRace().getRaceId());
 
@@ -175,7 +175,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with mother country", 2, bd.getParent().getMotherCountry().getCountryId());
         assertEquals("failed to update birth declaration session with mother passport number", "5999", bd.getParent().getMotherPassportNo());
         assertEquals("failed to update birth declaration session with mother full Name", "සංගුණි ෙද්ව ෙග්", bd.getParent().getMotherFullName());
-        //assertEquals("failed to update birth declaration session with mother mother DOB", "1968-03-01", bd.getParent().getMotherDOB());
+        assertEquals("failed to update birth declaration session with mother mother DOB", convertStringDateToDate("1968-march-01"), bd.getParent().getMotherDOB());
         assertEquals("failed to update birth declaration session with mother age at birth", 43, bd.getParent().getMotherAgeAtBirth().intValue());
         assertEquals("failed to update birth declaration session with mother address", "65 C මල්වත්ත පාර, කොට්ටාව", bd.getParent().getMotherAddress());
         //assertEquals("failed to update birth declaration session with mother district id",1, bd.getParent().getMotherDSDivision().getDistrict().getDistrictUKey());
@@ -183,7 +183,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with mother place of birth", "kandana", bd.getParent().getMotherPlaceOfBirth());
         assertEquals("failed to update birth declaration session with mother admission number", "125", bd.getParent().getMotherAdmissionNo());
         assertEquals("failed to update birth declaration session with mother email", "info@gmail.com", bd.getParent().getMotherEmail());
-        //assertEquals("failed to update birth declaration session with mother admission date",2010-06-28, bd.getParent().getMotherAdmissionDate());
+        assertEquals("failed to update birth declaration session with mother admission date", convertStringDateToDate("2010-june-28"), bd.getParent().getMotherAdmissionDate());
         assertEquals("failed to update birth declaration session with mother phone number", "0112345678", bd.getParent().getMotherPhoneNo());
 
         assertNotNull("marriage Bean population faild", action.getMarriage());
@@ -212,14 +212,14 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
         assertEquals("failed to update birth declaration session with place of marriage", "Kaduwela", bd.getMarriage().getPlaceOfMarriage());
-        //assertEquals("failed to update birth declaration session with date of marriage", "2007-09-02", bd.getMarriage().getDateOfMarriage());
+        assertEquals("failed to update birth declaration session with date of marriage", convertStringDateToDate("2007-sep-02"), bd.getMarriage().getDateOfMarriage());
         assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
         assertEquals("failed to update birth declaration session with informant NIC/PIN", "685031035V", bd.getInformant().getInformantNICorPIN());
         assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
         assertEquals("failed to update birth declaration session with informant address", "Kandy Road Matale", bd.getInformant().getInformantAddress());
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
         assertEquals("failed to update birth declaration session with informant Email", "info@gmail.com", bd.getInformant().getInformantEmail());
-        //assertEquals("failed to update birth declaration session with informant signed date", "2010-07-20", bd.getInformant().getInformantSignDate());
+        assertEquals("failed to update birth declaration session with informant signed date", convertStringDateToDate("2010-jul-20"), bd.getInformant().getInformantSignDate());
         assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
 
         //BirthDeclaration Form Details
@@ -231,7 +231,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
-        assertNotNull("Approval Permission Faild for the user", action.isAllowApproveBDF());
+        logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
         assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
         logger.debug("successfully persisted with the bdId :{}", action.getBdId());
 
@@ -377,7 +377,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
-        assertNotNull("Approval Permission Faild for the user", action.isAllowApproveBDF());
+        logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
         assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
     }
 
@@ -521,4 +521,19 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("No action errors", 0, action.getActionErrors().size());
 
     }
+
+    private Date convertStringDateToDate(String str_date) {
+        DateFormat formatter;
+        Date date = null;
+        try {
+            //String str_date="11-June-07";
+            formatter = new SimpleDateFormat("yy-MMM-dd");
+            date = (Date) formatter.parse(str_date);
+            logger.debug("date is {}", date);
+        } catch (ParseException e) {
+            logger.error("Exception :", e);
+        }
+        return date;
+    }
+
 }
