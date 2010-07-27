@@ -5,6 +5,39 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+
+<script>
+$(function() {
+    $('img#place').bind('click', function(evt) {
+        var id=$("input#placeOfBirth").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans",soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+    });
+
+    function processResponse(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
+})
+</script>
+
 <div id="birth-confirmation-form-outer">
 <table class="table_con_header_01" width="100%" cellpadding="0" cellspacing="0">
     <caption></caption>
@@ -198,7 +231,10 @@
         <td></td>
         <td><label>*in sinhala<br>*in tamil<br>Place in English</label></td>
         <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"/></td>
+        <td colspan="6">
+            <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
+        </td>
     </tr>
     <tr>
         <td>6</td>

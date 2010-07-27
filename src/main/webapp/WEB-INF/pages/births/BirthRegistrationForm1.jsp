@@ -43,7 +43,7 @@
                 });
         });
 
-        $('img#childName').bind('click', function(evt4) {
+        $('img#childName').bind('click', function(evt3) {
             var id=$("textarea#childFullNameOfficialLang").attr("value");
             var wsMethod = "transliterate";
             var soapNs = "http://translitwebservice.transliteration.icta.com/";
@@ -60,14 +60,39 @@
 
             //Lets send it
             SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
         });
 
-        function processResponse(respObj) {
+        function processResponse1(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
             $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        }
-    })
+        };
+
+    $('img#place').bind('click', function(evt4) {
+        var id=$("input#placeOfBirth").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans",soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+    });
+
+    function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
+})
 </script>
 
 
@@ -169,7 +194,10 @@
     </tr>
     <tr>
         <td><label>*in sinhala/*in tamil/ Place in English</label></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
+        <td colspan="6">
+            <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
+        </td>
     </tr>
     <tr>
         <td colspan="3"><label> රෝහලේදී /*in Tamil/In a Hospital</label></td>
@@ -184,7 +212,6 @@
             any of the official languages (Sinhala / Tamil)</label></td>
         <td colspan="7">
             <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:98.2%;"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
         </td>
     </tr>
 
@@ -192,7 +219,9 @@
         <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
         </label></td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;text-transform: uppercase;"/></td>
+            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;text-transform: uppercase;"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
+        </td>
     </tr>
     <tr>
         <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred
