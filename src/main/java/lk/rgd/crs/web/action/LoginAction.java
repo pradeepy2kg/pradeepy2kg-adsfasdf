@@ -130,6 +130,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         Map adminLink = new TreeMap();
         Map preferanceLink = new TreeMap();
         Map prsLink = new TreeMap();
+        Map adoptionLink = new TreeMap();
 
         for (Map.Entry<Integer, Link> e : linkPermission.entrySet()) {
             if (user.isAuthorized(e.getKey())) {
@@ -152,6 +153,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 } else if (category.equals("/popreg/prs/")) {
                     prsLink.put(key, link);
                 }
+                else if (category.equals("/popreg/adoption/")) {
+                    adoptionLink.put(key, link);
+                }
                 logger.debug("put link {} as category {}", e.getValue().getAction(), e.getValue().getCategory());
             }
         }
@@ -162,6 +166,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         allowedLinks.put("5management", adminLink);
         allowedLinks.put("3preferences", preferanceLink);
         allowedLinks.put("6prs", prsLink);
+        allowedLinks.put("7adoption", adoptionLink);
         return allowedLinks;
     }
 
@@ -329,6 +334,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS, new Link(null, "/popreg/births/", "eprCertificatePrintPrevious.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT, new Link(null, "/popreg/births/", "eprStillBirthCertificatePrint.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT, new Link(null, "/popreg/births/", "eprDirectPrintStillBirthCertificate.do"));
+
+        //Adoption Registration
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION, new Link("adoption_registration .label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do"));
 
     }
 

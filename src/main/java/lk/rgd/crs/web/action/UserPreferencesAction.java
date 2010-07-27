@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.service.UserManager;
@@ -49,7 +48,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private int BCPrintPendings;
     private int stillBirths;
     private int SBPendingApprovals;
-
+    private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
 
     public UserPreferencesAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, UserManager userManager) {
         this.districtDAO = districtDAO;
@@ -125,10 +124,15 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
             BCPrintPendings = 19;
             stillBirths = 20;
             SBPendingApprovals = 21;
-            logger.debug("return value of change password method is,","success" + userRole);
+            logger.debug("return value of change password method is,", "success" + userRole);
             return "success" + userRole;
         }
         return "error";
+    }
+
+    public String adoptionDeclaration() {
+        logger.info("load the adoptionDeclaration page");
+        return "form"+pageNo;
     }
 
     public String back() {
@@ -190,7 +194,6 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public void setRetypeNewPassword(String retypeNewPassword) {
         this.retypeNewPassword = retypeNewPassword;
     }
-
 
 
     public int getTotalDeclarations() {
@@ -289,4 +292,11 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         this.SBPendingApprovals = SBPendingApprovals;
     }
 
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
 }
