@@ -135,13 +135,18 @@
                listenTopics="view_DSDivs" formId="birth-registration-form-1"></sx:div>--%>
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="float:left;  width:240px;"/>
-             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                       list="bdDivisionList"
                       cssStyle=" width:240px;float:right;"/>
         </td>
     <tr>
         <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" size="75"/></td>
+    </tr>
+    <tr>
+        <td><label>*in sinhala/*in tamil/ Place in English</label></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish"
+                                     cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
         <td colspan="3"><label> රෝහලේදී /*in Tamil/In a Hospital</label></td>
