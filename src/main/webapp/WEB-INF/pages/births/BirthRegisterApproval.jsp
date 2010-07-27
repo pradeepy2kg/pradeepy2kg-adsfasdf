@@ -136,10 +136,11 @@
                 <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
                 <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
-                <th width="50px"><s:label name="edit" value="%{getText('edit.label')}"/></th>
-                <th width="50px"><s:label name="approve" value="%{getText('approve.label')}"/></th>
-                <th width="50px"><s:label name="reject" value="%{getText('reject.label')}"/></th>
-                <th width="50px"><s:label name="delete" value="%{getText('delete.label')}"/></th>
+                <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
         </s:if>
@@ -154,6 +155,14 @@
                 <td><s:property value="register.bdfSerialNo"/></td>
                 <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
+                <td align="center">
+                    <s:if test="register.liveBirth">
+                        <s:label value="%{getText('yes.label')}"/>
+                    </s:if>
+                    <s:else>
+                        <s:label value="%{getText('no.label')}"/>
+                    </s:else>
+                </td>
                 <s:if test="#request.allowEditBDF">
                     <s:url id="editSelected" action="eprBirthRegistrationInit.do">
                         <s:param name="bdId" value="idUKey"/>
