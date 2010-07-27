@@ -9,28 +9,33 @@
 
 <script type="text/javascript">
     function printPage() {
-        if(jsPrintSetup) {
-            alert("You don't have js printer." );
+        if (!jsPrintSetup) {
+            var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
+            if (option) {
+               window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
+            }
+        } else {
+            // set page orientation.
+            jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
+            // set margins.
+            jsPrintSetup.setOption('marginTop', 10);
+            jsPrintSetup.setOption('marginLeft', 15);
+
+
+            // set page header
+            jsPrintSetup.setOption('headerStrLeft', '');
+            jsPrintSetup.setOption('headerStrCenter', '');
+            jsPrintSetup.setOption('headerStrRight', '');
+            // set empty page footer
+            jsPrintSetup.setOption('footerStrLeft', '');
+            jsPrintSetup.setOption('footerStrCenter', '');
+            jsPrintSetup.setOption('footerStrRight', '');
+
+            jsPrintSetup.print();
+
+            var res = confirm(document.getElementById("printMessage").value);
+            history.go(0);
         }
-        // set page orientation.
-        jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
-        // set margins.
-        jsPrintSetup.setOption('marginTop', 10);
-        jsPrintSetup.setOption('marginLeft', 15);
-
-
-        // set page header
-        jsPrintSetup.setOption('headerStrLeft', '');
-        jsPrintSetup.setOption('headerStrCenter', '');
-        jsPrintSetup.setOption('headerStrRight', '');
-        // set empty page footer
-        jsPrintSetup.setOption('footerStrLeft', '');
-        jsPrintSetup.setOption('footerStrCenter', '');
-        jsPrintSetup.setOption('footerStrRight', '');
-
-        jsPrintSetup.print();
-        var res = confirm(document.getElementById("printMessage").value);
-        history.go(0);
     }
 </script>
 

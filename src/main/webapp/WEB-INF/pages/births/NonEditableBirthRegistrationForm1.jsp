@@ -5,19 +5,23 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 
 <s:if test="#request.archivedEntryList.size>0">
-<fieldset style="border:2px inset red; width:280px;" >
+<fieldset style="border:2px inset red; width:400px;" >
     <legend style="color:red;">
         <s:label value="%{getText('ArchivedData.label')}"/>
     </legend>
     <table>
         <th></th>
         <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
+        <th><s:label value="%{getText('lastupdate.time.label')}"/> </th>
         <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
         <s:iterator status="archivedStatus" value="archivedEntryList" id="searchId">
             <tr class="<s:if test="#archivedStatus.odd == true">odd</s:if><s:else>even</s:else>">
                 <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
                 <s:set value="getRegister().getStatus()" name="status"/>
                 <td><s:label value="%{getText(#status)}"/></td>
+                <td><s:property value="lastUpdatedTime"/> </td>
+                <s:set name="abc" value="lastUpdatedTime"/>
+                
                 <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                     <s:param name="bdId" value="idUKey"/>
                 </s:url>
