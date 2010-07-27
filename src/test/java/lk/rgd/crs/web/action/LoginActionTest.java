@@ -113,11 +113,8 @@ public class LoginActionTest extends CustomStrutsTestCase {
         request.setParameter("userName", "rg");
         request.setParameter("password", "password");
         String result = initAndExucute("/eprLogin.do", session);
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        request.setAttribute(WebConstants.SESSION_USER_BEAN, user);
         result = initAndExucute("/eprLogout.do", session);
-        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        assertNotSame("rg", user.getUserName());
+        assertEquals("Session User is Null : ", null, session.get(WebConstants.SESSION_USER_BEAN));
         assertEquals("No Action erros.", 0, action.getActionErrors().size());
     }
 
