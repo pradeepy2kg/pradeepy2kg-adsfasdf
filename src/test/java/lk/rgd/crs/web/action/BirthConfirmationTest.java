@@ -1,6 +1,6 @@
 package lk.rgd.crs.web.action;
 
-import org.apache.struts2.StrutsSpringTestCase;
+import lk.rgd.common.CustomStrutsTestCase;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ import java.util.Calendar;
  * To change this template use File | Settings | File Templates.
  * @author Janith Widarshana. 
  */
-public class BirthConfirmationTest extends StrutsSpringTestCase {
+public class BirthConfirmationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthConfirmationTest.class);
 
     private LoginAction action;

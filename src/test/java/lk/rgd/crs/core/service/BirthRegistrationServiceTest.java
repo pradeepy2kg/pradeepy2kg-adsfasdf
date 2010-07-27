@@ -77,6 +77,15 @@ public class BirthRegistrationServiceTest extends TestCase {
         BirthDeclaration bdf1 = getMinimalBDF(2010101, dob.getTime(), colomboBDDivision);
         birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
 
+        // try adding a duplicate
+        BirthDeclaration bdf2 = getMinimalBDF(2010101, dob.getTime(), colomboBDDivision);
+        try {
+            birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
+            fail("Should not allow addition of duplicate records");
+        } catch (Exception expected) {
+        }
+
+
         // reload again to fill all fields as we still only have IDUkey of new record
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
 

@@ -112,6 +112,18 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // TODO more validations .. like bdf.getParent().getMotherFullName() != null etc
         }
         validateAccessOfUser(user, bdf);
+
+        // has this serial number been used already?
+        try {
+            BirthDeclaration existing = birthDeclarationDAO.getByBDDivisionAndSerialNo(
+                bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo());
+            if (existing != null) {
+                handleException("The birth declaration BD Division/Serial number is a duplicate : " +
+                    bdf.getRegister().getBirthDivision().getBdDivisionUKey() + " " +
+                    bdf.getRegister().getBdfSerialNo(), ErrorCodes.INVALID_DATA);
+            }
+        } catch (NoResultException ignore) {}
+
         bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
         birthDeclarationDAO.addBirthDeclaration(bdf);
         return null;
@@ -511,6 +523,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // mark existing as archived with a newer record of corrections
             existing.setConfirmant(bdf.getConfirmant());
             existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CORRECTED);
+            existing.setActiveRecord(false);
             birthDeclarationDAO.updateBirthDeclaration(existing);
 
             // add new record
@@ -1186,8 +1199,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @inheritDoc
      */
     public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user) {
-        logger.debug("searching archived BirthDeclaration for Serial number : {} and birth division  : {}", serialNo, bdDivision.getBdDivisionUKey());
+        logger.debug("Searching for historical records for BD Division : {} and Serial number : {} ",
+            bdDivision.getBdDivisionUKey(), serialNo);
         validateAccessToBDDivision(user, bdDivision);
-        return birthDeclarationDAO.getArchivedCorrectedEntriesForGivenSerialNo(bdDivision, serialNo);
+        return birthDeclarationDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo);
     }
 }

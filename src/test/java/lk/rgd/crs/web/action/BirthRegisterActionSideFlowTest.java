@@ -1,8 +1,8 @@
 package lk.rgd.crs.web.action;
 
+import lk.rgd.common.CustomStrutsTestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.struts2.StrutsSpringTestCase;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
@@ -17,7 +17,7 @@ import lk.rgd.crs.web.WebConstants;
 /**
  * @author Chathuranga Withana
  */
-public class BirthRegisterActionSideFlowTest extends StrutsSpringTestCase {
+public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterActionSideFlowTest.class);
     private ActionProxy proxy;
     private BirthRegisterAction action;

@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
@@ -28,12 +29,14 @@ import java.io.Serializable;
         "WHERE bdf.register.birthDivision = :birthDivision " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
-    @NamedQuery(name = "get.archived.corrected.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) AND bdf.register.status = 4 " +
-        "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
+        "AND bdf.activeRecord IS FALSE " +
+        "ORDER BY bdf.lastUpdatedTime desc"),
 
     @NamedQuery(name = "get.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
-        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo"),
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
+        "AND bdf.activeRecord IS TRUE"),
 
     @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
@@ -108,6 +111,13 @@ public class BirthDeclaration implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
+    @Column(nullable = false)
+    private boolean activeRecord = true;
+
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date lastUpdatedTime;
+
     @Embedded
     private ChildInfo child = new ChildInfo();
 
@@ -138,6 +148,22 @@ public class BirthDeclaration implements Serializable {
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
+    }
+
+    public boolean isActiveRecord() {
+        return activeRecord;
+    }
+
+    public void setActiveRecord(boolean activeRecord) {
+        this.activeRecord = activeRecord;
+    }
+
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(Date lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
     }
 
     public ChildInfo getChild() {
