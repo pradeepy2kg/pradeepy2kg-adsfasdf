@@ -4,14 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.StrutsSpringTestCase;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
-import java.util.Locale;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
@@ -19,10 +17,6 @@ import java.text.DateFormat;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.UnitTestManager;
-import lk.rgd.Permission;
 
 /**
  * @author Indunil Moremada
@@ -34,10 +28,9 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
     private ActionProxy proxy;
     private BirthRegisterAction action;
     private LoginAction loginAction;
-    private Map session;
     private BirthDeclaration bd;
 
-    private String initAndExecute(String mapping) throws Exception {
+    private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         action = (BirthRegisterAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -45,8 +38,8 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         String result = null;
         try {
             result = proxy.execute();
-        } catch (Exception e) {
-            logger.error("proxy execution error", e);
+        } catch (NullPointerException e) {
+            logger.error("non fatal proxy execution error", e.getMessage());
         }
         logger.debug("result for mapping {} is {}", mapping, result);
         return result;
@@ -72,8 +65,10 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
 
     public void testBirthDeclaratinInitializer() throws Exception {
         Object obj;
-        login("indunil", "indunil");
-        initAndExecute("/births/eprBirthRegistrationInit.do");
+        Map session = login("indunil", "indunil");
+
+        initAndExecute("/births/eprBirthRegistrationInit.do", session);
+        session = action.getSession();
         assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -91,20 +86,22 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
     }
 
     public void testBirthDeclarationInitializerInEditMode() throws Exception {
-        //todo set date values to request 
-        Object obj;
-        login("indunil", "indunil");
+        Map session = login("indunil", "indunil");
+
         request.setParameter("bdId", "166");
-        initAndExecute("/births/eprBirthRegistrationInit.do");
+        initAndExecute("/births/eprBirthRegistrationInit.do", session);
+        session = action.getSession();
         assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         assertEquals("Data Entry Mode Faild", 0, bd.getRegister().getStatus().ordinal());
 
-        obj = session.get(WebConstants.SESSION_USER_LANG);
+        Object obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
         assertNotNull("Request District List Presence", action.getDistrictList());
         assertNotNull("Request Race List Presence", action.getRaceList());
+
+        //todo set date values to request
 
         //check whether required beans are populated
         assertEquals("Request child Bean is Populated", bd.getChild(), action.getChild());
@@ -137,7 +134,7 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         action.setRegister(bri);
 */
         request.setParameter("parent.motherAgeAtBirth", bd.getParent().getMotherAgeAtBirth().toString());
-        //request.setAttribute("child.dateOfBirth", convertStingToDate("2010-07-10"));
+        //todo request.setAttribute("child.dateOfBirth", convertStingToDate("2010-07-10"));
         action.getRegister().setDateOfRegistration(bd.getRegister().getDateOfRegistration());
 
         request.setParameter("birthDistrictId", "1");
@@ -151,7 +148,8 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         request.setParameter("child.childBirthWeight", "2");
         request.setParameter("child.childRank", "1");
         request.setParameter("child.numberOfChildrenBorn", "1");
-        initAndExecute("/births/eprBirthRegistration.do");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
         assertEquals("Action erros for 2 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -196,7 +194,8 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         //request.setParameter("parent.motherAdmissionDate", "2010-06-27");
         request.setParameter("parent.motherPhoneNo", "0112345678");
 
-        initAndExecute("/births/eprBirthRegistration.do");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
         assertEquals("Action erros for 3 of 4BDF", 0, action.getActionErrors().size());
 
         assertEquals("Request marriage Bean population faild", bd.getMarriage(), action.getMarriage());
@@ -228,26 +227,28 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         request.setParameter("informant.informantEmail", "sanguni@gmail.com");
         //request.setParameter("informant.informantSignDate", "2010-07-21");
 
-        initAndExecute("/births/eprBirthRegistration.do");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
         assertEquals("Action erros for 4 of 4BDF", 0, action.getActionErrors().size());
 
         //assertEquals("Request notifyingAuthority Bean population faild", bd.getNotifyingAuthority(), action.getNotifyingAuthority());
 
         //BirthDeclaration Form Details
         request.setParameter("pageNo", "4");
-        initAndExecute("/births/eprBirthRegistration.do");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
         assertNotNull("Approval Permission Faild for the user", action.isAllowApproveBDF());
     }
 
-    private void login(String userName, String password) throws Exception {
+    private Map login(String userName, String password) throws Exception {
         request.setParameter("userName", userName);
         request.setParameter("password", password);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
         loginAction = (LoginAction) proxy.getAction();
         ActionContext.getContext().setSession(new HashMap<String, Object>());
         proxy.execute();
-        session = loginAction.getSession();
+        return loginAction.getSession();
     }
 
     private Date convertStingToDate(String str_date) {
@@ -262,7 +263,8 @@ public class BirthRegisterActionTest extends StrutsSpringTestCase {
         }
         return date;
     }
-private String convertDateToString(Date date) {
+
+    private String convertDateToString(Date date) {
         DateFormat formatter;
         String str_date;
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -270,6 +272,7 @@ private String convertDateToString(Date date) {
         logger.debug("Date in String : " + str_date);
         return str_date;
     }
+
     /**
      * testing birth cetficate print
      *
@@ -305,15 +308,17 @@ private String convertDateToString(Date date) {
  }
     */
 
-
     public void testStillBirthDeclarationInit() throws Exception {
-        login("duminda", "duminda");
+        Map session = login("duminda", "duminda");
+
         BirthDeclaration bdOld = new BirthDeclaration();
         ChildInfo ciOld = new ChildInfo();
         ciOld.setChildFullNameEnglish("old name");
         bdOld.setChild(ciOld);
         request.setAttribute(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN, bdOld);
-        initAndExecute("/births/eprStillBirthRegistrationInit.do");
+        initAndExecute("/births/eprStillBirthRegistrationInit.do", session);
+        session = action.getSession();
+
         BirthDeclaration bdNew = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         assertFalse("Not a live birth: ",bdNew.getRegister().isLiveBirth());
         assertNotSame(bdOld.getChild().getChildFullNameEnglish(), bdNew.getChild().getChildFullNameEnglish());
@@ -332,11 +337,11 @@ private String convertDateToString(Date date) {
         request.setParameter("child.childRank", "1");
         request.setParameter("child.numberOfChildrenBorn", "1");
         request.setParameter("pageNo", "1");
-        initAndExecute("/births/eprBirthRegistration.do");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
         assertFalse("Not a live birth:", action.isLiveBirth());
         assertSame("Child ds division id: ", 2, action.getDsDivisionId());
 
-        // Still birth page two
-        
+        // todo Still birth page two
     }
 }
