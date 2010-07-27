@@ -219,4 +219,22 @@
         <put-attribute name="body" value="/WEB-INF/pages/preferences/UserPreferences.jsp"/>
         <put-attribute name="title" value="UserPreferences.title"/>
     </definition>
+     <!-- Adoption Registration Tiles-->
+     <definition name="epr.AdoptionReg01" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="adoption_reg_page01.title"/>
+    </definition>
+    <definition name="epr.AdoptionReg02" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="adoption_reg_page01.title"/>
+    </definition>
+    <definition name="epr.AdoptionReg03" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationForm3.jsp"/>
+        <put-attribute name="title" value="adoption_reg_page01.title"/>
+    </definition>
+
+    <definition name="epr.AdoptionReg04" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationForm4.jsp"/>
+        <put-attribute name="title" value="adoption_reg_page01.title"/>
+    </definition>
 </tiles-definitions>

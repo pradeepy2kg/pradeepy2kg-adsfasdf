@@ -728,6 +728,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtID, language, user);
     }
 
+
     public int getPageNo() {
         return pageNo;
     }
