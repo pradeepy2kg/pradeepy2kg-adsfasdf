@@ -505,7 +505,132 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>166</td>
+	<td>171</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/popreg/births/eprBirthConfirmationInit.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-register-approval-form_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprApproveBulk_index</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveBulk_approveSelected</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>SerialNo</td>
+	<td>171</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් ලියාපදිංචිය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-register-approval-form_refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//td[7]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprIgnoreWarning_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු කිරීම් මුද්‍රණය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-print-form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthConfirmationBulkPrint_index</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthConfirmationBulkPrint_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු කිරීම් මුද්‍රණය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>SerialNo</td>
+	<td>171</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -534,17 +659,32 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td>link=මුල් පිටුවට</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birthDivisionId</td>
+	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-certificate-print-form_0</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='birth-certificate-outer']/div/a/label</td>
+	<td>eprBirthCertificateBulkPrint_index</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>මුද්‍රණය සිදුවෙමින් පවතී. </td>
+	<td>clickAndWait</td>
+	<td>eprBirthCertificateBulkPrint_0</td>
 	<td></td>
 </tr>
 
