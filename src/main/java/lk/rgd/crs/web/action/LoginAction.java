@@ -107,7 +107,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             stillBirths = 20;
             SBPendingApprovals = 21;
 
-            String result = checkUserStatus(user);
+            String result = checkUserExpiry(user);
             if (result.equals(SUCCESS))
                 return result + userRole;
             else
@@ -171,7 +171,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
      * @param user
      * @return
      */
-    private String checkUserStatus(User user) {
+    private String checkUserExpiry(User user) {
         //todo change :::::user staus chcking goes here
         // get Calendar with current date
         java.util.GregorianCalendar gCal = new GregorianCalendar();
