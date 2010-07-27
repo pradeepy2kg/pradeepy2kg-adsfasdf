@@ -8,22 +8,34 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <script type="text/javascript">
-    function printPage(){
-        //window.print();
+    function printPage() {
+        if (!jsPrintSetup) {
+            var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
+            if (option) {
+               window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
+            }
+        } else {
+            // set page orientation.
+            jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
+            // set margins.
+            jsPrintSetup.setOption('marginTop', 10);
+            jsPrintSetup.setOption('marginLeft', 15);
 
-        // set page header
-        jsPrintSetup.setOption('headerStrLeft', '');
-        jsPrintSetup.setOption('headerStrCenter', '');
-        jsPrintSetup.setOption('headerStrRight', '');
-        // set empty page footer
-        jsPrintSetup.setOption('footerStrLeft', '');
-        jsPrintSetup.setOption('footerStrCenter', '');
-        jsPrintSetup.setOption('footerStrRight', '');
 
-        jsPrintSetup.print();
-        var res = confirm(document.getElementById("printMessage").value);
-        if(res)
-            history.go(0);      
+            // set page header
+            jsPrintSetup.setOption('headerStrLeft', '');
+            jsPrintSetup.setOption('headerStrCenter', '');
+            jsPrintSetup.setOption('headerStrRight', '');
+            // set empty page footer
+            jsPrintSetup.setOption('footerStrLeft', '');
+            jsPrintSetup.setOption('footerStrCenter', '');
+            jsPrintSetup.setOption('footerStrRight', '');
+
+            jsPrintSetup.print();
+
+            var res = confirm(document.getElementById("printMessage").value);
+            history.go(0);
+        }
     }
 </script>
 
@@ -259,7 +271,7 @@
         <td class="cell_011">10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6"><s:textfield cssClass="disable" disabled="true" name="marriage.parentsMarried"
-                value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
+                                     value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
         <td colspan="11"></td>
     </tr>
 
@@ -337,7 +349,8 @@
                 </label>
 
                 <p></p></td>
-            <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;" name="child.childFullNameEnglish">
+            <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
+                            name="child.childFullNameEnglish">
             </s:textarea></td>
         </tr>
         <tr>
@@ -628,7 +641,7 @@
             <td>Printed On</td>
 
             <td style="text-align:right;margin-left:auto;margin-right:0;"><%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()) %>
-</td>
+            </td>
         </tr>
         </tbody>
     </table>
