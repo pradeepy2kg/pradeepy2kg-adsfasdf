@@ -116,13 +116,15 @@
         </action>
 
         <action name="eprStillBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="stillBirthDeclarationInit">
-            <result type="tiles" name="form0">epr.stillBirthRegistration_form1</result>
+                method="birthDeclaratinInit">
+            <param name="liveBirth">false</param>
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclaratinInit">
+            <param name="liveBirth">true</param>
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
@@ -456,7 +458,7 @@
         <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
             <result name="pageload" type="tiles">epr.UserPreferences</result>
         </action>
-                                
+
         <action name="passChangePageLoad">
             <result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>
         </action>
@@ -477,12 +479,12 @@
 
     </package>
     <package name="adoption" namespace="/adoption" extends="NG">
-            <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
+        <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="adoptionDeclaration">
             <result type="tiles" name="form0">epr.AdoptionReg01</result>
-                <result type="tiles" name="form1">epr.AdoptionReg02</result>
-                <result type="tiles" name="form2">epr.AdoptionReg03</result>
-                <result type="tiles" name="form3">epr.AdoptionReg04</result>
+            <result type="tiles" name="form1">epr.AdoptionReg02</result>
+            <result type="tiles" name="form2">epr.AdoptionReg03</result>
+            <result type="tiles" name="form3">epr.AdoptionReg04</result>
         </action>
     </package>
 </struts>

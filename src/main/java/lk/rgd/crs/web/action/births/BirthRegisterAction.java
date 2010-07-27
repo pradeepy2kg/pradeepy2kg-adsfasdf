@@ -340,50 +340,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * This method is responsible for loading 1 of 4 BDF pages
-     * if bdId is 0 it is a fresh birth declaration, if addNewMode
-     * is true it is in the batch mode. switches to editable mode
-     * if bdId is greater than 0. for editing checks whether
-     * requested birthDeclaration is editable. If it is not in
-     * the editable mode directed to error page
+     * This method is responsible for loading 1 of 4 BDF pages of Live and Still Birth Declaration.
+     * if bdId is 0 it is a fresh birth declaration, if addNewMode is true it is in the batch mode switches to editable
+     * mode. if bdId is greater than 0. for editing checks whether requested birthDeclaration is editable. If it is not
+     * in the editable mode directed to error page
      *
      * @return
      */
     public String birthDeclaratinInit() {
         BirthDeclaration bdf;
+        logger.debug("Birth type is a live birth : {}", liveBirth);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId == 0) {
             if (!addNewMode) {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
             bdf = new BirthDeclaration();
-            bdf.getRegister().setLiveBirth(true);
-            liveBirth = bdf.getRegister().isLiveBirth();
-        } else {
-            bdf = service.getById(bdId, user);
-            if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
-                addActionError(getText("p1.editNotAllowed"));
-                return ERROR;
-            }
-        }
-        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-        populate(bdf);
-        return "form0";
-    }
-
-    /**
-     * @return
-     */
-    public String stillBirthDeclarationInit() {
-        BirthDeclaration bdf;
-        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-        if (bdId == 0) {
-            if (!addNewMode) {
-                session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-            }
-            bdf = new BirthDeclaration();
-            bdf.getRegister().setLiveBirth(false);
-            liveBirth = bdf.getRegister().isLiveBirth();
+            bdf.getRegister().setLiveBirth(liveBirth);
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -582,7 +555,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
             register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
-            register.setLiveBirth(oldBdf.getRegister().isLiveBirth());
+            register.setLiveBirth(true);
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();

@@ -124,6 +124,7 @@
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
                         <th width="110px"><s:label name="registered_date"
                                                    value="%{getText('registered_date.label')}"/></th>
+                        <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
                         <th width="100px"><s:label value="%{getText('print.label')}"/></th>
                     </tr>
                     </thead>
@@ -138,6 +139,14 @@
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="child.childFullNameOfficialLang"/></td>
                             <td align="center"><s:property value="register.dateOfRegistration"/></td>
+                            <td align="center">
+                                <s:if test="register.liveBirth">
+                                    <s:label value="%{getText('yes.label')}"/>
+                                </s:if>
+                                <s:else>
+                                    <s:label value="%{getText('no.label')}"/>
+                                </s:else>
+                            </td>
                             <td align="center">
                                 <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                                     <s:param name="bdId" value="idUKey"/>
