@@ -117,7 +117,7 @@ public class LoginActionTest extends CustomStrutsTestCase {
         request.setAttribute(WebConstants.SESSION_USER_BEAN, user);
         result = initAndExucute("/eprLogout.do", session);
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        assertNotSame("rg", user.getUserName());
+        assertNull(user);
         assertEquals("No Action erros.", 0, action.getActionErrors().size());
     }
 
