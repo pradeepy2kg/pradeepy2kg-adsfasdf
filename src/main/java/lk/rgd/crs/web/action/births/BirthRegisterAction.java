@@ -144,7 +144,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
-            case 1:
+            case 1:                 
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
@@ -152,7 +152,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setRegister(register);
                 bdf.getRegister().setLiveBirth(liveBirth);
                 break;
-            case 2:
+            case 2:   
                 liveBirth = bdf.getRegister().isLiveBirth();
                 bdf.setParent(parent);
                 break;
@@ -164,7 +164,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 break;
             case 4:
-                liveBirth = bdf.getRegister().isLiveBirth();
+                liveBirth = bdf.getRegister().isLiveBirth(); 
                 bdf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
@@ -182,13 +182,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
                     if (liveBirth) {
-                        service.editLiveBirthDeclaration(bdf, true, user);
+                        service.editLiveBirthDeclaration(bdf, true, user); 
                     } else {
                         service.editStillBirthDeclaration(bdf, true, user);
                     }
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-
                 // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
         }
