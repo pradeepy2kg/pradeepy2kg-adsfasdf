@@ -43,10 +43,20 @@
     <tr>
         <td width="300px"></td>
         <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
-                                                                    alt=""/><br><label>
-            උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-            <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
-            <br>Particulars for Registration of a Birth</label></td>
+                                                                    alt=""/><br>
+            <s:if test="liveBirth">
+                <label>
+                    උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
+                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
+                    <br>Particulars for Registration of a Birth</label>
+            </s:if>
+            <s:else>
+                <label>
+                    මළ උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
+                    <br>* In Tamil
+                    <br>Particulars for Registration of a Still Birth</label>
+            </s:else>
+        </td>
         <td>
             <table class="table_reg_datePicker_page_01">
                 <tr>
@@ -57,7 +67,13 @@
             </table>
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td><label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
+                    <td>
+                        <s:if test="liveBirth">
+                            <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
+                        </s:if>
+                        <s:else>
+                            <label><span class="font-8">ලියාපදිංචි කල දිනය<br>* In Tamil<br>Date of Registration</span></label>
+                        </s:else>
                     </td>
                     <td><s:label value="%{#session.birthRegister.register.dateOfRegistration}"/>
                     </td>
@@ -66,16 +82,28 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3">දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර
-            දිය
-            යුතුය. මෙම
-            තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
-            <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-            சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-            <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
-            forwarded
-            to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
-            information provided in this form.
+        <td colspan="3">
+            <s:if test="liveBirth">
+                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
+                යුතුය. මෙම
+                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
+                forwarded
+                to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
+                information provided in this form.
+            </s:if>
+            <s:else>
+                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
+                යුතුය. මෙම
+                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මළ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>* In Tamil
+                <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
+                forwarded
+                to the Notifying Authority. The still birth will be registered in the Civil Registration System based on the
+                information provided in this form.
+            </s:else>
         </td>
     </tr>
     </tbody>
@@ -96,9 +124,16 @@
     <tbody>
     <tr>
         <td class="font-9" colspan="8" style="text-align:center;">
-            ළම‌යාගේ විස්තර
-            <br>பிள்ளை பற்றிய தகவல்
-            <br>Child's Information
+            <s:if test="liveBirth">
+                ළම‌යාගේ විස්තර
+                <br>பிள்ளை பற்றிய தகவல்
+                <br>Child's Information
+            </s:if>
+            <s:else>
+                මළ උපත පිලිබඳ විස්තර
+                <br>* In Tamil
+                <br>Still-birth Information
+            </s:else>
         </td>
     </tr>
     <tr style="border-left:1px solid #000000;">
@@ -161,25 +196,23 @@
         <s:else>
             <s:label value="%{getText('no.label')}"/>
         </s:else>
+    </tr>
+    <s:if test="liveBirth">
+        <tr>
+            <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
+                / தமிழ்) <br>Name in
+                any of the official languages (Sinhala / Tamil)</label></td>
+            <td colspan="7"><s:label value="%{#session.birthRegister.child.childFullNameOfficialLang}"
+                                     cssStyle="width:98.2%;"/></td>
+        </tr>
 
-            <%--<td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}" value="true"/></td>
-         <td><label>නැත / *in Tamil / No</label></td>
-         <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>--%>
-    </tr>
-    <tr>
-        <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
-            / தமிழ்) <br>Name in
-            any of the official languages (Sinhala / Tamil)</label></td>
-        <td colspan="7"><s:label value="%{#session.birthRegister.child.childFullNameOfficialLang}"
-                                 cssStyle="width:98.2%;"/></td>
-    </tr>
-
-    <tr>
-        <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
-        </label></td>
-        <td colspan="7">
-            <s:label value="%{#session.birthRegister.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
-    </tr>
+        <tr>
+            <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
+            </label></td>
+            <td colspan="7">
+                <s:label value="%{#session.birthRegister.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
+        </tr>
+    </s:if>
     <tr>
         <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
             <br>Preferred
@@ -190,18 +223,27 @@
     </tr>
     <tr>
         <td class="font-9"><label>(6)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
-        <td colspan="3"><s:if test="session.birthRegister.child.childGender == 0">
-            <s:label name="" value="%{getText('male.label')}"/>
-        </s:if>
+        <td colspan="3">
+            <s:if test="session.birthRegister.child.childGender == 0">
+                <s:label name="" value="%{getText('male.label')}"/>
+            </s:if>
             <s:elseif test="session.birthRegister.child.childGender == 1">
                 <s:label name="" value="%{getText('female.label')}"/>
             </s:elseif>
             <s:elseif test="session.birthRegister.child.childGender == 2">
                 <s:label name="" value="%{getText('unknown.label')}"/>
             </s:elseif></td>
-        <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}"
-                                 cssStyle="width:95%;"/></td>
+        <s:if test="liveBirth">
+            <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
+            <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}"
+                                     cssStyle="width:95%;"/></td>
+        </s:if>
+        <s:else>
+            <td colspan="2"><label>(4) දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
+                <br>* In Tamil
+                <br>Number of weeks pregnant at the time of still-birth</label></td>
+            <td colspan="2"><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
+        </s:else>
     </tr>
     <tr>
         <td class="font-9"><label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According

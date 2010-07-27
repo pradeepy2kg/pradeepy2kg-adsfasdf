@@ -318,16 +318,9 @@
     <s:submit value="%{getText('next.label')}"/>
 </div>
 <div class="next-previous">
-    <s:if test="liveBirth">
-        <s:set name="pageNo" value="0"/>
-    </s:if>
-    <s:else>
-        <s:set name="pageNo" value="5"/>
-    </s:else>
-
     <s:url id="backUrl" action="eprBirthRegistration">
         <s:param name="back" value="true"/>
-        <s:param name="pageNo" value="#pageNo"/>
+        <s:param name="pageNo" value="{pageNo - 1}"/>
     </s:url>
     <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
