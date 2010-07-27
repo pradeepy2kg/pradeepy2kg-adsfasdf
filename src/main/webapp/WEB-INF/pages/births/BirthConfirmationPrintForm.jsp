@@ -8,8 +8,16 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <script type="text/javascript">
-    function printPage(){
-        //window.print();
+    function printPage() {
+        if(jsPrintSetup) {
+            alert("You don't have js printer." );
+        }
+        // set page orientation.
+        jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
+        // set margins.
+        jsPrintSetup.setOption('marginTop', 10);
+        jsPrintSetup.setOption('marginLeft', 15);
+
 
         // set page header
         jsPrintSetup.setOption('headerStrLeft', '');
@@ -22,8 +30,7 @@
 
         jsPrintSetup.print();
         var res = confirm(document.getElementById("printMessage").value);
-        if(res)
-            history.go(0);      
+        history.go(0);
     }
 </script>
 
@@ -259,7 +266,7 @@
         <td class="cell_011">10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6"><s:textfield cssClass="disable" disabled="true" name="marriage.parentsMarried"
-                value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
+                                     value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
         <td colspan="11"></td>
     </tr>
 
@@ -337,7 +344,8 @@
                 </label>
 
                 <p></p></td>
-            <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;" name="child.childFullNameEnglish">
+            <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
+                            name="child.childFullNameEnglish">
             </s:textarea></td>
         </tr>
         <tr>
@@ -628,7 +636,7 @@
             <td>Printed On</td>
 
             <td style="text-align:right;margin-left:auto;margin-right:0;"><%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()) %>
-</td>
+            </td>
         </tr>
         </tbody>
     </table>
