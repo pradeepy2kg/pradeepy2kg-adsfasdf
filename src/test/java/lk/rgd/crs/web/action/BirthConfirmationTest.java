@@ -32,32 +32,20 @@ import java.util.Calendar;
  */
 public class BirthConfirmationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthConfirmationTest.class);
-
-    private LoginAction action;
     private BirthRegisterAction registerAction;
     private ActionProxy proxy;
-    private Map session;
-    private User user;
 
-    private void initLoginExucute(String mapping, Map session) throws Exception {
-        session = new HashMap<String, Object>();
-        proxy = getActionProxy(mapping);
-        action = (LoginAction) proxy.getAction();
-        ActionContext.getContext().setSession(session);
-        String result = proxy.execute();
-        logger.debug("result for mapping {} is {}", mapping, result);
-    }
-
-    private void UserLogin(String username, String passwd) throws Exception {
+    private Map UserLogin(String username, String passwd) throws Exception {
         request.setParameter("userName", username);
         request.setParameter("password", passwd);
-        initLoginExucute("/eprLogin.do", session);
-        assertEquals("No Action erros.", 0, action.getActionErrors().size());
-        session = action.getSession();
-        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        ActionProxy proxy = getActionProxy("/eprLogin.do");
+        LoginAction loginAction = (LoginAction) proxy.getAction();
+        ActionContext.getContext().setSession(new HashMap<String, Object>());
+        proxy.execute();
+        return loginAction.getSession();
     }
 
-    private void initAndExucute(String mapping) {
+    private void initAndExucute(String mapping,Map session) {
         proxy = getActionProxy(mapping);
         registerAction = (BirthRegisterAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -75,18 +63,14 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
     }
 
     public void testBirthConfirmationInitMappingProxy() throws Exception {
-        //Login as valid User
-        UserLogin("ashoka", "ashoka");
-        logger.debug("logged user Id : {}", user.getUserId());
-        //mapping for confirmation init
+        Map session =UserLogin("rg", "password");
         ActionMapping mapping = getActionMapping("/births/eprBirthConfirmationInit.do");
         assertNotNull("Mapping not null {}", mapping);
         assertEquals("/births", mapping.getNamespace());
         assertEquals("eprBirthConfirmationInit", mapping.getName());
 
         request.setParameter("bdId", "165");
-
-        initAndExucute("/births/eprBirthConfirmationInit.do");
+        initAndExucute("/births/eprBirthConfirmationInit.do",session);
         assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
         session = registerAction.getSession();
 
@@ -127,14 +111,10 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         assertEquals("Father Full Name", "කුසුමාවතී රාම්‍යා ජයසිංහ", bdf.getParent().getFatherFullName());
         assertEquals("Mother Full Name", "කුසුමාවතී රාම්‍යා ජයසිංහ", bdf.getParent().getMotherFullName());
 
-        request.setParameter("pageNo", "0");
-        initAndExucute("/births/eprBirthConfirmation.do");
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-        session = registerAction.getSession();
-
-        assertNotNull("Session bdf presence", bdf);
-        assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
-
+        request.setParameter("pageNo", "1");
+        
+        request.setParameter("child.dateOfBirth","2010-07-21T00:00:00+05:30");
+        request.setParameter("birthDivisionId", "3");
         request.setParameter("child.placeOfBirth", "කොළඹ කොටුව");
         request.setParameter("child.placeOfBirthEnglish", "colombo port");
         request.setParameter("fatherRace", "3");
@@ -142,29 +122,51 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         request.setParameter("parent.fatherNICorPIN", "853303399v");
         request.setParameter("parent.motherNICorPIN", "666666666v");
         request.setParameter("child.childGender", "1");
-        request.setParameter("birthDivisionId", "3");
-
-        request.setParameter("pageNo", "1");
+        initAndExucute("/births/eprBirthConfirmation.do",session);
         assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+        session = registerAction.getSession();
+
+        assertNotNull("Session bdf presence", bdf);
         assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
 
+        request.setParameter("pageNo", "2");
         request.setParameter("child.childFullNameOfficialLang", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක");
         request.setParameter("child.childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka");
         request.setParameter("parent.fatherFullName", "Nishshanka Mudiyanselage Chandrasena Nishshanka");
         request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
-
-        request.setParameter("pageNo", "2");
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-        request.setParameter("confirmantRadio", "GUARDIAN");
-        request.setParameter("confirmant.confirmantNICorPIN", "GUARDIAN");
-        request.setParameter("confirmant.confirmantFullName", "GUARDIAN");
+        initAndExucute("/births/eprBirthConfirmation.do",session);
 
         request.setParameter("pageNo", "3");
-       
-        //testing for Approve Button
+        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+        request.setParameter("confirmantRadio", "GUARDIAN");
+        request.setParameter("confirmant.confirmantNICorPIN", "853303399v");
+        request.setParameter("confirmant.confirmantFullName", "කැලුම් කොඩිප්පිලි");
+        request.setParameter("confirmant.confirmantSignDate","2010-07-21T00:00:00+05:30");
+        initAndExucute("/births/eprBirthConfirmation.do",session);
+
+        session = registerAction.getSession();
         request.setParameter("confirmationApprovalFlag","true");
         request.setParameter("bdId","165");
-        proxy = getActionProxy("/births/eprConfrimationChangesDirectApproval.do");
+        approvalinit("/births/eprConfrimationChangesDirectApproval.do",session);
+        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
+        ActionContext.getContext().setSession(session);
+        try {
+            proxy.execute();
+        } catch (Exception e) {
+            logger.error("Handle Error {} : {}", e.getMessage(), e);
+        }
+
+        logger.debug("Status of the tested data : {}",registerAction.getRegister().getStatus().ordinal());
+
+        session = registerAction.getSession();
+        request.setParameter("directPrintBirthCertificate","true");
+        request.setParameter("bdId","165");
+        initAndExucute("/births/eprBirthCertificatDirectPrint.do",session);
+        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+//        logger.debug("Status of the tested data : {}",registerAction.getRegister().getStatus().ordinal());
+    }
+    private void approvalinit(String mapping,Map session){
+        proxy = getActionProxy(mapping);
         BirthRegisterApprovalAction approvalAction = (BirthRegisterApprovalAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
@@ -174,20 +176,5 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
             logger.error("Handle Error {} : {}", e.getMessage(), e);
         }
         assertEquals("No Action erros.", 0, approvalAction.getActionErrors().size());
-
-        request.setParameter("directPrintBirthCertificate","true");
-        request.setParameter("bdId","165");
-        proxy = getActionProxy("/births/eprBirthCertificatDirectPrint.do");
-        registerAction = (BirthRegisterAction) proxy.getAction();
-        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
-        ActionContext.getContext().setSession(session);
-        try {
-            proxy.execute();
-        } catch (Exception e) {
-            logger.error("Handle Error {} : {}", e.getMessage(), e);
-        }
-        assertEquals("No Action erros.", 0, approvalAction.getActionErrors().size());
-        logger.debug("Status of the tested data : {}",registerAction.getRegister().getStatus().ordinal());
     }
-
 }
