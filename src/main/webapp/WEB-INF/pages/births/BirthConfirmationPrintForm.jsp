@@ -18,8 +18,8 @@
             // set page orientation.
             jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
             // set margins.
-            jsPrintSetup.setOption('marginTop', 10);
-            jsPrintSetup.setOption('marginLeft', 15);
+            jsPrintSetup.setOption('marginTop', 0);
+            jsPrintSetup.setOption('marginLeft', 20);
 
 
             // set page header

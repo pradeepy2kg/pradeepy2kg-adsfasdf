@@ -181,22 +181,14 @@
             <td height="120px">නම <br>பெயர் <br>Name
             </td>
             <td colspan="5" class="bc-name" style="font-size:12pt">
-                <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/><br>
-                අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ  සේනානායක සේනානායක රාජපක්ෂ
-රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන<br>අංගම්මන රන්පන්හිඳ සමරදිවාකර විකසේනානායක ්‍රමසිංහ සේනානායක රාජපක්ෂ
-රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
+                <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
             <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
             <td colspan="5" class="bc-name" style="font-size:12pt">
-                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/> <br>
-                ANGAMMANA RANPANHINDA SAMARADIVAKARA WICKRAMASINGHE ILLANKONE SENANAYAKE
-RAJAPAKSE RAJAKARUNA WASALA MUDIYANSE RALAHAMILAGE LAKSHMAN BANDARA
-ANGAMMANA<br>ANGAMMANA RANPANHINDA SAMARADIVAKARA WICKRAMASINGHE ILLANKONE SENANAYAKE
-RAJAPAKSE RAJAKARUNA WASALA MUDIYANSE RALAHAMILAGE LAKSHMAN BANDARA
-ANGAMMANA
+                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             </td>
         </tr>
     </s:if>
@@ -204,10 +196,7 @@ ANGAMMANA
         <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
         <td colspan="5" class="bc-name" style="font-size:12pt">
-            <s:label name="" value="%{#request.parent.fatherFullName}"/><br>
-                අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ  සේනානායක සේනානායක රාජපක්ෂ
-රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන<br>අංගම්මන රන්පන්හිඳ සමරදිවාකර විකසේනානායක ්‍රමසිංහ සේනානායක රාජපක්ෂ
-රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
+            <s:label name="" value="%{#request.parent.fatherFullName}"/>
         </td>
     </tr>
     <tr>
@@ -227,10 +216,7 @@ ANGAMMANA
             <br> Mother's Full Name
         </td>
         <td colspan="5" class="bc-name" style="font-size:12pt">
-            <s:label name="" value="%{#request.parent.motherFullName}"/><br>
-                අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ  සේනානායක සේනානායක රාජපක්ෂ
-රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන<br>අංගම්මන රන්පන්හිඳ සමරදිවාකර විකසේනානායක ්‍රමසිංහ සේනානායක රාජපක්ෂ
-රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
+            <s:label name="" value="%{#request.parent.motherFullName}"/>
         </td>
     </tr>
     <tr>
