@@ -91,7 +91,8 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmation.do", session);
         session = action.getSession();
         assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
-
+        assertFalse("faild to set skipConfirmationChages in confirmation changes captured state",action.isSkipConfirmationChages());
+        
 
     }
 }
