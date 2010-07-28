@@ -258,9 +258,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         addActionError(getText("cp3.confirmation.changes.invalid.operation"));
                         return ERROR;
                     } else {
-                        service.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf, user);
-                        //todo meaning ful message should be given
-                        addActionMessage(getText("cp3.no.confirmation.changes.success"));
+                        if (bdf.getRegister().getStatus() != BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                            service.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf, user);
+                            addActionMessage(getText("cp3.no.confirmation.changes.success"));
+                        } else {
+                            service.captureLiveBirthConfirmationChanges(bdf, user);
+                            allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
+                            addActionMessage(getText("cp3.confirmation.changes.success"));
+                            //this is set to false because not to allow directly print the certificate it should have to approve
+                            skipConfirmationChages=false; 
+                        }
                     }
                 } else {
                     service.captureLiveBirthConfirmationChanges(bdf, user);
@@ -460,6 +467,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String skipConfirmationChanges() {
         BirthDeclaration bdf;
+        logger.debug("Skipping Confirmation Changes for bdId {}", bdId);
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         populate(bdf);
         return "form2";

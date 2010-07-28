@@ -46,7 +46,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         try {
             result = proxy.execute();
         } catch (NullPointerException e) {
-            logger.error("non fatal proxy execution error", e.getMessage());
+            logger.error("non fatal proxy execution error", e.getMessage(),e);
         }
         logger.debug("result for mapping {} is {}", mapping, result);
         return result;
@@ -526,12 +526,11 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         DateFormat formatter;
         Date date = null;
         try {
-            //String str_date="11-June-07";
             formatter = new SimpleDateFormat("yy-MMM-dd");
-            date = (Date) formatter.parse(str_date);
+            date = formatter.parse(str_date);
             logger.debug("date is {}", date);
         } catch (ParseException e) {
-            logger.error("Exception :", e);
+            logger.error("Exception ", e);
         }
         return date;
     }
