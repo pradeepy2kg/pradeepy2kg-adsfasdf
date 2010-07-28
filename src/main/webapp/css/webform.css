@@ -1619,24 +1619,27 @@
 
 }
 
-
-#adoption-registration-form-outer{width:1030px;background: #ffffff;padding: 10px;}
+/*css style for adoption registration pages*/
+#adoption-registration-home-outer{width:1030px;padding: 10px;}
+#adoption-registration-form-outer{width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
 .adoption-form-submit{margin:10px 0 10px 5px; text-transform:capitalize; width:112px; height:31px; border:none;float:right;text-align:center;}
 .adoption-form-submit a{text-decoration:none; line-height:30px; color:#000;}
 
-.adoption-reg-form-01-header-table {width:100%; border-left:none;}
+.adoption-reg-form-header-table {width:100%; border-left:none;font-size:12pt;text-align:center;margin-bottom:10px;}
+
+.adoption-reg-form-01-table01{width:100%;border-left:1px solid #000;border-top:1px solid #000;margin-bottom:10px;}
 .adoption-reg-form-01-table01 td {border-right:1px solid #000;border-bottom:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-01-table01 textarea{margin:5px;width:90%;margin-left:10px;}
-.adoption-reg-form-01-table01 input {margin:5px;width:90%;;margin-left:10px;}
+.adoption-reg-form-01-table01 textarea{margin:5px;width:94%;margin-left:10px;}
+.adoption-reg-form-01-table01 input {margin:5px;width:94%;;margin-left:10px;}
 
-.adoption-reg-form-01-table01{width:100%;border-left:1px solid #000;border-top:1px solid #000}
-.adoption-reg-form-02-table01 {width:100%;border-left:1px solid #000;border-top:1px solid #000}
+
+.adoption-reg-form-02-table01 {width:100%;border-left:1px solid #000;border-top:1px solid #000;margin-bottom:10px;}
 .adoption-reg-form-02-table01 td {border-right:1px solid #000;border-bottom:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-02-table01 textarea{margin:5px;width:90%;;margin-left:10px;}
-.adoption-reg-form-02-table01 input {margin:5px;width:90%;;margin-left:10px;}
+.adoption-reg-form-02-table01 textarea{margin:5px;width:94%;;margin-left:10px;}
+.adoption-reg-form-02-table01 input {margin:5px;width:94%;;margin-left:10px;}
 
 
-.adoption-reg-form-03-table01 {width:100%;border-left:1px solid #000;border-top:1px solid #000}
+.adoption-reg-form-03-table01 {width:100%;border-left:1px solid #000;border-top:1px solid #000;margin-bottom:10px;}
 .adoption-reg-form-03-table01 td {border-right:1px solid #000;border-bottom:1px solid #000;margin-bottom:10px;}
-.adoption-reg-form-03-table01 textarea{margin:5px;width:90%;;margin-left:10px;}
-.adoption-reg-form-03-table01 input {margin:5px;width:90%;;margin-left:10px;}
+.adoption-reg-form-03-table01 textarea{margin:5px;width:94%;;margin-left:10px;}
+.adoption-reg-form-03-table01 input {margin:5px;width:94%;;margin-left:10px;}
