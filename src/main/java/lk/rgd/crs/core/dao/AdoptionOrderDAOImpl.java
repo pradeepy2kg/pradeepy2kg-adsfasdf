@@ -39,7 +39,6 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      * @inheritDoc
      */
     public AdoptionOrder getById(long adoptionIdUKey) {
-        logger.debug("Get BDF by ID : {}", adoptionIdUKey);
         return em.find(AdoptionOrder.class, adoptionIdUKey);
     }
 
