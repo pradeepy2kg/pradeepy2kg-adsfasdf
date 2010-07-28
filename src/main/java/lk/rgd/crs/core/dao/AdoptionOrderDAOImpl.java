@@ -2,13 +2,11 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.common.core.dao.BaseDAO;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import javax.persistence.Query;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -46,7 +46,7 @@ import java.util.Date;
 //        "WHERE bdf.register.status = 2 " +
 //        "AND bdf.register.dateOfRegistration < :date"),
 //
-//    @NamedQuery(name = "findAll", query = "SELECT bdf FROM BirthDeclaration bdf")
+    @NamedQuery(name = "findAll", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
