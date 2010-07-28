@@ -535,4 +535,11 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         return date;
     }
 
+
+    public void testBirthDeclaratinInit() throws Exception {
+     Map session= login("rg", "password");
+        request.setParameter("bdId", "168");
+      // initAndExucute("/births/eprBirthRegistrationInit.do",session);
+    }
+
 }

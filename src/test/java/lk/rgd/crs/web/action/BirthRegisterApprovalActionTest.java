@@ -8,8 +8,10 @@ import com.opensymphony.xwork2.ActionContext;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Locale;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import lk.rgd.crs.web.WebConstants;
 
@@ -21,10 +23,9 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     private ActionProxy proxy;
     private BirthRegisterApprovalAction action;
     private LoginAction loginAction;
-    private Map session = new HashMap<String, Object>();
 
 
-    private String initAndExucute(String mapping) throws Exception {
+    private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         action = (BirthRegisterApprovalAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -32,8 +33,8 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         String result = null;
         try {
             result = proxy.execute();
-        } catch (Exception e) {
-            logger.error("proxy execution error", e);
+        } catch (NullPointerException e) {
+            logger.error("non fatal proxy execution error", e.getMessage());
         }
         logger.debug("result for mapping {} is {}", mapping, result);
         return result;
@@ -62,17 +63,18 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
      *
      * @throws Exception
      */
+
     public void testApprove() throws Exception {
-        login("rg", "password");
-        request.setParameter("bdId", "167");
-        initAndExucute("/births/eprApproveBirthDeclaration.do");
+        Map session = login("rg", "password");
+        request.setParameter("bdId", "168");
+        initAndExecute("/births/eprApproveBirthDeclaration.do", session);
         assertEquals("No Action errors", 0, action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
         //recode 167 is live birth
         assertEquals("Live birth", true, action.isLiveBirth());
-        //this recode have 3 warnings
-        //todo fix this : assertEquals("Number of warnings ", 3, action.getWarnings().size());
+
+        //   assertEquals("Number of warnings ", 3, action.getWarnings().size());
         //todo improve approval with out warning
         //todo try to approve with a user dont have permission
 
@@ -80,33 +82,33 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     public void testApproveIgnoringWarning() throws Exception {
-        login("rg", "password");
+        Map session = login("rg", "password");
         request.setParameter("bdId", "167");
         request.setParameter("ignoreWarning", "true");
         request.setParameter("confirmationApprovalFlag", "false");
-        initAndExucute("/births/eprIgnoreWarning.do");
+        initAndExecute("/births/eprIgnoreWarning.do", session);
         assertNotNull(" Action errors", action.getActionErrors().size());
-        commanApproval();
+        commanApproval(session);
     }
 
     public void testApproveIgnoreWarningsDirect() throws Exception {
         //cannot approve it already aproved
-        login("rg", "password");
+        Map session = login("rg", "password");
         request.setParameter("bdId", "167");
         request.setParameter("ignoreWarning", "true");
         request.setParameter("confirmationApprovalFlag", "false");
         request.setParameter("directApprovalFlag", "true");
-        initAndExucute("/births/eprIgnoreWarning.do");
-        commanApproval();
+        initAndExecute("/births/eprIgnoreWarning.do", session);
+        commanApproval(session);
         assertEquals("Request direct approval", true, action.isDirectApprovalFlag());
     }
 
     public void testReject() throws Exception {
         //cannot reject 167 is APROVED
-        login("rg", "password");
+        Map session = login("rg", "password");
         request.setParameter("bdId", "167");
         request.setParameter("comments", "test reject comment");
-        initAndExucute("/births/eprRejectBirthDeclaration.do");
+        initAndExecute("/births/eprRejectBirthDeclaration.do", session);
         assertNotNull("Action errors", action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
@@ -115,33 +117,57 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
 
     public void testDelete() throws Exception {
         //cannot delete recode 167 so there should be error
-        login("rg", "password");
+        Map session = login("rg", "password");
         request.setParameter("bdId", "167");
-        initAndExucute("/births/eprDeleteApprovalPending.do");
+        initAndExecute("/births/eprDeleteApprovalPending.do", session);
         assertNotNull("Action errors", action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
     }
 
     //todo implement after removing bug of serial numberr duplication
-/*
+
+
     public void testFilter() throws Exception {
         //foltering by serail number
-        //todo filter by date 
-        login("rg", "password");
+        //todo filter by date
+        Map session = login("rg", "password");
         request.setParameter("confirmationApprovalFlag", "false");
-        request.setParameter("bdfSerialNo", "15034");
+        request.setParameter("bdfSerialNo", "16005");
         request.setParameter("birthDivisionId", "10");
-        initAndExucute("/births/eprApprovalRefresh.do");
+        initAndExecute("/births/eprApprovalRefresh.do", session);
         assertEquals("No Action Errors", 0, action.getActionErrors().size());
     }
-*/
+
+    public void testApproveListOfEntries() throws Exception {
+        Map session = login("rg", "password");
+        request.setParameter("index", new String[]{"16005", "16004", "16003"});
+        initAndExecute("/births/eprApproveBulk.do", session);
+        assertEquals("No Action errors ", 0, action.getActionErrors().size());
+        assertEquals("Request index", 3, action.getIndex().length);
+        //   populateList();
+    }
+
+    private void populateList(Map session) {
+        //check users preferd language
+        Locale userLan = (Locale) session.get(WebConstants.SESSION_USER_LANG);
+        assertNotNull("Session User Local Presence", userLan);
+        //check user is not null
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        assertNotNull("Session User", user);
+        //check initial district are loaded properly
+        assertNotNull("Response User districtList", action.getDistrictList());
+        //check initial dsDivision are loaded
+        assertNotNull("Response User init dsdivision list", action.getDsDivisionList());
+        //check intial bdDivision
+        assertNotNull("Response User init bddivision list", action.getBdDivisionList());
+    }
 
     //todo implement a method to load table
     //todo implement a mothod to check permission
 
 
-    private void commanApproval() {
+    private void commanApproval(Map session) {
 
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
@@ -151,14 +177,14 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         assertEquals("Is live birth", true, action.isLiveBirth());
     }
 
-    private void login(String userName, String password) throws Exception {
+    private Map login(String userName, String password) throws Exception {
         request.setParameter("userName", userName);
         request.setParameter("password", password);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
         loginAction = (LoginAction) proxy.getAction();
         ActionContext.getContext().setSession(new HashMap<String, Object>());
         proxy.execute();
-        session = loginAction.getSession();
+        return loginAction.getSession();
     }
 
 }

@@ -22,11 +22,9 @@ public class PrintActionTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(PrintActionTest.class);
     private ActionProxy proxy;
     private PrintAction action;
-    private Map session = new HashMap<String, Object>();
     private LoginAction loginAction;
 
-    private String initAndExucute(String mapping) throws Exception {
-
+    private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         action = (PrintAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -34,8 +32,8 @@ public class PrintActionTest extends CustomStrutsTestCase {
         String result = null;
         try {
             result = proxy.execute();
-        } catch (Exception e) {
-            logger.error("proxy execution error", e);
+        } catch (NullPointerException e) {
+            logger.error("non fatal proxy execution error", e.getMessage());
         }
         logger.debug("result for mapping {} is {}", mapping, result);
         return result;
@@ -62,11 +60,11 @@ public class PrintActionTest extends CustomStrutsTestCase {
 
     public void testLoadBirthCertificatePrintList() throws Exception {
         //loggin as a rg
-        login("rg", "password");
-        initAndExucute("/births/eprBirthCertificateList.do");
+        Map session = login("rg", "password");
+        initAndExecute("/births/eprBirthCertificateList.do", session);
         //check no action errors
         assertEquals("No Action erros.", 0, action.getActionErrors().size());
-        populateList();
+        populateList(session);
 
         logger.info("testing LoadBirthCertificatePrintList completed");
 
@@ -74,11 +72,11 @@ public class PrintActionTest extends CustomStrutsTestCase {
 
     public void testBirthConfirmationPrintList() throws Exception {
         //loggin as a rg
-        login("rg", "password");
-        initAndExucute("/births/eprBirthConfirmationPrintList.do");
+        Map session = login("rg", "password");
+        initAndExecute("/births/eprBirthConfirmationPrintList.do", session);
         //check no action errors
         assertEquals("No Action erros.", 0, action.getActionErrors().size());
-        populateList();
+        populateList(session);
 
         logger.info("testing LoadBirthCertificatePrintList completed");
 
@@ -86,43 +84,43 @@ public class PrintActionTest extends CustomStrutsTestCase {
 
     public void testFilterPrintList() throws Exception {
         //login and init as rg
-        login("rg", "password");
+        Map session = login("rg", "password");
         //setting data to execute method
         //set bdDivision id =1 (Colombo Fort (Medical))  and printed false
         request.setParameter("birthDivisionId", "1");
         request.setParameter("printed", "false");
-        initAndExucute("/births/eprFilterBirthCetificateList.do");
-        comman();
+        initAndExecute("/births/eprFilterBirthCetificateList.do", session);
+        comman(session);
         //testing invalide data
-        filterPrintListWithInvalideData();
+        filterPrintListWithInvalideData(session);
 
         logger.info("testing FilterPrintList completed");
     }
 
     public void testPrintBulkOfEntries() throws Exception {
-        login("rg", "password");
+        Map session = login("rg", "password");
         request.setParameter("printed", "false");
         String[] index = new String[]{"164"};
         request.setParameter("index", index);
         request.setParameter("birthDivisionId", "1");
-        initAndExucute("/births/eprBirthCertificateBulkPrint.do");
-        comman();
+        initAndExecute("/births/eprBirthCertificateBulkPrint.do", session);
+        comman(session);
         //check for invalide data
 
         logger.info("testing LoadBirthCertificatePrintList completed");
     }
 
     public void testNext() throws Exception {
-        login("rg", "password");
+        Map session = login("rg", "password");
         commanPreNext();
-        initAndExucute("/births/eprPrintNext.do");
+        initAndExecute("/births/eprPrintNext.do", session);
         commanPreNextCheck();
     }
 
     public void testPrevious() throws Exception {
-        login("rg", "password");
+        Map session = login("rg", "password");
         commanPreNext();
-        initAndExucute("/births/eprPrintPrevious.do");
+        initAndExecute("/births/eprPrintPrevious.do", session);
         commanPreNextCheck();
     }
 
@@ -142,7 +140,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
         logger.info("page number : {}", action.getPageNo());
     }
 
-    private void comman() {
+    private void comman(Map session) {
         //check no action errors
         assertEquals("No Action erros.", 0, action.getActionErrors().size());
         //test cases
@@ -154,13 +152,13 @@ public class PrintActionTest extends CustomStrutsTestCase {
         assertEquals("Request printed", false, action.isPrinted());
 
         //check list population
-        populateList();
+        populateList(session);
     }
 
-    private void filterPrintListWithInvalideData() throws Exception {
+    private void filterPrintListWithInvalideData(Map session) throws Exception {
         request.setParameter("birthDivisionId", "0");
         request.setParameter("printed", "false");
-        initAndExucute("/births/eprFilterBirthCetificateList.do");
+        initAndExecute("/births/eprFilterBirthCetificateList.do", session);
         //check is there any action errors
         assertNotNull("Action errors ", action.getActionErrors());
     }
@@ -168,7 +166,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
     /**
      * this method test page loads after refresing or at begining
      */
-    private void populateList() {
+    private void populateList(Map session) {
         //check users preferd language
         Locale userLan = (Locale) session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", userLan);
@@ -183,14 +181,14 @@ public class PrintActionTest extends CustomStrutsTestCase {
         assertNotNull("Response User init bddivision list", action.getBdDivisionList());
     }
 
-    private void login(String userName, String password) throws Exception {
+    private Map login(String userName, String password) throws Exception {
         request.setParameter("userName", userName);
         request.setParameter("password", password);
         ActionProxy proxy = getActionProxy("/eprLogin.do");
         loginAction = (LoginAction) proxy.getAction();
         ActionContext.getContext().setSession(new HashMap<String, Object>());
         proxy.execute();
-        session = loginAction.getSession();
+        return loginAction.getSession();
     }
 
 
