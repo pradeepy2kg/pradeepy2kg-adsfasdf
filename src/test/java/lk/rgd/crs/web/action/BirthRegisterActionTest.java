@@ -431,7 +431,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         String result = initAndExecute("/births/eprStillBirthRegistrationInit.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth: ", bd.getRegister().isLiveBirth());
+        assertFalse("Not a live birth failed ", bd.getRegister().isLiveBirth());
         //assertEquals("form0", result);
 
         // Still birth page one
@@ -451,9 +451,14 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
-        assertEquals("Child Birth Division", 6, bd.getRegister().getBirthDivision().getBdDivisionUKey());
-        assertEquals("Date of registration", "Wed Jul 14 00:00:00 IST 2010", bd.getChild().getDateOfBirth().toString());
+        assertFalse("Not a live birth failed", bd.getRegister().isLiveBirth());
+        assertEquals("Register bdf serial no failed", (long)123, bd.getRegister().getBdfSerialNo());
+        assertEquals("Date of registration failed", "Wed Jul 14 00:00:00 IST 2010", bd.getRegister().getDateOfRegistration().toString());
+        assertEquals("Date of birth failed", "Wed Jul 14 00:00:00 IST 2010", bd.getChild().getDateOfBirth().toString());
+        assertEquals("Birth district Id failed", 1, bd.getRegister().getBirthDistrict().getDistrictUKey());
+        assertEquals("DSDivision Id failed", 2, bd.getRegister().getBirthDivision().getDsDivision().getDsDivisionUKey());
+        assertEquals("Child Birth Division failed", 6, bd.getRegister().getBirthDivision().getBdDivisionUKey());
+        assertEquals("Child Place of birth failed", "Colombo Fort (Medical)", bd.getChild().getPlaceOfBirth());
         assertEquals("No action errors", 0, action.getActionErrors().size());
         //assertEquals("form1", result);
 
