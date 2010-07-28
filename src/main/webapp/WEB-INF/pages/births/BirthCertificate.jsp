@@ -7,15 +7,42 @@
         .form-submit {
             display: none;
         }
+
+        td {
+            font-size: 11pt;
+        }
     }
 </style>
 
 <script type="text/javascript">
     function printPage() {
-        window.print();
-        var res = confirm(document.getElementById("printMessage").value);
-        if (res)
+        if (!jsPrintSetup) {
+            var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
+            if (option) {
+                window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
+            }
+        } else {
+            // set page orientation.
+            jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
+            // set margins.
+            jsPrintSetup.setOption('marginTop', 0);
+            jsPrintSetup.setOption('marginLeft', 20);
+
+
+            // set page header
+            jsPrintSetup.setOption('headerStrLeft', '');
+            jsPrintSetup.setOption('headerStrCenter', '');
+            jsPrintSetup.setOption('headerStrRight', '');
+            // set empty page footer
+            jsPrintSetup.setOption('footerStrLeft', '');
+            jsPrintSetup.setOption('footerStrCenter', '');
+            jsPrintSetup.setOption('footerStrRight', '');
+
+            jsPrintSetup.print();
+
+            var res = confirm(document.getElementById("printMessage").value);
             history.go(0);
+        }
     }
 </script>
 <div id="birth-certificate-outer">
@@ -153,23 +180,34 @@
         <tr>
             <td height="120px">නම <br>பெயர் <br>Name
             </td>
-            <td colspan="5" class="bc-name" style="font-size:10pt">
-                <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
+            <td colspan="5" class="bc-name" style="font-size:12pt">
+                <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/><br>
+                අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ  සේනානායක සේනානායක රාජපක්ෂ
+රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන<br>අංගම්මන රන්පන්හිඳ සමරදිවාකර විකසේනානායක ්‍රමසිංහ සේනානායක රාජපක්ෂ
+රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
             </td>
         </tr>
         <tr>
             <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
-            <td colspan="5" class="bc-name" style="font-size:10pt">
-                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
+            <td colspan="5" class="bc-name" style="font-size:12pt">
+                <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/> <br>
+                ANGAMMANA RANPANHINDA SAMARADIVAKARA WICKRAMASINGHE ILLANKONE SENANAYAKE
+RAJAPAKSE RAJAKARUNA WASALA MUDIYANSE RALAHAMILAGE LAKSHMAN BANDARA
+ANGAMMANA<br>ANGAMMANA RANPANHINDA SAMARADIVAKARA WICKRAMASINGHE ILLANKONE SENANAYAKE
+RAJAPAKSE RAJAKARUNA WASALA MUDIYANSE RALAHAMILAGE LAKSHMAN BANDARA
+ANGAMMANA
             </td>
         </tr>
     </s:if>
     <tr>
         <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:10pt">
-            <s:label name="" value="%{#request.parent.fatherFullName}"/>
+        <td colspan="5" class="bc-name" style="font-size:12pt">
+            <s:label name="" value="%{#request.parent.fatherFullName}"/><br>
+                අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ  සේනානායක සේනානායක රාජපක්ෂ
+රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන<br>අංගම්මන රන්පන්හිඳ සමරදිවාකර විකසේනානායක ්‍රමසිංහ සේනානායක රාජපක්ෂ
+රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
         </td>
     </tr>
     <tr>
@@ -188,8 +226,11 @@
             <br> தாயின் முழுப் பெயர்
             <br> Mother's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:10pt">
-            <s:label name="" value="%{#request.parent.motherFullName}"/>
+        <td colspan="5" class="bc-name" style="font-size:12pt">
+            <s:label name="" value="%{#request.parent.motherFullName}"/><br>
+                අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ  සේනානායක සේනානායක රාජපක්ෂ
+රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන<br>අංගම්මන රන්පන්හිඳ සමරදිවාකර විකසේනානායක ්‍රමසිංහ සේනානායක රාජපක්ෂ
+රාජකරුනා වාසල මුදියන්සේ රාලහාමිල්ලාගේ ලක්ෂ්මන් බණ්ඩාර අංගම්මන
         </td>
     </tr>
     <tr>
