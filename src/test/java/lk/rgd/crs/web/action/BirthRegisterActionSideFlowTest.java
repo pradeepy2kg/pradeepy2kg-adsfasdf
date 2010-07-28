@@ -78,6 +78,9 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertNotNull(action);
     }
 
+    /**
+     * Test BirthDeclaration adding in batch mode
+     */
     public void testAddNewBDFInBatchMode() throws Exception {
         Map session = login("chathuranga", "chathuranga");
 
@@ -145,25 +148,56 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
             batchBdf.getRegister().getBdfSerialNo());
         assertEquals("BDF date Of registration in session and DB are not equal", bdf.getRegister().getDateOfRegistration(),
             batchBdf.getRegister().getDateOfRegistration());
-        assertEquals("", bdf.getRegister().isLiveBirth(), batchBdf.getRegister().isLiveBirth());
-        assertEquals("", action.getBirthDistrictId(), batchBdf.getRegister().getBirthDistrict().getDistrictUKey());
-        assertEquals("", action.getDsDivisionId(), batchBdf.getRegister().getDsDivision().getDsDivisionUKey());
-        assertEquals("", action.getBirthDivisionId(), batchBdf.getRegister().getBirthDivision().getBdDivisionUKey());
-        assertEquals("", bdf.getRegister().getBirthDivision().getBdDivisionUKey(),
-            batchBdf.getRegister().getBirthDivision().getBdDivisionUKey());
-        assertEquals("", bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
-        assertEquals("", bdf.getNotifyingAuthority().getNotifyingAuthorityName(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityName());
-        assertEquals("", bdf.getNotifyingAuthority().getNotifyingAuthorityAddress(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
-        assertEquals("", bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate(), batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
-        logger.debug("Adding BDF autopopulated fields populated correctly");
-
-        
-        // TODO   not complete
-
-
-
+        assertEquals("BDF live birth type not matched", bdf.getRegister().isLiveBirth(), batchBdf.getRegister().isLiveBirth());
+        assertEquals("BDF District id miss match in action and session", action.getBirthDistrictId(),
+            batchBdf.getRegister().getBirthDistrict().getDistrictUKey());
+        assertEquals("BDF DS Division id miss match in action and session", action.getDsDivisionId(),
+            batchBdf.getRegister().getDsDivision().getDsDivisionUKey());
+        assertEquals("BDF Birth division id miss match in action and session",
+            action.getBirthDivisionId(), batchBdf.getRegister().getBirthDivision().getBdDivisionUKey());
+        assertEquals("BDF Birth division id miss match in previously added BDF and BDF in session",
+            bdf.getRegister().getBirthDivision().getBdDivisionUKey(), batchBdf.getRegister().getBirthDivision().getBdDivisionUKey());
+        assertEquals("BDF NotifyingAutho PIN miss match in previously added BDF and BDF in session",
+            bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
+        assertEquals("BDF NotifyingAutho Name miss match in previously added BDF and BDF in session",
+            bdf.getNotifyingAuthority().getNotifyingAuthorityName(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityName());
+        assertEquals("BDF NotifyingAutho Address miss match in previously added BDF and BDF in session",
+            bdf.getNotifyingAuthority().getNotifyingAuthorityAddress(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
+        assertEquals("BDF NotifyingAutho Sign Date miss match in previously added BDF and BDF in session",
+            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate(), batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+        logger.debug("Adding BDF auto populating fields populated correctly and Add new in batch mode passed");
+        deleteBDF(colomboBdDivision, serialNum);
     }
 
+
+    public void testBackButtonInBD() throws Exception {
+        Map session = login("chathuranga", "chathuranga");
+
+        long serialNum = 19000;
+        BDDivision colomboBdDivision = bdDivisionDAO.getBDDivisionByPK(1);
+
+        // get alredy entered BDF entry from DB, BDF with IDUKey 166 and this part used to skip first few steps of Bith
+        // Declaration
+        BirthDeclaration bdf = getBDFById(166);
+        assertNotNull("BirthDeclaration failed to be fetched from the DB", bdf);
+        bdf.setIdUKey(0);
+        bdf.getRegister().setBdfSerialNo(serialNum);
+        bdf.getRegister().setBirthDivision(colomboBdDivision);
+        assertEquals("session size incorrect", 3, session.size());
+        assertNull("Birth Declaration Bean can not exist in the session", session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+        assertEquals("session size incorrect", 4, session.size());
+        assertNotNull("Birth Declaration Bean does not exist in the session", session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+    }
+
+    /**
+     * Used to test login to the system
+     *
+     * @param userName the user Id
+     * @param password the password
+     * @return user session
+     * @throws Exception
+     */
     private Map login(String userName, String password) throws Exception {
         request.setParameter("userName", userName);
         request.setParameter("password", password);
@@ -174,11 +208,27 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         return loginAction.getSession();
     }
 
+    /**
+     * Return BirthDeclaration for a given IdUkey
+     *
+     * @param serial Birth Declarion Id for the given declaration
+     * @return the BDF if found, and the user has access to the record
+     */
     private BirthDeclaration getBDFById(long serial) {
         return birthDeclarationDAO.getById(serial);
     }
 
-//    private BirthDeclaration getBDFByBDDivisionAndSerial(BDDivision bdDivision, long serial) {
-//        return birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial);
-//    }
+    /**
+     * Delete Birth Declaration by BDDivision and serial number
+     *
+     * @param bdDivision
+     * @param serial
+     */
+    private void deleteBDF(BDDivision bdDivision, long serial) {
+        try {
+            birthDeclarationDAO.deleteBirthDeclaration(
+                birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial).getIdUKey());
+        } catch (Exception e) {
+        }
+    }
 }
