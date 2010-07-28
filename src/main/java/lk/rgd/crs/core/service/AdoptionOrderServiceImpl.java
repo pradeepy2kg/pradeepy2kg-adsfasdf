@@ -21,22 +21,41 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     public AdoptionOrder getById(long adoptionId) {
+        //todo access priviledges
         return adoptionOrderDAO.getById(adoptionId);
     }
 
     public void addAdoptionOrder(AdoptionOrder adoption) {
+        //todo security validations, access priviledges and business validations
         adoptionOrderDAO.addAdoptionOrder(adoption);
     }
 
     public void updateAdoptionOrder(AdoptionOrder adoption) {
+        //todo security validations, access priviledges and business validations
         adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
 
     public List<AdoptionOrder> findAll() {
+        //todo access priviledges
         return adoptionOrderDAO.findAll();
     }
 
     public void deleteAdoptionOrder(long idUKey) {
+        //todo security validations, access priviledges and business validations
         adoptionOrderDAO.deleteAdoptionOrder(idUKey);
+    }
+
+    public void approveAdoptionOrder(long idUKey) {
+        //todo security validations, access priviledges and business validations
+        AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
+        adoption.setStatus(AdoptionOrder.State.APPROVED);
+        adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    public void rejectAdoptionOrder(long idUKey) {
+        //todo security validations, access priviledges and business validations
+        AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
+        adoption.setStatus(AdoptionOrder.State.REJECTED);
+        adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
 }
