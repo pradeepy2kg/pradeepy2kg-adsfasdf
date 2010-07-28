@@ -60,7 +60,7 @@ public final class Permission {
     public static final int PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS = 89;
     public static final int PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT = 90;
     public static final int PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS = 91;
-    public static final int PAGE_ADVANCE_SEARCH = 92;
+    public static final int PAGE_ADVANCE_SEARCH_BIRTHS = 92;
     public static final int DELETE_USER = 93;
     public static final int PAGE_USER_CREATION = 94;
     public static final int VIEW_SELECTED_USERS = 95;
