@@ -7,18 +7,22 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.domain.AdoptionOrder;
+
 /**
- * Created by IntelliJ IDEA.
- * User: tharanga
- * Date: Jul 27, 2010
- * Time: 3:49:01 PM
- * To change this template use File | Settings | File Templates.
+ * Action class to handle Adoption flow in birth module
  */
 public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(AdoptionAction.class);
-
     private Map session;
+    private final AdoptionOrderService service;
+    private AdoptionOrder adoption;
+
+    AdoptionAction(AdoptionOrderService service) {
+        this.service = service;
+    }
 
     public String adoptionDeclaration() {
         return SUCCESS;
@@ -43,5 +47,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public Map getSession() {
         return session;
+    }
+
+    public AdoptionOrder getAdoption() {
+        return adoption;
+    }
+
+    public void setAdoption(AdoptionOrder adoption) {
+        this.adoption = adoption;
     }
 }
