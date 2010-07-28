@@ -9,7 +9,9 @@
     <ul class="menu">
         <s:iterator value="#session.allowed_menue" id="menue">
             <s:if test="%{value.size > 0}">
-                <s:if test="%{#session.context==key}"><li class="expand"></s:if><s:else><li></s:else>
+                <s:if test="%{#session.context==key}">
+                    <li class="expand">
+                </s:if><s:else><li></s:else>
 
                 <s:if test="%{key=='0births'}">
                     <s:a href="/popreg/births/eprBirthRegistrationHome.do">
@@ -41,7 +43,9 @@
                     <a href="#"><s:label value="%{getText('category_prs')}"/></a>
                 </s:if>
                 <s:if test="%{key == '7adoption'}">
-                    <a href="#"><s:label value="%{getText('category_adoption')}"/></a>
+                    <s:a href="">
+                        <s:label value="%{getText('category_adoption')}"/>
+                    </s:a>
                 </s:if>
 
                 <ul class="acitem">
@@ -55,8 +59,8 @@
                         </s:if>
                     </s:iterator>
                 </ul>
-            </li>
-        </s:if>
+                </li>
+            </s:if>
         </s:iterator>
     </ul>
 </div>

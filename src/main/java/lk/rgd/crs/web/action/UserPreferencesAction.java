@@ -130,11 +130,6 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         return "error";
     }
 
-    public String adoptionDeclaration() {
-        logger.info("load the adoptionDeclaration page");
-        return "form"+pageNo;
-    }
-
     public String back() {
         return this.userPreferenceInit();
     }
