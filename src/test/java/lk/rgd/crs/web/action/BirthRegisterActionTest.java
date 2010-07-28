@@ -70,7 +70,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertNotNull(action);
     }
 
-    public void testBirthDeclaratinInitializer() throws Exception {
+    public void testAddBirthDeclaration() throws Exception {
         Object obj;
         Map session = login("rg", "password");
         initAndExecute("/births/eprBirthRegistrationInit.do", session);
@@ -237,7 +237,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
     }
 
-    public void testBirthDeclarationInitializerInEditMode() throws Exception {
+    public void testBirthDeclarationEditMode() throws Exception {
         Map session = login("rg", "password");
         request.setParameter("bdId", "166");
         initAndExecute("/births/eprBirthRegistrationInit.do", session);
@@ -534,12 +534,4 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         }
         return date;
     }
-
-
-    public void testBirthDeclaratinInit() throws Exception {
-     Map session= login("rg", "password");
-        request.setParameter("bdId", "168");
-      // initAndExucute("/births/eprBirthRegistrationInit.do",session);
-    }
-
 }
