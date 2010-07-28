@@ -314,6 +314,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String directApprove() {
         bdf = service.getById(bdId, user);
+        logger.debug("Ds division : {} ",bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
         liveBirth = bdf.getRegister().isLiveBirth();
         boolean caughtException = false;
         try {

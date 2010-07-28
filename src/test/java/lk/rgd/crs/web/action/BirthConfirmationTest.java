@@ -33,6 +33,7 @@ import java.util.Calendar;
 public class BirthConfirmationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(BirthConfirmationTest.class);
     private BirthRegisterAction registerAction;
+    BirthRegisterApprovalAction approvalAction;
     private ActionProxy proxy;
 
     private Map UserLogin(String username, String passwd) throws Exception {
@@ -63,7 +64,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
     }
 
     public void testBirthConfirmationInitMappingProxy() throws Exception {
-        Map session =UserLogin("rg", "password");
+        Map session =UserLogin("ashoka", "ashoka");
         ActionMapping mapping = getActionMapping("/births/eprBirthConfirmationInit.do");
         assertNotNull("Mapping not null {}", mapping);
         assertEquals("/births", mapping.getNamespace());
@@ -77,6 +78,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         BirthDeclaration bdf, bcf;
         bdf = (BirthDeclaration) (session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
         bcf = (BirthDeclaration) (session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+        //request.setAttribute("",bdf);
         assertNotNull("Session bdf presence", bdf);
         assertNotNull("Session bcf presence", bcf);
         assertEquals("confirmation changes has been captured", 5, bdf.getRegister().getStatus().ordinal());
@@ -101,20 +103,13 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         assertNotNull("Child date of birth ", bdf.getChild().getDateOfBirth());
         assertEquals("Child place of birth ", "රෝහලේදී", bdf.getChild().getPlaceOfBirth());
         assertEquals("Child place of birth ", "In Hospital", bdf.getChild().getPlaceOfBirthEnglish());
-        assertEquals("Father NIC ", "855012132V", bdf.getParent().getFatherNICorPIN());
-        assertEquals("Mother NIC ", "855012132V", bdf.getParent().getMotherNICorPIN());
-        assertEquals("Father Race ", 1, bdf.getParent().getFatherRace().getRaceId());
-        assertEquals("Mother Race ", 1, bdf.getParent().getMotherRace().getRaceId());
-        assertEquals("Parent Married ", 1, bdf.getMarriage().getParentsMarried().intValue());
-        assertEquals("Child full Name in English", "ANGAMMANA RANPANHINDA SAMARADIVAKARA WICKRAMASINGHE ILLANKONE SENANAYAKE RAJAPAKSE", bdf.getChild().getChildFullNameEnglish());
-        assertEquals("Child full Name in OfficialLang", "අංගම්මන රන්පන්හිඳ සමරදිවාකර වික්‍රමසිංහ ඉලන්කෝන් සේනානායක රාජපක්ෂ", bdf.getChild().getChildFullNameOfficialLang());
-        assertEquals("Father Full Name", "කුසුමාවතී රාම්‍යා ජයසිංහ", bdf.getParent().getFatherFullName());
-        assertEquals("Mother Full Name", "කුසුමාවතී රාම්‍යා ජයසිංහ", bdf.getParent().getMotherFullName());
-
+       
+        session = registerAction.getSession();
         request.setParameter("pageNo", "1");
-        
         request.setParameter("child.dateOfBirth","2010-07-21T00:00:00+05:30");
-        request.setParameter("birthDivisionId", "3");
+        request.setParameter("birthDistrictId", "11");
+        request.setParameter("dsDivisionId", "3");
+        request.setParameter("birthDivisionId", "1");
         request.setParameter("child.placeOfBirth", "කොළඹ කොටුව");
         request.setParameter("child.placeOfBirthEnglish", "colombo port");
         request.setParameter("fatherRace", "3");
@@ -123,8 +118,13 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherNICorPIN", "666666666v");
         request.setParameter("child.childGender", "1");
         initAndExucute("/births/eprBirthConfirmation.do",session);
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
         session = registerAction.getSession();
+        bdf = (BirthDeclaration) (session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
+        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+
+        assertNotNull("child date of birth",registerAction.getChild().getDateOfBirth());
+        assertNotNull("child gender ",registerAction.getChild().getChildGender());
+        logger.debug("child date of birth : {}",registerAction.getChild().getDateOfBirth()) ;
 
         assertNotNull("Session bdf presence", bdf);
         assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
@@ -135,46 +135,36 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         request.setParameter("parent.fatherFullName", "Nishshanka Mudiyanselage Chandrasena Nishshanka");
         request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
         initAndExucute("/births/eprBirthConfirmation.do",session);
+        session = registerAction.getSession();
+        bdf = (BirthDeclaration) (session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
 
         request.setParameter("pageNo", "3");
         assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
         request.setParameter("confirmantRadio", "GUARDIAN");
         request.setParameter("confirmant.confirmantNICorPIN", "853303399v");
         request.setParameter("confirmant.confirmantFullName", "කැලුම් කොඩිප්පිලි");
-        request.setParameter("confirmant.confirmantSignDate","2010-07-21T00:00:00+05:30");
+        request.setParameter("confirmant.confirmantSignDate","2010-07-28T00:00:00+05:30");
+        request.setParameter("skipConfirmationChanges", "false");
         initAndExucute("/births/eprBirthConfirmation.do",session);
-
         session = registerAction.getSession();
-        request.setParameter("confirmationApprovalFlag","true");
-        request.setParameter("bdId","165");
+        assertNotNull("confirment full name ", registerAction.getConfirmant().getConfirmantFullName());
+
+        request.setParameter("confirmationApprovalFlag", "true");
+        request.setParameter("bdId", "165");
+        request.setParameter("directApprovalFlag", "true");
         approvalinit("/births/eprConfrimationChangesDirectApproval.do",session);
-        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
-        ActionContext.getContext().setSession(session);
-        try {
-            proxy.execute();
-        } catch (Exception e) {
-            logger.error("Handle Error {} : {}", e.getMessage(), e);
-        }
-
-        logger.debug("Status of the tested data : {}",registerAction.getRegister().getStatus().ordinal());
-
         session = registerAction.getSession();
-        request.setParameter("directPrintBirthCertificate","true");
-        request.setParameter("bdId","165");
-        initAndExucute("/births/eprBirthCertificatDirectPrint.do",session);
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
-//        logger.debug("Status of the tested data : {}",registerAction.getRegister().getStatus().ordinal());
+
+        assertNotNull("Ds division ", bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
     }
     private void approvalinit(String mapping,Map session){
         proxy = getActionProxy(mapping);
-        BirthRegisterApprovalAction approvalAction = (BirthRegisterApprovalAction) proxy.getAction();
-        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
+        approvalAction = (BirthRegisterApprovalAction) proxy.getAction();
         ActionContext.getContext().setSession(session);
         try {
             proxy.execute();
         } catch (Exception e) {
             logger.error("Handle Error {} : {}", e.getMessage(), e);
         }
-        assertEquals("No Action erros.", 0, approvalAction.getActionErrors().size());
     }
 }
