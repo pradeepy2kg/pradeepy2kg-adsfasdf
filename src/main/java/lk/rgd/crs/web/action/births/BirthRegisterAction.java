@@ -264,6 +264,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                 } else {
                     service.captureLiveBirthConfirmationChanges(bdf, user);
+                    logger.debug("Mother name : {} ",bdf.getParent().getMotherFullName());
                     //setting permission for BirthConfirmationDetails page
                     allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
                     addActionMessage(getText("cp3.confirmation.changes.success"));
@@ -271,6 +272,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 //jpa gives the newly added entries bdId instead of archived entry
                 bdId = bdf.getIdUKey();
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+                logger.debug("Ds division : {} ",bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
         }
 
         if (pageNo != 3) {

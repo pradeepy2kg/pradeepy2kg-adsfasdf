@@ -666,7 +666,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         if (child.getChildFullNameEnglish() != null) {
             child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
         }
-
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth confirmation",
