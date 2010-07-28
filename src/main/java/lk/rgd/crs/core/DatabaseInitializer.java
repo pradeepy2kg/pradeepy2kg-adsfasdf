@@ -242,7 +242,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
 
             //Search
-            bs.set(Permission.PAGE_ADVANCE_SEARCH);
+            bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);
             bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
@@ -332,7 +332,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_ADVANCE_SEARCH_PRS);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
-            bs.set(Permission.PAGE_ADVANCE_SEARCH);
+            bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_SEARCH);
 
             //User preferance

@@ -268,7 +268,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL, new Link("birth_confirmation_approval.label", "/popreg/births/", "eprBirthConfirmationApproval.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT, new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do"));
         linkPermission.put(Permission.PAGE_STILL_BIRTH_REGISTRATION, new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do"));
-        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH, new Link("advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_BIRTHS, new Link("advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE, new Link(null, "/popreg/births/", "eprDirectPrintBirthCertificate.do"));
 
         //non displayable (in the menu) pages
@@ -319,10 +319,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
         //Search
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH, new Link("search.label", "/popreg/births/", "eprSearchPageLoad.do"));
-        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH, new Link("advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_BIRTHS, new Link("birth.advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO, new Link(null, "/popreg/births/", "eprBDFSearchBySerialNo.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY, new Link(null, "/popreg/births/", "eprBDFSearchByIdUKey.do"));
-        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("advanceSearch.label", "/popreg/prs/", "eprPRSAdvancedSearch.do"));
+        linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_PRS, new Link("prs.advanceSearch.label", "/popreg/prs/", "eprPRSAdvancedSearch.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_SEARCH, new Link("birth_certificate_search.label", "/popreg/births/", "eprBirthCertificateSearch.do"));
 
         //Birth Certificate
