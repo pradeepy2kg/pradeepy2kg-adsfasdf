@@ -14,10 +14,12 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.web.WebConstants;
 
 /**
- * Action class to handle Adoption flow in birth module
+ * @author Duminda Dharmakeerthi
+ * @author amith jayasekaa
  */
 public class AdoptionAction extends ActionSupport implements SessionAware {
 
@@ -69,10 +71,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    public String adoptionApplicantInfo() {
+        return SUCCESS;
+    }
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
-
         populateDynamicLists(language);
     }
 
