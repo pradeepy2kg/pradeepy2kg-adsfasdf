@@ -29,9 +29,11 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         em.remove(getById(idUKey));
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * @inheritDoc
+     */
     public List<AdoptionOrder> findAll() {
-        Query q = em.createNamedQuery("findAll");
+        Query q = em.createNamedQuery("getAllAdoptions");
         return q.getResultList();
     }
 
