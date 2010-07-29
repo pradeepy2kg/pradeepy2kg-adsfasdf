@@ -13,6 +13,10 @@
         html {
             background: <s:url value="/images/body-bg1.png"/> repeat;
         }
+
+        body {
+            clear: both;
+        }
     </style>
     <script type="text/javascript">
         function setFocus() {
@@ -22,18 +26,20 @@
 </head>
 <body onload="setFocus()">
 <!--check is seesion is alive -->
-    <%
-        if (session.getAttribute("user_bean") != null) {
-            response.sendRedirect("/popreg/eprHome.do");
-        }
-    %>
+<%
+    if (session.getAttribute("user_bean") != null) {
+        response.sendRedirect("/popreg/eprHome.do");
+    }
+%>
 
-<img src="<s:url value="/images/epr-header.png" />"/>
+<!-- <img src="<s:url value="/images/epr-header.png" />"/>       -->
 
 <div id="login-error" style="text-align:center;">
     <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt; margin:150px auto -170px auto;"/>
 </div>
-<div id="login-form">
+<img src="<s:url value="/images/special-bg.png" />" style="margin:0 140px;"/>
+
+<div id="login-form" style="margin-top:-500px; margin-bottom:400px;">
     <div id="login-form-title">user login</div>
     <div id="login-form-body">
         <s:form action="/eprLogin.do" method="POST"
