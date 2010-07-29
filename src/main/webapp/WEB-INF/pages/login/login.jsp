@@ -32,14 +32,12 @@
     }
 %>
 
-<!-- <img src="<s:url value="/images/epr-header.png" />"/>       -->
-
+ <img src="<s:url value="/images/epr-header.png" />"/>  
 <div id="login-error" style="text-align:center;">
     <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt; margin:150px auto -170px auto;"/>
 </div>
-<img src="<s:url value="/images/special-bg.png" />" style="margin:0 140px;"/>
 
-<div id="login-form" style="margin-top:-500px; margin-bottom:400px;">
+<div id="login-form" style=" ">
     <div id="login-form-title">user login</div>
     <div id="login-form-body">
         <s:form action="/eprLogin.do" method="POST"
@@ -52,6 +50,8 @@
         </s:form>
     </div>
 </div>
+<img src="<s:url value="/images/special-bg.png" />" style="margin:-100px 140px; z-index:2;"/>
+
 <div style="margin-left:auto; margin-right:auto; width:55%;">
     Copyright © 2010 » Registrar General&apos;s Department of Sri Lanka. All Rights Reserved.
 </div>
