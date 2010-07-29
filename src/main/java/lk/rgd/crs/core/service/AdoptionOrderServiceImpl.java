@@ -3,6 +3,7 @@ package lk.rgd.crs.core.service;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.common.api.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,39 +21,39 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         this.adoptionOrderDAO = adoptionOrderDAO;
     }
 
-    public AdoptionOrder getById(long adoptionId) {
+    public AdoptionOrder getById(long adoptionId, User user) {
         //todo access priviledges
         return adoptionOrderDAO.getById(adoptionId);
     }
 
-    public void addAdoptionOrder(AdoptionOrder adoption) {
+    public void addAdoptionOrder(AdoptionOrder adoption, User user) {
         //todo security validations, access priviledges and business validations
         adoptionOrderDAO.addAdoptionOrder(adoption);
     }
 
-    public void updateAdoptionOrder(AdoptionOrder adoption) {
+    public void updateAdoptionOrder(AdoptionOrder adoption, User user) {
         //todo security validations, access priviledges and business validations
         adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
 
-    public List<AdoptionOrder> findAll() {
+    public List<AdoptionOrder> findAll(User user) {
         //todo access priviledges
         return adoptionOrderDAO.findAll();
     }
 
-    public void deleteAdoptionOrder(long idUKey) {
+    public void deleteAdoptionOrder(long idUKey, User user) {
         //todo security validations, access priviledges and business validations
         adoptionOrderDAO.deleteAdoptionOrder(idUKey);
     }
 
-    public void approveAdoptionOrder(long idUKey) {
+    public void approveAdoptionOrder(long idUKey, User user) {
         //todo security validations, access priviledges and business validations
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         adoption.setStatus(AdoptionOrder.State.APPROVED);
         adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
 
-    public void rejectAdoptionOrder(long idUKey) {
+    public void rejectAdoptionOrder(long idUKey, User user) {
         //todo security validations, access priviledges and business validations
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         adoption.setStatus(AdoptionOrder.State.REJECTED);

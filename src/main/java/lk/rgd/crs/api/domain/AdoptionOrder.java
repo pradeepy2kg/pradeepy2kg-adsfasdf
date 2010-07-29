@@ -50,7 +50,6 @@ import java.util.Date;
 })
 
 public class AdoptionOrder implements Serializable {
-
     public enum State {
         DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
 
@@ -59,6 +58,14 @@ public class AdoptionOrder implements Serializable {
         PRINTED,     // 2 - An  Adoption which is printed for parent confirmation
 
         REJECTED,    // 3 - An Adoption rejected by the ARG
+    }
+
+    public enum ApplicantType {
+        FATHER,    // 0
+
+        MOTHER,   // 1
+
+        OTHER,     // 2
     }
 
     @Id
@@ -118,6 +125,15 @@ public class AdoptionOrder implements Serializable {
 
     @Column(nullable = true)
     private int birthDivisionId; // if BC number not given
+
+    @Column(nullable = true)
+    private String certificateApplicantName;
+
+    @Column(nullable = true)
+    private String certificateApplicantAddress;
+
+    @Column(nullable = true)
+    private ApplicantType certificateApplicantType;
 
     @Column(nullable = false)
     private State status;
@@ -267,6 +283,30 @@ public class AdoptionOrder implements Serializable {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
+    }
+
+    public String getCertificateApplicantName() {
+        return certificateApplicantName;
+    }
+
+    public void setCertificateApplicantName(String certificateApplicantName) {
+        this.certificateApplicantName = certificateApplicantName;
+    }
+
+    public String getCertificateApplicantAddress() {
+        return certificateApplicantAddress;
+    }
+
+    public void setCertificateApplicantAddress(String certificateApplicantAddress) {
+        this.certificateApplicantAddress = certificateApplicantAddress;
+    }
+
+    public ApplicantType getCertificateApplicantType() {
+        return certificateApplicantType;
+    }
+
+    public void setCertificateApplicantType(ApplicantType certificateApplicantType) {
+        this.certificateApplicantType = certificateApplicantType;
     }
 
     public State getStatus() {
