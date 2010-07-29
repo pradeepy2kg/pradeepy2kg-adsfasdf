@@ -162,5 +162,8 @@
 
     <bean id="adoptionOrderAction" class="lk.rgd.crs.web.action.births.AdoptionAction">
         <constructor-arg ref="adoptionOrderService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
     </bean>
 </beans>

@@ -12,6 +12,7 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.web.WebConstants;
 
 /**
@@ -20,11 +21,11 @@ import lk.rgd.crs.web.WebConstants;
 public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(AdoptionAction.class);
-
-    private User user;
+    private final AdoptionOrderService service;
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+
     private int birthDistrictId;
     private int birthDivisionId;
     private int dsDivisionId;
@@ -33,9 +34,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
 
+    private User user;
     private Map session;
 
-    public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
+    public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
+                          AdoptionOrderService service) {
+        this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
