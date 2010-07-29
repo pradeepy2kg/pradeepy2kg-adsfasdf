@@ -83,10 +83,13 @@ public final class Permission {
     public static final int PRS_LOOKUP_PERSON_BY_KEYS = 52;
     public static final int PAGE_ADVANCE_SEARCH_PRS = 53;
 
+    //permission for Adoptions
     public static final int PAGE_ADOPTION_REGISTRATION = 109;
     public static final int PAGE_ADOPTION_REGISTRATION_HOME = 110;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT = 111;
-    public static final int PAGE_ADOPTION_RE_REGISTRATION=112;
-     public static final int PAGE_ADOPTION_INIT=113;
+    public static final int PAGE_ADOPTION_RE_REGISTRATION = 112;
+    public static final int PAGE_ADOPTION__INIT = 113;
+    public static final int PAGE_ADOPTION_APPLICANT_INFO = 114;
+
 
 }
