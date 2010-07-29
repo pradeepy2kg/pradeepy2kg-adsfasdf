@@ -13,6 +13,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.web.WebConstants;
 
 /**
@@ -34,6 +35,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
 
+    private AdoptionOrder adoption;
     private User user;
     private Map session;
 
@@ -161,5 +163,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public Map getSession() {
         return session;
+    }
+
+    public AdoptionOrder getAdoption() {
+        return adoption;
+    }
+
+    public void setAdoption(AdoptionOrder adoption) {
+        this.adoption = adoption;
     }
 }
