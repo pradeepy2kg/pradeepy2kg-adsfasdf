@@ -4,7 +4,7 @@
 
 
 <div id="adoption-registration-form-outer">
-<s:form action="eprAdoptionAction.do" name="" id="" method="POST">
+<s:form action="eprAdoptionAction.do" name="" id="" method="POST" onsubmit="javascript:return validate()">
 <table class="adoption-reg-form-header-table">
     <caption></caption>
     <col/>
@@ -39,13 +39,13 @@
         <td>අධිකරණය<br/>
             Court
         </td>
-        <td><s:textfield name="adoption.court" id=""/></td>
+        <td><s:textfield name="adoption.court" id="court"/></td>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
-        <td style="text-align:right;"><sx:datetimepicker id="issueDatePicker" name="adoption.orderIssuedDate"
+        <td style="text-align:right;"><sx:datetimepicker id="orderIssuedDatePicker" name="adoption.orderIssuedDate"
                                                          displayFormat="yyyy-MM-dd"
                                                          onchange="javascript:splitDate('issueDatePicker')"/></td>
     </tr>
@@ -53,13 +53,13 @@
         <td>නියෝග අංකය<br/>
             Serial number
         </td>
-        <td><s:textfield name="adoption.courtOrderNumber" id=""/></td>
+        <td><s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber"/></td>
     </tr>
     <tr>
         <td>විනිසුරු නම <br/>
             Name of the Judge
         </td>
-        <td><s:textfield name="adoption.judgeName" id=""/></td>
+        <td><s:textfield name="adoption.judgeName" id="judgeName"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -92,55 +92,78 @@
         <td></td>
     </tr>
     <tr>
-        <td colspan="3">Applicant's PIN/NIC Number</td>
+        <td colspan="3">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
+            தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
+            Applicant's PIN / NIC Number
+        </td>
         <td colspan="2"></td>
     </tr>
     <tr>
-        <td>If a foreigner</td>
-        <td>Country</td>
+        <td>විදේශිකය‍කු නම් <br/>
+            வெளிநாட்டவர் <br/>
+            If a foreigner
+        </td>
+        <td>රට <br/>
+            நாடு <br/>
+            Country
+        </td>
         <td></td>
-        <td>Pasport Number</td>
-        <td></td>
+        <td>ගමන් බලපත්‍ර අංකය          <br/>
+கடவுச் சீட்டு                          <br/>
+Passport No.</td>
+        <td><s:textfield></s:textfield></td>
     </tr>
     <tr>
         <td>නම <br/>
             Name of the Applicant
         </td>
-        <td colspan="4"><textarea id="applicantName" name="adoption.applicantName"></textarea></td>
+        <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"></s:textarea></td>
     </tr>
 
     <tr>
         <td>ලිපිනය <br/>
             Address
         </td>
-        <td colspan="4"><textarea name="adoption.applicantAddress"></textarea></td>
+        <td colspan="4"><s:textarea name="adoption.applicantAddress" id="applicantAddress"></s:textarea></td>
     </tr>
     </tbody>
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td> <br/>
-            If applicant is father,Mother's information
+        <td><br/>
+            අයදුම් කරු පියා නම් මවගේ විස්තර / If applicant is the father, Mother's details
         </td>
     </tr>
 </table>
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
-        <tr>
-        <td colspan="3">Applicant's PIN/NIC Number</td>
-        <td colspan="2"></td>
-    </tr>
     <tr>
-        <td>If a foreigner</td>
-        <td>Country</td>
-        <td></td>
-        <td>Pasport Number</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>නම <br/>
-            Name of the Applicant
+        <td colspan="3" width="680px">මවගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
+            தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
+            Wife's PIN / NIC Number
         </td>
-        <td colspan="4"><textarea  name=""></textarea></td>
+        <td colspan="2"><s:textfield></s:textfield></td>
+    </tr>
+    <tr>
+        <td width="330px">විදේශිකය‍කු නම් <br/>
+            வெளிநாட்டவர் <br/>
+            If a foreigner
+        </td>
+        <td width="175px">රට <br/>
+            நாடு <br/>
+            Country
+        </td>
+        <td width="175px"></td>
+        <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
+            கடவுச் சீட்டு <br/>
+            Passport No.
+        </td>
+        <td width="175px"></td>
+    </tr>
+    <tr>
+        <td> මවගේ නම <br/>
+            Name of Mother
+        </td>
+        <td colspan="4"><s:textarea name=""></s:textarea></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -181,11 +204,11 @@
         <td>අවුරුදු <br/>
             Years
         </td>
-        <td><s:textfield name="adoption.childAgeYears" id=""/></td>
+        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears"/></td>
         <td>මාස <br/>
             Months
         </td>
-        <td><s:textfield name="adoption.childAgeMonths" id=""/></td>
+        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths"/></td>
     </tr>
     <tr>
         <td>දැනට පවතින නම <br/>
@@ -193,13 +216,13 @@
             Existing Name <br/>
             (if already given)
         </td>
-        <td colspan="4"><textarea name="adoption.childExistingName"></textarea></td>
+        <td colspan="4"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
             New name given
         </td>
-        <td colspan="4"><textarea name="adoption.childNewName"></textarea></td>
+        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -266,7 +289,51 @@
 </table>
 <s:hidden name="pageNo" value="1"/>
 <div class="adoption-form-submit">
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+    <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
+<script type="text/javascript">
+    function validate()
+    {
+        var errormsgOut = "";
+        var element;
+        var returnval;
+        var flag = false;
+        var inputs = new Array(9);
+        var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName", "applicantName"
+                , "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
+
+        //these inpute can not be null
+        inputs[0] = new Date(document.getElementById("receivedDatePicker").value);
+        inputs[1] = document.getElementById("court").value;
+        inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
+        inputs[3] = document.getElementById("courtOrderNumber").value;
+        inputs[4] = document.getElementById("judgeName").value;
+        inputs[5] = document.getElementById("applicantName").value;
+        inputs[6] = document.getElementById("applicantAddress").value;
+        inputs[7] = document.getElementById("childAgeYears").value;
+        inputs[8] = document.getElementById("childAgeMonths").value;
+
+        //these inputs may be null with conditions
+        var childExistingName = document.getElementById("childExistingName").value;
+        var childNewName = document.getElementById("childNewName").value;
+        //check elements which are can not be null
+        for (i = 0; i < inputs.length; i++)
+        {
+            if (inputs[i].length <= 0)
+            {
+                errormsgOut = errormsgOut + "plese Enter  " + errormsg[i] + "\n";
+            }
+        }
+
+        if (errormsgOut.length > 0) {
+            alert(errormsgOut);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+</script>
 </div>
