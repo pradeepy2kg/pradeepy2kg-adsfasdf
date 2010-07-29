@@ -478,8 +478,8 @@
 
     </package>
     <package name="adoption" namespace="/adoption" extends="NG">
-        <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionDeclaration">
+        <action name="eprAdoptionInit" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="initAdoption">
             <result type="tiles" name="success">epr.AdoptionReg</result>
         </action>
         <action name="eprAdoptionReRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -494,5 +494,10 @@
                 method="adoptionApprovalAndPrint">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
+        <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionAction">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+
     </package>
 </struts>

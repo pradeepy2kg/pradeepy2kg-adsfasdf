@@ -220,10 +220,10 @@
     </definition>
     <definition name="epr.adoptionRegistrationHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionRegistrationHomePage.jsp"/>
-        <put-attribute name="title" value="birth_registration.label"/>
+        <put-attribute name="title" value="adoption_registration_home.label"/>
     </definition>
     <definition name="epr.adoptionApprovalAndPrint" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionApprovalAndPrintList.jsp"/>
-        <put-attribute name="title" value="birth_registration.label"/>
+        <put-attribute name="title" value="adoption_approval_and_print_registration.label"/>
     </definition>
 </tiles-definitions>

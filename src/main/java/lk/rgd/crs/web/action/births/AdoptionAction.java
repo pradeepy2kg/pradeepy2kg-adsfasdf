@@ -12,12 +12,12 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.web.WebConstants;
 
 /**
- * @author Duminda Dharmakeerthi
+ * Action class to handle Adoption flow in birth module
  */
 public class AdoptionAction extends ActionSupport implements SessionAware {
 
@@ -47,11 +47,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
     }
 
-    public String adoptionDeclaration() {
+    public String adoptionAction() {
+        adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
+        adoption.setApplicantMother(true);
+        User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        service.addAdoptionOrder(adoption, currentUser);
         return SUCCESS;
     }
 
-    public String initAdoptionRegistration() {
+    public String initAdoption() {
+        populate();
         return SUCCESS;
     }
 
@@ -64,18 +69,18 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    private void populate(){
+    private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
-        
+
         populateDynamicLists(language);
     }
 
-    private void populateBasicLists(String language){
+    private void populateBasicLists(String language) {
         districtList = districtDAO.getDistrictNames(language, user);
     }
 
-    private void populateDynamicLists(String language){
+    private void populateDynamicLists(String language) {
         if (birthDistrictId == 0) {
             if (!districtList.isEmpty()) {
                 birthDistrictId = districtList.keySet().iterator().next();
@@ -122,7 +127,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.bdDivisionList = bdDivisionList;
     }
 
-    public int getBirthDistrictId() {     
+    public int getBirthDistrictId() {
         return birthDistrictId;
     }
 

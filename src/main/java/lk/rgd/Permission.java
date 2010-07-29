@@ -87,5 +87,6 @@ public final class Permission {
     public static final int PAGE_ADOPTION_REGISTRATION_HOME = 110;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT = 111;
     public static final int PAGE_ADOPTION_RE_REGISTRATION=112;
+     public static final int PAGE_ADOPTION__INIT=113;
 
 }
