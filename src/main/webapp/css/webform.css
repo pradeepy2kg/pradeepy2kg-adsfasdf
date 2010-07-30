@@ -1622,6 +1622,7 @@
 /*css style for adoption registration pages*/
 #adoption-registration-home-outer{width:1030px;padding: 10px;}
 #adoption-registration-form-outer{width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
+#adoption-certificate-form-outer{width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
 .adoption-form-submit{margin:10px 0 10px 5px; text-transform:capitalize; width:112px; height:31px; border:none;float:right;text-align:center;}
 .adoption-form-submit a{text-decoration:none; line-height:30px; color:#000;}
 

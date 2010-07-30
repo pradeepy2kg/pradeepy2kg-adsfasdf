@@ -43,7 +43,7 @@
             </label>
         </td>
         <td>
-
+           <s:label value=""/>
         </td>
     </tr>
 </table>
@@ -61,26 +61,26 @@
         <td width="330px" height="40px">අධිකරණය <br/>
             Court
         </td>
-        <td><s:label name="" value="%{#adoption.court}"/></td>
+        <td><s:label name="" value="%{adoption.court}"/></td>
     </tr>
     <tr>
         <td height="40px">නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
-        <td><s:label name="" value="%{#adoption.orderIssuedDate}"/>
+        <td><s:label name="" value="%{adoption.orderIssuedDate}"/>
         </td>
     </tr>
     <tr>
         <td height="40px">නියෝග අංකය <br/>
             Serial number
         </td>
-        <td><s:label name="" value="%{#adoption.courtOrderNumber}"/>
+        <td><s:label name="" value="%{adoption.courtOrderNumber}"/>
     </tr>
     <tr>
         <td height="100px">විනිසුරු නම <br/>
             Name of the Judge
         </td>
-        <td colspan="4"><s:label name="" value="%{#adoption.judgeName}"/>
+        <td colspan="4"><s:label name="" value="%{adoption.judgeName}"/>
         </td>
     </tr>
 </table>
@@ -213,18 +213,18 @@
         <td height="100px" >නම <br/>
             Name
         </td>
-        <td height="40px" colspan="3"><s:label name="" value="%{#adoption.childExistingName}"/></td>
+        <td height="40px" colspan="3"><s:label name="" value="%{adoption.childExistingName}"/></td>
     </tr>
 
     <tr>
         <td>උපන් දිනය <br/>
             Date of birth
         </td>
-        <td height="40px"><s:label name="" value="%{#adoption.childBirthDate}"/></td>
+        <td height="40px"><s:label name="" value="%{adoption.childBirthDate}"/></td>
         <td height="40px" width="250px">ස්ත්‍රී පුරුෂ භාවය <br/>
             Gender
         </td>
-        <td width="250px"><s:label name="" value="%{#adoption.court}"/></td>
+        <td width="250px"><s:label name="" value="%{adoption.childGender}"/></td>
     </tr>
     </tbody>
 </table>
@@ -246,17 +246,17 @@
         <td height="40px">අධිකරණය <br/>
             Court
         </td>
-        <td colspan="3"><s:label name="" value="%{#adoption.court}"/></td>
+        <td colspan="3"><s:label name="" value="%{adoption.court}"/></td>
     </tr>
     <tr>
         <td height="40px">නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
-        <td><s:label name="" value="%{#adoption.orderIssuedDate}"/></td>
+        <td><s:label name="" value="%{adoption.orderIssuedDate}"/></td>
         <td width="250px">නියෝග අංකය <br/>
             Serial number
         </td>
-        <td width="250px"><s:label name="" value="%{#adoption.courtOrderNumber}"/></td>
+        <td width="250px"><s:label name="" value="%{adoption.courtOrderNumber}"/></td>
     </tr>
     </tbody>
 </table>
