@@ -405,4 +405,12 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public void setIndex(long[] index) {
         this.index = index;
     }
+
+    public BirthRegistrationService getService(){
+        return this.service;
+    }
+
+    public Map getSession(){
+        return this.session;
+    }
 }

@@ -922,4 +922,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    public BirthRegistrationService getService(){
+        return this.service;
+    }
+
+    public Map getSession() {
+        return session;
+    }
 }
