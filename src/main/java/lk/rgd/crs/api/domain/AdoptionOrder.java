@@ -117,6 +117,9 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private int childAgeMonths;
 
+    @Column(nullable = false)
+    private int childGender;      //  Gender 0 - male, 1 - female, 2 - unknown
+
     @Column(nullable = true)
     private long birthCertificateNumber; // idukey, not the serial !
 
@@ -252,6 +255,14 @@ public class AdoptionOrder implements Serializable {
 
     public void setChildAgeMonths(int childAgeMonths) {
         this.childAgeMonths = childAgeMonths;
+    }
+
+    public int getChildGender() {
+        return childGender;
+    }
+
+    public void setChildGender(int childGender) {
+        this.childGender = childGender;
     }
 
     public long getBirthCertificateNumber() {
