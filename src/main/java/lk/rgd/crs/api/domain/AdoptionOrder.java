@@ -36,8 +36,6 @@ import java.util.Date;
 //        "AND bdf.activeRecord IS FALSE " +
 //        "ORDER BY bdf.lastUpdatedTime desc"),
 //
-    @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
-        "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
 //
 //    @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
 //        "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
@@ -45,8 +43,10 @@ import java.util.Date;
 //    @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
 //        "WHERE bdf.register.status = 2 " +
 //        "AND bdf.register.dateOfRegistration < :date"),
-//
-        @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+     @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
+        "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
+
+     @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
@@ -141,6 +141,9 @@ public class AdoptionOrder implements Serializable {
 
     @Column(nullable = true)
     private ApplicantType certificateApplicantType;
+
+    @Column(length = 2, nullable = false)
+    private String languageToTransliterate;
 
     @Column(nullable = false)
     private State status;
@@ -323,6 +326,14 @@ public class AdoptionOrder implements Serializable {
 
     public void setCertificateApplicantType(ApplicantType certificateApplicantType) {
         this.certificateApplicantType = certificateApplicantType;
+    }
+
+    public String getLanguageToTransliterate() {
+        return languageToTransliterate;
+    }
+
+    public void setLanguageToTransliterate(String languageToTransliterate) {
+        this.languageToTransliterate = languageToTransliterate;
     }
 
     public State getStatus() {
