@@ -123,17 +123,28 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
         //direct approval confirmation changes
         request.setParameter("bdId", Long.toString(action.getBdId()));
-        request.setParameter("confirmationApprovalFlag","true");
+        request.setParameter("confirmationApprovalFlag", "true");
         initAndExecuteApproval("/births/eprConfrimationChangesDirectApproval.do", session);
-        session=approvalAction.getSession();
+        session = approvalAction.getSession();
 
-        logger.debug("current state after direct approval of confrimation chages : {}",(approvalAction.getService().getById(bdId,(User)session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+        logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificat print after direct approval
-        request.setParameter("bdId",Long.toString(approvalAction.getBdId()));
-        request.setParameter("directPrintBirthCertificate","true");
-        initAndExecute("/births/eprBirthCertificatDirectPrint.do",session);
-        session=action.getSession();
-        logger.debug("current state after direct printing the BC : {}",(action.getService().getById(bdId,(User)session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+        request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
+        request.setParameter("directPrintBirthCertificate", "true");
+        initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
+        session = action.getSession();
+        logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+    }
+
+    public void testCaptureConfirmationChanges() throws Exception {
+        Map session = login("rg", "password");
+        //initiating action
+        initAndExecute("/births/eprBirthConfirmationInit.do", session);
+        //getting the required bdId which is having confirmation changes
+        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1), new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        logger.debug("found bdId : {} and current state : {}",bdTemp.getIdUKey(),bdTemp.getRegister().getStatus());
+        
+
     }
 }
