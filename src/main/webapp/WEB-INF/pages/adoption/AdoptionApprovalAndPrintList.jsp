@@ -110,7 +110,7 @@
         <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-
+                <th></th>
                 <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
                 <th><s:label name="received" value="%{getText('received.label')}"/></th>
@@ -122,16 +122,22 @@
             </thead>
 
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <s:iterator status="approvalStatus" value="adoptionPendingApprovalList" id="approvalList">
+                <tr>
+                    <td><s:checkbox name="index"
+                                    onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
+                                    title="%{getText('select.label')}" value="%{#index}"
+                                    fieldValue="%{#approvalList.idUKey}"/></td>
+                    <td><s:property value="courtOrderNumber"/></td>
+                    <s:if test="childExistingName!=null">
+                        <td><s:property value="childExistingName"/></td>
+                    </s:if>
+                    <s:else>
+                        <td><s:property value="childNewName"/></td>
+                    </s:else>
+                </tr>
+            </s:iterator>
 
-            </tr>
             </tbody>
         </table>
     </fieldset>

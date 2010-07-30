@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
+import java.util.List;
 import java.util.Date;
 
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -43,6 +44,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+    private List<AdoptionOrder> adoptionPendingApprovalList;
 
     private AdoptionOrder adoption;
     private User user;
@@ -103,7 +105,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String adoptionApprovalAndPrint() {
+        //todo this is a mock method real backend is not implemented yet
         populate();
+        adoptionPendingApprovalList = service.findAll(user);
         return SUCCESS;
     }
 
@@ -118,6 +122,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (Exception e) {
             logger.debug("catch exception : {}", e);
         }
+        adoption.setCertificateApplicantAddress(certificateApplicantAddress);
+        //changing state
+        adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
+        logger.info(adoption.getCertificateApplicantType().name());
+        service.updateAdoptionOrder(adoption, user);
+        session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
     }
 
@@ -298,6 +308,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAdoptionOrder(AdoptionOrder adoptionOrder) {
         this.adoptionOrder = adoptionOrder;
+    }
+
+    public List<AdoptionOrder> getAdoptionPendingApprovalList() {
+        return adoptionPendingApprovalList;
+    }
+
+    public void setAdoptionPendingApprovalList(List<AdoptionOrder> adoptionPendingApprovalList) {
+        this.adoptionPendingApprovalList = adoptionPendingApprovalList;
     }
 
     public String getLanguage() {

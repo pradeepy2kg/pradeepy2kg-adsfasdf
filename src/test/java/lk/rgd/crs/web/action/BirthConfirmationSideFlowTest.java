@@ -75,12 +75,13 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChanges() throws Exception {
+        Object obj;
         Map session = login("rg", "password");
-        //initiating action
+        //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
-        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1), new Long("07000804"), (User) session.get(WebConstants.SESSION_USER_BEAN));
-        Object obj;
+        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
+            new Long("07000804"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry
         Long bdId = bdTemp.getIdUKey();
         logger.debug("Got bdId {}", bdId);
@@ -127,24 +128,64 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecuteApproval("/births/eprConfrimationChangesDirectApproval.do", session);
         session = approvalAction.getSession();
 
-        logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+        logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificat print after direct approval
         request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
         request.setParameter("directPrintBirthCertificate", "true");
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
         session = action.getSession();
-        logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId, (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+        logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 
     public void testCaptureConfirmationChanges() throws Exception {
+        //todo has to be implemented
+        Long bdId;
         Map session = login("rg", "password");
-        //initiating action
+        //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
-        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1), new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
-        logger.debug("found bdId : {} and current state : {}",bdTemp.getIdUKey(),bdTemp.getRegister().getStatus());
-        
+        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
+            new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
+        session = action.getSession();
+        bdId = bdTemp.getIdUKey();
 
+        //searches the confirmation which was sent by parent by its idUKey
+        request.setParameter("bdId", bdId.toString());
+        initAndExecute("/births/eprBirthConfirmationInit.do", session);
+
+        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        session = action.getSession();
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        assertNotNull("failed to populate Confirmation session bean", bd);
+        assertNotNull("failed to populate Confirmation Database bean",
+            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+        //loading the 2 of 3BCF
+        request.setParameter("pageNo", "1");
+        request.setParameter("register.bdfSerialNo", "07000805");
+        request.setParameter("register.dateOfRegistration", "2010-07-08T00:00:00+05:30");
+        request.setParameter("child.dateOfBirth", "2010-07-01T00:00:00+05:30");
+        request.setParameter("birthDistrictId", "1");
+        request.setParameter("birthDivisionId", "10");
+        request.setParameter("birthDivisionId", "1");
+        request.setParameter("child.placeOfBirth", "මාතර");
+        request.setParameter("child.placeOfBirthEnglish", "Matara");
+        request.setParameter("child.placeOfBirth", "කොළඹ කොටුව");
+        request.setParameter("child.placeOfBirthEnglish", "colombo port");
+        request.setParameter("fatherRace", "3");
+        request.setParameter("motherRace", "1");
+        request.setParameter("marriage.parentsMarried", "3");
+        request.setParameter("parent.fatherNICorPIN", "853303399v");
+        request.setParameter("parent.motherNICorPIN", "666666666v");
+        request.setParameter("child.childGender", "1");
+        initAndExecute("/births/eprBirthConfirmation.do", session);
+        session = action.getSession();
     }
+
+    //todo has to implement confirmation skip changes when the state is in confirmation printed
 }
