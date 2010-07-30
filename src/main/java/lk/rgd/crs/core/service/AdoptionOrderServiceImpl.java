@@ -3,7 +3,11 @@ package lk.rgd.crs.core.service;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Role;
+import lk.rgd.ErrorCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,5 +62,10 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         adoption.setStatus(AdoptionOrder.State.REJECTED);
         adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    private void handleException(String message, int code) {
+        logger.error(message);
+        throw new CRSRuntimeException(message, code);
     }
 }
