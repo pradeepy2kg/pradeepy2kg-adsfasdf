@@ -85,11 +85,15 @@
         <td>පියා   </br>
             Father
         </td>
-        <td></td>
+        <td>
+            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" value="false"/>
+        </td>
         <td>මව <br/>
             Mother
         </td>
-        <td></td>
+        <td>
+            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}"/>
+        </td>
     </tr>
     <tr>
         <td colspan="3">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
@@ -107,10 +111,11 @@
             நாடு <br/>
             Country
         </td>
-        <td></td>
-        <td>ගමන් බලපත්‍ර අංකය          <br/>
-கடவுச் சீட்டு                          <br/>
-Passport No.</td>
+        <td><s:textfield id="certifcateApplicantCountry" name="certifcateApplicantCountry"/></td>
+        <td>ගමන් බලපත්‍ර අංකය <br/>
+            கடவுச் சீட்டு <br/>
+            Passport No.
+        </td>
         <td><s:textfield></s:textfield></td>
     </tr>
     <tr>
@@ -300,8 +305,8 @@ Passport No.</td>
         var returnval;
         var flag = false;
         var inputs = new Array(9);
-        var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName", "applicantName"
-                , "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
+        var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName",
+                 "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
 
         //these inpute can not be null
         inputs[0] = new Date(document.getElementById("receivedDatePicker").value);
