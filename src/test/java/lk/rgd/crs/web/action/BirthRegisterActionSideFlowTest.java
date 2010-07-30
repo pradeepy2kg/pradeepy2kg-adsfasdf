@@ -171,23 +171,136 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
 
 
     public void testBackButtonInBD() throws Exception {
-        Map session = login("chathuranga", "chathuranga");
+        Map session = login("rg", "password");
+        initAndExecute("/births/eprBirthRegistrationInit.do", session);
+        session = action.getSession();
+        assertEquals("Action erros for 1 of 4 BDF pages", 0, action.getActionErrors().size());
 
-        long serialNum = 19000;
-        BDDivision colomboBdDivision = bdDivisionDAO.getBDDivisionByPK(1);
+        BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertNotNull("Birth Declaration Bean does not exist in the session", bdf);
+        assertEquals("bdId not equal to zero", 0, action.getBdId());
+        assertEquals("BDF live birth mis match in session and action", action.isLiveBirth(), bdf.getRegister().isLiveBirth());
 
-        // get alredy entered BDF entry from DB, BDF with IDUKey 166 and this part used to skip first few steps of Bith
-        // Declaration
-        BirthDeclaration bdf = getBDFById(166);
-        assertNotNull("BirthDeclaration failed to be fetched from the DB", bdf);
-        bdf.setIdUKey(0);
-        bdf.getRegister().setBdfSerialNo(serialNum);
-        bdf.getRegister().setBirthDivision(colomboBdDivision);
-        assertEquals("session size incorrect", 3, session.size());
-        assertNull("Birth Declaration Bean can not exist in the session", session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
-        assertEquals("session size incorrect", 4, session.size());
-        assertNotNull("Birth Declaration Bean does not exist in the session", session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        assertNotNull(bdf.getChild());
+        assertNotNull(bdf.getRegister());
+        assertNotNull(bdf.getParent());
+        assertNotNull(bdf.getGrandFather());
+        assertNotNull(bdf.getMarriage());
+        assertNotNull(bdf.getInformant());
+        assertNotNull(bdf.getNotifyingAuthority());
+
+        // TODO check session size
+        // Filling BDF form 1 and submitting
+        request.setParameter("pageNo", "1");
+        request.setParameter("register.bdfSerialNo", "12345");
+        request.setParameter("register.dateOfRegistration", "2010-07-14T00:00:00+05:30");
+        request.setParameter("child.dateOfBirth", "2010-06-28T00:00:00+05:30");
+        request.setParameter("birthDistrictId", "2");
+        request.setParameter("birthDivisionId", "13");
+        request.setParameter("dsDivisionId", "15");
+        request.setParameter("child.placeOfBirth", "ගම්පහ මහ රෝහල");
+        request.setParameter("child.placeOfBirthEnglish", "Gampha Cantral Hostipal");
+        request.setParameter("child.birthAtHospital", "ture");
+        request.setParameter("child.childFullNameOfficialLang", "කමල් සිල්වා");
+        request.setParameter("child.childFullNameEnglish", "KAMAL SILVA");
+        request.setParameter("register.preferredLanguage", "si");
+        request.setParameter("child.childGender", "0");
+        request.setParameter("child.childBirthWeight", "6");
+        request.setParameter("child.childRank", "1");
+        request.setParameter("child.numberOfChildrenBorn", "0");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();  //
+//        assertEquals("Action erros for 2 of 4BDF", 0, action.getActionErrors().size());
+        bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+
+        // Filling BDF form 1 and submitting
+        request.setParameter("pageNo", "2");
+        //father's information
+        request.setParameter("parent.fatherNICorPIN", "530232026V");
+        request.setParameter("fatherCountry", "3");
+        request.setParameter("parent.fatherPassportNo", "4562354875");
+        request.setParameter("parent.fatherFullName", "ලෝගේස්වරන් යුවන් ශන්කර්");
+        request.setParameter("parent.fatherDOB", "1953-01-23T00:00:00+05:30");
+        request.setParameter("parent.fatherPlaceOfBirth", "birth place");
+        request.setParameter("fatherRace", "3");
+
+        //mother's information
+        request.setParameter("parent.motherNICorPIN", "685031035V");
+        request.setParameter("motherCountry", "0");
+        request.setParameter("parent.motherPassportNo", "2586598456");
+        request.setParameter("parent.motherFullName", "සංගුණි ෙද්ව ෙග්");
+        request.setParameter("parent.motherDOB", "1968-01-03T00:00:00+05:30");
+        request.setParameter("parent.motherAgeAtBirth", "42");
+        request.setParameter("parent.motherAddress", "mother address");
+        request.setParameter("motherDistrictId", "2");
+        request.setParameter("motherDSDivisionId", "15");
+        request.setParameter("motherRace", "2");
+        request.setParameter("parent.motherPlaceOfBirth", "birth place");
+        request.setParameter("parent.motherAdmissionNo", "288");
+        request.setParameter("parent.motherEmail", "mother@gmail.com");
+        request.setParameter("parent.motherAdmissionDate", "2010-06-23T00:00:00+05:30");
+        request.setParameter("parent.motherPhoneNo", "0715516541");
+
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+//        assertEquals("Action erros found for 3 of 4 BDF", 0, action.getActionErrors().size());
+        bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+//        
+        //for 4 of 4BDF
+        request.setParameter("pageNo", "3");
+        request.setParameter("marriage.parentsMarried", "1");
+        request.setParameter("marriage.placeOfMarriage", "Maharagama");
+        request.setParameter("marriage.dateOfMarriage", "2009-04-27T00:00:00+05:30");
+
+        request.setParameter("grandFather.grandFatherFullName", "grand father");
+        request.setParameter("grandFather.grandFatherNICorPIN", "481254698V");
+        request.setParameter("grandFather.grandFatherBirthYear", "1948");
+        request.setParameter("grandFather.grandFatherBirthPlace", "Matara");
+        request.setParameter("grandFather.greatGrandFatherFullName", "great grand father");
+        request.setParameter("grandFather.greatGrandFatherNICorPIN", "210213654V");
+        request.setParameter("grandFather.greatGrandFatherBirthYear", "1869");
+        request.setParameter("grandFather.greatGrandFatherBirthPlace", "Galle");
+
+        request.setParameter("informant.informantType", "MOTHER");
+        request.setParameter("informant.informantNICorPIN", "685031035V");
+        request.setParameter("informant.informantName", "සංගුණි ෙද්ව ෙග්");
+        request.setParameter("informant.informantAddress", "mother address");
+        request.setParameter("informant.informantPhoneNo", "0715516541");
+        request.setParameter("informant.informantEmail", "mother@gmail.com");
+        request.setParameter("informant.informantSignDate", "2010-08-01T00:00:00+05:30");
+
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+//        assertEquals("Action erros for 4 of 4BDF", 0, action.getActionErrors().size());
+        bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+//
+        // TODO notifier information
+//        request.set
+//        assertEquals("failed to update birth declaration session with parent married", 1, bdf.getMarriage().getParentsMarried().intValue());
+//        assertEquals("failed to update birth declaration session with place of marriage", "Kaduwela", bdf.getMarriage().getPlaceOfMarriage());
+//        assertEquals("failed to update birth declaration session with date of marriage", convertStringDateToDate("2007-sep-02"), bdf.getMarriage().getDateOfMarriage());
+//        assertEquals("failed to update birth declaration session with informant type", 1, bdf.getInformant().getInformantType().ordinal());
+//        assertEquals("failed to update birth declaration session with informant NIC/PIN", "685031035V", bdf.getInformant().getInformantNICorPIN());
+//        assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bdf.getInformant().getInformantName());
+//        assertEquals("failed to update birth declaration session with informant address", "Kandy Road Matale", bdf.getInformant().getInformantAddress());
+//        assertEquals("failed to update birth declaration session with informant phone number", "081234567", bdf.getInformant().getInformantPhoneNo());
+//        assertEquals("failed to update birth declaration session with informant Email", "info@gmail.com", bdf.getInformant().getInformantEmail());
+//        assertEquals("failed to update birth declaration session with informant signed date", convertStringDateToDate("2010-jul-20"), bdf.getInformant().getInformantSignDate());
+//        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
+//
+//        //BirthDeclaration Form Details
+//        request.setParameter("pageNo", "4");
+//        request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "685031035V");
+//        request.setParameter("notifyingAuthority.notifyingAuthorityName", "සංගුණි ෙද්ව ෙග්");
+//        request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
+//        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-02T00:00:00+05:30");
+//        initAndExecute("/births/eprBirthRegistration.do", session);
+//        session = action.getSession();
+//        assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
+//        logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
+//        assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+//        logger.debug("successfully persisted with the bdId :{}", action.getBdId());
+
     }
 
     /**
