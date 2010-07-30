@@ -85,6 +85,52 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         setApprovalStatus(idUKey, user, AdoptionOrder.State.REJECTED);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public void setApplicantInfo(AdoptionOrder adoption, User user) {
+        AdoptionOrder adopt = getById(adoption.getIdUKey(), user);
+        if ( (adopt.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED) ||
+                (adoption.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED) ) {
+            handleException("Cannot change status to 4, " + adoption.getIdUKey() +
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+
+        adopt.setCertificateApplicantAddress(adoption.getCertificateApplicantAddress());
+        adopt.setCertificateApplicantName(adoption.getCertificateApplicantName());
+        adopt.setCertificateApplicantType(adoption.getCertificateApplicantType());
+        adopt.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
+        adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void setStatusToPrintedNotice(long adoptionId, User user) {
+        AdoptionOrder adoption = getById(adoptionId, user);
+        if (adoption.getStatus() != AdoptionOrder.State.APPROVED) {
+            handleException("Cannot change status to 2, " + adoption.getIdUKey() +
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+
+        adoption.setStatus(AdoptionOrder.State.NOTICE_LETTER_PRINTED);
+        adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void setStatusToPrintedCertificate (long adoptionId, User user) {
+        AdoptionOrder adoption = getById(adoptionId, user);
+        if (adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) {
+            handleException("Cannot change status to 5, " + adoption.getIdUKey() +
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+
+        adoption.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+        adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
         if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {
