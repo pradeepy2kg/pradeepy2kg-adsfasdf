@@ -3,6 +3,7 @@ package lk.rgd.crs.web.action;
 import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
+import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import org.slf4j.Logger;
@@ -24,11 +25,27 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     private ActionProxy proxy;
     private BirthRegisterAction action;
     private LoginAction loginAction;
+    private BirthRegisterApprovalAction approvalAction;
     private BirthDeclaration bd;
 
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         action = (BirthRegisterAction) proxy.getAction();
+        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
+        ActionContext.getContext().setSession(session);
+        String result = null;
+        try {
+            result = proxy.execute();
+        } catch (NullPointerException e) {
+            logger.error("non fatal proxy execution error", e.getMessage(), e);
+        }
+        logger.debug("result for mapping {} is {}", mapping, result);
+        return result;
+    }
+
+    private String initAndExecuteApproval(String mapping, Map session) throws Exception {
+        proxy = getActionProxy(mapping);
+        approvalAction = (BirthRegisterApprovalAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
         ActionContext.getContext().setSession(session);
         String result = null;
@@ -97,11 +114,26 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("pageNo", "3");
         request.setParameter("skipConfirmationChages", "true");
         request.setParameter("confirmant.confirmantSignDate", "2010-07-20T00:00:00+05:30");
-        request.setParameter("confirmant.confirmantNICorPIN", "685031035V");
-        request.setParameter("confirmant.confirmantFullName", "සංගුණි ෙද්ව ෙග්");
+        request.setParameter("confirmant.confirmantNICorPIN", "861481131V");
+        request.setParameter("confirmant.confirmantFullName", "Ramya de silva");
         initAndExecute("/births/eprBirthConfirmation.do", session);
         session = action.getSession();
         assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
         assertFalse("faild to set skipConfirmationChages in confirmation changes captured state", action.isSkipConfirmationChages());
+
+        //direct approval confirmation changes
+        request.setParameter("bdId", Long.toString(action.getBdId()));
+        request.setParameter("confirmationApprovalFlag","true");
+        initAndExecuteApproval("/births/eprConfrimationChangesDirectApproval.do", session);
+        session=approvalAction.getSession();
+
+        logger.debug("current state after direct approval of confrimation chages : {}",(approvalAction.getService().getById(bdId,(User)session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+
+        //direct birth certificat print after direct approval
+        request.setParameter("bdId",Long.toString(approvalAction.getBdId()));
+        request.setParameter("directPrintBirthCertificate","true");
+        initAndExecute("/births/eprBirthCertificatDirectPrint.do",session);
+        session=action.getSession();
+        logger.debug("current state after direct printing the BC : {}",(action.getService().getById(bdId,(User)session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 }
