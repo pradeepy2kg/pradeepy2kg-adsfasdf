@@ -61,13 +61,12 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("bdId", "165");
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         session = action.getSession();
-        logger.debug("size {}",action.getActionErrors().size());
-        //assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
-                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
 
         obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
@@ -92,6 +91,8 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmation.do", session);
         session = action.getSession();
         assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
-        assertFalse("faild to set skipConfirmationChages in confirmation changes captured state", action.isSkipConfirmationChages());*/
+        assertFalse("faild to set skipConfirmationChages in confirmation changes captured state",action.isSkipConfirmationChages());
+*/
+
     }
 }

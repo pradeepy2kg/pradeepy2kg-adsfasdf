@@ -40,7 +40,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private AdoptionOrder adoption;
     private User user;
     private Map session;
-
+    private long idUKey;
+    
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service) {
         this.service = service;
@@ -57,15 +58,19 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String initAdoption() {
+    public String adoptionDeclaration() {
         populate();
+        return SUCCESS;
+    }
+
+    public String initAdoptionReRegistration() {
+        adoption=service.getById(1,user);
         return SUCCESS;
     }
 
     public String adoptionReRegistration() {
         return SUCCESS;
     }
-
     public String adoptionApprovalAndPrint() {
         populate();
         return SUCCESS;
