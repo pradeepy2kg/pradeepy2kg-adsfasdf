@@ -29,16 +29,35 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     public AdoptionOrder getByCourtOrderNumber(String courtOrderNumber, User user) {
-        return adoptionOrderDAO.getByCourtOrderNumber(courtOrderNumber).get(0);
+        try {
+            return adoptionOrderDAO.getByCourtOrderNumber(courtOrderNumber).get(0);
+        } catch (Exception e) {
+            logger.debug("No results found for {}", courtOrderNumber);
+            return null;
+        }
     }
 
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
-        //todo validations and access rights
+        businessValidations(adoption);
+
+        AdoptionOrder adopt = getByCourtOrderNumber(adoption.getCourtOrderNumber(), user);
+        if (adopt != null) {
+            handleException("can not add adoption order " + adoption.getIdUKey() +
+                " Court Order number already exists : " + adoption.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+        }
+
         adoptionOrderDAO.addAdoptionOrder(adoption);
     }
 
     public void updateAdoptionOrder(AdoptionOrder adoption, User user) {
-        //todo security validations, access priviledges and business validations
+        businessValidations(adoption);
+
+        AdoptionOrder adopt = adoptionOrderDAO.getById(adoption.getIdUKey());
+        if (AdoptionOrder.State.DATA_ENTRY != adopt.getStatus()) {
+            handleException("Cannot update adoption order " + adoption.getIdUKey() +
+                    " Illegal state at target : " + adopt.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+
         adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
 
@@ -76,6 +95,18 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
                     " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    private void businessValidations(AdoptionOrder adoption) {
+        if (adoption.getStatus() != AdoptionOrder.State.DATA_ENTRY) {
+            handleException("can not update adoption order " + adoption.getIdUKey() +
+                " Illegal State : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+
+        if ((adoption.getChildNewName() == null) && (adoption.getChildExistingName() == null)) {
+            handleException("can not update adoption order " + adoption.getIdUKey() +
+                " A Name not given : " + adoption.getStatus(), ErrorCodes.INVALID_DATA);
+        }
     }
 
     private void validateAccess(User user) {
