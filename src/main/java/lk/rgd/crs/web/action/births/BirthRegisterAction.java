@@ -18,6 +18,7 @@ import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.bean.UserWarning;
 
 import lk.rgd.crs.web.WebConstants;
@@ -33,6 +34,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(BirthRegisterAction.class);
 
     private final BirthRegistrationService service;
+    private final AdoptionOrderService adoptionService;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
@@ -66,6 +68,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private long oldBdId;    // bdId of previously persisted birth declaration, used in add neew entry in batch mode
+    private long adoptionId; // adoption order id, used in registering an adopted child
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
@@ -112,8 +115,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public BirthRegisterAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+    public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
+        this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
@@ -357,7 +361,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
-    public String birthDeclaratinInit() {
+    public String birthDeclarationInit() {
         BirthDeclaration bdf;
         logger.debug("Birth type is a live birth : {}", liveBirth);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
@@ -380,9 +384,43 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * Responsible for loading the 4BDF in non editable mode if
-     * the requested BirthDeclaration is a belated or Still Birth
-     * related those will also be processed by this method
+     * This method is used when adding a Birth Declaration for adopted child
+     *
+     * @return
+     */
+    public String adoptionDeclarationInit() {
+        BirthDeclaration bdf;
+        AdoptionOrder ao;
+        logger.debug("Adding BDF of an adopted child");
+        session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+
+        if (adoptionId == 0) {
+            addActionError(getText("Adoption order id invalid"));       // TODO add to property file
+            return ERROR;
+        }
+        ao = adoptionService.getById(adoptionId, user);
+
+        if (ao.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) {
+            addActionError(getText("Can not add BDF"));              // TODO add to property file
+            return ERROR;
+        }
+        bdf = new BirthDeclaration();
+        bdf.getRegister().setLiveBirth(liveBirth);
+
+        // TODO populate AdoptionOrder fields to BirthDeclaration
+        // TODO adoption idUkey
+        bdf.getChild().setDateOfBirth(ao.getChildBirthDate());
+        bdf.getChild().setChildFullNameOfficialLang(ao.getChildNewName() != null ? ao.getChildNewName() : ao.getChildExistingName());
+
+        session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+        populate(bdf);
+        return "form0";
+    }
+
+    /**
+     * Responsible for loading the 4BDF in non editable mode if the requested BirthDeclaration is a belated or Still
+     * Birth related those will also be processed by this method
      *
      * @return
      */
