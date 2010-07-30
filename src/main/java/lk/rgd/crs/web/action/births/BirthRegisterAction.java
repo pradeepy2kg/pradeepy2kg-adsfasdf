@@ -266,12 +266,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                             allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
                             addActionMessage(getText("cp3.confirmation.changes.success"));
                             //this is set to false because not to allow directly print the certificate it should have to approve
-                            skipConfirmationChages=false; 
+                            skipConfirmationChages = false;
                         }
                     }
                 } else {
                     service.captureLiveBirthConfirmationChanges(bdf, user);
-                    logger.debug("Mother name : {} ",bdf.getParent().getMotherFullName());
+                    logger.debug("Mother name : {} ", bdf.getParent().getMotherFullName());
                     //setting permission for BirthConfirmationDetails page
                     allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
                     addActionMessage(getText("cp3.confirmation.changes.success"));
@@ -279,7 +279,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 //jpa gives the newly added entries bdId instead of archived entry
                 bdId = bdf.getIdUKey();
                 session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-                logger.debug("Ds division : {} ",bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
+                logger.debug("Ds division : {} ", bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
         }
 
         if (pageNo != 3) {
@@ -331,6 +331,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String initBirthRegistration() {
         return SUCCESS;
     }
+
 
     public String initStillBirth() {
         return SUCCESS;
@@ -437,7 +438,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             try {
                 bdf = service.getById(bdId, user);
                 bcf = service.getById(bdId, user);
-                logger.debug("bdId is {} ", bdId);   
+                logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
                     bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
@@ -1180,5 +1181,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setArchivedEntryList(List<BirthDeclaration> archivedEntryList) {
         this.archivedEntryList = archivedEntryList;
+    }
+
+    public BirthRegistrationService getService() {
+        return this.service;
+    }
+
+    public BDDivisionDAO getBDDivisionDAO() {
+        return this.bdDivisionDAO;
     }
 }
