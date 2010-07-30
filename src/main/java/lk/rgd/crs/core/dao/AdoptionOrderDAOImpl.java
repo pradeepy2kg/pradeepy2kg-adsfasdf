@@ -13,18 +13,18 @@ import java.util.List;
  * @author Ashoka Ekanayaka
  */
 public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public void addAdoptionOrder(AdoptionOrder adoption) {
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         em.persist(adoption);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public void updateAdoptionOrder(AdoptionOrder adoption) {
         em.merge(adoption);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public void deleteAdoptionOrder(long idUKey) {
         em.remove(getById(idUKey));
     }
