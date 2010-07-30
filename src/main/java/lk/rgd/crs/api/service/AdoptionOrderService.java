@@ -19,9 +19,33 @@ public interface AdoptionOrderService {
 
     public List<AdoptionOrder> findAll(User user);
 
-    public void deleteAdoptionOrder(long idUKey, User user);
+    public void deleteAdoptionOrder(long adoptionId, User user);
 
-    public void approveAdoptionOrder(long idUKey, User user);
+    public void approveAdoptionOrder(long adoptionId, User user);
 
-    public void rejectAdoptionOrder(long idUKey, User user);
+    public void rejectAdoptionOrder(long adoptionId, User user);
+
+    /**
+     * Set the information of applicant who is requesting the adoption certificate and set the status to
+     * CERTIFICATE_ISSUE_REQUEST_CAPTURED which is 4.
+     * pre condition : Status has to be NOTICE_LETTER_PRINTED, 2
+     * @param adoption
+     * @param user
+     */
+    public void setApplicantInfo(AdoptionOrder adoption, User user);
+
+    /**
+     * set the status to NOTICE_LETTER_PRINTED, which is 2. pre condition : Status has to be on 1 (APPROVED)
+     * @param adoptionId
+     * @param user
+     */
+    public void setStatusToPrintedNotice(long adoptionId, User user);
+
+    /**
+     * set the status to  ADOPTION_CERTIFICATE_PRINTED, which is 5.
+     *  pre condition : Status need to be  CERTIFICATE_ISSUE_REQUEST_CAPTURED which is 4.
+     * @param adoptionId
+     * @param user
+     */
+    public void setStatusToPrintedCertificate (long adoptionId, User user);
 }
