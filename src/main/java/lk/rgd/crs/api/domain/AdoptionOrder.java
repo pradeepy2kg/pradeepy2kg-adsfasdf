@@ -36,9 +36,8 @@ import java.util.Date;
 //        "AND bdf.activeRecord IS FALSE " +
 //        "ORDER BY bdf.lastUpdatedTime desc"),
 //
-//    @NamedQuery(name = "get.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
-//        "AND bdf.activeRecord IS TRUE"),
+    @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
+        "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
 //
 //    @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
 //        "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
@@ -54,13 +53,15 @@ public class AdoptionOrder implements Serializable {
     public enum State {
         DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
 
-        APPROVED,   // 1 - An ARG or higher approved Adoption
+        APPROVED, // 1 - An ARG or higher approved Adoption
 
-        PRINTED,     // 2 - An  Adoption which is printed for parent confirmation
+        NOTICE_LETTER_PRINTED,  // 2 - An  Adoption which is printed for parent confirmation
 
-        REJECTED,    // 3 - An Adoption rejected by the ARG
+        REJECTED,  // 3 - An Adoption rejected by the ARG
 
         CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
+
+        ADOPTION_CERTIFICATE_PRINTED, //5 Acertifcate is requested
     }
 
     public enum ApplicantType {
@@ -121,7 +122,7 @@ public class AdoptionOrder implements Serializable {
     private int childAgeMonths;
 
     @Column(nullable = false)
-    private int childGender;      //  Gender 0 - male, 1 - female, 2 - unknown
+    private int childGender;   //  Gender 0 - male, 1 - female, 2 - unknown
 
     @Column(nullable = true)
     private long birthCertificateNumber; // idukey, not the serial !

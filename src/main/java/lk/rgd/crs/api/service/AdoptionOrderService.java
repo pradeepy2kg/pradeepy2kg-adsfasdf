@@ -11,6 +11,8 @@ import java.util.List;
 public interface AdoptionOrderService {
     public AdoptionOrder getById(long adoptionId, User user);
 
+    public AdoptionOrder getByCourtOrderNumber(String courtOrderNumber, User user);
+
     public void addAdoptionOrder(AdoptionOrder adoption, User user);
 
     public void updateAdoptionOrder(AdoptionOrder bdf, User user);
