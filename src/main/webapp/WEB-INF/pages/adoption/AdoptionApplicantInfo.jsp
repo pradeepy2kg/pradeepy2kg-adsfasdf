@@ -2,6 +2,43 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="adoption-applicant-info-form-outer">
+    <script>
+        $(function() {
+            $('select#birthDistrictId').bind('change', function(evt1) {
+                var id = $("select#birthDistrictId").attr("value");
+                $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.dsDivisionList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#dsDivisionId").html(options1);
+
+                            var options2 = '';
+                            var bd = data.bdDivisionList;
+                            for (var j = 0; j < bd.length; j++) {
+                                options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                            }
+                            $("select#birthDivisionId").html(options2);
+                        });
+            });
+
+            $('select#dsDivisionId').bind('change', function(evt2) {
+                var id = $("select#dsDivisionId").attr("value");
+                $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                        function(data) {
+                            var options = '';
+                            var bd = data.bdDivisionList;
+                            for (var i = 0; i < bd.length; i++) {
+                                options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                            }
+                            $("select#birthDivisionId").html(options);
+                        });
+            })
+        })
+
+    </script>
 
     <form action="eprAdoptionFind.do" method="post">
         <table style=" border:1px solid #000000; width:300px">
@@ -108,7 +145,8 @@
                     Address
                 </td>
                 <td colspan="4">
-                    <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress" cssStyle="width:98.2%;"/>
+                    <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress"
+                                cssStyle="width:98.2%;"/>
                 </td>
             </tr>
             </tbody>

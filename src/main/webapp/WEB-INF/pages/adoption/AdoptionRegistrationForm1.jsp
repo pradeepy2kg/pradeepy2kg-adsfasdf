@@ -2,6 +2,44 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<script>
+    $(function() {
+        $('select#birthDistrictId').bind('change', function(evt1) {
+            var id = $("select#birthDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id,mode:3},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        })
+    })
+
+
+</script>
 
 <div id="adoption-registration-form-outer">
 <s:form action="eprAdoptionAction.do" name="" id="" method="POST" onsubmit="javascript:return validate()">
@@ -269,20 +307,28 @@
         <td>දිස්ත්‍රික්කය <br/>
             District
         </td>
-        <td><s:select id="birthDistrictId" name="adoption.birthDistrictId" list="districtList"
-                      value="birthDistrictId" cssStyle="width:240px;"/></td>
+        <td><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                      value="birthDistrictId" cssStyle="width:240px;"/>
+        </td>
     </tr>
     <tr>
         <td>ප්‍රාදේශීය ලේකම් කොට්ටාශය <br/>
             Divisional Secretariat
         </td>
-        <td></td>
+        <td>
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                      cssStyle="float:left;  width:240px;"/>
+        </td>
     </tr>
     <tr>
         <td>ලියාපදිංචි කිරීමේ කොට්ටාශය <br/>
             Registration Division
         </td>
-        <td></td>
+        <td>
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                      list="bdDivisionList"
+                      cssStyle=" width:240px;float:right;"/>
+        </td>
     </tr>
     <tr>
         <td>අනුක්‍රමික අංකය <br/>
@@ -306,7 +352,7 @@
         var flag = false;
         var inputs = new Array(9);
         var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName",
-                 "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
+                "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
 
         //these inpute can not be null
         inputs[0] = new Date(document.getElementById("receivedDatePicker").value);

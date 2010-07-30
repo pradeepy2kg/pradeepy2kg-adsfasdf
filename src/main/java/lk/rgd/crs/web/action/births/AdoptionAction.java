@@ -32,6 +32,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int birthDistrictId;
     private int birthDivisionId;
     private int dsDivisionId;
+    private String language;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
@@ -42,7 +43,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map session;
     private long idUKey;
     //registering adoption
-    
+
 
     //requesting for certificate
     private String courtOrderNo;
@@ -125,7 +126,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
-        districtList = districtDAO.getDistrictNames(language, user);
+        districtList = districtDAO.getAllDistrictNames(language, user);
     }
 
     private void populateDynamicLists(String language) {
@@ -288,5 +289,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAdoptionOrder(AdoptionOrder adoptionOrder) {
         this.adoptionOrder = adoptionOrder;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
