@@ -41,7 +41,19 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private User user;
     private Map session;
     private long idUKey;
+    //registering adoption
     
+
+    //requesting for certificate
+    private String courtOrderNo;
+    private String certificateApplicantAddress;
+    private String certificateApplicantName;
+    private String certificateApplicantPassportNo;
+    private String certifcateApplicantCountry;
+    private String certifcateApplicantPin;
+    private String certificateApplicantType;
+    private AdoptionOrder adoptionOrder;
+
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service) {
         this.service = service;
@@ -64,13 +76,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String initAdoptionReRegistration() {
-        adoption=service.getById(1,user);
+        adoption = service.getById(1, user);
         return SUCCESS;
     }
 
     public String adoptionReRegistration() {
         return SUCCESS;
     }
+
     public String adoptionApprovalAndPrint() {
         populate();
         return SUCCESS;
@@ -79,10 +92,36 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String adoptionApplicantInfo() {
         return SUCCESS;
     }
+
+    public String issueCertifiedCopy() {
+        //todo set      passpoert ,country,pin
+        adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
+        adoption.setCertificateApplicantName(certificateApplicantName);
+        if (certificateApplicantType.equals("0")) {
+            adoption.setCertificateApplicantType(AdoptionOrder.ApplicantType.FATHER);
+        } else {
+            adoption.setCertificateApplicantType(AdoptionOrder.ApplicantType.MOTHER);
+        }
+        adoption.setCertificateApplicantAddress(certificateApplicantAddress);
+        //changing state
+        adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
+        logger.info(adoption.getCertificateApplicantType().name());
+        service.updateAdoptionOrder(adoption, user);
+        session.remove(WebConstants.SESSION_ADOPTION_ORDER);
+        return SUCCESS;
+    }
+
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         populateDynamicLists(language);
+    }
+
+    public String populateAdoption() {
+        //todo replace this with getAdoptionBySerialnumber
+        adoption = service.getById(1, user);
+        session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
+        return SUCCESS;
     }
 
     private void populateBasicLists(String language) {
@@ -185,5 +224,69 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAdoption(AdoptionOrder adoption) {
         this.adoption = adoption;
+    }
+
+    public String getCourtOrderNo() {
+        return courtOrderNo;
+    }
+
+    public void setCourtOrderNo(String courtOrderNo) {
+        this.courtOrderNo = courtOrderNo;
+    }
+
+    public String getCertificateApplicantName() {
+        return certificateApplicantName;
+    }
+
+    public void setCertificateApplicantName(String certificateApplicantName) {
+        this.certificateApplicantName = certificateApplicantName;
+    }
+
+    public String getCertificateApplicantAddress() {
+        return certificateApplicantAddress;
+    }
+
+    public void setCertificateApplicantAddress(String certificateApplicantAddress) {
+        this.certificateApplicantAddress = certificateApplicantAddress;
+    }
+
+    public String getCertificateApplicantPassportNo() {
+        return certificateApplicantPassportNo;
+    }
+
+    public void setCertificateApplicantPassportNo(String certificateApplicantPassportNo) {
+        this.certificateApplicantPassportNo = certificateApplicantPassportNo;
+    }
+
+    public String getCertifcateApplicantCountry() {
+        return certifcateApplicantCountry;
+    }
+
+    public void setCertifcateApplicantCountry(String certifcateApplicantCountry) {
+        this.certifcateApplicantCountry = certifcateApplicantCountry;
+    }
+
+    public String getCertifcateApplicantPin() {
+        return certifcateApplicantPin;
+    }
+
+    public void setCertifcateApplicantPin(String certifcateApplicantPin) {
+        this.certifcateApplicantPin = certifcateApplicantPin;
+    }
+
+    public String getCertificateApplicantType() {
+        return certificateApplicantType;
+    }
+
+    public void setCertificateApplicantType(String certificateApplicantType) {
+        this.certificateApplicantType = certificateApplicantType;
+    }
+
+    public AdoptionOrder getAdoptionOrder() {
+        return adoptionOrder;
+    }
+
+    public void setAdoptionOrder(AdoptionOrder adoptionOrder) {
+        this.adoptionOrder = adoptionOrder;
     }
 }

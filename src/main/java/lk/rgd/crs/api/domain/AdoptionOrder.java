@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * An instance representing a court order granting adoption of a child.
+ *
  * @author Ashoka Ekanayaka
  */
 @Entity
@@ -46,7 +47,7 @@ import java.util.Date;
 //        "WHERE bdf.register.status = 2 " +
 //        "AND bdf.register.dateOfRegistration < :date"),
 //
-    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+        @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
@@ -58,6 +59,8 @@ public class AdoptionOrder implements Serializable {
         PRINTED,     // 2 - An  Adoption which is printed for parent confirmation
 
         REJECTED,    // 3 - An Adoption rejected by the ARG
+
+        CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
     }
 
     public enum ApplicantType {
@@ -84,7 +87,7 @@ public class AdoptionOrder implements Serializable {
     private String courtOrderNumber;
 
     @Column(nullable = false)
-    private String court; 
+    private String court;
 
     @Column(nullable = false)
     private String judgeName;
@@ -142,7 +145,7 @@ public class AdoptionOrder implements Serializable {
     private State status;
 
     private String filterBlanks(String s) {
-        return (s != null) && (s.trim().length() == 0) ? null:s;
+        return (s != null) && (s.trim().length() == 0) ? null : s;
     }
 
     public long getIdUKey() {
@@ -288,6 +291,7 @@ public class AdoptionOrder implements Serializable {
     public void setApplicantMother(boolean applicantMother) {
         this.applicantMother = applicantMother;
     }
+
     public int getBirthDivisionId() {
         return birthDivisionId;
     }

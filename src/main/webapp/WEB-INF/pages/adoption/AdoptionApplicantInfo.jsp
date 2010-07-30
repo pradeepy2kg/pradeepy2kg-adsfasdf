@@ -3,14 +3,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="adoption-applicant-info-form-outer">
 
-    <form action="#" method="post">
+    <form action="eprAdoptionFind.do" method="post">
         <table style=" border:1px solid #000000; width:300px">
             <tr><s:actionerror/></tr>
             <tr>
                 <td>
                     <s:label value="%{getText('adoption_court_order_serial.label')}"/>
                 </td>
-                <td><s:textfield name="#" id="#"/></td>
+                <td><s:textfield name="courtOrderNo" id="courtOrderNo"/></td>
             </tr>
         </table>
         <table style=" width:300px">
@@ -24,7 +24,7 @@
             </tr>
         </table>
     </form>
-    <s:form>
+    <s:form action="eprAdoptionCertificateRequest.do">
         <table border="1" class="adoption-applicant" cellspacing="0" cellpadding="0"
                style="border:1px solid #000; border-collapse:collapse;">
             <caption></caption>
@@ -43,13 +43,13 @@
                     Father
                 </td>
                 <td>
-                    <s:radio name="father" list="#@java.util.HashMap@{'0':''}"/>
+                    <s:radio name="certificateApplicantType" list="#@java.util.HashMap@{'0':''}"/>
                 </td>
                 <td>මව <br/>
                     Mother
                 </td>
                 <td>
-                    <s:radio name="mother" list="#@java.util.HashMap@{'1':''}"/>
+                    <s:radio name="certificateApplicantType" list="#@java.util.HashMap@{'1':''}"/>
                 </td>
             </tr>
             <tr>
@@ -62,7 +62,7 @@
                     <br>
                 </td>
                 <td colspan="2">
-                    <s:textfield id="applicantPin" name="applicantPin"/>
+                    <s:textfield id="certifcateApplicantPin" name="acertifcateApplicantPin"/>
                 </td>
             </tr>
             <tr>
@@ -81,7 +81,7 @@
                     <br>
                     Country
                 </td>
-                <td><s:textfield id="applicantCountry" name="applicantCountry"/></td>
+                <td><s:textfield id="certifcateApplicantCountry" name="certifcateApplicantCountry"/></td>
                 <td>
                     ගමන් බලපත්‍ර අංකය
                     <br>
@@ -89,7 +89,7 @@
                     <br>
                     Passport No.
                 </td>
-                <td><s:textfield id="applicantPassportNo" name="applicantPassportNo"/></td>
+                <td><s:textfield id="certificateApplicantPassportNo" name="certificateApplicantPassportNo"/></td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -98,7 +98,7 @@
                     Name of the Applicant
                 </td>
                 <td colspan="4">
-                    <s:textarea id="applicantName" name="applicantName" cssStyle="width:98.2%;"/>
+                    <s:textarea id="certificateApplicantName" name="certificateApplicantName" cssStyle="width:98.2%;"/>
                 </td>
             </tr>
             <tr>
@@ -108,7 +108,7 @@
                     Address
                 </td>
                 <td colspan="4">
-                    <s:textarea id="applicantAddress" name="applicantAddress" cssStyle="width:98.2%;"/>
+                    <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress" cssStyle="width:98.2%;"/>
                 </td>
             </tr>
             </tbody>
