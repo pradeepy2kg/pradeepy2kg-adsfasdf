@@ -3,7 +3,6 @@ package lk.rgd.crs.core.service;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
-import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
@@ -29,8 +28,12 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         return adoptionOrderDAO.getById(adoptionId);
     }
 
+    public AdoptionOrder getByCourtOrderNumber(String courtOrderNumber, User user) {
+        return adoptionOrderDAO.getByCourtOrderNumber(courtOrderNumber).get(0);
+    }
+
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
-        //todo validations
+        //todo validations and access rights
         adoptionOrderDAO.addAdoptionOrder(adoption);
     }
 
@@ -40,7 +43,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     public List<AdoptionOrder> findAll(User user) {
-        //todo access priviledges
+        //todo access priviledges ?
         return adoptionOrderDAO.findAll();
     }
 

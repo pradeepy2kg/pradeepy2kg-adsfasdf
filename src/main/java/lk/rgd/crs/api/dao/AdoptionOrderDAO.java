@@ -17,4 +17,6 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> findAll();
 
     public void deleteAdoptionOrder(long idUKey);
+
+    public List<AdoptionOrder> getByCourtOrderNumber(String serialNumber);
 }
