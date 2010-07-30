@@ -26,12 +26,11 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     public AdoptionOrder getById(long adoptionId, User user) {
-        //todo access priviledges
         return adoptionOrderDAO.getById(adoptionId);
     }
 
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
-        //todo security validations, access priviledges and business validations
+        //todo validations
         adoptionOrderDAO.addAdoptionOrder(adoption);
     }
 
@@ -46,22 +45,43 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     public void deleteAdoptionOrder(long idUKey, User user) {
-        //todo security validations, access priviledges and business validations
-        adoptionOrderDAO.deleteAdoptionOrder(idUKey);
+        //todo access priviledges ?
+        AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
+        if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {
+            adoptionOrderDAO.deleteAdoptionOrder(idUKey);
+        } else {
+            handleException("Cannot delete adoption order " + adoption.getIdUKey() +
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
     }
 
     public void approveAdoptionOrder(long idUKey, User user) {
-        //todo security validations, access priviledges and business validations
-        AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
-        adoption.setStatus(AdoptionOrder.State.APPROVED);
-        adoptionOrderDAO.updateAdoptionOrder(adoption);
+        setApprovalStatus(idUKey, user, AdoptionOrder.State.APPROVED);
     }
 
     public void rejectAdoptionOrder(long idUKey, User user) {
-        //todo security validations, access priviledges and business validations
+        setApprovalStatus(idUKey, user, AdoptionOrder.State.REJECTED);
+    }
+
+    private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {
         AdoptionOrder adoption = adoptionOrderDAO.getById(idUKey);
-        adoption.setStatus(AdoptionOrder.State.REJECTED);
+        if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {
+            validateAccess(user);
+            adoption.setStatus(state);
+        } else {
+            handleException("Cannot approve/reject adoption order " + adoption.getIdUKey() +
+                    " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
         adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    private void validateAccess(User user) {
+        String role = user.getRole().getName();
+        if ( !(User.State.ACTIVE == user.getStatus()) ||
+                !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role)) ) {
+            handleException("User : " + user.getUserId() + " of role : " + role +
+                " is not allowed access to approve/reject an adoption : ",ErrorCodes.PERMISSION_DENIED);
+        }
     }
 
     private void handleException(String message, int code) {
