@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
+import java.util.Date;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -17,10 +18,15 @@ import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.web.WebConstants;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * @author Duminda Dharmakeerthi
  * @author amith jayasekaa
  */
+@SuppressWarnings({"ALL"})
 public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(AdoptionAction.class);
@@ -41,6 +47,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private AdoptionOrder adoption;
     private User user;
     private Map session;
+
     private long idUKey;
     //registering adoption
 
@@ -77,7 +84,17 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String initAdoptionReRegistration() {
-        adoption = service.getById(1, user);
+        AdoptionOrder adoption;
+        if (idUKey != 0) {
+            try {
+                adoption = service.getById(idUKey, user);
+                logger.debug("Id u key : {}", idUKey);
+            } catch (Exception e) {
+                logger.debug("catch exception : {}", e);
+            }
+        } else {
+            logger.debug("idUkey is zero");
+        }
         return SUCCESS;
     }
 
@@ -94,21 +111,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String issueCertifiedCopy() {
-        //todo set      passpoert ,country,pin
-        adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
-        adoption.setCertificateApplicantName(certificateApplicantName);
-        if (certificateApplicantType.equals("0")) {
-            adoption.setCertificateApplicantType(AdoptionOrder.ApplicantType.FATHER);
-        } else {
-            adoption.setCertificateApplicantType(AdoptionOrder.ApplicantType.MOTHER);
+    public String adoptionCertificate() {
+        try {
+            adoption = service.getById(idUKey, user);
+            logger.debug("Id u key : {}", idUKey);
+        } catch (Exception e) {
+            logger.debug("catch exception : {}", e);
         }
-        adoption.setCertificateApplicantAddress(certificateApplicantAddress);
-        //changing state
-        adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
-        logger.info(adoption.getCertificateApplicantType().name());
-        service.updateAdoptionOrder(adoption, user);
-        session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
     }
 
