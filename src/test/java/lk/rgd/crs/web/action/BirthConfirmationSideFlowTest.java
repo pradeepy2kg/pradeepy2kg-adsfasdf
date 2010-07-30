@@ -55,43 +55,44 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChanges() throws Exception {
-        /*Map session = login("rg", "password");
-        Object obj;
-        //searching the required entry
-        request.setParameter("bdId", "165");
-        initAndExecute("/births/eprBirthConfirmationInit.do", session);
-        session = action.getSession();
-        logger.debug("size {}",action.getActionErrors().size());
-        //assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
-
-        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-        assertNotNull("failed to populate Confirmation session bean", bd);
-        assertNotNull("failed to populate Confirmation Database bean",
-                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
-
-        obj = session.get(WebConstants.SESSION_USER_LANG);
-        assertNotNull("Session User Local Presence", obj);
-        assertNotNull("Request District List Presence", action.getDistrictList());
-        assertNotNull("Request Race List Presence", action.getRaceList());
-
-        //skipping the changes
-        request.setParameter("bdId", "165");
-        request.setParameter("pageNo", "2");
-        request.setParameter("skipConfirmationChages", "true");
-        initAndExecute("/births/eprBirthConfirmationSkipChanges.do", session);
-        session = action.getSession();
-        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
-
-        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
-
-        request.setParameter("pageNo", "3");
-        request.setParameter("skipConfirmationChages", "true");
-        request.setParameter("confirmant.confirmantSignDate", "2010-07-20T00:00:00+05:30");
-        request.setParameter("confirmant.confirmantNICorPIN", "685031035V");
-        request.setParameter("confirmant.confirmantFullName", "සංගුණි ෙද්ව ෙග්");
-        initAndExecute("/births/eprBirthConfirmation.do", session);
-        session = action.getSession();
-        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
-        assertFalse("faild to set skipConfirmationChages in confirmation changes captured state", action.isSkipConfirmationChages());*/
+//        Map session = login("rg", "password");
+//        Object obj;
+//        //searching the required entry
+//        request.setParameter("bdId", "165");
+//        initAndExecute("/births/eprBirthConfirmationInit.do", session);
+//        session = action.getSession();
+//        logger.debug("action error was : {}", action.getActionErrors().iterator().next());
+//        assertEquals("Action errors Confirmation Search", 0, action.getActionErrors().size());
+//
+//        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+//        assertNotNull("failed to populate Confirmation session bean", bd);
+//        assertNotNull("failed to populate Confirmation Database bean",
+//        session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+//
+//        obj = session.get(WebConstants.SESSION_USER_LANG);
+//        assertNotNull("Session User Local Presence", obj);
+//        assertNotNull("Request District List Presence", action.getDistrictList());
+//        assertNotNull("Request Race List Presence", action.getRaceList());
+//
+//        //skipping the changes
+//        request.setParameter("bdId", "165");
+//        request.setParameter("pageNo", "2");
+//        request.setParameter("skipConfirmationChages", "true");
+//        initAndExecute("/births/eprBirthConfirmationSkipChanges.do", session);
+//        session = action.getSession();
+//        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+//
+//        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
+//
+//        request.setParameter("pageNo", "3");
+//        request.setParameter("skipConfirmationChages", "true");
+//        request.setParameter("confirmant.confirmantSignDate", "2010-07-20T00:00:00+05:30");
+//        request.setParameter("confirmant.confirmantNICorPIN", "685031035V");
+//        request.setParameter("confirmant.confirmantFullName", "සංගුණි ෙද්ව ෙග්");
+//        initAndExecute("/births/eprBirthConfirmation.do", session);
+//        session = action.getSession();
+//        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+//        assertFalse("faild to set skipConfirmationChages in confirmation changes captured state",action.isSkipConfirmationChages());
+//
     }
 }
