@@ -160,7 +160,7 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private ApplicantType certificateApplicantType;
 
-    @Column(length = 2, nullable = false)
+    @Column(length = 2, nullable = true)
     private String languageToTransliterate;
 
     @Column(nullable = false)
