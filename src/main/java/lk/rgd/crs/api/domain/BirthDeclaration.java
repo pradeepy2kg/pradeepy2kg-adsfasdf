@@ -105,6 +105,24 @@ public class BirthDeclaration implements Serializable {
     }
 
     /**
+     * The Enumeration defining the type of the birth declaration.
+     */
+    public enum BirthType {
+        /**
+         * 0 - still birth
+         */
+        STILL,
+        /**
+         * 1 - live birth
+         */
+        LIVE,
+        /**
+         * 2 - child adoption
+         */
+        ADOPTION
+    }
+
+    /**
      * This is an auto generated unique row identifier
      */
     @Id
