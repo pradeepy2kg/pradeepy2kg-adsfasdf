@@ -249,7 +249,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     }
 
     /**
-     * delete selected pending BirthDeclaration if there
+     * approve selected pending BirthDeclaration if there
      * are any warnings redirected to warning displying page
      *
      * @return String

@@ -16,12 +16,13 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionOrderService;
-import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.Permission;
 
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 /**
  * @author Duminda Dharmakeerthi
@@ -64,6 +65,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String certificateApplicantType;
     private AdoptionOrder adoptionOrder;
 
+    private boolean allowEditAdoption;
+    private boolean allowApproveAdoption;
+
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service) {
         this.service = service;
@@ -88,8 +92,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String initAdoptionReRegistration() {
         if (idUKey != 0) {
             try {
-                adoption = service.getById(idUKey, user);
-                logger.debug("Id u key : {}", idUKey);
+                adoption = service.getById(getIdUKey(), user);
+                logger.debug("Id u key : {}", getIdUKey());
             } catch (Exception e) {
                 logger.debug("catch exception : {}", e);
             }
@@ -99,14 +103,33 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+
     public String adoptionReRegistration() {
         return SUCCESS;
     }
 
+    /**
+     * get the adoption which are to be approved and printed
+     *
+     * @return
+     */
     public String adoptionApprovalAndPrint() {
         //todo this is a mock method real backend is not implemented yet
         populate();
+        initPermissionForApprovalAndPrint();
         adoptionPendingApprovalList = service.findAll(user);
+        return SUCCESS;
+    }
+
+    /**
+     * responsible for approving requested adoption
+     * based on the idUKey
+     *
+     * @return
+     */
+    public String approveAdoption() {
+        logger.debug("requested to approve adoption with idUKey {}", getIdUKey());
+        service.approveAdoptionOrder(getIdUKey(), user);
         return SUCCESS;
     }
 
@@ -116,8 +139,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public String adoptionCertificate() {
         try {
-            adoption = service.getById(idUKey, user);
-            logger.debug("Id u key : {}", idUKey);
+            adoption = service.getById(getIdUKey(), user);
+            logger.debug("Id u key : {}", getIdUKey());
         } catch (Exception e) {
             logger.debug("catch exception : {}", e);
         }
@@ -128,6 +151,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //service.updateAdoptionOrder(adoption, user);
         //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
+    }
+
+    public void initPermissionForApprovalAndPrint() {
+        allowApproveAdoption = user.isAuthorized(Permission.APPROVE_ADOPTION);
+        allowEditAdoption = user.isAuthorized(Permission.EDIT_ADOPTION);
     }
 
     private void populate() {
@@ -323,5 +351,29 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public boolean isAllowEditAdoption() {
+        return allowEditAdoption;
+    }
+
+    public void setAllowEditAdoption(boolean allowEditAdoption) {
+        this.allowEditAdoption = allowEditAdoption;
+    }
+
+    public boolean isAllowApproveAdoption() {
+        return allowApproveAdoption;
+    }
+
+    public void setAllowApproveAdoption(boolean allowApproveAdoption) {
+        this.allowApproveAdoption = allowApproveAdoption;
+    }
+
+    public long getIdUKey() {
+        return idUKey;
+    }
+
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
     }
 }

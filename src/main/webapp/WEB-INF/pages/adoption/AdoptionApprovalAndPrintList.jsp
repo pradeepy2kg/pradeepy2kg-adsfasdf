@@ -113,11 +113,13 @@
                 <th></th>
                 <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                <th><s:label name="received" value="%{getText('received.label')}"/></th>
+                <%-- <th><s:label name="received" value="%{getText('received.label')}"/></th>--%>
                 <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
                 <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
                 <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
                 <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
+                <th><s:label name="delete" value="%{getText('view.label')}"/></th>
+                <th><s:label name="delete" value="%{getText('print.label')}"/></th>
             </tr>
             </thead>
 
@@ -135,6 +137,118 @@
                     <s:else>
                         <td><s:property value="childNewName"/></td>
                     </s:else>
+                    <s:if test="status.ordinal()==0">
+                        <s:if test="#request.allowEditAdoption">
+                            <s:url id="editSelected" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
+                        </s:if>
+                        <s:if test="#request.allowApproveAdoption">
+                            <s:url id="approveSelected" action="eprApproveAdoption.do">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{approveSelected}"
+                                                    title="%{getText('approveTooltip.label')}">
+                                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
+                        </s:if>
+                        <s:if test="#request.allowApproveAdoption">
+                            <s:url id="rejectSelected" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{rejectSelected}"
+                                                    title="%{getText('rejectTooltip.label')}"><img
+                                    src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
+                        </s:if>
+                        <s:if test="#request.allowApproveAdoption">
+                            <s:url id="deleteSelected" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{deleteSelected}"
+                                                    title="%{getText('deleteToolTip.label')}"><img
+                                    src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
+                        </s:if>
+                        <td></td>
+                        <td></td>
+                    </s:if>
+
+                    <s:elseif test="status.ordinal()==1">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <s:url id="viewSelected" action="">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        </td>
+                        <td>
+                            <s:url id="cetificatePrintUrl" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{cetificatePrintUrl}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                     height="25"/>
+                            </s:a>
+                        </td>
+                    </s:elseif>
+
+                    <s:elseif test="status.ordinal()==2">
+                        <s:url id="viewSelected" action="">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        </td>
+                        <td>
+                            <s:url id="cetificatePrintUrl" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{cetificatePrintUrl}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                     height="25"/>
+                            </s:a>
+                        </td>
+                    </s:elseif>
+
+                    <s:elseif test="status.ordinal()==4">
+                        <s:url id="viewSelected" action="">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        </td>
+                        <td>
+                            <s:url id="cetificatePrintUrl" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{cetificatePrintUrl}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                     height="25"/>
+                            </s:a>
+                        </td>
+                    </s:elseif>
                 </tr>
             </s:iterator>
 
@@ -142,4 +256,3 @@
         </table>
     </fieldset>
 </div>
-<%-- Styling Completed --%>

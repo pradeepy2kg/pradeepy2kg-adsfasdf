@@ -501,10 +501,6 @@
                 method="initAdoptionRegistration">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
-        <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionApprovalAndPrint">
-            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
-        </action>
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionAction">
             <result type="tiles" name="success">epr.home</result>
@@ -527,5 +523,17 @@
             <!--//todo change this to adoption home page -->
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
         </action>
+
+        <!--approve and print list related-->
+        <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionApprovalAndPrint">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprApproveAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="approveAdoption">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
     </package>
 </struts>
