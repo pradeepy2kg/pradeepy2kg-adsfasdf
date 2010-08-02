@@ -17,6 +17,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
 import javax.persistence.Column;
@@ -146,8 +147,50 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String approveAdoption() {
-        logger.debug("requested to approve adoption with idUKey {}", getIdUKey());
-        service.approveAdoptionOrder(getIdUKey(), user);
+        logger.debug("requested to approve AdoptionOrder with idUKey : {}", idUKey);
+        try {
+            service.approveAdoptionOrder(getIdUKey(), user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("adoption.error.no.permission"));
+        }
+        adoptionPendingApprovalList = service.findAll(user);
+        initPermissionForApprovalAndPrint();
+        populate();
+        return SUCCESS;
+    }
+
+    /**
+     * reject the AdoptionOrder based on requested
+     * idUKey
+     *
+     * @return
+     */
+    public String rejectAdoption() {
+        logger.debug("requested to reject AdoptionOrder with idUKey : {}", idUKey);
+        try {
+            service.rejectAdoptionOrder(idUKey, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("adoption.error.no.permission"));
+        }
+        adoptionPendingApprovalList = service.findAll(user);
+        initPermissionForApprovalAndPrint();
+        populate();
+        return SUCCESS;
+    }
+
+    /**
+     * delete the AdoptionOrder based on requested
+     * idUKey
+     *
+     * @return
+     */
+
+    public String deleteAdoption() {
+        logger.debug("requested to delete AdoptionOrder with idUKey : {}", idUKey);
+        service.deleteAdoptionOrder(idUKey, user);
+        adoptionPendingApprovalList = service.findAll(user);
+        initPermissionForApprovalAndPrint();
+        populate();
         return SUCCESS;
     }
 
