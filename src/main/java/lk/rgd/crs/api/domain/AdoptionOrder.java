@@ -160,7 +160,10 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private ApplicantType certificateApplicantType;
 
-    @Column(length = 2, nullable = true)
+    @Column(nullable = true)
+    private String certificateApplicantPINorNIC;
+
+    @Column(length = 2, nullable = false)
     private String languageToTransliterate;
 
     @Column(nullable = false)
@@ -408,5 +411,13 @@ public class AdoptionOrder implements Serializable {
 
     public void setStatus(State status) {
         this.status = status;
+    }
+
+    public String getCertificateApplicantPINorNIC() {
+        return certificateApplicantPINorNIC;
+    }
+
+    public void setCertificateApplicantPINorNIC(String certificateApplicantPINorNIC) {
+        this.certificateApplicantPINorNIC = certificateApplicantPINorNIC;
     }
 }

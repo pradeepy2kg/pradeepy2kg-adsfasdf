@@ -43,7 +43,7 @@
 
 <div id="adoption-registration-form-outer">
 <s:form action="eprAdoptionAction.do" name="" id="" method="POST" onsubmit="javascript:return validate()">
-<table class="adoption-reg-form-header-table">
+<table class="adoption-reg-form-header-table" cellspacing="1" cellpadding="1">
     <caption></caption>
     <col/>
     <col/>
@@ -99,6 +99,17 @@
         </td>
         <td><s:textfield name="adoption.judgeName" id="judgeName"/></td>
     </tr>
+    <tr>
+        <td>******* සහතිකය නිකුත් කල යුතු භාෂාව <br>***in tamil***<br>Preferred
+            Language for
+           ******
+        </td>
+        <td>
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
+                      name="adoption.languageToTransliterate"
+                      cssStyle="width:190px; margin-left:5px;"></s:select>
+        </td>
+    </tr>
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
@@ -138,9 +149,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2">
-            <s:textfield id="applicantPINorNIC" name="adoption.applicantPINorNIC"/>
-        </td>
+        <td colspan="2"><s:textfield name="adoption.applicantPINorNIC" id="applcantPIN"> </s:textfield></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -151,25 +160,28 @@
             நாடு <br/>
             Country
         </td>
-        <td><s:textfield id="applicantCountryId" name="adoption.applicantCountryId"/></td>
+        <td>
+            <s:select name="adoption.applicantCountryId" list="countryList" headerKey="0"
+                      headerValue="%{getText('adoption.select_country.label')}"/>
+        </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td><s:textfield id="applicantPassport" name="adoption.applicantPassport"/></td>
+        <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber"> </s:textfield></td>
     </tr>
     <tr>
         <td>නම <br/>
             Name of the Applicant
         </td>
-        <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"/></td>
+        <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"></s:textarea></td>
     </tr>
 
     <tr>
         <td>ලිපිනය <br/>
             Address
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantAddress" id="adoption.applicantAddress"/></td>
+        <td colspan="4"><s:textarea name="adoption.applicantAddress" id="applicantAddress"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -186,7 +198,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"/></td>
+        <td colspan="2"><s:textfield name="adoption.wifePINorNIC"></s:textfield></td>
     </tr>
     <tr>
         <td width="330px">විදේශිකය‍කු නම් <br/>
@@ -197,18 +209,23 @@
             நாடு <br/>
             Country
         </td>
-        <td width="175px"><s:textfield name="adoption.wifeCountryId" id="wifeCountryId"/> </td>
+        <td width="175px">
+            <s:select name="adoption.wifeCountryId" list="countryList" headerKey="0"
+                      headerValue="%{getText('adoption.select_country.label')}"/>
+        </td>
         <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td width="175px"><s:textfield name="adoption.wifePassport" id="wifePassport"/> </td>
+        <td width="175px">
+            <s:textfield name="adoption.wifePassport" id="applcantPassportNumber"> </s:textfield>
+        </td>
     </tr>
     <tr>
         <td> මවගේ නම <br/>
             Name of Mother
         </td>
-        <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"/></td>
+        <td colspan="4"><s:textarea name=""></s:textarea></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -261,13 +278,13 @@
             Existing Name <br/>
             (if already given)
         </td>
-        <td colspan="4"><s:textarea name="adoption.childExistingName" id="childExistingName"/></td>
+        <td colspan="4"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
             New name given
         </td>
-        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName"/></td>
+        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -286,7 +303,7 @@
         <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
             The serial number of the Birth Certificate
         </td>
-        <td width="30%"><s:textfield name="adoption.birthCertificateSerial" id="" cssStyle="width:85%;"/></td>
+        <td width="30%"><s:textfield name="adoption.birthCertificateSerial" id="birthRegistrationSerial" cssStyle="width:85%;"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -327,16 +344,19 @@
             Registration Division
         </td>
         <td>
-            <s:select id="birthDivisionId" name="adoption.birthDivisionId" value="%{birthDivisionId}"
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                       list="bdDivisionList"
-                      cssStyle=" width:240px;float:right;"/>
+                      cssStyle=" width:240px;float:left;"/>
         </td>
     </tr>
     <tr>
         <td>අනුක්‍රමික අංකය <br/>
             Serial Number
         </td>
-        <td><s:textfield name="adoption.birthCertificateSerial" id="birthCertificateSerial"/> </td>
+        <td>
+            <s:textfield name="adoption.birthCertificateSerial" id="birthCertificateSrialNum"
+                         cssStyle="width:200px"> </s:textfield>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -366,7 +386,6 @@
         inputs[6] = document.getElementById("applicantAddress").value;
         inputs[7] = document.getElementById("childAgeYears").value;
         inputs[8] = document.getElementById("childAgeMonths").value;
-
         //these inputs may be null with conditions
         var childExistingName = document.getElementById("childExistingName").value;
         var childNewName = document.getElementById("childNewName").value;
