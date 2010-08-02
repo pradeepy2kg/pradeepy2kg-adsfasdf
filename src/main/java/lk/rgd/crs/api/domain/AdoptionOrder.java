@@ -100,10 +100,28 @@ public class AdoptionOrder implements Serializable {
     private String applicantAddress;
 
     @Column(nullable = false)
+    private String applicantPINorNIC;
+
+    @Column(nullable = true)
+    private String applicantCountry;
+
+    @Column(nullable = true)
+    private String applicantPassport;
+
+    @Column(nullable = false)
     private boolean applicantMother; // false if father is the applicant (Usual case), true if it is the mother
 
     @Column(nullable = true)
     private String wifeName; // applies only if applicantMother is false (father)
+
+    @Column(nullable = true)
+    private String wifePINorNIC;
+
+    @Column(nullable = true)
+    private String wifeCountry;
+
+    @Column(nullable = true)
+    private String wifePassport;
 
     @Column(nullable = true)
     private String childExistingName; // this can not be null if given name is also null
@@ -206,6 +224,54 @@ public class AdoptionOrder implements Serializable {
 
     public void setApplicantAddress(String applicantAddress) {
         this.applicantAddress = filterBlanks(applicantAddress);
+    }
+
+    public String getApplicantPINorNIC() {
+        return applicantPINorNIC;
+    }
+
+    public void setApplicantPINorNIC(String applicantPINorNIC) {
+        this.applicantPINorNIC = applicantPINorNIC;
+    }
+
+    public String getApplicantCountry() {
+        return applicantCountry;
+    }
+
+    public void setApplicantCountry(String applicantCountry) {
+        this.applicantCountry = applicantCountry;
+    }
+
+    public String getApplicantPassport() {
+        return applicantPassport;
+    }
+
+    public void setApplicantPassport(String applicantPassport) {
+        this.applicantPassport = applicantPassport;
+    }
+
+    public String getWifePINorNIC() {
+        return wifePINorNIC;
+    }
+
+    public void setWifePINorNIC(String wifePINorNIC) {
+        this.wifePINorNIC = wifePINorNIC;
+    }
+
+    public String getWifeCountry() {
+        return wifeCountry;
+    }
+
+    public void setWifeCountry(String wifeCountry) {
+        this.wifeCountry = wifeCountry;
+    }
+
+    public String getWifePassport() {
+        return wifePassport;
+    }
+
+    public void setWifePassport(String wifePassport) {
+        this.wifePassport = wifePassport;
     }
 
     public String getWifeName() {

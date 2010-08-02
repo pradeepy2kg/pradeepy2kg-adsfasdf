@@ -383,12 +383,5 @@ insert into CRS.BIRTH_REGISTER (activeRecord, BIRTHATHOSPITAL, CHILDBIRTHWEIGHT,
 values (1, 1,4.0,'RUWAN PERERA','RUWAN PERERA',0,3,'2010-07-23',2,12352,'රෝහලේදී','In Hospital',36,null,null,null,null,null,'Kandy',1959,'ලක්ෂ්මන් බණ්ඩාර අංගම්මන','123123','Kurunegala',1920,'වාසල මුදියන්සේ අංගම්මන','456456457','65 C මල්වත්ත පාර,කොට්ටාව','kamal@gmail.com','842212131V','කුසුමාවතී රාම්‍යා ජයසිංහ','0715516541','2010-07-20',1,'2008-07-21',1,1,1,'මාතර','65 C මල්වත්ත පාර, කොට්ටාව','කුසුමාවතී රාම්‍යා ජයසිංහ','855112139V','2010-07-23','1984-01-01','ඉලන්කෝන් කුසුමාවතී ජයසිංහ','855112131V','112233456','මාතර','65 C මල්වත්ත පාර, කොට්ටාව','2010-07-12','288',    29,'1981-01-01','kusuma@gmail.com','කුසුමා ජයසිංහ'    ,'855112881V','1111122222','0715516541','මාතර','2010-07-21 14:31:19',07000805,null,null,'2010-07-21',1,null,29,'si',2,1,1,1,1,1,'ashoka',1,null,null);
 
 --Adoption order
-insert into CRS.ADOPTION_ORDER (APPLICANTADDRESS, APPLICANTMOTHER, APPLICANTNAME, CHILDAGEYEARS, CHILDEXISTINGNAME, CHILDGENDER, CHILDNEWNAME, COURT, COURTORDERNUMBER, JUDGENAME, LANGUAGETOTRANSLITERATE, ORDERISSUEDDATE, ORDERRECEIVEDDATE, STATUS)
-values ('applicant address',1,'applicant name - mother name',2,'child existing name',0,'child new name','court','20100803','judge name','si','2010-07-02','2010-07-20',5 );
-
-
-
-
-
-
-
+insert into CRS.ADOPTION_ORDER (APPLICANTADDRESS, APPLICANTMOTHER, APPLICANTNAME, APPLICANTPINORNIC, CHILDAGEYEARS, CHILDEXISTINGNAME, CHILDGENDER, CHILDNEWNAME, COURT, COURTORDERNUMBER, JUDGENAME, LANGUAGETOTRANSLITERATE, ORDERISSUEDDATE, ORDERRECEIVEDDATE, STATUS)
+values ('applicant address',1,'applicant name - mother name','841554656V',2,'child existing name',0,'child new name','court','20100803','judge name','si','2010-07-02','2010-07-20',5 );
