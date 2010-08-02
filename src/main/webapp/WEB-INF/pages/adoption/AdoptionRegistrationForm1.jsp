@@ -138,7 +138,9 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2"></td>
+        <td colspan="2">
+            <s:textfield id="applicantPINorNIC" name="adoption.applicantPINorNIC"/>
+        </td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -149,25 +151,25 @@
             நாடு <br/>
             Country
         </td>
-        <td><s:textfield id="certifcateApplicantCountry" name="certifcateApplicantCountry"/></td>
+        <td><s:textfield id="applicantCountryId" name="adoption.applicantCountryId"/></td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td><s:textfield></s:textfield></td>
+        <td><s:textfield id="applicantPassport" name="adoption.applicantPassport"/></td>
     </tr>
     <tr>
         <td>නම <br/>
             Name of the Applicant
         </td>
-        <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"></s:textarea></td>
+        <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"/></td>
     </tr>
 
     <tr>
         <td>ලිපිනය <br/>
             Address
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantAddress" id="applicantAddress"></s:textarea></td>
+        <td colspan="4"><s:textarea name="adoption.applicantAddress" id="adoption.applicantAddress"/></td>
     </tr>
     </tbody>
 </table>
@@ -184,7 +186,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2"><s:textfield></s:textfield></td>
+        <td colspan="2"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"/></td>
     </tr>
     <tr>
         <td width="330px">විදේශිකය‍කු නම් <br/>
@@ -195,18 +197,18 @@
             நாடு <br/>
             Country
         </td>
-        <td width="175px"></td>
+        <td width="175px"><s:textfield name="adoption.wifeCountryId" id="wifeCountryId"/> </td>
         <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td width="175px"></td>
+        <td width="175px"><s:textfield name="adoption.wifePassport" id="wifePassport"/> </td>
     </tr>
     <tr>
         <td> මවගේ නම <br/>
             Name of Mother
         </td>
-        <td colspan="4"><s:textarea name=""></s:textarea></td>
+        <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -259,13 +261,13 @@
             Existing Name <br/>
             (if already given)
         </td>
-        <td colspan="4"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
+        <td colspan="4"><s:textarea name="adoption.childExistingName" id="childExistingName"/></td>
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
             New name given
         </td>
-        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName"></s:textarea></td>
+        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName"/></td>
     </tr>
     </tbody>
 </table>
@@ -325,7 +327,7 @@
             Registration Division
         </td>
         <td>
-            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+            <s:select id="birthDivisionId" name="adoption.birthDivisionId" value="%{birthDivisionId}"
                       list="bdDivisionList"
                       cssStyle=" width:240px;float:right;"/>
         </td>
@@ -334,7 +336,7 @@
         <td>අනුක්‍රමික අංකය <br/>
             Serial Number
         </td>
-        <td></td>
+        <td><s:textfield name="adoption.birthCertificateSerial" id="birthCertificateSerial"/> </td>
     </tr>
     </tbody>
 </table>

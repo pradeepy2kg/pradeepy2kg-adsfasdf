@@ -21,10 +21,10 @@
         </s:label></td>
     </tr>
     <tr height="50px" style="text-align:left;font-size:10pt">
-        <td>Name of the applicant</td>
+        <td><s:label value="%{adoption.applicantName}"/></td>
     </tr>
     <tr height="100px" style="text-align:left;font-size:10pt">
-        <td>Address of applicant</td>
+        <td><s:label value="%{adoption.applicantAddress}"/></td>
     </tr>
     <tr>
         <td>දරුකමට හදාගත් ළමයෙකුගේ උපත නෙවත ලියපදින්ච්චි කිරීම <br/>
@@ -43,7 +43,7 @@
             </label>
         </td>
         <td>
-           <s:label value=""/>
+            <s:label value="%{adoption.birthCertificateSerial}"/>
         </td>
     </tr>
 </table>
@@ -127,7 +127,7 @@
             </label>
         </td>
         <td width="250px">
-
+            <s:label value="%{adoption.birthCertificateSerial}"/>
         </td>
     </tr>
 </table>
@@ -210,7 +210,7 @@
     <col/>
     <tbody>
     <tr>
-        <td height="100px" >නම <br/>
+        <td height="100px">නම <br/>
             Name
         </td>
         <td height="40px" colspan="3"><s:label name="" value="%{adoption.childExistingName}"/></td>
