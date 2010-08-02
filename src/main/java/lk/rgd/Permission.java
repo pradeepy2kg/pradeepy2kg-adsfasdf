@@ -10,6 +10,8 @@ public final class Permission {
     public static final int PRINT_BDF = 4;
     public static final int APPROVE_BDF = 5;
     public static final int APPROVE_BDF_CONFIRMATION = 6;
+    public static final int EDIT_ADOPTION=7;
+    public static final int APPROVE_ADOPTION=8;
 
     //permission for pages
     public static final int PAGE_CREATE_USER = 25;
