@@ -535,5 +535,10 @@
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
 
+        <action name="eprAdoptionEditMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationEditMode">
+            <result type="tiles" name="success">epr.AdoptionReg</result>
+        </action>
+
     </package>
 </struts>

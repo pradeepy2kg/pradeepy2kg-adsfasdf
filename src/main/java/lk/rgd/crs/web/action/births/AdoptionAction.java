@@ -63,7 +63,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String certifcateApplicantCountry;
     private String certifcateApplicantPin;
     private String certificateApplicantType;
-    private AdoptionOrder adoptionOrder;
 
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
@@ -100,6 +99,25 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } else {
             logger.debug("idUkey is zero");
         }
+        return SUCCESS;
+    }
+
+    /**
+     * responsible for loading the AdoptionOrder based
+     * on requested idUKey. Error will be thrown if it
+     * is not in the DATA_ENTRY mode
+     *
+     * @return
+     */
+    public String adoptionDeclarationEditMode() {
+        adoption = service.getById(idUKey, user);
+        if (adoption.getStatus().ordinal() != AdoptionOrder.State.DATA_ENTRY.ordinal()) {
+            //not in data entry mode
+            addActionError(getText("adoption.error.editNotAllowed"));
+            return ERROR;
+        }
+
+        populate();
         return SUCCESS;
     }
 
@@ -327,14 +345,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setCertificateApplicantType(String certificateApplicantType) {
         this.certificateApplicantType = certificateApplicantType;
-    }
-
-    public AdoptionOrder getAdoptionOrder() {
-        return adoptionOrder;
-    }
-
-    public void setAdoptionOrder(AdoptionOrder adoptionOrder) {
-        this.adoptionOrder = adoptionOrder;
     }
 
     public List<AdoptionOrder> getAdoptionPendingApprovalList() {

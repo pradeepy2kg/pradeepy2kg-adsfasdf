@@ -139,7 +139,7 @@
                     </s:else>
                     <s:if test="status.ordinal()==0">
                         <s:if test="#request.allowEditAdoption">
-                            <s:url id="editSelected" action="">
+                            <s:url id="editSelected" action="eprAdoptionEditMode.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
