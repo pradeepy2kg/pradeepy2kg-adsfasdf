@@ -117,6 +117,7 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="adoptionOrderService"/>
     </bean>
 
     <bean id="ajaxSupport" scope="prototype" class="lk.rgd.crs.web.action.AjaxAction">
