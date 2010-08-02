@@ -135,17 +135,19 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         request.setParameter("confirmationApprovalFlag", "false");
         request.setParameter("bdfSerialNo", "16005");
         request.setParameter("birthDivisionId", "10");
+        request.setParameter("birthDistrictId", "2");
         initAndExecute("/births/eprApprovalRefresh.do", session);
         assertEquals("No Action Errors", 0, action.getActionErrors().size());
+        populateList(session);
+
     }
 
     public void testApproveListOfEntries() throws Exception {
         Map session = login("rg", "password");
-        request.setParameter("index", new String[]{"16005", "16004", "16003"});
+        request.setParameter("index", new String[]{"167", "168", "169"});
         initAndExecute("/births/eprApproveBulk.do", session);
-        assertEquals("No Action errors ", 0, action.getActionErrors().size());
+        assertEquals("Action errors ", 1, action.getActionErrors().size());
         assertEquals("Request index", 3, action.getIndex().length);
-        //   populateList();
     }
 
     private void populateList(Map session) {

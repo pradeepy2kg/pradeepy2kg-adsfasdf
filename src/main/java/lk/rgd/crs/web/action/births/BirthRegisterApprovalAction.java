@@ -314,7 +314,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      */
     public String directApprove() {
         bdf = service.getById(bdId, user);
-        logger.debug("Ds division : {} ",bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
+        logger.debug("Ds division : {} ", bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
         liveBirth = bdf.getRegister().isLiveBirth();
         boolean caughtException = false;
         try {
@@ -423,7 +423,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 } else {
                     warnings = service.approveBirthDeclarationIdList(index, user);
                 }
-                addActionMessage(getText("message.approval.Success"));
+                if (index.length > 1 && (warnings != null && warnings.size() > 0)) {
+                    addActionMessage(getText("message.approval.Success.with.some.errors"));
+                } else if (index.length == 1 && (warnings != null && warnings.size() > 0)) {
+                    addActionMessage(getText("message.approval.faild"));
+                } else {
+                    addActionMessage(getText("message.approval.Success"));
+                }
             }
             catch (CRSRuntimeException e) {
                 logger.error("inside approveListOfEntries : {} ", e);
@@ -434,6 +440,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionMessage(getText("messege.noSelected.items"));
         }
         populate();
+        logger.info("district list : {}", districtList.size());
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
@@ -524,7 +531,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //TODO checking district loading
         setBirthDistrictId(birthDistrictId);
         //dsDivisions
-        this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         //setting bdDivisions
         if (!dsDivisionList.isEmpty()) {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
@@ -923,7 +930,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.approved = approved;
     }
 
-    public BirthRegistrationService getService(){
+    public BirthRegistrationService getService() {
         return this.service;
     }
 
