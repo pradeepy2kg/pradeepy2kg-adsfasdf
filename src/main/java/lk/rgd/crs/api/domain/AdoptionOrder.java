@@ -103,7 +103,7 @@ public class AdoptionOrder implements Serializable {
     private String applicantPINorNIC;
 
     @Column(nullable = true)
-    private String applicantCountry;
+    private int applicantCountryId;
 
     @Column(nullable = true)
     private String applicantPassport;
@@ -118,7 +118,7 @@ public class AdoptionOrder implements Serializable {
     private String wifePINorNIC;
 
     @Column(nullable = true)
-    private String wifeCountry;
+    private int wifeCountryId;
 
     @Column(nullable = true)
     private String wifePassport;
@@ -234,12 +234,12 @@ public class AdoptionOrder implements Serializable {
         this.applicantPINorNIC = applicantPINorNIC;
     }
 
-    public String getApplicantCountry() {
-        return applicantCountry;
+    public int getApplicantCountryId() {
+        return applicantCountryId;
     }
 
-    public void setApplicantCountry(String applicantCountry) {
-        this.applicantCountry = applicantCountry;
+    public void setApplicantCountryId(int applicantCountryId) {
+        this.applicantCountryId = applicantCountryId;
     }
 
     public String getApplicantPassport() {
@@ -258,12 +258,12 @@ public class AdoptionOrder implements Serializable {
         this.wifePINorNIC = wifePINorNIC;
     }
 
-    public String getWifeCountry() {
-        return wifeCountry;
+    public int getWifeCountryId() {
+        return wifeCountryId;
     }
 
-    public void setWifeCountry(String wifeCountry) {
-        this.wifeCountry = wifeCountry;
+    public void setWifeCountryId(int wifeCountryId) {
+        this.wifeCountryId = wifeCountryId;
     }
 
     public String getWifePassport() {

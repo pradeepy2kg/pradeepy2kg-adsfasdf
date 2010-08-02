@@ -91,6 +91,5 @@ public final class Permission {
     public static final int PAGE_ADOPTION__INIT = 113;
     public static final int PAGE_ADOPTION_APPLICANT_INFO = 114;
     public static final int PAGE_ADOPTION_CERTIFICATE = 115;
-
-
+    public static final int PAGE_ADOPTION_BDF_ENTRY = 116;
 }

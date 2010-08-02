@@ -412,6 +412,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         // TODO adoption idUkey
         bdf.getChild().setDateOfBirth(ao.getChildBirthDate());
         bdf.getChild().setChildFullNameOfficialLang(ao.getChildNewName() != null ? ao.getChildNewName() : ao.getChildExistingName());
+        bdf.getChild().setChildGender(ao.getChildGender());
+
+        if (ao.isApplicantMother()) {
+            bdf.getParent().setMotherNICorPIN(ao.getApplicantPINorNIC());
+            bdf.getParent().setMotherFullName(ao.getApplicantName());
+            bdf.getParent().setMotherAddress(ao.getApplicantAddress());
+            bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getApplicantCountryId()));
+            bdf.getParent().setMotherPassportNo(ao.getApplicantPassport());
+        } else {
+            bdf.getParent().setFatherNICorPIN(ao.getApplicantPINorNIC());
+            bdf.getParent().setFatherFullName(ao.getApplicantName());
+            bdf.getParent().setFatherCountry(countryDAO.getCountry(ao.getApplicantCountryId()));
+            bdf.getParent().setFatherPassportNo(ao.getApplicantPassport());
+
+            bdf.getParent().setMotherNICorPIN(ao.getWifePINorNIC());
+            bdf.getParent().setMotherFullName(ao.getWifeName());
+            bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getWifeCountryId()));
+            bdf.getParent().setMotherPassportNo(ao.getWifePassport());
+        }
 
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
         populate(bdf);
@@ -1227,5 +1246,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public BDDivisionDAO getBDDivisionDAO() {
         return this.bdDivisionDAO;
+    }
+
+    public long getAdoptionId() {
+        return adoptionId;
+    }
+
+    public void setAdoptionId(long adoptionId) {
+        this.adoptionId = adoptionId;
     }
 }
