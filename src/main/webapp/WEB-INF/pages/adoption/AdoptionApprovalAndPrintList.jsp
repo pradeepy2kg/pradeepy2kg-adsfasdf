@@ -59,7 +59,7 @@
     });
 
 </script>
-
+<s:actionerror/>
 <table width="100%" cellpadding="5" cellspacing="0">
     <col width="220px"/>
     <col/>
@@ -110,7 +110,6 @@
         <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th></th>
                 <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
                 <%-- <th><s:label name="received" value="%{getText('received.label')}"/></th>--%>
@@ -126,10 +125,6 @@
             <tbody>
             <s:iterator status="approvalStatus" value="adoptionPendingApprovalList" id="approvalList">
                 <tr>
-                    <td><s:checkbox name="index"
-                                    onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
-                                    title="%{getText('select.label')}" value="%{#index}"
-                                    fieldValue="%{#approvalList.idUKey}"/></td>
                     <td><s:property value="courtOrderNumber"/></td>
                     <s:if test="childExistingName!=null">
                         <td><s:property value="childExistingName"/></td>
@@ -158,7 +153,7 @@
                             </td>
                         </s:if>
                         <s:if test="#request.allowApproveAdoption">
-                            <s:url id="rejectSelected" action="">
+                            <s:url id="rejectSelected" action="eprRejectAdoption.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <td align="center"><s:a href="%{rejectSelected}"
@@ -168,7 +163,7 @@
                             </td>
                         </s:if>
                         <s:if test="#request.allowApproveAdoption">
-                            <s:url id="deleteSelected" action="">
+                            <s:url id="deleteSelected" action="eprDeleteAdoption.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <td align="center"><s:a href="%{deleteSelected}"
@@ -228,6 +223,29 @@
                     </s:elseif>
 
                     <s:elseif test="status.ordinal()==4">
+                        <s:url id="viewSelected" action="">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        </td>
+                        <td>
+                            <s:url id="cetificatePrintUrl" action="">
+                                <s:param name="idUKey" value="idUKey"/>
+                            </s:url>
+                            <s:a href="%{cetificatePrintUrl}">
+                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                     height="25"/>
+                            </s:a>
+                        </td>
+                    </s:elseif>
+
+                    <s:elseif test="status.ordinal()==5">
                         <s:url id="viewSelected" action="">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>

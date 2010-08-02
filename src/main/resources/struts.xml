@@ -535,6 +535,16 @@
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
 
+        <action name="eprRejectAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="rejectAdoption">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+         <action name="eprDeleteAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="deleteAdoption">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
         <action name="eprAdoptionEditMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclarationEditMode">
             <result type="tiles" name="success">epr.AdoptionReg</result>
