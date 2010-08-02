@@ -141,7 +141,6 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testCaptureConfirmationChanges() throws Exception {
-        //todo has to be implemented
         Long bdId;
         Map session = login("rg", "password");
         //initiating action to get the required bdId to start the unit test
@@ -165,7 +164,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
             session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
-        //loading the 2 of 3BCF
+        //loading the 2 of 3BCFs
         request.setParameter("pageNo", "1");
         request.setParameter("register.bdfSerialNo", "07000805");
         request.setParameter("register.dateOfRegistration", "2010-07-08T00:00:00+05:30");
@@ -184,7 +183,63 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherNICorPIN", "666666666v");
         request.setParameter("child.childGender", "1");
         initAndExecute("/births/eprBirthConfirmation.do", session);
+
+        assertEquals("Action erros for loading second page", 0, action.getActionErrors().size());
         session = action.getSession();
+
+        assertNotNull("faild to initialize child bean", action.getChild());
+        assertNotNull("faild to initialize parent bean", action.getParent());
+
+        //loading the 3 of 3BCFs
+        request.setParameter("pageNo", "2");
+        request.setParameter("child.childFullNameOfficialLang", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක");
+        request.setParameter("child.childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka");
+        request.setParameter("parent.fatherFullName", "Nishshanka Mudiyanselage Chandrasena Nishshanka");
+        request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
+        initAndExecute("/births/eprBirthConfirmation.do", session);
+
+        assertEquals("Action erros for loading third page", 0, action.getActionErrors().size());
+        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
+        session = action.getSession();
+
+        //cheking for back support
+        request.setParameter("pageNo", "1");
+        initAndExecute("/births/eprBirthConfirmation.do", session);
+        assertEquals("Action erros for loading second page with back support", 0, action.getActionErrors().size());
+
+        assertEquals("failed to populate child full name in official language", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක", action.getChild().getChildFullNameOfficialLang());
+        assertEquals("failed to populate childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka", action.getChild().getChildFullNameEnglish());
+        assertEquals("failed to populate Father full name", "Nishshanka Mudiyanselage Chandrasena Nishshanka", action.getParent().getFatherFullName());
+        assertEquals("failed to populate Mother full name", "Periyapperuma Arachchilage Premawathi", action.getParent().getMotherFullName());
+
+        session = action.getSession();
+        //loading the 3 of 3BCFs
+        request.setParameter("pageNo", "2");
+        request.setParameter("child.childFullNameOfficialLang", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක");
+        request.setParameter("child.childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka");
+        request.setParameter("parent.fatherFullName", "Nishshanka Mudiyanselage Chandrasena Nishshanka");
+        request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
+        initAndExecute("/births/eprBirthConfirmation.do", session);
+
+        assertEquals("Action erros for loading third page", 0, action.getActionErrors().size());
+        assertNotNull("faild to initialize confirmant bean after back support", action.getConfirmant());
+        session = action.getSession();
+
+        //loading the confirmation form detail page
+        request.setParameter("pageNo", "3");
+        request.setParameter("confirmantRadio", "GUARDIAN");
+        request.setParameter("confirmant.confirmantNICorPIN", "853303399v");
+        request.setParameter("confirmant.confirmantFullName", "කැලුම් කොඩිප්පිලි");
+        request.setParameter("confirmant.confirmantSignDate", "2010-07-28T00:00:00+05:30");
+        request.setParameter("skipConfirmationChanges", "false");
+        initAndExecute("/births/eprBirthConfirmation.do", session);
+        session = action.getSession();
+
+        logger.debug("bdId for the new entry {}", action.getBdId());
+        logger.debug("current state after capturing confirmation changes : {}", (action.getService().getById(action.getBdId(),
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+
+        //todo approval and print certificate has to be checked
     }
 
     //todo has to implement confirmation skip changes when the state is in confirmation printed
