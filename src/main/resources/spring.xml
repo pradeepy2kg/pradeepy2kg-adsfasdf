@@ -166,5 +166,6 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="countryDAOImpl"/>
     </bean>
 </beans>

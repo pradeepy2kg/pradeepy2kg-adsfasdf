@@ -61,7 +61,8 @@
             </tr>
         </table>
     </form>
-    <s:form action="eprAdoptionCertificateRequest.do">
+    <s:form action="eprAdoptionApplicantInfo.do">
+        <s:hidden name="pageNo" value="1"/>
         <table border="1" class="adoption-applicant" cellspacing="0" cellpadding="0"
                style="border:1px solid #000; border-collapse:collapse;">
             <caption></caption>
@@ -99,44 +100,45 @@
                     <br>
                 </td>
                 <td colspan="2">
-                    <s:textfield id="certifcateApplicantPin" name="acertifcateApplicantPin"/>
+                    <s:textfield id="certifcateApplicantPin" name="adoption.certificateApplicantPINorNIC"/>
                 </td>
             </tr>
-            <tr>
-                <td width="30px" style="background:lightgray;"></td>
-                <td>
-                    විදේශිකය‍කු නම්
-                    <br>
-                    வெளிநாட்டவர்
-                    <br>
-                    If a foreigner
-                </td>
-                <td>
-                    රට
-                    <br>
-                    நாடு
-                    <br>
-                    Country
-                </td>
-                <td><s:textfield id="certifcateApplicantCountry" name="certifcateApplicantCountry"/></td>
-                <td>
-                    ගමන් බලපත්‍ර අංකය
-                    <br>
-                    கடவுச் சீட்டு
-                    <br>
-                    Passport No.
-                </td>
-                <td><s:textfield id="certificateApplicantPassportNo" name="certificateApplicantPassportNo"/></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    අයදුම් කරුගේ නම
-                    <br>
-                    Name of the Applicant
-                </td>
-                <td colspan="4">
-                    <s:textarea id="certificateApplicantName" name="certificateApplicantName" cssStyle="width:98.2%;"/>
-                </td>
+                <%--<tr>
+                    <td width="30px" style="background:lightgray;"></td>
+                    <td>
+                        විදේශිකය‍කු නම්
+                        <br>
+                        வெளிநாட்டவர்
+                        <br>
+                        If a foreigner
+                    </td>
+                    <td>
+                        රට
+                        <br>
+                        நாடு
+                        <br>
+                        Country
+                    </td>
+                    <td><s:textfield id="certifcateApplicantCountry" name="certifcateApplicantCountry"/></td>
+                    <td>
+                        ගමන් බලපත්‍ර අංකය
+                        <br>
+                        கடவுச் சீட்டு
+                        <br>
+                        Passport No.
+                    </td>
+                    <td><s:textfield id="certificateApplicantPassportNo" name="certificateApplicantPassportNo"/></td>
+                </tr>
+                <tr>--%>
+            <td colspan="2">
+                අයදුම් කරුගේ නම
+                <br>
+                Name of the Applicant
+            </td>
+            <td colspan="4">
+                <s:textarea id="certificateApplicantName" name="adoption.certificateApplicantName"
+                            cssStyle="width:98.2%;"/>
+            </td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -145,14 +147,16 @@
                     Address
                 </td>
                 <td colspan="4">
-                    <s:textarea id="certificateApplicantAddress" name="certificateApplicantAddress"
+                    <s:textarea id="certificateApplicantAddress" name="adoption.certificateApplicantAddress"
                                 cssStyle="width:98.2%;"/>
                 </td>
             </tr>
             </tbody>
         </table>
+
         <div class="adoption-form-submit">
             <s:submit value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
         </div>
+
     </s:form>
 </div>

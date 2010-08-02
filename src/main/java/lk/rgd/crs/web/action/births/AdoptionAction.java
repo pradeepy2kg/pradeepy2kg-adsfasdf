@@ -12,10 +12,12 @@ import java.util.Date;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
@@ -23,7 +25,6 @@ import lk.rgd.Permission;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  * @author Duminda Dharmakeerthi
@@ -37,6 +38,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final CountryDAO countryDAO;
 
     private int birthDistrictId;
     private int birthDivisionId;
@@ -47,40 +49,31 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
     private List<AdoptionOrder> adoptionPendingApprovalList;
+    private Map<Integer, String> countryList;
 
     private AdoptionOrder adoption;
     private User user;
     private Map session;
 
     private long idUKey;
-    //registering adoption
-
-
-    //requesting for certificate
+    private int pageNo;
     private String courtOrderNo;
-    private String certificateApplicantAddress;
-    private String certificateApplicantName;
-    private String certificateApplicantPassportNo;
-    private String certifcateApplicantCountry;
-    private String certifcateApplicantPin;
-    private String certificateApplicantType;
-
-    private boolean allowEditAdoption;
+     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                          AdoptionOrderService service) {
+                          AdoptionOrderService service, CountryDAO countryDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.countryDAO = countryDAO;
     }
 
     public String adoptionAction() {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
-        adoption.setApplicantMother(true);
-        User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        service.addAdoptionOrder(adoption, currentUser);
+        service.addAdoptionOrder(adoption, user);
         return SUCCESS;
     }
 
@@ -90,6 +83,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String initAdoptionReRegistration() {
+        AdoptionOrder adoption;
         if (idUKey != 0) {
             try {
                 adoption = service.getById(getIdUKey(), user);
@@ -193,8 +187,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         return SUCCESS;
     }
-
     public String adoptionApplicantInfo() {
+        //todo check pageNo value
+        if (pageNo == 1) {
+            AdoptionOrder adpt = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
+            //todo remove this to JSP level
+            service.updateAdoptionOrder(adpt, user);
+            session.remove(WebConstants.SESSION_ADOPTION_ORDER);
+        }
         return SUCCESS;
     }
 
@@ -213,12 +213,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
     }
-
-    public void initPermissionForApprovalAndPrint() {
+public void initPermissionForApprovalAndPrint() {
         allowApproveAdoption = user.isAuthorized(Permission.APPROVE_ADOPTION);
         allowEditAdoption = user.isAuthorized(Permission.EDIT_ADOPTION);
     }
-
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
@@ -226,13 +224,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String populateAdoption() {
-        //todo replace this with getAdoptionBySerialnumber
-        adoption = service.getById(1, user);
+        adoption = service.getByCourtOrderNumber(courtOrderNo, user);
         session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
         return SUCCESS;
     }
 
     private void populateBasicLists(String language) {
+        countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getAllDistrictNames(language, user);
     }
 
@@ -342,53 +340,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.courtOrderNo = courtOrderNo;
     }
 
-    public String getCertificateApplicantName() {
-        return certificateApplicantName;
-    }
-
-    public void setCertificateApplicantName(String certificateApplicantName) {
-        this.certificateApplicantName = certificateApplicantName;
-    }
-
-    public String getCertificateApplicantAddress() {
-        return certificateApplicantAddress;
-    }
-
-    public void setCertificateApplicantAddress(String certificateApplicantAddress) {
-        this.certificateApplicantAddress = certificateApplicantAddress;
-    }
-
-    public String getCertificateApplicantPassportNo() {
-        return certificateApplicantPassportNo;
-    }
-
-    public void setCertificateApplicantPassportNo(String certificateApplicantPassportNo) {
-        this.certificateApplicantPassportNo = certificateApplicantPassportNo;
-    }
-
-    public String getCertifcateApplicantCountry() {
-        return certifcateApplicantCountry;
-    }
-
-    public void setCertifcateApplicantCountry(String certifcateApplicantCountry) {
-        this.certifcateApplicantCountry = certifcateApplicantCountry;
-    }
-
-    public String getCertifcateApplicantPin() {
-        return certifcateApplicantPin;
-    }
-
-    public void setCertifcateApplicantPin(String certifcateApplicantPin) {
-        this.certifcateApplicantPin = certifcateApplicantPin;
-    }
-
-    public String getCertificateApplicantType() {
-        return certificateApplicantType;
-    }
-
-    public void setCertificateApplicantType(String certificateApplicantType) {
-        this.certificateApplicantType = certificateApplicantType;
-    }
 
     public List<AdoptionOrder> getAdoptionPendingApprovalList() {
         return adoptionPendingApprovalList;
@@ -406,7 +357,30 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.language = language;
     }
 
-    public boolean isAllowEditAdoption() {
+    public Map<Integer, String> getCountryList() {
+        return countryList;
+    }
+
+    public void setCountryList(Map<Integer, String> countryList) {
+        this.countryList = countryList;
+    }
+
+    public int getPageNumber() {
+        return pageNo;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNo = pageNumber;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+ public boolean isAllowEditAdoption() {
         return allowEditAdoption;
     }
 
