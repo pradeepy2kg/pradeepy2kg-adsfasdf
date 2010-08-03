@@ -554,5 +554,11 @@
                 method="adoptionDeclarationViewMode">
             <result type="tiles" name="success">epr.non_editable_adoptionCertificate</result>
         </action>
+
+        <action name="eprPrintAdoptionRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationMarkAsPrint">
+            <result type="tiles" name="success">epr.AdoptionReReg</result>
+        </action>
+
     </package>
 </struts>
