@@ -32,6 +32,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     public List<AdoptionOrder> getByCourtOrderNumber(String courtOrderNumber) {
         Query q = em.createNamedQuery("get.by.courtOrderNumber");
         q.setParameter("courtOrderNumber", courtOrderNumber);
+       // logger.debug("new court order number : {} ",q.getResultList());
         return q.getResultList();
     }
 

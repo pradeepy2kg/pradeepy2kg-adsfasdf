@@ -72,17 +72,23 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public String adoptionAction() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        //AdoptionOrder adoption;
+        //adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
+        //courtOrderNo=adoption.getCourtOrderNumber();
         service.addAdoptionOrder(adoption, user);
+        logger.debug("IdUkey : {} ",idUKey);
         return SUCCESS;
     }
 
     public String adoptionDeclaration() {
+        logger.debug("Adoption declaration ok");
         populate();
         return SUCCESS;
     }
 
     public String initAdoptionReRegistration() {
+        logger.debug("Adoption reregistration for IdUkey : {}",idUKey);
         AdoptionOrder adoption;
         if (idUKey != 0) {
             try {
@@ -220,12 +226,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (Exception e) {
             logger.debug("catch exception : {}", e);
         }
-        //adoption.setCertificateApplicantAddress(certificateApplicantAddress);
-        //changing state
-        //adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
-        //logger.info(adoption.getCertificateApplicantType().name());
-        //service.updateAdoptionOrder(adoption, user);
-        //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
     }
 

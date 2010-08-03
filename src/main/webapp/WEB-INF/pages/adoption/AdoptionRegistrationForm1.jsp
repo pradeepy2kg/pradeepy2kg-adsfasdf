@@ -256,7 +256,7 @@
         </td>
         <td><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                name="adoption.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
     </tr>
     <tr>
