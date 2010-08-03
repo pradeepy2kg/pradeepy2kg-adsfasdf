@@ -149,7 +149,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("birth certificate search: Page {}", pageNo);
         // TODO Still implementing
         if (pageNo == 1) {
-            service.addBirthCertificateSearch(bcSearch, user);
+            service.performBirthCertificateSearch(bcSearch, user);
         }
         return "page" + pageNo;
     }

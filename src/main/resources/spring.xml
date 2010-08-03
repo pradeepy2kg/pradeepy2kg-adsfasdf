@@ -106,6 +106,7 @@
     <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
         <constructor-arg ref="solrIndexManager"/>
         <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <!--Web module related classes-->

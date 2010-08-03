@@ -32,7 +32,7 @@ public class BirthCertificateSearch implements Serializable {
      */
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dateOfSubmittion;
+    private Date dateOfSubmission;
 
     /**
      * This is the applicants full name
@@ -50,7 +50,13 @@ public class BirthCertificateSearch implements Serializable {
      * This is the full name of whose birth certificate being searched
      */
     @Column(nullable = true, length = 600)
-    private String fullName;
+    private String childFullNameOfficialLang;
+
+    /**
+     * This is the full name of whose birth certificate being searched
+     */
+    @Column(nullable = true, length = 600)
+    private String childFullNameEnglish;
 
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
@@ -63,6 +69,12 @@ public class BirthCertificateSearch implements Serializable {
      */
     @Transient
     private int noOfCopies;
+
+    /**
+     * The number of results returned for the search
+     */
+    @Column(nullable = false)
+    private int resultsFound;
 
     /**
      * Full name of father
@@ -108,7 +120,7 @@ public class BirthCertificateSearch implements Serializable {
      */
     @Column(nullable = true)
     @Temporal(TemporalType.DATE)
-    private Date certificateIssueDate;
+    private Date dateOfRegistration;
 
     /**
      * The user performed the birth certificate search
@@ -140,12 +152,12 @@ public class BirthCertificateSearch implements Serializable {
         this.applicationNo = applicationNo;
     }
 
-    public Date getDateOfSubmittion() {
-        return dateOfSubmittion;
+    public Date getDateOfSubmission() {
+        return dateOfSubmission;
     }
 
-    public void setDateOfSubmittion(Date dateOfSubmittion) {
-        this.dateOfSubmittion = dateOfSubmittion;
+    public void setDateOfSubmission(Date dateOfSubmission) {
+        this.dateOfSubmission = dateOfSubmission;
     }
 
     public String getApplicantFullName() {
@@ -164,12 +176,12 @@ public class BirthCertificateSearch implements Serializable {
         this.applicantAddress = applicantAddress;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getChildFullNameOfficialLang() {
+        return childFullNameOfficialLang;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
+        this.childFullNameOfficialLang = childFullNameOfficialLang == null ? null : childFullNameOfficialLang.trim();
     }
 
     public int getGender() {
@@ -193,7 +205,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = fatherFullName;
+        this.fatherFullName = fatherFullName == null ? null : fatherFullName.trim();
     }
 
     public String getMotherFullName() {
@@ -201,7 +213,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setMotherFullName(String motherFullName) {
-        this.motherFullName = motherFullName;
+        this.motherFullName = motherFullName == null ? null : motherFullName.trim();
     }
 
     public Date getDateOfBirth() {
@@ -217,7 +229,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
+        this.placeOfBirth = placeOfBirth == null ? null : placeOfBirth.trim();
     }
 
     public BDDivision getBirthDivision() {
@@ -236,12 +248,12 @@ public class BirthCertificateSearch implements Serializable {
         this.certificateNo = certificateNo;
     }
 
-    public Date getCertificateIssueDate() {
-        return certificateIssueDate;
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
     }
 
-    public void setCertificateIssueDate(Date certificateIssueDate) {
-        this.certificateIssueDate = certificateIssueDate;
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
     }
 
     public User getSearchUser() {
@@ -258,5 +270,21 @@ public class BirthCertificateSearch implements Serializable {
 
     public void setSearchPerformDate(Date searchPerformDate) {
         this.searchPerformDate = searchPerformDate;
+    }
+
+    public String getChildFullNameEnglish() {
+        return childFullNameEnglish;
+    }
+
+    public void setChildFullNameEnglish(String childFullNameEnglish) {
+        this.childFullNameEnglish = childFullNameEnglish == null ? null : childFullNameEnglish.trim().toUpperCase();
+    }
+
+    public int getResultsFound() {
+        return resultsFound;
+    }
+
+    public void setResultsFound(int resultsFound) {
+        this.resultsFound = resultsFound;
     }
 }

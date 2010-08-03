@@ -319,12 +319,13 @@ public interface BirthRegistrationService {
     public void triggerScheduledJobs();
 
     /**
-     * Add a birth certificate search entry to the system. This operation is maintained for auditing purposes.
+     * Perform a birth certificate search, and add an entry on the search performed
      *
-     * @param bcs  the Birth certificate search to be added
-     * @param user the user initiate the action
+     * @param bcs  the Birth certificate search details
+     * @param user the user performing the action
+     * @return the list of records found and returned to the user
      */
-    public void addBirthCertificateSearch(BirthCertificateSearch bcs, User user);
+    public List<BirthDeclaration> performBirthCertificateSearch(BirthCertificateSearch bcs, User user);
 
     /**
      * Returns historical records for the given BD Division and Serial number

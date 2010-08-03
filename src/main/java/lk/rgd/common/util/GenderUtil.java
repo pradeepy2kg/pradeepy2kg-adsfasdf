@@ -10,15 +10,24 @@ import org.slf4j.LoggerFactory;
 public class GenderUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(GenderUtil.class);
+    private static final String GENDER_MALE_STRING = "පිරිමි / #Male# / Male";
+    private static final String GENDER_FEMALE_STRING = "ගැහැණු / #Female# / Female";
+    private static final String GENDER_UNKNOWN_STRING = "නොදත් / #Unknown# / Unknown";
 
     public static String getGenderString(int code) {
         switch (code) {
-            case 0: return "පිරිමි / #Male# / Male";
-            case 1: return "ගැහැණු / #Female# / Female";
-            case 2: return "නොදත් / #Unknown# / Unknown";
+            case 0: return GENDER_MALE_STRING;
+            case 1: return GENDER_FEMALE_STRING;
+            case 2: return GENDER_UNKNOWN_STRING;
         }
         logger.error("Invalid gender code : {}", code);
         throw new IllegalArgumentException("Invalid gender code : {}");
+    }
+
+    public static int getGenderCode(String langString) {
+        if (GENDER_MALE_STRING.equals(langString)) return 0;
+        if (GENDER_FEMALE_STRING.equals(langString)) return 1;
+        return 2;
     }
 
     public static String getGender(int code, String language) {

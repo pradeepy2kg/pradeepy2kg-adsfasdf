@@ -55,6 +55,10 @@ public class ErrorCodes {
      * The action cannot be performed on the objects' current state
      */
     public static final int ILLEGAL_STATE = 2002;
+    /**
+     * Error searching Solr index
+     */
+    public static final int INDEX_SEARCH_FAILURE = 2003;
 
     //error code 3001-4000 indicate authorization errors
     public static final int AUTHORIZATION_FAILS_USER_MANAGEMENT = 3001;

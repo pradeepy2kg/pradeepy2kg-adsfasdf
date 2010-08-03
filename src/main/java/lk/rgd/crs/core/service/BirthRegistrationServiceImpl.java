@@ -595,9 +595,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing);
 
-        // index record
-        birthRecordsIndexer.add(existing);
-
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
     }
 
@@ -626,9 +623,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         bdf.getRegister().setOriginalBCPrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing);
-
-        // index record
-        birthRecordsIndexer.add(existing);
 
         logger.debug("Marked as Still Birth certificate printed for record : {}", bdf.getIdUKey());
     }
@@ -1044,6 +1038,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Generated PIN for record IDUKey : {} issued PIN : {}", bdf.getIdUKey(), pin);
         birthDeclarationDAO.updateBirthDeclaration(bdf);
 
+        // index record
+        birthRecordsIndexer.add(bdf);        
+
         return warnings;
     }
 
@@ -1185,16 +1182,40 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public void addBirthCertificateSearch(BirthCertificateSearch bcs, User user) {
-        logger.debug("Adding a new birth certificate search entry");
+    public List<BirthDeclaration> performBirthCertificateSearch(BirthCertificateSearch bcs, User user) {
 
+        logger.debug("Birth certificate search started");
+
+        List<BirthDeclaration> results = new ArrayList<BirthDeclaration>();
+        BirthDeclaration exactRecord = null;
+
+        if (bcs.getBirthDivision() != null && bcs.getCertificateNo() != null) {
+            logger.debug("Search narrowed against BD Division : {} and certificate serial : {}" +
+                bcs.getBirthDivision().getEnDivisionName(), bcs.getCertificateNo());
+            exactRecord = birthDeclarationDAO.getByBDDivisionAndSerialNo(bcs.getBirthDivision(), bcs.getCertificateNo());
+            if (exactRecord != null) {
+                results = new ArrayList<BirthDeclaration>();
+                results.add(exactRecord);
+            }
+        }
+
+        // add any matches from Solr search, except for the exact match
+        for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(bcs)) {
+            if (exactRecord == null || exactRecord.getIdUKey() != bdf.getIdUKey()) {
+                results.add(bdf);
+            }
+        }
+        
         // set user perform searching and the timestamp
         bcs.setSearchUser(user);
         bcs.setSearchPerformDate(new Date());
+        bcs.setResultsFound(results.size());
 
         bcSearchDAO.addBirthCertificateSearch(bcs);
-        logger.debug("Added a new birth certificate search entry. SearchUKey : {} by UserID", bcs.getSearchUKey(),
-            user.getUserId());
+        logger.debug("Birth certificate search completed and recorded as SearchUKey : {} Results found : {}",
+            bcs.getSearchUKey(), results.size());
+
+        return results;
     }
 
     /**
