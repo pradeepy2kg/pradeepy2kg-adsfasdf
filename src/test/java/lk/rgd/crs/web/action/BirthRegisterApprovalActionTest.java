@@ -14,6 +14,7 @@ import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 
 /**
  * @author amith jayasekara
@@ -72,7 +73,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
         //recode 167 is live birth
-        assertEquals("Live birth", true, action.isLiveBirth());
+        assertEquals("Live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());
 
         //   assertEquals("Number of warnings ", 3, action.getWarnings().size());
         //todo improve approval with out warning
@@ -176,7 +177,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         assertEquals("Request confermationFlag", false, action.isConfirmationApprovalFlag());
         assertEquals("Request ignoring warnings", true, action.isIgnoreWarning());
         //this is (167) a live birth
-        assertEquals("Is live birth", true, action.isLiveBirth());
+        assertEquals("Is live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());
     }
 
     private Map login(String userName, String password) throws Exception {

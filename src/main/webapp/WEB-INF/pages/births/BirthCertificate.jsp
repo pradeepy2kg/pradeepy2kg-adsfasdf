@@ -69,7 +69,7 @@
     </tr>
     <tr>
         <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
-            <s:if test="liveBirth">
+            <s:if test="birthType.ordinal() != 0">
                 උප්පැන්න සහතික<br>
                 பிறப்பு சான்றிதழ்﻿<br>
                 BIRTH CERTIFICATE
@@ -109,7 +109,7 @@
             <br>Registration Division
         </td>
         <td><s:label name="" value="%{#request.register.birthDivision.siDivisionName}"/></td>
-        <s:if test="liveBirth">
+        <s:if test="birthType.ordinal() != 0">
             <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
                 <br> நிறைவேற்றிய மாற்றங்கள்
                 <br> Changes after first registration
@@ -129,7 +129,7 @@
     <col width="100px">
     <col>
     <tbody>
-    <s:if test="liveBirth">
+    <s:if test="birthType.ordinal() != 0">
         <tr>
             <td height="80px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)
             </td>
@@ -176,7 +176,7 @@
         </td>
         <td><s:label name="" value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>
     </tr>
-    <s:if test="liveBirth">
+    <s:if test="birthType.ordinal() != 0">
         <tr>
             <td height="120px">නම <br>பெயர் <br>Name
             </td>

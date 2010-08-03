@@ -117,21 +117,21 @@
 
         <action name="eprStillBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclarationInit">
-            <param name="liveBirth">false</param>
+            <param name="birthType">STILL</param>
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclarationInit">
-            <param name="liveBirth">true</param>
+            <param name="birthType">LIVE</param>
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprAdoptionBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="adoptionDeclarationInit">
-            <param name="liveBirth">true</param>
+            <param name="birthType">ADOPTION</param>
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="error">epr.error</result>
         </action>

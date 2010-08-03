@@ -84,11 +84,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     //decides request is from birth confirmation approval if confirmationApprovalFlag is set to true
     private boolean confirmationApprovalFlag;
     private boolean searchDateRangeFlag;
-    private boolean liveBirth;
+    private BirthDeclaration.BirthType birthType;
     private boolean approved;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -148,10 +148,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), getPageNo(), noOfRows, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), getPageNo(), noOfRows, user);
         }
         paginationHandler(approvalPendingList.size());
         setPreviousFlag(false);
@@ -166,11 +166,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (confirmationApprovalFlag) {
             setAllowApproveBDFConfirmation(user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION));
             logger.debug("permissions for Birth Confirmation Approval were populated : edit confirmation {} , Approve/Reject Confirmation {} , "
-                    , allowEditBDF, allowApproveBDFConfirmation);
+                , allowEditBDF, allowApproveBDFConfirmation);
         } else {
             setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
             logger.debug("permissions for Birth Registratin Approval were populated : edit Registration {} , Approve/Reject Registration {} , "
-                    , allowEditBDF, allowApproveBDF);
+                , allowEditBDF, allowApproveBDF);
         }
     }
 
@@ -188,7 +188,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         initPermission();
         if (logger.isDebugEnabled()) {
             logger.debug("inside filter() : birthDistrictId {} and birthDivisionId {}  ", birthDistrictId, birthDivisionId + " bdfSerialNumber " +
-                    bdfSerialNo + " selected, requested from page " + pageNo);
+                bdfSerialNo + " selected, requested from page " + pageNo);
         }
 
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
@@ -210,24 +210,24 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
             } else {
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
             }
         } else if (searchStartDate != null && searchEndDate != null && bdfSerialNo == 0) {
             // searching according to selected date range in BDF approval page and Confirmation approval page
             searchDateRangeFlag = true;
             if (confirmationApprovalFlag) {
                 approvalPendingList = service.getByBDDivisionStatusAndConfirmationReceiveDateRange(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
             } else {
                 approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
-                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
             }
             addActionMessage("select according to date");
         } else {
             if (bdfSerialNo > 0) {
                 try {
                     bdf = service.getByBDDivisionAndSerialNo(
-                            bdDivisionDAO.getBDDivisionByPK(birthDivisionId), bdfSerialNo, user);
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), bdfSerialNo, user);
                 }
                 catch (Exception e) {
                     logger.error("inside filter() : {} ", e);
@@ -238,7 +238,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
             } else {
                 approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
             }
         }
         paginationHandler(approvalPendingList.size());
@@ -257,17 +257,17 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String approve() {
         initPermission();
         bdf = service.getById(bdId, user);
-        liveBirth = bdf.getRegister().isLiveBirth();
+        birthType = bdf.getRegister().getBirthType();
         boolean caughtException = false;
         try {
             if (confirmationApprovalFlag) {
                 warnings = service.approveConfirmationChanges(bdf, false, user);
                 logger.debug("inside approve() : requested to approve birth confirmation bdId {} ", bdId);
             } else {
-                if (liveBirth) {
+                if (birthType == BirthDeclaration.BirthType.LIVE) {
                     warnings = service.approveLiveBirthDeclaration(bdf, false, user);
                     logger.debug("inside approve() : requested to approve live birth declaration bdId {} ", bdId);
-                } else {
+                } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     warnings = service.approveStillBirthDeclaration(bdf, false, user);
                     logger.debug("inside approve() : requested to approve still birth declaration bdId {} ", bdId);
                 }
@@ -285,10 +285,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         if (caughtException || (warnings != null && warnings.isEmpty())) {
             if (confirmationApprovalFlag) {
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
             } else {
                 approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
             }
             if (approvalPendingList.size() > 0) {
                 paginationHandler(approvalPendingList.size());
@@ -315,16 +315,16 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String directApprove() {
         bdf = service.getById(bdId, user);
         logger.debug("Ds division : {} ", bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
-        liveBirth = bdf.getRegister().isLiveBirth();
+        birthType = bdf.getRegister().getBirthType();
         boolean caughtException = false;
         try {
             if (confirmationApprovalFlag) {
                 warnings = service.approveConfirmationChanges(bdf, false, user);
             } else {
-                if (liveBirth) {
+                if (birthType == BirthDeclaration.BirthType.LIVE) {
                     warnings = service.approveLiveBirthDeclaration(bdf, false, user);
                     logger.debug("inside directApprove() : direct approve live birth declaration with bdId : {} ", bdId);
-                } else {
+                } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     warnings = service.approveStillBirthDeclaration(bdf, false, user);
                     logger.debug("inside directApprove() : direct approve still birth declaration with bdId : {} ", bdId);
                 }
@@ -342,7 +342,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_CONFIRMATION);
                 addActionMessage((getText("confirmationApprovedSuccess.label")));
             } else {
-                liveBirth = bdf.getRegister().isLiveBirth();
+                birthType = bdf.getRegister().getBirthType();
                 setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
                 addActionMessage((getText("approveSuccess.label")));
             }
@@ -353,7 +353,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     public String approveIgnoringWarning() {
         if (logger.isDebugEnabled()) {
             logger.debug("inside approveIgnoringWarning() : bdId {} requested isBirthConfirmatinConfirmationApproval {} ",
-                    bdId, confirmationApprovalFlag + " IgnoreWarnings " + ignoreWarning);
+                bdId, confirmationApprovalFlag + " IgnoreWarnings " + ignoreWarning);
         }
         initPermission();
         //direct birth approvalIgnoring warnings from birthDeclarationFormDetails page
@@ -363,7 +363,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         }
         if (ignoreWarning) {
             bdf = service.getById(bdId, user);
-            liveBirth = bdf.getRegister().isLiveBirth();
+            birthType = bdf.getRegister().getBirthType();
             try {
                 if (confirmationApprovalFlag) {
                     service.approveConfirmationChanges(bdf, true, user);
@@ -375,9 +375,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         return SUCCESS;
                     }
                 } else {
-                    if (liveBirth) {
+                    if (birthType == BirthDeclaration.BirthType.LIVE) {
                         service.approveLiveBirthDeclaration(bdf, true, user);
-                    } else {
+                    } else if (birthType == BirthDeclaration.BirthType.STILL) {
                         service.approveStillBirthDeclaration(bdf, true, user);
                     }
                     //checks whether the request is from immediately after entering a birth declaration
@@ -386,7 +386,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         addActionMessage((getText("approveSuccess.label")));
                         setAllowApproveBDF(user.isAuthorized(Permission.APPROVE_BDF));
                         approved = true;
-                        liveBirth = bdf.getRegister().isLiveBirth();
+                        birthType = bdf.getRegister().getBirthType();
                         return SUCCESS;
                     }
                 }
@@ -399,10 +399,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo, noOfRows, user);
+                pageNo, noOfRows, user);
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo, noOfRows, user);
+                pageNo, noOfRows, user);
         }
         paginationHandler(approvalPendingList.size());
         populate();
@@ -416,7 +416,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         initPermission();
         if (index != null) {
             logger.debug("inside approveListOfEntries() : {} records are requested to approve isBirthConfirmationApproval {}",
-                    index.length, confirmationApprovalFlag);
+                index.length, confirmationApprovalFlag);
             try {
                 if (confirmationApprovalFlag) {
                     warnings = service.approveConfirmationChangesForIDList(index, user);
@@ -444,10 +444,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo, noOfRows, user);
+                pageNo, noOfRows, user);
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo, noOfRows, user);
+                pageNo, noOfRows, user);
         }
         paginationHandler(approvalPendingList.size());
         return SUCCESS;
@@ -478,13 +478,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
             if (confirmationApprovalFlag) {
                 approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
                 paginationHandler(approvalPendingList.size());
                 addActionMessage(getText("message.success.ConfirmationReject"));
                 return "successConfirmationReject";
             } else {
                 approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
                 paginationHandler(approvalPendingList.size());
                 addActionMessage(getText("message.success.DeclarationReject"));
                 return "successDeclarationReject";
@@ -501,11 +501,11 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         logger.debug("inside delete() : bdId {} requested to delete", bdId);
         initPermission();
         bdf = service.getById(bdId, user);
-        liveBirth = bdf.getRegister().isLiveBirth();
+        birthType = bdf.getRegister().getBirthType();
         try {
-            if (liveBirth) {
+            if (birthType == BirthDeclaration.BirthType.LIVE) {
                 service.deleteLiveBirthDeclaration(bdf, false, user);
-            } else {
+            } else if (birthType == BirthDeclaration.BirthType.STILL) {
                 service.deleteStillBirthDeclaration(bdf, false, user);
             }
         }
@@ -514,7 +514,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             logger.error("inside delete: {} ", e);
         }
         approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE), user);
+            getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE), user);
         paginationHandler(approvalPendingList.size());
         populate();
         addActionMessage(getText("message.success.Declaration.delete"));
@@ -531,7 +531,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         //TODO checking district loading
         setBirthDistrictId(birthDistrictId);
         //dsDivisions
-         this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+        this.dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
         //setting bdDivisions
         if (!dsDivisionList.isEmpty()) {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
@@ -563,7 +563,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
          */
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else if (searchDateRangeFlag) {
             try {
                 searchStartDate = df.parse(startDate);
@@ -572,10 +572,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 logger.error("in nextPage() startDate and endDate conversion failed: {}", e);
             }
             approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), getPageNo(), noOfRows, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), getPageNo(), noOfRows, user);
         }
         paginationHandler(approvalPendingList.size());
         /**
@@ -597,7 +597,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         initPermission();
         if (logger.isDebugEnabled()) {
             logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId
-                    + " requested from pageNo " + pageNo);
+                + " requested from pageNo " + pageNo);
         }
         /**
          * UI related. decides whether to display
@@ -626,7 +626,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
         if (confirmationApprovalFlag) {
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo, noOfRows, user);
+                pageNo, noOfRows, user);
         } else if (searchDateRangeFlag) {
             try {
                 searchStartDate = df.parse(startDate);
@@ -635,10 +635,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 logger.error("in previousPage() startDate and endDate conversion failed: {}", e);
             }
             approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
         } else {
             approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    getPageNo(), noOfRows, user);
+                getPageNo(), noOfRows, user);
         }
         if (getRecordCounter() > 0) {
             setRecordCounter(getRecordCounter() - noOfRows);
@@ -914,12 +914,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         this.directApprovalFlag = directApprovalFlag;
     }
 
-    public boolean isLiveBirth() {
-        return liveBirth;
+    public BirthDeclaration.BirthType getBirthType() {
+        return birthType;
     }
 
-    public void setLiveBirth(boolean liveBirth) {
-        this.liveBirth = liveBirth;
+    public void setBirthType(BirthDeclaration.BirthType birthType) {
+        this.birthType = birthType;
     }
 
     public boolean isApproved() {

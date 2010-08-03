@@ -44,7 +44,7 @@
         <td width="300px"></td>
         <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
                                                                     alt=""/><br>
-            <s:if test="liveBirth">
+            <s:if test="birthType.ordinal() != 0">
                 <label>
                     උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
                     <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
@@ -68,7 +68,7 @@
             <table class="table_reg_datePicker_page_01">
                 <tr>
                     <td>
-                        <s:if test="liveBirth">
+                        <s:if test="birthType.ordinal() == 1">
                             <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
                         </s:if>
                         <s:else>
@@ -83,7 +83,7 @@
     </tr>
     <tr>
         <td colspan="3">
-            <s:if test="liveBirth">
+            <s:if test="birthType.ordinal() == 1">
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
                 තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
@@ -94,7 +94,7 @@
                 to the Notifying Authority. The birth will be registered in the Civil Registration System based on the
                 information provided in this form.
             </s:if>
-            <s:else>
+            <s:elseif test="birthType.ordinal() == 0">
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
                 තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මළ උපත ලියාපදිංචි කරනු ලැබේ.
@@ -103,7 +103,15 @@
                 forwarded
                 to the Notifying Authority. The still birth will be registered in the Civil Registration System based on the
                 information provided in this form.
-            </s:else>
+            </s:elseif>
+            <s:elseif test="birthType.ordinal() == 2">
+                * In Sinhala
+                <br>* In Tamil
+                <br>Should be perfected by the adopting parents, and the duly completed form should be forwarded
+                to the Assistant Registrar General in charge of the zone where the birth of the child occured; or to the
+                head office of the Registrar Generals Department in Colombo. The birth will be re-registered in the
+                Civil Registration System based on the information provided in this form.
+            </s:elseif>
         </td>
     </tr>
     </tbody>
@@ -124,18 +132,56 @@
     <tbody>
     <tr>
         <td class="font-9" colspan="8" style="text-align:center;">
-            <s:if test="liveBirth">
-                ළම‌යාගේ විස්තර
-                <br>பிள்ளை பற்றிய தகவல்
-                <br>Child's Information
-            </s:if>
-            <s:else>
+            <s:if test="birthType.ordinal() == 0">
                 මළ උපත පිලිබඳ විස්තර
                 <br>* In Tamil
                 <br>Still-birth Information
+            </s:if>
+            <s:else>
+                ළම‌යාගේ විස්තර
+                <br>பிள்ளை பற்றிய தகவல்
+                <br>Child's Information
             </s:else>
         </td>
     </tr>
+    <%--TODO style not added--%>
+    <s:if test="birthType.ordinal() == 2">
+        <tr style="border-left:1px solid #000000;">
+            <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial Number of the Certificate of Adoption</label></td>
+            <td colspan="7">
+                <%--TODO fill name--%>
+                <s:label value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was previously registered</label></td>
+            <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
+            <td colspan="6" class="table_reg_cell_01">
+                <%--TODO fill name--%>
+                <s:label value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
+            <td colspan="6" class="table_reg_cell_01">
+                <%--TODO fill name--%>
+                <s:label value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
+            <td colspan="6" class="table_reg_cell_01">
+                <%--TODO fill name--%>
+                <s:label value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
+            <%--TODO fill name--%>
+            <td colspan="6"><s:label value=""/></td>
+        </tr>
+    </s:if>
+    <tr></tr>
     <tr style="border-left:1px solid #000000;">
         <td width="150px"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="7">
@@ -197,7 +243,7 @@
             <s:label value="%{getText('no.label')}"/>
         </s:else>
     </tr>
-    <s:if test="liveBirth">
+    <s:if test="birthType.ordinal() != 0">
         <tr>
             <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
                 / தமிழ்) <br>Name in
@@ -233,17 +279,22 @@
             <s:elseif test="session.birthRegister.child.childGender == 2">
                 <s:label name="" value="%{getText('unknown.label')}"/>
             </s:elseif></td>
-        <s:if test="liveBirth">
+        <s:if test="birthType.ordinal() == 1">
             <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
             <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}"
                                      cssStyle="width:95%;"/></td>
         </s:if>
-        <s:else>
+        <s:if test="birthType.ordinal() == 2">
+            <td colspan="2"><label>(7) උපත් බර (දන්නේ නමි)<br>பிறப்பு நிறை<br>Birth Weight, if known (kg)</label></td>
+            <td colspan="2"><s:textfield name="%{#session.birthRegister.child.childBirthWeight}"
+                                         cssStyle="width:95%;"/></td>
+        </s:if>
+        <s:elseif test="birthType.ordinal() == 0">
             <td colspan="2"><label>(4) දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label></td>
             <td colspan="2"><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
-        </s:else>
+        </s:elseif>
     </tr>
     <tr>
         <td class="font-9"><label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According

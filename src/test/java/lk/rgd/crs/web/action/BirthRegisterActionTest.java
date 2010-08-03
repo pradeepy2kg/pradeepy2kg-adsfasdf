@@ -3,16 +3,13 @@ package lk.rgd.crs.web.action;
 import lk.rgd.common.CustomStrutsTestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.struts2.StrutsSpringTestCase;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
-import java.util.Locale;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
@@ -20,10 +17,6 @@ import java.text.DateFormat;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.UnitTestManager;
-import lk.rgd.Permission;
 
 /**
  * @author Indunil Moremada
@@ -46,7 +39,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         try {
             result = proxy.execute();
         } catch (NullPointerException e) {
-            logger.error("non fatal proxy execution error", e.getMessage(),e);
+            logger.error("non fatal proxy execution error", e.getMessage(), e);
         }
         logger.debug("result for mapping {} is {}", mapping, result);
         return result;
@@ -84,7 +77,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertNotNull("Request District List Presence", action.getDistrictList());
         assertNotNull("Request Race List Presence", action.getRaceList());
         assertEquals("Error of populating a value to bdId", 0, action.getBdId());
-        assertTrue("Not a Live birth", action.isLiveBirth());
+        assertEquals("Not a Live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());
         //check whether required beans are populated
         assertEquals("Request child Bean is Populated", bd.getChild(), action.getChild());
         assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
@@ -251,18 +244,18 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertNotNull("Session User Local Presence", obj);
         assertNotNull("Request District List Presence", action.getDistrictList());
         assertNotNull("Request Race List Presence", action.getRaceList());
-        assertTrue("Not a live birth", action.isLiveBirth());
+        assertEquals("Not a live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());
 
         //check whether required beans are populated
         assertEquals("Request child Bean is Populated", bd.getChild(), action.getChild());
         assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
 
         assertEquals("Request birthDistrictId is set to existing district", action.getRegister().getBirthDistrict().getDistrictUKey(),
-                action.getBirthDistrictId());
+            action.getBirthDistrictId());
         assertEquals("Request birthDivisionId is set to existing birthDivision", action.getRegister().getBirthDivision().getBdDivisionUKey(),
-                action.getBirthDivisionId());
+            action.getBirthDivisionId());
         assertEquals("Request dsDivisionId is set to existing dsDivision", action.getRegister().getDsDivision().getDsDivisionUKey(),
-                action.getDsDivisionId());
+            action.getDsDivisionId());
         assertEquals("Request father Country", action.getFatherCountry(), bd.getParent().getFatherCountry().getCountryId());
         assertEquals("Request father Race", action.getFatherRace(), bd.getParent().getFatherRace().getRaceId());
         assertEquals("Request Mother Country", action.getMotherCountry(), bd.getParent().getMotherCountry().getCountryId());
@@ -431,7 +424,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         String result = initAndExecute("/births/eprStillBirthRegistrationInit.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth failed ", bd.getRegister().isLiveBirth());
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
         //assertEquals("form0", result);
 
         // Still birth page one
@@ -451,8 +444,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth failed", bd.getRegister().isLiveBirth());
-        assertEquals("Register bdf serial no failed", (long)123, bd.getRegister().getBdfSerialNo());
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
+        assertEquals("Register bdf serial no failed", (long) 123, bd.getRegister().getBdfSerialNo());
         assertEquals("Date of registration failed", "Wed Jul 14 00:00:00 IST 2010", bd.getRegister().getDateOfRegistration().toString());
         assertEquals("Date of birth failed", "Wed Jul 14 00:00:00 IST 2010", bd.getChild().getDateOfBirth().toString());
         assertEquals("Birth district Id failed", 1, bd.getRegister().getBirthDistrict().getDistrictUKey());
@@ -484,7 +477,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());        
         assertEquals("Father NIC", "11111111v", bd.getParent().getFatherNICorPIN());
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("No action errors", 0, action.getActionErrors().size());
@@ -502,7 +495,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());     
         assertEquals("Father NIC", "11111111v", bd.getParent().getFatherNICorPIN());
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("Informant NIC: ", "33333333v", bd.getInformant().getInformantNICorPIN());
@@ -517,7 +510,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertFalse("Not a live birth:", bd.getRegister().isLiveBirth());
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());       
         assertEquals("Father NIC", "11111111v", bd.getParent().getFatherNICorPIN());
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("Informant NIC: ", "33333333v", bd.getInformant().getInformantNICorPIN());

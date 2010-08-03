@@ -15,7 +15,7 @@
     <td colspan="3"><sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                                        onmouseover="javascript:splitDate('motherDatePicker')"/></td>
     <td colspan="3" width="100px"><label>
-        <s:if test="%{#session.birthRegister.register.liveBirth}">
+        <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
             (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
             as at
             the date of birth of child
