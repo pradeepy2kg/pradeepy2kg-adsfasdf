@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
-import java.util.Date;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -17,18 +16,14 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionOrderService;
-import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 /**
  * @author Duminda Dharmakeerthi
  * @author amith jayasekaa
+ * @author Indunil Moremada
  */
 @SuppressWarnings({"ALL"})
 public class AdoptionAction extends ActionSupport implements SessionAware {
@@ -60,6 +55,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String courtOrderNo;
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
+
+    private String dsDivisionName;
+    private String birthDivisionName;
+    private String applicantCountryName;
+    private String wifeCountryName;
+    private String birthDistrictName;
     private String certificateApplicantAddress;
     private String certificateApplicantPINorNIC;
     private String certificateApplicantName;
@@ -134,9 +135,27 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String adoptionDeclarationViewMode() {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+
+        birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
+        dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+        applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
+        wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
         return SUCCESS;
     }
 
+    /**
+     * marks requested Adoption Regisration as printed
+     *
+     * @return
+     */
+    public String adoptionDeclarationMarkAsPrint() {
+        logger.debug("requested to mark as printed AdoptionOrder with idUKey : {} ", idUKey);
+        service.setStatusToPrintedNotice(idUKey, user);
+        adoption = service.getById(idUKey, user);
+        return SUCCESS;
+    }
 
     public String adoptionReRegistration() {
         return SUCCESS;
@@ -231,6 +250,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (Exception e) {
             logger.debug("catch exception : {}", e);
         }
+        //adoption.setCertificateApplicantAddress(certificateApplicantAddress);
+        //changing state
+        //adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
+        //logger.info(adoption.getCertificateApplicantType().name());
+        //service.updateAdoptionOrder(adoption, user);
+        //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
     }
 
@@ -340,6 +365,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public void setSession(Map map) {
+        logger.debug("Set session {}", map);
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("setting User: {}", user.getUserName());
@@ -428,6 +454,46 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
+    }
+
+    public String getDsDivisionName() {
+        return dsDivisionName;
+    }
+
+    public void setDsDivisionName(String dsDivisionName) {
+        this.dsDivisionName = dsDivisionName;
+    }
+
+    public String getBirthDivisionName() {
+        return birthDivisionName;
+    }
+
+    public void setBirthDivisionName(String birthDivisionName) {
+        this.birthDivisionName = birthDivisionName;
+    }
+
+    public String getApplicantCountryName() {
+        return applicantCountryName;
+    }
+
+    public void setApplicantCountryName(String applicantCountryName) {
+        this.applicantCountryName = applicantCountryName;
+    }
+
+    public String getWifeCountryName() {
+        return wifeCountryName;
+    }
+
+    public void setWifeCountryName(String wifeCountryName) {
+        this.wifeCountryName = wifeCountryName;
+    }
+
+    public String getBirthDistrictName() {
+        return birthDistrictName;
+    }
+
+    public void setBirthDistrictName(String birthDistrictName) {
+        this.birthDistrictName = birthDistrictName;
     }
 
     public String getCertificateApplicantAddress() {

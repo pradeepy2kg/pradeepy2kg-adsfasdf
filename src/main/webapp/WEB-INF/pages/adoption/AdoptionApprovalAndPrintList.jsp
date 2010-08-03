@@ -191,7 +191,7 @@
                                  border="none"/></s:a>
                         </td>
                         <td>
-                            <s:url id="cetificatePrintUrl" action="">
+                            <s:url id="cetificatePrintUrl" action="eprPrintAdoptionRegistration.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionRegistrationTooltip.label')}">
@@ -214,18 +214,33 @@
                                  border="none"/></s:a>
                         </td>
                         <td>
-                            <s:url id="cetificatePrintUrl" action="">
+                            <%--<s:url id="cetificatePrintUrl" action="">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionRegistrationTooltip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
-                            </s:a>
+                            </s:a>--%>
                         </td>
                     </s:elseif>
 
+                    <s:elseif test="status.ordinal()==3">
+                        <s:url id="viewSelected" action="eprAdoptionViewMode.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                        </s:url>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('viewAdoptionRegistrationTooltip.label')}">
+                            <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                                 border="none"/></s:a>
+                        </td>
+                        <td></td>
+                    </s:elseif>
+
                     <s:elseif test="status.ordinal()==4">
-                        <s:url id="viewSelected" action="">
+                        <s:url id="viewSelected" action="eprAdoptionViewMode.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <td></td>
@@ -263,7 +278,7 @@
                             <s:url id="cetificatePrintUrl" action="">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{cetificatePrintUrl}" title="%{getText('viewAdoptionCertificateTooltip.label')}">
+                            <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionCertificateToolTip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>

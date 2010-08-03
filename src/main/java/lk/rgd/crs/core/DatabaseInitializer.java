@@ -370,7 +370,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             //Adoption
             bs.set(Permission.EDIT_ADOPTION);
-            bs.set(Permission.APPROVE_ADOPTION);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
@@ -387,6 +386,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             Role argRole = roleDao.getRole("ARG");
             bs = new BitSet();
+            bs.set(Permission.APPROVE_ADOPTION);
             bs.or(drRole.getPermBitSet());
             // TODO add any ARG specific permissions
             argRole.setPermBitSet(bs);
@@ -394,6 +394,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             Role rgRole = roleDao.getRole("RG");
             bs = new BitSet();
+            bs.set(Permission.APPROVE_ADOPTION);
             bs.or(argRole.getPermBitSet());
             // TODO add any RG specific permissions
             rgRole.setPermBitSet(bs);

@@ -782,7 +782,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         if (!(User.State.ACTIVE == user.getStatus()
             &&
-            (Role.ROLE_RG.equals(user.getRole().getName())
+            (Role.ROLE_RG.equals(user.getRole().getRoleId())
                 ||
                 (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
                     &&

@@ -7,6 +7,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,6 +182,12 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
             handleException("User : " + user.getUserId() + " of role : " + role +
                     " is not allowed access to approve/reject an adoption : ", ErrorCodes.PERMISSION_DENIED);
         }
+
+        if (!user.isAuthorized(Permission.APPROVE_ADOPTION)) {
+             handleException("User : " + user.getUserId() + " is not allowed to approve/reject Adoptions",
+                 ErrorCodes.PERMISSION_DENIED);
+         }
+
     }
 
     private void handleException(String message, int code) {

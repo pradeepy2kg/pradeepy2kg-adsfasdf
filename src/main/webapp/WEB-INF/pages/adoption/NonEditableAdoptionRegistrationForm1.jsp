@@ -92,14 +92,14 @@
             Father
         </td>
         <td>
-           <s:if test="request.adoption.certificateApplicantType.ordinal() == 0"><s:label
+           <s:if test="#request.adoption.certificateApplicantType.ordinal() == 0"><s:label
                                 value="%{getText('yes.label')}"/></s:if>
         </td>
         <td>මව <br/>
             Mother
         </td>
         <td>
-            <s:if test="request.adoption.certificateApplicantType.ordinal() == 1"><s:label
+            <s:if test="#request.adoption.certificateApplicantType.ordinal() == 1"><s:label
                                 value="%{getText('yes.label')}"/></s:if>
         </td>
     </tr>
@@ -120,7 +120,7 @@
             Country
         </td>
         <td>
-            <s:label value="%{#request.adoption.applicantCountryId}"/>
+            <s:label value="%{#request.applicantCountryName}"/>
         </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
@@ -168,7 +168,7 @@
             Country
         </td>
         <td width="175px">
-            <s:label value="%{#request.adoption.wifeCountryId}"/>
+            <s:label value="%{#request.wifeCountryName}"/>
         </td>
         <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
@@ -210,13 +210,13 @@
             Gender
         </td>
         <td>
-            <s:if test="request.adoption.childGender == 0">
+            <s:if test="#request.adoption.childGender == 0">
                 <s:label name="" value="%{getText('male.label')}"/>
             </s:if>
-            <s:elseif test="request.adoption.childGender == 1">
+            <s:elseif test="#request.adoption.childGender == 1">
                 <s:label name="" value="%{getText('female.label')}"/>
             </s:elseif>
-            <s:elseif test="request.adoption.childGender == 2">
+            <s:elseif test="#request.adoption.childGender == 2">
                 <s:label name="" value="%{getText('unknown.label')}"/>
             </s:elseif></td>
     </tr>
@@ -287,7 +287,7 @@
         <td>දිස්ත්‍රික්කය <br/>
             District
         </td>
-        <td><s:label value="%{#request.birthDistrictId}"/>
+        <td><s:label value="%{#request.birthDistrictName}"/>
         </td>
     </tr>
     <tr>
@@ -295,7 +295,7 @@
             Divisional Secretariat
         </td>
         <td>
-            <s:label value="%{#request.dsDivisionId}" list="dsDivisionList" cssStyle="float:left;  width:240px;"/>
+            <s:label value="%{#request.dsDivisionName}"  cssStyle="float:left;  width:240px;"/>
         </td>
     </tr>
     <tr>
@@ -303,7 +303,7 @@
             Registration Division
         </td>
         <td>
-            <s:label value="%{#request.birthDivisionId}" cssStyle=" width:240px;float:left;"/>
+            <s:label value="%{#request.birthDivisionName}" cssStyle=" width:240px;float:left;"/>
         </td>
     </tr>
     <tr>
