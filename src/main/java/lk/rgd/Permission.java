@@ -10,8 +10,8 @@ public final class Permission {
     public static final int PRINT_BDF = 4;
     public static final int APPROVE_BDF = 5;
     public static final int APPROVE_BDF_CONFIRMATION = 6;
-    public static final int EDIT_ADOPTION=7;
-    public static final int APPROVE_ADOPTION=8;
+    public static final int EDIT_ADOPTION = 7;
+    public static final int APPROVE_ADOPTION = 8;
 
     //permission for pages
     public static final int PAGE_CREATE_USER = 25;
@@ -94,4 +94,7 @@ public final class Permission {
     public static final int PAGE_ADOPTION_APPLICANT_INFO = 114;
     public static final int PAGE_ADOPTION_CERTIFICATE = 115;
     public static final int PAGE_ADOPTION_BDF_ENTRY = 116;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE = 117;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED = 118;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED = 119;
 }

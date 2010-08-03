@@ -181,10 +181,10 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <s:url id="viewSelected" action="">
+                        <s:url id="viewSelected" action="eprAdoptionViewMode.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
-                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('viewAdoptionRegistrationTooltip.label')}">
                             <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
@@ -192,7 +192,7 @@
                             <s:url id="cetificatePrintUrl" action="">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
+                            <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionRegistrationTooltip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>
@@ -207,7 +207,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('viewAdoptionRegistrationTooltip.label')}">
                             <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
@@ -215,7 +215,7 @@
                             <s:url id="cetificatePrintUrl" action="">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
+                            <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionRegistrationTooltip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>
@@ -230,7 +230,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('viewAdoptionCertificateTooltip.label')}">
                             <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
@@ -238,7 +238,7 @@
                             <s:url id="cetificatePrintUrl" action="">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
+                            <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionCertificateToolTip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>
@@ -253,7 +253,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('editTooltip.label')}">
+                        <td align="center"><s:a href="%{viewSelected}" title="%{getText('viewAdoptionCertificateTooltip.label')}">
                             <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
                                  border="none"/></s:a>
                         </td>
@@ -261,7 +261,7 @@
                             <s:url id="cetificatePrintUrl" action="">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
+                            <s:a href="%{cetificatePrintUrl}" title="%{getText('viewAdoptionCertificateTooltip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                      height="25"/>
                             </s:a>

@@ -58,7 +58,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private long idUKey;
     private int pageNo;
     private String courtOrderNo;
-     private boolean allowEditAdoption;
+    private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
@@ -105,6 +105,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String adoptionDeclarationEditMode() {
+        logger.debug("requested to edit AdoptionOrder with idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
         if (adoption.getStatus().ordinal() != AdoptionOrder.State.DATA_ENTRY.ordinal()) {
             //not in data entry mode
@@ -113,6 +114,19 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         }
 
         populate();
+        return SUCCESS;
+    }
+
+    /**
+     * responsible for loading the AdoptionOrder based
+     * on requested idUKey. which is then redirected to
+     * no editable page
+     *
+     * @return
+     */
+    public String adoptionDeclarationViewMode() {
+        logger.debug("initializing view mode for idUKey : {}", idUKey);
+        adoption = service.getById(idUKey, user);
         return SUCCESS;
     }
 
@@ -187,6 +201,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         return SUCCESS;
     }
+
     public String adoptionApplicantInfo() {
         //todo check pageNo value
         if (pageNo == 1) {
@@ -213,10 +228,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         return SUCCESS;
     }
-public void initPermissionForApprovalAndPrint() {
+
+    public void initPermissionForApprovalAndPrint() {
         allowApproveAdoption = user.isAuthorized(Permission.APPROVE_ADOPTION);
         allowEditAdoption = user.isAuthorized(Permission.EDIT_ADOPTION);
     }
+
     private void populate() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
@@ -380,7 +397,8 @@ public void initPermissionForApprovalAndPrint() {
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
     }
- public boolean isAllowEditAdoption() {
+
+    public boolean isAllowEditAdoption() {
         return allowEditAdoption;
     }
 
