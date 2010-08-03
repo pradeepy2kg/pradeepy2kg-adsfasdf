@@ -13,9 +13,6 @@ import java.util.Date;
 @Table(name = "ADOPTION_ORDER", schema = "CRS")
 
 @NamedQueries({
-//    @NamedQuery(name = "filter.by.division.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-//        "ORDER BY bdf.register.dateOfRegistration desc"),
 //
 //    @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
 //        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
@@ -43,6 +40,9 @@ import java.util.Date;
 //    @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
 //        "WHERE bdf.register.status = 2 " +
 //        "AND bdf.register.dateOfRegistration < :date"),
+    @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
+        "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
+
      @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
 
