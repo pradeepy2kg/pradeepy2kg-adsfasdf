@@ -341,9 +341,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_ADOPTION_RE_REGISTRATION, new Link("adoption_re_registration .label", "/popreg/adoption/", "eprAdoptionReRegistrationAction.do"));
         linkPermission.put(Permission.PAGE_ADOPTION__INIT, new Link("adoption_registration.label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do"));
-    //    linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/popreg/adoption/", "eprAdoptionCertificate.do"));
+        //    linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/popreg/adoption/", "eprAdoptionCertificate.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_BDF_ENTRY, new Link(null, "/popreg/births/", "eprAdoptionBirthRegistrationInit.do"));
-
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE, new Link(null, "/popreg/adoption/", "eprAdoptionViewMode.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED, new Link(null, "/popreg/adoption/", "eprApproveAdoption.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED, new Link(null, "/popreg/adoption/", "eprRejectAdoption.do"));
     }
 
 

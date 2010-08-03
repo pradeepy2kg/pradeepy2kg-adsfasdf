@@ -423,10 +423,12 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 } else {
                     warnings = service.approveBirthDeclarationIdList(index, user);
                 }
-                if (index.length > 1 && (warnings != null && warnings.size() > 0)) {
-                    addActionMessage(getText("message.approval.Success.with.some.errors"));
-                } else if (index.length == 1 && (warnings != null && warnings.size() > 0)) {
-                    addActionMessage(getText("message.approval.faild"));
+                if (warnings != null && warnings.size() > 0) {
+                    if (index.length == 1) {
+                        addActionMessage(getText("message.approval.faild"));
+                    } else {
+                        addActionMessage(getText("message.approval.Success.with.some.errors"));
+                    }
                 } else {
                     addActionMessage(getText("message.approval.Success"));
                 }
@@ -434,7 +436,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             catch (CRSRuntimeException e) {
                 logger.error("inside approveListOfEntries : {} ", e);
                 addActionError(getText("brapproval.approval.error." + e.getErrorCode()));
-                addActionMessage(getText("message.approval.Rejected"));
             }
         } else {
             addActionMessage(getText("messege.noSelected.items"));
