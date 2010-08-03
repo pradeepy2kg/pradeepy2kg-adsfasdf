@@ -32,7 +32,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         try {
             return adoptionOrderDAO.getByCourtOrderNumber(courtOrderNumber).get(0);
         } catch (Exception e) {
-            logger.debug("No results found for {}", courtOrderNumber);
+            logger.debug("No results found for {} : {}", courtOrderNumber,e);
             return null;
         }
     }
