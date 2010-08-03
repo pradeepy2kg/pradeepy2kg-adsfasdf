@@ -6,7 +6,7 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
 <s:form action="eprViewBDFInNonEditableMode.do" name="nonEditableBirthRegistrationForm1" method="POST">
 
-<s:if test="session.birthRegister.register.liveBirth">
+<s:if test="session.birthRegister.register.birthType.ordinal() != 0">
     <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
         <caption></caption>
         <col/>
@@ -130,7 +130,7 @@
         </tbody>
     </table>
 </s:if>
-<s:else>
+<s:elseif test="session.birthRegister.register.birthType.ordinal() == 0">
     <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
         <caption></caption>
         <col/>
@@ -161,7 +161,7 @@
         </tr>
         </tbody>
     </table>
-</s:else>
+</s:elseif>
 
 <table class="table_reg_page_03" cellspacing="0">
     <caption></caption>
@@ -202,7 +202,7 @@
         <td>
             <table class="sub_table">
                 <tr>
-                    <s:if test="session.birthRegister.register.liveBirth">
+                    <s:if test="session.birthRegister.register.birthType.ordinal() != 0">
                         <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
                         <td align="center" width="150px">
                             <s:if test="session.birthRegister.informant.informantType.ordinal() == 2"> <s:label

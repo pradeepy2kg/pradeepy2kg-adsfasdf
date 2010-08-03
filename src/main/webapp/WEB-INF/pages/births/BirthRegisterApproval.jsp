@@ -156,12 +156,12 @@
                 <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
-                    <s:if test="register.liveBirth">
+                    <s:if test="register.birthType.ordinal() == 1">
                         <s:label value="%{getText('yes.label')}"/>
                     </s:if>
-                    <s:else>
+                    <s:elseif test="register.register.birthType.ordinal() == 0">
                         <s:label value="%{getText('no.label')}"/>
-                    </s:else>
+                    </s:elseif>
                 </td>
                 <s:if test="#request.allowEditBDF">
                     <s:url id="editSelected" action="eprBirthRegistrationInit.do">

@@ -90,7 +90,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean back;
     private boolean allowApproveBDF;
 
-    private boolean liveBirth;
+    private BirthDeclaration.BirthType birthType;
     private boolean directPrint;
     private boolean directPrintBirthCertificate;
     private int rgdErrorCode;
@@ -149,26 +149,26 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                liveBirth = bdf.getRegister().isLiveBirth();
+                birthType = bdf.getRegister().getBirthType();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
                 register.setComments(bdf.getRegister().getComments());
                 bdf.setRegister(register);
-                bdf.getRegister().setLiveBirth(liveBirth);
+                bdf.getRegister().setBirthType(birthType);
                 break;
             case 2:
-                liveBirth = bdf.getRegister().isLiveBirth();
+                birthType = bdf.getRegister().getBirthType();
                 bdf.setParent(parent);
                 break;
             case 3:
-                liveBirth = bdf.getRegister().isLiveBirth();
+                birthType = bdf.getRegister().getBirthType();
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
                 bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 break;
             case 4:
-                liveBirth = bdf.getRegister().isLiveBirth();
+                birthType = bdf.getRegister().getBirthType();
                 bdf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
@@ -177,17 +177,17 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdId = bdf.getIdUKey();
 
                 if (bdId == 0) {
-                    if (liveBirth) {
+                    if (birthType == BirthDeclaration.BirthType.LIVE) {
                         service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
-                    } else {
+                    } else if (birthType == BirthDeclaration.BirthType.STILL) {
                         service.addStillBirthDeclaration(bdf, true, user);
                     }
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
-                    if (liveBirth) {
+                    if (birthType == BirthDeclaration.BirthType.LIVE) {
                         service.editLiveBirthDeclaration(bdf, true, user);
-                    } else {
+                    } else if (birthType == BirthDeclaration.BirthType.STILL) {
                         service.editStillBirthDeclaration(bdf, true, user);
                     }
                 }
@@ -363,14 +363,14 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String birthDeclarationInit() {
         BirthDeclaration bdf;
-        logger.debug("Birth type is a live birth : {}", liveBirth);
+        logger.debug("Birth type is a live birth : {}", birthType);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId == 0) {
             if (!addNewMode) {
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
             }
             bdf = new BirthDeclaration();
-            bdf.getRegister().setLiveBirth(liveBirth);
+            bdf.getRegister().setBirthType(birthType);
         } else {
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
@@ -391,7 +391,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public String adoptionDeclarationInit() {
         BirthDeclaration bdf;
         AdoptionOrder ao;
-        logger.debug("Adding BDF of an adopted child");
+        logger.debug("Adding BDF of an adopted child. Birth Type : {}", birthType);
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
 
@@ -406,7 +406,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return ERROR;
         }
         bdf = new BirthDeclaration();
-        bdf.getRegister().setLiveBirth(liveBirth);
+        bdf.getRegister().setBirthType(birthType);
 
         // TODO populate AdoptionOrder fields to BirthDeclaration
         // TODO adoption idUkey
@@ -459,7 +459,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("initializing non editable mode for bdId {}", bdId);
                 try {
                     bdf = service.getById(bdId, user);
-                    liveBirth = bdf.getRegister().isLiveBirth();
+                    birthType = bdf.getRegister().getBirthType();
                     if (bdf.getRegister().getStatus().ordinal() == 5) {
                         logger.debug("serching rivisions for bdId {} ", bdId);
                         archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
@@ -542,20 +542,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             BirthDeclaration bdf = service.getById(bdId, user);
 
             bdf = service.loadValuesForPrint(bdf, user);
-            liveBirth = bdf.getRegister().isLiveBirth();
+            birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
                 bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
-                if (liveBirth) {
+                if (birthType == BirthDeclaration.BirthType.LIVE) {
                     service.markLiveBirthCertificateAsPrinted(bdf, user);
-                } else {
+                } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     service.markStillBirthCertificateAsPrinted(bdf, user);
                 }
                 beanPopulate(bdf);
 
-                if (liveBirth) {
+                if (birthType == BirthDeclaration.BirthType.LIVE) {
                     gender = child.getChildGenderPrint();
                     genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
                     childDistrict = register.getDistrictPrint();
@@ -608,7 +608,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private void populate(BirthDeclaration bdf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
-        liveBirth = bdf.getRegister().isLiveBirth();
+        birthType = bdf.getRegister().getBirthType();
         /**
          *  under "Add another mode", few special values need to be3 preserved from last entry .
          *  Pre setting serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
@@ -620,7 +620,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register.setBdfSerialNo(oldBdf.getRegister().getBdfSerialNo() + 1);
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
             register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
-            register.setLiveBirth(true);
+            register.setBirthType(BirthDeclaration.BirthType.LIVE);
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
@@ -1095,12 +1095,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.oldBdId = oldBdId;
     }
 
-    public boolean isLiveBirth() {
-        return liveBirth;
+    public BirthDeclaration.BirthType getBirthType() {
+        return birthType;
     }
 
-    public void setLiveBirth(boolean liveBirth) {
-        this.liveBirth = liveBirth;
+    public void setBirthType(BirthDeclaration.BirthType birthType) {
+        this.birthType = birthType;
     }
 
     public int getRgdErrorCode() {

@@ -68,22 +68,30 @@ public class BirthRegisterInfo implements Serializable {
     @Enumerated
     private BirthDeclaration.State status;
 
-    /** The ADR or higher approving the record  */
+    /**
+     * The ADR or higher approving the record
+     */
     @OneToOne
     @JoinColumn(name = "approveUser")
     private User approveUser;
 
-    /** The timestamp when an ADR or higher approves the record  */
+    /**
+     * The timestamp when an ADR or higher approves the record
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date approveDate;
 
-    /** The user printing the confirmation */
+    /**
+     * The user printing the confirmation
+     */
     @OneToOne
     @JoinColumn(name = "confirmationPrintUser")
     private User confirmationPrintUser;
 
-    /** The timestamp when confirmation is printed for this record */
+    /**
+     * The timestamp when confirmation is printed for this record
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date confirmationPrintDate;
@@ -98,7 +106,9 @@ public class BirthRegisterInfo implements Serializable {
     @Column(nullable = true, length = 4096)
     private String comments;
 
-    /** The user printing the original BC */
+    /**
+     * The user printing the original BC
+     */
     @OneToOne
     @JoinColumn(name = "originalBCPrintUser")
     private User originalBCPrintUser;
@@ -123,10 +133,10 @@ public class BirthRegisterInfo implements Serializable {
     private String originalBCPlaceOfIssuePrint;
 
     /**
-     * if normal birth - true, if still birth - false
+     * @see lk.rgd.crs.api.domain.BirthDeclaration.BirthType
      */
-    @Column(nullable = false, columnDefinition = "integer default 1")
-    private boolean liveBirth = true;
+    @Enumerated
+    private BirthDeclaration.BirthType birthType = BirthDeclaration.BirthType.LIVE;
 
     public String getComments() {
         return comments;
@@ -185,11 +195,13 @@ public class BirthRegisterInfo implements Serializable {
     public Date getDateOfRegistration() {
         return dateOfRegistration;
     }
+
     public String getDateOfRegistrationForPrint() {
         synchronized (dfm) {
             return dfm.format(dateOfRegistration);
         }
     }
+
     public void setDateOfRegistration(Date dateOfRegistration) {
         this.dateOfRegistration = dateOfRegistration;
     }
@@ -242,12 +254,12 @@ public class BirthRegisterInfo implements Serializable {
         this.districtPrint = districtPrint;
     }
 
-    public boolean isLiveBirth() {
-        return liveBirth;
+    public BirthDeclaration.BirthType getBirthType() {
+        return birthType;
     }
 
-    public void setLiveBirth(boolean liveBirth) {
-        this.liveBirth = liveBirth;
+    public void setBirthType(BirthDeclaration.BirthType birthType) {
+        this.birthType = birthType;
     }
 
     public User getApproveUser() {

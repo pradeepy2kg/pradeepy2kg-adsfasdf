@@ -108,7 +108,7 @@
             }
         </script>
 
-        <s:if test="liveBirth">
+        <s:if test="birthType.ordinal() == 1">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
                 <table class="table_reg_page_04" width="100%" cellspacing="0" style="margin-top:20px;">
                     <caption></caption>

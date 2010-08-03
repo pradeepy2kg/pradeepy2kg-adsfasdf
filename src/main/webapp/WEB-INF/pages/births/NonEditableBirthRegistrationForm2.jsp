@@ -158,7 +158,7 @@
         <td width="200px"><label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="3"><s:label value="%{#session.birthRegister.parent.motherDOB}" cssStyle="width:50%;"/></td>
         <td colspan="3" width="100px"><label>
-            <s:if test="session.birthRegister.register.liveBirth">
+            <s:if test="session.birthRegister.register.birthType.ordinal() != 0">
                 (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
                 as at
                 the date of birth of child

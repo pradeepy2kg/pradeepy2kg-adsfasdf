@@ -7,18 +7,12 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.Action;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
 
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.InformantInfo;
-import lk.rgd.crs.api.domain.NotifyingAuthorityInfo;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
@@ -148,7 +142,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
             batchBdf.getRegister().getBdfSerialNo());
         assertEquals("BDF date Of registration in session and DB are not equal", bdf.getRegister().getDateOfRegistration(),
             batchBdf.getRegister().getDateOfRegistration());
-        assertEquals("BDF live birth type not matched", bdf.getRegister().isLiveBirth(), batchBdf.getRegister().isLiveBirth());
+        assertEquals("BDF live birth type not matched", bdf.getRegister().getBirthType(), batchBdf.getRegister().getBirthType());
         assertEquals("BDF District id miss match in action and session", action.getBirthDistrictId(),
             batchBdf.getRegister().getBirthDistrict().getDistrictUKey());
         assertEquals("BDF DS Division id miss match in action and session", action.getDsDivisionId(),
@@ -179,7 +173,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         assertNotNull("Birth Declaration Bean does not exist in the session", bdf);
         assertEquals("bdId not equal to zero", 0, action.getBdId());
-        assertEquals("BDF live birth mis match in session and action", action.isLiveBirth(), bdf.getRegister().isLiveBirth());
+        assertEquals("BDF live birth mis match in session and action", action.getBirthType(), bdf.getRegister().getBirthType());
 
         assertNotNull(bdf.getChild());
         assertNotNull(bdf.getRegister());

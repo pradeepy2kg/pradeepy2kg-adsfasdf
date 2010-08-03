@@ -66,7 +66,7 @@
         <s:a href="%{newBDFUrl}"><s:label value="%{getText('addNewBDF_link.label')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
         <s:if test="#request.allowApproveBDF">
             <s:if test="approved">
-                <s:if test="#request.liveBirth">
+                <s:if test="#request.birthType.ordinal() != 0">
                     <s:a href="%{printBirthConfirmation}">
                         <s:label value="%{getText('printConfirmation_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
                 </s:if>
