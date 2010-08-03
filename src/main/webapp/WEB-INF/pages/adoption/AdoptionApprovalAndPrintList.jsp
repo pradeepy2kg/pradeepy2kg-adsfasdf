@@ -59,6 +59,8 @@
     });
 
 </script>
+<script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
+
 <s:actionerror/>
 <table width="100%" cellpadding="5" cellspacing="0">
     <col width="220px"/>

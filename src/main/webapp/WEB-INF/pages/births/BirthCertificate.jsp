@@ -13,6 +13,7 @@
         }
     }
 </style>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <script type="text/javascript">
     function printPage() {

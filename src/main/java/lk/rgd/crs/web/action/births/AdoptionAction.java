@@ -76,10 +76,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public String adoptionAction() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        //AdoptionOrder adoption;
-        //adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
-        //courtOrderNo=adoption.getCourtOrderNumber();
         service.addAdoptionOrder(adoption, user);
         logger.debug("IdUkey : {} ", idUKey);
         return SUCCESS;
