@@ -60,6 +60,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String courtOrderNo;
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
+    private String certificateApplicantAddress;
+    private String certificateApplicantPINorNIC;
+    private String certificateApplicantName;
+    private AdoptionOrder.ApplicantType certificateApplicantType;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO) {
@@ -77,7 +81,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         //courtOrderNo=adoption.getCourtOrderNumber();
         service.addAdoptionOrder(adoption, user);
-        logger.debug("IdUkey : {} ",idUKey);
+        logger.debug("IdUkey : {} ", idUKey);
         return SUCCESS;
     }
 
@@ -88,7 +92,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String initAdoptionReRegistration() {
-        logger.debug("Adoption reregistration for IdUkey : {}",idUKey);
+        logger.debug("Adoption reregistration for IdUkey : {}", idUKey);
         AdoptionOrder adoption;
         if (idUKey != 0) {
             try {
@@ -211,9 +215,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String adoptionApplicantInfo() {
         //todo check pageNo value
         if (pageNo == 1) {
-            AdoptionOrder adpt = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
-            //todo remove this to JSP level
-            service.updateAdoptionOrder(adpt, user);
+            //set type
+            adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
+            adoption.setCertificateApplicantAddress(certificateApplicantAddress);
+            adoption.setCertificateApplicantName(certificateApplicantName);
+            adoption.setCertificateApplicantPINorNIC(certificateApplicantPINorNIC);
+            adoption.setCertificateApplicantType(certificateApplicantType);
+            service.setApplicantInfo(adoption, user);
             session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         }
         return SUCCESS;
@@ -242,7 +250,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public String populateAdoption() {
         adoption = service.getByCourtOrderNumber(courtOrderNo, user);
-        session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
+        if (adoption != null) {
+            session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
+        } else {
+            addActionError(getText("adoption_order_notfound.message"));
+        }
         return SUCCESS;
     }
 
@@ -419,5 +431,37 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
+    }
+
+    public String getCertificateApplicantAddress() {
+        return certificateApplicantAddress;
+    }
+
+    public void setCertificateApplicantAddress(String certificateApplicantAddress) {
+        this.certificateApplicantAddress = certificateApplicantAddress;
+    }
+
+    public String getCertificateApplicantPINorNIC() {
+        return certificateApplicantPINorNIC;
+    }
+
+    public void setCertificateApplicantPINorNIC(String certificateApplicantPINorNIC) {
+        this.certificateApplicantPINorNIC = certificateApplicantPINorNIC;
+    }
+
+    public String getCertificateApplicantName() {
+        return certificateApplicantName;
+    }
+
+    public void setCertificateApplicantName(String certificateApplicantName) {
+        this.certificateApplicantName = certificateApplicantName;
+    }
+
+    public AdoptionOrder.ApplicantType getCertificateApplicantType() {
+        return certificateApplicantType;
+    }
+
+    public void setCertificateApplicantType(AdoptionOrder.ApplicantType certificateApplicantType) {
+        this.certificateApplicantType = certificateApplicantType;
     }
 }

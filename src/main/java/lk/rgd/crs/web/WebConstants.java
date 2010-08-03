@@ -33,5 +33,5 @@ public class WebConstants {
     public static final String REQUEST_PIN_NIC = "pinOrNic";
     public static final String DIVISION_ID = "id";
     public static final String MODE = "mode";
-    public static final String SESSION_ADOPTION_ORDER = "adoptio_order";
+    public static final String SESSION_ADOPTION_ORDER = "adoption_order";
 }
