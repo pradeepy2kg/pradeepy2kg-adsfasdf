@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="adoption-certificate-form-outer">
 <form action="eprAdoptionReRegistration.do">

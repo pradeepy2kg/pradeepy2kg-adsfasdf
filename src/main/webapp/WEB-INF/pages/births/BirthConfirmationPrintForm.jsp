@@ -38,6 +38,7 @@
         }
     }
 </script>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div class="birth-confirmation-print-form-outer">
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">

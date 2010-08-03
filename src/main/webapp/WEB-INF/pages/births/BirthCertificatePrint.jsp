@@ -60,6 +60,7 @@
 
 
 </script>
+<script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
 
 
 <div id="birth-certificate-print">

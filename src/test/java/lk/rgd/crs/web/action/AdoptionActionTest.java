@@ -80,7 +80,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
       request.setParameter("adoption.orderReceivedDate", "2010-08-01T00:00:00+05:30");
       request.setParameter("adoption.court", "District Court Colombo");
       request.setParameter("adoption.orderIssuedDate", "2010-08-03T00:00:00+05:30");
-      request.setParameter("adotion.courtOrderNumber", "145555522");
+      request.setParameter("adoption.courtOrderNumber", "123");
       request.setParameter("adoption.judgeName", "Kaluarachchi A.");
       request.setParameter("adoption.applicantMother", "false");
       request.setParameter("adoption.applicantPINorNIC", "654425588V");
@@ -99,22 +99,19 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
       request.setParameter("adoption.childExistingName", "Priyankara Perera");
       request.setParameter("adoption.childNewName", "Rasika Bandara");
       //request.setParameter("adoption.birthCertificateSerial","20100801");
-      request.setParameter("adoption.birthDistrictId", "11");
-      request.setParameter("adoption.dsDivisionId", "3");
-      request.setParameter("adoption.birthDivisionId", "1");
+      request.setParameter("birthDistrictId", "11");
+      request.setParameter("dsDivisionId", "3");
+      request.setParameter("birthDivisionId", "1");
       request.setParameter("adoption.birthCertificateSerial", "111002");
 
       initAndExucute("/adoption/eprAdoptionAction.do", session);
       session = adoptionAction.getSession();
-      user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-
-      //adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
-
+      
       assertNotNull("Birth division ID ", adoptionAction.getBirthDivisionId());
-//        assertNotNull("Court OrderNo ", adoptionAction.getCourtOrderNo());
+//      assertNotNull("Court OrderNo ", adoptionAction.getCourtOrderNo());
 
       assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
-      logger.debug("successfully persisted with the bdId :{}", adoptionAction.getIdUKey());
+      logger.debug("successfully persisted with the idUkey :{}", adoptionAction.getIdUKey());
   }
     /*
     public void testAdoptionApprovalAndPrint() throws Exception {
