@@ -560,5 +560,9 @@
             <result type="tiles" name="success">epr.AdoptionReReg</result>
         </action>
 
+         <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationMarkAsCertificatePrint">
+            <result type="tiles" name="success">epr.adoptionCertificate</result>
+        </action>
     </package>
 </struts>

@@ -252,7 +252,7 @@
                                  border="none"/></s:a>
                         </td>
                         <td>
-                            <s:url id="cetificatePrintUrl" action="">
+                            <s:url id="cetificatePrintUrl" action="eprPrintAdoptionCertificate.do">
                                 <s:param name="idUKey" value="idUKey"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionCertificateToolTip.label')}">
@@ -275,8 +275,9 @@
                                  border="none"/></s:a>
                         </td>
                         <td>
-                            <s:url id="cetificatePrintUrl" action="">
+                            <s:url id="cetificatePrintUrl" action="eprPrintAdoptionCertificate.do">
                                 <s:param name="idUKey" value="idUKey"/>
+                                <s:param name="alreadyPrinted" value="true"/>
                             </s:url>
                             <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionCertificateToolTip.label')}">
                                 <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
