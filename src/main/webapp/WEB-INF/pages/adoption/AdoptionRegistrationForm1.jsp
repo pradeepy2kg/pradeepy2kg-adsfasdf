@@ -103,7 +103,7 @@
     <tr>
         <td>******* සහතිකය නිකුත් කල යුතු භාෂාව <br>***in tamil***<br>Preferred
             Language for
-           ******
+            ******
         </td>
         <td>
             <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
@@ -136,13 +136,14 @@
             Father
         </td>
         <td>
-            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" value="false"/>
+            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" value="false"
+                     onclick="disable(false)"/>
         </td>
         <td>මව <br/>
             Mother
         </td>
         <td>
-            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}"/>
+            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}" onclick="disable(true);"/>
         </td>
     </tr>
     <tr>
@@ -199,7 +200,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2"><s:textfield name="adoption.wifePINorNIC"></s:textfield></td>
+        <td colspan="2"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"></s:textfield></td>
     </tr>
     <tr>
         <td width="330px">විදේශිකය‍කු නම් <br/>
@@ -211,7 +212,7 @@
             Country
         </td>
         <td width="175px">
-            <s:select name="adoption.wifeCountryId" list="countryList" headerKey="0"
+            <s:select id="wifeCountryId" name="adoption.wifeCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('adoption.select_country.label')}"/>
         </td>
         <td width="175px">ගමන් බලපත්‍ර අංකය <br/>
@@ -219,14 +220,14 @@
             Passport No.
         </td>
         <td width="175px">
-            <s:textfield name="adoption.wifePassport" id="applcantPassportNumber"> </s:textfield>
+            <s:textfield name="adoption.wifePassport" id="wifePassport"> </s:textfield>
         </td>
     </tr>
     <tr>
         <td> මවගේ නම <br/>
             Name of Mother
         </td>
-        <td colspan="4"><s:textarea name=""></s:textarea></td>
+        <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"></s:textarea></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -271,7 +272,8 @@
         <td>මාස <br/>
             Months
         </td>
-        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths"/></td>
+        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths"
+                /></td>
     </tr>
     <tr>
         <td>දැනට පවතින නම <br/>
@@ -304,7 +306,8 @@
         <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
             The serial number of the Birth Certificate
         </td>
-        <td width="30%"><s:textfield name="adoption.birthCertificateSerial" id="birthRegistrationSerial" cssStyle="width:85%;"/></td>
+        <td width="30%"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
+                                     cssStyle="width:85%;"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -367,8 +370,9 @@
 </div>
 </s:form>
 <script type="text/javascript">
-    function validate()
-    {
+
+
+    function validate() {
         var errormsgOut = "";
         var element;
         var returnval;
@@ -407,6 +411,12 @@
         {
             return true;
         }
+    }
+    function disable(mode) {
+        document.getElementById('wifePINorNIC').disabled = mode;
+        document.getElementById('wifeCountryId').disabled = mode;
+        document.getElementById('wifePassport').disabled = mode;
+        document.getElementById('wifeName').disabled = mode;
     }
 </script>
 </div>
