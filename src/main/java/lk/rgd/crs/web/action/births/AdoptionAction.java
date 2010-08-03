@@ -66,6 +66,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String certificateApplicantName;
     private AdoptionOrder.ApplicantType certificateApplicantType;
 
+    private boolean alreadyPrinted;
+
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO) {
         this.service = service;
@@ -153,6 +155,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String adoptionDeclarationMarkAsPrint() {
         logger.debug("requested to mark as printed AdoptionOrder with idUKey : {} ", idUKey);
         service.setStatusToPrintedNotice(idUKey, user);
+        adoption = service.getById(idUKey, user);
+        return SUCCESS;
+    }
+
+    /**
+     * marks requested Adoption as it's certificate
+     * printed
+     *
+     * @return
+     */
+    public String adoptionDeclarationMarkAsCertificatePrint() {
+        logger.debug("requested to mark adoption certificate as printed with idUKey : {} alreadyPrinted : {} ", idUKey, alreadyPrinted);
+        if (!alreadyPrinted) {
+            service.setStatusToPrintedCertificate(idUKey, user);
+        }
         adoption = service.getById(idUKey, user);
         return SUCCESS;
     }
@@ -526,5 +543,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setCertificateApplicantType(AdoptionOrder.ApplicantType certificateApplicantType) {
         this.certificateApplicantType = certificateApplicantType;
+    }
+
+    public boolean isAlreadyPrinted() {
+        return alreadyPrinted;
+    }
+
+    public void setAlreadyPrinted(boolean alreadyPrinted) {
+        this.alreadyPrinted = alreadyPrinted;
     }
 }
