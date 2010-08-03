@@ -331,7 +331,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public void setSession(Map map) {
-        logger.debug("Set session {}", map);
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("setting User: {}", user.getUserName());

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Main service to manage Adoption Orders and related activities
@@ -129,6 +130,23 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
 
         adoption.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
         adoptionOrderDAO.updateAdoptionOrder(adoption);
+    }
+
+    public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows,
+                                                        AdoptionOrder.State status, User user) {
+        try {
+            return adoptionOrderDAO.getPaginatedListForState(pageNo, noOfRows, status);
+        } catch (Exception e) {
+            return new ArrayList();  //returns an empty List if no records are found
+        }
+    }
+
+    public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
+        try {
+            return adoptionOrderDAO.getPaginatedListForAll(pageNo, noOfRows);
+        } catch (Exception e) {
+            return new ArrayList();  //returns an empty List if no records are found
+        }
     }
 
     private void setApprovalStatus(long idUKey, User user, AdoptionOrder.State state) {

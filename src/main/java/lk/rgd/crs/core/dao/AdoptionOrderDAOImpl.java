@@ -39,6 +39,25 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     /**
      * @inheritDoc
      */
+    public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows, AdoptionOrder.State status) {
+        Query q = em.createNamedQuery("adoption.filter.by.status.paginated").setFirstResult((pageNo - 1)
+                * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("status", status);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("getAllAdoptions").setFirstResult((pageNo - 1)
+                * noOfRows).setMaxResults(noOfRows);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public List<AdoptionOrder> findAll() {
         Query q = em.createNamedQuery("getAllAdoptions");
         return q.getResultList();

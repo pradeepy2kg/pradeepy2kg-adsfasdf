@@ -19,4 +19,8 @@ public interface AdoptionOrderDAO {
     public void deleteAdoptionOrder(long idUKey);
 
     public List<AdoptionOrder> getByCourtOrderNumber(String serialNumber);
+
+    public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows, AdoptionOrder.State status);
+
+    public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows);
 }

@@ -48,4 +48,23 @@ public interface AdoptionOrderService {
      * @param user
      */
     public void setStatusToPrintedCertificate (long adoptionId, User user);
+
+    /**
+     *  Returns all records (page by page) which are in the given state
+     * @param pageNo
+     * @param noOfRows
+     * @param status
+     * @param user
+     * @return
+     */
+    public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows, AdoptionOrder.State status, User user);
+
+    /**
+     * Returns a paginated list of all records
+     * @param pageNo
+     * @param noOfRows
+     * @param user
+     * @return
+     */
+    public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows, User user);
 }

@@ -9,9 +9,6 @@
 <head>
     <sx:head debug="false" cache="false" compressed="true" parseContent="true"/>
     <title>E-Population System</title>
-    <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
-    <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
-    <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
