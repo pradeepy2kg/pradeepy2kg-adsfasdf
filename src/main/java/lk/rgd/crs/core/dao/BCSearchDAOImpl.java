@@ -33,8 +33,8 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
         if (bcs.getApplicantAddress() != null) {
             bcs.setApplicantAddress(bcs.getApplicantAddress().toUpperCase());
         }
-        if (bcs.getFullName() != null) {
-            bcs.setFullName(bcs.getFullName().toUpperCase());
+        if (bcs.getChildFullNameOfficialLang() != null) {
+            bcs.setChildFullNameOfficialLang(bcs.getChildFullNameOfficialLang().toUpperCase());
         }
         if (bcs.getFatherFullName() != null) {
             bcs.setFatherFullName(bcs.getFatherFullName().toUpperCase());
@@ -53,8 +53,8 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
      * @param bcs the birth certificate search entry to be updated
      */
     private void setBlankStringsAsNull(BirthCertificateSearch bcs) {
-        if (isBlankString(bcs.getFullName())) {
-            bcs.setFullName(null);
+        if (isBlankString(bcs.getChildFullNameOfficialLang())) {
+            bcs.setChildFullNameOfficialLang(null);
         }
         if (isBlankString(bcs.getFatherFullName())) {
             bcs.setFatherFullName(null);
