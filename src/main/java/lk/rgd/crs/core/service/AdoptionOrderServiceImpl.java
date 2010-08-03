@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * Main service to manage Adoption Orders and related activities
+ *
  * @author Ashoka Ekanayaka
  */
 public class AdoptionOrderServiceImpl implements AdoptionOrderService {
@@ -44,7 +45,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         AdoptionOrder adopt = getByCourtOrderNumber(adoption.getCourtOrderNumber(), user);
         if (adopt != null) {
             handleException("can not add adoption order " + adoption.getIdUKey() +
-                " Court Order number already exists : " + adoption.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+                    " Court Order number already exists : " + adoption.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
 
         adoptionOrderDAO.addAdoptionOrder(adoption);
@@ -91,16 +92,12 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      */
     public void setApplicantInfo(AdoptionOrder adoption, User user) {
         AdoptionOrder adopt = getById(adoption.getIdUKey(), user);
-        if ( (adopt.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED) ||
-                (adoption.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED) ) {
+        if ((adopt.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED) ||
+                (adoption.getStatus() != AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
             handleException("Cannot change status to 4, " + adoption.getIdUKey() +
                     " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-
-        adopt.setCertificateApplicantAddress(adoption.getCertificateApplicantAddress());
-        adopt.setCertificateApplicantName(adoption.getCertificateApplicantName());
-        adopt.setCertificateApplicantType(adoption.getCertificateApplicantType());
-        adopt.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
+        adoption.setStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
         adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
 
@@ -121,7 +118,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     /**
      * @inheritDoc
      */
-    public void setStatusToPrintedCertificate (long adoptionId, User user) {
+    public void setStatusToPrintedCertificate(long adoptionId, User user) {
         AdoptionOrder adoption = getById(adoptionId, user);
         if (adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) {
             handleException("Cannot change status to 5, " + adoption.getIdUKey() +
@@ -164,21 +161,21 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     private void businessValidations(AdoptionOrder adoption) {
         if (adoption.getStatus() != AdoptionOrder.State.DATA_ENTRY) {
             handleException("can not update adoption order " + adoption.getIdUKey() +
-                " Illegal State : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal State : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
 
         if ((adoption.getChildNewName() == null) && (adoption.getChildExistingName() == null)) {
             handleException("can not update adoption order " + adoption.getIdUKey() +
-                " A Name not given : " + adoption.getStatus(), ErrorCodes.INVALID_DATA);
+                    " A Name not given : " + adoption.getStatus(), ErrorCodes.INVALID_DATA);
         }
     }
 
     private void validateAccess(User user) {
         String role = user.getRole().getName();
-        if ( !(User.State.ACTIVE == user.getStatus()) ||
-                !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role)) ) {
+        if (!(User.State.ACTIVE == user.getStatus()) ||
+                !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role))) {
             handleException("User : " + user.getUserId() + " of role : " + role +
-                " is not allowed access to approve/reject an adoption : ",ErrorCodes.PERMISSION_DENIED);
+                    " is not allowed access to approve/reject an adoption : ", ErrorCodes.PERMISSION_DENIED);
         }
     }
 
