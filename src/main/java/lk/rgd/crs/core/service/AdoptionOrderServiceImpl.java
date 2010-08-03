@@ -175,7 +175,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     private void validateAccess(User user) {
-        String role = user.getRole().getName();
+        String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()) ||
                 !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role))) {
             handleException("User : " + user.getUserId() + " of role : " + role +
