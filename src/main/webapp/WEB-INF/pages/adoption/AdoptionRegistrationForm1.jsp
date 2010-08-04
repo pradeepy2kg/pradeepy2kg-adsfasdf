@@ -364,6 +364,7 @@
     </tr>
     </tbody>
 </table>
+<s:hidden name="idUKey" value="%{#request.idUKey}"/>
 <s:hidden name="pageNo" value="1"/>
 <div class="adoption-form-submit">
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
