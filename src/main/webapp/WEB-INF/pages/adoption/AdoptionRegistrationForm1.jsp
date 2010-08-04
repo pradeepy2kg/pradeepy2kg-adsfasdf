@@ -365,7 +365,7 @@
     </tbody>
 </table>
 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-
+<s:hidden name="pageNo" value="1"/>
 <div class="adoption-form-submit">
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>
@@ -459,7 +459,7 @@
         var ageYearBDay = bday.getYear();
         var ageMonthTOday = today.getMonth();
         var ageYearTOday = today.getYear();
-        var ageMonth,ageYear=0;
+        var ageMonth,ageYear= 0;
 
         if (ageMonthTOday >= ageMonthBDay) {
             ageMonth = ageMonthTOday - ageMonthBDay;
@@ -470,8 +470,8 @@
             ageYear = (ageYearTOday - 1) - ageYearBDay;
         }
         if (bday != null && ageMonth != null) {
-            if (confirm(document.getElementById("lable01").value +"   :" + ageYear
-                    +"\n "+document.getElementById("lable02").value +"    :"+ ageMonth)) {
+            if (confirm(document.getElementById("lable01").value + "   :" + ageYear
+                    + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
                 document.getElementById("childAgeYears").value = ageYear;
                 document.getElementById("childAgeMonths").value = ageMonth;
             }
