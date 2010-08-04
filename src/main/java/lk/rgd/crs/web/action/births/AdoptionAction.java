@@ -277,8 +277,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public void initPermissionForApprovalAndPrint() {
+
         allowApproveAdoption = user.isAuthorized(Permission.APPROVE_ADOPTION);
         allowEditAdoption = user.isAuthorized(Permission.EDIT_ADOPTION);
+
     }
 
     private void populate() {
