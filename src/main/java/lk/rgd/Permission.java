@@ -79,6 +79,8 @@ public final class Permission {
     public static final int PAGE_BIRTH_CONFIRMATION_DIRECT_PRINT_BIRTH_CERTIFICATE = 106;
     public static final int PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL_IGNORING_WARNINGS = 107;
     public static final int PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE = 108;
+    public static final int PAGE_DEATH_REGISTRATION_INIT = 120;
+
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;
