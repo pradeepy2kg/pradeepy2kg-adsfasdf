@@ -556,9 +556,20 @@
             <result type="tiles" name="success">epr.AdoptionReReg</result>
         </action>
 
-         <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
+        <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclarationMarkAsCertificatePrint">
             <result type="tiles" name="success">epr.adoptionCertificate</result>
         </action>
+
+        <action name="eprAdoptionNext" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="loadNextRecords">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprAdoptionPrevious" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="loadPreviousRecords">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
     </package>
 </struts>
