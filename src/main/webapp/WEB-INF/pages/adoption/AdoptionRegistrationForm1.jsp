@@ -137,6 +137,7 @@
         </td>
         <td>
             <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" value="false"
+                     id="adoptionApplicantFather"
                      onclick="disable(false)"/>
         </td>
         <td>මව <br/>
@@ -272,8 +273,7 @@
         <td>මාස <br/>
             Months
         </td>
-        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths"
-                /></td>
+        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()"/></td>
     </tr>
     <tr>
         <td>දැනට පවතින නම <br/>
@@ -369,8 +369,23 @@
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
+<s:hidden id="error0" value="%{getText(' er.lable.receivedDate')}"/>
+<s:hidden id="error1" value="%{getText('er.lable.court')}"/>
+<s:hidden id="error2" value="%{getText('er.lable.orderIssuedDate')}"/>
+<s:hidden id="error3" value="%{getText('er.lable.courtOrderNumber')}"/>
+<s:hidden id="error4" value="%{getText('er.lable.judgeName')}"/>
+<s:hidden id="error5" value="%{getText('er.lable.applicantName')}"/>
+<s:hidden id="error6" value="%{getText('er.lable.applicantAddress')}"/>
+<s:hidden id="error7" value="%{getText('er.lable.childAgeYears')}"/>
+<s:hidden id="error8" value="%{getText('er.lable.childAgeMonths')}"/>
+<s:hidden id="error9" value="%{getText('er.lablechildName')}"/>
+<s:hidden id="error10" value="%{getText('er.lable.childAgeYearsValid')}"/>
+<s:hidden id="error11" value="%{getText('er.lable.childAgeMonthsValid')}"/>
+<s:hidden id="lable01" value="%{getText('lable.childAgeYear')}"/>
+<s:hidden id="lable02" value="%{getText('lable.childAgeMonth')}"/>
 <script type="text/javascript">
 
+    //these inpute can not be null
 
     function validate() {
         var errormsgOut = "";
@@ -378,10 +393,6 @@
         var returnval;
         var flag = false;
         var inputs = new Array(9);
-        var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName",
-                "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
-
-        //these inpute can not be null
         inputs[0] = new Date(document.getElementById("receivedDatePicker").value);
         inputs[1] = document.getElementById("court").value;
         inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
@@ -391,18 +402,35 @@
         inputs[6] = document.getElementById("applicantAddress").value;
         inputs[7] = document.getElementById("childAgeYears").value;
         inputs[8] = document.getElementById("childAgeMonths").value;
+
         //these inputs may be null with conditions
         var childExistingName = document.getElementById("childExistingName").value;
         var childNewName = document.getElementById("childNewName").value;
+        //var adoptionApplicantFather=document.getElementById("adoptionApplicantFather").value;
+        //alert(adoptionApplicantFather);
         //check elements which are can not be null
         for (i = 0; i < inputs.length; i++)
         {
             if (inputs[i].length <= 0)
             {
-                errormsgOut = errormsgOut + "plese Enter  " + errormsg[i] + "\n";
+                errormsgOut = errormsgOut + document.getElementById("error" + i).value + "\n";
             }
         }
+        if (childExistingName.length <= 0 && childNewName.length <= 0) {
 
+            errormsgOut = errormsgOut + document.getElementById("error9").value + "\n";
+        }
+        if (isNaN(inputs[7]) && inputs[7].length > 0)
+        {
+            errormsgOut = errormsgOut + document.getElementById("error10").value + "\n";
+        }
+        if ((isNaN(inputs[8]) && inputs[8].length > 0)) {
+
+            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
+        }
+        else if ((inputs[8] > 12 || inputs[8] < 0) && (inputs[8].length > 0)) {
+            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
+        }
         if (errormsgOut.length > 0) {
             alert(errormsgOut);
             return false;
@@ -411,6 +439,7 @@
         {
             return true;
         }
+
     }
     function disable(mode) {
         document.getElementById('wifePINorNIC').disabled = mode;
@@ -418,5 +447,33 @@
         document.getElementById('wifePassport').disabled = mode;
         document.getElementById('wifeName').disabled = mode;
     }
+    function calYearAndMonth()
+    {
+
+        var bday = new Date(dojo.widget.byId('bdayDatePicker').inputNode.value);
+        var today = new Date();
+        var ageMonthBDay = bday.getMonth();
+        var ageYearBDay = bday.getYear();
+        var ageMonthTOday = today.getMonth();
+        var ageYearTOday = today.getYear();
+        var ageMonth,ageYear=0;
+
+        if (ageMonthTOday >= ageMonthBDay) {
+            ageMonth = ageMonthTOday - ageMonthBDay;
+            ageYear = ageYearTOday - ageYearBDay;
+        }
+        else if (ageYearTOday > ageYearBDay) {
+            ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
+            ageYear = (ageYearTOday - 1) - ageYearBDay;
+        }
+        if (bday != null && ageMonth != null) {
+            if (confirm(document.getElementById("lable01").value +"   :" + ageYear
+                    +"\n "+document.getElementById("lable02").value +"    :"+ ageMonth)) {
+                document.getElementById("childAgeYears").value = ageYear;
+                document.getElementById("childAgeMonths").value = ageMonth;
+            }
+        }
+    }
+
 </script>
 </div>
