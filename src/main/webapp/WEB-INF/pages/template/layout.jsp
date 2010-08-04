@@ -44,7 +44,7 @@
 <body >
 <div id="wrapper">
     <%-- Header  --%>
-    <div id="layout-header">
+    <div id="layout-header" >
         <tiles:insertAttribute name="header"/>
     </div>
     <%-- Menu & Body--%>

@@ -12,27 +12,27 @@
 /* Common FONT-SIZES are defined here */
 .font-7 {
     font-size: 7pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 .font-8 {
     font-size: 8pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 .font-9 {
     font-size: 9pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 .font-10 {
     font-size: 10pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 .font-12 {
     font-size: 12pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 /*
@@ -1495,18 +1495,18 @@
     padding: 10px;
     background: #fff;
     font-size: 9pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 #birth-certificate-outer table {
     font-size: 10pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
     margin-bottom: 10px;
 }
 
 #birth-certificate-outer p {
     font-size: 8pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
     text-align: center;
     margin-top: -3px;
     margin-bottom: 0;
@@ -1514,7 +1514,7 @@
 
 .bc-name {
     font-size: 12pt;
-    font-family: BhashitaComplex;
+    font-family: Bhashitha2, Bhashitha2San;
 }
 
 #birth-certificate-outer .table-with-border {
