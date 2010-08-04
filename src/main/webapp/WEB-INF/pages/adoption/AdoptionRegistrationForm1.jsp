@@ -365,7 +365,7 @@
     </tbody>
 </table>
 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-<s:hidden name="pageNo" value="1"/>
+
 <div class="adoption-form-submit">
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>
@@ -394,6 +394,10 @@
         var returnval;
         var flag = false;
         var inputs = new Array(9);
+        var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName",
+                "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
+
+        //these inpute can not be null
         inputs[0] = new Date(document.getElementById("receivedDatePicker").value);
         inputs[1] = document.getElementById("court").value;
         inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
@@ -403,7 +407,6 @@
         inputs[6] = document.getElementById("applicantAddress").value;
         inputs[7] = document.getElementById("childAgeYears").value;
         inputs[8] = document.getElementById("childAgeMonths").value;
-
         //these inputs may be null with conditions
         var childExistingName = document.getElementById("childExistingName").value;
         var childNewName = document.getElementById("childNewName").value;
@@ -440,7 +443,6 @@
         {
             return true;
         }
-
     }
     function disable(mode) {
         document.getElementById('wifePINorNIC').disabled = mode;
