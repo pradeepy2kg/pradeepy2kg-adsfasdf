@@ -64,6 +64,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private ConfirmantInfo confirmant;
     private BirthRegisterInfo register;
     private User user;
+    private OldBDInfo oldBDInfo;
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
@@ -192,6 +193,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+                session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
                 // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
                 allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
         }
@@ -390,6 +392,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String adoptionDeclarationInit() {
         BirthDeclaration bdf;
+        BirthDeclaration existingBdf = null;
         AdoptionOrder ao;
         logger.debug("Adding BDF of an adopted child. Birth Type : {}", birthType);
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -408,8 +411,30 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = new BirthDeclaration();
         bdf.getRegister().setBirthType(birthType);
 
-        // TODO populate AdoptionOrder fields to BirthDeclaration
-        // TODO adoption idUkey
+        // population fields in adoption order to birth declaration
+        bdf.getRegister().setAdoptionUKey(ao.getIdUKey());
+        long existBdUKey = ao.getBirthCertificateNumber();
+
+        if (existBdUKey != 0) {
+            existingBdf = service.getById(existBdUKey, user);
+        } else {
+            long existSerial = ao.getBirthCertificateSerial();
+            int existBDivisionId = ao.getBirthDivisionId();
+
+            if (existSerial != 0 && existBDivisionId != 0) {
+                existingBdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(existBDivisionId),
+                    existSerial, user);
+            } else {
+                // TODO display error msg                  
+            }
+        }
+        logger.debug("Existing birth declaration IDUKey : {}", existBdUKey);
+        if (existingBdf != null) {
+            oldBDInfo = new OldBDInfo();
+            populateOldBD(oldBDInfo, existingBdf);
+            session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
+        }
+
         bdf.getChild().setDateOfBirth(ao.getChildBirthDate());
         bdf.getChild().setChildFullNameOfficialLang(ao.getChildNewName() != null ? ao.getChildNewName() : ao.getChildExistingName());
         bdf.getChild().setChildGender(ao.getChildGender());
@@ -435,6 +460,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
         populate(bdf);
         return "form0";
+    }
+
+    /**
+     * Populate oldBDInfo bean used in adding birth declaration for adopted child in 1 of 4BDF pages.
+     *
+     * @param oldBDInfo  bean used to hold old birth declaration data
+     * @param existingBD existing birth declaration
+     */
+    private void populateOldBD(OldBDInfo oldBDInfo, BirthDeclaration existingBD) {
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        BDDivision existBdDivision = existingBD.getRegister().getBirthDivision();
+        oldBDInfo.setSerialNumber(existingBD.getRegister().getBdfSerialNo());
+        oldBDInfo.setBdDivisionName(bdDivisionDAO.getNameByPK(existBdDivision.getBdDivisionUKey(), language));
+        oldBDInfo.setDistrictName(districtDAO.getNameByPK(existBdDivision.getDistrict().getDistrictUKey(), language));
+        oldBDInfo.setDsDivisionName(dsDivisionDAO.getNameByPK(existBdDivision.getDsDivision().getDsDivisionUKey(), language));
     }
 
     /**
@@ -1254,5 +1294,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setAdoptionId(long adoptionId) {
         this.adoptionId = adoptionId;
+    }
+
+    public OldBDInfo getOldBDInfo() {
+        return oldBDInfo;
+    }
+
+    public void setOldBDInfo(OldBDInfo oldBDInfo) {
+        this.oldBDInfo = oldBDInfo;
     }
 }

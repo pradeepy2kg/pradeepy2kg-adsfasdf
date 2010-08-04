@@ -138,6 +138,12 @@ public class BirthRegisterInfo implements Serializable {
     @Enumerated
     private BirthDeclaration.BirthType birthType = BirthDeclaration.BirthType.LIVE;
 
+    /**
+     * The adoption unique key of an adoption order, if only applicable
+     */
+    @Column(nullable = true)
+    private Long adoptionUKey;
+
     public String getComments() {
         return comments;
     }
@@ -308,5 +314,13 @@ public class BirthRegisterInfo implements Serializable {
 
     public void setOriginalBCPrintUser(User originalBCPrintUser) {
         this.originalBCPrintUser = originalBCPrintUser;
+    }
+
+    public Long getAdoptionUKey() {
+        return adoptionUKey;
+    }
+
+    public void setAdoptionUKey(Long adoptionUKey) {
+        this.adoptionUKey = adoptionUKey;
     }
 }
