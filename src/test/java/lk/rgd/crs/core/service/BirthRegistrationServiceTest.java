@@ -434,7 +434,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         BirthCertificateSearch bcs = new BirthCertificateSearch();
         bcs.setApplicantFullName("applicant name");
         bcs.setApplicantAddress("applicant address");
-        bcs.setApplicationNo(1L);
+        bcs.setApplicationNo("1");
         bcs.setDateOfSubmission(new Date());
 
         // should find when the search term does occur within the field

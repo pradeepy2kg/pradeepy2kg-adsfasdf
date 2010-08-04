@@ -3,7 +3,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
-
+    <script>
+        // mode 1 = passing District, will return DS list
+        $(function() {
+            $('select#districtId').bind('change', function(evt1) {
+                var id = $("select#districtId").attr("value");
+                $.getJSON('/popreg/crs/DivisionLookupService', {id:id,mode:1},
+                        function(data) {
+                            var options1 = '';
+                            var ds = data.dsDivisionList;
+                            for (var i = 0; i < ds.length; i++) {
+                                options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                            }
+                            $("select#dsDivisionId").html(options1);
+                        });
+            });
+        })
+    </script>
     <%--TODO insert specific css for tables in this page still implementing--%>
     <s:form action="eprBirthCertificateSearch.do" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
             method="POST" onsubmit="javascript:return validate()">
@@ -32,7 +48,7 @@
                         <tr>
                             <td><label><span class="font-8">යොමුකළ දිනය<br>*Tamil<br>Submitted Date</span></label>
                             </td>
-                            <td><sx:datetimepicker id="dateOfSubmittion" name="bcSearch.dateOfSubmittion"
+                            <td><sx:datetimepicker id="dateOfSubmission" name="bcSearch.dateOfSubmission"
                                                    displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate()"/>
                             </td>
                         </tr>
@@ -61,10 +77,16 @@
                 <td colspan="6"><s:textarea name="bcSearch.applicantAddress" id="applicantAddress"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම<br>*Tamil<br>
+                <td class="font-9"><label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම  රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made ?
                 </label></td>
-                <td colspan="6"><s:textarea name="bcSearch.fullName" id="fullName"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.childFullNameOfficialLang" id="childFullNameOfficialLang"/></td>
+            </tr>
+            <tr>
+                <td class="font-9"><label> ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන් <br>*Tamil<br>
+                    Full Name of the person respecting whose birth application is made in English?
+                </label></td>
+                <td colspan="6"><s:textarea name="bcSearch.childFullNameEnglish" id="childFullNameEnglish"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
@@ -99,9 +121,21 @@
                 <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's Division</label></td>
-                <td colspan="6" align="center">DS Division List here</td>
+                <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's
+                    Division</label></td>
+                <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+                <td colspan="6" class="table_reg_cell_01">
+                    <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
+                              cssStyle="width:98.5%;"/>
+                </td>
             </tr>
+            <tr>
+                <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
+                <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                              cssStyle="width:98.5%;"/>
+                </td>
+            <tr>
             <tr>
                 <td class="font-9"><label>
                     (7) උප්පැන්න සහතිකයේ අංකය<br>*Tamil<br>Birth Certificate Number</label>

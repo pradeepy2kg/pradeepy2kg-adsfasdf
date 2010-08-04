@@ -30,7 +30,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
-    private final BCSearchDAO bcSearchDAO;
+//    private final BCSearchDAO bcSearchDAO;    TODO chathuranga
 
     private Map session;
     private Map<Integer, String> bdDivisionList;
@@ -52,12 +52,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                        BDDivisionDAO bdDivisionDAO, BCSearchDAO bcSearchDAO) {
+        BDDivisionDAO bdDivisionDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
-        this.bcSearchDAO = bcSearchDAO;
+//        this.bcSearchDAO = bcSearchDAO;   TODO chathuranga
     }
 
     public String welcome() {
@@ -149,8 +149,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("birth certificate search: Page {}", pageNo);
         // TODO Still implementing
         if (pageNo == 1) {
+            bcSearch.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
             service.performBirthCertificateSearch(bcSearch, user);
+            // TODO forward to the result page
         }
+        populate();
         return "page" + pageNo;
     }
 
