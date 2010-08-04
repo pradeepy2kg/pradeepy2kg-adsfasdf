@@ -5,7 +5,7 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="adoption-certificate-form-outer">
-<form action="eprAdoptionReRegistration.do">
+<form action="eprAdoptionApprovalAndPrint.do">
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
     <col width="400px">

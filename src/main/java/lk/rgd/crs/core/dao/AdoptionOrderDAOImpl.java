@@ -59,7 +59,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      * @inheritDoc
      */
     public List<AdoptionOrder> findAll() {
-        Query q = em.createNamedQuery("getAllAdoptions");
+        Query q = em.createNamedQuery("getAllAdoptions"); 
         return q.getResultList();
     }
 

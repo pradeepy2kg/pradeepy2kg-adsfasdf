@@ -5,7 +5,7 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="adoption-registration-form-outer">
-<s:form action="eprAdoptionReRegistration.do" name="" id="" method="POST">
+<s:form action="eprAdoptionApprovalAndPrint.do" name="" id="" method="POST">
 <table class="adoption-reg-form-header-table">
     <tr>
         <td align="center" style="font-size:12pt">
