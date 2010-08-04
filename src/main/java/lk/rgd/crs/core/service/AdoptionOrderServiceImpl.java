@@ -35,7 +35,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         try {
             return adoptionOrderDAO.getByCourtOrderNumber(courtOrderNumber).get(0);
         } catch (Exception e) {
-            logger.debug("No results found for {} : {}", courtOrderNumber,e);
+            logger.debug("No results found for {} : {}", courtOrderNumber, e);
             return null;
         }
     }
@@ -68,7 +68,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         //todo access priviledges ?
         try {
             return adoptionOrderDAO.findAll();
-        } catch (Exception e) {   
+        } catch (Exception e) {
             return new ArrayList();
         }
     }
@@ -115,7 +115,6 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
             handleException("Cannot change status to 2, " + adoption.getIdUKey() +
                     " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-
         adoption.setStatus(AdoptionOrder.State.NOTICE_LETTER_PRINTED);
         adoptionOrderDAO.updateAdoptionOrder(adoption);
     }
@@ -184,9 +183,9 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         }
 
         if (!user.isAuthorized(Permission.APPROVE_ADOPTION)) {
-             handleException("User : " + user.getUserId() + " is not allowed to approve/reject Adoptions",
-                 ErrorCodes.PERMISSION_DENIED);
-         }
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject Adoptions",
+                    ErrorCodes.PERMISSION_DENIED);
+        }
 
     }
 

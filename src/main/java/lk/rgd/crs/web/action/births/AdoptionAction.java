@@ -88,10 +88,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public String adoptionAction() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        //todo check state of the adoption before update
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
-        service.addAdoptionOrder(adoption, user);
-        logger.debug("Court order number : {} ",adoption.getCourtOrderNumber());
-        logger.debug("IdUkey : {} ", idUKey);
+        if (idUKey > 0) {
+            adoption.setIdUKey(idUKey);
+            service.updateAdoptionOrder(adoption, user);
+        } else {
+            service.addAdoptionOrder(adoption, user);
+        }
         return SUCCESS;
     }
 
