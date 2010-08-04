@@ -416,6 +416,16 @@
         </action>
     </package>
 
+    <package name="deaths" namespace="/deaths" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction" method="deathDeclaration">
+            <result type="tiles" name="form0">epr.deathDeclaration_form1</result>
+            <result type="tiles" name="form1">epr.deathDeclaration_form2</result>
+            <result type="tiles" name="form2">epr.deathDeclaration_form3</result>
+        </action>
+    </package>
+
     <package name="management" namespace="/management" extends="NG">
         <default-interceptor-ref name="default"/>
 
