@@ -168,5 +168,6 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 </beans>

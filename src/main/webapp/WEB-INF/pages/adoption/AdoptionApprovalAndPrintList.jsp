@@ -204,7 +204,7 @@
                     </s:elseif>
 
                     <s:elseif test="status.ordinal()==2">
-                        <s:url id="viewSelected" action="">
+                        <s:url id="viewSelected" action="eprAdoptionViewMode.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <td></td>
@@ -269,7 +269,7 @@
                     </s:elseif>
 
                     <s:elseif test="status.ordinal()==5">
-                        <s:url id="viewSelected" action="">
+                        <s:url id="viewSelected" action="eprPrintAdoptionCertificate.do">
                             <s:param name="idUKey" value="idUKey"/>
                         </s:url>
                         <td></td>
@@ -300,7 +300,29 @@
         </table>
     </fieldset>
 </div>
+<div class="next-previous">
+                <%-- Next link to visible next records will only visible if nextFlag is
+              set to 1--%>
+            <s:url id="previousUrl" action="eprAdoptionPrevious.do" encode="true">
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+            </s:url>
 
+            <s:url id="nextUrl" action="eprAdoptionNext.do" encode="true">
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+            </s:url>
+            <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
+                <img src="<s:url value='/images/previous.gif'/>"
+                     border="none"/></s:a><s:label value="%{getText('previous.label')}"
+                                                   cssStyle="margin-right:5px;"/></s:if>
+
+            <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
+                                                    cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
+                <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
+        </div>
 
 <%--use to customize table base on user role--%>
 <s:if test="!#request.allowEditAdoption">

@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
+import java.text.ParseException;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
@@ -29,11 +31,14 @@ import lk.rgd.Permission;
 public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(AdoptionAction.class);
+    private static final String ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
+
     private final AdoptionOrderService service;
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
+    private final AppParametersDAO appParametersDAO;
 
     private int birthDistrictId;
     private int birthDivisionId;
@@ -55,6 +60,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String courtOrderNo;
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
+    private boolean nextFlag;
+    private boolean previousFlag;
 
     private String dsDivisionName;
     private String birthDivisionName;
@@ -67,14 +74,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private AdoptionOrder.ApplicantType certificateApplicantType;
 
     private boolean alreadyPrinted;
+    private int noOfRows;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                          AdoptionOrderService service, CountryDAO countryDAO) {
+                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
+        this.appParametersDAO = appParametersDAO;
     }
 
     public String adoptionAction() {
@@ -184,10 +193,75 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String adoptionApprovalAndPrint() {
-        //todo this is a mock method real backend is not implemented yet
+        setPageNo(1);
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        adoptionPendingApprovalList = service.findAll(user);
+        //adoptionPendingApprovalList = service.findAll(user);
+        adoptionPendingApprovalList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        paginationHandler(adoptionPendingApprovalList.size());
+        previousFlag = false;
+        return SUCCESS;
+    }
+
+    /**
+     * responsible whether to display the next link in
+     * the jsp or not and handles the page number
+     *
+     * @param recordsFound no of AdoptionOrders found
+     */
+    public void paginationHandler(int recordsFound) {
+        if (recordsFound == appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE)) {
+            setNextFlag(true);
+        } else {
+            setNextFlag(false);
+        }
+    }
+
+    /**
+     * handles pagination of AdoptionOrders approval and print data
+     *
+     * @return String
+     */
+    public String loadPreviousRecords() {
+        logger.debug("requested previous records current pageNo : {} ", pageNo);
+        if (previousFlag && getPageNo() == 2) {
+            /**
+             * request is comming backword(calls previous
+             * to load the very first page
+             */
+            setPreviousFlag(false);
+        } else if (getPageNo() == 1) {
+            /**
+             * if request is from page one
+             * in the next page previous link
+             * should be displayed
+             */
+            setPreviousFlag(false);
+        } else {
+            setPreviousFlag(true);
+        }
+        setNextFlag(true);
+        if (getPageNo() > 1) {
+            setPageNo(getPageNo() - 1);
+        }
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        adoptionPendingApprovalList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        populate();
+        initPermissionForApprovalAndPrint();
+        return SUCCESS;
+    }
+
+    public String loadNextRecords() {
+        logger.debug("requested next records current pageNo : {} ", pageNo);
+        setPageNo(getPageNo() + 1);
+
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        adoptionPendingApprovalList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        paginationHandler(adoptionPendingApprovalList.size());
+        setPreviousFlag(true);
+        populate();
+        initPermissionForApprovalAndPrint();
         return SUCCESS;
     }
 
@@ -553,5 +627,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAlreadyPrinted(boolean alreadyPrinted) {
         this.alreadyPrinted = alreadyPrinted;
+    }
+
+    public boolean isNextFlag() {
+        return nextFlag;
+    }
+
+    public void setNextFlag(boolean nextFlag) {
+        this.nextFlag = nextFlag;
+    }
+
+    public boolean isPreviousFlag() {
+        return previousFlag;
+    }
+
+    public void setPreviousFlag(boolean previousFlag) {
+        this.previousFlag = previousFlag;
     }
 }
