@@ -27,7 +27,7 @@ public class BirthCertificateSearch implements Serializable {
      * This is the application number of birth certificate search form
      */
     @Column(nullable = false)
-    private Long applicationNo;
+    private String applicationNo;
 
     @ManyToOne
     @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
@@ -108,14 +108,6 @@ public class BirthCertificateSearch implements Serializable {
     private String placeOfBirth;
 
     /**
-     * The Birth/Death registration division where the birth is registered
-     */
-    @ManyToOne
-    @JoinColumn(name = "bdDivisionUKey", nullable = true)
-    // TODO change to nullable = true
-    private BDDivision birthDivision;
-
-    /**
      * This is the number of the birth certificate
      */
     @Column(nullable = true)
@@ -158,11 +150,11 @@ public class BirthCertificateSearch implements Serializable {
         this.dsDivision = dsDivision;
     }
 
-    public Long getApplicationNo() {
+    public String getApplicationNo() {
         return applicationNo;
     }
 
-    public void setApplicationNo(Long applicationNo) {
+    public void setApplicationNo(String applicationNo) {
         this.applicationNo = applicationNo;
     }
 
@@ -244,14 +236,6 @@ public class BirthCertificateSearch implements Serializable {
 
     public void setPlaceOfBirth(String placeOfBirth) {
         this.placeOfBirth = placeOfBirth == null ? null : placeOfBirth.trim();
-    }
-
-    public BDDivision getBirthDivision() {
-        return birthDivision;
-    }
-
-    public void setBirthDivision(BDDivision birthDivision) {
-        this.birthDivision = birthDivision;
     }
 
     public Long getCertificateNo() {

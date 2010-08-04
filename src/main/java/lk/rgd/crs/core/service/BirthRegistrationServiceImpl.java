@@ -1039,7 +1039,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         birthDeclarationDAO.updateBirthDeclaration(bdf);
 
         // index record
-        birthRecordsIndexer.add(bdf);        
+        birthRecordsIndexer.add(bdf);
 
         return warnings;
     }
@@ -1189,11 +1189,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         List<BirthDeclaration> results = new ArrayList<BirthDeclaration>();
         BirthDeclaration exactRecord = null;
 
-        if (bcs.getBirthDivision() != null && bcs.getCertificateNo() != null) {
-            logger.debug("Search narrowed against BD Division : {} and certificate serial : {}" +
-                bcs.getBirthDivision().getEnDivisionName(), bcs.getCertificateNo());
-            exactRecord = birthDeclarationDAO.getByBDDivisionAndSerialNo(bcs.getBirthDivision(), bcs.getCertificateNo());
+        if (bcs.getCertificateNo() != null) {
+            logger.debug("Search narrowed against certificate IDUKey : {}", bcs.getCertificateNo());
+            exactRecord = birthDeclarationDAO.getById(bcs.getCertificateNo());
             if (exactRecord != null) {
+                exactRecord.getRegister().getStatus();                  // TODO only if certificate printed
                 results = new ArrayList<BirthDeclaration>();
                 results.add(exactRecord);
             }
@@ -1205,7 +1205,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 results.add(bdf);
             }
         }
-        
+
         // set user perform searching and the timestamp
         bcs.setSearchUser(user);
         bcs.setSearchPerformDate(new Date());
