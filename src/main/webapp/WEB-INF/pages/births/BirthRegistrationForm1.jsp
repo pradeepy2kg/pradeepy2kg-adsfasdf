@@ -220,35 +220,31 @@
         <tr style="border-left:1px solid #000000;">
             <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial Number of the Certificate of Adoption</label></td>
             <td colspan="7">
-                <%--TODO fill name--%>
-                <s:textfield name="" id=""/>
+                <s:label value="%{#session.birthRegister.register.adoptionUKey}"/>
             </td>
         </tr>
         <tr>
             <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was previously registered</label></td>
             <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <%--TODO fill name--%>
-                <s:textfield name="" id=""/>
+                <s:label value="%{#session.oldBdfForAdoption.districtName}"/>
             </td>
         </tr>
         <tr>
             <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <%--TODO fill name--%>
-                <s:textfield name="" id=""/>
+                <s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/>
             </td>
         </tr>
         <tr>
             <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <%--TODO fill name--%>
-                <s:textfield name="" id=""/>
+                <s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/>
             </td>
         </tr>
         <tr>
             <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
-            <td colspan="6"><s:textfield name="" id=""/></td>
+            <td colspan="6"><s:label value="%{#session.oldBdfForAdoption.serialNumber}"/></td>
         </tr>
     </s:if>
     <tr></tr>

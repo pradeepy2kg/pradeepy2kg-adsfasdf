@@ -43,10 +43,10 @@ import java.util.Date;
     @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
 
-     @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
+    @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
 
-     @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
@@ -146,7 +146,7 @@ public class AdoptionOrder implements Serializable {
     private long birthCertificateNumber; // idukey, not the serial !
 
     @Column(nullable = true)
-    private String birthCertificateSerial; // if BC number not given
+    private long birthCertificateSerial; // if BC number not given
 
     @Column(nullable = true)
     private int birthDivisionId; // if BC number not given
@@ -349,12 +349,12 @@ public class AdoptionOrder implements Serializable {
         this.birthCertificateNumber = birthCertificateNumber;
     }
 
-    public String getBirthCertificateSerial() {
+    public long getBirthCertificateSerial() {
         return birthCertificateSerial;
     }
 
-    public void setBirthCertificateSerial(String birthCertificateSerial) {
-        this.birthCertificateSerial = filterBlanks(birthCertificateSerial);
+    public void setBirthCertificateSerial(long birthCertificateSerial) {
+        this.birthCertificateSerial = birthCertificateSerial;
     }
 
     public boolean isApplicantMother() {
