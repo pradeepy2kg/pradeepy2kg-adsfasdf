@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <include file="struts-default.xml"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.custom.i18n.resources" value="textproperties"/>
+    <constant name="struts.action.extension" value="do"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.devMode" value="true"/>
+
+    <package name="NG" namespace="/NG" extends="struts-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+        </result-types>
+
+        <interceptors>
+            <interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor"/>
+            <interceptor name="security" class="lk.rgd.crs.web.action.SecurityInterceptor"/>
+            <interceptor name="cacheControl" class="lk.rgd.crs.web.action.CacheControlInterceptor"/>
+            <interceptor-stack name="default">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="security"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="cacheControl"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <!--<default-interceptor-ref name="exception"/>-->
+        <global-results>
+            <result type="tiles" name="error">epr.error</result>
+            <result type="tiles" name="RGDerror">epr.rgdError</result>
+            <result type="tiles" name="none">epr.home</result>
+            <result name="login">/WEB-INF/pages/login/login.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="lk.rgd.common.RGDRuntimeException" result="RGDerror"></exception-mapping>
+            <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
+        </global-exception-mappings>
+    </package>
+
+    <package name="epr" namespace="/" extends="NG">
+
+        <action name="eprLogin" class="lk.rgd.crs.web.action.LoginAction" method="login">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="cacheControl"/>
+            <result type="tiles" name="successADMIN">epr.home</result>
+            <result type="tiles" name="successRG">epr.rghome</result>
+            <result type="tiles" name="successARG">epr.home</result>
+            <result type="tiles" name="successDR">epr.home</result>
+            <result type="tiles" name="successADR">epr.adrhome</result>
+            <result type="tiles" name="successDEO">epr.deohome</result>
+
+            <result name="expired">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
+            <result name="error">/WEB-INF/pages/login/login.jsp</result>
+        </action>
+
+        <action name="eprLogout" class="lk.rgd.crs.web.action.LoginAction" method="logout">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="cacheControl"/>
+            <result name="success">/WEB-INF/pages/login/login.jsp</result>
+            <result type="tiles" name="error">epr.home</result>
+        </action>
+
+        <!--check here -->
+        <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
+            <interceptor-ref name="default"/>
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+
+        <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.AjaxAction" method="{1}">
+            <result name="DSDivList">/WEB-INF/pages/template/DSDivBox.jsp</result>
+            <result name="DSDivListOnly">/WEB-INF/pages/template/DSDivBoxOnly.jsp</result>
+            <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
+            <result name="FatherInfo">/WEB-INF/pages/template/FatherInfo.jsp</result>
+            <result name="MotherInfo">/WEB-INF/pages/template/MotherInfo.jsp</result>
+            <result name="DSDivListSearch">/WEB-INF/pages/template/DSDivBoxSearch.jsp</result>
+            <result name="DSDivListBDFApproval">/WEB-INF/pages/template/DSDivBoxBDFApproval.jsp</result>
+            <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
+            <result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
+            <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp
+            </result>
+            <result name="DSDivListUserPreference">/WEB-INF/pages/template/DSDivBoxUserPreference.jsp</result>
+            <result name="MotherDSDivList">/WEB-INF/pages/template/DSDivBoxMother.jsp</result>
+        </action>
+    </package>
+
+    <package name="prs" namespace="/prs" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprPRSAdvancedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="advancedSearch">
+            <result type="tiles" name="success">epr.PRSAdvancedSearch</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+    </package>
+
+    <package name="births" namespace="/births" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction" method="welcome">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+
+        <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthDeclaration">
+            <result type="tiles" name="form5">epr.stillBirthRegistration_form1</result>
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
+            <result type="tiles" name="form1">epr.birthRegistration_form2</result>
+            <result type="tiles" name="form2">epr.birthRegistration_form3</result>
+            <result type="tiles" name="form3">epr.birthRegistration_form4</result>
+            <result type="tiles" name="form4">epr.birthRegistration_details</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprStillBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthDeclarationInit">
+            <param name="birthType">STILL</param>
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthDeclarationInit">
+            <param name="birthType">LIVE</param>
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprAdoptionBirthRegistrationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="adoptionDeclarationInit">
+            <param name="birthType">ADOPTION</param>
+            <result type="tiles" name="form0">epr.birthRegistration_form1</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprViewBDFInNonEditableMode" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="viewInNonEditableMode">
+            <result type="tiles" name="form0">epr.non_editable_birthRegistration_form1</result>
+            <result type="tiles" name="form1">epr.non_editable_birthRegistration_form2</result>
+            <result type="tiles" name="form2">epr.non_editable_birthRegistration_form3</result>
+            <result type="tiles" name="form3">epr.non_editable_birthRegistration_form4</result>
+            <result type="tiles" name="success"></result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthConfirmation">
+            <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
+            <result type="tiles" name="form1">epr.birthConfirmation_form2</result>
+            <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
+            <result type="tiles" name="form3">epr.birthConfirmation_details</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthConfirmationSkipChanges" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="skipConfirmationChanges">
+            <result type="tiles" name="form2">epr.birthConfirmation_form3</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthConfirmationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthConfirmationInit">
+            <result type="tiles" name="form0">epr.birthConfirmation_form1</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthConfirmationPrintPage" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="confirmationPrintPageLoad">
+            <result type="tiles" name="pageLoad">epr.birthConfirmationPrint_form</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthCetificatePrint">
+            <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprStillBirthCertificatePrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthCetificatePrint">
+            <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <!--BirthDeclaration Approval related actions-->
+        <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="initBirthDeclarationApproval">
+            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApprovalNext" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="nextPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApprovalPrevious" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprDeleteApprovalPending" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="delete">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprRejectBirthDeclaration" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="reject">
+            <result type="tiles" name="successDeclarationReject">epr.birthRegisterApproval</result>
+            <result type="tiles" name="successConfirmationReject">epr.BirthConfirmationApproval</result>
+            <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
+        </action>
+
+        <action name="eprApproveBirthDeclaration" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approve">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+            <result type="tiles" name="approvalRejected">epr.approvalWorning</result>
+        </action>
+
+        <action name="eprApprovalRefresh" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="filter">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprApproveBulk" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveListOfEntries">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <!--Birth Confirmation Approval related actions-->
+        <action name="eprBirthConfirmationApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="initBirthConfirmationApproval">
+            <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprConfirmationApprovalRefresh" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="filter">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprConfirmationApprovalNext" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="nextPage">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprConfirmationApprovalPrevious" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprApproveBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approve">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+            <result type="tiles" name="approvalRejected">epr.confirmationApprovalWorning</result>
+        </action>
+
+        <action name="eprApproveConfirmationBulk" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveListOfEntries">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprConfirmationIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
+        </action>
+
+        <action name="eprRejectBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="reject">
+            <result type="tiles" name="rejectGetComments">epr.birthRegisterReject</result>
+        </action>
+
+        <!--Direct Approval through BirthConfirmationFormDetails page -->
+        <action name="eprConfrimationChangesDirectApproval"
+                class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="directApprove">
+            <result type="tiles" name="success">epr.birthConfirmation_details</result>
+        </action>
+
+        <action name="eprBirthCertificatDirectPrint" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="birthCetificatePrint">
+            <result type="tiles" name="pageLoad">epr.birthCertificate_form</result>
+        </action>
+
+        <action name="ConfirmationDirectApprovalIngoreWarning"
+                class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.birthConfirmation_details</result>
+        </action>
+
+        <action name="eprDirectPrintBirthCertificate" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="directPrintBirthCertificate">
+            <result type="tiles" name="success">epr.birthConfirmation_details</result>
+        </action>
+
+        <!--Direct Approval through BirthRegisterFormDetails page -->
+        <action name="eprDirectApprove" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="directApprove">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
+        <action name="eprDirectApproveIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="approveIgnoringWarning">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
+        <!--Action for Print Button in direct printing birth confirmation in batch mode -->
+        <action name="eprDirectPrintBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="pageLoad">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
+        <!--Action for Print Button in direct printing still birth certificate in batch mode -->
+        <action name="eprDirectPrintStillBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="pageLoad">
+            <result type="tiles" name="success">epr.birthRegistration_details</result>
+        </action>
+
+        <!--birth certificate print related actions-->
+        <action name="eprBirthCertificateList" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="loadBirthCertificatePrintList">
+            <result type="tiles" name="pageLoad">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprFilterBirthCetificateList" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="filterPrintList">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="printBulkOfEntries">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+        </action>
+
+        <action name="eprCertificatePrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+        </action>
+
+        <!--birthconfirmation print related-->
+        <action name="eprBirthConfirmationPrintList" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="loadConfirmationPrintList">
+            <result type="tiles" name="pageLoad">epr.birthConfirmationPrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprFilterBirthConfirmationPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="filterPrintList">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="printBulkOfEntries">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprPrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+        </action>
+
+        <action name="eprPrintPrevious" class="lk.rgd.crs.web.action.births.PrintAction" method="previousPage">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+        </action>
+
+        <!-- Search related-->
+        <action name="eprSearchPageLoad" class="lk.rgd.crs.web.action.births.SearchAction" method="welcome">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
+        <action name="eprBDFSearchBySerialNo" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="searchBDFBySerialNumber">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
+        <action name="eprBDFSearchByIdUKey" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="searchBDFByIdUKey">
+            <result type="tiles" name="success">epr.BDFSearch</result>
+        </action>
+
+        <action name="eprBirthsAdvancedSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="advancedSearch">
+            <result type="tiles" name="success">epr.BirthsAdvancedSearch</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprBirthRegistrationHome" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="initBirthRegistration">
+            <result type="tiles" name="success">epr.birthRegistrationHome</result>
+        </action>
+
+        <action name="eprStillBirth" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="initStillBirth">
+            <result type="tiles" name="success">epr.stillBirth</result>
+        </action>
+
+        <!--Birth Certificate Search-->
+        <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="birthCertificateSearch">
+            <result type="tiles" name="page0">epr.birthCertificateSearch</result>
+            <result type="tiles" name="page1">epr.home</result>
+        </action>
+    </package>
+
+    <package name="management" namespace="/management" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initUser">
+            <result type="tiles" name="pageLoad">epr.creatUser</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="creatUser">
+            <result type="tiles" name="pageLoad">epr.creatUser</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="viewUsers">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+        <action name="eprdeleteUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="deleteUser">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+
+        <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="selectUsers">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+    </package>
+
+    <package name="preferences" namespace="/preferences" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                method="changePassword">
+            <result type="tiles" name="successADMIN">epr.home</result>
+            <result type="tiles" name="successRG">epr.rghome</result>
+            <result type="tiles" name="successARG">epr.home</result>
+            <result type="tiles" name="successDR">epr.home</result>
+            <result type="tiles" name="successADR">epr.adrhome</result>
+            <result type="tiles" name="successDEO">epr.deohome</result>
+            <result name="error">/WEB-INF/pages/preferences/PasswordChange.jsp</result>
+        </action>
+
+        <action name="eprBackChangePass" class="lk.rgd.crs.web.action.UserPreferencesAction" method="back">
+            <result name="pageload" type="tiles">epr.UserPreferences</result>
+        </action>
+
+        <action name="passChangePageLoad">
+            <result>/WEB-INF/pages/preferences/PasswordChange.jsp</result>
+        </action>
+
+        <action name="eprUserPreferencesInit" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                method="userPreferenceInit">
+            <result type="tiles" name="pageload">epr.UserPreferences</result>
+        </action>
+
+        <!-- -->
+        <action name="eprUserPreferencesAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
+                method="selectUserPreference">
+            <result type="redirectAction">
+                <param name="actionName">eprHome</param>
+                <param name="namespace">/births</param>
+            </result>
+        </action>
+
+    </package>
+    <package name="adoption" namespace="/adoption" extends="NG">
+        <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclaration">
+            <result type="tiles" name="success">epr.AdoptionReg</result>
+        </action>
+        <action name="eprAdoptionReRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="initAdoptionReRegistration">
+            <result type="tiles" name="success">epr.AdoptionReReg</result>
+        </action>
+        <action name="eprAdoptionReRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionReRegistration">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+        <action name="eprAdoptionRegistrationHome" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="initAdoptionRegistration">
+            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+        </action>
+        <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionAction">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+        <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionApplicantInfo">
+            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+        </action>
+        <action name="eprAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionCertificate">
+            <result type="tiles" name="success">epr.adoptionCertificate</result>
+        </action>
+        <action name="eprAdoptionCertificateRequest" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="issueCertifiedCopy">
+            <!--//todo change this to adoption home page -->
+            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+        </action>
+        <action name="eprAdoptionFind" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="populateAdoption">
+            <!--//todo change this to adoption home page -->
+            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+        </action>
+
+        <!--approve and print list related-->
+        <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionApprovalAndPrint">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprApproveAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="approveAdoption">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprRejectAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="rejectAdoption">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprDeleteAdoption" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="deleteAdoption">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprAdoptionEditMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationEditMode">
+            <result type="tiles" name="success">epr.AdoptionReg</result>
+        </action>
+
+        <action name="eprAdoptionViewMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationViewMode">
+            <result type="tiles" name="success">epr.non_editable_adoptionCertificate</result>
+        </action>
+
+        <action name="eprPrintAdoptionRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationMarkAsPrint">
+            <result type="tiles" name="success">epr.AdoptionReReg</result>
+        </action>
+
+         <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionDeclarationMarkAsCertificatePrint">
+            <result type="tiles" name="success">epr.adoptionCertificate</result>
+        </action>
+    </package>
+</struts>
