@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +13,8 @@ import java.util.Date;
  * @author Chathuranga Withana
  */
 @Entity
-@Table(name = "BIRTH_CERT_SEARCH", schema = "CRS")
+@Table(name = "BIRTH_CERT_SEARCH", schema = "CRS",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"dsDivisionUKey", "applicationNo"})})
 public class BirthCertificateSearch implements Serializable {
     /**
      * This is the auto generated unique row identifier
@@ -26,6 +28,10 @@ public class BirthCertificateSearch implements Serializable {
      */
     @Column(nullable = false)
     private Long applicationNo;
+
+    @ManyToOne
+    @JoinColumn(name = "dsDivisionUKey", nullable = false, updatable = false)
+    private DSDivision dsDivision;
 
     /**
      * The date which the birth certificate search form is submitted
@@ -142,6 +148,14 @@ public class BirthCertificateSearch implements Serializable {
 
     public void setSearchUKey(long searchUKey) {
         this.searchUKey = searchUKey;
+    }
+
+    public DSDivision getDsDivision() {
+        return dsDivision;
+    }
+
+    public void setDsDivision(DSDivision dsDivision) {
+        this.dsDivision = dsDivision;
     }
 
     public Long getApplicationNo() {
