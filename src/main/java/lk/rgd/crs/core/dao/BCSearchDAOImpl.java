@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -32,7 +33,11 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
         Query q = em.createNamedQuery("get.by.serialNo.and.dsDivision");
         q.setParameter("serialNo", serialNo);
         q.setParameter("dsDivision", dsDivision);
-        return (BirthCertificateSearch) q.getSingleResult();
+        try {
+            return (BirthCertificateSearch) q.getSingleResult();
+        } catch (NoResultException ignore) {
+            return null;
+        }
     }
 
     /**
