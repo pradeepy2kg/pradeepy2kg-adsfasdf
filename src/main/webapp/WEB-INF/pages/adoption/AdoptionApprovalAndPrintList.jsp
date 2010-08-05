@@ -90,7 +90,8 @@
     <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
     <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
     <th><s:label name="delete" value="%{getText('view.label')}"/></th>
-    <th><s:label name="delete" value="%{getText('print.label')}"/></th>
+    <th><s:label name="delete" value="%{getText('printNotice.label')}"/></th>
+    <th><s:label name="delete" value="%{getText('printCertificete.label')}"/></th>
 </tr>
 </thead>
 
@@ -161,6 +162,7 @@
     </td>
     <td></td>
     <td></td>
+    <td></td>
 </s:if>
 
 <s:elseif test="status.ordinal()==1">
@@ -180,7 +182,7 @@
         <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
              border="none"/></s:a>
     </td>
-    <td>
+    <td align="center">
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionRegistration.do">
             <s:param name="idUKey" value="idUKey"/>
             <s:param name="status" value="%{#request.status}"/>
@@ -195,6 +197,7 @@
                  height="25"/>
         </s:a>
     </td>
+    <td></td>
 </s:elseif>
 
 <s:elseif test="status.ordinal()==2">
@@ -223,6 +226,7 @@
                      height="25"/>
             </s:a>--%>
     </td>
+    <td></td>
 </s:elseif>
 
 <s:elseif test="status.ordinal()==3">
@@ -262,7 +266,8 @@
         <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
              border="none"/></s:a>
     </td>
-    <td>
+    <td></td>
+    <td align="center">
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionCertificate.do">
             <s:param name="idUKey" value="idUKey"/>
             <s:param name="status" value="%{#request.status}"/>
@@ -295,7 +300,8 @@
         <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
              border="none"/></s:a>
     </td>
-    <td>
+    <td></td>
+    <td align="center">
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionCertificate.do">
             <s:param name="idUKey" value="idUKey"/>
             <s:param name="alreadyPrinted" value="true"/>
