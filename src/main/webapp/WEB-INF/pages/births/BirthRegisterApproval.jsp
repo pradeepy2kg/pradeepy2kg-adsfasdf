@@ -129,7 +129,6 @@ function checkSelect(form, allCheck)
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
-<s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBDFApproval"/>
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
 <div id="birth-register-approval-header">
 <fieldset style="margin-bottom:10px;margin-top:20px; border:none">

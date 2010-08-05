@@ -64,7 +64,6 @@
 
 
 <div id="birth-certificate-print">
-    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListBCPrint"/>
     <div id="birth-certificate-print-header">
 
         <s:form action="eprFilterBirthCetificateList.do" name="birth_register_approval_head" method="POST"

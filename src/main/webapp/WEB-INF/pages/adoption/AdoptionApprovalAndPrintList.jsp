@@ -71,7 +71,8 @@
             <td>
                 <s:select list="#@java.util.HashMap@{'DATA_ENTRY':getText('data.entry.label'),'APPROVED':getText('Approved.label'),'NOTICE_LETTER_PRINTED':getText('notice.printed.label'),
         'REJECTED':getText('rejected.label'),'CERTIFICATE_ISSUE_REQUEST_CAPTURED':getText('certificate.issual.request.captured.label'),'ADOPTION_CERTIFICATE_PRINTED':getText('adoption.certificate.printed.label')}"
-                          name="currentStatus" value="%{#request.currentStatus}"  headerKey="0" headerValue="%{getText('select.status.label')}"
+                          name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
+                          headerValue="%{getText('select.status.label')}"
                           cssStyle="width:200px; margin-left:5px;"></s:select></td>
             <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
         </tr>

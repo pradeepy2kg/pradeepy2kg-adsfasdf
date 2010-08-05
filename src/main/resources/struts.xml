@@ -70,21 +70,6 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
 
-        <action name="ajaxSupport_*" class="lk.rgd.crs.web.action.AjaxAction" method="{1}">
-            <result name="DSDivList">/WEB-INF/pages/template/DSDivBox.jsp</result>
-            <result name="DSDivListOnly">/WEB-INF/pages/template/DSDivBoxOnly.jsp</result>
-            <result name="BDDivList">/WEB-INF/pages/template/BDDivBox.jsp</result>
-            <result name="FatherInfo">/WEB-INF/pages/template/FatherInfo.jsp</result>
-            <result name="MotherInfo">/WEB-INF/pages/template/MotherInfo.jsp</result>
-            <result name="DSDivListSearch">/WEB-INF/pages/template/DSDivBoxSearch.jsp</result>
-            <result name="DSDivListBDFApproval">/WEB-INF/pages/template/DSDivBoxBDFApproval.jsp</result>
-            <result name="DSDivListBDFConfirmation">/WEB-INF/pages/template/DSDivBoxBDFConfirmation.jsp</result>
-            <result name="BirthCertificatePrint">/WEB-INF/pages/template/BCPrintDSDivBox.jsp</result>
-            <result name="DSDivListBDFConfirmationPrint">/WEB-INF/pages/template/DSDivBoxBDFConfirmationPrint.jsp
-            </result>
-            <result name="DSDivListUserPreference">/WEB-INF/pages/template/DSDivBoxUserPreference.jsp</result>
-            <result name="MotherDSDivList">/WEB-INF/pages/template/DSDivBoxMother.jsp</result>
-        </action>
     </package>
 
     <package name="prs" namespace="/prs" extends="NG">
@@ -425,12 +410,13 @@
             <result type="tiles" name="form1">epr.deathDeclaration_form2</result>
             <result type="tiles" name="form2">epr.deathDeclaration_form3</result>
         </action>
- <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+        <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="lateDeath">
             <result type="tiles" name="success">epr.lateDeathDeclaration</result>
         </action>
 
-        <action name="eprDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction" method="deathCertificate">
+        <action name="eprDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="deathCertificate">
             <result type="tiles" name="success">epr.deathCertificate</result>
         </action>
     </package>
