@@ -197,9 +197,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String adoptionApprovalAndPrint() {
-        if (pageNo <= 0) {
-            setPageNo(1);
-        }
+        setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
@@ -210,6 +208,24 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         }
         paginationHandler(adoptionApprovalAndPrintList.size());
         previousFlag = false;
+        return SUCCESS;
+    }
+
+    /**
+     * method is responsible for loading the previous records
+     * after viewing and printing a particular adoption
+     *
+     * @return
+     */
+    public String adoptionBackToPreviouseState() {
+        populate();
+        initPermissionForApprovalAndPrint();
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (status != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, status, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         return SUCCESS;
     }
 
