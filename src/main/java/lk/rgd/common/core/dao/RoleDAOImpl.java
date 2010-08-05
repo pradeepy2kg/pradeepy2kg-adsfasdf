@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.BitSet;
 
 /**
  * @author asankha
@@ -49,7 +48,7 @@ public class RoleDAOImpl extends BaseDAO implements RoleDAO, PreloadableDAO {
             String roleId = r.getRoleId();
             String name = r.getName();
             //BitSet perms = r.getPermBitSet();
-            //int status = r.getStatus();
+            //int status = r.getCurrentStatus();
 
             roleListByRoleId.put(roleId, name);
         }
