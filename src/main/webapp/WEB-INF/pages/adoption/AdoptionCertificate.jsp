@@ -48,7 +48,7 @@
 </script>
 
 <div id="adoption-certificate-form-outer">
-<form action="eprAdoptionApprovalAndPrintTest.do">
+<form action="eprAdoptionBackToPreviousState.do">
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
     <col width="400px">
@@ -252,4 +252,11 @@
     <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
 </div>
 </form>
+<s:form action="eprAdoptionBackToPreviousState.do">
+    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+    <s:hidden name="status" value="%{#request.status}"/>
+    <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
+</s:form>
 </div>
