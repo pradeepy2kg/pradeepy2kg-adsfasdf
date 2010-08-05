@@ -17,62 +17,63 @@
                 <td colspan="7">ප්‍රකාශකයාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>Details of the Declarant</td>
             </tr>
             <tr>
-                <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
+                <td colspan="4">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
                     <br>PIN / NIC
                 </td>
-                <td colspan="5"></td>
+                <td colspan="3"><s:textfield id="" name="" /></td>
             </tr>
             <tr>
                 <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="6"></td>
+                <td colspan="6"><s:textarea id="" name="" /></td>
             </tr>
             <tr>
                 <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="6"></td>
+                <td colspan="6"><s:textarea id="" name="" /></td>
             </tr>
             <tr>
                 <td colspan="1">ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
                 <td colspan="1">දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
-                <td colspan="2"></td>
+                <td colspan="2"><s:textfield id="" name="" /></td>
                 <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td colspan="2"></td>
+                <td colspan="2"><s:textfield id="" name="" /></td>
             </tr>
             <tr>
                 <td rowspan="2" colspan="1">දැනුම් දෙන්නේ කවරකු වශයෙන්ද<br>*in tamil<br>Capacity for giving information
                 </td>
                 <td colspan="1">මව <br>*in tamil<br>Mother</td>
-                <td colspan="1"></td>
+                <td colspan="1"><s:checkbox id="" name="" /></td>
                 <td colspan="1">පියා<br>*in tamil<br>Father</td>
-                <td colspan="1"></td>
+                <td colspan="1"><s:checkbox id="" name="" /></td>
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
-                <td colspan="1"></td>
+                <td colspan="1"><s:checkbox id="" name="" /></td>
             </tr>
             <tr>
                 <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
-                <td colspan="1"></td>
+                <td colspan="1"><s:checkbox id="" name="" /></td>
                 <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
-                <td colspan="1"></td>
+                <td colspan="1"><s:checkbox id="" name="" /></td>
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
-                <td colspan="1"></td>
+                <td colspan="1"><s:checkbox id="" name="" /></td>
             </tr>
             </tbody>
         </table>
 
         <table border="0" class="font-9">
             <col/>
+            <col width="40px"/>
             <col width="100px"/>
             <tbody>
             <tr>
-                <td height="100px"><p>ඉහත සඳහන් ප්‍රකාශය සත්‍යවුත් නිවැරදිවුත් ප්‍රකාශයක් බවට මෙයින් ප්‍රකාශ කරමි
+                <td height="100px"><p style="text-align:justify;">ඉහත සඳහන් ප්‍රකාශය සත්‍යවුත් නිවැරදිවුත් ප්‍රකාශයක් බවට මෙයින් ප්‍රකාශ කරමි
                     20.... ක් වූ …...................................... මස ….................. දින
                     …............................................................................................ දී
                     අත්සන් කරන ලදී
-                    in tamil
-                    in tamil
-                    I do hereby declare the above to be a true and correct statement
+                    <br>*in tamil
+                    <br>I do hereby declare the above to be a true and correct statement
                     Witness my hand at
                     …....................................................................................................
                     on this …............... day of …........................... 20...</p></td>
+                <td></td>
                 <td style="border:1px solid #000;">ශත 25 ක මුද්දර<br>*in tamil<br>Stamp of 25 cents</td>
             </tr>
             <tr>
@@ -101,21 +102,21 @@
             </tr>
             <tr>
                 <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td></td>
+                <td><s:textfield id="" name="" /></td>
                 <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td></td>
+                <td><s:textfield id="" name="" /></td>
             </tr>
             <tr>
                 <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"></td>
+                <td colspan="2"><s:textarea id="" name="" /></td>
                 <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"></td>
+                <td colspan="2"><s:textarea id="" name="" /></td>
             </tr>
             <tr>
                 <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"></td>
+                <td colspan="2"><s:textarea id="" name="" /></td>
                 <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"></td>
+                <td colspan="2"><s:textarea id="" name="" /></td>
             </tr>
             <tr>
                 <td>අත්සන <br>தகவல் ...<br>Signature</td>

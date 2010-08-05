@@ -18,10 +18,10 @@ function printPage() {
             printWindow.document.write("<script language=\"JavaScript\" src=\"/popreg/js/print.js\"><\/script>");
             printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"/popreg/css/print.css\"/></head>");
             printWindow.document.write(printContentWrapper.html());
-            //printWindow.document.close();
+            printWindow.document.close();
             printWindow.focus();
             printWindow.onload = printForm();
-            //printWindow.close();
+            printWindow.close();
         }
     }
 
