@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
-import java.text.ParseException;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
@@ -44,13 +43,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int birthDivisionId;
     private int dsDivisionId;
     private String language;
+    private AdoptionOrder.State status;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
-    private List<AdoptionOrder> adoptionPendingApprovalList;
+    private List<AdoptionOrder> adoptionApprovalAndPrintList;
     private Map<Integer, String> countryList;
-
     private AdoptionOrder adoption;
     private User user;
     private Map session;
@@ -106,7 +105,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String initAdoptionReRegistration() {
-        logger.debug("Adoption reregistration for IdUkey : {}", idUKey);
+        logger.debug("Adoption reregistration for IdUKey : {}", idUKey);
         AdoptionOrder adoption;
         if (idUKey != 0) {
             try {
@@ -198,14 +197,35 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String adoptionApprovalAndPrint() {
-        setPageNo(1);
+        if (pageNo <= 0) {
+            setPageNo(1);
+        }
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        //adoptionPendingApprovalList = service.findAll(user);
-        adoptionPendingApprovalList = service.getPaginatedListForAll(pageNo, noOfRows, user);
-        paginationHandler(adoptionPendingApprovalList.size());
+        if (status != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, status, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
+        paginationHandler(adoptionApprovalAndPrintList.size());
         previousFlag = false;
+        return SUCCESS;
+    }
+
+    /**
+     * filtering based on the user selected state
+     *
+     * @return
+     */
+    public String filterByStatus() {
+        setPageNo(1);
+        logger.debug("requested to filter by : {}", status);
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        populate();
+        initPermissionForApprovalAndPrint();
+        adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, status, user);
+        paginationHandler(adoptionApprovalAndPrintList.size());
         return SUCCESS;
     }
 
@@ -251,7 +271,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             setPageNo(getPageNo() - 1);
         }
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        adoptionPendingApprovalList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        if (status != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, status, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         populate();
         initPermissionForApprovalAndPrint();
         return SUCCESS;
@@ -262,8 +286,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         setPageNo(getPageNo() + 1);
 
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        adoptionPendingApprovalList = service.getPaginatedListForAll(pageNo, noOfRows, user);
-        paginationHandler(adoptionPendingApprovalList.size());
+        if (status != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, status, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
+        paginationHandler(adoptionApprovalAndPrintList.size());
         setPreviousFlag(true);
         populate();
         initPermissionForApprovalAndPrint();
@@ -283,7 +311,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
-        adoptionPendingApprovalList = service.findAll(user);
+        adoptionApprovalAndPrintList = service.findAll(user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -302,7 +330,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
-        adoptionPendingApprovalList = service.findAll(user);
+        adoptionApprovalAndPrintList = service.findAll(user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -318,7 +346,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String deleteAdoption() {
         logger.debug("requested to delete AdoptionOrder with idUKey : {}", idUKey);
         service.deleteAdoptionOrder(idUKey, user);
-        adoptionPendingApprovalList = service.findAll(user);
+        adoptionApprovalAndPrintList = service.findAll(user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -490,12 +518,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
 
-    public List<AdoptionOrder> getAdoptionPendingApprovalList() {
-        return adoptionPendingApprovalList;
+    public List<AdoptionOrder> getAdoptionApprovalAndPrintList() {
+        return adoptionApprovalAndPrintList;
     }
 
-    public void setAdoptionPendingApprovalList(List<AdoptionOrder> adoptionPendingApprovalList) {
-        this.adoptionPendingApprovalList = adoptionPendingApprovalList;
+    public void setAdoptionApprovalAndPrintList(List<AdoptionOrder> adoptionApprovalAndPrintList) {
+        this.adoptionApprovalAndPrintList = adoptionApprovalAndPrintList;
     }
 
     public String getLanguage() {
@@ -648,5 +676,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
+    }
+
+    public AdoptionOrder.State getStatus() {
+        return status;
+    }
+
+    public void setStatus(AdoptionOrder.State status) {
+        this.status = status;
     }
 }
