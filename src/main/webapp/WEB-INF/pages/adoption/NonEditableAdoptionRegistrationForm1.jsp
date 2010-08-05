@@ -31,7 +31,8 @@
         <td width="330px">නියෝගය ලැබුණු දිනය <br/>
             Received Date
         </td>
-        <td style="text-align:left;"><s:label name="adoption.orderReceivedDate" value="%{#request.adoption.orderReceivedDate}" /></td>
+        <td style="text-align:left;"><s:label name="adoption.orderReceivedDate"
+                                              value="%{#request.adoption.orderReceivedDate}"/></td>
     </tr>
     <tr>
         <td>අධිකරණය<br/>
@@ -92,15 +93,15 @@
             Father
         </td>
         <td>
-           <s:if test="#request.adoption.certificateApplicantType.ordinal() == 0"><s:label
-                                value="%{getText('yes.label')}"/></s:if>
+            <s:if test="#request.adoption.certificateApplicantType.ordinal() == 0"><s:label
+                    value="%{getText('yes.label')}"/></s:if>
         </td>
         <td>මව <br/>
             Mother
         </td>
         <td>
             <s:if test="#request.adoption.certificateApplicantType.ordinal() == 1"><s:label
-                                value="%{getText('yes.label')}"/></s:if>
+                    value="%{getText('yes.label')}"/></s:if>
         </td>
     </tr>
     <tr>
@@ -295,7 +296,7 @@
             Divisional Secretariat
         </td>
         <td>
-            <s:label value="%{#request.dsDivisionName}"  cssStyle="float:left;  width:240px;"/>
+            <s:label value="%{#request.dsDivisionName}" cssStyle="float:left;  width:240px;"/>
         </td>
     </tr>
     <tr>
@@ -318,6 +319,10 @@
 </table>
 
 <div class="adoption-form-submit">
+    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:hidden name="status" value="%{#request.status}"/>
+    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:submit value="%{getText('back.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>

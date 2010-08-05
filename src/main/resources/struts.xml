@@ -585,5 +585,10 @@
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
 
+        <action name="eprAdoptionFilterByStatus" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="filterByStatus">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
     </package>
 </struts>

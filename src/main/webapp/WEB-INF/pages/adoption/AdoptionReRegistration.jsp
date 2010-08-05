@@ -288,6 +288,10 @@
     </tbody>
 </table>
 <div class="adoption-form-submit">
+    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:hidden name="status" value="%{#request.status}"/>
+    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
