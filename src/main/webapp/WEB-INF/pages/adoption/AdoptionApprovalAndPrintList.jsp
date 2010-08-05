@@ -186,7 +186,7 @@
              border="none"/></s:a>
     </td>
     <td align="center">
-        <s:url id="cetificatePrintUrl" action="eprPrintAdoptionRegistration.do">
+        <s:url id="cetificatePrintUrl" action="eprPrintAdoptionNotice.do">
             <s:param name="idUKey" value="idUKey"/>
             <s:param name="currentStatus" value="%{#request.currentStatus}"/>
             <s:param name="pageNo" value="%{#request.pageNo}"/>
