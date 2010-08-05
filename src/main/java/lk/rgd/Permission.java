@@ -79,9 +79,7 @@ public final class Permission {
     public static final int PAGE_BIRTH_CONFIRMATION_DIRECT_PRINT_BIRTH_CERTIFICATE = 106;
     public static final int PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL_IGNORING_WARNINGS = 107;
     public static final int PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE = 108;
-    public static final int PAGE_DEATH_REGISTRATION_INIT = 120;
-    public static final int PAGE_DEATH_CERTIFICATE = 121;
-    public static final int PAGE_LATE_DEATH_REGISTRATION = 122 ;
+
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
     public static final int PRS_EDIT_PERSON = 51;
@@ -100,6 +98,11 @@ public final class Permission {
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE = 117;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED = 118;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED = 119;
-    public static final int PAGE_ADOPTION_BDF_HOME = 120 ;
+    public static final int PAGE_ADOPTION_BDF_HOME = 120;
 
+
+    //permission for death
+    public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
+    public static final int PAGE_DEATH_CERTIFICATE = 122;
+    public static final int PAGE_LATE_DEATH_REGISTRATION = 123;
 }
