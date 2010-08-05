@@ -87,7 +87,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public String adoptionAction() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        //todo check state of the adoption before update
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         if (idUKey > 0) {
             adoption.setIdUKey(idUKey);
@@ -368,6 +367,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    /**
+     * capture certificate applicant data and chage adoption order state in to CERTIFICATE_ISSUE_REQUEST_CAPTURED
+     *
+     * @return SUCCESS if successfully captured data
+     */
     public String adoptionApplicantInfo() {
         //todo check pageNo value
         if (pageNo == 1) {
@@ -396,6 +400,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //logger.info(adoption.getCertificateApplicantType().name());
         //service.updateAdoptionOrder(adoption, user);
         //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
+        return SUCCESS;
+    }
+
+    public String test() {
         return SUCCESS;
     }
 
