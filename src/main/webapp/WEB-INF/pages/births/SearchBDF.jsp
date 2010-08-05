@@ -59,25 +59,11 @@
                     });
         })
     });
-
 </script>
-
-
 <div id="birth-confirmation-search">
-    <script>
-        function view_DSDivs() {
-            dojo.event.topic.publish("view_DSDivs");
-        }
-
-        function view_BDDivs() {
-            dojo.event.topic.publish("view_BDDivs");
-        }
-    </script>
-    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListSearch"/>
     <s:actionerror/>
     <br/>
-    <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
-            method="post">
+    <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form" method="post">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="registrationSerchLegend"
                              value="%{getText('registrationSerchLegend.label')}"/></legend>
@@ -98,28 +84,17 @@
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
                                   value="birthDistrictId" cssStyle="width:240px;"/>
-
                     </td>
-
                 </tr>
                 <tr>
                     <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
                     <td colspan="3">
-                            <%--                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                           cssStyle="float:left;  width:240px;"/>
-                 <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                           list="bdDivisionList"
-                           cssStyle=" width:240px;float:right;"/>
-                        <sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                listenTopics="view_DSDivs" formId="search-bdf-form"></sx:div>  --%>
-
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                                   cssStyle="float:left;  width:240px;"/>
                         <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                                   list="bdDivisionList"
                                   cssStyle=" width:240px;float:right;"/>
                     </td>
-
                 </tr>
                 <tr>
                     <td colspan="3"></td>
@@ -163,17 +138,19 @@
                     <s:if test="searchResultList.size>0">
                         <th></th>
                     </s:if>
+                    <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
                     <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
-                    <th><s:label name="districtlbl" value="%{getText('district.label')}"/></th>
-                    <th><s:label name="divisionlbl" value="%{getText('division.label')}"/></th>
+                    <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
                     <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
-                    <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <s:if test="%{#request.bdf != null}">
                     <tr>
+                        <td><s:property value="%{#request.bdf.register.bdfSerialNo}"/></td>
                         <td align="center"><s:label name="childName"
                                                     value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/></td>
                         <td align="center"><s:if test="%{#request.bdf.child.childGender == 0}">
@@ -186,26 +163,37 @@
                                 <s:label value="%{getText('unknown.label')}"/>
                             </s:elseif>
                         </td>
-                        <td align="center"><s:label name="district"
-                                                    value="%{#request.districtList.get(#request.bdf.register.getBirthDistrict().districtUKey)}"/></td>
-                        <td align="center"><s:label name="division"
-                                                    value="%{#request.divisionList.get(#request.bdf.register.getBirthDivision().bdDivisionUKey)}"/></td>
+                        <td align="center">
+                            <s:if test="%{#request.bdf.register.birthType.ordinal() != 0}">
+                                <s:label value="%{getText('yes.label')}"/>
+                            </s:if>
+                            <s:elseif test="%{#request.bdf.register.birthType.ordinal() == 0}">
+                                <s:label value="%{getText('no.label')}"/>
+                            </s:elseif>
+                        </td>
                         <td align="center">
                             <s:label value="%{getText(status)}"/></td>
                         <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                             <s:param name="bdId" value="%{#request.bdf.idUKey}"/>
                         </s:url>
-                        <td>
-                            <s:if test="bdf.register.status.ordinal() !=4"><s:a href="%{viewSelected}"
-                                                                                title="%{getText('view.label')}">
-                                <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                     border="none"/></s:a></s:if></td>
+                        <td align="center">
+                            <s:if test="bdf.register.status.ordinal() !=4">
+                                <s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                                    <img src="<s:url value='/images/view.gif'/>" width="25" height="25" border="none"/>
+                                </s:a>
+                            </s:if>
+                        </td>
+                            <%--TODO still implementing--%>
+                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
+                        </td>
                     </tr>
                 </s:if>
                 <s:elseif test="searchResultList.size>0">
                     <s:iterator status="searchStatus" value="searchResultList" id="searchId">
                         <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
                             <td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>
+                            <td><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                             <td align="center">
                                 <s:if test="child.childGender == 0">
@@ -217,20 +205,33 @@
                                 <s:elseif test="child.childGender == 2">
                                     <s:label value="%{getText('unknown.label')}"/>
                                 </s:elseif>
-                            <td><s:property
-                                    value="%{#request.districtList.get(register.getBirthDistrict().districtUKey)}"/></td>
-                            <td><s:property
-                                    value="%{#request.districtList.get(register.getBirthDivision().bdDivisionUKey)}"/></td>
+
+                            <td align="center">
+                                <s:if test="register.birthType.ordinal() != 0">
+                                    <s:label value="%{getText('yes.label')}"/>
+                                </s:if>
+                                <s:elseif test="register.birthType.ordinal() == 0">
+                                    <s:label value="%{getText('no.label')}"/>
+                                </s:elseif>
+                            </td>
                             <s:set value="getRegister().getStatus()" name="status"/>
                             <td><s:label value="%{getText(#status)}"/></td>
                             <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                                 <s:param name="bdId" value="idUKey"/>
                             </s:url>
-                            <td>
-                                <s:if test="register.status.ordinal() !=4"><s:a href="%{viewSelected}"
-                                                                                title="%{getText('view.label')}">
-                                    <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
-                                         border="none"/></s:a></s:if></td>
+                            <td align="center">
+                                <s:if test="register.status.ordinal() !=4">
+                                    <s:a href="%{viewSelected}" title="%{getText('view.label')}">
+                                        <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
+                                </s:if>
+                            </td>
+                                <%--TODO still implementing--%>
+                            <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                            </td>
                         </tr>
                     </s:iterator>
                 </s:elseif>

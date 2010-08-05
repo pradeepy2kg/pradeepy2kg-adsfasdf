@@ -1188,14 +1188,28 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         List<BirthDeclaration> results = new ArrayList<BirthDeclaration>();
         BirthDeclaration exactRecord = null;
+        BirthCertificateSearch existing = null;
+
+        // TODO before adding check existing entries with same serial and division
+        // TODO only if certificate printed
+
+        if (bcs.getApplicationNo() != null && bcs.getDsDivision() != null) {
+            existing = bcSearchDAO.getByDSDivisionAndSerialNo(bcs.getDsDivision(), bcs.getApplicationNo());
+        }
 
         if (bcs.getCertificateNo() != null) {
             logger.debug("Search narrowed against certificate IDUKey : {}", bcs.getCertificateNo());
             exactRecord = birthDeclarationDAO.getById(bcs.getCertificateNo());
             if (exactRecord != null) {
-                exactRecord.getRegister().getStatus();                  // TODO only if certificate printed
-                results = new ArrayList<BirthDeclaration>();
-                results.add(exactRecord);
+                final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
+                if (BirthDeclaration.State.ARCHIVED_CERT_GENERATED == currentState ||
+                    BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
+                    results = new ArrayList<BirthDeclaration>();
+                    results.add(exactRecord);
+
+                } else {
+                    // TODO throw exception
+                }
             }
         }
 

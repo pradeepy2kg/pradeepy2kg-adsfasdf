@@ -225,10 +225,10 @@ function checkSelect(form, allCheck)
                 <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
-                    <s:if test="register.birthType.ordinal() == 1">
+                    <s:if test="register.birthType.ordinal() != 0">
                         <s:label value="%{getText('yes.label')}"/>
                     </s:if>
-                    <s:elseif test="register.register.birthType.ordinal() == 0">
+                    <s:elseif test="register.birthType.ordinal() == 0">
                         <s:label value="%{getText('no.label')}"/>
                     </s:elseif>
                 </td>

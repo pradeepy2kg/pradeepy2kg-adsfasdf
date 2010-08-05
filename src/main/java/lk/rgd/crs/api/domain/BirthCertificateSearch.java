@@ -15,6 +15,11 @@ import java.util.Date;
 @Entity
 @Table(name = "BIRTH_CERT_SEARCH", schema = "CRS",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"dsDivisionUKey", "applicationNo"})})
+
+@NamedQueries({
+    @NamedQuery(name = "get.by.serialNo.and.dsDivision", query = "SELECT bcs FROM BirthCertificateSearch bcs " +
+        "WHERE bcs.applicationNo = :serialNo AND bcs.dsDivision = :dsDivision")
+})
 public class BirthCertificateSearch implements Serializable {
     /**
      * This is the auto generated unique row identifier
@@ -134,6 +139,10 @@ public class BirthCertificateSearch implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date searchPerformDate;
 
+    private String filterBlanks(String s) {
+        return (s == null) ? null : (s.trim().length() == 0) ? null : s.toUpperCase();
+    }
+
     public long getSearchUKey() {
         return searchUKey;
     }
@@ -155,7 +164,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setApplicationNo(String applicationNo) {
-        this.applicationNo = applicationNo;
+        this.applicationNo = filterBlanks(applicationNo);
     }
 
     public Date getDateOfSubmission() {
@@ -171,7 +180,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setApplicantFullName(String applicantFullName) {
-        this.applicantFullName = applicantFullName;
+        this.applicantFullName = filterBlanks(applicantFullName);
     }
 
     public String getApplicantAddress() {
@@ -179,7 +188,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setApplicantAddress(String applicantAddress) {
-        this.applicantAddress = applicantAddress;
+        this.applicantAddress = filterBlanks(applicantAddress);
     }
 
     public String getChildFullNameOfficialLang() {
@@ -187,7 +196,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = childFullNameOfficialLang == null ? null : childFullNameOfficialLang.trim();
+        this.childFullNameOfficialLang = filterBlanks(childFullNameOfficialLang);
     }
 
     public int getGender() {
@@ -211,7 +220,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = fatherFullName == null ? null : fatherFullName.trim();
+        this.fatherFullName = filterBlanks(fatherFullName);
     }
 
     public String getMotherFullName() {
@@ -219,7 +228,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setMotherFullName(String motherFullName) {
-        this.motherFullName = motherFullName == null ? null : motherFullName.trim();
+        this.motherFullName = filterBlanks(motherFullName);
     }
 
     public Date getDateOfBirth() {
@@ -235,7 +244,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth == null ? null : placeOfBirth.trim();
+        this.placeOfBirth = filterBlanks(placeOfBirth);
     }
 
     public Long getCertificateNo() {
@@ -275,7 +284,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = childFullNameEnglish == null ? null : childFullNameEnglish.trim().toUpperCase();
+        this.childFullNameEnglish = filterBlanks(childFullNameEnglish);
     }
 
     public int getResultsFound() {
