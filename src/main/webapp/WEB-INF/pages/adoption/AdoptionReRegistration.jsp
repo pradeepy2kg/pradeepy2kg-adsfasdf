@@ -332,9 +332,16 @@
 <div class="adoption-form-submit">
     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-    <s:hidden name="status" value="%{#request.status}"/>
+    <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
 </div>
+</s:form>
+<s:form action="eprAdoptionBackToPreviousState.do">
+    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+    <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
+    <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
 </s:form>
 </div>

@@ -101,7 +101,7 @@ public class UserManagementTest extends TestCase {
             newUser3.setPrefLanguage("si");
             newUser3.setRole(roleDAO.getRole("DEO"));
             newUser3.setPasswordHash(userManager.hashPassword("newUser3"));
-            newUser3.setStatus(User.State.ACTIVE);
+            newUser3.setCurrentStatus(User.State.ACTIVE);
             userManager.createUser(newUser3, admin);
             fail("Should not be able to create users with duplicate IDs");
         } catch (Exception ignore) {

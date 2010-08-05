@@ -69,7 +69,7 @@
             <td><s:label value="%{getText('status.label')}"/></td>
             <td><s:select list="#@java.util.HashMap@{'DATA_ENTRY':'Data Entry','APPROVED':'Approved','NOTICE_LETTER_PRINTED':'Notice Printed',
         'REJECTED':'Rejected','CERTIFICATE_ISSUE_REQUEST_CAPTURED':'Certificate Issual request captured','ADOPTION_CERTIFICATE_PRINTED':'Certificate Printed'}"
-                          name="status" value="%{#request.status}"
+                          name="currentStatus" value="%{#request.currentStatus}"  headerKey="0" headerValue="Select Status"
                           cssStyle="width:200px; margin-left:5px;"></s:select></td>
             <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
         </tr>
@@ -108,7 +108,7 @@
 <s:if test="status.ordinal()==0">
     <s:url id="editSelected" action="eprAdoptionEditMode.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -120,7 +120,7 @@
 
     <s:url id="approveSelected" action="eprApproveAdoption.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -133,7 +133,7 @@
 
     <s:url id="rejectSelected" action="eprRejectAdoption.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -148,7 +148,7 @@
 
     <s:url id="deleteSelected" action="eprDeleteAdoption.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -172,7 +172,7 @@
     <td></td>
     <s:url id="viewSelected" action="eprAdoptionViewMode.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -185,7 +185,7 @@
     <td align="center">
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionRegistration.do">
             <s:param name="idUKey" value="idUKey"/>
-            <s:param name="status" value="%{#request.status}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
             <s:param name="pageNo" value="%{#request.pageNo}"/>
             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -203,7 +203,7 @@
 <s:elseif test="status.ordinal()==2">
     <s:url id="viewSelected" action="eprAdoptionViewMode.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -232,7 +232,7 @@
 <s:elseif test="status.ordinal()==3">
     <s:url id="viewSelected" action="eprAdoptionViewMode.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -252,7 +252,7 @@
 <s:elseif test="status.ordinal()==4">
     <s:url id="viewSelected" action="eprAdoptionViewMode.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -270,7 +270,7 @@
     <td align="center">
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionCertificate.do">
             <s:param name="idUKey" value="idUKey"/>
-            <s:param name="status" value="%{#request.status}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
             <s:param name="pageNo" value="%{#request.pageNo}"/>
             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -286,7 +286,7 @@
 <s:elseif test="status.ordinal()==5">
     <s:url id="viewSelected" action="eprPrintAdoptionCertificate.do">
         <s:param name="idUKey" value="idUKey"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -305,7 +305,7 @@
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionCertificate.do">
             <s:param name="idUKey" value="idUKey"/>
             <s:param name="alreadyPrinted" value="true"/>
-            <s:param name="status" value="%{#request.status}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
             <s:param name="pageNo" value="%{#request.pageNo}"/>
             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -330,14 +330,14 @@
     <s:url id="previousUrl" action="eprAdoptionPrevious.do" encode="true">
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
     </s:url>
 
     <s:url id="nextUrl" action="eprAdoptionNext.do" encode="true">
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="status" value="%{#request.status}"/>
+        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
     </s:url>
     <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
