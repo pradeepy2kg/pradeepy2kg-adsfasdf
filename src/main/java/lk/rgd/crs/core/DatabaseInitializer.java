@@ -247,6 +247,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             //Death Registration
             bs.set(Permission.PAGE_DEATH_REGISTRATION_INIT);
+            bs.set(Permission.PAGE_DEATH_CERTIFICATE);
 
             //Search
             bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);

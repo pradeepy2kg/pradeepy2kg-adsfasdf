@@ -425,6 +425,10 @@
             <result type="tiles" name="form1">epr.deathDeclaration_form2</result>
             <result type="tiles" name="form2">epr.deathDeclaration_form3</result>
         </action>
+
+        <action name="eprDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction" method="deathCertificate">
+            <result type="tiles" name="success">epr.deathCertificate</result>
+        </action>
     </package>
 
     <package name="management" namespace="/management" extends="NG">

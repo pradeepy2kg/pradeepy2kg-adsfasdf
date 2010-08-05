@@ -32,6 +32,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         return ERROR;
     }
 
+    public String deathCertificate(){
+        return SUCCESS;
+    }
+
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
     }

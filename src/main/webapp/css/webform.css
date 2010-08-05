@@ -1651,5 +1651,5 @@
 
 
 /* Styles for the Death forms */
-#death-declaration-form-1-outer, #death-declaration-form-2-outer, #death-declaration-form-3-outer{width:1030px; background:white; padding:10px;}
-#death-declaration-form-1-outer table, #death-declaration-form-2-outer table, #death-declaration-form-3-outer table{margin-bottom:15px;}
+#death-certificate-outer, #death-declaration-form-1-outer, #death-declaration-form-2-outer, #death-declaration-form-3-outer{width:1030px; background:white; padding:10px;}
+#death-certificate-outer table, #death-declaration-form-1-outer table, #death-declaration-form-2-outer table, #death-declaration-form-3-outer table{margin-bottom:15px;}

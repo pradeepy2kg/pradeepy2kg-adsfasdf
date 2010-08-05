@@ -3,9 +3,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="death-certificate-outer">
     <table style="width: 100%; border:none; border-collapse:collapse; ">
-        <col width="200px">
-        <col width="400px">
-        <col width="200px">
+        <col width="300px"/>
+        <col width="400px"/>
+        <col width="130px"/>
+        <col/>
         <tbody>
         <tr>
             <td rowspan="3"></td>
@@ -13,22 +14,23 @@
                 <img src="<s:url value="../images/official-logo.png" />"
                      style="display: block; text-align: center;" width="80" height="100">
             </td>
-            <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
+            <td class="font-9" style="border:1px solid #000;" height="60px">සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
             </td>
+            <td style="border:1px solid #000;"><s:label name=""/></td>
         </tr>
         <tr>
-            <td><s:label name=""/></td>
+            <td colspan="2"></td>
         </tr>
         <tr>
             <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
                 මරණ ලියාපදිංචි කිරීමේ ලේඛනය <br>பிறப்பு சான்றிதழ்﻿<br>REGISTER OF DEATHS
             </td>
-            <td></td>
+            <td colspan="2"></td>
         </tr>
         </tbody>
     </table>
 
-    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; ">
+    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
         <col width="135px"/>
         <col/>
         <col width="145px"/>
@@ -49,7 +51,7 @@
         </tbody>
     </table>
 
-    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; ">
+    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
         <col width="150px"/>
         <col width="160px"/>
         <col width="100px"/>
@@ -116,7 +118,8 @@
         </tbody>
     </table>
 
-    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; ">
+    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:0;"
+           class="font-9">
         <col width="195px"/>
         <col width="215px"/>
         <col width="120px"/>
@@ -142,8 +145,9 @@
         </tbody>
     </table>
 
-    <s:label>පු.අ.අ. හෝ ජා.හැ.අ. = අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය</s:label>
-    <s:label><p>උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින්
+    <s:label><p class="font-7">පු.අ.අ. හෝ ජා.හැ.අ. = අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය</p></s:label>
+    <s:label><p class="font-8" style="width:100%; text-align:center;">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය)
+        යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින්
         නිකුත් කරන
         ලදි.<br>
         பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
