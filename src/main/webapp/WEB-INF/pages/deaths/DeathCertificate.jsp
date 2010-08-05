@@ -1,6 +1,24 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<style type="text/css">
+    #death-certificate-outer table tr td {
+        padding: 0 5px;
+    }
+
+    @media print {
+        .form-submit {
+            display: none;
+        }
+
+        td {
+            font-size: 8pt;
+        }
+    }
+
+</style>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+
 <div id="death-certificate-outer">
     <table style="width: 100%; border:none; border-collapse:collapse; ">
         <col width="300px"/>
@@ -14,7 +32,8 @@
                 <img src="<s:url value="../images/official-logo.png" />"
                      style="display: block; text-align: center;" width="80" height="100">
             </td>
-            <td class="font-9" style="border:1px solid #000;" height="60px">සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
+            <td class="font-9" style="border:1px solid #000;" height="60px">සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate
+                Number
             </td>
             <td style="border:1px solid #000;"><s:label name=""/></td>
         </tr>
@@ -22,7 +41,7 @@
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+            <td align="center" class="font-12">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
                 මරණ ලියාපදිංචි කිරීමේ ලේඛනය <br>பிறப்பு சான்றிதழ்﻿<br>REGISTER OF DEATHS
             </td>
             <td colspan="2"></td>
@@ -153,4 +172,12 @@
         பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
         Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
     </s:label>
+    <div class="form-submit">
+        <s:url id="print" action="eprDeathCertificate.do">
+            
+        </s:url>
+
+        <s:a href="%{print}" onclick="printPage();"><s:label value="%{getText('print.button')}"/></s:a>
+        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+    </div>
 </div>

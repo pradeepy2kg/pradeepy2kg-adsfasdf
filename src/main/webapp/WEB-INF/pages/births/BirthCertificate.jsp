@@ -3,55 +3,24 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
+    #birth-certificate-outer table tr td{padding:0 5px;}
     @media print {
         .form-submit {
             display: none;
         }
 
         td {
-            font-size: 11pt;
+            font-size: 8pt;
         }
     }
+
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
-<script type="text/javascript">
-    function printPage() {
-        if (!jsPrintSetup) {
-            var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
-            if (option) {
-                window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
-            }
-        } else {
-            // set page orientation.
-            jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
-            // set margins.
-            jsPrintSetup.setOption('marginTop', 0);
-            jsPrintSetup.setOption('marginLeft', 20);
-
-
-            // set page header
-            jsPrintSetup.setOption('headerStrLeft', '');
-            jsPrintSetup.setOption('headerStrCenter', '');
-            jsPrintSetup.setOption('headerStrRight', '');
-            // set empty page footer
-            jsPrintSetup.setOption('footerStrLeft', '');
-            jsPrintSetup.setOption('footerStrCenter', '');
-            jsPrintSetup.setOption('footerStrRight', '');
-
-            jsPrintSetup.print();
-
-            var res = confirm(document.getElementById("printMessage").value);
-            history.go(0);
-        }
-    }
-</script>
 <div id="birth-certificate-outer">
-<%--<s:form action="eprBirthCetificateList.do" name="birthCertificatePrint"--%>
-<%--id="birth-certificate-print-form" method="POST">--%>
 
 
-<table style="width: 100%; border:none; border-collapse:collapse; ">
+<table style="width: 100%; border:none; border-collapse:collapse;  margin:10px 0;">
     <col width="200px">
     <col width="400px">
     <col width="200px">
@@ -69,7 +38,7 @@
         <td><s:label name="bdId"/></td>
     </tr>
     <tr>
-        <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+        <td align="center" style="font-size:11pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             <s:if test="birthType.ordinal() != 0">
                 උප්පැන්න සහතික<br>
                 பிறப்பு சான்றிதழ்﻿<br>
@@ -86,7 +55,7 @@
     </tbody>
 </table>
 
-<table border="1" class="table-with-border">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;">
     <col width="135px">
     <col>
     <col width="145px">
@@ -122,7 +91,7 @@
     </tbody>
 </table>
 
-<table border="1" class="table-with-border">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;">
     <col width="150px">
     <col width="160px">
     <col width="100px">
@@ -181,14 +150,14 @@
         <tr>
             <td height="120px">නම <br>பெயர் <br>Name
             </td>
-            <td colspan="5" class="bc-name" style="font-size:12pt">
+            <td colspan="5" class="bc-name" style="font-size:11pt">
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
             <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
-            <td colspan="5" class="bc-name" style="font-size:12pt">
+            <td colspan="5" class="bc-name" style="font-size:11pt">
                 <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             </td>
         </tr>
@@ -196,7 +165,7 @@
     <tr>
         <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:12pt">
+        <td colspan="5" class="bc-name" style="font-size:11pt">
             <s:label name="" value="%{#request.parent.fatherFullName}"/>
         </td>
     </tr>
@@ -216,7 +185,7 @@
             <br> தாயின் முழுப் பெயர்
             <br> Mother's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:12pt">
+        <td colspan="5" class="bc-name" style="font-size:11pt">
             <s:label name="" value="%{#request.parent.motherFullName}"/>
         </td>
     </tr>
@@ -233,7 +202,7 @@
     </tbody>
 </table>
 
-<table border="1" class="table-with-border">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;">
     <col width="195px">
     <col width="215px">
     <col width="120px">

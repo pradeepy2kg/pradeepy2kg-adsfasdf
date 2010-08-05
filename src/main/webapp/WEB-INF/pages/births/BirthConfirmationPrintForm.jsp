@@ -6,41 +6,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<style type="text/css">
+    #birth-confirmation-print-form-outer table tr td{padding:0 5px;}
+    @media print {
+        .form-submit {
+            display: none;
+        }
 
-<script type="text/javascript">
-    function printPage() {
-        if (!jsPrintSetup) {
-            var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
-            if (option) {
-               window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
-            }
-        } else {
-            // set page orientation.
-            jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
-            // set margins.
-            jsPrintSetup.setOption('marginTop', 0);
-            jsPrintSetup.setOption('marginLeft', 20);
-
-
-            // set page header
-            jsPrintSetup.setOption('headerStrLeft', '');
-            jsPrintSetup.setOption('headerStrCenter', '');
-            jsPrintSetup.setOption('headerStrRight', '');
-            // set empty page footer
-            jsPrintSetup.setOption('footerStrLeft', '');
-            jsPrintSetup.setOption('footerStrCenter', '');
-            jsPrintSetup.setOption('footerStrRight', '');
-
-            jsPrintSetup.print();
-
-            var res = confirm(document.getElementById("printMessage").value);
-            history.go(0);
+        td {
+            font-size: 8pt;
         }
     }
-</script>
+
+</style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
-<div class="birth-confirmation-print-form-outer">
+
+<div id="birth-confirmation-print-form-outer">
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
 <table style="width:65%;float:left;">
     <caption></caption>
