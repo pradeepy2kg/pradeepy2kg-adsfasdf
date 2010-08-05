@@ -5,23 +5,23 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 
 <s:if test="#request.archivedEntryList.size>0">
-<fieldset style="border:2px inset red; width:400px;" >
+<fieldset style="border:2px inset red; width:400px;">
     <legend style="color:red;">
         <s:label value="%{getText('ArchivedData.label')}"/>
     </legend>
     <table>
         <th></th>
         <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
-        <th><s:label value="%{getText('lastupdate.time.label')}"/> </th>
+        <th><s:label value="%{getText('lastupdate.time.label')}"/></th>
         <th><s:label name="viewlbl" value="%{getText('view.label')}"/></th>
         <s:iterator status="archivedStatus" value="archivedEntryList" id="searchId">
             <tr class="<s:if test="#archivedStatus.odd == true">odd</s:if><s:else>even</s:else>">
                 <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
                 <s:set value="getRegister().getStatus()" name="status"/>
                 <td><s:label value="%{getText(#status)}"/></td>
-                <td><s:property value="lastUpdatedTime"/> </td>
+                <td><s:property value="lastUpdatedTime"/></td>
                 <s:set name="abc" value="lastUpdatedTime"/>
-                
+
                 <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                     <s:param name="bdId" value="idUKey"/>
                 </s:url>
@@ -144,40 +144,42 @@
             </s:else>
         </td>
     </tr>
-    <%--TODO style not added--%>
+        <%--TODO style not added--%>
     <s:if test="birthType.ordinal() == 2">
         <tr style="border-left:1px solid #000000;">
-            <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial Number of the Certificate of Adoption</label></td>
+            <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial
+                Number of the Certificate of Adoption</label></td>
             <td colspan="7">
-                <%--TODO fill name--%>
+                    <%--TODO fill name--%>
                 <s:label value=""/>
             </td>
         </tr>
         <tr>
-            <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was previously registered</label></td>
+            <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was
+                previously registered</label></td>
             <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <%--TODO fill name--%>
+                    <%--TODO fill name--%>
                 <s:label value=""/>
             </td>
         </tr>
         <tr>
             <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <%--TODO fill name--%>
+                    <%--TODO fill name--%>
                 <s:label value=""/>
             </td>
         </tr>
         <tr>
             <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
             <td colspan="6" class="table_reg_cell_01">
-                <%--TODO fill name--%>
+                    <%--TODO fill name--%>
                 <s:label value=""/>
             </td>
         </tr>
         <tr>
             <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
-            <%--TODO fill name--%>
+                <%--TODO fill name--%>
             <td colspan="6"><s:label value=""/></td>
         </tr>
     </s:if>
@@ -234,8 +236,9 @@
     </tr>
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
-        <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td>
+        <td colspan="2"><label>ඔව් / *in Tamil / Yes </label></td>
+
+        <td width="150px">
             <s:if test="session.birthRegister.child.birthAtHospital ==true">
             <s:label value="%{getText('yes.label')}"/></td>
         </s:if>
@@ -290,7 +293,7 @@
                                          cssStyle="width:95%;"/></td>
         </s:if>
         <s:elseif test="birthType.ordinal() == 0">
-            <td colspan="2"><label>(4) දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
+            <td id="xxx" colspan="2"><label>(4) දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label></td>
             <td colspan="2"><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>

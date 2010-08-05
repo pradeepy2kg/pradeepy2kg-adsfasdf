@@ -101,7 +101,7 @@
         <tr>
             <td rowspan="2" style="width:75px"></td>
             <td><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="3"><s:label value="%{#session.birthRegister.grandFather.grandFatherFullName}" cssStyle="width:98%;"/></td>
+            <td colspan="1"><s:label value="%{#session.birthRegister.grandFather.grandFatherFullName}" cssStyle="width:98%;"/></td>
         </tr>
         <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>

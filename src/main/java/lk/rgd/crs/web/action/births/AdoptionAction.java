@@ -400,16 +400,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (Exception e) {
             logger.debug("catch exception : {}", e);
         }
-        //adoption.setCertificateApplicantAddress(certificateApplicantAddress);
-        //changing state
-        //adoption.setCurrentStatus(AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED);
-        //logger.info(adoption.getCertificateApplicantType().name());
-        //service.updateAdoptionOrder(adoption, user);
-        //session.remove(WebConstants.SESSION_ADOPTION_ORDER);
-        return SUCCESS;
-    }
-
-    public String test() {
         return SUCCESS;
     }
 

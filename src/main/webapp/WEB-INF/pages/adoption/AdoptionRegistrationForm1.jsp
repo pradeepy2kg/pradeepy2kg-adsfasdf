@@ -268,11 +268,12 @@
         <td>අවුරුදු <br/>
             Years
         </td>
-        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears" onclick="calYearAndMonth()"/></td>
+        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears"
+                         onchange="validateNum(document.getElementById('childAgeYears').value)"/></td>
         <td>මාස <br/>
             Months
         </td>
-        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()"/></td>
+        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()" onchange="validateNum(document.getElementById('childAgeMonths').value)"/></td>
     </tr>
     <tr>
         <td>දැනට පවතින නම <br/>
@@ -280,7 +281,7 @@
             Existing Name <br/>
             (if already given)
         </td>
-        <td colspan="4"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
+        <td colspan=" 4"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
@@ -458,7 +459,7 @@
         var ageYearBDay = bday.getYear();
         var ageMonthTOday = today.getMonth();
         var ageYearTOday = today.getYear();
-        var ageMonth,ageYear= 0;
+        var ageMonth,ageYear = 0;
 
         if (ageMonthTOday >= ageMonthBDay) {
             ageMonth = ageMonthTOday - ageMonthBDay;
@@ -474,6 +475,12 @@
                 document.getElementById("childAgeYears").value = ageYear;
                 document.getElementById("childAgeMonths").value = ageMonth;
             }
+        }
+    }
+
+    function validateNum(num) {
+        if (isNaN(num)) {
+            alert("not a number");
         }
     }
 

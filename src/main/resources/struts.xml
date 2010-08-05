@@ -530,14 +530,6 @@
         </action>
 
         <!--approve and print list related-->
-        <action name="eprAdoptionApprovalAndPrintTest" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="test">
-            <result type="redirectAction">
-                <param name="actionName">eprAdoptionApprovalAndPrint</param>
-                <!--<param name="namespace">/births</param>-->
-            </result>
-        </action>
-
         <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApprovalAndPrint">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
