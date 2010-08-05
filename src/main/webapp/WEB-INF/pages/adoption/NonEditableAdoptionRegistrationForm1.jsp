@@ -321,7 +321,7 @@
 <div class="adoption-form-submit">
     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-    <s:hidden name="status" value="%{#request.status}"/>
+    <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:submit value="%{getText('back.label')}" cssStyle="margin-top:10px;"/>
 </div>

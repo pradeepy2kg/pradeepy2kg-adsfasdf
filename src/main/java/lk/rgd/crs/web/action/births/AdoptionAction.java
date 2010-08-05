@@ -84,7 +84,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.countryDAO = countryDAO;
         this.appParametersDAO = appParametersDAO;
     }
-    public String initAdoptionRegistration(){
+
+    public String initAdoptionRegistration() {
         return SUCCESS;
 
     }
@@ -221,7 +222,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String adoptionBackToPreviouseState() {
-        logger.debug("loading prvious page : currentStatus {} , pageNo  {}", currentStatus, pageNo);
+        logger.debug("loading previous page : currentStatus {} , pageNo  {}", currentStatus, pageNo);
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);

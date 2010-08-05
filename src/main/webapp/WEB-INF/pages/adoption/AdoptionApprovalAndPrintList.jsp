@@ -64,12 +64,14 @@
 <s:actionerror/>
 <table cellpadding="5" cellspacing="0">
     <s:form action="eprAdoptionFilterByStatus" method="post">
+
         <tbody>
         <tr>
-            <td><s:label value="%{getText('status.label')}"/></td>
-            <td><s:select list="#@java.util.HashMap@{'DATA_ENTRY':'Data Entry','APPROVED':'Approved','NOTICE_LETTER_PRINTED':'Notice Printed',
-        'REJECTED':'Rejected','CERTIFICATE_ISSUE_REQUEST_CAPTURED':'Certificate Issual request captured','ADOPTION_CERTIFICATE_PRINTED':'Certificate Printed'}"
-                          name="currentStatus" value="%{#request.currentStatus}"  headerKey="0" headerValue="Select Status"
+            <td><s:label value="%{getText('select.status.label')}"/></td>
+            <td>
+                <s:select list="#@java.util.HashMap@{'DATA_ENTRY':getText('data.entry.label'),'APPROVED':getText('Approved.label'),'NOTICE_LETTER_PRINTED':getText('notice.printed.label'),
+        'REJECTED':getText('rejected.label'),'CERTIFICATE_ISSUE_REQUEST_CAPTURED':getText('certificate.issual.request.captured.label'),'ADOPTION_CERTIFICATE_PRINTED':getText('adoption.certificate.printed.label')}"
+                          name="currentStatus" value="%{#request.currentStatus}"  headerKey="0" headerValue="%{getText('select.status.label')}"
                           cssStyle="width:200px; margin-left:5px;"></s:select></td>
             <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
         </tr>
