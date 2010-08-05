@@ -27,17 +27,17 @@ import java.util.List;
  */
 public class BirthRegistrationServiceTest extends TestCase {
 
-    private final ApplicationContext ctx = UnitTestManager.ctx;
-    private final BirthRegistrationService birthRegSvc;
-    private final BDDivisionDAO bdDivisionDAO;
-    private final UserManagerImpl userManager;
-    private final BDDivision colomboBDDivision;
-    private final BDDivision negamboBDDivision;
-    private BirthDeclarationDAO birthDeclarationDAO;
-    private User deoColomboColombo;
-    private User deoGampahaNegambo;
-    private User adrColomboColombo;
-    private User adrGampahaNegambo;
+    protected final ApplicationContext ctx = UnitTestManager.ctx;
+    protected final BirthRegistrationService birthRegSvc;
+    protected final BDDivisionDAO bdDivisionDAO;
+    protected final UserManagerImpl userManager;
+    protected final BDDivision colomboBDDivision;
+    protected final BDDivision negamboBDDivision;
+    protected BirthDeclarationDAO birthDeclarationDAO;
+    protected User deoColomboColombo;
+    protected User deoGampahaNegambo;
+    protected User adrColomboColombo;
+    protected User adrGampahaNegambo;
 
     @Override
     protected void setUp() throws Exception {
@@ -398,104 +398,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         deleteBDF(colomboBDDivision, 2010107);
     }
 
-    public void testBirthRecordIndexing() throws Exception {
-
-        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
-        BirthDeclaration bdf1 = getMinimalBDF(2010108, dfm.parse("2010-07-21"), colomboBDDivision);
-        bdf1.getChild().setChildFullNameEnglish("aaaa bbbb cccc zzzz");
-        bdf1.getChild().setChildGender(0);
-        bdf1.getParent().setMotherFullName("hhhh iiii zzzz");
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
-        birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
-        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
-        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
-
-        BirthDeclaration bdf2 = getMinimalBDF(2010109, dfm.parse("2010-07-22"), colomboBDDivision);
-        bdf2.getChild().setChildFullNameEnglish("eeee ffff gggg zzzz");
-        bdf2.getChild().setChildGender(0);
-        bdf2.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
-        birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
-        birthRegSvc.approveLiveBirthDeclaration(bdf2, true, adrColomboColombo);
-        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf2, deoColomboColombo);
-        bdf2 = birthRegSvc.getById(bdf2.getIdUKey(), deoColomboColombo);
-        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf2, deoColomboColombo);
-
-        BirthDeclaration bdf3 = getMinimalBDF(2010110, dfm.parse("2010-07-22"), colomboBDDivision);
-        bdf3.getChild().setChildFullNameEnglish("hhhh iiii zzzz");
-        bdf3.getChild().setChildGender(0);
-        bdf3.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
-        birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo, null, null);
-        birthRegSvc.approveLiveBirthDeclaration(bdf3, true, adrColomboColombo);
-        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf3, deoColomboColombo);
-        bdf3 = birthRegSvc.getById(bdf3.getIdUKey(), deoColomboColombo);
-        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf3, deoColomboColombo);
-
-        BirthCertificateSearch bcs = new BirthCertificateSearch();
-        bcs.setApplicantFullName("applicant name");
-        bcs.setApplicantAddress("applicant address");
-        bcs.setApplicationNo("1");
-        bcs.setDateOfSubmission(new Date());
-
-        // should find when the search term does occur within the field
-        bcs.setChildFullNameEnglish("aaaa bbbb");
-        List<BirthDeclaration> results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(1, results.size());
-
-        // should find when the search term does occur within the field
-        bcs.setChildFullNameEnglish("ffff zzzz");
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(1, results.size());
-
-        // should not find when the search term does not occur
-        bcs.setChildFullNameEnglish("xxxx yyyy");
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(0, results.size());
-
-        bcs.setGender(0);
-        bcs.setChildFullNameEnglish("zzzz");
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(3, results.size());
-
-        // should not match zzzz for gender = 1 as gender is an exact match
-        bcs.setGender(1);
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(0, results.size());
-
-        bcs.setGender(0);
-        bcs.setDateOfBirth(null);
-        bcs.setMotherFullName("zzzz");
-        bcs.setDateOfBirth(dfm.parse("2010-07-22"));
-        
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(2, results.size());
-
-        bcs.setMotherFullName("zzzz");
-        bcs.setChildFullNameEnglish(null);
-        bcs.setDateOfBirth(dfm.parse("2010-07-21"));
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(1, results.size());
-
-        // search on issued date
-
-        bcs.setDateOfBirth(null);
-        bcs.setMotherFullName(null);
-        bcs.setDateOfRegistration(new Date()); // TODO
-        bcs.setSearchUKey(0);
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
-        Assert.assertEquals(3, results.size());
-
-        deleteBDF(colomboBDDivision, 2010108);
-        deleteBDF(colomboBDDivision, 2010109);
-    }
-
-    private BirthDeclaration getMinimalBDF(long serial, Date dob, BDDivision bdDivision) {
+    protected BirthDeclaration getMinimalBDF(long serial, Date dob, BDDivision bdDivision) {
 
         Date today = new Date();
         BirthDeclaration bdf = new BirthDeclaration();
@@ -518,7 +421,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         return bdf;
     }
 
-    private void deleteBDF(BDDivision bdDivision, long serial) {
+    protected void deleteBDF(BDDivision bdDivision, long serial) {
         try {
             birthDeclarationDAO.deleteBirthDeclaration(
                 birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial).getIdUKey());
