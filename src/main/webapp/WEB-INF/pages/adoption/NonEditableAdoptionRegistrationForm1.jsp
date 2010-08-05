@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="adoption-registration-form-outer">
-<s:form action="eprAdoptionApprovalAndPrint" name="" id="" method="POST">
+<s:form action="eprAdoptionBackToPreviousState" name="" id="" method="POST">
 
 <table class="adoption-reg-form-header-table" cellspacing="1" cellpadding="1">
     <caption></caption>
