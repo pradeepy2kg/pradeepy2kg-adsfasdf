@@ -560,14 +560,24 @@
             <result type="tiles" name="success">epr.non_editable_adoptionCertificate</result>
         </action>
 
-        <action name="eprPrintAdoptionRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionDeclarationMarkAsPrint">
+        <action name="eprPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>
         </action>
 
+        <action name="eprMarkAdoptionNoticeAsPirnted" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="markAdoptionNoticeAsPrinted">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
         <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionDeclarationMarkAsCertificatePrint">
+                method="loadAdoptionCertificate">
             <result type="tiles" name="success">epr.adoptionCertificate</result>
+        </action>
+
+        <action name="eprMarkAdoptionCertificateAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="markAdoptionCertificateAsPrinted">
+            <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
 
         <action name="eprAdoptionNext" class="lk.rgd.crs.web.action.births.AdoptionAction"

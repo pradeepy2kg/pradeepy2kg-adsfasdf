@@ -146,8 +146,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     /**
      * responsible for loading the AdoptionOrder based
-     * on requested idUKey. which is then redirected to
-     * no editable page
+     * on requested idUKey which is then redirected to
+     * non editable page
      *
      * @return
      */
@@ -165,29 +165,67 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * marks requested Adoption Regisration as printed
+     * loading the AdoptionRegistration form
      *
      * @return
      */
-    public String adoptionDeclarationMarkAsPrint() {
-        logger.debug("requested to mark as printed AdoptionOrder with idUKey : {} ", idUKey);
-        service.setStatusToPrintedNotice(idUKey, user);
+    public String loadAdoptionNotice() {
         adoption = service.getById(idUKey, user);
         return SUCCESS;
     }
 
     /**
-     * marks requested Adoption as it's certificate
-     * printed
+     * marks requested AdoptionOrder as its Adoption notice
+     * as printed then loads the adoption list page where it
+     * started to print the adoption Notice
      *
      * @return
      */
-    public String adoptionDeclarationMarkAsCertificatePrint() {
+    public String markAdoptionNoticeAsPrinted() {
+        logger.debug("requested to mark Adoption Notice as printed for idUKey : {} ", idUKey);
+        service.setStatusToPrintedNotice(idUKey, user);
+        populate();
+        initPermissionForApprovalAndPrint();
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (currentStatus != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * responsible for loading the Adoption Certificate
+     *
+     * @return
+     */
+    public String loadAdoptionCertificate() {
+        adoption = service.getById(idUKey, user);
+        return SUCCESS;
+    }
+
+    /**
+     * marks adoption certificate as printed only if
+     * it is already not printed. then loads the
+     * adoption list page where it started to print
+     * the adoption certificate
+     *
+     * @return
+     */
+    public String markAdoptionCertificateAsPrinted() {
         logger.debug("requested to mark adoption certificate as printed with idUKey : {} alreadyPrinted : {} ", idUKey, alreadyPrinted);
         if (!alreadyPrinted) {
             service.setStatusToPrintedCertificate(idUKey, user);
         }
-        adoption = service.getById(idUKey, user);
+        populate();
+        initPermissionForApprovalAndPrint();
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (currentStatus != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         return SUCCESS;
     }
 

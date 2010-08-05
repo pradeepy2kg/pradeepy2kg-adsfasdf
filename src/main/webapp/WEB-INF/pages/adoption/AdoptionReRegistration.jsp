@@ -47,7 +47,7 @@
     }
 </script>
 <div id="adoption-registration-form-outer">
-<s:form action="eprAdoptionBackToPreviousState.do" name="" id="" method="POST">
+<s:form action="eprMarkAdoptionNoticeAsPirnted.do" name="" id="" method="POST">
 <table class="adoption-reg-form-header-table">
     <tr>
         <td align="center" style="font-size:12pt">
@@ -334,6 +334,7 @@
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+    <s:hidden name="idUKey" value="%{#request.idUKey}"/>
     <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
