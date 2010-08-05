@@ -1653,3 +1653,10 @@
 /* Styles for the Death forms */
 #death-certificate-outer, #death-declaration-form-1-outer, #death-declaration-form-2-outer, #death-declaration-form-3-outer{width:1030px; background:white; padding:10px;}
 #death-certificate-outer table, #death-declaration-form-1-outer table, #death-declaration-form-2-outer table, #death-declaration-form-3-outer table{margin-bottom:15px;}
+
+/*css class for late death registration*/
+#late-death-registrations-outer {width:1030px;background: #ffffff;padding: 10px;font-size:9pt;}
+.death-reg-header-table{width:1030px;border:none;font-size:12pt;text-align:center;margin-bottom:10px;}
+.death-reg-header-table-02 {width:1030px;border:none;font-size:10pt;margin-bottom:10px;}
+.death-late-reg-table{width:1030px;font-size:10pt;border-top:1px solid #000;border-left:1px solid #000;}
+.death-late-reg-table td{border-right:1px solid #000;border-bottom:1px solid #000;}

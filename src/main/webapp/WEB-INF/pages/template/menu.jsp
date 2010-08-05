@@ -43,9 +43,8 @@
                     <a href="#"><s:label value="%{getText('category_prs')}"/></a>
                 </s:if>
                 <s:if test="%{key == '7adoption'}">
-                    <s:a href="">
-                        <s:label value="%{getText('category_adoption')}"/>
-                    </s:a>
+                    <s:a href="#">
+                        <s:label value="%{getText('category_adoption')}"/></s:a>
                 </s:if>
 
                 <ul class="acitem">
