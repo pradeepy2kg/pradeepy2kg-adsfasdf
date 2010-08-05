@@ -268,7 +268,7 @@
         <td>අවුරුදු <br/>
             Years
         </td>
-        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears"/></td>
+        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears" onclick="calYearAndMonth()"/></td>
         <td>මාස <br/>
             Months
         </td>

@@ -84,6 +84,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.countryDAO = countryDAO;
         this.appParametersDAO = appParametersDAO;
     }
+    public String initAdoptionRegistration(){
+        return SUCCESS;
+
+    }
 
     public String adoptionAction() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
