@@ -121,13 +121,6 @@
         <constructor-arg ref="adoptionOrderService"/>
     </bean>
 
-    <bean id="ajaxSupport" scope="prototype" class="lk.rgd.crs.web.action.AjaxAction">
-        <constructor-arg ref="popRegService"/>
-        <constructor-arg ref="districtDAOImpl"/>
-        <constructor-arg ref="bdDivisionDAOImpl"/>
-        <constructor-arg ref="dsDivisionDAOImpl"/>
-    </bean>
-
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
