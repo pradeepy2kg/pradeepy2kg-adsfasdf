@@ -136,6 +136,7 @@ public class BirthRegisterInfo implements Serializable {
      * @see lk.rgd.crs.api.domain.BirthDeclaration.BirthType
      */
     @Enumerated
+    @Column(nullable = false)
     private BirthDeclaration.BirthType birthType = BirthDeclaration.BirthType.LIVE;
 
     /**

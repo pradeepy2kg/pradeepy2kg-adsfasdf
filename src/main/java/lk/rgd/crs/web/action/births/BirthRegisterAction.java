@@ -14,6 +14,7 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.util.GenderUtil;
+import lk.rgd.common.util.MarriedStatusUtil;
 
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -109,7 +110,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String fatherRacePrintEn;
     private String motherRacePrint;
     private String motherRacePrintEn;
-    private String marriedStatusPrint;
+    private String marriedStatus;
+    private String marriedStatusEn;
 
 
     public String welcome() {
@@ -595,23 +597,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 }
                 beanPopulate(bdf);
 
-                if (birthType == BirthDeclaration.BirthType.LIVE) {
-                    gender = child.getChildGenderPrint();
-                    genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
-                    childDistrict = register.getDistrictPrint();
-                    childDistrictEn = register.getBirthDistrict().getEnDistrictName();
-                    childDsDivision = register.getDsDivisionPrint();
-                    childDsDivisionEn = register.getDsDivision().getEnDivisionName();
-                    fatherRacePrint = parent.getFatherRacePrint();
-                    if (fatherRace != 0) {
-                        fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
-                    }
-                    motherRacePrint = parent.getMotherRacePrint();
-                    if (motherRace != 0) {
-                        motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
-                    }
-                }
-                // TODO else part needed ??
+                gender = child.getChildGenderPrint();
+                genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
+                childDistrict = register.getDistrictPrint();
+                childDistrictEn = register.getBirthDistrict().getEnDistrictName();
+                childDsDivision = register.getDsDivisionPrint();
+                childDsDivisionEn = register.getDsDivision().getEnDivisionName();
+                fatherRacePrint = parent.getFatherRacePrint();
+                fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
+                motherRacePrint = parent.getMotherRacePrint();
+                motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
+                marriedStatus = marriage.getParentsMarriedPrint();
+                marriedStatusEn = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
 
                 addActionMessage("message.print.success");
                 return "pageLoad";
@@ -1220,12 +1217,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.motherRacePrint = motherRacePrint;
     }
 
-    public String getMarriedStatusPrint() {
-        return marriedStatusPrint;
+    public String getMarriedStatusEn() {
+        return marriedStatusEn;
     }
 
-    public void setMarriedStatusPrint(String marriedStatusPrint) {
-        this.marriedStatusPrint = marriedStatusPrint;
+    public void setMarriedStatusEn(String marriedStatusEn) {
+        this.marriedStatusEn = marriedStatusEn;
     }
 
     public String getGenderEn() {
@@ -1302,5 +1299,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setOldBDInfo(OldBDInfo oldBDInfo) {
         this.oldBDInfo = oldBDInfo;
+    }
+
+    public String getMarriedStatus() {
+        return marriedStatus;
+    }
+
+    public void setMarriedStatus(String marriedStatus) {
+        this.marriedStatus = marriedStatus;
     }
 }

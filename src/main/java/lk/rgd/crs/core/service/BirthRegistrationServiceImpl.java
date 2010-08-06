@@ -9,6 +9,7 @@ import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.GenderUtil;
+import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -963,6 +964,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 parent.setMotherDsDivisionPrint(
                     dsDivisionDAO.getNameByPK(parent.getMotherDSDivision().getDsDivisionUKey(), prefLanguage));
             }
+        }
+
+        MarriageInfo marriage = bdf.getMarriage();
+        if (marriage != null) {
+            marriage.setParentsMarriedPrint(MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), prefLanguage));
         }
 
         return bdf;

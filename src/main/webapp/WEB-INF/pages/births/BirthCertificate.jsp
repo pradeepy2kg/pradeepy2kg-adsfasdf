@@ -3,7 +3,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
-    #birth-certificate-outer table tr td{padding:0 5px;}
+    #birth-certificate-outer table tr td {
+        padding: 0 5px;
+    }
+
     @media print {
         .form-submit {
             display: none;
@@ -19,8 +22,7 @@
 
 <div id="birth-certificate-outer">
 
-
-<table style="width: 100%; border:none; border-collapse:collapse;  margin:10px 0;">
+<table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
     <col width="400px">
     <col width="200px">
@@ -73,21 +75,36 @@
         <td><s:label name="" value="%{childDsDivision}"/><br/>
             <s:label name="" value="%{childDsDivisionEn}"/></td>
     </tr>
-    <tr>
-        <td width="200px" height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
-            <br>பிரிவு
-            <br>Registration Division
-        </td>
-        <td><s:label name="" value="%{#request.register.birthDivision.siDivisionName}"/></td>
-        <s:if test="birthType.ordinal() != 0">
-            <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
-                <br> நிறைவேற்றிய மாற்றங்கள்
-                <br> Changes after first registration
+    <s:if test="birthType.ordinal() != 0">
+        <tr>
+            <td width="200px" height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+                <br>பிரிவு
+                <br>Registration Division
             </td>
-            <%--TODO fill variable--%>
+            <td>
+                <s:label name="" value="%{#request.register.bdDivisionPrint}"/><br>
+                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
+            </td>
+            <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
+                <br>நிறைவேற்றிய மாற்றங்கள்
+                <br>Changes After First Registration
+            </td>
+                <%--TODO fill variable--%>
             <td><s:label name="" value="%{}"/></td>
-        </s:if>
-    </tr>
+        </tr>
+    </s:if>
+    <s:else>
+        <tr>
+            <td height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+                <br>பிரிவு
+                <br>Registration Division
+            </td>
+            <td colspan="3">
+                <s:label name="" value="%{#request.register.bdDivisionPrint}"/><br>
+                <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
+            </td>            
+        </tr>
+    </s:else>
     </tbody>
 </table>
 
@@ -119,20 +136,19 @@
         <tr>
             <td height="80px" width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
             </td>
-            <td><s:label name="" value="%{#request.child.dateOfBirth}"/></td>
+            <td><s:label name="" value="%{#request.child.childDateOfBirthForPrint}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
             </td>
-            <td width="150px">
+            <td width="100px">
 
                 <s:label name="" value="%{gender}"/><br/>
                 <s:label name="" value="%{genderEn}"/>
             </td>
-            <td>දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
+            <td width="350px">දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth
             </td>
             <td><s:label name="" value="%{#request.child.weeksPregnant}"/></td>
-
         </tr>
     </s:else>
     <tr>
@@ -144,7 +160,8 @@
         </td>
         <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா? <br>Were Parents Married?
         </td>
-        <td><s:label name="" value="%{getText('married.status.'+#request.marriage.parentsMarried)}"/></td>
+        <td><s:label name="" value="%{marriedStatus}"/><br>
+        <s:label name="" value="%{marriedStatusEn}"/></td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
@@ -175,8 +192,8 @@
         <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
         <td>පියාගේ ජාතිය<br>தந்தையின் இனம் <br> Father's Race
         </td>
-        <td colspan="3"><s:label name="" value="%{fatherRacePrint}"/><br/><s:label name=""
-                                                                                   value="%{fatherRacePrintEn}"/></td>
+        <td colspan="3"><s:label name="" value="%{fatherRacePrint}"/><br/>
+            <s:label name="" value="%{fatherRacePrintEn}"/></td>
 
     </tr>
 

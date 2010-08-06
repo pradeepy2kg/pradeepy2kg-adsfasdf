@@ -184,8 +184,14 @@
                             </s:if>
                         </td>
                             <%--TODO still implementing--%>
-                        <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                            <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
+                        <s:url id="editSelected" action="eprBirthRegistrationInit.do">
+                            <s:param name="bdId" value="%{#request.bdf.idUKey}"/>
+                        </s:url>
+                        <td align="center">
+                            <s:if test="%{#request.bdf.register.status.ordinal() == 0}">
+                                <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                    <img src="<s:url value='/images/edit.png'/>" width="25" height="25" border="none"/></s:a>
+                            </s:if>
                         </td>
                     </tr>
                 </s:if>
@@ -228,9 +234,15 @@
                                 </s:if>
                             </td>
                                 <%--TODO still implementing--%>
-                            <td align="center"><s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                     border="none"/></s:a>
+                            <s:url id="editSelected" action="eprBirthRegistrationInit.do">
+                                <s:param name="bdId" value="idUKey"/>
+                            </s:url>
+                            <td align="center">
+                                <s:if test="register.status.ordinal() ==0">
+                                    <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:if>
                             </td>
                         </tr>
                     </s:iterator>
