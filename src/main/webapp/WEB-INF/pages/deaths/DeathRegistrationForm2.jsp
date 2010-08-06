@@ -52,40 +52,40 @@
                 <td colspan="4">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
                     <br>PIN / NIC
                 </td>
-                <td colspan="3" class="find-person"><s:textfield id="declarant_pinOrNic" name="declarantNICorPIN"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
+                <td colspan="3" class="find-person"><s:textfield id="declarant_pinOrNic" name="declarant.declarantNICorPIN"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
             </tr>
             <tr>
                 <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="6"><s:textarea id="declarantFullName" name="declarantFullName"/></td>
+                <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"/></td>
             </tr>
             <tr>
                 <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="6"><s:textarea id="declarantAddress" name="declarantAddress"/></td>
+                <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"/></td>
             </tr>
             <tr>
                 <td colspan="1">ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
                 <td colspan="1">දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
-                <td colspan="2"><s:textfield id="declarantPhone" name="declarantPhone"/></td>
+                <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
                 <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td colspan="2"><s:textfield id="declarantEMail" name="declarantEMail"/></td>
+                <td colspan="2"><s:textfield id="declarantEMail" name="declarant.declarantEMail"/></td>
             </tr>
             <tr>
                 <td rowspan="2" colspan="1">දැනුම් දෙන්නේ කවරකු වශයෙන්ද<br>*in tamil<br>Capacity for giving information
                 </td>
                 <td colspan="1">මව <br>*in tamil<br>Mother</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarantType" list="#@java.util.HashMap@{'0':''}"/></td>
+                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType" list="#@java.util.HashMap@{'0':''}"/></td>
                 <td colspan="1">පියා<br>*in tamil<br>Father</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarantType" list="#@java.util.HashMap@{'1':''}"/></td>
+                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType" list="#@java.util.HashMap@{'1':''}"/></td>
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarantType" list="#@java.util.HashMap@{'2':''}"/></td>
+                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType" list="#@java.util.HashMap@{'2':''}"/></td>
             </tr>
             <tr>
                 <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarantType" list="#@java.util.HashMap@{'3':''}"/></td>
+                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType" list="#@java.util.HashMap@{'3':''}"/></td>
                 <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarantType" list="#@java.util.HashMap@{'4':''}"/></td>
+                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType" list="#@java.util.HashMap@{'4':''}"/></td>
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarantType" list="#@java.util.HashMap@{'5':''}"/></td>
+                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType" list="#@java.util.HashMap@{'5':''}"/></td>
             </tr>
             </tbody>
         </table>
@@ -136,21 +136,21 @@
             </tr>
             <tr>
                 <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td colspan="1" class="find-person"><s:textfield id="first_witness_NICorPIN" name="firstWitnessNICorPIN"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle; margin-left:20px;" id="first_witness_lookup"></td>
+                <td colspan="1" class="find-person"><s:textfield id="first_witness_NICorPIN" name="firstWitness.witnessNICorPIN"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle; margin-left:20px;" id="first_witness_lookup"></td>
                 <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td colspan="1" class="find-person"><s:textfield id="second_witness_NICorPIN" name="secondWitnessNICorPIN"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle; margin-left:20px;" id="second_witness_lookup"></td>
+                <td colspan="1" class="find-person"><s:textfield id="second_witness_NICorPIN" name="secondWitness.witnessNICorPIN"/><img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle; margin-left:20px;" id="second_witness_lookup"></td>
             </tr>
             <tr>
                 <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:textarea id="firstWitnessFullName" name="firstWitnessFullName"/></td>
+                <td colspan="2"><s:textarea id="firstWitnessFullName" name="firstWitness.witnessFullName"/></td>
                 <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:textarea id="secondWitnessFullName" name="secondWitnessFullName"/></td>
+                <td colspan="2"><s:textarea id="secondWitnessFullName" name="secondWitness.witnessFullName"/></td>
             </tr>
             <tr>
                 <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:textarea id="firstWitnessAddress" name="firstWitnessAddress"/></td>
+                <td colspan="2"><s:textarea id="firstWitnessAddress" name="firstWitness.witnessAddress"/></td>
                 <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:textarea id="secondWitnessAddress" name="secondWitnessAddress"/></td>
+                <td colspan="2"><s:textarea id="secondWitnessAddress" name="secondWitness.witnessAddress"/></td>
             </tr>
             <tr>
                 <td>අත්සන <br>தகவல் ...<br>Signature</td>
