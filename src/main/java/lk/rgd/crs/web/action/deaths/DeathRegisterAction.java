@@ -12,6 +12,7 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.DeathRegisterInfo;
 import lk.rgd.crs.web.WebConstants;
 
 /**
@@ -64,10 +65,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
+        
         return SUCCESS;
     }
 
     public String lateDeath() {
+        populate();
+        DeathRegisterInfo death;
         return SUCCESS;
     }
 
