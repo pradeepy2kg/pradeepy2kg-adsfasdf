@@ -277,8 +277,8 @@
     <tr>
         <td><label>*in sinhala/*in tamil/ Place in English</label></td>
         <td colspan="6">
-            <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
+            <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:92%;"/>
+            <img src="<s:url value="/images/translate.png"/>" style="vertical-align:middle;" id="place">
         </td>
     </tr>
     <tr>
@@ -302,8 +302,8 @@
         <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
         </label></td>
         <td colspan="7">
-            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;text-transform: uppercase;"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
+            <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:95%;text-transform: uppercase;"/>
+            <img src="<s:url value="/images/translate.png"/>" style="vertical-align:middle; margin-top:15px;" id="childName">
         </td>
     </tr>
 	</s:if>
