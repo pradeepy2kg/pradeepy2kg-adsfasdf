@@ -234,15 +234,25 @@
                                 </s:if>
                             </td>
                                 <%--TODO still implementing--%>
-                            <s:url id="editSelected" action="eprBirthRegistrationInit.do">
-                                <s:param name="bdId" value="idUKey"/>
-                            </s:url>
+
                             <td align="center">
                                 <s:if test="register.status.ordinal() ==0">
+                                    <s:url id="editSelected" action="eprBirthRegistrationInit.do">
+                                        <s:param name="bdId" value="idUKey"/>
+                                    </s:url>
                                     <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                                         <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
                                              border="none"/></s:a>
                                 </s:if>
+                                <s:elseif test="register.status.ordinal() ==2 || register.status.ordinal()==5">
+                                    <s:url id="editSelected" action="eprBirthConfirmationInit.do">
+                                        <s:param name="bdId" value="idUKey"/>
+                                    </s:url>
+                                    <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:elseif>
+
                             </td>
                         </tr>
                     </s:iterator>
