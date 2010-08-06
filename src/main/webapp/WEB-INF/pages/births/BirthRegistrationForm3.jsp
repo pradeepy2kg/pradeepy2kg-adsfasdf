@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<s:set value="rowNumber" name="row"/>
 <script type="text/javascript">
     $(function() {
         $('img#informant_lookup').bind('click', function(evt1) {
@@ -34,7 +35,8 @@
             </td>
         </tr>
         <tr>
-            <td rowspan="2"><label>(25)මව්පියන් විවාහකද? <br>பெற்றோர்கள் மணம் முடித்தவர்களா? <br>Were Parent's
+            <td rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන් විවාහකද? <br>பெற்றோர்கள்
+                மணம் முடித்தவர்களா? <br>Were Parent's
                 Married?</label></td>
             <td rowspan="2">
                 <table class="sub_table" width="100%">
@@ -70,7 +72,8 @@
                                                onmouseover="javascript:splitDate('marriageDatePicker')"/></td>
         </tr>
         <tr>
-            <td colspan="3" rowspan="2"><label>(26)මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
+            <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
+                විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
                 සහ
                 පියාගේ අත්සන් <br>பெற்றோர்
                 மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
@@ -102,7 +105,8 @@
             </td>
         </tr>
         <tr>
-            <td colspan="7"><label>(27)ළමයාගේ මුත්තා ශ්‍රී ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
+            <td colspan="7"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ මුත්තා ශ්‍රී
+                ලංකාවේ උපන්නේ නම් <br>பிள்ளையின் பாட்டனார் இலங்கையில்
                 பிறந்திருந்தால் <br>If
                 grandfather of the child born in Sri Lanka</label></td>
         </tr>
@@ -113,16 +117,18 @@
         </tr>
         <tr>
             <td>අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-            அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</td>
-            <td><s:textfield name="grandFather.grandFatherNICorPIN" /></td>
+                அடையாள அட்டை
+                இலக்கம்<br>PIN / NIC Number
+            </td>
+            <td><s:textfield name="grandFather.grandFatherNICorPIN"/></td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
         </tr>
         <tr>
-            <td colspan="7"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
+            <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
+                ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
                 தந்தை
                 இலங்கையில் பிறக்காமல் பூட்டன் இலங்கையில் பிறந்திருந்தால் பூட்டனாரின் தகவல்கள
                 ்<br>If the father was not
@@ -135,10 +141,11 @@
         </tr>
         <tr>
             <td>අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-            அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</td>
-            <td><s:textfield name="grandFather.greatGrandFatherNICorPIN" /></td>
-            
+                அடையாள அட்டை
+                இலக்கம்<br>PIN / NIC Number
+            </td>
+            <td><s:textfield name="grandFather.greatGrandFatherNICorPIN"/></td>
+
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthYear" cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
@@ -163,7 +170,8 @@
         </tr>
         <tr>
             <td class="font-9" colspan="3">
-                <label>(25) මවි පියන් විවාහකද?<br>* Tamil <br>Were Parents Married ?</label>
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?<br>* Tamil <br>Were
+                    Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
                 <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/>
@@ -193,7 +201,8 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>(29)දැනුම් දෙන්නේ කවුරුන් විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
+            විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
             Information</label></td>
         <td>
             <table class="sub_table">
@@ -237,43 +246,50 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3"><label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
+        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
+            අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
             கொடுப்பவரின்
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
         <td colspan="3" class="find-person">
             <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                         id="informant_lookup"/>
+                 id="informant_lookup"/>
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
+            <br>Name</label></td>
         <td colspan="4"><s:textarea name="informant.informantName" id="informantName" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td colspan="2"><label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
+            முகவரி <br>Postal Address</label></td>
         <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
                                     cssStyle="width:98%;"/></td>
     </tr>
     <tr>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)***සම්බන්ධ කල හැකි තොරතුරු
+            <br>தாயின்
+            தொடர்பு இலக்க தகவல் <br>Contact Details of the
+            Informant</label></td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
-        <td colspan="2"><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
-                                     cssStyle="width:95%;"/></td>
+        <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
+                         cssStyle="width:95%;"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
-        <td colspan="2"><s:textfield name="informant.informantEmail" id="informantEmail"
-                                     cssStyle="width:95%;"/></td>
+        <td><s:textfield name="informant.informantEmail" id="informantEmail"
+                         cssStyle="width:95%;"/></td>
 
     </tr>
     <tr>
-        <td colspan="2"><label>දිනය <br>*in tamil<br>Date</label></td>
+        <td colspan="1"><label>දිනය <br>*in tamil<br>Date</label></td>
         <td colspan="4"><sx:datetimepicker id="informDatePicker" name="informant.informantSignDate"
                                            displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('secondDatePicker')"/></td>
     </tr>
     </tbody>
 </table>
-
+   <s:hidden name="rowNumber" value="%{row}"/>
 
 <s:hidden id="p3error1" value="%{getText('p3.person.error.value')}"/>
 <s:hidden id="p3error2" value="%{getText('p3.Informent.Name.error.value')}"/>
@@ -344,15 +360,15 @@
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
                 flag = true;
             }
-           
+
 
         }
         element = document.getElementsByName("marriage.parentsMarried")[2];
-        if(element.checked ){
+        if (element.checked) {
             element = document.getElementById('fatherName');
-            if(!element.checked && element.value.length>0)
+            if (!element.checked && element.value.length > 0)
             {
-               errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
             }
         }
 

@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<s:set value="1" name="row"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 
@@ -185,13 +186,13 @@
     </s:if>
     <tr></tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="150px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="7">
             <s:label value="%{#session.birthRegister.child.dateOfBirth}"/>
         </td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:if test="#userPreferedLang == 'si'">
@@ -247,7 +248,7 @@
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td class="font-9"><label>(3) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
+            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
                 / தமிழ்) <br>Name in
                 any of the official languages (Sinhala / Tamil)</label></td>
             <td colspan="7"><s:label value="%{#session.birthRegister.child.childFullNameOfficialLang}"
@@ -255,14 +256,14 @@
         </tr>
 
         <tr>
-            <td class="font-9"><label>(4) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
+            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
             </label></td>
             <td colspan="7">
                 <s:label value="%{#session.birthRegister.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
         </tr>
     </s:if>
     <tr>
-        <td class="font-9" colspan="2"><label>(5) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
+        <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
             <br>Preferred
             Language for
             Birth Certificate </label></td>
@@ -270,7 +271,7 @@
         <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
     </tr>
     <tr>
-        <td class="font-9"><label>(6)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
         <td colspan="3">
             <s:if test="session.birthRegister.child.childGender == 0">
                 <s:label name="" value="%{getText('male.label')}"/>
@@ -282,28 +283,28 @@
                 <s:label name="" value="%{getText('unknown.label')}"/>
             </s:elseif></td>
         <s:if test="birthType.ordinal() == 1">
-            <td colspan="2"><label>(7) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
+            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு நிறை<br>Birth Weight (kg)</label></td>
             <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}"
                                      cssStyle="width:95%;"/></td>
         </s:if>
         <s:if test="birthType.ordinal() == 2">
-            <td colspan="2"><label>(7) උපත් බර (දන්නේ නමි)<br>பிறப்பு நிறை<br>Birth Weight, if known (kg)</label></td>
+            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ නමි)<br>பிறப்பு நிறை<br>Birth Weight, if known (kg)</label></td>
             <td colspan="2"><s:textfield name="%{#session.birthRegister.child.childBirthWeight}"
                                          cssStyle="width:95%;"/></td>
         </s:if>
         <s:elseif test="birthType.ordinal() == 0">
-            <td id="xxx" colspan="2"><label>(4) දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
+            <td id="xxx" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label></td>
             <td colspan="2"><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
         </s:elseif>
     </tr>
     <tr>
-        <td class="font-9"><label>(8)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
             to Live Birth Order,
             rank of the child?</label></td>
         <td colspan="3" class="font-9"><s:label value="%{#session.birthRegister.child.childRank}"/></td>
-        <td colspan="2" class="font-9"><label>(9)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
+        <td colspan="2" class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
             multiple births, number of children</label></td>
         <td colspan="2"><s:label value="%{#session.birthRegister.child.numberOfChildrenBorn}"
@@ -314,6 +315,7 @@
 </table>
 
     <s:hidden name="pageNo" value="1"/>
+    <s:hidden name="rowNumber" value="%{row}"/>
 
 <div class="form-submit">
     <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>

@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<s:set value="rowNumber" name="row"/>
 <script type="text/javascript">
     $(function() {
         $('img#notifier_lookup').bind('click', function(evt1) {
@@ -38,7 +39,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="4"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
+                <td colspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
                 <td colspan="1" class="find-person" width="250px">
@@ -48,14 +49,14 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px" colspan="1"><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+                <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
                                 cssStyle="width:98%;"/>
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"  id="notifyingAuthorityAddress"
                                             cssStyle="width:98%;"/></td>
             </tr>
