@@ -363,54 +363,6 @@ public class DeathRegisterInfo implements Serializable {
         this.dateOfRegistration = dateOfRegistration;
     }
 
-    public String getDeclarantType() {
-        return declarantType;
-    }
-
-    public void setDeclarantType(String declarantType) {
-        this.declarantType = declarantType;
-    }
-
-    public String getDeclarantEmail() {
-        return declarantEmail;
-    }
-
-    public void setDeclarantEmail(String declarantEmail) {
-        this.declarantEmail = declarantEmail;
-    }
-
-    public String getDeclarantPhoneNo() {
-        return declarantPhoneNo;
-    }
-
-    public void setDeclarantPhoneNo(String declarantPhoneNo) {
-        this.declarantPhoneNo = declarantPhoneNo;
-    }
-
-    public String getDeclarantAddress() {
-        return declarantAddress;
-    }
-
-    public void setDeclarantAddress(String declarantAddress) {
-        this.declarantAddress = declarantAddress;
-    }
-
-    public String getDeclarantName() {
-        return declarantName;
-    }
-
-    public void setDeclarantName(String declarantName) {
-        this.declarantName = declarantName;
-    }
-
-    public String getDeclarantPINorNIC() {
-        return declarantPINorNIC;
-    }
-
-    public void setDeclarantPINorNIC(String declarantPINorNIC) {
-        this.declarantPINorNIC = declarantPINorNIC;
-    }
-
     public String getDeathPersonFatherPINorNIC() {
         return deathPersonFatherPINorNIC;
     }
