@@ -236,9 +236,8 @@
     </tr>
     <tr>
         <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
-        <td colspan="2"><label>ඔව් / *in Tamil / Yes </label></td>
 
-        <td width="150px">
+        <td width="150px" colspan="4">
             <s:if test="session.birthRegister.child.birthAtHospital ==true">
             <s:label value="%{getText('yes.label')}"/></td>
         </s:if>

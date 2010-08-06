@@ -30,31 +30,26 @@
                     <col width="20px" align="right"/>
                     <tbody>
                     <tr>
-                        <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
-                        <td><s:if test="session.birthRegister.marriage.parentsMarried==0"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if>
+                        <td><s:if test="session.birthRegister.marriage.parentsMarried==0"> <label>නොදනී<br>*in tamil<br>Unknown</label> </s:if>
                         </td>
                     </tr>
                     <tr>
-                        <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
-                        <td><s:if test="session.birthRegister.marriage.parentsMarried==1"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if></td>
+                        <td><s:if test="session.birthRegister.marriage.parentsMarried==1"> <label>ඔව්<br>*in tamil<br>Yes</label> </s:if>
+                        </td>
                     </tr>
                     <tr>
-                        <td><label>නැත<br>*in tamil<br>No</label></td>
-                        <td><s:if test="session.birthRegister.marriage.parentsMarried==2"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if></td>
+                        <td><s:if test="session.birthRegister.marriage.parentsMarried==2"> <label>නැත<br>*in tamil<br>No</label> </s:if>
+                        </td>
                     </tr>
                     <tr>
-                        <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
-                        <td><s:if test="session.birthRegister.marriage.parentsMarried==3"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if></td>
+                        <td><s:if test="session.birthRegister.marriage.parentsMarried==3">
+                            <label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label> </s:if></td>
                     </tr>
                     </tbody>
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:label value="%{#session.birthRegister.marriage.placeOfMarriage}" /></td>
+            <td colspan="2"><s:label value="%{#session.birthRegister.marriage.placeOfMarriage}"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -67,13 +62,15 @@
                 மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
                 parents are not married, signatures of mother and father to include father's particulars</label></td>
             <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
-            <td align="center"><s:if test="session.birthRegister.marriage.motherSigned==true"> <s:label value="%{getText('yes.label')}"/></s:if>
+            <td align="center"><s:if test="session.birthRegister.marriage.motherSigned==true"> <s:label
+                    value="%{getText('yes.label')}"/></s:if>
                 <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
         </tr>
         <tr>
             <td><label>පියාගේ අත්සන <br>தகப்பனின் ஒப்பம் <br>Father’s Signature</label></td>
-            <td align="center"><s:if test="session.birthRegister.marriage.fatherSigned==true"> <s:label value="%{getText('yes.label')}"/></s:if>
-             <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
+            <td align="center"><s:if test="session.birthRegister.marriage.fatherSigned==true"> <s:label
+                    value="%{getText('yes.label')}"/></s:if>
+                <s:else><s:label value="%{getText('no.label')}"/></s:else></td>
         </tr>
         </tbody>
     </table>
@@ -101,13 +98,14 @@
         <tr>
             <td rowspan="2" style="width:75px"></td>
             <td><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="1"><s:label value="%{#session.birthRegister.grandFather.grandFatherFullName}" cssStyle="width:98%;"/></td>
+            <td colspan="4"><s:label value="%{#session.birthRegister.grandFather.grandFatherFullName}"
+                                     cssStyle="width:98%;"/></td>
         </tr>
         <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
             <td><s:label value="%{#session.birthRegister.grandFather.grandFatherBirthYear}"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:label  value="%{#session.birthRegister.grandFather.grandFatherBirthPlace}"/></td>
+            <td><s:label value="%{#session.birthRegister.grandFather.grandFatherBirthPlace}"/></td>
         </tr>
         <tr>
             <td colspan="5"><label> (28)ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ <br>பிள்ளையின்
@@ -119,13 +117,16 @@
         <tr>
             <td rowspan="2"></td>
             <td><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-            <td colspan="3"><s:label value="%{#session.birthRegister.grandFather.greatGrandFatherFullName}" cssStyle="width:98%;"/></td>
+            <td colspan="3"><s:label value="%{#session.birthRegister.grandFather.greatGrandFatherFullName}"
+                                     cssStyle="width:98%;"/></td>
         </tr>
         <tr>
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:label value="%{#session.birthRegister.grandFather.greatGrandFatherBirthYear}" cssStyle="width:95%;"/></td>
+            <td><s:label value="%{#session.birthRegister.grandFather.greatGrandFatherBirthYear}"
+                         cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:label value="%{#session.birthRegister.grandFather.greatGrandFatherBirthPlace}" cssStyle="width:95%;"/></td>
+            <td><s:label value="%{#session.birthRegister.grandFather.greatGrandFatherBirthPlace}"
+                         cssStyle="width:95%;"/></td>
         </tr>
         </tbody>
     </table>
@@ -150,12 +151,12 @@
             </td>
             <td class="font-9" colspan="1">
                 <s:if test="session.birthRegister.marriage.parentsMarried== 1"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if>
+                        value="%{getText('yes.label')}"/> </s:if>
                 <label> ඔවි/*in tamil / Yes</label>
             </td>
             <td class="font-9" colspan="1">
-               <s:if test="session.birthRegister.marriage.parentsMarried==2"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if>
+                <s:if test="session.birthRegister.marriage.parentsMarried==2"> <s:label
+                        value="%{getText('yes.label')}"/> </s:if>
                 <label> නැත / *in tamil / No</label>
             </td>
         </tr>
@@ -165,12 +166,11 @@
 
 <table class="table_reg_page_03" cellspacing="0">
     <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
+    <col width="200px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+
     <tbody>
     <tr>
         <td colspan="6" style="text-align:center;font-size:12pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
@@ -180,70 +180,57 @@
     <tr>
         <td colspan="2"><label>(29)දැනුම් දෙන්නේ කවුරුන් විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
             Information</label></td>
-        <td>
-            
-            <table class="sub_table">
-                <tr>
-                    <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="center" width="150px"><s:if test="session.birthRegister.informant.informantType.ordinal() == 1"><s:label
-                                value="%{getText('yes.label')}"/></s:if></td>
-                </tr>
-            </table>
-        </td>
-        <td colspan="2" style="width:180px">
-            <table class="sub_table">
-                <tr>
-                    <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="center" width="150px"><s:if test="session.birthRegister.informant.informantType.ordinal() == 0"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if></td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="sub_table">
-                <tr>
-                    <s:if test="session.birthRegister.register.birthType.ordinal() != 0">
-                        <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
-                        <td align="center" width="150px">
-                            <s:if test="session.birthRegister.informant.informantType.ordinal() == 2"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if></td>
-                    </s:if>
-                    <s:else>
-                        <td><label>නෑයන් <br> * In Tamil <br>Relative</label></td>
-                        <td align="center" width="150px">
-                            <s:if test="session.birthRegister.informant.informantType.ordinal() == 3"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if></td>
-                    </s:else>
-                </tr>
-            </table>
-        </td>
+        <s:if test="session.birthRegister.informant.informantType.ordinal() == 1">
+            <td colspan="2">
+                <label>මව <br>மாதா <br>Mother</label>
+            </td>
+        </s:if>
+
+        <s:elseif test="session.birthRegister.informant.informantType.ordinal() == 0">
+            <td colspan="2"><label>පියා<br> பிதா <br>Father</label>
+            </td>
+        </s:elseif>
+
+        <s:elseif test="session.birthRegister.informant.informantType.ordinal() == 2">
+        <td colspan="2">
+            <label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label>
+             </td>
+        </s:elseif>  
+
+        <s:else>
+                <td colspan="2">
+                    <label>නෑයන් <br> * In Tamil <br>Relative</label>
+                </td>
+        </s:else>
     </tr>
     <tr>
-        <td colspan="3"><label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
+        <td colspan="2"><label>(31)දැනුම් දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
             கொடுப்பவரின்
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3"><s:label value="%{#session.birthRegister.informant.informantNICorPIN}" /></td>
+        <td colspan="4"><s:label value="%{#session.birthRegister.informant.informantNICorPIN}"/></td>
     </tr>
     <tr>
-        <td colspan="2"><label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label></td>
-        <td colspan="4"><s:label value="%{#session.birthRegister.informant.informantName}" cssStyle="width:98%;"/></td>
+        <td colspan="1" ><label>(30) නම <br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+        <td colspan="3"><s:label value="%{#session.birthRegister.informant.informantName}" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td colspan="2"><label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
-        <td colspan="4"><s:label value="%{#session.birthRegister.informant.informantAddress}" cssStyle="width:98%;"/></td>
+        <td colspan="1"><label>(32)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
+        <td colspan="3"><s:label value="%{#session.birthRegister.informant.informantAddress}"
+                                 cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.informant.informantPhoneNo}"  cssStyle="width:95%;"/></td>
-        <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.informant.informantEmail}" id="informantEmail"
-                                     cssStyle="width:95%;"/></td>
+        <td colspan="1"><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
+        <td colspan="1"><s:label value="%{#session.birthRegister.informant.informantPhoneNo}"
+                                 cssStyle="width:95%;"/></td>
+        <td colspan="1"><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
+        <td colspan="1"><s:label value="%{#session.birthRegister.informant.informantEmail}" id="informantEmail"
+                                 cssStyle="width:95%;"/></td>
 
     </tr>
     <tr>
-        <td colspan="2"><label>දිනය <br>*in tamil<br>Date</label></td>
-        <td colspan="4"><s:label value="%{#session.birthRegister.informant.informantSignDate}"/></td>
+        <td colspan="1"><label>දිනය <br>*in tamil<br>Date</label></td>
+        <td colspan="3"><s:label value="%{#session.birthRegister.informant.informantSignDate}"/></td>
     </tr>
     </tbody>
 </table>
