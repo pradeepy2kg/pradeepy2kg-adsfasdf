@@ -53,6 +53,17 @@ public class DeathRegisterInfo implements Serializable {
     private WitnessInfo firstWitness;
     private WitnessInfo secondWitness;
 
+    // Notifying Authority
+    private NotifyingAuthorityInfo notifyingAuthority;
+
+    public void setNotifyingAuthority(NotifyingAuthorityInfo notifyingAuthority) {
+        this.notifyingAuthority = notifyingAuthority;
+    }
+
+    public NotifyingAuthorityInfo getNotifyingAuthority() {    
+        return notifyingAuthority;
+    }
+
     public void setFirstWitness(WitnessInfo firstWitness) {
         this.firstWitness = firstWitness;
     }

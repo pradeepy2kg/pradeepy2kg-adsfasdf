@@ -6,42 +6,6 @@
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
                class="font-9">
             <col width="150px"/>
-            <col width="400px"/>
-            <col width="100px"/>
-            <col/>
-            <tbody>
-            <tr class="form-sub-title">
-                <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
-            </tr>
-            <tr>
-                <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
-                    NIC
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
-                    Authority
-                </td>
-                <td colspan="1"></td>
-                <td colspan="1">දිනය<br>திகதி<br>Date</td>
-                <td colspan="1"></td>
-            </tr>
-            </tbody>
-        </table>
-        <hr style=" border:1px dashed;"/>
-
-        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
-               class="font-9">
-            <col width="150px"/>
             <col width="140px"/>
             <col width="100px"/>
             <col width="140px"/>
