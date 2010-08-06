@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<s:set value="rowNumber" name="row"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
     <s:form action="eprSearchPageLoad.do" name="nonEditableBirthRegistrationForm4" method="POST">
@@ -20,7 +21,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3"><label>(33) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
+                <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
                 <td colspan="2" class="find-person" width="200px">
@@ -32,14 +33,14 @@
         <table class="table_reg_page_04" width="100%" cellspacing="0" style="border-top:none;">
             <tbody>
             <tr>
-                <td width="200px"><label>(34) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
                     <s:label value="%{#session.birthRegister.notifyingAuthority.notifyingAuthorityName}"
                              cssStyle="width:98%;"/>
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால் முகவரி <br>Postal Address</label></td>
                 <td colspan="4"><s:label value="%{#session.birthRegister.notifyingAuthority.notifyingAuthorityAddress}"
                                          cssStyle="width:98%;"/></td>
             </tr>

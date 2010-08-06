@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<s:set value="rowNumber" name="row"/>
 <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
 <script>
     $(function() {
@@ -65,7 +66,8 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(10)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
+        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)අනන්‍යතා අංකය
+            / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td rowspan="2" width="230px" class="find-person"><s:textfield id="father_pinOrNic"
@@ -88,18 +90,21 @@
 
 <table class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
     <tr>
-        <td width="200px"><label>(11)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின்
+            முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(12)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
+            திகதி <br>Date of Birth</label></td>
         <td colspan="2">
             <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
                                onmouseover="javascript:splitDate('fatherDatePicker')"/>
         </td>
-        <td colspan="2"><label>(13)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
+            <br>Place of Birth</label></td>
         <td colspan="2"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth"
                                      cssStyle="width:95%;"/></td>
     </tr>
@@ -108,7 +113,8 @@
 <table class="table_reg_page_02" cellspacing="0" style="border-top:none;">
     <tbody>
     <tr>
-        <td width="200px"><label>(14)පියාගේ ජාතිය<br>இனம்<br> Father's Race</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ ජාතිය<br>இனம்<br>
+            Father's Race</label></td>
         <td colspan="6" class="table_reg_cell_02">
             <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
                       cssStyle="width:200px;"/>
@@ -135,7 +141,8 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(15)අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
+        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)අනන්‍යතා අංකය
+            / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td colspan="2" rowspan="2" width="230px" class="find-person">
@@ -158,23 +165,27 @@
 <table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none; border-bottom:none;">
     <tbody>
     <tr>
-        <td width="200px"><label>(16)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின்
+            முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(17)උපන් දිනය <br>பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
+            திகதி <br>Date of Birth</label></td>
         <td colspan="3"><sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('motherDatePicker')"/></td>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
-                (18) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+                (<s:property value="#row"/><s:set name="row"
+                                                  value="#row+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
                 as at
                 the date of birth of child
             </s:if>
             <s:else>
-                (18) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
+                (<s:property value="#row"/><s:set name="row"
+                                                  value="#row+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
                 as at the date of still-birth of child
             </s:else>
         </label>
@@ -183,7 +194,8 @@
                                           onclick="javascript:motherage()"/></td>
     </tr>
     <tr style="border-bottom:none;">
-        <td style="border-bottom:none;"><label>(21)මවගේ ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
+        <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ ස්ථිර
+            ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
             Address of the Mother</label>
         </td>
         <td colspan="8" style="border-bottom:none;">
@@ -225,23 +237,28 @@
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(19)ම‌වගේ ජාතිය<br>இனம்<br> Mother's Race</label></td>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌වගේ ජාතිය<br>இனம்<br>
+            Mother's Race</label></td>
         <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
 
-        <td colspan="3"><label>(20)උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of Birth</label></td>
+        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
+            <br>Place of Birth</label></td>
         <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
-        <td><label>(22)රෝහලට ඇතුලත් කිරිමේ අංකය<br>*in tamil<br>Hospital Admission Number</label></td>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ අංකය<br>*in
+            tamil<br>Hospital Admission Number</label></td>
         <td colspan="3" class="passport"><s:textfield name="parent.motherAdmissionNo"/></td>
-        <td colspan="2"><label>(23)රෝහලට ඇතුලත් කිරිමේ දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
+            දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3"><sx:datetimepicker id="admitDatePicker" name="parent.motherAdmissionDate"
                                            displayFormat="yyyy-MM-dd"
                                            onmouseover="javascript:splitDate('admitDatePicker')"/></td>
     </tr>
     <tr>
-        <td><label>(24)ම‌ව සම්බන්ධ කල හැකි තොරතුරු <br>தாயின் தொடர்பு இலக்க தகவல் <br>Contact Details of the
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌ව සම්බන්ධ කල හැකි තොරතුරු <br>தாயின்
+            தொடர்பு இலக்க தகவல் <br>Contact Details of the
             Mother</label></td>
         <td><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
         <td colspan="3"><s:textfield name="parent.motherPhoneNo"/></td>
@@ -252,6 +269,7 @@
 </table>
 
 <s:hidden name="pageNo" value="2"/>
+<s:hidden name="rowNumber" value="%{row}"/>
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
 <s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
