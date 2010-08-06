@@ -177,6 +177,9 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
   public void testAdoptionCertificate() throws Exception {
       Map session = UserLogin("ashoka", "ashoka");
       request.setParameter("idUKey", "8");
+      request.setParameter("pageNo", "1");
+      request.setParameter("nextFlag", "false");
+      request.setParameter("previousFlag", "false");
       initAndExucute("/adoption/eprPrintAdoptionCertificate.do", session);
       session = adoptionAction.getSession();
       assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
@@ -197,7 +200,10 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
       assertNotNull("District list", adoptionAction.getDistrictList());
 
       request.setParameter("idUKey", "9");
-      initAndExucute("/adoption/eprPrintAdoptionRegistration.do", session);
+      request.setParameter("pageNo", "1");
+      request.setParameter("nextFlag", "false");
+      request.setParameter("previousFlag", "false");
+      initAndExucute("/adoption/eprPrintAdoptionNotice.do", session);
       session = adoptionAction.getSession();
       assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
 

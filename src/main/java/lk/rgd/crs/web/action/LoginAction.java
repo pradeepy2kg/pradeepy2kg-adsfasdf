@@ -274,6 +274,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_DEATH_REGISTRATION_INIT, new Link("death_registration.label", "/popreg/deaths/", "eprDeathDeclaration.do"));
         linkPermission.put(Permission.PAGE_DEATH_CERTIFICATE, new Link("death_certificate.label", "/popreg/deaths/", "eprDeathCertificate.do"));
         linkPermission.put(Permission.PAGE_LATE_DEATH_REGISTRATION, new Link("late_death_registration.label", "/popreg/deaths/", "eprLateDeathDeclaration.do"));
+
         //non displayable (in the menu) pages
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME, new Link(null, "/popreg/births/", "eprHome.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON, new Link(null, "/popreg/births/", "eprBirthRegistration.do"));

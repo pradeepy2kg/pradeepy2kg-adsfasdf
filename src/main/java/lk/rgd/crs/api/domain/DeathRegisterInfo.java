@@ -15,11 +15,16 @@ public class DeathRegisterInfo implements Serializable {
 
     //information of death
     private long deathSerialNo;
+    private long deathCertificateNo;
     private String placeOfDeath;
     private Date dateOfDeath;
+    private Date dateOfRegistration;
+    private Date dateOfIssue;
+    private String placeOfIssue;
     private String timeOfDeath;
     private int deathDivisionId;
     private String placeOfDeathInEnglish;
+    private String placeOfDeathInOfficialLang;
     private boolean causeOfDeathEstablished;
     private boolean infantLessThan30Days;
     private String causeOfDeath;
@@ -33,14 +38,23 @@ public class DeathRegisterInfo implements Serializable {
     private String deathPersonAge;
     private int deathPersonGender;
     private int deathPersonRace;
-    private String deathPersonName;
+    private String deathPersonNameOfficialLang;
     private String deathPersonNameInEnglish;
     private String deathPersonPermanentAddress;
     private String deathPersonFatherPINorNIC;
     private String deathPersonFatherFullName;
-    private String deathPersonMotherNICNo;
+    private String deathPersonMotherPINorNIC;
     private String deathPersonMotherFullName;
 
+    //information about Declarant
+    private String declarantPINorNIC;
+    private String declarantName;
+    private String declarantAddress;
+    private String declarantPhoneNo;
+    private String declarantEmail;
+    private String declarantType;
+
+    //
 
     public String getPlaceOfDeath() {
         return placeOfDeath;
@@ -172,11 +186,11 @@ public class DeathRegisterInfo implements Serializable {
     }
 
     public String getDeathPersonName() {
-        return deathPersonName;
+        return deathPersonNameOfficialLang;
     }
 
     public void setDeathPersonName(String deathPersonName) {
-        this.deathPersonName = deathPersonName;
+        this.deathPersonNameOfficialLang = deathPersonName;
     }
 
     public String getDeathPersonNameInEnglish() {
@@ -204,11 +218,11 @@ public class DeathRegisterInfo implements Serializable {
     }
 
     public String getDeathPersonMotherNICNo() {
-        return deathPersonMotherNICNo;
+        return deathPersonMotherPINorNIC;
     }
 
     public void setDeathPersonMotherNICNo(String deathPersonMotherNICNo) {
-        this.deathPersonMotherNICNo = deathPersonMotherNICNo;
+        this.deathPersonMotherPINorNIC = deathPersonMotherNICNo;
     }
 
     public String getDeathPersonMotherFullName() {
@@ -234,5 +248,101 @@ public class DeathRegisterInfo implements Serializable {
 
     public void setDeathSerialNo(long deathSerialNo) {
         this.deathSerialNo = deathSerialNo;
+    }
+
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
+    public String getDeclarantType() {
+        return declarantType;
+    }
+
+    public void setDeclarantType(String declarantType) {
+        this.declarantType = declarantType;
+    }
+
+    public String getDeclarantEmail() {
+        return declarantEmail;
+    }
+
+    public void setDeclarantEmail(String declarantEmail) {
+        this.declarantEmail = declarantEmail;
+    }
+
+    public String getDeclarantPhoneNo() {
+        return declarantPhoneNo;
+    }
+
+    public void setDeclarantPhoneNo(String declarantPhoneNo) {
+        this.declarantPhoneNo = declarantPhoneNo;
+    }
+
+    public String getDeclarantAddress() {
+        return declarantAddress;
+    }
+
+    public void setDeclarantAddress(String declarantAddress) {
+        this.declarantAddress = declarantAddress;
+    }
+
+    public String getDeclarantName() {
+        return declarantName;
+    }
+
+    public void setDeclarantName(String declarantName) {
+        this.declarantName = declarantName;
+    }
+
+    public String getDeclarantPINorNIC() {
+        return declarantPINorNIC;
+    }
+
+    public void setDeclarantPINorNIC(String declarantPINorNIC) {
+        this.declarantPINorNIC = declarantPINorNIC;
+    }
+
+    public String getDeathPersonFatherPINorNIC() {
+        return deathPersonFatherPINorNIC;
+    }
+
+    public void setDeathPersonFatherPINorNIC(String deathPersonFatherPINorNIC) {
+        this.deathPersonFatherPINorNIC = deathPersonFatherPINorNIC;
+    }
+
+    public String getPlaceOfDeathInOfficialLang() {
+        return placeOfDeathInOfficialLang;
+    }
+
+    public void setPlaceOfDeathInOfficialLang(String placeOfDeathInOfficialLang) {
+        this.placeOfDeathInOfficialLang = placeOfDeathInOfficialLang;
+    }
+
+    public long getDeathCertificateNo() {
+        return deathCertificateNo;
+    }
+
+    public void setDeathCertificateNo(long deathCertificateNo) {
+        this.deathCertificateNo = deathCertificateNo;
+    }
+
+    public Date getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+    public String getPlaceOfIssue() {
+        return placeOfIssue;
+    }
+
+    public void setPlaceOfIssue(String placeOfIssue) {
+        this.placeOfIssue = placeOfIssue;
     }
 }
