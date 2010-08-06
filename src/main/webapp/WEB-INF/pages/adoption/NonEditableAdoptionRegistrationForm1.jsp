@@ -63,8 +63,9 @@
             Language for
             ******
         </td>
+        <s:set name="lang" value="%{#request.adoption.languageToTransliterate}"/>
         <td>
-            <s:label value="%{#request.adoption.languageToTransliterate}"
+            <s:label value="%{getText(#lang)}"
                      cssStyle="width:190px; margin-left:5px;"/>
         </td>
     </tr>
