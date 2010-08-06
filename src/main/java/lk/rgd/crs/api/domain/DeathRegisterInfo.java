@@ -46,15 +46,120 @@ public class DeathRegisterInfo implements Serializable {
     private String deathPersonMotherPINorNIC;
     private String deathPersonMotherFullName;
 
-    //information about Declarant
-    private String declarantPINorNIC;
-    private String declarantName;
+    // Declarant Information
+    private String declarantNICorPIN;
+    private String declarantFullName;
     private String declarantAddress;
-    private String declarantPhoneNo;
-    private String declarantEmail;
-    private String declarantType;
+    private String declarantPhone;
+    private String declarantEMail;
+    private int declarantType;
 
-    //
+    // Witnesses Information
+    private String firstWitnessNICorPIN;
+    private String secondWitnessNICorPIN;
+    private String firstWitnessFullName;
+    private String secondWitnessFullName;
+    private String firstWitnessAddress;
+
+    public void setFirstWitnessNICorPIN(String firstWitnessNICorPIN) {
+        this.firstWitnessNICorPIN = firstWitnessNICorPIN;
+    }
+
+    public void setSecondWitnessNICorPIN(String secondWitnessNICorPIN) {
+        this.secondWitnessNICorPIN = secondWitnessNICorPIN;
+    }
+
+    public void setFirstWitnessFullName(String firstWitnessFullName) {
+        this.firstWitnessFullName = firstWitnessFullName;
+    }
+
+    public void setSecondWitnessFullName(String secondWitnessFullName) {
+        this.secondWitnessFullName = secondWitnessFullName;
+    }
+
+    public void setFirstWitnessAddress(String firstWitnessAddress) {
+        this.firstWitnessAddress = firstWitnessAddress;
+    }
+
+    public void setSecondWitnessAddress(String secondWitnessAddress) {
+        this.secondWitnessAddress = secondWitnessAddress;
+    }
+
+    public String getFirstWitnessNICorPIN() {
+
+        return firstWitnessNICorPIN;
+    }
+
+    public String getSecondWitnessNICorPIN() {
+        return secondWitnessNICorPIN;
+    }
+
+    public String getFirstWitnessFullName() {
+        return firstWitnessFullName;
+    }
+
+    public String getSecondWitnessFullName() {
+        return secondWitnessFullName;
+    }
+
+    public String getFirstWitnessAddress() {
+        return firstWitnessAddress;
+    }
+
+    public String getSecondWitnessAddress() {
+        return secondWitnessAddress;
+    }
+
+    private String secondWitnessAddress;
+
+
+    public void setDeclarantNICorPIN(String declarantNICorPIN) {
+        this.declarantNICorPIN = declarantNICorPIN;
+    }
+
+    public void setDeclarantFullName(String declarantFullName) {
+        this.declarantFullName = declarantFullName;
+    }
+
+    public void setDeclarantAddress(String declarantAddress) {
+        this.declarantAddress = declarantAddress;
+    }
+
+    public void setDeclarantPhone(String declarantPhone) {
+        this.declarantPhone = declarantPhone;
+    }
+
+    public void setDeclarantEMail(String declarantEMail) {
+        this.declarantEMail = declarantEMail;
+    }
+
+    public void setDeclarantType(int declarantType) {
+        this.declarantType = declarantType;
+    }
+
+    public String getDeclarantNICorPIN() {
+        return declarantNICorPIN;
+    }
+
+    public String getDeclarantFullName() {
+        return declarantFullName;
+    }
+
+    public String getDeclarantAddress() {
+        return declarantAddress;
+    }
+
+    public String getDeclarantPhone() {
+        return declarantPhone;
+    }
+
+    public String getDeclarantEMail() {
+        return declarantEMail;
+    }
+
+    public int getDeclarantType() {
+        return declarantType;
+    }
 
     public String getPlaceOfDeath() {
         return placeOfDeath;

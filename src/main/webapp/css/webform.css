@@ -1663,3 +1663,6 @@
 .death-late-reg-table td{border-right:1px solid #000;border-bottom:1px solid #000;}
 .death-late-reg-table input{width:75px;float:right;margin-right:10px;}
 .death-late-reg-table textarea{width:96%;float:right;margin-right:10px;}
+
+#death-declaration-form-2-outer table tr td{padding:2px 5px;}
+#death-declaration-form-2-outer table tr td textarea{width:98%;}
