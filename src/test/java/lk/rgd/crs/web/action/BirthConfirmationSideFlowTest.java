@@ -74,7 +74,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         return loginAction.getSession();
     }
 
-    public void testSkipConfirmationChanges() throws Exception {
+    public void testSkipConfirmationChangesForConfirmationChangesCapturedEntry() throws Exception {
         Object obj;
         Map session = login("rg", "password");
         //initiating action to get the required bdId to start the unit test
@@ -131,7 +131,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
             (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
-        //direct birth certificat print after direct approval
+        //direct birth certificate print after direct approval
         request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
         request.setParameter("directPrintBirthCertificate", "true");
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
@@ -234,13 +234,86 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("skipConfirmationChanges", "false");
         initAndExecute("/births/eprBirthConfirmation.do", session);
         session = action.getSession();
-
-        logger.debug("bdId for the new entry {}", action.getBdId());
-        logger.debug("current state after capturing confirmation changes : {}", (action.getService().getById(action.getBdId(),
+        bdId = action.getBdId();
+        logger.debug("bdId for the new entry {}", bdId);
+        logger.debug("current state after capturing confirmation changes : {}", (action.getService().getById(bdId,
             (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
-        //todo approval and print certificate has to be checked
+        //dirct approval of confirmation changes
+        request.setParameter("bdId", Long.toString(bdId));
+        request.setParameter("confirmationApprovalFlag", "true");
+        initAndExecuteApproval("/births/eprConfrimationChangesDirectApproval.do", session);
+        session = approvalAction.getSession();
+
+        logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+
+        //direct birth certificate print after direct approval
+        request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
+        request.setParameter("directPrintBirthCertificate", "true");
+        initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
+        session = action.getSession();
+        logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 
-    //todo has to implement confirmation skip changes when the state is in confirmation printed
+    public void testSkipConfirmationChangesForConfirmationPrintedEntry() throws Exception {
+        Object obj;
+        Map session = login("rg", "password");
+        //initiating action to get the required bdId to start the unit test
+        initAndExecute("/births/eprBirthConfirmationInit.do", session);
+        //getting the required bdId wich is not having confirmation changes
+        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
+            new Long("07000810"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        //searching the required entry for which confirmation changes to be skipped
+        Long bdId = bdTemp.getIdUKey();
+        logger.debug("Got confirmation printed Entry with bdId : {}", bdId);
+        request.setParameter("bdId", bdId.toString());
+        initAndExecute("/births/eprBirthConfirmationInit.do", session);
+        session = action.getSession();
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+
+        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
+        assertNotNull("failed to populate Confirmation session bean", bd);
+        assertNotNull("failed to populate Confirmation Database bean",
+            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+
+        obj = session.get(WebConstants.SESSION_USER_LANG);
+        assertNotNull("Session User Local Presence", obj);
+        assertNotNull("Request District List Presence", action.getDistrictList());
+        assertNotNull("Request Race List Presence", action.getRaceList());
+
+        //skipping changes
+        request.setParameter("bdId", bdId.toString());
+        request.setParameter("pageNo", "2");
+        request.setParameter("skipConfirmationChages", "true");
+        initAndExecute("/births/eprBirthConfirmationSkipChanges.do", session);
+        session = action.getSession();
+        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+
+        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
+
+        request.setParameter("pageNo", "3");
+        request.setParameter("skipConfirmationChages", "true");
+        request.setParameter("confirmant.confirmantSignDate", "2010-07-22T00:00:00+05:30");
+        request.setParameter("confirmant.confirmantNICorPIN", "861481137V");
+        request.setParameter("confirmant.confirmantFullName", "samara jayawardane");
+        initAndExecute("/births/eprBirthConfirmation.do", session);
+        session = action.getSession();
+        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+        logger.debug("SkipConfirmationChanges : {} ", action.isSkipConfirmationChages());
+
+        logger.debug("current state after skipping confirmation changes : {}", (action.getService().getById(bdId,
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+
+        //direct birth certificate print after skipping confirmation changes
+        request.setParameter("bdId", Long.toString(action.getBdId()));
+        request.setParameter("directPrintBirthCertificate", "true");
+        initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
+        session = action.getSession();
+        logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+    }
 }
