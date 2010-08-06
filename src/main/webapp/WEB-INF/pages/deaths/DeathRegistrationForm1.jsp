@@ -250,7 +250,7 @@
         <td rowspan="2" colspan="3"><s:textfield name="deathPerson.deathPersonPINorNIC"></s:textfield></td>
         <td rowspan="2">විදේශිකය‍කු නම්<br>வெளிநாட்டவர் <br>If a foreigner</td>
         <td>රට<br>நாடு<br>Country</td>
-        <td><s:select id="wifeCountryId" name="deathPerson.deathPersonCountryId" list="countryList" headerKey="0"
+        <td><s:select id="deathPersonCountryId" name="deathPerson.deathPersonCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('select_country.label')}"/></td>
     </tr>
     <tr>

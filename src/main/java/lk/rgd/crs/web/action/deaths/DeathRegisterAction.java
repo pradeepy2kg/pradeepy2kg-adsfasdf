@@ -15,6 +15,8 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.DeathInfo;
 import lk.rgd.crs.api.domain.DeathPersonInfo;
+import lk.rgd.crs.api.domain.DeclarantInfo;
+import lk.rgd.crs.api.domain.WitnessInfo;
 import lk.rgd.crs.web.WebConstants;
 
 /**
@@ -27,6 +29,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private User user;
     private DeathInfo death;
     private DeathPersonInfo deathPerson;
+    private DeclarantInfo declarant;
+    private WitnessInfo witness;
+
 
     private int deathDistrictId;
     private int deathDivisionId;
@@ -77,6 +82,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
+        
         return SUCCESS;
     }
 

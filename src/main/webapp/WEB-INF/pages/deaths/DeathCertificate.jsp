@@ -82,13 +82,13 @@
         <tbody>
         <tr>
             <td>පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)</td>
-            <td><s:label name="" value="%{death.deathPersonPINorNIC}"/></td>
+            <td><s:label name="" value="%{deathPerson.deathPersonPINorNIC}"/></td>
             <td>වයස<br>*in tamil<br>Age</td>
-            <td><s:label name="" value="%{death.deathPersonAge}"/></td>
+            <td><s:label name="" value="%{deathPerson.deathPersonAge}"/></td>
             <td>මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
-            <td><s:label name="" value="%{death.dateOfDeath}"/></td>
+            <td><s:label name="" value="%{deathPerson.dateOfDeath}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender</td>
-            <td><s:label name="" value="%{death.deathPersonGender}"/></td>
+            <td><s:label name="" value="%{deathPerson.deathPersonGender}"/></td>
         </tr>
         <tr>
             <td colspan="1">මරණය සිදුවූ ස්ථානය<br>*in tamil<br>Place of death</td>
@@ -106,33 +106,33 @@
         </tr>
         <tr>
             <td colspan="1">නම <br>பெயர் <br>Name</td>
-            <td colspan="7"><s:label name="" value="%{death.deathPersonNameOfficialLang}"/></td>
+            <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonNameOfficialLang}"/></td>
         </tr>
         <tr>
             <td colspan="1">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English</td>
-            <td colspan="7"><s:label name="" value="%{death.deathPersonNameInEnglish}"/></td>
+            <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonNameInEnglish}"/></td>
         </tr>
         <tr>
             <td colspan="1">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name</td>
-            <td colspan="5"><s:label name="" value="%{death.deathPersonFatherFullName}"/></td>
+            <td colspan="5"><s:label name="" value="%{deathPerson.deathPersonFatherFullName}"/></td>
             <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-            <td colspan="1"><s:label name="" value="%{death.deathPersonFatherPINorNIC}"/></td>
+            <td colspan="1"><s:label name="" value="%{deathPerson.deathPersonFatherPINorNIC}"/></td>
         </tr>
         <tr>
             <td colspan="1">මවගේ සම්පූර්ණ නම<br> தாயின் முழுப் பெயர்<br> Mother's Full Name</td>
-            <td colspan="5"><s:label name="" value="%{death.}"/></td>
+            <td colspan="5"><s:label name="" value="%{deathPerson.deathPersonMotherFullName}"/></td>
             <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-            <td colspan="1"><s:label name="" value="%{death.}"/></td>
+            <td colspan="1"><s:label name="" value="%{deathPerson.deathPersonMotherPINorNIC}"/></td>
         </tr>
         <tr>
             <td colspan="1">දැනුම් දෙන්නගේ නම<br>கொடுப்பவரின் பெயர்<br>Informant's Name</td>
-            <td colspan="5"><s:label name="" value="%{death.deathPersonMotherFullName}"/></td>
+            <td colspan="5"><s:label name="" value="%{}"/></td>
             <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-            <td colspan="1"><s:label name="" value="%{death.deathPersonMotherPINorNIC}"/></td>
+            <td colspan="1"><s:label name="" value="%{}"/></td>
         </tr>
         <tr>
             <td colspan="1">දැනුම් ලිපිනය <br>கொடுப்பவரின் பெயர்<br>Informant's Address</td>
-            <td colspan="7"><s:label name="" value="%{death.deathPersonPermanentAddress}"/></td>
+            <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonPermanentAddress}"/></td>
         </tr>
         </tbody>
     </table>

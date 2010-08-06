@@ -250,7 +250,7 @@
             தனிநபர் அடையாள எண் / அடையாள அட்டை இல. <br/>
             PIN / NIC
         </td>
-        <td colspan="3" rowspan="2"><s:textfield name="death.deathPersonPINorNIC" cssStyle="width:92%"/></td>
+        <td colspan="3" rowspan="2"><s:textfield name="deathPerson.deathPersonPINorNIC" cssStyle="width:92%"/></td>
         <td rowspan="2">විදේශිකය‍කු නම් <br/>
             வெளிநாட்டவர் <br/>
             If a foreigner
@@ -259,21 +259,24 @@
             நாடு <br/>
             Country
         </td>
-        <td><s:textfield name="death.deathPersonCountryId"/></td>
+        <td>
+            <s:select id="deathPersonCountryId" name="deathPerson.deathPersonCountryId" list="countryList" headerKey="0"
+                      headerValue="%{getText('select_country.label')}"/>
+        </td>
     </tr>
     <tr>
         <td>ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td><s:textfield name="death.deathPersonPassportNo" cssStyle="width:90%"/></td>
+        <td><s:textfield name="deathPerson.deathPersonPassportNo" cssStyle="width:90%"/></td>
     </tr>
     <tr>
         <td>වයස හෝ අනුමාන වයස <br/>
             பிறப்ப <br/>
             Age or probable Age
         </td>
-        <td><s:textfield name="death.deathPersonAge"/></td>
+        <td><s:textfield name="deathPerson.deathPersonAge"/></td>
         <td>ස්ත්‍රී පුරුෂ භාවය <br/>
             பால் <br/>
             Gender
@@ -287,7 +290,7 @@
             பிறப் <br/>
             Race
         </td>
-        <td colspan="2"><s:textfield name="death.deathPersonRace"/></td>
+        <td colspan="2"><s:textfield name="deathPerson.deathPersonRace"/></td>
     </tr>
     <tr>
         <td>නම රාජ්‍ය භාෂාවෙන් <br/>
@@ -295,7 +298,7 @@
             பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)
             Name in either of the official languages
         </td>
-        <td colspan="6"><s:textarea name="death.deathPersonNameOfficialLang"/></td>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang"/></td>
     </tr>
     </tbody>
 </table>
@@ -310,40 +313,40 @@
             பிறப்பு அத்தாட்சி ….. <br/>
             Name in English
         </td>
-        <td><s:textarea name="death.deathPersonNameInEnglish"/></td>
+        <td><s:textarea name="deathPerson.deathPersonNameInEnglish"/></td>
     </tr>
     <tr>
         <td>ස්ථිර ලිපිනය <br/>
             தாயின் நிரந்தர வதிவிட முகவரி <br/>
             Permanent Address
         </td>
-        <td><s:textarea name="death.deathPersonPermanentAddress"/></td>
+        <td><s:textarea name="deathPerson.deathPersonPermanentAddress"/></td>
     </tr>
     <tr>
         <td>පියාගේ පු.අ.අ. / ජා.හැ.අ. <br/>
             Fathers PIN / NIC <br/>
         </td>
-        <td><s:textfield name="death.deathPersonFatherPINorNIC" cssStyle="width:40%"/></td>
+        <td><s:textfield name="deathPerson.deathPersonFatherPINorNIC" cssStyle="width:40%"/></td>
     </tr>
     <tr>
         <td>පියාගේ සම්පුර්ණ නම <br/>
             in tamil <br/>
             Fathers full name
         </td>
-        <td><s:textarea name="death.deathPersonFatherFullName"/></td>
+        <td><s:textarea name="deathPerson.deathPersonFatherFullName"/></td>
     </tr>
     <tr>
         <td>මවගේ පු.අ.අ. / ජා.හැ.අ. <br/>
             Mothers PIN / NIC
         </td>
-        <td><s:textfield name="death.deathPersonMotherPINorNIC" cssStyle="width:40%"/></td>
+        <td><s:textfield name="deathPerson.deathPersonMotherPINorNIC" cssStyle="width:40%"/></td>
     </tr>
     <tr>
         <td>මවගේ සම්පුර්ණ නම <br/>
             in tamil <br/>
             Mothers full name
         </td>
-        <td><s:textarea name="death.deathPersonMotherFullName"/></td>
+        <td><s:textarea name="deathPerson.deathPersonMotherFullName"/></td>
     </tr>
     </tbody>
 </table>
@@ -373,7 +376,7 @@
             தகவநபர் அடையாள எண் / அடையாள அட்டை இல. <br/>
             PIN / NIC
         </td>
-        <td colspan="5"><s:textfield name="death.declarantPINorNIC" cssStyle="width:40%"/></td>
+        <td colspan="5"><s:textfield name="declarant.declarantPINorNIC" cssStyle="width:40%"/></td>
     </tr>
     <tr>
         <td>නම <br/>
@@ -381,14 +384,14 @@
             Name
 
         </td>
-        <td colspan="7"><s:textarea name="death.declarantName"/></td>
+        <td colspan="7"><s:textarea name="declarant.declarantName"/></td>
     </tr>
     <tr>
         <td>තැපැල් ලිපිනය <br/>
             தபால் முகவரி <br/>
             Postal Address
         </td>
-        <td colspan="7"><s:textarea name="death.declarantAddress"/></td>
+        <td colspan="7"><s:textarea name="declarant.declarantAddress"/></td>
     </tr>
     <tr>
         <td>ඇමතුම් විස්තර <br/>
@@ -399,12 +402,12 @@
             தொலைபேசி இலக்கம் <br/>
             Telephone
         </td>
-        <td colspan="3"><s:textfield name="death.declarantPhoneNo" cssStyle="width:90%"/></td>
+        <td colspan="3"><s:textfield name="declarant.declarantPhoneNo" cssStyle="width:90%"/></td>
         <td>ඉ -තැපැල <br/>
             மின்னஞ்சல் <br/>
             Email
         </td>
-        <td colspan="2"><s:textfield name="death.declarantEmail" cssStyle="width:90%"/></td>
+        <td colspan="2"><s:textfield name="declarant.declarantEmail" cssStyle="width:90%"/></td>
     </tr>
     <tr>
         <td rowspan="2">දැනුම් දෙන්නේ කවරකු වශයෙන්ද <br/>
@@ -416,22 +419,22 @@
             Mother
         </td>
         <td colspan="2">
-            <s:radio name="death.declarantType" list="#@java.util.HashMap@{'false':''}"
-                     id="declarant"
+            <s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+                     id="declarantType"
                      onclick="disable(false)"/></td>
         <td>පියා <br/>
             in tamil <br/>
             Father
         </td>
-        <td><s:radio name="death.declarantType" list="#@java.util.HashMap@{'false':''}"
-                     id="declarant"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+                     id="declarantType"
                      onclick="disable(false)"/></td>
         <td>සහෝදරයා සහෝදරිය <br/>
             in tamil <br/>
             Brother / Sister
         </td>
-        <td><s:radio name="death.declarantType" list="#@java.util.HashMap@{'false':''}"
-                     id="declarant"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+                     id="declarantType"
                      onclick="disable(false)"/></td>
     </tr>
     <tr>
@@ -439,21 +442,21 @@
             in tamil <br/>
             Son / Daughter
         </td>
-        <td colspan="2"><s:radio name="death.declarantType" list="#@java.util.HashMap@{'false':''}"
-                                 id="declarant"
+        <td colspan="2"><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+                                 id="declarantType"
                                  onclick="disable(false)"/></td>
         <td>නෑයන <br/>් பாதுகாவலர் <br/>
             Relative
         </td>
-        <td><s:radio name="death.declarantType" list="#@java.util.HashMap@{'false':''}"
-                     id="declarant"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+                     id="declarantType"
                      onclick="disable(false)"/></td>
         <td>වෙනත් <br/>
             in tamil <br/>
             Other
         </td>
-        <td><s:radio name="death.declarantType" list="#@java.util.HashMap@{'false':''}" value="false"
-                     id="declarant"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}" value="false"
+                     id="declarantType"
                      onclick="disable(false)"/></td>
     </tr>
     </tbody>
