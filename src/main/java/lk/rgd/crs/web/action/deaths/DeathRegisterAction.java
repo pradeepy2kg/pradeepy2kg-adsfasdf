@@ -10,9 +10,11 @@ import java.util.Locale;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.domain.DeathRegisterInfo;
+import lk.rgd.crs.api.domain.DeathInfo;
+import lk.rgd.crs.api.domain.DeathPersonInfo;
 import lk.rgd.crs.web.WebConstants;
 
 /**
@@ -23,7 +25,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map session;
     private int pageNo;
     private User user;
-
+    private DeathInfo death;
+    private DeathPersonInfo deathPerson;
 
     private int deathDistrictId;
     private int deathDivisionId;
@@ -33,18 +36,27 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final CountryDAO countryDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+    private Map<Integer, String> countryList;
 
-    public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
+    public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
+                               CountryDAO countryDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.countryDAO = countryDAO;
     }
 
     public String welcome() {
+        return SUCCESS;
+    }
+
+    public String initDeathDeclaration() {
+        populate();
         return SUCCESS;
     }
 
@@ -65,13 +77,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        
         return SUCCESS;
     }
 
     public String lateDeath() {
         populate();
-        DeathRegisterInfo death;
         return SUCCESS;
     }
 
@@ -83,12 +93,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
-         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
+        setCountryList(countryDAO.getCountries(language));
     }
 
     private void populateDynamicLists(String language) {
-         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());
@@ -193,5 +204,29 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDsDivisionId(int dsDivisionId) {
         this.dsDivisionId = dsDivisionId;
+    }
+
+    public Map<Integer, String> getCountryList() {
+        return countryList;
+    }
+
+    public void setCountryList(Map<Integer, String> countryList) {
+        this.countryList = countryList;
+    }
+
+    public DeathInfo getDeath() {
+        return death;
+    }
+
+    public void setDeath(DeathInfo death) {
+        this.death = death;
+    }
+
+    public DeathPersonInfo getDeathPerson() {
+        return deathPerson;
+    }
+
+    public void setDeathPerson(DeathPersonInfo deathPerson) {
+        this.deathPerson = deathPerson;
     }
 }

@@ -1,7 +1,6 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <script type="text/javascript">
     $(function() {
@@ -22,7 +21,7 @@
                         $("textarea#firstWitnessAddress").val(data2.lastAddress);
                     });
         });
-
+        
         $('img#second_witness_lookup').bind('click', function(evt3) {
             var id3 = $("input#second_witness_NICorPIN").attr("value");
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id3},
@@ -157,45 +156,42 @@
             </tbody>
         </table>
 
-        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin-bottom:5px;"
-               class="font-9">
-            <col width="150px"/>
-            <col width="400px"/>
-            <col width="100px"/>
-            <col/>
-            <tbody>
-            <tr class="form-sub-title">
-                <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
-            </tr>
-            <tr>
-                <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
-                    NIC
-                </td>
-                <td colspan="2" class="find-person"><s:textfield id="notifying_authority_NICorPIN"
-                                                                 name="notifyingAuthority.notifyingAuthorityPIN"/><img
-                        src="<s:url value="/images/search-father.png"/>"
-                        style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
-            </tr>
-            <tr>
-                <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="3"><s:textarea id="notifyingAuthorityName" name="notifyingAuthority.notifyingAuthorityName"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="3"><s:textarea id="notifyingAuthorityAddress" name="notifyingAuthority.notifyingAuthorityAddress"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
-                    Authority
-                </td>
-                <td colspan="1"></td>
-                <td colspan="1">දිනය<br>திகதி<br>Date</td>
-                <td colspan="1"><sx:datetimepicker id="submitDatePicker" name="notifyingAuthority.notifyingAuthoritySignDate"
-                                           displayFormat="yyyy-MM-dd"
-                                           onmouseover="javascript:splitDate()"/></td>
-            </tr>
-            </tbody>
-        </table>
+        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
+                      class="font-9">
+                   <col width="150px"/>
+                   <col width="400px"/>
+                   <col width="100px"/>
+                   <col/>
+                   <tbody>
+                   <tr class="form-sub-title">
+                       <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
+                   </tr>
+                   <tr>
+                       <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
+                           NIC
+                       </td>
+                       <td colspan="2"></td>
+                   </tr>
+                   <tr>
+                       <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
+                       <td colspan="3"></td>
+                   </tr>
+                   <tr>
+                       <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
+                       <td colspan="3"></td>
+                   </tr>
+                   <tr>
+                       <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
+                           Authority
+                       </td>
+                       <td colspan="1"></td>
+                       <td colspan="1">දිනය<br>திகதி<br>Date</td>
+                       <td colspan="1"></td>
+                   </tr>
+                   </tbody>
+               </table>
+
+
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 
         <div class="form-submit">
