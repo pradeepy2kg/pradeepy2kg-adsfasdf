@@ -69,6 +69,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     public List<DeathRegister> getByDeathSerialNo(String deathSerialNo) {
+        //todo after finalizing the requirements has to be modified whether to return a single entry or list
         Query q = em.createNamedQuery("get.by.death.SerailNumber");
         q.setParameter("deathSerialNo", deathSerialNo);
         return q.getResultList();

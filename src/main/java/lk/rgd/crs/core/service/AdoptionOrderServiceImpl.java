@@ -65,7 +65,7 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
     }
 
     public List<AdoptionOrder> findAll(User user) {
-        //todo access priviledges ?
+        //todo access priviledges ?                                                  
         try {
             return adoptionOrderDAO.findAll();
         } catch (Exception e) {
