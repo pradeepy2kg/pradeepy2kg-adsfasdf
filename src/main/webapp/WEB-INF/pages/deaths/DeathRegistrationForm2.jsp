@@ -1,6 +1,8 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
 
 <script type="text/javascript">
     $(function() {
@@ -21,7 +23,7 @@
                         $("textarea#firstWitnessAddress").val(data2.lastAddress);
                     });
         });
-        
+
         $('img#second_witness_lookup').bind('click', function(evt3) {
             var id3 = $("input#second_witness_NICorPIN").attr("value");
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id3},
@@ -43,7 +45,7 @@
 </script>
 
 <div id="death-declaration-form-2-outer">
-    <s:form name="deathRegistrationForm2" action="eprDeathDeclaration" id="death-registration-form-2" method="POST">
+    <s:form name="deathRegistrationForm2" action="eprDeathDeclaration.do" id="death-registration-form-2" method="POST">
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
                class="font-9">
             <col width="150px"/>
@@ -86,24 +88,24 @@
                 </td>
                 <td colspan="1">මව <br>*in tamil<br>Mother</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'0':''}"/></td>
+                                         list="#@java.util.HashMap@{'FATHER':''}"/></td>
                 <td colspan="1">පියා<br>*in tamil<br>Father</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'1':''}"/></td>
+                                         list="#@java.util.HashMap@{'MOTHER':''}"/></td>
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'2':''}"/></td>
+                                         list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"/></td>
             </tr>
             <tr>
                 <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'3':''}"/></td>
+                                         list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"/></td>
                 <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'4':''}"/></td>
+                                         list="#@java.util.HashMap@{'RELATIVE':''}"/></td>
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'5':''}"/></td>
+                                         list="#@java.util.HashMap@{'OTHER':''}"/></td>
             </tr>
             </tbody>
         </table>
@@ -126,26 +128,26 @@
             <tr>
                 <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
                 <td colspan="1" class="find-person"><s:textfield id="first_witness_NICorPIN"
-                                                                 name="firstWitness.witnessNICorPIN"/><img
+                                                                 name="witness.firstWitnessNICorPIN"/><img
                         src="<s:url value="/images/search-father.png"/>"
                         style="vertical-align:middle; margin-left:20px;" id="first_witness_lookup"></td>
                 <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
                 <td colspan="1" class="find-person"><s:textfield id="second_witness_NICorPIN"
-                                                                 name="secondWitness.witnessNICorPIN"/><img
+                                                                 name="witness.secondWitnessNICorPIN"/><img
                         src="<s:url value="/images/search-father.png"/>"
                         style="vertical-align:middle; margin-left:20px;" id="second_witness_lookup"></td>
             </tr>
             <tr>
                 <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:textarea id="firstWitnessFullName" name="firstWitness.witnessFullName"/></td>
+                <td colspan="2"><s:textarea id="firstWitnessFullName" name="witness.firstWitnessFullName"/></td>
                 <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:textarea id="secondWitnessFullName" name="secondWitness.witnessFullName"/></td>
+                <td colspan="2"><s:textarea id="secondWitnessFullName" name="witness.secondWitnessFullName"/></td>
             </tr>
             <tr>
                 <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:textarea id="firstWitnessAddress" name="firstWitness.witnessAddress"/></td>
+                <td colspan="2"><s:textarea id="firstWitnessAddress" name="witness.firstWitnessAddress"/></td>
                 <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:textarea id="secondWitnessAddress" name="secondWitness.witnessAddress"/></td>
+                <td colspan="2"><s:textarea id="secondWitnessAddress" name="witness.secondWitnessAddress"/></td>
             </tr>
             <tr>
                 <td>අත්සන <br>தகவல் ...<br>Signature</td>
@@ -157,39 +159,48 @@
         </table>
 
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
-                      class="font-9">
-                   <col width="150px"/>
-                   <col width="400px"/>
-                   <col width="100px"/>
-                   <col/>
-                   <tbody>
-                   <tr class="form-sub-title">
-                       <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
-                           NIC
-                       </td>
-                       <td colspan="2"></td>
-                   </tr>
-                   <tr>
-                       <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                       <td colspan="3"></td>
-                   </tr>
-                   <tr>
-                       <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                       <td colspan="3"></td>
-                   </tr>
-                   <tr>
-                       <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
-                           Authority
-                       </td>
-                       <td colspan="1"></td>
-                       <td colspan="1">දිනය<br>திகதி<br>Date</td>
-                       <td colspan="1"></td>
-                   </tr>
-                   </tbody>
-               </table>
+               class="font-9">
+            <col width="150px"/>
+            <col width="400px"/>
+            <col width="100px"/>
+            <col/>
+            <tbody>
+            <tr class="form-sub-title">
+                <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
+            </tr>
+            <tr>
+                <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
+                    NIC
+                </td>
+                <td colspan="2"><s:textfield id="notifying_authority_NICorPIN"
+                                             name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
+                    <img src="<s:url value="/images/search-father.png" />"
+                         style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
+                <td colspan="3"><s:textarea id="notifyingAuthorityName"
+                                            name="notifyingAuthority.notifyingAuthorityName"/></td>
+            </tr>
+            <tr>
+                <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
+                <td colspan="3"><s:textarea id="notifyingAuthorityAddress"
+                                            name="notifyingAuthority.notifyingAuthorityAddress"/></td>
+            </tr>
+            <tr>
+                <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
+                    Authority
+                </td>
+                <td colspan="1"></td>
+                <td colspan="1">දිනය<br>திகதி<br>Date</td>
+                <td colspan="1"><sx:datetimepicker id="submitDatePicker"
+                                                   name="notifyingAuthority.notifyingAuthoritySignDate"
+                                                   displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate()"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
 
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
