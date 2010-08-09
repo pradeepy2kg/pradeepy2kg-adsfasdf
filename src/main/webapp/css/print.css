@@ -49,6 +49,10 @@
 
         page-break-before: always;
     }
+
+    .form-submit {
+        display: none
+    }
 }
 
 /*@media print {*/
