@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @NamedQueries({
     @NamedQuery(name = "death.register.filter.by.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.idUKey desc"),
+        "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
     
     @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT deathRegister FROM DeathRegister deathRegister")
 })
