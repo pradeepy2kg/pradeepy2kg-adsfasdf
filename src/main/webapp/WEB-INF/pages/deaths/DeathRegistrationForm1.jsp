@@ -10,88 +10,64 @@
     // any other = passing district, will return DS list and the BD list for the first DS
     $(function() {
         $('select#deathDistrictId').bind('change', function(evt1) {
-            var id=$("select#deathDistrictId").attr("value");
+            var id = $("select#deathDistrictId").attr("value");
             $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
-                function(data) {
-                    var options1 = '';
-                    var ds = data.dsDivisionList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#deathDsDivisionId").html(options1);
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#deathDsDivisionId").html(options1);
 
-                    var options2 = '';
-                    var bd = data.bdDivisionList;
-                    for (var j = 0; j < bd.length; j++) {
-                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                    }
-                    $("select#deathDivisionId").html(options2);
-                });
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#deathDivisionId").html(options2);
+                    });
         });
 
         $('select#deathDsDivisionId').bind('change', function(evt2) {
-            var id=$("select#deathDsDivisionId").attr("value");
+            var id = $("select#deathDsDivisionId").attr("value");
             $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
-                function(data) {
-                    var options = '';
-                    var bd = data.bdDivisionList;
-                    for (var i = 0; i < bd.length; i++) {
-                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                    }
-                    $("select#deathDivisionId").html(options);
-                });
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#deathDivisionId").html(options);
+                    });
         });
 
-        $('img#childName').bind('click', function(evt3) {
-            var id=$("textarea#childFullNameOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans",soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
-
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+        $('img#death_person_lookup').bind('click', function(evt3) {
+            var id1 = $("input#deathPerson_PINorNIC").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
+                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#deathPersonPermanentAddress").val(data2.lastAddress);
+                    });
+        });
+        $('img#death_person_father_lookup').bind('click', function(evt4) {
+            var id1 = $("input#deathPersonFather_PINorNIC").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#deathPersonFatherFullName").val(data1.fullNameInOfficialLanguage);
+                    });
+        });
+        $('img#death_person_mother_lookup').bind('click', function(evt5) {
+            var id1 = $("input#deathPersonMother_PINorNIC").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#deathPersonMotherFullName").val(data1.fullNameInOfficialLanguage);
+                    });
         });
 
-        function processResponse1(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        };
 
-    $('img#place').bind('click', function(evt4) {
-        var id=$("input#placeOfBirth").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans",soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-    });
-
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    }
-})
+    })
 </script>
 
 
@@ -125,7 +101,9 @@
         </td>
         <td style="border:1px solid #000;">ලියාපදිංචි කල දිනය<br>பிறப்பைப் பதிவு திகதி <br>Date of Registration
         </td>
-        <td style="border:1px solid #000;"></td>
+        <td style="border:1px solid #000;"><sx:datetimepicker id="dateOfRegistrationDatePicker" name="death.dateOfRegistration"
+                                                                     displayFormat="yyyy-MM-dd"
+                                                                     onchange="javascript:splitDate('issueDatePicker')"/></td>
     </tr>
     <tr>
         <td colspan="4" height="15px"></td>
@@ -170,7 +148,7 @@
                                                                      displayFormat="yyyy-MM-dd"
                                                                      onchange="javascript:splitDate('issueDatePicker')"/></td>
         <td>වෙලාව<br>*in tamil<br>Time</td>
-        <td colspan="2"><s:textfield name="death.timeOfDeath"></s:textfield></td>
+        <td colspan="2"></td>
     </tr>
     <tr>
         <td rowspan="5">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
@@ -185,14 +163,14 @@
     </tr>
     <tr>
         <td colspan="3">ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
-        <td colspan="5"><s:select id="deathDivisionId" name="deathDivisionId" value="%{deathDivisionId}"
+        <td colspan="5"><s:select id="deathDivisionId" name="death.deathDivisionId" value="%{deathDivisionId}"
                                   list="bdDivisionList"
                                   cssStyle=" width:240px;float:left;"/></td>
     </tr>
     <tr>
         <td rowspan="2" colspan="1">ස්ථානය <br>பிறந்த <br>Place</td>
         <td colspan="2">සිංහල හෝ දෙමළ භාෂාවෙන්<br>சிங்களம் தமிழ்<br>In Sinhala or Tamil</td>
-        <td colspan="5"><s:textarea name="" cssStyle="width:550px;"></s:textarea></td>
+        <td colspan="5"><s:textarea name="death.placeOfDeath" cssStyle="width:550px;"></s:textarea></td>
     </tr>
     <tr>
         <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>*in tamil<br>In English</td>
@@ -247,7 +225,10 @@
         <td rowspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
             <br>PIN / NIC
         </td>
-        <td rowspan="2" colspan="3"><s:textfield name="deathPerson.deathPersonPINorNIC"></s:textfield></td>
+        <td rowspan="2" colspan="3"><s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
+                                                 cssStyle="float:left;margin-left:225px;"></s:textfield>
+            <img src="<s:url value="/images/search-father.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="death_person_lookup"></td>
         <td rowspan="2">විදේශිකය‍කු නම්<br>வெளிநாட்டவர் <br>If a foreigner</td>
         <td>රට<br>நாடு<br>Country</td>
         <td><s:select id="deathPersonCountryId" name="deathPerson.deathPersonCountryId" list="countryList" headerKey="0"
@@ -272,31 +253,42 @@
         <td colspan="1">නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)<br>Name
             in either of the official languages (Sinhala / Tamil)
         </td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang"></s:textarea></td>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang"
+                                    id="deathPersonNameOfficialLang"></s:textarea></td>
     </tr>
     <tr>
         <td colspan="1">නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு அத்தாட்சி …..<br>Name in English</td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameInEnglish"></s:textarea></td>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameInEnglish"
+                                    id="deathPersonNameInEnglish"></s:textarea></td>
     </tr>
     <tr>
         <td colspan="1">ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonPermanentAddress"></s:textarea></td>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonPermanentAddress"
+                                    id="deathPersonPermanentAddress"></s:textarea></td>
     </tr>
     <tr>
         <td colspan="1">පියාගේ පු.අ.අ. / ජා.හැ.අ.<br>*in tamil<br>Fathers PIN / NIC</td>
-        <td colspan="6"><s:textfield name="deathPerson.deathPersonFatherPINorNIC"></s:textfield></td>
+        <td colspan="6"><s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
+                                     cssStyle="float:left;margin-left:695px;"></s:textfield>
+            <img src="<s:url value="/images/search-mother.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup"></td>
     </tr>
     <tr>
         <td colspan="1">පියාගේ සම්පුර්ණ නම<br>*in tamil <br>Fathers full name</td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonFatherFullName"></s:textarea></td>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonFatherFullName"
+                                    id="deathPersonFatherFullName"></s:textarea></td>
     </tr>
     <tr>
         <td colspan="1">මවගේ පු.අ.අ. / ජා.හැ.අ.<br>*in tamil<br>Mothers PIN / NIC</td>
-        <td colspan="6"><s:textfield name="deathPerson.deathPersonMotherNICNo"></s:textfield></td>
+        <td colspan="6"><s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
+                                     cssStyle="float:left;margin-left:695px;"></s:textfield>
+            <img src="<s:url value="/images/search-mother.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
     </tr>
     <tr>
         <td colspan="1">මවගේ සම්පුර්ණ නම<br>*in tamil <br>Mothers full name</td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonMotherFullName"></s:textarea></td>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonMotherFullName"
+                                    id="deathPersonMotherFullName"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -306,4 +298,12 @@
     <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
+<script type="text/javascript">
+    function setTime()
+    {
+        var list = document.getElementById("time");
+        var array = new Array('1', '2', '3');
+        list.list = array;
+    }
+</script>
 </div>

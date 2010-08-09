@@ -26,7 +26,7 @@
                 </s:if>
 
                 <s:if test="%{key == '1deaths'}">
-                    <s:a href="/popreg/deaths/eprInitDeathDeclaration.do">
+                    <s:a href="/popreg/deaths/eprInitDeathHome.do">
                         <s:label value="%{getText('category_death_registraion')}"/>
                     </s:a>
                 </s:if>

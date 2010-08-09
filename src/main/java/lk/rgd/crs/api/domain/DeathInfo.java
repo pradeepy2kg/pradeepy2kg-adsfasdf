@@ -36,14 +36,10 @@ public class DeathInfo implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date dateOfRegistration;
 
-    @Column(nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfIssue;
-
     @Column(nullable = true)
     private String placeOfIssue;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String timeOfDeath;
 
     @Column(nullable = false)
@@ -117,14 +113,6 @@ public class DeathInfo implements Serializable {
 
     public void setDateOfRegistration(Date dateOfRegistration) {
         this.dateOfRegistration = dateOfRegistration;
-    }
-
-    public Date getDateOfIssue() {
-        return dateOfIssue;
-    }
-
-    public void setDateOfIssue(Date dateOfIssue) {
-        this.dateOfIssue = dateOfIssue;
     }
 
     public String getPlaceOfIssue() {

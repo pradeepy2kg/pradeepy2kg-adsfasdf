@@ -31,6 +31,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathPersonInfo deathPerson;
     private DeclarantInfo declarant;
     private WitnessInfo witness;
+    private NotifyingAuthorityInfo notifyingAuthority;
 
 
     private int deathDistrictId;
@@ -42,6 +43,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
+
+
     private final DeathRegisterService service;
 
     private Map<Integer, String> districtList;
@@ -50,33 +53,55 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                               CountryDAO countryDAO,DeathRegisterService deathRegisterService) {
+                               CountryDAO countryDAO, DeathRegisterService deathRegisterService) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
-        this.service=deathRegisterService;
+        this.service = deathRegisterService;
     }
 
     public String welcome() {
         return SUCCESS;
     }
 
+    public String initDeathHome() {
+        return SUCCESS;
+    }
+
     public String initDeathDeclaration() {
+        DeathRegister ddf;
+        session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+        ddf = new DeathRegister();
+        session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
         populate();
         return SUCCESS;
     }
 
     public String deathDeclaration() {
         populate();
+        logger.debug("Step {} of 2 ", pageNo);
+        DeathRegister ddf;
+        ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
-            case 0:
-                return "form0";
             case 1:
+                logger.debug("Death Declaration Step {} of 2 ", pageNo);
+                ddf.setDeath(death);
+                ddf.setDeathPerson(deathPerson);
+                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
+                session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 return "form1";
             case 2:
-                return "form2";
-            case 3:
+                logger.debug("Death Declaration Step {} of 2 ", pageNo);
+                ddf.setDeclarant(declarant);
+                logger.info("declarent was completed");
+                ddf.setWitness(witness);
+                logger.info("witness was completed");
+                ddf.setNotifyingAuthority(notifyingAuthority);
+                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
+
+                User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+                service.addDeathRegistration(ddf, user);
                 return SUCCESS;
         }
         return ERROR;
@@ -84,7 +109,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        
+
         return SUCCESS;
     }
 
@@ -237,5 +262,29 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeathPerson(DeathPersonInfo deathPerson) {
         this.deathPerson = deathPerson;
+    }
+
+    public DeclarantInfo getDeclarant() {
+        return declarant;
+    }
+
+    public void setDeclarant(DeclarantInfo declarant) {
+        this.declarant = declarant;
+    }
+
+    public WitnessInfo getWitness() {
+        return witness;
+    }
+
+    public void setWitness(WitnessInfo witness) {
+        this.witness = witness;
+    }
+
+    public NotifyingAuthorityInfo getNotifyingAuthority() {
+        return notifyingAuthority;
+    }
+
+    public void setNotifyingAuthority(NotifyingAuthorityInfo notifyingAuthority) {
+        this.notifyingAuthority = notifyingAuthority;
     }
 }
