@@ -149,9 +149,19 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("birth certificate search: Page {}", pageNo);
         // TODO Still implementing
         if (pageNo == 1) {
-            bcSearch.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-            service.performBirthCertificateSearch(bcSearch, user);
-            // TODO forward to the result page
+
+            try {
+                bcSearch.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                searchResultList = service.performBirthCertificateSearch(bcSearch, user);
+
+            } catch (CRSRuntimeException e) {
+                logger.error("inside birthCertificateSearch()", e);
+                addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + bcSearch.getApplicationNo() +
+                    " , " + bcSearch.getDsDivision().getDsDivisionUKey());
+            } catch (Exception e) {
+                logger.error("inside birthCertificateSearch()", e);
+                return ERROR;
+            }
         }
         populate();
         return "page" + pageNo;

@@ -140,7 +140,7 @@ public class BirthCertificateSearch implements Serializable {
     private Date searchPerformDate;
 
     private String filterBlanks(String s) {
-        return (s == null) ? null : (s.trim().length() == 0) ? null : s.toUpperCase();
+        return (s == null) ? null : (s.trim().length() == 0) ? null : s.trim().toUpperCase();
     }
 
     public long getSearchUKey() {

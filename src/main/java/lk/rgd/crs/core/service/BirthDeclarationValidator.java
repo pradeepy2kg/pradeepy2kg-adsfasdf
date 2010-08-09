@@ -96,8 +96,11 @@ public class BirthDeclarationValidator {
 
         // check child and parent  information - the names and mothers address to be non-empty
         ChildInfo child = bdf.getChild();
-        checkValidString(child.getChildFullNameOfficialLang(), warnings, rb, "child_name_official_invalid");
-        checkValidString(child.getChildFullNameEnglish(), warnings, rb, "child_name_en_invalid");
+        final BirthDeclaration.BirthType birthType = bdf.getRegister().getBirthType();
+        if (BirthDeclaration.BirthType.STILL != birthType) {
+            checkValidString(child.getChildFullNameOfficialLang(), warnings, rb, "child_name_official_invalid");
+            checkValidString(child.getChildFullNameEnglish(), warnings, rb, "child_name_en_invalid");
+        }
         ParentInfo parent = bdf.getParent();
         checkValidString(parent.getFatherFullName(), warnings, rb, "father_name_invalid");
         checkValidString(parent.getMotherFullName(), warnings, rb, "mother_name_invalid");

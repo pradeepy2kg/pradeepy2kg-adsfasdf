@@ -605,9 +605,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 childDsDivision = register.getDsDivisionPrint();
                 childDsDivisionEn = register.getDsDivision().getEnDivisionName();
                 fatherRacePrint = parent.getFatherRacePrint();
-                fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
+                if (parent.getFatherRace() != null) {
+                    fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
+                }
                 motherRacePrint = parent.getMotherRacePrint();
-                motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
+                if (parent.getMotherRace() != null) {
+                    motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
+                }
                 marriedStatus = marriage.getParentsMarriedPrint();
                 marriedStatusEn = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
 
@@ -636,7 +640,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void handleErrors(Exception e) {
-        logger.error("Handle Error  : {}", e);
+        logger.error("Handle Error  ", e);
         //todo pass the error to the error.jsp page
     }
 
