@@ -20,31 +20,44 @@
                 </s:if>
 
                 <s:if test="%{key == '5management'}">
-                    <a href="#"><s:label value="%{getText('category_admin_task')}"/></a>
+                    <s:a href="#">
+                        <s:label value="%{getText('category_admin_task')}"/>
+                    </s:a>
                 </s:if>
 
                 <s:if test="%{key == '1deaths'}">
-                    <li><a href="#"><s:label value="%{getText('category_death_registraion')}"/> </a>
+                    <s:a href="/popreg/deaths/eprInitDeathDeclaration.do">
+                        <s:label value="%{getText('category_death_registraion')}"/>
+                    </s:a>
                 </s:if>
 
                 <s:if test="%{key == '2marriages'}">
-                    <li><a href="#"><s:label value="%{getText('category_marrage_registraion')}"/> </a>
+                    <s:a href="#">
+                        <s:label value="%{getText('category_marrage_registraion')}"/>
+                    </s:a>
                 </s:if>
 
                 <s:if test="%{key == '4reprots'}">
-                    <a href="#"><s:label value="%{getText('category_reports')}"/></a>
+                    <s:a href="#">
+                        <s:label value="%{getText('category_reports')}"/>
+                    </s:a>
                 </s:if>
 
                 <s:if test="%{key == '3preferences'}">
-                    <a href="#"><s:label value="%{getText('category_user_preferance')}"/></a>
+                    <s:a href="#">
+                        <s:label value="%{getText('category_user_preferance')}"/>
+                    </s:a>
                 </s:if>
 
                 <s:if test="%{key == '6prs'}">
-                    <a href="#"><s:label value="%{getText('category_prs')}"/></a>
+                    <s:a href="#">
+                        <s:label value="%{getText('category_prs')}"/>
+                    </s:a>
                 </s:if>
                 <s:if test="%{key == '7adoption'}">
                     <s:a href="#">
-                        <s:label value="%{getText('category_adoption')}"/></s:a>
+                        <s:label value="%{getText('category_adoption')}"/>
+                    </s:a>
                 </s:if>
 
                 <ul class="acitem">
