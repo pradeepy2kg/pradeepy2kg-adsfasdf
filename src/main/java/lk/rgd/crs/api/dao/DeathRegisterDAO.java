@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.domain.AdoptionOrder;
 
 import java.util.List;
 
@@ -39,4 +40,6 @@ public interface DeathRegisterDAO {
     public void deleteDeathRegistration(long deathRegistrationIdUKey);
 
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status);
+
+    public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows);
 }
