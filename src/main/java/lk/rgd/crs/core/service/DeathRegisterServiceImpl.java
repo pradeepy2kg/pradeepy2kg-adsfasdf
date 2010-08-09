@@ -12,6 +12,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
+
 /**
  * @author Indunil Moremada
  */
@@ -19,6 +21,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterService.class);
     private final DeathRegisterDAO deathRegisterDAO;
+
 
     DeathRegisterServiceImpl(DeathRegisterDAO deathRegisterDAO) {
         this.deathRegisterDAO = deathRegisterDAO;
@@ -55,13 +58,26 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public DeathRegister getById(long deathRegisterIdUKey, User user) {
-        return deathRegisterDAO.getById(deathRegisterIdUKey);
+        logger.debug("Load death registration record : {}", deathRegisterIdUKey);
+        DeathRegister deathRegister = new DeathRegister();
+        try {
+            deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
+        } catch (NoResultException ignore) {
+            logger.error("Requested entry not available ", ignore);
+        }
+        return deathRegister;
     }
 
     /**
      * @inheritDoc
      */
     public void deleteDeathRegistration(long deathRegiserIdUKey, User user) {
+        logger.debug("attempt to delete death registration record : {}", deathRegiserIdUKey);
+        DeathRegister dr = deathRegisterDAO.getById(deathRegiserIdUKey);
+        if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
+            handleException("Cannot delete death registraion " + deathRegiserIdUKey +
+                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
         deathRegisterDAO.deleteDeathRegistration(deathRegiserIdUKey);
     }
 
