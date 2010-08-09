@@ -84,6 +84,7 @@
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="bcSearchDAOImpl"/>
+        <constructor-arg ref="adoptionOrderDAOImpl"/>
     </bean>
 
     <bean id="deathRegisterService" class="lk.rgd.crs.core.service.DeathRegisterServiceImpl">
