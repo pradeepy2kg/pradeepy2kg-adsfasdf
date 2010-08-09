@@ -47,11 +47,17 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
         deathRegisterDAO.deleteDeathRegistration(deathRegiserIdUKey);
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user) {
         return deathRegisterDAO.getPaginatedListForState(pageNo, noOfRows, status);
     }
 
+    /**
+     * @inheritDoc
+     */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
-        return deathRegisterDAO.getPaginatedListForAll(pageNo,noOfRows);
+        return deathRegisterDAO.getPaginatedListForAll(pageNo, noOfRows);
     }
 }
