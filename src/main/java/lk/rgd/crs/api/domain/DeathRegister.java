@@ -14,7 +14,7 @@ import java.io.Serializable;
     @NamedQuery(name = "death.register.filter.by.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.idUKey desc"),
     
-    @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT adoption FROM DeathRegister deathRegister")
+    @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT deathRegister FROM DeathRegister deathRegister")
 })
 public class DeathRegister implements Serializable {
     public enum State {

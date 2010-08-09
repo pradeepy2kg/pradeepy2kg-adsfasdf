@@ -39,7 +39,20 @@ public interface DeathRegisterDAO {
      */
     public void deleteDeathRegistration(long deathRegistrationIdUKey);
 
+    /**
+     *
+     * @param pageNo
+     * @param noOfRows
+     * @param status
+     * @return
+     */
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status);
 
+    /**
+     * 
+     * @param pageNo
+     * @param noOfRows
+     * @return
+     */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows);
 }
