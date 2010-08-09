@@ -17,6 +17,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.BCSearchDAO;
+import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
@@ -47,6 +48,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final UserManager userManager;
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final BCSearchDAO bcSearchDAO;
+    private final AdoptionOrderDAO adoptionOrderDAO;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
@@ -94,6 +96,20 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // TODO still birth specific validations
         addBirthDeclaration(bdf, ignoreWarnings, user);
         logger.debug("Added a new still birth declaration. IDUKey : {}", bdf.getIdUKey());
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<UserWarning> addAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        logger.debug("Adding a new adoption birth declaration");
+
+        // TODO adoption specific validations
+        addBirthDeclaration(bdf, ignoreWarnings, user);
+//        adoptionOrderDAO.
+        // TODO archive adoption order and add new one
+        logger.debug("Added a new adoption birth declaration. IDUKey : {}", bdf.getIdUKey());
         return null;
     }
 
@@ -1196,44 +1212,44 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         BirthDeclaration exactRecord = null;
         BirthCertificateSearch existing = null;
 
-        // TODO before adding check existing entries with same serial and division
-        // TODO only if certificate printed
-
         if (bcs.getApplicationNo() != null && bcs.getDsDivision() != null) {
             existing = bcSearchDAO.getByDSDivisionAndSerialNo(bcs.getDsDivision(), bcs.getApplicationNo());
         }
 
-        if (bcs.getCertificateNo() != null) {
-            logger.debug("Search narrowed against certificate IDUKey : {}", bcs.getCertificateNo());
-            exactRecord = birthDeclarationDAO.getById(bcs.getCertificateNo());
-            if (exactRecord != null) {
-                final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
-                if (BirthDeclaration.State.ARCHIVED_CERT_GENERATED == currentState ||
-                    BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
-                    results = new ArrayList<BirthDeclaration>();
-                    results.add(exactRecord);
-
-                } else {
-                    // TODO throw exception
+        if (existing == null) {
+            if (bcs.getCertificateNo() != null) {
+                logger.debug("Search narrowed against certificate IDUKey : {}", bcs.getCertificateNo());
+                exactRecord = birthDeclarationDAO.getById(bcs.getCertificateNo());
+                if (exactRecord != null) {
+                    final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
+                    if (BirthDeclaration.State.ARCHIVED_CERT_GENERATED == currentState ||
+                        BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
+                        results = new ArrayList<BirthDeclaration>();
+                        results.add(exactRecord);
+                    }
                 }
             }
-        }
 
-        // add any matches from Solr search, except for the exact match
-        for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(bcs)) {
-            if (exactRecord == null || exactRecord.getIdUKey() != bdf.getIdUKey()) {
-                results.add(bdf);
+            // add any matches from Solr search, except for the exact match
+            for (BirthDeclaration bdf : birthRecordsIndexer.searchBirthRecords(bcs)) {
+                if (exactRecord == null || exactRecord.getIdUKey() != bdf.getIdUKey()) {
+                    results.add(bdf);
+                }
             }
+
+            // set user perform searching and the timestamp
+            bcs.setSearchUser(user);
+            bcs.setSearchPerformDate(new Date());
+            bcs.setResultsFound(results.size());
+
+            bcSearchDAO.addBirthCertificateSearch(bcs);
+            logger.debug("Birth certificate search completed and recorded as SearchUKey : {} Results found : {}",
+                bcs.getSearchUKey(), results.size());
+
+        } else {
+            handleException("The birth certificate search DS Division/Application number is a duplicate : " +
+                bcs.getDsDivision().getDsDivisionUKey() + " " + bcs.getApplicationNo(), ErrorCodes.INVALID_DATA);
         }
-
-        // set user perform searching and the timestamp
-        bcs.setSearchUser(user);
-        bcs.setSearchPerformDate(new Date());
-        bcs.setResultsFound(results.size());
-
-        bcSearchDAO.addBirthCertificateSearch(bcs);
-        logger.debug("Birth certificate search completed and recorded as SearchUKey : {} Results found : {}",
-            bcs.getSearchUKey(), results.size());
 
         return results;
     }

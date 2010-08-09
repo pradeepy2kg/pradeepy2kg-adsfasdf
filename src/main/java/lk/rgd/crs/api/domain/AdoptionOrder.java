@@ -62,6 +62,8 @@ public class AdoptionOrder implements Serializable {
         CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
 
         ADOPTION_CERTIFICATE_PRINTED, //5 Acertifcate is requested
+
+        ADOPTION_ORDER_ARCHIVED    // 6 - Adoption order archived due to new BDF adding. This is the state of old record
     }
 
     public enum ApplicantType {
@@ -170,7 +172,7 @@ public class AdoptionOrder implements Serializable {
     private State status;
 
     private String filterBlanks(String s) {
-        return (s == null) ? null : (s.trim().length() == 0) ? null : s.toUpperCase();
+        return (s == null) ? null : (s.trim().length() == 0) ? null : s.trim().toUpperCase();
     }
 
     public long getIdUKey() {
