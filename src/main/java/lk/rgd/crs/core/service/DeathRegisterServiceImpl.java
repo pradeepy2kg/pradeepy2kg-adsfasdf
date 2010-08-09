@@ -3,16 +3,20 @@ package lk.rgd.crs.core.service;
 import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Indunil Moremada
  */
 public class DeathRegisterServiceImpl implements DeathRegisterService {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(DeathRegisterService.class);
     private final DeathRegisterDAO deathRegisterDAO;
 
     DeathRegisterServiceImpl(DeathRegisterDAO deathRegisterDAO) {
@@ -59,5 +63,17 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
         return deathRegisterDAO.getPaginatedListForAll(pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<DeathRegister> getByDeathSerialNo(String deathSerialNo, User user) {
+        return deathRegisterDAO.getByDeathSerialNo(deathSerialNo);
+    }
+
+    private void handleException(String message, int code) {
+        logger.error(message);
+        throw new CRSRuntimeException(message, code);
     }
 }

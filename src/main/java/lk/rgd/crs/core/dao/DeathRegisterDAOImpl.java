@@ -64,4 +64,13 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
             * noOfRows).setMaxResults(noOfRows);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public List<DeathRegister> getByDeathSerialNo(String deathSerialNo) {
+        Query q = em.createNamedQuery("get.by.death.SerailNumber");
+        q.setParameter("deathSerialNo", deathSerialNo);
+        return q.getResultList();
+    }
 }
