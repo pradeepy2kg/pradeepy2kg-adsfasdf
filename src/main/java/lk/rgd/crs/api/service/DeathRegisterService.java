@@ -46,4 +46,6 @@ public interface DeathRegisterService {
     public void deleteDeathRegistration(long deathRegiserIdUKey, User user);
 
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user);
+
+    public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user);
 }
