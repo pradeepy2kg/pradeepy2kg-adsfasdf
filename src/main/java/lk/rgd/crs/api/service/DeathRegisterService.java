@@ -65,4 +65,13 @@ public interface DeathRegisterService {
      * @return list of DeathRegister objects
      */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user);
+
+    /**
+     * get a list of death registration based on requested serial number
+     *
+     * @param user          the user initiating the action
+     * @param deathSerialNo serial number of the death registration
+     * @return list of DeathRegister objects
+     */
+    public List<DeathRegister> getByDeathSerialNo(String deathSerialNo, User user);
 }

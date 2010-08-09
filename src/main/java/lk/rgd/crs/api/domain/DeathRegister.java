@@ -13,8 +13,11 @@ import java.io.Serializable;
 @NamedQueries({
     @NamedQuery(name = "death.register.filter.by.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
-    
-    @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT deathRegister FROM DeathRegister deathRegister")
+
+    @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT deathRegister FROM DeathRegister deathRegister"),
+
+    @NamedQuery(name = "get.by.death.SerailNumber", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo")
 })
 public class DeathRegister implements Serializable {
     public enum State {

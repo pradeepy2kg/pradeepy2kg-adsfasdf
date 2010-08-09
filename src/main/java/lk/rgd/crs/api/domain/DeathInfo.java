@@ -20,7 +20,7 @@ public class DeathInfo implements Serializable {
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     @Column(nullable = false)
-    private long deathSerialNo;
+    private String deathSerialNo;
 
     @Column(nullable = true)
     private long deathCertificateNo;
@@ -79,11 +79,11 @@ public class DeathInfo implements Serializable {
     @Column(nullable = false)
     private String placeOfBurial;
 
-    public long getDeathSerialNo() {
+    public String getDeathSerialNo() {
         return deathSerialNo;
     }
 
-    public void setDeathSerialNo(long deathSerialNo) {
+    public void setDeathSerialNo(String deathSerialNo) {
         this.deathSerialNo = deathSerialNo;
     }
 
