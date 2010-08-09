@@ -1,13 +1,25 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <s:set value="3" name="row"/>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="/popreg/lib/datepicker/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/popreg/lib/datepicker/jquery-ui-1.8.4.custom.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css" />
+
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
+	$(function() {
+		$("#submitDatePicker").datepicker();
+	});
+    
+    $(function() {
+        $("#birthDatePicker").datepicker();
+    });
+
     // mode 1 = passing District, will return DS list
     // mode 2 = passing DsDivision, will return BD list
     // any other = passing district, will return DS list and the BD list for the first DS
@@ -146,9 +158,8 @@
                             <label><span class="font-8">ලියාපදිංචි කල දිනය<br>* In Tamil<br>Date of Registration</span></label>
                         </s:else>
                     </td>
-                    <td><sx:datetimepicker id="submitDatePicker" name="register.dateOfRegistration"
-                                           displayFormat="yyyy-MM-dd"
-                                           onmouseover="javascript:splitDate()"/>
+                    <td>
+                        <s:textfield name="register.dateOfRegistration" id="submitDatePicker" />
                     </td>
                 </tr>
             </table>
@@ -255,8 +266,7 @@
     <tr style="border-left:1px solid #000000;">
         <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="7">
-            <sx:datetimepicker id="datePicker" name="child.dateOfBirth" displayFormat="yyyy-MM-dd"
-                               onchange="javascript:splitDate('datePicker')"/>
+            <s:textfield id="birthDatePicker" name="child.dateOfBirth"/>
         </td>
     </tr>
     <tr>
@@ -401,19 +411,17 @@
         var check = document.getElementById('skipjs');
 
         /*date related validations*/
-        var datePicker = dojo.widget.byId('datePicker').inputNode.value;
-        var submitDatePicker = dojo.widget.byId('submitDatePicker').inputNode.value;
-        var birtdate = new Date(datePicker);
-        var submit = new Date(submitDatePicker);
+        var birthdate = new Date($("#birthDatePicker").attr("value"));
+        var submitdate = new Date($("#submitDatePicker").attr("value"));
 
         //compare two days
-        if (birtdate.getTime() > submit.getTime()) {
+        if (birthdate.getTime() > submit.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('error6').value;
             flag = true;
         }
         //comparing 90 days delay
         var one_day = 1000 * 60 * 60 * 24 ;
-        var numDays = Math.ceil((submit.getTime() - birtdate.getTime()) / (one_day));
+        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
 
         if (numDays >= 90) {
             if (numDays >= 365) {
@@ -495,4 +503,3 @@
 </div>
 </s:form>
 </div>
-      <%-- Styling Completed --%>
