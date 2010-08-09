@@ -17,6 +17,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.dao.BCSearchDAO;
+import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Person;
@@ -47,6 +48,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final UserManager userManager;
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final BCSearchDAO bcSearchDAO;
+    private final AdoptionOrderDAO adoptionOrderDAO;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
@@ -94,6 +96,20 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // TODO still birth specific validations
         addBirthDeclaration(bdf, ignoreWarnings, user);
         logger.debug("Added a new still birth declaration. IDUKey : {}", bdf.getIdUKey());
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<UserWarning> addAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        logger.debug("Adding a new adoption birth declaration");
+
+        // TODO adoption specific validations
+        addBirthDeclaration(bdf, ignoreWarnings, user);
+//        adoptionOrderDAO.
+        // TODO archive adoption order and add new one
+        logger.debug("Added a new adoption birth declaration. IDUKey : {}", bdf.getIdUKey());
         return null;
     }
 

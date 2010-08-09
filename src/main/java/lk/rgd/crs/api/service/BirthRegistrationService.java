@@ -28,7 +28,7 @@ public interface BirthRegistrationService {
      *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-                                                     String caseFileNumber, String additionalDocumentsComment);
+        String caseFileNumber, String additionalDocumentsComment);
 
     /**
      * Add a Still Birth declaration to the system.
@@ -40,6 +40,17 @@ public interface BirthRegistrationService {
      *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Add a Adoption Birth declaration to the system.
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
+     *         Warnings maybe if a mother specified is known to be dead etc
+     */
+    public List<UserWarning> addAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Update an existing BDF for a Live birth by a DEO or ADR <b>before</b> approval
@@ -284,7 +295,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -300,7 +311,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -331,7 +342,7 @@ public interface BirthRegistrationService {
      * Returns historical records for the given BD Division and Serial number
      *
      * @param bdDivision the birth division
-     * @param serialNo      the BirthDeclaration serial number
+     * @param serialNo   the BirthDeclaration serial number
      * @return the related historical records - if any
      */
     public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user);
