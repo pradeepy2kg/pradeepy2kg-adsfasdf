@@ -129,7 +129,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("fatherCountry", "1");
         request.setParameter("parent.fatherPassportNo", "4832");
         request.setParameter("parent.fatherFullName", "ලෝගේස්වරන් යුවන් ශන්කර්");
-        request.setParameter("parent.fatherDOB", "1964-07-02T00:00:00+05:30");
+        request.setParameter("parent.fatherDOB", "07/02/1964");
+//        request.setParameter("parent.fatherDOB", "07/02/1964-07-02T00:00:00+05:30");
         request.setParameter("parent.fatherPlaceOfBirth", "Kandy");
         request.setParameter("fatherRace", "1");
 

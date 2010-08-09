@@ -3,11 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 <html>
 <head>
-    <sx:head debug="false" cache="false" compressed="true" parseContent="true"/>
     <title>E-Population System</title>
     
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
