@@ -23,4 +23,12 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows, AdoptionOrder.State status);
 
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows);
+
+    /**
+     * Update existing adoption order state as archived and add a new adoption order entry with state adoption
+     * certificate printed
+     *
+     * @param adoption existing adoption order
+     */
+    public void initiateBirthDeclaration(AdoptionOrder adoption);
 }

@@ -112,12 +112,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         AdoptionOrder existing = adoptionOrderDAO.getById(bdf.getRegister().getAdoptionUKey());
         final AdoptionOrder.State currentState = existing.getStatus();
         if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED == currentState) {
-            // mark existing adoption order as archived
-            existing.setStatus(AdoptionOrder.State.ADOPTION_ORDER_ARCHIVED);
-            adoptionOrderDAO.updateAdoptionOrder(existing);
-
-            // add new adoption order
-            adoptionOrderDAO.addAdoptionOrder(existing);
+            adoptionOrderDAO.initiateBirthDeclaration(existing);
             logger.debug("Changes captured for adoption record, new record : {} and archived record : {}",
                 existing.getIdUKey(), bdf.getRegister().getAdoptionUKey());
 

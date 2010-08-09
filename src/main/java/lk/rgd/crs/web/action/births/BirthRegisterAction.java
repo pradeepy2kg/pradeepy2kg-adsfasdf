@@ -157,6 +157,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
                 register.setComments(bdf.getRegister().getComments());
+                register.setAdoptionUKey(bdf.getRegister().getAdoptionUKey());
                 bdf.setRegister(register);
                 bdf.getRegister().setBirthType(birthType);
                 break;

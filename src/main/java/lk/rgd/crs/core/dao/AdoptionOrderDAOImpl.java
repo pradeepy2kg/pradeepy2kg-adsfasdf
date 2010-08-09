@@ -32,7 +32,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     public List<AdoptionOrder> getByCourtOrderNumber(String courtOrderNumber) {
         Query q = em.createNamedQuery("get.by.courtOrderNumber");
         q.setParameter("courtOrderNumber", courtOrderNumber);
-       // logger.debug("new court order number : {} ",q.getResultList());
+        // logger.debug("new court order number : {} ",q.getResultList());
         return q.getResultList();
     }
 
@@ -41,7 +41,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      */
     public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows, AdoptionOrder.State status) {
         Query q = em.createNamedQuery("adoption.filter.by.status.paginated").setFirstResult((pageNo - 1)
-                * noOfRows).setMaxResults(noOfRows);
+            * noOfRows).setMaxResults(noOfRows);
         q.setParameter("status", status);
         return q.getResultList();
     }
@@ -51,7 +51,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      */
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("getAllAdoptions").setFirstResult((pageNo - 1)
-                * noOfRows).setMaxResults(noOfRows);
+            * noOfRows).setMaxResults(noOfRows);
         return q.getResultList();
     }
 
@@ -59,7 +59,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      * @inheritDoc
      */
     public List<AdoptionOrder> findAll() {
-        Query q = em.createNamedQuery("getAllAdoptions"); 
+        Query q = em.createNamedQuery("getAllAdoptions");
         return q.getResultList();
     }
 
@@ -70,4 +70,18 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         return em.find(AdoptionOrder.class, adoptionIdUKey);
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional
+    public void initiateBirthDeclaration(AdoptionOrder adoption) {
+        // mark existing adoption order as archived
+        adoption.setStatus(AdoptionOrder.State.ADOPTION_ORDER_ARCHIVED);
+        em.merge(adoption);
+
+        // add new adoption order
+        adoption.setIdUKey(0);
+        adoption.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+        em.persist(adoption);
+    }
 }
