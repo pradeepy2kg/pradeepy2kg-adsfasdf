@@ -87,8 +87,8 @@ public final class Permission {
     public static final int PAGE_ADVANCE_SEARCH_PRS = 53;
 
     //permission for Adoptions
-    public static final int PAGE_ADOPTION_REGISTRATION = 109;
-    public static final int PAGE_ADOPTION_REGISTRATION_HOME = 110;
+    public static final int PAGE_ADOPTION_REGISTRATION_HOME = 109;
+    public static final int PAGE_ADOPTION_REGISTRATION = 110;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT = 111;
     public static final int PAGE_ADOPTION_RE_REGISTRATION = 112;
     public static final int PAGE_ADOPTION_INIT = 113;
@@ -103,7 +103,8 @@ public final class Permission {
 
     //permission for death
     public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
-    public static final int PAGE_DEATH_CERTIFICATE = 122;
+    public static final int PAGE_DEATH_REGISTRATION = 122;
     public static final int PAGE_LATE_DEATH_REGISTRATION = 123;
-    public static final int PAGE_DEATH_REGISTRATION = 124;
+    public static final int PAGE_DEATH_CERTIFICATE = 124;
+
 }

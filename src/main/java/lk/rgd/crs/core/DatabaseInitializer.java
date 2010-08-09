@@ -247,9 +247,10 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             //Death Registration
             bs.set(Permission.PAGE_DEATH_REGISTRATION_INIT);
-            bs.set(Permission.PAGE_DEATH_CERTIFICATE);
-            bs.set(Permission.PAGE_LATE_DEATH_REGISTRATION);
             bs.set(Permission.PAGE_DEATH_REGISTRATION);
+            bs.set(Permission.PAGE_LATE_DEATH_REGISTRATION);
+            bs.set(Permission.PAGE_DEATH_CERTIFICATE);
+            
             //Search
             bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);
             bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
@@ -267,8 +268,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PRS_ADD_PERSON);
 
             //adoption related
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_HOME);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION);
 
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
