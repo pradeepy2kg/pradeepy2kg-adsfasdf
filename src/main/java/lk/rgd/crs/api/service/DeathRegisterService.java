@@ -26,7 +26,7 @@ public interface DeathRegisterService {
      * @param deathRegistration the death registration to be updated
      * @param user              the user initiating the action
      */
-    public void editDeathRegistration(DeathRegister deathRegistration, User user);
+    public void updateDeathRegistration(DeathRegister deathRegistration, User user);
 
     /**
      * returns DeathRegister object for a given IDUKey
