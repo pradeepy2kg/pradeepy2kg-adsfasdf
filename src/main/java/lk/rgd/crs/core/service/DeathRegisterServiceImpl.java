@@ -5,6 +5,8 @@ import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.common.api.domain.User;
 
+import java.util.List;
+
 /**
  * @author Indunil Moremada
  */
@@ -36,5 +38,16 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public DeathRegister getById(long deathRegisterIdUKey, User user) {
         return deathRegisterDAO.getById(deathRegisterIdUKey);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void deleteDeathRegistration(long deathRegiserIdUKey, User user) {
+        deathRegisterDAO.deleteDeathRegistration(deathRegiserIdUKey);
+    }
+
+    public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user) {
+        return deathRegisterDAO.getPaginatedListForState(pageNo, noOfRows, status);
     }
 }

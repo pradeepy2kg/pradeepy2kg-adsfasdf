@@ -2,6 +2,8 @@ package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.DeathRegister;
 
+import java.util.List;
+
 /**
  * @author Indunil Moremada
  */
@@ -35,4 +37,6 @@ public interface DeathRegisterDAO {
      * @param deathRegistrationIdUKey the unique id of the death registration to be removed
      */
     public void deleteDeathRegistration(long deathRegistrationIdUKey);
+
+    public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status);
 }

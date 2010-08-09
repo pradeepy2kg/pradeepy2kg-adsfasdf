@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "DEATH_REGISTER", schema = "CRS")
+
+@NamedQueries({
+    @NamedQuery(name = "death.register.filter.by.status.paginated", query = "SELECT deathRegister FROM DeathRegister adoption " +
+        "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.idUKey desc")
+})
 public class DeathRegister implements Serializable {
     public enum State {
         DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
