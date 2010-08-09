@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
+import java.util.Date;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.domain.DeathInfo;
-import lk.rgd.crs.api.domain.DeathPersonInfo;
-import lk.rgd.crs.api.domain.DeclarantInfo;
-import lk.rgd.crs.api.domain.WitnessInfo;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.web.WebConstants;
 
 /**
@@ -42,6 +42,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
+    private final DeathRegisterService service;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
@@ -49,11 +50,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                               CountryDAO countryDAO) {
+                               CountryDAO countryDAO,DeathRegisterService deathRegisterService) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
+        this.service=deathRegisterService;
     }
 
     public String welcome() {
@@ -142,6 +144,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     public Map<Integer, String> getDistrictList() {

@@ -1,27 +1,58 @@
 package lk.rgd.crs.api.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Column;
+import java.io.Serializable;
+
 /**
- * Created by IntelliJ IDEA.
- * User: tharanga
- * Date: Aug 6, 2010
- * Time: 12:08:55 PM
- * To change this template use File | Settings | File Templates.
+ * @author Indunil Moremada
+ *         An instance representing death information of the death person
  */
-public class DeathPersonInfo {
 
+@Embeddable
+public class DeathPersonInfo implements Serializable {
 
+    @Column(nullable = true)
     private String deathPersonPINorNIC;
+
+    @Column(nullable = true)
+
     private int deathPersonCountryId;
+
+    @Column(nullable = true)
     private String deathPersonPassportNo;
+
+    @Column(nullable = true)
     private String deathPersonAge;
+
+    /**
+     * Gender 0 - male, 1 - female, 2 - unknown
+     */
+    @Column(nullable = false)
     private int deathPersonGender;
+
+    @Column(nullable = true)
     private int deathPersonRace;
+
+    @Column(nullable = true, length = 600)
     private String deathPersonNameOfficialLang;
+
+    @Column(nullable = true, length = 600)
     private String deathPersonNameInEnglish;
+
+    @Column(nullable = true, length = 255)
     private String deathPersonPermanentAddress;
+
+    @Column(nullable = true)
     private String deathPersonFatherPINorNIC;
+
+    @Column(nullable = true)
     private String deathPersonFatherFullName;
+
+    @Column(nullable = true)
     private String deathPersonMotherPINorNIC;
+
+    @Column(nullable = true)
     private String deathPersonMotherFullName;
 
     public String getDeathPersonPINorNIC() {
