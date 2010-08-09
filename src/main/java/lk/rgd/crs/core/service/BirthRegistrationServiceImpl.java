@@ -54,7 +54,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
         PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
-        BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO) {
+        BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO, AdoptionOrderDAO adoptionOrderDAO) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -66,6 +66,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         this.userManager = userManager;
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.bcSearchDAO = bcSearchDAO;
+        this.adoptionOrderDAO = adoptionOrderDAO;
     }
 
     /**
@@ -107,8 +108,24 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // TODO adoption specific validations
         addBirthDeclaration(bdf, ignoreWarnings, user);
-//        adoptionOrderDAO.
-        // TODO archive adoption order and add new one
+
+        AdoptionOrder existing = adoptionOrderDAO.getById(bdf.getRegister().getAdoptionUKey());
+        final AdoptionOrder.State currentState = existing.getStatus();
+        if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED == currentState) {
+            // mark existing adoption order as archived
+            existing.setStatus(AdoptionOrder.State.ADOPTION_ORDER_ARCHIVED);
+            adoptionOrderDAO.updateAdoptionOrder(existing);
+
+            // add new adoption order
+            adoptionOrderDAO.addAdoptionOrder(existing);
+            logger.debug("Changes captured for adoption record, new record : {} and archived record : {}",
+                existing.getIdUKey(), bdf.getRegister().getAdoptionUKey());
+
+        } else {
+            handleException("Cannot archive adoption order : " + bdf.getRegister().getAdoptionUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
+
         logger.debug("Added a new adoption birth declaration. IDUKey : {}", bdf.getIdUKey());
         return null;
     }
