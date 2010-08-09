@@ -21,22 +21,14 @@
             "sPaginationType": "full_numbers"
         });
     });
-
 </script>
 <div>
     <s:actionerror/>
 </div>
 
 <div>
-    <s:if test="#request.bdf != null || #request.searchResultList.size>0">
-
-    </s:if>
-
-
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend>
-            <s:label value="%{getText('searchResult.label')}"/>
-        </legend>
+        <legend><s:label value="%{getText('searchResult.label')}"/></legend>
         <table id="search-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
@@ -48,7 +40,6 @@
                 <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
                 <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
                 <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
-                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -77,28 +68,19 @@
                         <s:elseif test="register.birthType.ordinal() == 0">
                             <s:label value="%{getText('no.label')}"/>
                         </s:elseif>
-                    </td>                    
-                    <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
-                        <s:param name="bdId" value="idUKey"/>
-                    </s:url>
-                    <td align="center">
-                        <s:if test="register.status.ordinal() !=4">
-                            <s:a href="%{viewSelected}" title="%{getText('view.label')}">
-                                <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
-                                     border="none"/>
-                            </s:a>
-                        </s:if>
                     </td>
-                        <%--TODO still implementing--%>
-                    <s:url id="editSelected" action="eprBirthRegistrationInit.do">
-                        <s:param name="bdId" value="idUKey"/>
-                    </s:url>
                     <td align="center">
-                        <s:if test="register.status.ordinal() ==0">
-                            <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                     border="none"/></s:a>
-                        </s:if>
+                        <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
+                            <s:param name="bdId" value="idUKey"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                            <s:param name="printed" value="#request.printed"/>
+                            <s:param name="printStart" value="#request.printStart"/>
+                        </s:url>
+                        <s:a href="%{cetificatePrintUrl}">
+                            <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                        </s:a>
                     </td>
                 </tr>
             </s:iterator>
