@@ -233,7 +233,6 @@
                                     </s:a>
                                 </s:if>
                             </td>
-                                <%--TODO still implementing--%>
 
                             <td align="center">
                                 <s:if test="register.status.ordinal() ==0">

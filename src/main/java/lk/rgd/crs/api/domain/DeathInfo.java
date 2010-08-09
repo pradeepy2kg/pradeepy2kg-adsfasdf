@@ -1,31 +1,82 @@
 package lk.rgd.crs.api.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
- * User: tharanga
- * Date: Aug 6, 2010
- * Time: 12:08:12 PM
+ * @author Indunil Moremada
+ * @author Tharanga Punchihewa
+ *         An instance representing death information submitted for the deathRegistration of a death (page 1 of the form)
  */
-public class DeathInfo {
+@Embeddable
+public class DeathInfo implements Serializable {
 
+    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
+    @Column(nullable = false)
     private long deathSerialNo;
+
+    @Column(nullable = true)
     private long deathCertificateNo;
+
+    @Column(nullable = false, length = 255)
     private String placeOfDeath;
+
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfDeath;
+
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfRegistration;
+
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date dateOfIssue;
+
+    @Column(nullable = true)
     private String placeOfIssue;
+
+    @Column(nullable = false)
     private String timeOfDeath;
+
+    @Column(nullable = false)
     private int deathDistrictId;
+
+    @Column(nullable = false)
     private int deathDivisionId;
+
+    @Column(nullable = true, length = 255)
     private String placeOfDeathInEnglish;
+
+    @Column(nullable = true, length = 255)
     private String placeOfDeathInOfficialLang;
+
+    /**
+     * 1-Yes, 0-No
+     */
+    @Column(nullable = true)
     private boolean causeOfDeathEstablished;
+
+    /**
+     * 1-Yes , 0-No
+     */
+    @Column(nullable = true)
     private boolean infantLessThan30Days;
+
+    @Column(nullable = true, length = 600)
     private String causeOfDeath;
+
+    @Column(nullable = true)
     private String icdCodeOfCause;
+
+    @Column(nullable = false)
     private String placeOfBurial;
 
     public long getDeathSerialNo() {

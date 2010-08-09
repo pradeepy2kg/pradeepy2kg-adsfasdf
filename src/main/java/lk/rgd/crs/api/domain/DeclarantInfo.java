@@ -1,16 +1,48 @@
 package lk.rgd.crs.api.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Column;
+import java.io.Serializable;
+
 /**
  * @author Duminda Dharmakeerthi
+ * @author Indunil Moremada
+ *         An instance representing death declarant information submitted for the death
  */
-public class DeclarantInfo {
 
+@Embeddable
+public class DeclarantInfo implements Serializable {
+
+    /**
+     * 0 - father, 1 - mother, 2 - brotherOrSister,
+     * 3 - sonOrDaughter, 4 - relative, 5 - other
+     */
+    public enum DeclarantType {
+        FATHER,
+        MOTHER,
+        BORTHER_OR_SISTER,
+        SON_OR_DAUGHTER,
+        RELATIVE,
+        OTHER
+    }
+
+    @Column(nullable = true)
     private String declarantNICorPIN;
+
+    @Column(nullable = true)
     private String declarantFullName;
+
+    @Column(nullable = true)
     private String declarantAddress;
+
+    @Column(nullable = true)
     private String declarantPhone;
+
+    @Column(nullable = true)
     private String declarantEMail;
-    private int declarantType;
+
+    @Column(nullable = false)
+    private DeclarantType declarantType;
 
 
     public void setDeclarantNICorPIN(String declarantNICorPIN) {
@@ -33,7 +65,7 @@ public class DeclarantInfo {
         this.declarantEMail = declarantEMail;
     }
 
-    public void setDeclarantType(int declarantType) {
+    public void setDeclarantType(DeclarantType declarantType) {
         this.declarantType = declarantType;
     }
 
@@ -57,7 +89,7 @@ public class DeclarantInfo {
         return declarantEMail;
     }
 
-    public int getDeclarantType() {
+    public DeclarantType getDeclarantType() {
         return declarantType;
-    }    
+    }
 }
