@@ -15,38 +15,6 @@
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
-<script type="text/javascript">
-    function printPage() {
-        if (!jsPrintSetup) {
-            var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
-            if (option) {
-                window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
-            }
-        } else {
-            // set page orientation.
-            jsPrintSetup.setOption('orientation', jsPrintSetup.kPortraitOrientation);
-            // set margins.
-            jsPrintSetup.setOption('marginTop', 0);
-            jsPrintSetup.setOption('marginLeft', 20);
-
-
-            // set page header
-            jsPrintSetup.setOption('headerStrLeft', '');
-            jsPrintSetup.setOption('headerStrCenter', '');
-            jsPrintSetup.setOption('headerStrRight', '');
-            // set empty page footer
-            jsPrintSetup.setOption('footerStrLeft', '');
-            jsPrintSetup.setOption('footerStrCenter', '');
-            jsPrintSetup.setOption('footerStrRight', '');
-
-            jsPrintSetup.print();
-
-            var res = confirm(document.getElementById("printMessage").value);
-            history.go(0);
-        }
-    }
-</script>
-
 <div id="adoption-certificate-form-outer">
 <form action="eprMarkAdoptionCertificateAsPrinted.do">
 <table style="width: 100%; border:none; border-collapse:collapse; ">
@@ -244,7 +212,7 @@
     </tr>
 </table>
 
-<div class="adoption-form-submit">
+<div class="form-submit">
     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
     <s:hidden name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
@@ -259,6 +227,8 @@
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
-    <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
+    <div class="form-submit">
+        <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
+    </div>
 </s:form>
 </div>
