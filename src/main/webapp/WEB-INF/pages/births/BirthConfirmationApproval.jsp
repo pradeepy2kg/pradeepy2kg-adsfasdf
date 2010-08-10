@@ -1,5 +1,4 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <style type="text/css" title="currentStyle">
@@ -8,8 +7,18 @@
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
 
 <script>
+
+    $(function() {
+        $("#searchStartDatePicker").datepicker();
+    });
+
+    $(function() {
+        $("#searchEndDatePicker").datepicker();
+    });
     $(document).ready(function() {
         $('#confirm-list-table').dataTable({
             "bPaginate": true,
@@ -96,11 +105,11 @@
             <td><s:label value="%{getText('serial.label')}"/></td>
             <td><s:textfield value="" name="bdId" cssStyle="width:232px;"/></td>
             <td align="right"><s:label value="%{getText('date.from.label')}"
-                                       cssStyle="margin-right:5px;"/><sx:datetimepicker name="searchStartDate"
-                                                                                        displayFormat="yyyy-MM-dd"/></td>
+                                       cssStyle="margin-right:5px;"/><s:textfield name="searchStartDate"
+                                                                                  id="searchStartDatePicker"></s:textfield></td>
             <td align="right"><s:label value="%{getText('date.to.label')}"
-                                       cssStyle="margin-right:5px;"/><sx:datetimepicker name="searchEndDate"
-                                                                                        displayFormat="yyyy-MM-dd"/></td>
+                                       cssStyle="margin-right:5px;"/><s:textfield name="searchEndDate"
+                                                                                  id="searchEndDatePicker"></s:textfield></td>
         </tr>
         <tr>
             <td colspan="4" class="button" align="right">

@@ -7,34 +7,41 @@
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
 <script>
-$(function() {
-    $('img#place').bind('click', function(evt) {
-        var id=$("input#placeOfBirth").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans",soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs+wsMethod, soapBody); //Request is ready to be sent
-
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+    $(function() {
+        $("#submitDatePicker").datepicker();
     });
+    $(function() {
+        $('img#place').bind('click', function(evt) {
+            var id = $("input#placeOfBirth").attr("value");
+            var wsMethod = "transliterate";
+            var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-    function processResponse(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    }
-})
+            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+            soapBody.attr("xmlns:trans", soapNs);
+            soapBody.appendChild(new SOAPObject('InputName')).val(id);
+            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+            //Create a new SOAP Request
+            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+            //Lets send it
+            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+        });
+
+        function processResponse(respObj) {
+            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
+        }
+    })
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -112,8 +119,9 @@ $(function() {
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
-        <td><s:textfield cssClass="disable" disabled="true" name="#session.birthConfirmation_db.register.bdfSerialNo" />
-            <s:textfield cssClass="disable" disabled="true" name="#session.birthConfirmation_db.register.dateOfRegistration"/></td>
+        <td><s:textfield cssClass="disable" disabled="true" name="#session.birthConfirmation_db.register.bdfSerialNo"/>
+            <s:textfield cssClass="disable" disabled="true"
+                         name="#session.birthConfirmation_db.register.dateOfRegistration"/></td>
     </tr>
     <tr>
         <td>2</td>
@@ -166,18 +174,19 @@ $(function() {
         <td class="cell_01">3</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
         <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Year</label></td>
-        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
+        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}"
+                                         cssClass="disable" disabled="true"
                                          size="4"/></td>
         <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Month</label></td>
-        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.month+1}" cssClass="disable" disabled="true"
+        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.month+1}"
+                                         cssClass="disable" disabled="true"
                                          size="4"/></td>
         <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Day</label></td>
-        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}" cssClass="disable" disabled="true"
+        <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}"
+                                         cssClass="disable" disabled="true"
                                          size="4"/></td>
-        <td colspan="6" width="350px"><sx:datetimepicker id="submitDatePicker" name="child.dateOfBirth"
-                                                         displayFormat="yyyy-MM-dd"
-                                                         value="child.dateOfBirth"
-                                                         onmouseover="javascript:splitDate('submitDatePicker')"/></td>
+        <td colspan="6" width="350px"><s:textfield name="child.dateOfBirth" id="submitDatePicker"></s:textfield>
+        </td>
     </tr>
     <tr>
         <td>4</td>
@@ -223,13 +232,15 @@ $(function() {
     <tr>
         <td></td>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
-        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable" disabled="true" cols="38"/></td>
+        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
+                                    disabled="true" cols="38"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
         <td></td>
         <td><label>*in sinhala<br>*in tamil<br>Place in English</label></td>
-        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
+        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable"
+                                    disabled="true" cols="38"/></td>
         <td colspan="6">
             <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
@@ -238,7 +249,8 @@ $(function() {
     <tr>
         <td>6</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
-        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
+                                     disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
     </tr>
     <tr>
@@ -253,7 +265,8 @@ $(function() {
     <tr>
         <td>8</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
-        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable" disabled="true"/></td>
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
+                                     disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35"/></td>
     </tr>
     <tr>
@@ -266,7 +279,8 @@ $(function() {
     <tr>
         <td>10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
-        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable" disabled="true"
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
+                                     disabled="true"
                                      value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
         <td><label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label></td>
         <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
@@ -320,16 +334,16 @@ $(function() {
     }
 
     function validateSkipChanges() {
-        var noSerialEntered=document.getElementById('p1error1').value;
-        var notChecked=document.getElementById('p1errorckbx').value;
-        var serial=document.getElementById('SerialNo');
-        var skipChanges=document.getElementById('skipChangesCBox');
-        if(serial.value==0){
+        var noSerialEntered = document.getElementById('p1error1').value;
+        var notChecked = document.getElementById('p1errorckbx').value;
+        var serial = document.getElementById('SerialNo');
+        var skipChanges = document.getElementById('skipChangesCBox');
+        if (serial.value == 0) {
             alert(noSerialEntered);
             return false;
         }
-        if(!skipChanges.checked ){
-           alert(notChecked);
+        if (!skipChanges.checked) {
+            alert(notChecked);
             return false;
         }
     }

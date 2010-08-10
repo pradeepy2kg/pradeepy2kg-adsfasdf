@@ -3,8 +3,19 @@
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
+
+      $(function() {
+        $("#searchStartDatePicker").datepicker();
+    });
+
+    $(function() {
+        $("#searchEndDatePicker").datepicker();
+    });
     $(document).ready(function() {
         $('#approval-list-table').dataTable({
             "bPaginate": true,
@@ -54,79 +65,78 @@
     });
 
 
-var fieldName = 'index';
+    var fieldName = 'index';
 
-function
-        selectall(form, allCheck) {
-    var i = form.elements.length;
-    var e = form.elements;
-    var name = new Array();
-    var value = new Array();
-    var j = 0;
-    for (var k = 0; k < i; k++)
-    {
-        if (form.elements[k].name == fieldName)
+    function
+            selectall(form, allCheck) {
+        var i = form.elements.length;
+        var e = form.elements;
+        var name = new Array();
+        var value = new Array();
+        var j = 0;
+        for (var k = 0; k < i; k++)
         {
-            if (form.elements[k].checked == true) {
-                value[j] = form.elements[k].value;
-                j++;
-            }
-        }
-    }
-    checkSelect(form, allCheck);
-}
-function selectCheck(obj, form, allCheck)
-{
-    var i = form.elements.length;
-    for (var k = 0; k < i; k++)
-    {
-        if (form.elements[k].name == fieldName)
-        {
-            form.elements[k].checked = obj;
-        }
-    }
-    selectall(form, allCheck);
-}
-
-function selectallMe(form, allCheck)
-{
-    if (allCheck.checked == true)
-    {
-        selectCheck(true, form, allCheck);
-    }
-    else
-    {
-        selectCheck(false, form, allCheck);
-    }
-}
-function checkSelect(form, allCheck)
-{
-    var i = form.elements.length;
-    var berror = true;
-    for (var k = 0; k < i; k++)
-    {
-        if (form.elements[k].name == fieldName)
-        {
-            if (form.elements[k].checked == false)
+            if (form.elements[k].name == fieldName)
             {
-                berror = false;
-                break;
+                if (form.elements[k].checked == true) {
+                    value[j] = form.elements[k].value;
+                    j++;
+                }
             }
         }
+        checkSelect(form, allCheck);
     }
-    if (berror == false)
+    function selectCheck(obj, form, allCheck)
     {
-        allCheck.checked = false;
+        var i = form.elements.length;
+        for (var k = 0; k < i; k++)
+        {
+            if (form.elements[k].name == fieldName)
+            {
+                form.elements[k].checked = obj;
+            }
+        }
+        selectall(form, allCheck);
     }
-    else
+
+    function selectallMe(form, allCheck)
     {
-        allCheck.checked = true;
+        if (allCheck.checked == true)
+        {
+            selectCheck(true, form, allCheck);
+        }
+        else
+        {
+            selectCheck(false, form, allCheck);
+        }
     }
-}
+    function checkSelect(form, allCheck)
+    {
+        var i = form.elements.length;
+        var berror = true;
+        for (var k = 0; k < i; k++)
+        {
+            if (form.elements[k].name == fieldName)
+            {
+                if (form.elements[k].checked == false)
+                {
+                    berror = false;
+                    break;
+                }
+            }
+        }
+        if (berror == false)
+        {
+            allCheck.checked = false;
+        }
+        else
+        {
+            allCheck.checked = true;
+        }
+    }
 </script>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
@@ -161,11 +171,11 @@ function checkSelect(form, allCheck)
             <td><s:label value="%{getText('serial.label')}"/></td>
             <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;"/></td>
             <td align="right"><s:label value="%{getText('date.from.label')}"
-                                       cssStyle=" margin-right:5px;"/><sx:datetimepicker name="searchStartDate"
-                                                                                         displayFormat="yyyy-MM-dd"/></td>
+                                       cssStyle=" margin-right:5px;"/><s:textfield id="searchStartDatePicker"
+                                                                                   name="searchStartDate"></s:textfield></td>
             <td align="right"><s:label value="%{getText('date.to.label')}"
-                                       cssStyle=" margin-right:5px;"/><sx:datetimepicker name="searchEndDate"
-                                                                                         displayFormat="yyyy-MM-dd"/></td>
+                                       cssStyle=" margin-right:5px;"/><s:textfield id="searchEndDatePicker"
+                                                                                   name="searchEndDate"></s:textfield></td>
         </tr>
         <tr>
             <td colspan="4" class="button" align="right">

@@ -1,9 +1,22 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
 
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
     <script>
+        $(function() {
+            $("#datePicker").datepicker();
+        });
+        $(function() {
+            $("#bcSearchDatePicker").datepicker();
+        });
+        $(function() {
+            $("#dateOfSubmission").datepicker();
+        });
         // mode 1 = passing District, will return DS list
         $(function() {
             $('select#districtId').bind('change', function(evt1) {
@@ -48,8 +61,7 @@
                         <tr>
                             <td><label><span class="font-8">යොමුකළ දිනය<br>*Tamil<br>Submitted Date</span></label>
                             </td>
-                            <td><sx:datetimepicker id="dateOfSubmission" name="bcSearch.dateOfSubmission"
-                                                   displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate()"/>
+                            <td><s:textfield id="dateOfSubmission" name="bcSearch.dateOfSubmission"></s:textfield>
                             </td>
                         </tr>
                     </table>
@@ -77,13 +89,16 @@
                 <td colspan="6"><s:textarea name="bcSearch.applicantAddress" id="applicantAddress"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම  රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>*Tamil<br>
+                <td class="font-9"><label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම රාජ්‍ය භාෂාවෙන්
+                    (සිංහල / දෙමළ)<br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made ?
                 </label></td>
-                <td colspan="6"><s:textarea name="bcSearch.childFullNameOfficialLang" id="childFullNameOfficialLang"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.childFullNameOfficialLang"
+                                            id="childFullNameOfficialLang"/></td>
             </tr>
             <tr>
-                <td class="font-9"><label> ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන් <br>*Tamil<br>
+                <td class="font-9"><label> ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන්
+                    <br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made in English?
                 </label></td>
                 <td colspan="6"><s:textarea name="bcSearch.childFullNameEnglish" id="childFullNameEnglish"/></td>
@@ -113,9 +128,7 @@
             </tr>
             <tr style="border-left:1px solid #000000;">
                 <td class="font-9" width="150px"><label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
-                <td>
-                    <sx:datetimepicker id="datePicker" name="bcSearch.dateOfBirth" displayFormat="yyyy-MM-dd"
-                                       onchange="javascript:splitDate('datePicker')"/>
+                <td><s:textfield id="bcSearchDatePicker" name="bcSearch.dateOfBirth"></s:textfield>
                 </td>
                 <td class="font-9"><label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
                 <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth"/></td>
@@ -142,9 +155,7 @@
                 </td>
                 <td><s:textfield name="bcSearch.certificateNo" id="certificateNo"/></td>
                 <td class="font-9" width="150px"><label>නිකුත් කළ දිනය<br>* Tamil<br>Date of Issue</label></td>
-                <td>
-                    <sx:datetimepicker id="datePicker" name="bcSearch.certificateIssueDate" displayFormat="yyyy-MM-dd"
-                                       onchange="javascript:splitDate('datePicker')"/>
+                <td><s:textfield id="datePicker" name="bcSearch.certificateIssueDate"></s:textfield>
                 </td>
             </tr>
             </tbody>
