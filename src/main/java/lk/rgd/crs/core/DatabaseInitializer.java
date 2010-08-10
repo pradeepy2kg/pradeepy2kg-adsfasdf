@@ -55,6 +55,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(BDDivision.class);
         entityClasses.add(DSDivision.class);
         entityClasses.add(GNDivision.class);
+        entityClasses.add(Event.class);
         entityClasses.add(Race.class);
         entityClasses.add(Role.class);
         entityClasses.add(User.class);
@@ -203,9 +204,11 @@ public class DatabaseInitializer implements ApplicationContextAware {
                     new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
 
-            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+            if (!mysql) {
+                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                     new ClassPathResource("database/populate_sample_crs.sql"), false);
-            logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
+                logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
+            }
 
         } catch (Exception e) {
             logger.error("Error populating the database with initial data from : populate_sample_data/crs/prs.sql", e);
