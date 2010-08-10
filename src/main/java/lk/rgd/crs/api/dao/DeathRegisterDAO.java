@@ -59,10 +59,10 @@ public interface DeathRegisterDAO {
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows);
 
     /**
-     * get a list of death registration based on requested serial number
+     * get a death registration based on requested serial number
      *
      * @param deathSerialNo serial number of the death registration
-     * @return list of DeathRegister objects
+     * @return DeathRegister object
      */
-    public List <DeathRegister> getByDeathSerialNo(String deathSerialNo);
+    public DeathRegister getByDeathSerialNo(String deathSerialNo);
 }
