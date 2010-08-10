@@ -72,7 +72,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         assertEquals("No Action errors", 0, action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
-        //recode 167 is live birth
+        //recode 168 is live birth
         assertEquals("Live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());
 
         //   assertEquals("Number of warnings ", 3, action.getWarnings().size());
