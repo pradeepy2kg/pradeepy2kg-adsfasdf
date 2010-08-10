@@ -175,28 +175,28 @@
         <td>නැත / xx / No</td>
         <td><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'false':''}"
                      id="causeOfDeathEstablished"
-                     onclick="disable(false)"/>
+                     />
         </td>
         <td colspan="2" rowspan="2">මරණය දින 30 කට අඩු ළදරුවෙකුගේද? <br/>
             in tamil <br/>
             Is the death of an infant less than 30 days?
         </td>
         <td colspan="2">නැත / xx / No</td>
-        <td><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'false':''}" value="false"
+        <td><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'false':''}" value="true"
                      id="infantLessThan30Days"
-                     onclick="disable(false)"/>
+                     />
         </td>
     </tr>
     <tr>
         <td>ඔව් / xx /Yes</td>
         <td><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'true':''}" value="false"
                      id="causeOfDeathEstablished"
-                     onclick="disable(false)"/>
+                     />
         </td>
         <td colspan="2">ඔව් / xx /Yes</td>
         <td><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'true':''}"
                      id="infantLessThan30Days"
-                     onclick="disable(false)"/>
+                     />
         </td>
     </tr>
     <tr>
@@ -419,21 +419,21 @@
         <td colspan="2">
             <s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'FATHER':''}"
                      id="declarantType"
-                     onclick="disable(false)"/></td>
+                     /></td>
         <td>පියා <br/>
             in tamil <br/>
             Father
         </td>
         <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'MOTHER':''}"
                      id="declarantType"
-                     onclick="disable(false)"/></td>
+                     /></td>
         <td>සහෝදරයා සහෝදරිය <br/>
             in tamil <br/>
             Brother / Sister
         </td>
         <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
                      id="declarantType"
-                     onclick="disable(false)"/></td>
+                     /></td>
     </tr>
     <tr>
         <td>පුත්‍රයා / දියණිය <br/>
@@ -442,23 +442,70 @@
         </td>
         <td colspan="2"><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
                                  id="declarantType"
-                                 onclick="disable(false)"/></td>
+                                 /></td>
         <td>නෑයන <br/>් பாதுகாவலர் <br/>
             Relative
         </td>
         <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'RELATIVE':''}"
                      id="declarantType"
-                     onclick="disable(false)"/></td>
+                     /></td>
         <td>වෙනත් <br/>
             in tamil <br/>
             Other
         </td>
-        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'OTHER':''}" value="5"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'OTHER':''}" value="OTHER"
                      id="declarantType"
-                     onclick="disable(false)"/></td>
+                     /></td>
     </tr>
     </tbody>
 </table>
+
+<table class="death-reg-header-table">
+  <tr>
+        <td>තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
+  </tr>
+</table>
+
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
+       class="font-9">
+    <col style="width:20%;"/>
+    <col width="400px"/>
+    <col width="100px"/>
+    <col/>
+    <tbody>
+
+    <tr>
+        <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
+            NIC
+        </td>
+        <td colspan="2"><s:textfield id="notifying_authority_NICorPIN"
+                                     name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
+            <img src="<s:url value="/images/search-father.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
+        <td colspan="3"><s:textarea id="notifyingAuthorityName"
+                                    name="notifyingAuthority.notifyingAuthorityName" cssStyle="width:96%;float:right;margin-right:10px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
+        <td colspan="3"><s:textarea id="notifyingAuthorityAddress"
+                                    name="notifyingAuthority.notifyingAuthorityAddress" cssStyle="width:96%;float:right;margin-right:10px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
+            Authority
+        </td>
+        <td colspan="1"></td>
+        <td colspan="1">දිනය<br>திகதி<br>Date</td>
+        <td colspan="1"><s:textfield id="submitDatePicker"
+                                     name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
+    </tr>
+    </tbody>
+</table>
+
 <div class="adoption-form-submit">
     <s:submit value="%{getText('submit.lable')}" cssStyle="margin-top:10px;"/>
 </div>
