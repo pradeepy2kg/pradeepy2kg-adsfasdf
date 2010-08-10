@@ -69,11 +69,17 @@ public class DeathRegister implements Serializable {
     @Column(nullable= false)
     private Type deathType;
 
-    /**
-     * The preferred language of for the record
-     */
-    @Column(nullable = false, columnDefinition = "char(2) default 'si'")
-    private String preferredLanguage = "si";
+    public String getReasonForLateRegistration() {
+        return reasonForLateRegistration;
+    }
+
+    public void setReasonForLateRegistration(String reasonForLateRegistration) {
+        this.reasonForLateRegistration = reasonForLateRegistration;
+    }
+
+    @Column(nullable = true)
+    private String reasonForLateRegistration;
+
 
     public State getStatus() {
         return status;
@@ -144,14 +150,6 @@ public class DeathRegister implements Serializable {
 
     public void setDeath(DeathInfo death) {
         this.death = death;
-    }
-
-    public String getPreferredLanguage() {
-        return preferredLanguage;
-    }
-
-    public void setPreferredLanguage(String preferredLanguage) {
-        this.preferredLanguage = preferredLanguage;
     }
     
     public Type getDeathType() {

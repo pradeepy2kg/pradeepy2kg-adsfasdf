@@ -53,6 +53,12 @@ public class DeathInfo implements Serializable {
     private String placeOfDeathInOfficialLang;
 
     /**
+     * The preferred language of for the record
+     */
+    @Column(nullable = false, columnDefinition = "char(2) default 'si'")
+    private String preferredLanguage = "si";
+
+    /**
      * 1-Yes, 0-No
      */
     @Column(nullable = true)
@@ -191,5 +197,13 @@ public class DeathInfo implements Serializable {
 
     public void setBirthDivision(BDDivision birthDivision) {
         this.birthDivision = birthDivision;
+    }
+
+    public String getPreferredLanguage() {
+        return preferredLanguage;
+    }
+
+    public void setPreferredLanguage(String preferredLanguage) {
+        this.preferredLanguage = preferredLanguage;
     }
 }
