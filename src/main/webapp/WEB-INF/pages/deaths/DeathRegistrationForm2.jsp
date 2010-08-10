@@ -1,7 +1,7 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%--<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>--%>
 <script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
 
 <script type="text/javascript">
