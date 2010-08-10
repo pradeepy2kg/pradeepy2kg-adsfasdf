@@ -1,8 +1,19 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="rowNumber" name="row"/>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
 <script type="text/javascript">
+    $(function() {
+        $("#marriageDatePicker").datepicker();
+    });
+    $(function() {
+        $("#informDatePicker").datepicker();
+    });
     $(function() {
         $('img#informant_lookup').bind('click', function(evt1) {
             var id1 = $("input#informantNICorPIN").attr("value");
@@ -67,9 +78,8 @@
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
-            <td colspan="2"><sx:datetimepicker id="marriageDatePicker" name="marriage.dateOfMarriage"
-                                               displayFormat="yyyy-MM-dd"
-                                               onmouseover="javascript:splitDate('marriageDatePicker')"/></td>
+            <td colspan="2">
+                    <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"/>
         </tr>
         <tr>
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
@@ -283,13 +293,12 @@
     </tr>
     <tr>
         <td colspan="1"><label>දිනය <br>*in tamil<br>Date</label></td>
-        <td colspan="4"><sx:datetimepicker id="informDatePicker" name="informant.informantSignDate"
-                                           displayFormat="yyyy-MM-dd"
-                                           onmouseover="javascript:splitDate('secondDatePicker')"/></td>
+        <td colspan="4">
+                <s:textfield name="informant.informantSignDate" id="informDatePicker"/>
     </tr>
     </tbody>
 </table>
-   <s:hidden name="rowNumber" value="%{row}"/>
+<s:hidden name="rowNumber" value="%{row}"/>
 
 <s:hidden id="p3error1" value="%{getText('p3.person.error.value')}"/>
 <s:hidden id="p3error2" value="%{getText('p3.Informent.Name.error.value')}"/>
@@ -327,8 +336,8 @@
         var element;
         var returnval;
         /*date related validations*/
-        var submitDatePicker = dojo.widget.byId('informDatePicker').inputNode.value;
-        var submit = new Date(submitDatePicker);
+        var submit = getDate(document.getElementById('informDatePicker').value);
+       // var submit = new Date(submitDatePicker);
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
             flag = true;
@@ -354,8 +363,8 @@
                 errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
             }
 
-            submitDatePicker = dojo.widget.byId('marriageDatePicker').inputNode.value;
-            submit = new Date(submitDatePicker);
+            submit =getDate(document.getElementById('marriageDatePicker').value);
+           // submit = new Date(submitDatePicker);
             if (!(submit.getTime())) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
                 flag = true;
@@ -378,6 +387,16 @@
         }
         return returnval;
     }
+
+     function getDate(date) {
+        var y = date.substring(date.lastIndexOf("/")+1, date.length);
+        date=date.substring(0,date.lastIndexOf("/"));
+        var d=date.substring(date.lastIndexOf("/")+1, date.length);
+        var m=date.substring(0,date.lastIndexOf("/"));
+        return new Date(y,m,d);
+    }
+
+
 </script>
 <s:hidden name="pageNo" value="3"/>
 <div class="form-submit">

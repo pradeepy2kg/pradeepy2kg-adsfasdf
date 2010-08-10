@@ -1,9 +1,24 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="rowNumber" name="row"/>
-<script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
+
 <script>
+    $(function() {
+        $("#fatherDatePicker").datepicker();
+    });
+    $(function() {
+        $("#motherDatePicker").datepicker();
+    });
+    $(function() {
+        $("#admitDatePicker").datepicker();
+    });
     $(function() {
         $('img#father_lookup').bind('click', function(evt1) {
             var id1 = $("input#father_pinOrNic").attr("value");
@@ -100,8 +115,7 @@
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="2">
-            <sx:datetimepicker id="fatherDatePicker" name="parent.fatherDOB" displayFormat="yyyy-MM-dd"
-                               onmouseover="javascript:splitDate('fatherDatePicker')"/>
+            <s:textfield name="parent.fatherDOB" id="fatherDatePicker"/>
         </td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
@@ -174,8 +188,8 @@
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
-        <td colspan="3"><sx:datetimepicker id="motherDatePicker" name="parent.motherDOB" displayFormat="yyyy-MM-dd"
-                                           onmouseover="javascript:splitDate('motherDatePicker')"/></td>
+        <td colspan="3">
+                <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
@@ -252,9 +266,7 @@
         <td colspan="3" class="passport"><s:textfield name="parent.motherAdmissionNo"/></td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
-        <td colspan="3"><sx:datetimepicker id="admitDatePicker" name="parent.motherAdmissionDate"
-                                           displayFormat="yyyy-MM-dd"
-                                           onmouseover="javascript:splitDate('admitDatePicker')"/></td>
+        <td colspan="3"><s:textfield name="parent.motherAdmissionDate" id="admitDatePicker"/></td>
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌ව සම්බන්ධ කල හැකි තොරතුරු <br>தாயின்
@@ -302,7 +314,7 @@
     }
     function motherage() {
         var child_bday = document.getElementById('childDateOfBirth').value;
-        var mother_dob = dojo.widget.byId('motherDatePicker').inputNode.value;
+        var mother_dob = getDate(document.getElementById('motherDatePicker').value);
         var check_mother_dob = mother_dob;
         mother_dob = new Date(mother_dob);
         var child_dob = new Date(child_bday);
@@ -323,6 +335,13 @@
             mother_age_at_birth.value = mother_age;
             return true;
         }
+    }
+        function getDate(date) {
+        var y = date.substring(date.lastIndexOf("/")+1, date.length);
+        date=date.substring(0,date.lastIndexOf("/"));
+        var d=date.substring(date.lastIndexOf("/")+1, date.length);
+        var m=date.substring(0,date.lastIndexOf("/"));
+        return new Date(y,m,d);
     }
 </script>
 
