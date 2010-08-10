@@ -74,4 +74,20 @@ public interface DeathRegisterService {
      * @return list of DeathRegister objects
      */
     public List<DeathRegister> getByDeathSerialNo(String deathSerialNo, User user);
+
+    /**
+     * Approve a death registration already captured by the DEO by an ADR or higher authority
+     *
+     * @param deathRegisterIdUKey the unique id of the death registration which is to be approved
+     * @param user                the user initiating the action
+     */
+    public void approveDeathRegistration(long deathRegisterIdUKey, User user);
+
+    /**
+     * Reject a death registration already captured by the DEO by an ADR or higher authority
+     *
+     * @param deathRegisterIdUKey the unique id of the death registration which is to be rejected
+     * @param user                the user initiating the action
+     */
+    public void rejectDeathRegistration(long deathRegisterIdUKey, User user);
 }

@@ -402,6 +402,7 @@ bs.set(Permission.PAGE_DEATH_APPROVAL_PRINT);
             Role argRole = roleDao.getRole("ARG");
             bs = new BitSet();
             bs.set(Permission.APPROVE_ADOPTION);
+            bs.set(Permission.APPROVE_DEATH);
             bs.or(drRole.getPermBitSet());
             // TODO add any ARG specific permissions
             argRole.setPermBitSet(bs);
@@ -410,6 +411,7 @@ bs.set(Permission.PAGE_DEATH_APPROVAL_PRINT);
             Role rgRole = roleDao.getRole("RG");
             bs = new BitSet();
             bs.set(Permission.APPROVE_ADOPTION);
+            bs.set(Permission.APPROVE_DEATH);
             bs.or(argRole.getPermBitSet());
             // TODO add any RG specific permissions
             rgRole.setPermBitSet(bs);
