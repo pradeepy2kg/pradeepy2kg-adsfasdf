@@ -5,7 +5,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+
 <style type="text/css">
     #birth-confirmation-print-form-outer table tr td{padding:0 5px;}
     @media print {
