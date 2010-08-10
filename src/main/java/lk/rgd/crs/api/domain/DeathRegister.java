@@ -27,7 +27,7 @@ public class DeathRegister implements Serializable {
 
         REJECTED,  // 2 - An death registration rejected by the ARG
 
-        DEATH_CERTIFICATE_PRINTED, // 3 Acertifcate is printed
+        DEATH_CERTIFICATE_PRINTED, // 3 A certifcate is printed
     }
 
     /**

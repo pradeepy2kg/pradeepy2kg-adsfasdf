@@ -5,7 +5,9 @@ import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Role;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -72,6 +74,32 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     /**
      * @inheritDoc
      */
+    public void approveDeathRegistration(long deathRegisterIdUKey, User user) {
+        setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void rejectDeathRegistration(long deathRegisterIdUKey, User user) {
+        setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.REJECTED);
+    }
+
+    private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
+        DeathRegister dr = deathRegisterDAO.getById(idUKey);
+        if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
+            validateAccess(user);
+            dr.setStatus(state);
+        } else {
+            handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
+                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        deathRegisterDAO.updateDeathRegistration(dr);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public void deleteDeathRegistration(long deathRegiserIdUKey, User user) {
         logger.debug("attempt to delete death registration record : {}", deathRegiserIdUKey);
         DeathRegister dr = deathRegisterDAO.getById(deathRegiserIdUKey);
@@ -130,5 +158,19 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
                 " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
 
+    }
+
+    private void validateAccess(User user) {
+        String role = user.getRole().getRoleId();
+        if (!(User.State.ACTIVE == user.getStatus()) ||
+            !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role))) {
+            handleException("User : " + user.getUserId() + " of role : " + role +
+                " is not allowed access to approve/reject an death registration : ", ErrorCodes.PERMISSION_DENIED);
+        }
+
+        if (!user.isAuthorized(Permission.APPROVE_DEATH)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject death registration",
+                ErrorCodes.PERMISSION_DENIED);
+        }
     }
 }
