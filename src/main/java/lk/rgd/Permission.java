@@ -12,6 +12,9 @@ public final class Permission {
     public static final int APPROVE_BDF_CONFIRMATION = 6;
     public static final int EDIT_ADOPTION = 7;
     public static final int APPROVE_ADOPTION = 8;
+    public static final int APPROVE_DEATH = 9;
+    public static final int EDIT_DEATH = 10;
+
 
     //permission for pages
     public static final int PAGE_CREATE_USER = 25;
@@ -102,12 +105,12 @@ public final class Permission {
 
 
     //permission for death
-      public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
+    public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
     public static final int PAGE_DEATH_REGISTRATION = 122;
     public static final int PAGE_LATE_DEATH_REGISTRATION = 123;
     public static final int PAGE_DEATH_CERTIFICATE = 124;
     public static final int PAGE_LATE_DEATH_HOME = 125;
     public static final int PAGE_DEATH_APPROVAL_PRINT = 127;
     public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 128;
-    public static final int APPROVE_DEATH = 129;
+
 }                                                                   
