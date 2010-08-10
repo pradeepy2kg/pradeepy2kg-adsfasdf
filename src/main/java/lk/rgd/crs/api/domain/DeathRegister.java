@@ -20,6 +20,7 @@ import java.io.Serializable;
         "WHERE deathRegister.death.deathSerialNo = :deathSerialNo")*/
 })
 public class DeathRegister implements Serializable {
+
     public enum State {
         DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
 
@@ -54,6 +55,12 @@ public class DeathRegister implements Serializable {
 
     @Column(nullable = false)
     private State status;
+
+    /**
+     * The preferred language of for the record
+     */
+    @Column(nullable = false, columnDefinition = "char(2) default 'si'")
+    private String preferredLanguage = "si";
 
     public State getStatus() {
         return status;
@@ -124,5 +131,13 @@ public class DeathRegister implements Serializable {
 
     public void setDeath(DeathInfo death) {
         this.death = death;
+    }
+
+    public String getPreferredLanguage() {
+        return preferredLanguage;
+    }
+
+    public void setPreferredLanguage(String preferredLanguage) {
+        this.preferredLanguage = preferredLanguage;
     }
 }

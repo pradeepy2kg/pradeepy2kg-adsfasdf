@@ -1,9 +1,6 @@
 package lk.rgd.crs.api.domain;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -42,11 +39,12 @@ public class DeathInfo implements Serializable {
     @Column(nullable = true)
     private String timeOfDeath;
 
-    @Column(nullable = false)
-    private int deathDistrictId;
-
-    @Column(nullable = false)
-    private int deathDivisionId;
+     /**
+     * The Birth/Death registration division where the death is registered (Includes District)
+     */
+    @ManyToOne
+    @JoinColumn(name = "bdDivisionUKey", nullable = false)
+    private BDDivision birthDivision;
 
     @Column(nullable = true, length = 255)
     private String placeOfDeathInEnglish;
@@ -131,22 +129,6 @@ public class DeathInfo implements Serializable {
         this.timeOfDeath = timeOfDeath;
     }
 
-    public int getDeathDistrictId() {
-        return deathDistrictId;
-    }
-
-    public void setDeathDistrictId(int deathDistrictId) {
-        this.deathDistrictId = deathDistrictId;
-    }
-
-    public int getDeathDivisionId() {
-        return deathDivisionId;
-    }
-
-    public void setDeathDivisionId(int deathDivisionId) {
-        this.deathDivisionId = deathDivisionId;
-    }
-
     public String getPlaceOfDeathInEnglish() {
         return placeOfDeathInEnglish;
     }
@@ -201,5 +183,13 @@ public class DeathInfo implements Serializable {
 
     public void setPlaceOfBurial(String placeOfBurial) {
         this.placeOfBurial = placeOfBurial;
+    }
+
+    public BDDivision getBirthDivision() {
+        return birthDivision;
+    }
+
+    public void setBirthDivision(BDDivision birthDivision) {
+        this.birthDivision = birthDivision;
     }
 }

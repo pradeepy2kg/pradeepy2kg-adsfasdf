@@ -41,6 +41,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
             handleException("can not add death registration " + deathRegistration.getIdUKey() +
                 " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
+        deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
     }
 
