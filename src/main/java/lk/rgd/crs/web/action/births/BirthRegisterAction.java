@@ -196,6 +196,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.editLiveBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.STILL) {
                         service.editStillBirthDeclaration(bdf, true, user);
+                    } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                        service.editAdoptionBirthDeclaration(bdf, true, user);
                     }
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -598,6 +600,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     service.markLiveBirthCertificateAsPrinted(bdf, user);
                 } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     service.markStillBirthCertificateAsPrinted(bdf, user);
+                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                    service.markAdoptionBirthCertificateAsPrinted(bdf, user);
                 }
                 beanPopulate(bdf);
 

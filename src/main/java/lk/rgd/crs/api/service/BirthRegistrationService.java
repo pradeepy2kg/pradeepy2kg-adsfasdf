@@ -71,6 +71,15 @@ public interface BirthRegistrationService {
     public void editStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
+     * Update an existing BDF for a adoption birth by a ADR <b>before</b> approval
+     *
+     * @param bdf            the BDF to be updated
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     */
+    public void editAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
      * Remove an existing BDF for a Live birth by a DEO or ADR <b>before</b> approval
      *
      * @param bdf            the BDF to be added
@@ -87,6 +96,15 @@ public interface BirthRegistrationService {
      * @param user           the user initiating the action
      */
     public void deleteStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Remove an existing BDF for a adoption birth by a ADR <b>before</b> approval
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     */
+    public void deleteAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Approve a list of BDF forms for Live and Still births. Will only approve those that triggers no warnings. The result
@@ -117,6 +135,16 @@ public interface BirthRegistrationService {
      * @return a list of warnings, if ignoreWarnings is false
      */
     public List<UserWarning> approveStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Approve a single BDF for a child adoption by an ADR or higher authority
+     *
+     * @param bdf            the BDF to be approved
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param user           the user initiating the action
+     * @return a list of warnings, if ignoreWarnings is false
+     */
+    public List<UserWarning> approveAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Mark that the confirmation form for the BDF has been printed
@@ -186,6 +214,14 @@ public interface BirthRegistrationService {
      * @param user the user initiating the action
      */
     public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
+
+    /**
+     * Mark that the Birth Certificate for the BDF has been printed for adopted child
+     *
+     * @param bdf  the BDF for which the BC has been printed
+     * @param user the user initiating the action
+     */
+    public void markAdoptionBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
 
     /**
      * Mark that the Birth Certificates(Live/Still) for the BDF IDs given has been printed

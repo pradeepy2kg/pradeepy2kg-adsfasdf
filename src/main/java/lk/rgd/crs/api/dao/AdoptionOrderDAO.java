@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public interface AdoptionOrderDAO {
      * certificate printed
      *
      * @param adoption existing adoption order
+     * @param bdf      the BDF added for a adopted child
      */
-    public void initiateBirthDeclaration(AdoptionOrder adoption);
+    public void initiateBirthDeclaration(AdoptionOrder adoption, BirthDeclaration bdf);
 }

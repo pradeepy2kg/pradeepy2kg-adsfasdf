@@ -270,6 +270,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     warnings = service.approveStillBirthDeclaration(bdf, false, user);
                     logger.debug("inside approve() : requested to approve still birth declaration bdId {} ", bdId);
+                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                    warnings = service.approveAdoptionBirthDeclaration(bdf, false, user);
                 }
             }
             addActionMessage(getText("message.approval.Success"));
@@ -327,6 +329,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     warnings = service.approveStillBirthDeclaration(bdf, false, user);
                     logger.debug("inside directApprove() : direct approve still birth declaration with bdId : {} ", bdId);
+                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                    warnings = service.approveAdoptionBirthDeclaration(bdf, false, user);
+                    logger.debug("inside directApprove() : direct approve adoption birth declaration with bdId : {} ", bdId);
                 }
             }
         }
@@ -379,6 +384,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         service.approveLiveBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.STILL) {
                         service.approveStillBirthDeclaration(bdf, true, user);
+                    } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                        service.approveAdoptionBirthDeclaration(bdf, true, user);
                     }
                     //checks whether the request is from immediately after entering a birth declaration
                     if (directApprovalFlag) {
@@ -508,6 +515,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 service.deleteLiveBirthDeclaration(bdf, false, user);
             } else if (birthType == BirthDeclaration.BirthType.STILL) {
                 service.deleteStillBirthDeclaration(bdf, false, user);
+            } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                service.deleteAdoptionBirthDeclaration(bdf, false, user);
             }
         }
         catch (CRSRuntimeException e) {
