@@ -1,8 +1,21 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
 <script>
+    $(function() {
+        $("#receivedDatePicker").datepicker();
+    });
+    $(function() {
+        $("#bdayDatePicker").datepicker();
+    });
+    $(function() {
+        $("#orderIssuedDatePicker").datepicker();
+    });
     $(function() {
         $('select#birthDistrictId').bind('change', function(evt1) {
             var id = $("select#birthDistrictId").attr("value");
@@ -69,9 +82,9 @@
         <td width="330px">නියෝගය ලැබුණු දිනය <br/>
             Received Date
         </td>
-        <td style="text-align:right;"><sx:datetimepicker id="receivedDatePicker" name="adoption.orderReceivedDate"
-                                                         displayFormat="yyyy-MM-dd"
-                                                         onchange="javascript:splitDate('receivedDatePicker')"/></td>
+        <td style="text-align:right;"><s:textfield id="receivedDatePicker"
+                                                   name="adoption.orderReceivedDate"></s:textfield>
+        </td>
     </tr>
     <tr>
         <td>අධිකරණය<br/>
@@ -83,9 +96,9 @@
         <td>නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
-        <td style="text-align:right;"><sx:datetimepicker id="orderIssuedDatePicker" name="adoption.orderIssuedDate"
-                                                         displayFormat="yyyy-MM-dd"
-                                                         onchange="javascript:splitDate('issueDatePicker')"/></td>
+        <td style="text-align:right;"><s:textfield id="orderIssuedDatePicker"
+                                                   name="adoption.orderIssuedDate"></s:textfield>
+        </td>
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
@@ -250,9 +263,10 @@
         <td>උපන් දිනය<br/>
             Date of birth
         </td>
-        <td colspan="2" style="text-align:right;"><sx:datetimepicker id="bdayDatePicker" name="adoption.childBirthDate"
-                                                                     displayFormat="yyyy-MM-dd"
-                                                                     onchange="javascript:splitDate('bdayDatePicker')"/></td>
+        <td colspan="2" style="text-align:right;"><s:textfield id="bdayDatePicker"
+                                                               name="adoption.childBirthDate"
+                                                               onchange="calYearAndMonth()"></s:textfield>
+        </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
             Gender
         </td>
@@ -273,7 +287,8 @@
         <td>මාස <br/>
             Months
         </td>
-        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()" onchange="validateNum(document.getElementById('childAgeMonths').value)"/></td>
+        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()"
+                         onchange="validateNum(document.getElementById('childAgeMonths').value)"/></td>
     </tr>
     <tr>
         <td>දැනට පවතින නම <br/>
@@ -394,13 +409,11 @@
         var returnval;
         var flag = false;
         var inputs = new Array(9);
-        var errormsg = new Array("receivedDate", "court", "orderIssuedDate", "courtOrderNumber", "judgeName",
-                "applicantName", "applicantAddress", "childAgeYears", "childAgeMonths");
 
         //these inpute can not be null
-        inputs[0] = new Date(document.getElementById("receivedDatePicker").value);
+        inputs[0] = getDate(document.getElementById("receivedDatePicker").value)
         inputs[1] = document.getElementById("court").value;
-        inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
+        inputs[2] = getDate(document.getElementById("orderIssuedDatePicker").value);
         inputs[3] = document.getElementById("courtOrderNumber").value;
         inputs[4] = document.getElementById("judgeName").value;
         inputs[5] = document.getElementById("applicantName").value;
@@ -452,15 +465,13 @@
     }
     function calYearAndMonth()
     {
-
-        var bday = new Date(dojo.widget.byId('bdayDatePicker').inputNode.value);
+        var bday = getDate(document.getElementById("bdayDatePicker").value);
         var today = new Date();
         var ageMonthBDay = bday.getMonth();
         var ageYearBDay = bday.getYear();
         var ageMonthTOday = today.getMonth();
         var ageYearTOday = today.getYear();
         var ageMonth,ageYear = 0;
-
         if (ageMonthTOday >= ageMonthBDay) {
             ageMonth = ageMonthTOday - ageMonthBDay;
             ageYear = ageYearTOday - ageYearBDay;
@@ -469,7 +480,7 @@
             ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
             ageYear = (ageYearTOday - 1) - ageYearBDay;
         }
-        if (bday != null && ageMonth != null) {
+        if (ageMonth != null) {
             if (confirm(document.getElementById("lable01").value + "   :" + ageYear
                     + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
                 document.getElementById("childAgeYears").value = ageYear;
@@ -482,6 +493,14 @@
         if (isNaN(num)) {
             alert("not a number");
         }
+    }
+
+    function getDate(date) {
+        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
+        date = date.substring(0, date.lastIndexOf("/"));
+        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
+        var m = date.substring(0, date.lastIndexOf("/"));
+        return new Date(y, m, d);
     }
 
 </script>

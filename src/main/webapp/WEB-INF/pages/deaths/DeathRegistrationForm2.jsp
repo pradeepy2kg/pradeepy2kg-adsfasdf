@@ -1,10 +1,19 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%--<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>--%>
-<script type="text/javascript" src='<s:url value="/js/datemanipulater.js"/>'></script>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
 
 <script type="text/javascript">
+
+    $(function() {
+        $("#submitDatePicker").datepicker();
+    });
+
     $(function() {
         $('img#declarant_lookup').bind('click', function(evt1) {
             var id1 = $("input#declarant_pinOrNic").attr("value");
@@ -194,10 +203,8 @@
                 </td>
                 <td colspan="1"></td>
                 <td colspan="1">දිනය<br>திகதி<br>Date</td>
-                <td colspan="1"><sx:datetimepicker id="submitDatePicker"
-                                                   name="notifyingAuthority.notifyingAuthoritySignDate"
-                                                   displayFormat="yyyy-MM-dd" onmouseover="javascript:splitDate()"/>
-                </td>
+                <td colspan="1"><s:textfield id="submitDatePicker"
+                                             name="notifyingAuthority.notifyingAuthoritySignDate"></s:textfield></td>
             </tr>
             </tbody>
         </table>
