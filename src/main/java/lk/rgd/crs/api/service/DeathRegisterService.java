@@ -67,13 +67,13 @@ public interface DeathRegisterService {
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user);
 
     /**
-     * get a list of death registration based on requested serial number
+     * get a death registration based on requested serial number
      *
      * @param user          the user initiating the action
      * @param deathSerialNo serial number of the death registration
-     * @return list of DeathRegister objects
+     * @return DeathRegister object
      */
-    public List<DeathRegister> getByDeathSerialNo(String deathSerialNo, User user);
+    public DeathRegister getByDeathSerialNo(String deathSerialNo, User user);
 
     /**
      * Approve a death registration already captured by the DEO by an ADR or higher authority
@@ -94,7 +94,7 @@ public interface DeathRegisterService {
     /**
      * mark that death certificate for the death registration as printed
      *
-     * @param deathRegisterIdUKey the unique id of the death registration 
+     * @param deathRegisterIdUKey the unique id of the death registration
      * @param user                the user initiating the action
      */
     public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user);

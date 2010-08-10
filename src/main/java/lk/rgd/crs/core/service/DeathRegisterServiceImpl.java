@@ -36,7 +36,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     public void addDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding new death registration");
         businessValidations(deathRegistration);
-        DeathRegister dr = getByDeathSerialNo(deathRegistration.getDeath().getDeathSerialNo(), user).get(0);
+        DeathRegister dr = getByDeathSerialNo(deathRegistration.getDeath().getDeathSerialNo(), user);
         if (dr != null) {
             handleException("can not add death registration " + deathRegistration.getIdUKey() +
                 " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
@@ -158,13 +158,13 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     /**
      * @inheritDoc
      */
-    public List<DeathRegister> getByDeathSerialNo(String deathSerialNo, User user) {
+    public DeathRegister getByDeathSerialNo(String deathSerialNo, User user) {
         //todo after finalizing the requirements has to be modified whether to return a single entry or list
         try {
             return deathRegisterDAO.getByDeathSerialNo(deathSerialNo);
         } catch (NoResultException e) {
             logger.error("No result found", e);
-            return new ArrayList();
+            return null;
         }
     }
 
