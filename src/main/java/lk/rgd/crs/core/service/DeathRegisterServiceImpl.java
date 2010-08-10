@@ -75,6 +75,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public void approveDeathRegistration(long deathRegisterIdUKey, User user) {
+        logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
         setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
     }
 
@@ -82,7 +83,22 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public void rejectDeathRegistration(long deathRegisterIdUKey, User user) {
+        logger.debug("attempt to reject death registration record : {}", deathRegisterIdUKey);
         setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.REJECTED);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user) {
+        logger.debug("requested to mark death certificate as printed for the record : {} ", deathRegisterIdUKey);
+        DeathRegister dr = deathRegisterDAO.getById(deathRegisterIdUKey);
+        if (DeathRegister.State.APPROVED != dr.getStatus()) {
+            handleException("Cannot change status , " + dr.getIdUKey() +
+                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }
+        dr.setStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED);
+        deathRegisterDAO.updateDeathRegistration(dr);
     }
 
     private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
@@ -114,6 +130,10 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get death registrations with the state : " + status
+                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
         try {
             return deathRegisterDAO.getPaginatedListForState(pageNo, noOfRows, status);
         } catch (NoResultException e) {
@@ -126,6 +146,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
+        logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
         try {
             return deathRegisterDAO.getPaginatedListForAll(pageNo, noOfRows);
         } catch (NoResultException e) {
