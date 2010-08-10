@@ -23,11 +23,6 @@ import java.util.Date;
 import java.util.Calendar;
 
 /**
- * Created by IntelliJ IDEA.
- * User: widu
- * Date: Jul 20, 2010
- * Time: 11:52:16 AM
- * To change this template use File | Settings | File Templates.
  * @author Janith Widarshana. 
  */
 public class BirthConfirmationTest extends CustomStrutsTestCase {

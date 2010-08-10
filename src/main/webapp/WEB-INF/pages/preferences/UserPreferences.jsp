@@ -2,16 +2,50 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
- <script>
-        function view_DSDivs() {
-            dojo.event.topic.publish("view_DSDivs");
-        }
 
-        function view_BDDivs() {
-            dojo.event.topic.publish("view_BDDivs");
-        }
-    </script>
-    <s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListUserPreferences"/>
+<script>
+    // mode 1 = passing District, will return DS list
+    // mode 2 = passing DsDivision, will return BD list
+    // any other = passing district, will return DS list and the BD list for the first DS
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var id = $("select#districtId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        });
+    });
+
+
+</script>
+
+<s:url id="loadDSDivList" action="../ajaxSupport_loadDSDivListUserPreferences"/>
 
 <div id="user-preference-outer">
     <s:form action="eprUserPreferencesAction" name="user_preference_form" id="user_preference" method="POST">
@@ -32,8 +66,9 @@
                         <label>දිස්ත්‍රික්කය / மாவட்டம் / District</label>
                     </div>
                 </td>
-                <td><s:select name="birthDistrictId" list="districtList" value="birthDistrictId"
-                                  onchange="javascript:view_DSDivs();return false;" />
+                <td colspan="6" class="table_reg_cell_01">
+                    <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
+                              cssStyle="width:98.5%;"/>
                 </td>
             </tr>
             <tr>
@@ -42,16 +77,18 @@
                         <label>D.S.කොට්ඨාශය / பிரிவு / D.S. Division</label>
                     </div>
                 </td>
-                <td width="250px"><sx:div id="dsDivisionId" value="dsDivisionId" href="%{loadDSDivList}" theme="ajax"
-                                            listenTopics="view_DSDivs" formId="user_preference"></sx:div>
+                <td width="250px"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                            value="%{dsDivisionId}"
+                                            cssStyle="float:left;  width:240px;"/>
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td>
                     <div class="form-submit">
-                        <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"></s:submit>                     
-                        <s:submit action="passChangePageLoad" value="%{getText('change_pass.label')}" cssStyle="float:right;"/>
+                        <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"></s:submit>
+                        <s:submit action="passChangePageLoad" value="%{getText('change_pass.label')}"
+                                  cssStyle="float:right;"/>
                     </div>
                 </td>
             </tr>

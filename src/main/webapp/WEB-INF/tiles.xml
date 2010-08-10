@@ -199,11 +199,11 @@
     </definition>
 
     <!-- Death Registration Tiles -->
+
     <definition name="epr.deathHome" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathHome.jsp"/>
         <put-attribute name="title" value="death_home.title"/>
     </definition>
-
     <definition name="epr.deathDeclaration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm1.jsp"/>
         <put-attribute name="title" value="death_declaration_form1.title"/>
@@ -218,7 +218,6 @@
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm3.jsp"/>
         <put-attribute name="title" value="death_declaration_form3.title"/>
     </definition>
-
     <definition name="epr.lateDeathDeclaration" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/LateDeclarationOfDeath.jsp"/>
         <put-attribute name="title" value="late_death_declaration.title"/>
@@ -227,6 +226,11 @@
     <definition name="epr.deathCertificate" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathCertificate.jsp"/>
         <put-attribute name="title" value="death_certificate.title"/>
+    </definition>
+
+    <definition name="epr.deathApproveAndPrint" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathApprovalAndPrintList.jsp"/>
+        <put-attribute name="title" value="death_approve_print_list.label"/>
     </definition>
 
     <!--  User Management Tiles -->

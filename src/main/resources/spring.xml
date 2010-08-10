@@ -88,7 +88,7 @@
     </bean>
 
     <bean id="deathRegisterService" class="lk.rgd.crs.core.service.DeathRegisterServiceImpl">
-      <constructor-arg ref="deathRegisterDAOImpl"/>
+        <constructor-arg ref="deathRegisterDAOImpl"/>
     </bean>
 
     <bean id="adoptionOrderService" class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
@@ -175,5 +175,8 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="deathRegisterService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
+
+
 </beans>
