@@ -443,6 +443,36 @@
                 method="filterByStatus">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
+        <!--todo-->
+        <action name="eprDeathEditMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="deathDeclarationEditMode">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprApproveDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="approveDeath">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprRejectDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="rejectDeath">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprDeleteDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="deleteDeath">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprDeathViewMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="deathDeclarationViewMode">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprPrintDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="markDeathDeclarationAsPrinted">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
 
     </package>
 

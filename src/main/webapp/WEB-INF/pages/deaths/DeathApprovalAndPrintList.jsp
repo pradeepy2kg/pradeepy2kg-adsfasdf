@@ -80,139 +80,217 @@
 </table>
 <div id="birth-register-approval-body">
 
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
-        <legend></legend>
-        <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-            <thead>
-            <tr>
-                <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
-                <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
-                <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
-                <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
-                <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
-                <th><s:label name="veiw" value="%{getText('view.label')}"/></th>
-                <th><s:label name="print" value="%{getText('printCertificete.label')}"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <s:iterator value="deathApprovalAndPrintList" status="approvedAndPrint" id="approveAndPrintList">
+<fieldset style="margin-bottom:10px;margin-top:20px;border:none">
+<legend></legend>
+<table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+<thead>
+<tr>
+    <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
+    <th><s:label name="name" value="%{getText('name.label')}"/></th>
+    <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
+    <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
+    <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
+    <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
+    <th><s:label name="veiw" value="%{getText('view.label')}"/></th>
+    <th><s:label name="print" value="%{getText('printCertificete.label')}"/></th>
+</tr>
+</thead>
+<tbody>
+<s:iterator value="deathApprovalAndPrintList" status="approvedAndPrint" id="approveAndPrintList">
 
-                <tr>
-                    <td>
-                        <s:property value="death.deathSerialNo"/>
-                    </td>
-                    <td>
-                        <s:property value="deathPerson.deathPersonNameOfficialLang"/>
-                    </td>
+    <tr>
+        <td>
+            <s:property value="death.deathSerialNo"/>
+        </td>
+        <td>
+            <s:property value="deathPerson.deathPersonNameOfficialLang"/>
+        </td>
 
-                    <s:if test="status.ordinal()==0">
-                        <td align="center">
-                            <s:a href="#" title="%{getText('editTooltip.label')}">
-                                <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                     border="none"/></s:a>
-                        </td>
-                        <td align="center"><s:a href="#"
-                                                title="%{getText('approveTooltip.label')}">
-                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                 border="none" id="approveImage"/></s:a>
-                        </td>
-                        <td align="center"><s:a href="#"
-                                                title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
-                                                                                               src="<s:url value='/images/reject.gif'/>"
-                                                                                               width="25"
-                                                                                               height="25"
-                                                                                               border="none"/></s:a>
-                        </td>
-                        <td align="center"><s:a href="%{deleteSelected}"
-                                                title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
-                                                                                               src="<s:url value='/images/delete.gif'/>"
-                                                                                               width="25"
-                                                                                               height="25"
-                                                                                               border="none"/></s:a>
-                        </td>
-                        <td align="center"><s:a href="#"
-                                                title="%{getText('viewAdoptionRegistrationTooltip.label')}">
-                            <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
-                        <td></td>
-                    </s:if>
+        <s:if test="status.ordinal()==0">
 
-                        <%--only veiw and print if approved--%>
-                    <s:if test="status.ordinal()==1">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td align="center"><s:a href="#"
-                                                title="%{getText('viewAdoptionRegistrationTooltip.label')}">
-                            <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
-                        <td align="center">
-                            <s:a href="#"
-                                 title="%{getText('printAdoptionRegistrationTooltip.label')}">
-                                <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
-                                     width="25"
-                                     height="25"/>
-                            </s:a>
-                        </td>
+            <s:url id="editSelected" action="eprDeathEditMode.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
 
-                    </s:if>
+            <s:url id="approveSelected" action="eprApproveDeath.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
 
-                    <s:if test="status.ordinal()==2">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+            <s:url id="rejectSelected" action="eprRejectDeath.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
 
-                        <td align="center"><s:a href="#"
-                                                title="%{getText('viewAdoptionRegistrationTooltip.label')}">
-                            <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
+            <s:url id="deleteSelected" action="eprDeleteDeath.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
 
-                        <td></td>
-                    </s:if>
-                    <s:if test="status.ordinal()==3">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+            <s:url id="viewSelected" action="eprDeathViewMode.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
 
-                        <td align="center"><s:a href="#"
-                                                title="%{getText('viewAdoptionRegistrationTooltip.label')}">
-                            <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
-                                 border="none"/></s:a>
-                        </td>
-                        <td align="center">
-                            <s:a href="#"
-                                 title="%{getText('printAdoptionRegistrationTooltip.label')}">
-                                <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
-                                     width="25"
-                                     height="25"/>
-                            </s:a>
-                        </td>
-                    </s:if>
-                </tr>
-            </s:iterator>
-            </tbody>
-            <%--customize based on user role--%>
+            <td align="center">
+                <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                    <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                         border="none"/></s:a>
+            </td>
+            <td align="center"><s:a href="%{approveSelected}"
+                                    title="%{getText('approveTooltip.label')}">
+                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                     border="none" id="approveImage"/></s:a>
+            </td>
+            <td align="center"><s:a href="%{rejectSelected}"
+                                    title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
+                                                                                   src="<s:url value='/images/reject.gif'/>"
+                                                                                   width="25"
+                                                                                   height="25"
+                                                                                   border="none"/></s:a>
+            </td>
+            <td align="center"><s:a href="%{deleteSelected}"
+                                    title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
+                                                                                   src="<s:url value='/images/delete.gif'/>"
+                                                                                   width="25"
+                                                                                   height="25"
+                                                                                   border="none"/></s:a>
+            </td>
+            <td align="center"><s:a href="%{viewSelected}"
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
+                <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                     border="none"/></s:a>
+            </td>
+            <td></td>
+        </s:if>
 
-            <s:if test="!#request.allowEditDeath">
-            <script type="text/javascript">
-                document.getElementById('editImage').style.display = 'none';
-            </script>
-            </s:if>
-            <s:if test="!#request.allowApproveDeath">
-            <script type="text/javascript">
-                document.getElementById('approveImage').style.display = 'none';
-                document.getElementById('rejectImage').style.display = 'none';
-                document.getElementById('deleteImage').style.display = 'none';
-                document.getElementById('printImage').style.display = 'none';
-            </script>
-            </s:if>
+            <%--only veiw and print if approved--%>
+        <s:if test="status.ordinal()==1">
+
+            <s:url id="viewSelected" action="eprDeathViewMode.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
+
+            <s:url id="cetificatePrintUrl" action="eprPrintDeath.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td align="center"><s:a href="%{viewSelected}"
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
+                <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                     border="none"/></s:a>
+            </td>
+            <td align="center">
+                <s:a href="%{cetificatePrintUrl}"
+                     title="%{getText('printDeathRegistrationTooltip.label')}">
+                    <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
+                         width="25"
+                         height="25"/>
+                </s:a>
+            </td>
+
+        </s:if>
+
+        <s:if test="status.ordinal()==2">
+
+            <s:url id="viewSelected" action="eprDeathViewMode.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td align="center"><s:a href="%{viewSelected}"
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
+                <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                     border="none"/></s:a>
+            </td>
+
+            <td></td>
+        </s:if>
+            <%--already printed--%>
+        <s:if test="status.ordinal()==3">
+
+            <s:url id="viewSelected" action="eprDeathViewMode.do">
+                <s:param name="idUKey" value="idUKey"/>
+                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:param name="pageNo" value="%{#request.pageNo}"/>
+                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            </s:url>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td align="center"><s:a href="%{viewSelected}"
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
+                <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
+                     border="none"/></s:a>
+            </td>
+            <td align="center">
+                <s:a href="#"
+                     title="%{getText('printDeathRegistrationTooltipAgain.label')}">
+                    <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
+                         width="25"
+                         height="25" onclick="print()"/>
+                </s:a>
+            </td>
+        </s:if>
+    </tr>
+</s:iterator>
+</tbody>
+
+<%--customize based on user role--%>
+
+<s:if test="!#request.allowEditDeath">
+<script type="text/javascript">
+    document.getElementById('editImage').style.display = 'none';
+</script>
+</s:if>
+<s:if test="!#request.allowApproveDeath">
+<script type="text/javascript">
+    document.getElementById('approveImage').style.display = 'none';
+    document.getElementById('rejectImage').style.display = 'none';
+    document.getElementById('deleteImage').style.display = 'none';
+    document.getElementById('printImage').style.display = 'none';
+</script>
+</s:if>
 
 
 

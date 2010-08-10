@@ -138,7 +138,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String adoptionDeclarationEditMode() {
         logger.debug("requested to edit AdoptionOrder with idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
-        if (adoption.getStatus().ordinal() != AdoptionOrder.State.DATA_ENTRY.ordinal()) {
+        if (adoption.getStatus() != AdoptionOrder.State.DATA_ENTRY) {
             //not in data entry mode
             addActionError(getText("adoption.error.editNotAllowed"));
             return ERROR;
