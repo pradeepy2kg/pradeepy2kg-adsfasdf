@@ -102,11 +102,11 @@ public final class Permission {
 
 
     //permission for death
-    public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
+      public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
     public static final int PAGE_DEATH_REGISTRATION = 122;
     public static final int PAGE_LATE_DEATH_REGISTRATION = 123;
     public static final int PAGE_DEATH_CERTIFICATE = 124;
-    public static final int PAGE_LATE_DEATH_HOME = 125; 
+    public static final int PAGE_LATE_DEATH_HOME = 125;
     public static final int PAGE_DEATH_APPROVAL_PRINT = 127;
     public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 128;
     public static final int APPROVE_DEATH = 129;

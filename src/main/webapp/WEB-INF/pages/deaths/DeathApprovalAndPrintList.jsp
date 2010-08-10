@@ -1,5 +1,4 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -96,6 +95,9 @@
     <th><s:label name="print" value="%{getText('printCertificete.label')}"/></th>
 </tr>
 </thead>
+<tbody>
+
+</tbody>
 
 <%--<tbody>
 <s:iterator status="approvalStatus" value="adoptionApprovalAndPrintList" id="approvalList">
