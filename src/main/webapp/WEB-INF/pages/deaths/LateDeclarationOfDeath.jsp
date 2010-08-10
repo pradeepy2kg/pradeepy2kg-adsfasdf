@@ -34,10 +34,8 @@
                         பிறப்பைப் பதிவு திகதி <br/>
                         Date of Registration
                     </td>
-                    <td style="width:50%;text-align:right;"><sx:datetimepicker id="dateOfRegistration"
-                                                                               name="death.dateOfRegistration"
-                                                                               displayFormat="yyyy-MM-dd"
-                                                                               onchange="javascript:splitDate('receivedDatePicker')"/></td>
+                    <td style="width:50%;text-align:right;">
+                        <s:textfield id="dateOfRegistration" name="death.dateOfRegistration"> </s:textfield></td>
                 </tr>
             </table>
         </td>
@@ -102,9 +100,7 @@
         </td>
 
         <td colspan="4" style="text-align:right;">
-            <sx:datetimepicker id="dateOfDeath" name="death.dateOfDeath"
-                               displayFormat="yyyy-MM-dd"
-                               onchange="javascript:splitDate('issueDatePicker')"/>
+            <s:textfield id="dateOfDeath" name="death.dateOfDeath"></s:textfield>
         </td>
 
         <td>වෙලාව

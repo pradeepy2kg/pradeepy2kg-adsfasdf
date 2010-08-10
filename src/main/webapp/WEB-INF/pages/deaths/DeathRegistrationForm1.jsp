@@ -1,7 +1,23 @@
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
+
 <script>
+
+    $(function() {
+        $("#dateOfRegistrationDatePicker").datepicker();
+    });
+
+    $(function() {
+        $("#deathDatePicker").datepicker();
+    });
+
     // mode 1 = passing District, will return DS list
     // mode 2 = passing DsDivision, will return BD list
     // any other = passing district, will return DS list and the BD list for the first DS
@@ -98,9 +114,9 @@
         </td>
         <td style="border:1px solid #000;">ලියාපදිංචි කල දිනය<br>பிறப்பைப் பதிவு திகதி <br>Date of Registration
         </td>
-        <td style="border:1px solid #000;"><sx:datetimepicker id="dateOfRegistrationDatePicker" name="death.dateOfRegistration"
-                                                                     displayFormat="yyyy-MM-dd"
-                                                                     onchange="javascript:splitDate('issueDatePicker')"/></td>
+        <td style="border:1px solid #000;"><s:textfield id="dateOfRegistrationDatePicker"
+                                                        name="death.dateOfRegistration"></s:textfield>
+        </td>
     </tr>
     <tr>
         <td colspan="4" height="15px"></td>
@@ -141,9 +157,8 @@
     </tr>
     <tr>
         <td>මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
-        <td colspan="5" style="text-align:right;"><sx:datetimepicker id="deathDatePicker" name="death.dateOfDeath"
-                                                                     displayFormat="yyyy-MM-dd"
-                                                                     onchange="javascript:splitDate('issueDatePicker')"/></td>
+        <td colspan="5" style="text-align:right;"><s:textfield id="deathDatePicker" name="death.dateOfDeath"></s:textfield>
+        </td>
         <td>වෙලාව<br>*in tamil<br>Time</td>
         <td colspan="2"></td>
     </tr>

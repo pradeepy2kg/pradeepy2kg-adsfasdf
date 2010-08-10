@@ -1,7 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/popreg/css/datepicker.css" type="text/css"/>
+
+
 <script>
+    $(function() {
+        $("#datePicker").datepicker();
+    });
+
     $(function() {
         $('img#confirmant_lookup').bind('click', function(evt1) {
             var id1 = $("input#confirmantNICorPIN").attr("value");
@@ -60,7 +70,7 @@
                     <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
                     <br>PIN / NIC of person confirming the birth details
                 </label></td>
-                <td colspan="3" class="find-person" width="250px" ><s:textfield name="confirmant.confirmantNICorPIN"
+                <td colspan="3" class="find-person" width="250px"><s:textfield name="confirmant.confirmantNICorPIN"
                                                                                id="confirmantNICorPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="confirmant_lookup"/>
@@ -81,10 +91,8 @@
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct </label></td>
                 <td width="150px"><label>දිනය <br>திகதி <br>Date </label></td>
-                <td colspan="2"><sx:datetimepicker id="datePicker" name="confirmant.confirmantSignDate"
-                                                   displayFormat="yyyy-MM-dd"
-                                                   onmouseover="javascript:splitDate('datePicker')"
-                                                   value="%{'today'}"/></td>
+                <td colspan="2"><s:textfield id="datePicker" name="confirmant.confirmantSignDate"></s:textfield>
+                </td>
             </tr>
             <tr>
                 <td colspan="2" style="height:75px">අත්සන<br>கையொப்பம்<br>Signature</td>
@@ -114,8 +122,8 @@
                 var returnval;
 
                 /*date related validations*/
-                var submitDatePicker = dojo.widget.byId('datePicker').inputNode.value;
-                var submit = new Date(submitDatePicker);
+                alert("xsdfv");
+                var submit = document.getElementById('atePicker').value;
                 if (!(submit.getTime())) {
                     errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
                     flag = true;
@@ -133,6 +141,14 @@
                     returnval = false;
                 }
                 return returnval;
+            }
+
+            function getDate(date) {
+                var y = date.substring(date.lastIndexOf("/") + 1, date.length);
+                date = date.substring(0, date.lastIndexOf("/"));
+                var d = date.substring(date.lastIndexOf("/") + 1, date.length);
+                var m = date.substring(0, date.lastIndexOf("/"));
+                return new Date(y, m, d);
             }
         </script>
         <div class="skip-validation">
