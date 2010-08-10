@@ -112,7 +112,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         AdoptionOrder existing = adoptionOrderDAO.getById(bdf.getRegister().getAdoptionUKey());
         final AdoptionOrder.State currentState = existing.getStatus();
         if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED == currentState) {
-            adoptionOrderDAO.initiateBirthDeclaration(existing);
+            adoptionOrderDAO.initiateBirthDeclaration(existing, bdf);
             logger.debug("Changes captured for adoption record, new record : {} and archived record : {}",
                 existing.getIdUKey(), bdf.getRegister().getAdoptionUKey());
 
@@ -176,10 +176,13 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             BirthDeclaration bdf = birthDeclarationDAO.getById(id);
 
             List<UserWarning> w = null;
-            if (isLiveBirth(bdf)) {
+            final BirthDeclaration.BirthType current = bdf.getRegister().getBirthType();
+            if (BirthDeclaration.BirthType.LIVE == current) {
                 w = approveLiveBirthDeclaration(bdf, false, user);
-            } else {
+            } else if (BirthDeclaration.BirthType.STILL == current) {
                 w = approveStillBirthDeclaration(bdf, false, user);
+            } else if (BirthDeclaration.BirthType.ADOPTION == current) {
+                w = approveAdoptionBirthDeclaration(bdf, false, user);
             }
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration ID : " + id +
@@ -202,7 +205,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void editLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         logger.debug("Attempt to edit live birth declaration record : {}", bdf.getIdUKey());
         // ensure name in english is in upper case
         ChildInfo child = bdf.getChild();
@@ -214,7 +217,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         validateAccessOfUser(user, existing);
 
         // TODO check validations as per addLiveBirthDeclaration
@@ -236,7 +239,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void editStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         logger.debug("Attempt to edit still birth declaration record : {}", bdf.getIdUKey());
 
         // TODO check user have access to edit still BDF
@@ -244,7 +247,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         validateAccessOfUser(user, existing);
 
         // TODO check validations as per addStillBirthDeclaration
@@ -263,16 +266,45 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public void editAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        logger.debug("Attempt to edit adoption birth declaration record : {}", bdf.getIdUKey());
+
+        // does the user have access to the BDF being updated
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        validateAccessOfUser(user, existing);
+
+        // TODO check validations as per addAdoptionBirthDeclaration
+
+        // a BDF can be edited by a DEO or ADR only before being approved
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (currentState == BirthDeclaration.State.DATA_ENTRY) {
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            logger.debug("Saved edit changes to adoption birth declaration record : {}  in data entry state", bdf.getIdUKey());
+
+        } else {
+            handleException("Cannot modify adoption birth declaration : " + existing.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public void deleteLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         logger.debug("Attempt to delete live birth declaration record : {}", bdf.getIdUKey());
 
         // does the user have access to the BDF being deleted
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         validateAccessOfUser(user, existing);
 
         // a live BDF can be edited by a DEO or ADR only before being approved
@@ -292,7 +324,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void deleteStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         logger.debug("Attempt to delete still birth declaration record : {}", bdf.getIdUKey());
 
         // TODO check user have access to edit still BDF
@@ -300,7 +332,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         validateAccessOfUser(user, existing);
 
         // a still BDF can be edited by a ADR only before being approved
@@ -318,9 +350,36 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public void deleteAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        logger.debug("Attempt to delete adoption birth declaration record : {}", bdf.getIdUKey());
+
+        // does the user have access to the BDF being deleted
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        validateAccessOfUser(user, existing);
+
+        // a live BDF can be edited by a DEO or ADR only before being approved
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (currentState == BirthDeclaration.State.DATA_ENTRY) {
+            birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
+            logger.debug("Deleted adoption birth declaration record : {} in data entry state", bdf.getIdUKey());
+
+        } else {
+            handleException("Cannot delete adoption birth declaration " + existing.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         logger.debug("Attempt to approve live birth declaration : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
         // ensure name in english is in upper case
         ChildInfo child = bdf.getChild();
@@ -330,7 +389,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -394,12 +453,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> approveStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         logger.debug("Attempt to approve still birth declaration : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -462,14 +521,88 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    public List<UserWarning> approveAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        logger.debug("Attempt to approve adoption birth declaration : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
+        // ensure name in english is in upper case
+        ChildInfo child = bdf.getChild();
+        if (child.getChildFullNameEnglish() != null) {
+            child.setChildFullNameEnglish(child.getChildFullNameEnglish().toUpperCase());
+        }
+
+        // load the existing record
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+
+        // does the user have access to the BDF being added (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        validateAccessOfUser(user, existing);
+
+        // check approve permission
+        if (!user.isAuthorized(Permission.APPROVE_BDF)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
+        // is the BDF currently existing in a state for approval
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (BirthDeclaration.State.DATA_ENTRY != currentState) {
+            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+                ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
+        }
+
+        // validate if the minimum required fields are adequately filled
+        BirthDeclarationValidator.validateMinimalRequirements(bdf);
+
+        // validate standard validations anyway, since even if validations are rejected a note of it will be made
+        // against the approval for audit requirements
+        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+
+        if (!warnings.isEmpty() && ignoreWarnings) {
+            StringBuilder sb = new StringBuilder();
+            if (existing.getRegister().getComments() != null) {
+                sb.append(existing.getRegister().getComments()).append("\n");
+            }
+
+            // SimpleDateFormat is not thread-safe
+            synchronized (dfm) {
+                sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
+                    append(user.getUserId()).append("\n");
+            }
+
+            for (UserWarning w : warnings) {
+                sb.append(w.getSeverity());
+                sb.append("-");
+                sb.append(w.getMessage());
+            }
+            bdf.getRegister().setComments(sb.toString());
+        }
+
+        if (warnings.isEmpty() || ignoreWarnings) {
+            bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
+            bdf.getRegister().setApproveDate(new Date());
+            bdf.getRegister().setApproveUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            logger.debug("Approved adoption birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
+        } else {
+            logger.debug("Approval of adoption birth declaration record : {} stopped due to warnings", bdf.getIdUKey());
+        }
+        return warnings;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public void markLiveBirthConfirmationAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         logger.debug("Attempt to mark confirmation printed for live birth declaration record : {}", bdf.getIdUKey());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -499,14 +632,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void markLiveBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         logger.debug("Attempt to mark birth record : {} as confirmed without changes", bdf.getIdUKey());
 
         // does the user have access to the BDF being confirmed (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         validateAccessOfUser(user, existing);
 
         // to ensure correctness, modify the existing copy and not update to whats passed to us
@@ -533,7 +666,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void captureLiveBirthConfirmationChanges(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         logger.debug("Attempt to capture changes for birth record : {} ", bdf.getIdUKey());
         // ensure name in english is in upper case
         ChildInfo child = bdf.getChild();
@@ -545,7 +678,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         validateAccessOfUser(user, existing);
 
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
@@ -603,12 +736,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
         logger.debug("Request to mark as Birth certificate printed for record : {}", bdf.getIdUKey());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -632,12 +765,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
         logger.debug("Request to mark as Still Birth certificate printed for record : {}", bdf.getIdUKey());
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, false);
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -657,23 +790,52 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     }
 
     /**
+     * @inheritDoc
+     */
+    public void markAdoptionBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
+
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        logger.debug("Request to mark as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
+
+        // load the existing record
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+
+        // does the user have access to the BDF being added (i.e. check district and DS division)
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        validateAccessOfUser(user, existing);
+
+        existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
+        final Date originalBCDateOfIssue = new Date();
+        existing.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
+        bdf.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
+        existing.getRegister().setOriginalBCPrintUser(user);
+        bdf.getRegister().setOriginalBCPrintUser(user);
+        // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
+        birthDeclarationDAO.updateBirthDeclaration(existing);
+
+        logger.debug("Marked as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
+    }
+
+    /**
      * BirthRegistrationServiceImpl
      *
      * @inheritDoc
      */
     public void markBirthCertificateIDsAsPrinted(long[] printedIDList, User user) {
         logger.debug("Request to mark as Birth certificate printed for records : {}", printedIDList);
-        logger.info("finished1");
         for (long l : printedIDList) {
             BirthDeclaration bdf = birthDeclarationDAO.getById(l);
             logger.info("BDF is still or Live : {}", bdf.getRegister().getBirthType());
 
-            if (isLiveBirth(bdf)) {
+            final BirthDeclaration.BirthType current = bdf.getRegister().getBirthType();
+            if (BirthDeclaration.BirthType.LIVE == current) {
                 markLiveBirthCertificateAsPrinted(bdf, user);
-                logger.info("finished2");
-            } else {
+            } else if (BirthDeclaration.BirthType.STILL == current) {
                 markStillBirthCertificateAsPrinted(bdf, user);
-                logger.info("finished3");
+            } else if (BirthDeclaration.BirthType.ADOPTION == current) {
+                markAdoptionBirthCertificateAsPrinted(bdf, user);
             }
         }
     }
@@ -683,7 +845,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         logger.debug("Request to approve confirmation changes for record : {}", bdf.getIdUKey());
         // ensure name in english is in upper case
         ChildInfo child = bdf.getChild();
@@ -722,12 +884,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private List<UserWarning> prepareForConfirmation(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         // does the user have access to the BDF being confirmed (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, true);
+        validateLiveBirth(bdf);
         validateAccessOfUser(user, existing);
 
         // validate if the minimum required fields are adequately filled
@@ -1197,19 +1359,25 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         return s == null || s.trim().length() == 0;
     }
 
-    private boolean isLiveBirth(BirthDeclaration bdf) {
-        return (bdf.getRegister().getBirthType() == BirthDeclaration.BirthType.LIVE) ? true : false;
-    }
-
-    private void validateBirthType(BirthDeclaration bdf, boolean liveBirth) {
-        boolean valid = (liveBirth ^ isLiveBirth(bdf)) ? false : true;
-        if (!valid) {
+    private void validateBirthType(BirthDeclaration bdf, BirthDeclaration.BirthType birthType) {
+        if (birthType != bdf.getRegister().getBirthType()) {
             handleException("Live birth : " + bdf.getRegister().getBirthType() + ", BDF : " + bdf.getIdUKey() +
                 " in invalid context", ErrorCodes.ILLEGAL_STATE);
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("bith type checking for BDF : " + bdf.getIdUKey() + " passed for live birth : " +
+            logger.debug("bith type checking for BDF : " + bdf.getIdUKey() + " passed for birth type as : " +
                 bdf.getRegister().getBirthType());
+        }
+    }
+
+    private void validateLiveBirth(BirthDeclaration bdf) {
+        final BirthDeclaration.BirthType current = bdf.getRegister().getBirthType();
+        if (BirthDeclaration.BirthType.LIVE != current && BirthDeclaration.BirthType.ADOPTION != current) {
+            handleException("Live birth : " + current + ", BDF : " + bdf.getIdUKey() + " in invalid context",
+                ErrorCodes.ILLEGAL_STATE);
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("bith type checking for BDF : {}  passed for birth type as : {}", bdf.getIdUKey(), current);
         }
     }
 

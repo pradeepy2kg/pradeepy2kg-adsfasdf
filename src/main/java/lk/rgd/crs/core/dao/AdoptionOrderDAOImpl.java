@@ -2,6 +2,7 @@ package lk.rgd.crs.core.dao;
 
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.common.core.dao.BaseDAO;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
@@ -74,7 +75,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      * @inheritDoc
      */
     @Transactional
-    public void initiateBirthDeclaration(AdoptionOrder adoption) {
+    public void initiateBirthDeclaration(AdoptionOrder adoption, BirthDeclaration bdf) {
         // mark existing adoption order as archived
         adoption.setStatus(AdoptionOrder.State.ADOPTION_ORDER_ARCHIVED);
         em.merge(adoption);
@@ -82,6 +83,9 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         // add new adoption order
         adoption.setIdUKey(0);
         adoption.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
+        adoption.setBirthCertificateNumber(bdf.getIdUKey());
+        adoption.setBirthCertificateSerial(bdf.getRegister().getBdfSerialNo());
+        adoption.setBirthDivisionId(bdf.getRegister().getBirthDivision().getBdDivisionUKey());
         em.persist(adoption);
     }
 }
