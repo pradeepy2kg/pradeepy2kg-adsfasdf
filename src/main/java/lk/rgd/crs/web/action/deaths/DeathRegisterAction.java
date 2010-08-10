@@ -58,8 +58,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private List<DeathRegister> deathApprovalAndPrintList;
 
     private int noOfRows;
-    private boolean allowEditAdoption;
-    private boolean allowApproveAdoption;
+    private boolean allowEditDeath;
+    private boolean allowApproveDeath;
     private DeathRegister.State currentStatus;
     private boolean nextFlag;
     private boolean previousFlag;
@@ -78,10 +78,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String welcome() {
         return SUCCESS;
     }
+
     public String initDeathHome() {
         return SUCCESS;
     }
- public String initDeathDeclaration() {
+
+    public String initDeathDeclaration() {
         DeathRegister ddf;
         session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         ddf = new DeathRegister();
@@ -89,8 +91,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         populate();
         return SUCCESS;
     }
+
     public String deathDeclaration() {
-               populate();
+        populate();
         logger.debug("Step {} of 2 ", pageNo);
         DeathRegister ddf;
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -176,11 +179,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public void initPermissionForApprovalAndPrint() {
-        //todo change permission
-        allowApproveAdoption = user.isAuthorized(Permission.APPROVE_ADOPTION);
-        allowEditAdoption = user.isAuthorized(Permission.EDIT_ADOPTION);
+        allowApproveDeath = user.isAuthorized(Permission.APPROVE_DEATH);
+        allowEditDeath = user.isAuthorized(Permission.EDIT_DEATH);
 
     }
+
     private void populateBasicLists(String language) {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
@@ -352,20 +355,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.noOfRows = noOfRows;
     }
 
-    public boolean isAllowEditAdoption() {
-        return allowEditAdoption;
-    }
-
-    public void setAllowEditAdoption(boolean allowEditAdoption) {
-        this.allowEditAdoption = allowEditAdoption;
-    }
-
     public boolean isAllowApproveAdoption() {
-        return allowApproveAdoption;
+        return allowApproveDeath;
     }
 
     public void setAllowApproveAdoption(boolean allowApproveAdoption) {
-        this.allowApproveAdoption = allowApproveAdoption;
+        this.allowApproveDeath = allowApproveAdoption;
     }
 
     public DeathRegister.State getCurrentStatus() {
@@ -378,6 +373,22 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public boolean isNextFlag() {
         return nextFlag;
+    }
+
+    public boolean isAllowApproveDeath() {
+        return allowApproveDeath;
+    }
+
+    public void setAllowApproveDeath(boolean allowApproveDeath) {
+        this.allowApproveDeath = allowApproveDeath;
+    }
+
+    public boolean isAllowEditDeath() {
+        return allowEditDeath;
+    }
+
+    public void setAllowEditDeath(boolean allowEditDeath) {
+        this.allowEditDeath = allowEditDeath;
     }
 
     public void setNextFlag(boolean nextFlag) {
