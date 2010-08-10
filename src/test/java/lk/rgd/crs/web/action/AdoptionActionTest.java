@@ -29,7 +29,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     private AdoptionOrder adoption;
 
     private ActionProxy proxy;
-    User user;
+    private User user;
     private AdoptionOrderService service;
 
     private Map UserLogin(String username, String passwd) throws Exception {

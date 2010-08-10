@@ -259,7 +259,9 @@
                 name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
         <td colspan="1">ජාතිය<br>பிறப்<br>Race</td>
-        <td colspan="2"></td>
+        <td colspan="2">
+            
+        </td>
     </tr>
     <tr>
         <td colspan="1">නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)<br>Name

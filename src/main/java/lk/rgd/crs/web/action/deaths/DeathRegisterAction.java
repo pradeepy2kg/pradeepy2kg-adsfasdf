@@ -15,16 +15,17 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.AppConstants;
 import lk.rgd.Permission;
 
 /**
  * @author Duminda Dharmakeerthi
- * @authar amith jayasekara
  */
 public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterAction.class);
@@ -34,10 +35,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private User user;
     private DeathInfo death;
     private DeathPersonInfo deathPerson;
+    private DeathRegister register;
     private DeclarantInfo declarant;
     private WitnessInfo witness;
+    private long idUKey;
     private NotifyingAuthorityInfo notifyingAuthority;
-
 
     private int deathDistrictId;
     private int deathDivisionId;
@@ -64,6 +66,15 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean nextFlag;
     private boolean previousFlag;
 
+    private String genderEn;
+    private String genderSi;
+    private String deathPersonDistrict;
+    private String deathPersonDsDivision;
+    private String deathPersonDeathDivision;
+    private String deathPersonDeathDivisionEn;
+    private String deathPersonDistrictEn;
+    private String deathPersondsDivision;
+    private String deathPersondsDivisionEn;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                                CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
@@ -98,6 +109,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister ddf;
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
+            case 0:
+                return "form0";
             case 1:
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeath(death);
@@ -123,11 +136,34 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
+        idUKey = 4;
+        register = service.getById(idUKey, user);
+        deathPerson=register.getDeathPerson();
+        death=register.getDeath();
+        declarant=register.getDeclarant();
+        notifyingAuthority=register.getNotifyingAuthority();
+        declarant=register.getDeclarant();
+
+        genderEn=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
+        genderSi=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
+        deathPersonDeathDivision=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.SINHALA);
+        deathPersonDeathDivisionEn=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.ENGLISH);
+        deathPersondsDivision=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.SINHALA);
+        deathPersondsDivisionEn=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.ENGLISH);
+        deathPersonDistrict=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.SINHALA);
+        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);
+        return SUCCESS;
+    }
+
+    public String initLateDeath() {
+        populate();
         return SUCCESS;
     }
 
     public String lateDeath() {
-        populate();
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        register.setStatus(DeathRegister.State.DATA_ENTRY);
+        service.addDeathRegistration(register, user);
         return SUCCESS;
     }
 
@@ -409,5 +445,93 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
+    }
+
+    public long getIdUKey() {
+        return idUKey;
+    }
+
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
+    }
+
+    public String getGenderEn() {
+        return genderEn;
+    }
+
+    public void setGenderEn(String genderEn) {
+        this.genderEn = genderEn;
+    }
+
+    public String getGenderSi() {
+        return genderSi;
+    }
+
+    public void setGenderSi(String genderSi) {
+        this.genderSi = genderSi;
+    }
+
+    public String getDeathPersonDistrict() {
+        return deathPersonDistrict;
+    }
+
+    public void setDeathPersonDistrict(String deathPersonDistrict) {
+        this.deathPersonDistrict = deathPersonDistrict;
+    }
+
+    public String getDeathPersonDsDivision() {
+        return deathPersonDsDivision;
+    }
+
+    public void setDeathPersonDsDivision(String deathPersonDsDivision) {
+        this.deathPersonDsDivision = deathPersonDsDivision;
+    }
+
+    public String getDeathPersonDeathDivision() {
+        return deathPersonDeathDivision;
+    }
+
+    public void setDeathPersonDeathDivision(String deathPersonDeathDivision) {
+        this.deathPersonDeathDivision = deathPersonDeathDivision;
+    }
+
+    public DeathRegister getRegister() {
+        return register;
+    }
+
+    public void setRegister(DeathRegister register) {
+        this.register = register;
+    }
+
+    public String getDeathPersonDeathDivisionEn() {
+        return deathPersonDeathDivisionEn;
+    }
+
+    public void setDeathPersonDeathDivisionEn(String deathPersonDeathDivisionEn) {
+        this.deathPersonDeathDivisionEn = deathPersonDeathDivisionEn;
+    }
+
+    public String getDeathPersonDistrictEn() {
+        return deathPersonDistrictEn;
+    }
+
+    public void setDeathPersonDistrictEn(String deathPersonDistrictEn) {
+        this.deathPersonDistrictEn = deathPersonDistrictEn;
+    }
+
+    public String getDeathPersondsDivision() {
+        return deathPersondsDivision;
+    }
+
+    public void setDeathPersondsDivision(String deathPersondsDivision) {
+        this.deathPersondsDivision = deathPersondsDivision;
+    }
+
+    public String getDeathPersondsDivisionEn() {
+        return deathPersondsDivisionEn;
+    }
+
+    public void setDeathPersondsDivisionEn(String deathPersondsDivisionEn) {
+        this.deathPersondsDivisionEn = deathPersondsDivisionEn;
     }
 }
