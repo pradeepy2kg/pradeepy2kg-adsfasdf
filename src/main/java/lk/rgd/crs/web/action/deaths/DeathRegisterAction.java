@@ -146,12 +146,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
         genderEn=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
         genderSi=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
-        deathPersonDeathDivision=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.SINHALA);
+        /*deathPersonDeathDivision=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.SINHALA);
         deathPersonDeathDivisionEn=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.ENGLISH);
         deathPersondsDivision=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.SINHALA);
         deathPersondsDivisionEn=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.ENGLISH);
         deathPersonDistrict=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.SINHALA);
-        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);
+        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);*/
         return SUCCESS;
     }
 
