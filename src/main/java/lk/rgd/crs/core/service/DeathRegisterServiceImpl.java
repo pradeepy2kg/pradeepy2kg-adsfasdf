@@ -8,6 +8,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.ErrorCodes;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public DeathRegister getById(long deathRegisterIdUKey, User user) {
         logger.debug("Load death registration record : {}", deathRegisterIdUKey);
-        DeathRegister deathRegister = new DeathRegister();
+        DeathRegister deathRegister = null;
         try {
             deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
         } catch (NoResultException ignore) {
@@ -85,14 +86,24 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user) {
-        return deathRegisterDAO.getPaginatedListForState(pageNo, noOfRows, status);
+        try {
+            return deathRegisterDAO.getPaginatedListForState(pageNo, noOfRows, status);
+        } catch (NoResultException e) {
+            logger.error("No result found", e);
+            return new ArrayList();
+        }
     }
 
     /**
      * @inheritDoc
      */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
-        return deathRegisterDAO.getPaginatedListForAll(pageNo, noOfRows);
+        try {
+            return deathRegisterDAO.getPaginatedListForAll(pageNo, noOfRows);
+        } catch (NoResultException e) {
+            logger.error("No result found ", e);
+            return new ArrayList();
+        }
     }
 
     /**
@@ -100,7 +111,12 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public List<DeathRegister> getByDeathSerialNo(String deathSerialNo, User user) {
         //todo after finalizing the requirements has to be modified whether to return a single entry or list
-        return deathRegisterDAO.getByDeathSerialNo(deathSerialNo);
+        try {
+            return deathRegisterDAO.getByDeathSerialNo(deathSerialNo);
+        } catch (NoResultException e) {
+            logger.error("No result found", e);
+            return new ArrayList();
+        }
     }
 
     private void handleException(String message, int code) {
