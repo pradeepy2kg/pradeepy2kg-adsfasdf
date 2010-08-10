@@ -90,4 +90,12 @@ public interface DeathRegisterService {
      * @param user                the user initiating the action
      */
     public void rejectDeathRegistration(long deathRegisterIdUKey, User user);
+
+    /**
+     * mark that death certificate for the death registration as printed
+     *
+     * @param deathRegisterIdUKey the unique id of the death registration 
+     * @param user                the user initiating the action
+     */
+    public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user);
 }
