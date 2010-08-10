@@ -31,6 +31,16 @@ public class DeathRegister implements Serializable {
         DEATH_CERTIFICATE_PRINTED, // 3 A certifcate is printed
     }
 
+    public enum Type {
+        NORMAL,  // 0 -  A normal death
+
+        SUDDEN,  // 1 - A sudden death
+
+        LATE,   // 2 - A late death registration
+        
+        MISSING   // 3 - A death of a missing person
+    }
+
     /**
      * This is an auto generated unique row identifier
      */
@@ -55,6 +65,9 @@ public class DeathRegister implements Serializable {
 
     @Column(nullable = false)
     private State status;
+
+    @Column(nullable= false)
+    private Type deathType;
 
     /**
      * The preferred language of for the record
@@ -139,5 +152,13 @@ public class DeathRegister implements Serializable {
 
     public void setPreferredLanguage(String preferredLanguage) {
         this.preferredLanguage = preferredLanguage;
+    }
+    
+    public Type getDeathType() {
+        return deathType;
+    }
+
+    public void setDeathType(Type deathType) {
+        this.deathType = deathType;
     }
 }

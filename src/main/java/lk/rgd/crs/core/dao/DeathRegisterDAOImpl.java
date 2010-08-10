@@ -41,7 +41,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
-    @Transactional
+    @Transactional 
     public void deleteDeathRegistration(long deathRegistrationIdUKey) {
         DeathRegister dr = getById(deathRegistrationIdUKey);
         em.remove(dr);
@@ -52,7 +52,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      */
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status) {
         Query q = em.createNamedQuery("death.register.filter.by.status.paginated").setFirstResult((pageNo - 1)
-                * noOfRows).setMaxResults(noOfRows);
+            * noOfRows).setMaxResults(noOfRows);
         q.setParameter("status", status);
         return q.getResultList();
     }
@@ -62,7 +62,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      */
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("getAllDeathRegistrations").setFirstResult((pageNo - 1)
-                * noOfRows).setMaxResults(noOfRows);
+            * noOfRows).setMaxResults(noOfRows);
         return q.getResultList();
     }
 
@@ -73,6 +73,6 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         //todo after finalizing the requirements has to be modified whether to return a single entry or list
         //Query q = em.createNamedQuery("get.by.death.SerailNumber");
         //q.setParameter("deathSerialNo", deathSerialNo);
-        return em.find(DeathRegister.class, deathSerialNo);
+        return em.find(DeathRegister.class,deathSerialNo);
     }
 }
