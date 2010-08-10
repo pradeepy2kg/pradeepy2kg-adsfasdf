@@ -257,6 +257,10 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH);
             bs.set(Permission.PAGE_DEATH_APPROVAL_PRINT);
             bs.set(Permission.EDIT_DEATH);
+            bs.set(Permission.PAGE_DEATH_EDIT_MODE);
+            bs.set(Permission.PAGE_DEATH_VEIW_MODE);
+
+
             //Search
             bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);
             bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
@@ -393,6 +397,12 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             //death realated
             bs.set(Permission.APPROVE_DEATH);
+            bs.set(Permission.PAGE_DEATH_APPROVE);
+            bs.set(Permission.PAGE_DEATH_REJECT);
+            bs.set(Permission.PAGE_DEATH_DELETE);
+            bs.set(Permission.PAGE_DEATH_PRINT);
+
+
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 

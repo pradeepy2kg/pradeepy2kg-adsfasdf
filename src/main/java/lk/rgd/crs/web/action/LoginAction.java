@@ -274,11 +274,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_DEATH_REGISTRATION_INIT, new Link("death_registration.label", "/popreg/deaths/", "eprInitDeathDeclaration.do"));
         linkPermission.put(Permission.PAGE_DEATH_REGISTRATION, new Link(null, "/popreg/deaths/", "eprDeathDeclaration.do"));
         linkPermission.put(Permission.PAGE_DEATH_CERTIFICATE, new Link("death_certificate.label", "/popreg/deaths/", "eprDeathCertificate.do"));
-        linkPermission.put(Permission.PAGE_LATE_DEATH_REGISTRATION, new Link("late_death_registration.label", "/popreg/deaths/", "eprInitLateDeathDeclaration.do"));
-        linkPermission.put(Permission.PAGE_LATE_DEATH_REGISTRATION_INIT, new Link(null, "/popreg/deaths/", "eprLateDeathDeclaration.do"));
-		linkPermission.put(Permission.PAGE_DEATH_APPROVAL_PRINT, new Link("death_approve_print_list.label", "/popreg/deaths/", "eprDeathApprovalAndPrint.do"));
-        linkPermission.put(Permission.PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH, new Link(null, "/popreg/deaths/", "eprDeathFilterByStatus.do"));		
-		linkPermission.put(Permission.PAGE_LATE_DEATH_HOME, new Link(null, "/popreg/deaths/", "eprInitDeathHome.do"));
+        linkPermission.put(Permission.PAGE_LATE_DEATH_REGISTRATION, new Link("late_death_registration.label", "/popreg/deaths/", "eprLateDeathDeclaration.do"));
+        linkPermission.put(Permission.PAGE_DEATH_APPROVAL_PRINT, new Link("death_approve_print_list.label", "/popreg/deaths/", "eprDeathApprovalAndPrint.do"));
+        linkPermission.put(Permission.PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH, new Link(null, "/popreg/deaths/", "eprDeathFilterByStatus.do"));
+        linkPermission.put(Permission.PAGE_LATE_DEATH_HOME, new Link(null, "/popreg/deaths/", "eprInitDeathHome.do"));
+
+        linkPermission.put(Permission.PAGE_DEATH_APPROVE, new Link(null, "/popreg/deaths/", "eprApproveDeath.do"));
+        linkPermission.put(Permission.PAGE_DEATH_REJECT, new Link(null, "/popreg/deaths/", "eprRejectDeath.do"));
+        linkPermission.put(Permission.PAGE_DEATH_DELETE, new Link(null, "/popreg/deaths/", "eprDeleteDeath.do"));
+        linkPermission.put(Permission.PAGE_DEATH_VEIW_MODE, new Link(null, "/popreg/deaths/", "eprDeathViewMode.do"));
+        linkPermission.put(Permission.PAGE_DEATH_PRINT, new Link(null, "/popreg/deaths/", "eprPrintDeath.do"));
+        linkPermission.put(Permission.PAGE_DEATH_EDIT_MODE, new Link(null, "/popreg/deaths/", "eprDeathEditMode.do"));
 
         //non displayable (in the menu) pages
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME, new Link(null, "/popreg/births/", "eprHome.do"));

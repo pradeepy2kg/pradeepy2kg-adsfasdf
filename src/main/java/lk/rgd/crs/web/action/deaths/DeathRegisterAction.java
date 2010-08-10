@@ -22,6 +22,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
+import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
 
 /**
@@ -32,14 +33,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterAction.class);
     private static final String DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE = "crs.dr_rows_per_page";
     private Map session;
-    private int pageNo;
     private User user;
+    private DeathRegister deathRegister;
     private DeathInfo death;
     private DeathPersonInfo deathPerson;
-    private DeathRegister register;
     private DeclarantInfo declarant;
     private WitnessInfo witness;
-    private long idUKey;
     private NotifyingAuthorityInfo notifyingAuthority;
 
 
@@ -61,6 +60,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private List<DeathRegister> deathApprovalAndPrintList;
 
+    private long idUKey;
+    private int pageNo;
     private int noOfRows;
     private boolean allowEditDeath;
     private boolean allowApproveDeath;
@@ -136,22 +137,24 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String deathCertificate() {
         idUKey = 4;
-        register = service.getById(idUKey, user);
-        deathPerson=register.getDeathPerson();
-        death=register.getDeath();
-        declarant=register.getDeclarant();
-        notifyingAuthority=register.getNotifyingAuthority();
-        declarant=register.getDeclarant();
+        deathRegister = service.getById(idUKey, user);
+        deathPerson=deathRegister.getDeathPerson();
+        death=deathRegister.getDeath();
+        declarant=deathRegister.getDeclarant();
+        notifyingAuthority=deathRegister.getNotifyingAuthority();
+        declarant=deathRegister.getDeclarant();
 
         genderEn=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
         genderSi=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
-        /*deathPersonDeathDivision=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.SINHALA);
-        deathPersonDeathDivisionEn=bdDivisionDAO.getNameByPK(register.getDeath().getDeathDivisionId(),AppConstants.ENGLISH);
-        deathPersondsDivision=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.SINHALA);
-        deathPersondsDivisionEn=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.ENGLISH);
-        deathPersonDistrict=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.SINHALA);
-        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(register.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);*/
-        return SUCCESS;
+/*      
+  deathPersonDeathDivision=bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivisionId(),AppConstants.SINHALA);
+        deathPersonDeathDivisionEn=bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivisionId(),AppConstants.ENGLISH);
+        deathPersondsDivision=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.SINHALA);
+        deathPersondsDivisionEn=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.ENGLISH);
+        deathPersonDistrict=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.SINHALA);
+        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);
+*/        
+return SUCCESS;
     }
 
     public String initLateDeath() {
@@ -160,8 +163,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String lateDeath() {
-        register.setStatus(DeathRegister.State.DATA_ENTRY);
-        service.addDeathRegistration(register, user);
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
+        service.addDeathRegistration(deathRegister, user);
         return SUCCESS;
     }
 
@@ -187,8 +191,93 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         paginationHandler(deathApprovalAndPrintList.size());
+        return SUCCESS;
+    }
+
+    public String test() {
+        return SUCCESS;
+    }
+
+    public String deathDeclarationEditMode() {
+        logger.debug("death edit mode requested for idUkey : {} ", idUKey);
+        deathRegister = service.getById(idUKey, user);
+        if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
+            addActionError("death.error.editNotAllowed");
+        }
+        return SUCCESS;
+    }
+
+    public String approveDeath() {
+        logger.debug("requested to approve Death Decalaration with idUKey : {}", idUKey);
+        try {
+            service.approveDeathRegistration(getIdUKey(), user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("death.error.no.permission"));
+        }
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        initPermissionForApprovalAndPrint();
+        populate();
+        return SUCCESS;
+    }
+
+    public String rejectDeath() {
+        logger.debug("requested to reject Death Decalaration with idUKey : {}", idUKey);
+        try {
+            service.rejectDeathRegistration(idUKey, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("death.error.no.permission.reject"));
+        }
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        initPermissionForApprovalAndPrint();
+        populate();
+
+        return SUCCESS;
+    }
+
+    public String deleteDeath() {
+        logger.debug("requested to delete Death Decalaration with idUKey : {}", idUKey);
+        try {
+            service.deleteDeathRegistration(idUKey, user);
+        }
+        catch (CRSRuntimeException e) {
+            addActionError("death.error.no.permission.delete");
+        }
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        initPermissionForApprovalAndPrint();
+        populate();
+        return SUCCESS;
+    }
+
+    public String deathDeclarationViewMode() {
+        //todo implement
+        logger.debug("initializing view mode for idUKey : {}", idUKey);
+        deathRegister = service.getById(idUKey, user);
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        return SUCCESS;
+    }
+
+    public String markDeathDeclarationAsPrinted() {
+        logger.debug("requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
+        try {
+            service.markDeathCertificateAsPrinted(idUKey, user);
+        }
+        catch (CRSRuntimeException e) {
+            addActionError("death.error.no.permission.print");
+        }
+        populate();
+        initPermissionForApprovalAndPrint();
+        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (currentStatus != null) {
+            deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        } else {
+            deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         return SUCCESS;
     }
 
@@ -211,8 +300,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         populateBasicLists(language);
         populateDynamicLists(language);
     }
-
-    private void populate(DeathRegister ddf) {
+ private void populate(DeathRegister ddf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
 
@@ -247,7 +335,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             logger.debug("Districts, DS and BD divisions set from defaults : {} {}", deathDistrictId, dsDivisionId);
         }
     }
-
     private void beanPopulate(DeathRegister ddf) {
         //TODO is all needed
         death = ddf.getDeath();
@@ -256,7 +343,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         declarant = ddf.getDeclarant();
         witness = ddf.getWitness();
     }
-
     public void initPermissionForApprovalAndPrint() {
         allowApproveDeath = user.isAuthorized(Permission.APPROVE_DEATH);
         allowEditDeath = user.isAuthorized(Permission.EDIT_DEATH);
@@ -264,11 +350,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
     }
 
     private void populateDynamicLists(String language) {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());
@@ -488,7 +576,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
     }
-
     public boolean isBack() {
         return back;
     }
@@ -497,7 +584,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.back = back;
     }
 
-    public long getIdUKey() {
+public long getIdUKey() {
         return idUKey;
     }
 
@@ -545,13 +632,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.deathPersonDeathDivision = deathPersonDeathDivision;
     }
 
-    public DeathRegister getRegister() {
-        return register;
-    }
-
-    public void setRegister(DeathRegister register) {
-        this.register = register;
-    }
 
     public String getDeathPersonDeathDivisionEn() {
         return deathPersonDeathDivisionEn;
@@ -583,5 +663,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeathPersondsDivisionEn(String deathPersondsDivisionEn) {
         this.deathPersondsDivisionEn = deathPersondsDivisionEn;
+    }
+
+    public DeathRegister getDeathRegister() {
+        return deathRegister;
+    }
+
+    public void setDeathRegister(DeathRegister deathRegister) {
+        this.deathRegister = deathRegister;
     }
 }
