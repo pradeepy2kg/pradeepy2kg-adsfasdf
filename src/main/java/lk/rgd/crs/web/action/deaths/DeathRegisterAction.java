@@ -136,7 +136,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        idUKey = 4;
+        idUKey = 8;
         deathRegister = service.getById(idUKey, user);
         deathPerson=deathRegister.getDeathPerson();
         death=deathRegister.getDeath();
