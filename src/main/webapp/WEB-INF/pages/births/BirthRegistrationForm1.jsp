@@ -394,6 +394,7 @@
 
 <s:hidden name="pageNo" value="1"/>
 <s:hidden name="rowNumber" value="%{row}"/>
+<s:hidden id="birthTypeId" value="%{birthType.ordinal()}"/>
 
 <s:hidden id="error1" value="%{getText('p1.SerialNum.error.value')}"/>
 <s:hidden id="error2" value="%{getText('p1.childName.error.value')}"/>
@@ -417,7 +418,6 @@
         var flag = false;
         var lateOrbelate = false;
         var check = document.getElementById('skipjs');
-        //alert(document.getElementById('birthDatePicker').value);
         /*date related validations*/
         // var birthdate = new Date($("#birthDatePicker").attr("value"));
         // var submitdate = new Date($("#submitDatePicker").attr("value"));
@@ -428,17 +428,22 @@
             errormsg = errormsg + "\n" + document.getElementById('error6').value;
             flag = true;
         }
-        //comparing 90 days delay
-        var one_day = 1000 * 60 * 60 * 24 ;
-        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-        if (numDays >= 90) {
-            if (numDays >= 365) {
-                errormsg = errormsg + "\n" + document.getElementById('error8').value;
-            } else {
-                errormsg = errormsg + "\n" + document.getElementById('error7').value;
+
+        var birthType = document.getElementById('birthTypeId').value;
+        if (birthType != 2) {
+            //comparing 90 days delay
+            var one_day = 1000 * 60 * 60 * 24 ;
+            var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+            if (numDays >= 90) {
+                if (numDays >= 365) {
+                    errormsg = errormsg + "\n" + document.getElementById('error8').value;
+                } else {
+                    errormsg = errormsg + "\n" + document.getElementById('error7').value;
+                }
+                lateOrbelate = true;
             }
-            lateOrbelate = true;
         }
+
         element = document.getElementById('bdfSerialNo');
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('error1').value;
@@ -457,6 +462,7 @@
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
             flag = true;
         }
+
         if (!check.checked) {
 
             element = document.getElementById('childFullNameOfficialLang');
