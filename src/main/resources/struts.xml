@@ -407,6 +407,7 @@
                 method="initDeathHome">
             <result type="tiles" name="success">epr.deathHome</result>
         </action>
+        
         <action name="eprDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclaration">
             <result type="tiles" name="form0">epr.deathDeclaration_form1</result>
@@ -418,9 +419,15 @@
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
+        <action name="eprInitLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="initLateDeath">
+            <result type="tiles" name="success">epr.lateDeathDeclaration</result>
+        </action>
+
         <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="lateDeath">
-            <result type="tiles" name="success">epr.lateDeathDeclaration</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"

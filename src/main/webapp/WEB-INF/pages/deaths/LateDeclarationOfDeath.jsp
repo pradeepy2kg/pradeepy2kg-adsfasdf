@@ -3,6 +3,7 @@
 
 
 <div id="late-death-registrations-outer">
+<s:form name="lateDeathRegistration" id="lateDeathRegistrationform" action="eprLateDeathDeclaration.do" method="POST">
 <table style="border:none;width:1030px;">
     <tr>
 
@@ -188,12 +189,12 @@
     </tr>
     <tr>
         <td>ඔව් / xx /Yes</td>
-        <td><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'false':''}" value="false"
+        <td><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'true':''}" value="false"
                      id="causeOfDeathEstablished"
                      onclick="disable(false)"/>
         </td>
         <td colspan="2">ඔව් / xx /Yes</td>
-        <td><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'false':''}"
+        <td><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'true':''}"
                      id="infantLessThan30Days"
                      onclick="disable(false)"/>
         </td>
@@ -285,7 +286,9 @@
             பிறப் <br/>
             Race
         </td>
-        <td colspan="2"><s:textfield name="deathPerson.deathPersonRace"/></td>
+        <td colspan="2">
+
+        </td>
     </tr>
     <tr>
         <td>නම රාජ්‍ය භාෂාවෙන් <br/>
@@ -414,21 +417,21 @@
             Mother
         </td>
         <td colspan="2">
-            <s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+            <s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'FATHER':''}"
                      id="declarantType"
                      onclick="disable(false)"/></td>
         <td>පියා <br/>
             in tamil <br/>
             Father
         </td>
-        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'MOTHER':''}"
                      id="declarantType"
                      onclick="disable(false)"/></td>
         <td>සහෝදරයා සහෝදරිය <br/>
             in tamil <br/>
             Brother / Sister
         </td>
-        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
                      id="declarantType"
                      onclick="disable(false)"/></td>
     </tr>
@@ -437,24 +440,27 @@
             in tamil <br/>
             Son / Daughter
         </td>
-        <td colspan="2"><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+        <td colspan="2"><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
                                  id="declarantType"
                                  onclick="disable(false)"/></td>
         <td>නෑයන <br/>් பாதுகாவலர் <br/>
             Relative
         </td>
-        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'RELATIVE':''}"
                      id="declarantType"
                      onclick="disable(false)"/></td>
         <td>වෙනත් <br/>
             in tamil <br/>
             Other
         </td>
-        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'false':''}" value="false"
+        <td><s:radio name="declarant.declarantType" list="#@java.util.HashMap@{'OTHER':''}" value="5"
                      id="declarantType"
                      onclick="disable(false)"/></td>
     </tr>
     </tbody>
 </table>
-
+<div class="adoption-form-submit">
+    <s:submit value="%{getText('submit.lable')}" cssStyle="margin-top:10px;"/>
+</div>
+</s:form>
 </div>

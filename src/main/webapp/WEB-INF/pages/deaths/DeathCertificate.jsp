@@ -51,19 +51,23 @@
 
     <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; " class="font-9">
         <col width="135px"/>
-        <col/>
+        <col width="390px"/>
         <col width="145px"/>
         <col/>
         <tbody>
         <tr>
             <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
-            <td><s:label name="" value="%{}"/></td>
+            <td><s:label name="" value="%{deathPersonDistrict}"/><br>
+            <s:label name="" value="%{deathPersonDistrictEn}"/></td>
             <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br> பிரிவு <br> Divisional Secretariat</td>
-            <td><s:label name="" value="%{}"/></td>
+            <td><s:label name="" value="%{deathPersondsDivision}"/><br>
+                <s:label name="" value="%{deathPersondsDivisionEn}"/>
+            </td>
         </tr>
         <tr>
             <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය<br>பிரிவு<br>Registration Division</td>
-            <td><s:label name="" value="%{death.deathDivisionId}"/></td>
+            <td><s:label name="" value="%{deathPersonDeathDivision}"/><br>
+                <s:label name="" value="%{deathPersonDeathDivisionEn}"/></td>
             <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්<br> நிறைவேற்றிய மாற்றங்கள்<br> Changes after first registration</td>
             <td><s:label name="" value="%{}"/></td>
         </tr>
@@ -86,9 +90,12 @@
             <td>වයස<br>*in tamil<br>Age</td>
             <td><s:label name="" value="%{deathPerson.deathPersonAge}"/></td>
             <td>මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
-            <td><s:label name="" value="%{deathPerson.dateOfDeath}"/></td>
+            <td><s:label name="" value="%{death.dateOfDeath}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender</td>
-            <td><s:label name="" value="%{deathPerson.deathPersonGender}"/></td>
+            <td>
+                <s:label name=""  value="%{genderSi}" />
+                <br> <s:label name=""  value="%{genderEn}" />
+            </td>
         </tr>
         <tr>
             <td colspan="1">මරණය සිදුවූ ස්ථානය<br>*in tamil<br>Place of death</td>
@@ -105,33 +112,33 @@
             <td colspan="7"><s:label name="" value="%{death.placeOfBurial}"/></td>
         </tr>
         <tr>
-            <td colspan="1">නම <br>பெயர் <br>Name</td>
+            <td colspan="1" height="120px">නම <br>பெயர் <br>Name</td>
             <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonNameOfficialLang}"/></td>
         </tr>
         <tr>
-            <td colspan="1">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English</td>
+            <td colspan="1" height="120px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English</td>
             <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonNameInEnglish}"/></td>
         </tr>
         <tr>
-            <td colspan="1">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name</td>
+            <td colspan="1" height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name</td>
             <td colspan="5"><s:label name="" value="%{deathPerson.deathPersonFatherFullName}"/></td>
             <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
             <td colspan="1"><s:label name="" value="%{deathPerson.deathPersonFatherPINorNIC}"/></td>
         </tr>
         <tr>
-            <td colspan="1">මවගේ සම්පූර්ණ නම<br> தாயின் முழுப் பெயர்<br> Mother's Full Name</td>
+            <td colspan="1" height="100px">මවගේ සම්පූර්ණ නම<br> தாயின் முழுப் பெயர்<br> Mother's Full Name</td>
             <td colspan="5"><s:label name="" value="%{deathPerson.deathPersonMotherFullName}"/></td>
             <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
             <td colspan="1"><s:label name="" value="%{deathPerson.deathPersonMotherPINorNIC}"/></td>
         </tr>
         <tr>
-            <td colspan="1">දැනුම් දෙන්නගේ නම<br>கொடுப்பவரின் பெயர்<br>Informant's Name</td>
-            <td colspan="5"><s:label name="" value="%{}"/></td>
+            <td colspan="1" height="100px">දැනුම් දෙන්නගේ නම<br>கொடுப்பவரின் பெயர்<br>Informant's Name</td>
+            <td colspan="5"><s:label name="" value="%{declarant.declarantFullName}"/></td>
             <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-            <td colspan="1"><s:label name="" value="%{}"/></td>
+            <td colspan="1"><s:label name="" value="%{declarant.declarantNICorPIN}"/></td>
         </tr>
         <tr>
-            <td colspan="1">දැනුම් ලිපිනය <br>கொடுப்பவரின் பெயர்<br>Informant's Address</td>
+            <td colspan="1" height="100px">දැනුම් ලිපිනය <br>கொடுப்பவரின் பெயர்<br>Informant's Address</td>
             <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonPermanentAddress}"/></td>
         </tr>
         </tbody>
@@ -155,7 +162,9 @@
                 சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
                 Name, Signature and Designation of certifying officer
             </td>
-            <td colspan="2"><s:label name="" value="%{}"/></td>
+            <td colspan="2" height="120px"><s:label name="" value="%{notifyingAuthority.notifyingAuthorityName}"/>, <br>
+                    <s:label name="" value="%{notifyingAuthority.notifyingAuthorityAddress}"/>
+            </td>
         </tr>
         <tr>
             <td colspan="2">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue</td>
@@ -173,11 +182,7 @@
         Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
     </s:label>
     <div class="form-submit">
-        <s:url id="print" action="eprDeathCertificate.do">
-            
-        </s:url>
-
-        <s:a href="%{print}" onclick="printPage();"><s:label value="%{getText('print.button')}"/></s:a>
-        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+        <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
     </div>
+
 </div>

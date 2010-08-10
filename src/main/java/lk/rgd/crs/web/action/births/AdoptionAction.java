@@ -14,12 +14,14 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
+import lk.rgd.AppConstants;
 
 /**
  * @author Duminda Dharmakeerthi
@@ -74,6 +76,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     private boolean alreadyPrinted;
     private int noOfRows;
+    private String genderEn;
+    private String genderSi;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
@@ -202,6 +206,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
+        genderEn=GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
+        genderSi=GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
         return SUCCESS;
     }
 
@@ -742,5 +748,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setCurrentStatus(AdoptionOrder.State currentStatus) {
         this.currentStatus = currentStatus;
+    }
+
+    public String getGenderEn() {
+        return genderEn;
+    }
+
+    public void setGenderEn(String genderEn) {
+        this.genderEn = genderEn;
+    }
+
+    public String getGenderSi() {
+        return genderSi;
+    }
+
+    public void setGenderSi(String genderSi) {
+        this.genderSi = genderSi;
     }
 }

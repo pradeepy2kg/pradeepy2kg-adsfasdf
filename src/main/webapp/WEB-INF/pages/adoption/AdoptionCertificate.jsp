@@ -1,6 +1,5 @@
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
     @media print {
@@ -96,8 +95,8 @@
         <td width="150px">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
         <td width="150px">
-            <s:label name="" value="%{adoption.childGender}"/><br/>
-            <s:label name="" value="%{adoption.childGender}"/>
+                <s:label name=""  value="%{genderSi}" /> <br>
+                <s:label name=""  value="%{genderEn}" />
         </td>
     </tr>
 
