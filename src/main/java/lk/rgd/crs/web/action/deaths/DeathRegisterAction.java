@@ -26,6 +26,7 @@ import lk.rgd.Permission;
 
 /**
  * @author Duminda Dharmakeerthi
+ * @authar amith jayasekara
  */
 public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterAction.class);
@@ -40,6 +41,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private WitnessInfo witness;
     private long idUKey;
     private NotifyingAuthorityInfo notifyingAuthority;
+
 
     private int deathDistrictId;
     private int deathDivisionId;
@@ -65,6 +67,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathRegister.State currentStatus;
     private boolean nextFlag;
     private boolean previousFlag;
+    private boolean back;
 
     private String genderEn;
     private String genderSi;
@@ -104,34 +107,30 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String deathDeclaration() {
+        logger.debug("Step {} of 2", pageNo);
         populate();
-        logger.debug("Step {} of 2 ", pageNo);
         DeathRegister ddf;
+        if (back) {
+            populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
+            return "form" + pageNo;
+        }
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
-            case 0:
-                return "form0";
             case 1:
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeath(death);
-                ddf.setDeathPerson(deathPerson);
-                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
+                ddf.setDeathPerson(deathPerson);                
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
-                return "form1";
+                break;
             case 2:
-                logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeclarant(declarant);
-                logger.info("declarent was completed");
                 ddf.setWitness(witness);
-                logger.info("witness was completed");
                 ddf.setNotifyingAuthority(notifyingAuthority);
-                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
-
-                User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+                
                 service.addDeathRegistration(ddf, user);
-                return SUCCESS;
+                session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
-        return ERROR;
+        return "form" + pageNo;
     }
 
 
@@ -161,7 +160,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String lateDeath() {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         register.setStatus(DeathRegister.State.DATA_ENTRY);
         service.addDeathRegistration(register, user);
         return SUCCESS;
@@ -214,6 +212,51 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         populateDynamicLists(language);
     }
 
+    private void populate(DeathRegister ddf) {
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        populateBasicLists(language);
+
+        beanPopulate(ddf);
+
+        boolean idsPopulated = false;
+        if (death != null) {
+            // TODO remove these comments after BDDivision added
+//            if (death.getBirthDivision() != null) {  //if data present, populate with existing values
+//                deathDistrictId = death.getBirthDistrict().getDistrictUKey();
+//                deathDivisionId = death.getBirthDivision().getBdDivisionUKey();
+//                dsDivisionId = death.getDsDivision().getDsDivisionUKey();
+//                idsPopulated = true;
+//            }
+            logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", deathDistrictId, dsDivisionId);
+        }
+
+        if (!idsPopulated) {         // populate distric and ds div Ids with user preferences or set to 0 temporarily
+            if (user.getPrefBDDistrict() != null) {
+                deathDistrictId = user.getPrefBDDistrict().getDistrictUKey();
+                logger.debug("Prefered district {} set in user {}", deathDistrictId, user.getUserId());
+            } else {
+                deathDistrictId = 0;
+                logger.debug("First district in the list {} was set in user {}", deathDistrictId, user.getUserId());
+            }
+
+            if (user.getPrefBDDSDivision() != null) {
+                dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
+            } else {
+                dsDivisionId = 0;
+            }
+            logger.debug("Districts, DS and BD divisions set from defaults : {} {}", deathDistrictId, dsDivisionId);
+        }
+    }
+
+    private void beanPopulate(DeathRegister ddf) {
+        //TODO is all needed
+        death = ddf.getDeath();
+        deathPerson = ddf.getDeathPerson();
+        notifyingAuthority = ddf.getNotifyingAuthority();
+        declarant = ddf.getDeclarant();
+        witness = ddf.getWitness();
+    }
+
     public void initPermissionForApprovalAndPrint() {
         allowApproveDeath = user.isAuthorized(Permission.APPROVE_DEATH);
         allowEditDeath = user.isAuthorized(Permission.EDIT_DEATH);
@@ -221,13 +264,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
     }
 
     private void populateDynamicLists(String language) {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());
@@ -265,6 +306,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public void setSession(Map map) {
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        logger.debug("setting User: {}", user.getUserName());
     }
 
     public Map<Integer, String> getDistrictList() {
@@ -445,6 +487,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
+    }
+
+    public boolean isBack() {
+        return back;
+    }
+
+    public void setBack(boolean back) {
+        this.back = back;
     }
 
     public long getIdUKey() {

@@ -91,7 +91,6 @@
 
         <action name="eprBirthRegistration" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
                 method="birthDeclaration">
-            <result type="tiles" name="form5">epr.stillBirthRegistration_form1</result>
             <result type="tiles" name="form0">epr.birthRegistration_form1</result>
             <result type="tiles" name="form1">epr.birthRegistration_form2</result>
             <result type="tiles" name="form2">epr.birthRegistration_form3</result>

@@ -170,9 +170,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
-                if (BirthDeclaration.BirthType.ADOPTION != birthType) {
+//                if (BirthDeclaration.BirthType.ADOPTION != birthType) {
                     bdfLateOrBelated = checkDateLateOrBelated(bdf);
-                }
+//                }
                 break;
             case 4:
                 birthType = bdf.getRegister().getBirthType();
