@@ -99,7 +99,8 @@
         </tr>
         <tr>
             <td colspan="1">මරණය සිදුවූ ස්ථානය<br>*in tamil<br>Place of death</td>
-            <td colspan="7"><s:label name="" value="%{death.placeOfDeathInOfficialLang}"/></td>
+            <td colspan="7"><s:label name="" value="%{death.placeOfDeathInOfficialLang}"/>
+            <br><s:label name="" value="%{death.placeOfDeathInEnglish}"/></td>
         </tr>
         <tr>
             <td colspan="1">මරණයට හේතුව<br>*in tamil<br>Cause of Death</td>
@@ -113,7 +114,7 @@
         </tr>
         <tr>
             <td colspan="1" height="120px">නම <br>பெயர் <br>Name</td>
-            <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonNameOfficialLang}"/></td>
+            <td colspan="7" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonNameOfficialLang}"/></td>
         </tr>
         <tr>
             <td colspan="1" height="120px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English</td>
