@@ -40,11 +40,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeclarantInfo declarant;
     private NotifyingAuthorityInfo notifyingAuthority;
 
-
     private int deathDistrictId;
     private int deathDivisionId;
     private int dsDivisionId;
-
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -56,6 +54,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+
     private Map<Integer, String> countryList;
     private List<DeathRegister> deathApprovalAndPrintList;
 
@@ -64,10 +63,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int noOfRows;
     private boolean allowEditDeath;
     private boolean allowApproveDeath;
-    private DeathRegister.State currentStatus;
+    private int currentStatus;
+    private DeathRegister.State state;
     private boolean nextFlag;
     private boolean previousFlag;
     private boolean back;
+    private boolean searchByDate;
 
     private String genderEn;
     private String genderSi;
@@ -79,8 +80,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String deathPersondsDivision;
     private String deathPersondsDivisionEn;
 
+    private Date fromDate;
+    private Date endDate;
+
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -119,13 +123,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             case 1:
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeath(death);
-                ddf.setDeathPerson(deathPerson);                
+                ddf.setDeathPerson(deathPerson);
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 break;
             case 2:
                 ddf.setDeclarant(declarant);
                 ddf.setNotifyingAuthority(notifyingAuthority);
-                
+
                 service.addDeathRegistration(ddf, user);
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
@@ -136,28 +140,28 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String deathCertificate() {
         idUKey = 8;
         deathRegister = service.getById(idUKey, user);
-        if (deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED ) {
+        if (deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED) {
             addActionError(getText("death.error.no.permission.print"));
-            logger.debug("Current state of adoption certificate : {}",deathRegister.getStatus());
+            logger.debug("Current state of adoption certificate : {}", deathRegister.getStatus());
             return ERROR;
         } else {
-        deathPerson=deathRegister.getDeathPerson();
-        death=deathRegister.getDeath();
-        declarant=deathRegister.getDeclarant();
-        notifyingAuthority=deathRegister.getNotifyingAuthority();
-        declarant=deathRegister.getDeclarant();
+            deathPerson = deathRegister.getDeathPerson();
+            death = deathRegister.getDeath();
+            declarant = deathRegister.getDeclarant();
+            notifyingAuthority = deathRegister.getNotifyingAuthority();
+            declarant = deathRegister.getDeclarant();
 
-        genderEn=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
-        genderSi=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
+            genderEn = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
+            genderSi = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
 
-        deathPersonDeathDivision=bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(),death.getPreferredLanguage());
-        deathPersonDeathDivisionEn=bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(),AppConstants.ENGLISH);
-        deathPersondsDivision=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(),death.getPreferredLanguage());
-        deathPersondsDivisionEn=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.ENGLISH);
-        deathPersonDistrict=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(),death.getPreferredLanguage());
-        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);
+            deathPersonDeathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), death.getPreferredLanguage());
+            deathPersonDeathDivisionEn = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), AppConstants.ENGLISH);
+            deathPersondsDivision = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), death.getPreferredLanguage());
+            deathPersondsDivisionEn = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), AppConstants.ENGLISH);
+            deathPersonDistrict = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), death.getPreferredLanguage());
+            deathPersonDistrictEn = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), AppConstants.ENGLISH);
 
-        return SUCCESS;
+            return SUCCESS;
         }
     }
 
@@ -178,8 +182,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        if (currentStatus != null) {
-            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, state, user);
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         }
@@ -190,13 +194,26 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String filterByStatus() {
-        setPageNo(1);
         logger.debug("requested to filter by : {}", currentStatus);
+        setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, currentStatus, user);
+
+        searchByDate = ((fromDate != null) && (endDate != null));
+
+        if (searchByDate) {
+            //search by date in given divission deathDivisions and all the status
+            deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+        } else {
+            if (currentStatus == 0) {
+                //search by state with all state with in deathDivision
+                deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+            } else {
+                //search by state with a state with in a deathDivision
+                deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, state, user);
+            }
+        }
         paginationHandler(deathApprovalAndPrintList.size());
         return SUCCESS;
     }
@@ -277,8 +294,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (currentStatus != null) {
-            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, state, user);
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         }
@@ -342,7 +359,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void beanPopulate(DeathRegister ddf) {
-        //TODO is all needed ?
+        //TODO is all needed
         death = ddf.getDeath();
         deathPerson = ddf.getDeathPerson();
         notifyingAuthority = ddf.getNotifyingAuthority();
@@ -527,12 +544,26 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.allowApproveDeath = allowApproveAdoption;
     }
 
-    public DeathRegister.State getCurrentStatus() {
+    public int getCurrentStatus() {
         return currentStatus;
     }
 
-    public void setCurrentStatus(DeathRegister.State currentStatus) {
+    public void setCurrentStatus(int currentStatus) {
         this.currentStatus = currentStatus;
+        switch (currentStatus) {
+            case 1:
+                this.state = DeathRegister.State.DATA_ENTRY;
+                break;
+            case 2:
+                this.state = DeathRegister.State.APPROVED;
+                break;
+            case 3:
+                this.state = DeathRegister.State.REJECTED;
+                break;
+            case 4:
+                this.state = DeathRegister.State.DEATH_CERTIFICATE_PRINTED;
+                //speacial case 0 all status
+        }
     }
 
     public boolean isNextFlag() {
@@ -670,5 +701,37 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeathRegister(DeathRegister deathRegister) {
         this.deathRegister = deathRegister;
+    }
+
+    public DeathRegister.State getState() {
+        return state;
+    }
+
+    public void setState(DeathRegister.State state) {
+        this.state = state;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isSearchByDate() {
+        return searchByDate;
+    }
+
+    public void setSearchByDate(boolean searchByDate) {
+        this.searchByDate = searchByDate;
     }
 }
