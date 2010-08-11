@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Table(name = "DEATH_REGISTER", schema = "CRS")
 
 @NamedQueries({
-    @NamedQuery(name = "death.register.filter.by.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "death.register.filter.by.and.deathDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision = :deathDivision " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
     @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE "+
     "deathRegister.death.deathDivision = :deathDivision"),

@@ -41,14 +41,15 @@ public interface DeathRegisterDAO {
     public void deleteDeathRegistration(long deathRegistrationIdUKey);
 
     /**
-     * Get the list of death registrations for a given state
+     * Get the list of death registrations for a given state based on given death division
      *
+     * @param deathDivision the death division
      * @param pageNo   the page number for the results required (start from 1)
      * @param noOfRows number of rows to return per page
      * @param status   state of the DeathRegister
      * @return list of DeathRegister objects which are in the given state
      */
-    public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status);
+    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision,int pageNo, int noOfRows, DeathRegister.State status);
 
     /**
      * Get the list of all the death registrations which are belonging to the given death division

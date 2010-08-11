@@ -47,15 +47,16 @@ public interface DeathRegisterService {
     public void deleteDeathRegistration(long deathRegiserIdUKey, User user);
 
     /**
-     * Get the list of death registrations for a given state
+     * Get the list of death registrations for a given state based on given death division
      *
-     * @param pageNo   the page number for the results required (start from 1)
-     * @param noOfRows number of rows to return per page
-     * @param status   state of the DeathRegister
-     * @param user     the user initiating the action
+     * @param deathDivision the death division
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @param status        state of the DeathRegister
+     * @param user          the user initiating the action
      * @return list of DeathRegister objects which are in the given state
      */
-    public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user);
+    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status, User user);
 
     /**
      * Get the list of all the death registrations which are belonging to the given death division

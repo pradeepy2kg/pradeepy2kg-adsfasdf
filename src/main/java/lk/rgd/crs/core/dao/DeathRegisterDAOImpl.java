@@ -50,9 +50,10 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
-    public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status) {
-        Query q = em.createNamedQuery("death.register.filter.by.status.paginated").setFirstResult((pageNo - 1)
+    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision,int pageNo, int noOfRows, DeathRegister.State status) {
+        Query q = em.createNamedQuery("death.register.filter.by.and.deathDivision.status.paginated").setFirstResult((pageNo - 1)
             * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("deathDivision", deathDivision);
         q.setParameter("status", status);
         return q.getResultList();
     }

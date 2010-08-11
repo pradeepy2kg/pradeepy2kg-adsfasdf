@@ -134,13 +134,13 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     /**
      * @inheritDoc
      */
-    public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user) {
+    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision,int pageNo, int noOfRows, DeathRegister.State status, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get death registrations with the state : " + status
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         try {
-            return deathRegisterDAO.getPaginatedListForState(pageNo, noOfRows, status);
+            return deathRegisterDAO.getPaginatedListForState(deathDivision,pageNo, noOfRows, status);
         } catch (NoResultException e) {
             logger.error("No result found", e);
             return new ArrayList();

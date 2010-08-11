@@ -79,7 +79,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String deathPersondsDivisionEn;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -118,14 +118,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             case 1:
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeath(death);
-                ddf.setDeathPerson(deathPerson);                
+                ddf.setDeathPerson(deathPerson);
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 break;
             case 2:
                 ddf.setDeclarant(declarant);
                 ddf.setWitness(witness);
                 ddf.setNotifyingAuthority(notifyingAuthority);
-                
+
                 service.addDeathRegistration(ddf, user);
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
@@ -136,23 +136,23 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String deathCertificate() {
         idUKey = 8;
         deathRegister = service.getById(idUKey, user);
-        deathPerson=deathRegister.getDeathPerson();
-        death=deathRegister.getDeath();
-        declarant=deathRegister.getDeclarant();
-        notifyingAuthority=deathRegister.getNotifyingAuthority();
-        declarant=deathRegister.getDeclarant();
+        deathPerson = deathRegister.getDeathPerson();
+        death = deathRegister.getDeath();
+        declarant = deathRegister.getDeclarant();
+        notifyingAuthority = deathRegister.getNotifyingAuthority();
+        declarant = deathRegister.getDeclarant();
 
-        genderEn=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
-        genderSi=GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
+        genderEn = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.ENGLISH);
+        genderSi = GenderUtil.getGender(deathPerson.getDeathPersonGender(), AppConstants.SINHALA);
 
-        deathPersonDeathDivision=bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(),AppConstants.SINHALA);
-        deathPersonDeathDivisionEn=bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(),AppConstants.ENGLISH);
-        deathPersondsDivision=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.SINHALA);
-        deathPersondsDivisionEn=dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(),AppConstants.ENGLISH);
-        deathPersonDistrict=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(),AppConstants.SINHALA);
-        deathPersonDistrictEn=districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(),AppConstants.ENGLISH);
+        deathPersonDeathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), AppConstants.SINHALA);
+        deathPersonDeathDivisionEn = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getDivisionId(), AppConstants.ENGLISH);
+        deathPersondsDivision = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), AppConstants.SINHALA);
+        deathPersondsDivisionEn = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDsDivision().getDsDivisionUKey(), AppConstants.ENGLISH);
+        deathPersonDistrict = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), AppConstants.SINHALA);
+        deathPersonDistrictEn = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(deathRegister.getDeath().getDeathDivision().getDivisionId()).getDistrict().getDistrictUKey(), AppConstants.ENGLISH);
 
-return SUCCESS;
+        return SUCCESS;
     }
 
     public String initLateDeath() {
@@ -173,9 +173,9 @@ return SUCCESS;
         populate();
         initPermissionForApprovalAndPrint();
         if (currentStatus != null) {
-            deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, currentStatus, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -190,7 +190,7 @@ return SUCCESS;
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, currentStatus, user);
         paginationHandler(deathApprovalAndPrintList.size());
         return SUCCESS;
     }
@@ -216,7 +216,7 @@ return SUCCESS;
             addActionError(getText("death.error.no.permission"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -230,7 +230,7 @@ return SUCCESS;
             addActionError(getText("death.error.no.permission.reject"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
 
@@ -246,7 +246,7 @@ return SUCCESS;
             addActionError("death.error.no.permission.delete");
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -272,9 +272,9 @@ return SUCCESS;
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (currentStatus != null) {
-            deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, currentStatus, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         }
         return SUCCESS;
     }
@@ -298,7 +298,8 @@ return SUCCESS;
         populateBasicLists(language);
         populateDynamicLists(language);
     }
- private void populate(DeathRegister ddf) {
+
+    private void populate(DeathRegister ddf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
 
@@ -576,6 +577,7 @@ return SUCCESS;
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
     }
+
     public boolean isBack() {
         return back;
     }
@@ -584,7 +586,7 @@ return SUCCESS;
         this.back = back;
     }
 
-public long getIdUKey() {
+    public long getIdUKey() {
         return idUKey;
     }
 
