@@ -15,13 +15,58 @@
     $(function() {
         $('img#confirmant_lookup').bind('click', function(evt1) {
             var id1 = $("input#confirmantNICorPIN").attr("value");
-            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
                     });
         });
-    })
+    });
+
+    function setConfirmPerson(id, nICorPIN, name) {
+        var confirmantName = document.getElementById("confirmantFullName");
+        var confirmantNICorPIN = document.getElementById("confirmantNICorPIN");
+
+        confirmantName.value = name;
+        confirmantNICorPIN.value = nICorPIN;
+    }
+
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
+
+        /*date related validations*/
+        alert("xsdfv");
+        var submit = document.getElementById('atePicker').value;
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+            flag = true;
+        }
+        element = document.getElementById('confirmantNICorPIN');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+        }
+        element = document.getElementById('confirmantFullName');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
+
+    function getDate(date) {
+        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
+        date = date.substring(0, date.lastIndexOf("/"));
+        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
+        var m = date.substring(0, date.lastIndexOf("/"));
+        return new Date(y, m, d);
+    }
 </script>
+
 <div id="birth-confirmation-form-outer">
     <s:form action="eprBirthConfirmation" name="birthConfirmationForm3" method="POST" id="birth-confirmation-form3"
             onsubmit="javascript:return validate()">
@@ -106,51 +151,6 @@
         <s:hidden id="p3error2" value="%{getText('cp3.error.FullName.value')}"/>
         <s:hidden id="p3error3" value="%{getText('cp3.error.confirm.date.value')}"/>
 
-        <script type="text/javascript">
-            function setConfirmPerson(id, nICorPIN, name) {
-                var confirmantName = document.getElementById("confirmantFullName");
-                var confirmantNICorPIN = document.getElementById("confirmantNICorPIN");
-
-                confirmantName.value = name;
-                confirmantNICorPIN.value = nICorPIN;
-            }
-
-            function validate()
-            {
-                var errormsg = "";
-                var element;
-                var returnval;
-
-                /*date related validations*/
-                alert("xsdfv");
-                var submit = document.getElementById('atePicker').value;
-                if (!(submit.getTime())) {
-                    errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
-                    flag = true;
-                }
-                element = document.getElementById('confirmantNICorPIN');
-                if (element.value == "") {
-                    errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-                }
-                element = document.getElementById('confirmantFullName');
-                if (element.value == "") {
-                    errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
-                }
-                if (errormsg != "") {
-                    alert(errormsg);
-                    returnval = false;
-                }
-                return returnval;
-            }
-
-            function getDate(date) {
-                var y = date.substring(date.lastIndexOf("/") + 1, date.length);
-                date = date.substring(0, date.lastIndexOf("/"));
-                var d = date.substring(date.lastIndexOf("/") + 1, date.length);
-                var m = date.substring(0, date.lastIndexOf("/"));
-                return new Date(y, m, d);
-            }
-        </script>
         <div class="skip-validation">
             <s:checkbox name="skipjavaScript" id="skipjs" value="false">
                 <s:label value="%{getText('skipvalidation.label')}"/>
@@ -173,4 +173,3 @@
         </div>
     </s:form>
 </div>
-<%-- Styling Completed --%>
