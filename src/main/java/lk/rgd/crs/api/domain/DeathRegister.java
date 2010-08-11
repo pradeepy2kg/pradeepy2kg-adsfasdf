@@ -14,10 +14,11 @@ import java.io.Serializable;
     @NamedQuery(name = "death.register.filter.by.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.status = :status " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-    @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT deathRegister FROM DeathRegister deathRegister"),
+    @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE "+
+    "deathRegister.death.deathDivision = :deathDivision"),
 
     @NamedQuery(name = "get.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision=:deathDivision")
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision")
 })
 public class DeathRegister implements Serializable {
 

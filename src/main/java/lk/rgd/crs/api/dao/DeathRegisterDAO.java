@@ -51,13 +51,14 @@ public interface DeathRegisterDAO {
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status);
 
     /**
-     * Get the list of all the death registrations
+     * Get the list of all the death registrations which are belonging to the given death division
      *
+     * @param deathDivision the death division
      * @param pageNo   the page number for the results required(start from 1)
      * @param noOfRows number of rows to return per page
      * @return list of DeathRegister objects
      */
-    public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows);
+    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision,int pageNo, int noOfRows);
 
     /**
      * get a death registration based on requested serial number and BDDivision

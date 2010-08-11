@@ -60,9 +60,10 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
-    public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows) {
-        Query q = em.createNamedQuery("getAllDeathRegistrations").setFirstResult((pageNo - 1)
+    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("get.all.deaths.by.deathDivision").setFirstResult((pageNo - 1)
             * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("deathDivision", deathDivision);
         return q.getResultList();
     }
 
