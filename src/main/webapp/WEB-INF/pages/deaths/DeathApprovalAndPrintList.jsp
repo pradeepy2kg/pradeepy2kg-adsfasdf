@@ -8,7 +8,20 @@
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+
 <script>
+
+    /*date pickers for start and end dates*/
+    $(function() {
+        $("#fromDateId").datepicker();
+    });
+    $(function() {
+        $("#endDateId").datepicker();
+    });
+
     $(document).ready(function() {
         $('#approval-list-table').dataTable({
             "bPaginate": true,
@@ -39,7 +52,7 @@
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
-                        $("select#birthDivisionId").html(options2);
+                        $("select#deathDivisionId").html(options2);
                     });
         });
 
@@ -52,7 +65,7 @@
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
-                        $("select#birthDivisionId").html(options);
+                        $("select#deathDivisionId").html(options);
                     });
         })
     });
@@ -61,23 +74,88 @@
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
 
 <s:actionerror/>
-<table cellpadding="5" cellspacing="0">
-    <s:form action="eprDeathFilterByStatus" method="post">
+<s:form action="eprDeathFilterByStatus" method="post">
+    <table width="100%" cellpadding="5" cellspacing="0">
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td colspan="1">
+                <s:label name="district" value="%{getText('district.label')}"/>
+            </td>
+            <td colspan="1">
+                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                          value="birthDistrictId" cssStyle="width:240px;"/>
+            </td>
+            <td colspan="1"></td>
+            <td colspan="1">
+                <s:select id="deathDivisionId" name="deathDivisionId" value="%{deathDivisionId}"
+                          list="bdDivisionList"
+                          cssStyle=" width:240px;float:right;"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                <s:label name="division" value="%{getText('select_ds_division.label')}"/>
+            </td>
+            <td colspan="1">
+                <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                          cssStyle="float:left;  width:240px;"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <table width="100%" cellpadding="5" cellspacing="0">
+        <col>
+        <col>
+        <col>
+        <tbody>
+        <tr>
+            <td colspan="1"><s:label value="%{getText('death_select_state.lable')}"/></td>
+            <td colspan="2" width="230px">
+                <s:select list="#@java.util.HashMap@{'1':getText('data.entry.label'),'2':getText('Approved.label'),
+        '3':getText('rejected.label'),'4':getText('death.certificate.printed.label')}"
+                          name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
+                          headerValue="%{getText('death_select_all.lable')}"
+                          cssStyle="width:200px; margin-left:5px;"></s:select>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <table cellpadding="5" cellspacing="0">
+
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
 
         <tbody>
         <tr>
-            <td><s:label value="%{getText('death_select_state.lable')}"/></td>
             <td>
-                <s:select list="#@java.util.HashMap@{'DATA_ENTRY':getText('data.entry.label'),'APPROVED':getText('Approved.label'),
-        'REJECTED':getText('rejected.label'),'DEATH_CERTIFICATE_PRINTED':getText('death.certificate.printed.label')}"
-                          name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
-                          headerValue="%{getText('death_select_state.lable')}"
-                          cssStyle="width:200px; margin-left:5px;"></s:select></td>
-            <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
+                <s:label value="%{getText('date.from.label')}"/>
+            </td>
+            <td>
+                <s:textfield name="fromDate" id="fromDateId"/>
+            </td>
+            <td><s:label value="%{getText('date.to.label')}"/></td>
+            <td>
+                <s:textfield name="endDate" id="endDateId"/>
+            </td>
+            <td colspan="2" class="button" align="left"><s:submit name="refresh"
+                                                                  value="%{getText('refresh.label')}"/></td>
         </tr>
         </tbody>
-    </s:form>
-</table>
+    </table>
+
+</s:form>
+
 <div id="birth-register-approval-body">
 
 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
@@ -87,6 +165,7 @@
 <tr>
     <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
     <th><s:label name="name" value="%{getText('name.label')}"/></th>
+    <th><s:label name="state" value="%{getText('state.label')}"/></th>
     <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
     <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
     <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
@@ -104,6 +183,9 @@
         </td>
         <td>
             <s:property value="deathPerson.deathPersonNameOfficialLang"/>
+        </td>
+        <td>
+            <s:property value="status"/>
         </td>
 
         <s:if test="status.ordinal()==0">
