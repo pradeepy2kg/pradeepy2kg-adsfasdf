@@ -38,28 +38,23 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
+	<td>submitDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[5]/td[3]</td>
+	<td>link=9</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[@id='datePicker']/img</td>
+	<td>birthDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[4]/td[1]</td>
+	<td>link=11</td>
 	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birthDivisionId</td>
-	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
 </tr>
 <tr>
 	<td>type</td>

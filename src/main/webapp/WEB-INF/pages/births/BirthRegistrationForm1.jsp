@@ -154,7 +154,14 @@
                     <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
                 </tr>
             </table>
+
             <table class="table_reg_datePicker_page_01">
+                 <tr>
+                    <td colspan="2" >කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக
+                        பாவனைக்காக மட்டும்
+                        <br>For office use only <hr>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <s:if test="birthType.ordinal() == 1">
@@ -286,7 +293,7 @@
         </td>
     </tr>
     <tr>
-        <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
+        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="float:left;  width:240px;"/>
@@ -296,11 +303,11 @@
                       cssStyle=" width:240px;float:right;"/>
         </td>
     <tr>
-        <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
+        <td><label>සිංහල හෝ දෙමළ භාෂාවෙන්         <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
-        <td><label>*in sinhala/*in tamil/ Place in English</label></td>
+        <td><label>ඉංග්‍රීසි භාෂාවෙන්        <br>இங்கிலீஷ் <br>In English</label></td>
         <td colspan="6">
             <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
@@ -504,11 +511,11 @@
         return returnval;
     }
     function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/")+1, date.length);
-        date=date.substring(0,date.lastIndexOf("/"));
-        var d=date.substring(date.lastIndexOf("/")+1, date.length);
-        var m=date.substring(0,date.lastIndexOf("/"));
-        return new Date(y,m,d);
+        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
+        date = date.substring(0, date.lastIndexOf("/"));
+        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
+        var m = date.substring(0, date.lastIndexOf("/"));
+        return new Date(y, m, d);
     }
 </script>
 

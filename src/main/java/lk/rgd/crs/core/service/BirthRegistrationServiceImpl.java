@@ -1118,7 +1118,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         ChildInfo child = bdf.getChild();
         child.setChildGenderPrint(GenderUtil.getGender(bdf.getChild().getChildGender(), prefLanguage));
-
+        logger.debug("check for certificate");
         BirthRegisterInfo brInfo = bdf.getRegister();
         if (brInfo.getOriginalBCPlaceOfIssue() != null) {
             brInfo.setOriginalBCPlaceOfIssuePrint(dsDivisionDAO.getNameByPK(brInfo.getOriginalBCPlaceOfIssue(), prefLanguage));

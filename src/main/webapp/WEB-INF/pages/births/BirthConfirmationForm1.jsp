@@ -126,8 +126,8 @@
     <tr>
         <td>2</td>
         <td><label>
-            *in Sinhala
-            <br>* in Tamil
+            යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත  දැනුම් දිය යුතු  අවසන් දිනය <br>
+            மாற்றங்கள் பதிவாளர் அதிகாரியின் அலுவலகத்தை அடைய வேண்டிய இறுதித் திகதி
             <br>Last date by which changes should be received by the registrar generals office.
         </label></td>
         <td><s:textfield cssClass="disable" disabled="true" value=""/></td>
@@ -173,15 +173,15 @@
     <tr>
         <td class="cell_01">3</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
-        <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Year</label></td>
+        <td class="cell_03"><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
-        <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Month</label></td>
+        <td class="cell_03"><label>මාසය<br>மாதம்<br>Month</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.month+1}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
-        <td class="cell_03"><label>*in Sinhala<br>*in Tamil<br>Day</label></td>
+        <td class="cell_03"><label>දිනය<br>திகதி<br>Day</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
@@ -209,36 +209,32 @@
         <td colspan="13"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
     </tr>
     <tr>
-        <td></td>
+        <td rowspan="5"></td>
         <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
         <td colspan="6"><s:textfield value="%{getDistrictList().get(birthDistrictId)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:select list="districtList" name="birthDistrictId"/></td>
     </tr>
     <tr>
-        <td></td>
         <td><label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId"/></td>
     </tr>
     <tr>
-        <td></td>
         <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
         <td colspan="6"><s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
     </tr>
     <tr>
-        <td></td>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
         <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
                                     disabled="true" cols="38"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
-        <td></td>
-        <td><label>*in sinhala<br>*in tamil<br>Place in English</label></td>
+        <td><label>ඉංග්‍රීසි භාෂාවෙන්     <br>இங்கிலீஷ்    <br>In English</label></td>
         <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable"
                                     disabled="true" cols="38"/></td>
         <td colspan="6">
@@ -282,12 +278,12 @@
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
                                      disabled="true"
                                      value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
-        <td><label id="yes" class="label">*in sinhala<br>*in tamil<br>Yes</label></td>
+        <td><label id="yes" class="label">ඔව්<br>*in tamil<br>Yes</label></td>
         <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
                      value="1"/></td>
-        <td><label class="label">*in sinhala<br>*in tamil<br>No</label></td>
+        <td><label class="label">නැත<br>*in tamil<br>No</label></td>
         <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
-        <td><label class="label">*in sinhala<br>*in tamil<br>Since Married</label></td>
+        <td><label class="label">නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
         <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
     </tr>
     </tbody>

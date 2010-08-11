@@ -45,7 +45,7 @@ $(function() {
             <col/>
             <tbody>
             <tr>
-                <td colspan="3" style="text-align:center;font-size:12pt"> * in Sinhala <br>* in Tamil *<br> Changes in
+                <td colspan="3" style="text-align:center;font-size:12pt"> නම් වල වෙනස් වීම්<br> பெயரிலுள்ள  மாற்றங்கள் <br> Changes in Names
                     Names
                 </td>
             </tr>
@@ -58,7 +58,7 @@ $(function() {
             </tr>
             <tr>
                 <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
                 <td><s:textarea id="childFullNameOfficialLang" name="child.childFullNameOfficialLang"/></td>
             </tr>
             <tr>
@@ -69,7 +69,7 @@ $(function() {
             </tr>
             <tr>
                 <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
                 <td>
                     <s:textarea id="childFullNameEnglish" name="child.childFullNameEnglish" cssStyle="text-transform: uppercase;"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
@@ -82,7 +82,7 @@ $(function() {
             </tr>
             <tr>
                 <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
                 <td><s:textarea name="parent.fatherFullName"></s:textarea></td>
             </tr>
             <tr>
@@ -92,7 +92,7 @@ $(function() {
             </tr>
             <tr>
                 <td></td>
-                <td><label>නම වෙනස් විය යුතු අයුරු<br>* in Tamil <br>Corrected name</label></td>
+                <td><label>නම වෙනස් විය යුතු අයුරු<br>திருத்தப்பட்ட பெயர் <br>Corrected name</label></td>
                 <td><s:textarea name="parent.motherFullName"></s:textarea></td>
             </tr>
             </tbody>

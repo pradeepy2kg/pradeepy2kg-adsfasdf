@@ -90,8 +90,9 @@
         }
         element = document.getElementsByName("marriage.parentsMarried")[2];
         if (element.checked) {
-            element = document.getElementById('fatherName');
-            if (!element.checked && element.value.length > 0)
+             element = document.getElementById('fatherName');
+            var element3=document.getElementById('fatherSigned');
+            if (element.value.length > 0 && !element3.checked)
             {
                 errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
             }

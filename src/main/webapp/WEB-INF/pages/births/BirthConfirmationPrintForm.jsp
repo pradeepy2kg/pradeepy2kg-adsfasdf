@@ -7,7 +7,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <style type="text/css">
-    #birth-confirmation-print-form-outer table tr td{padding:0 5px;}
+    #birth-confirmation-print-form-outer table tr td {
+        padding: 0 5px;
+    }
+
     @media print {
         .form-submit {
             display: none;
@@ -114,9 +117,9 @@
     <tr>
         <td style="text-align:center">2</td>
         <td><label>
-            *in Sinhala
-            <br>* in Tamil
-            <br>Last date by which changes should be received by the registrar generals office.
+            යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත දැනුම් දිය යුතු අවසන් දිනය <br>
+            மாற்றங்கள் பதிவாளர் அதிகாரியின் அலுவலகத்தை அடைய வேண்டிய இறுதித் திகதி <br>
+            Last date by which changes should be received by the registrar generals office
         </label></td>
         <td><s:textfield cssClass="disable" disabled="true" name="register.lastDayForConfirmation"/></td>
     </tr>
@@ -162,20 +165,20 @@
     <tr>
         <td class="cell_011">3</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
-        <td><label>*in Sinhala<br>*in Tamil<br>Year</label></td>
+        <td><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
                                       size="4"/></td>
-        <td><label>*in Sinhala<br>*in Tamil<br>Month</label></td>
+        <td><label>මාසය<br>மாதம்<br>Month</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.month+1}" cssClass="disable" disabled="true"
                                       size="4"/></td>
-        <td><label>*in Sinhala<br>*in Tamil<br>Day</label></td>
+        <td><label>දිනය<br>திகதி<br>Day</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.date}" cssClass="disable" disabled="true"
                                       size="4"/></td>
-        <td colspan="6"><label>*in Sinhala<br>*in Tamil<br>Year</label></td>
+        <td colspan="6"><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
         <td width="60px"></td>
-        <td><label>*in Sinhala<br>*in Tamil<br>Month</label></td>
+        <td><label>මාසය<br>மாதம்<br>Month</label></td>
         <td width="60px"></td>
-        <td><label>*in Sinhala<br>*in Tamil<br>Day</label></td>
+        <td><label>දිනය<br>திகதி<br>Day</label></td>
         <td width="60px"></td>
 
     </tr>
@@ -198,7 +201,7 @@
         <td colspan="18" height="25px"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
     </tr>
     <tr>
-        <td rowspan="3"></td>
+        <td rowspan="4"></td>
         <td height="40px"><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -217,8 +220,7 @@
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td></td>
-        <td><label>*in sinhala<br>*in tamil<br>Place in English</label></td>
+        <td><label>ඉංග්‍රීසි භාෂාවෙන්     <br>இங்கிலீஷ்    <br>In English</label></td>
         <td colspan="6"><s:textarea name="child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
         <td colspan="11"></td>
     </tr>
@@ -296,7 +298,7 @@
         <tr>
             <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-                <br>* in Tamil
+                <br>திருத்தப்பட்ட பெயர்
                 <br>Corrected name</label>
 
                 <p></p></td>
@@ -339,7 +341,7 @@
         <tr>
             <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-                <br>* in Tamil
+                <br>திருத்தப்பட்ட பெயர்
                 <br>Corrected name</label>
 
                 <p></p></td>
@@ -379,7 +381,7 @@
         <tr>
             <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-                <br>* in Tamil
+                <br>திருத்தப்பட்ட பெயர்
                 <br>Corrected name</label>
 
                 <p></p></td>
@@ -420,7 +422,7 @@
         <tr>
             <td rowspan="5" class="cell_012"></td>
             <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-                <br>* in Tamil
+                <br>திருத்தப்பட்ட பெயர்
                 <br>Corrected name</label>
 
                 <p></p></td>
@@ -618,7 +620,7 @@
             <td colspan="2"><p></p></td>
         </tr>
         <tr>
-            <td colspan="2"><p></p></td>                        
+            <td colspan="2"><p></p></td>
         </tr>
         <tr>
             <td>Printed On</td>
