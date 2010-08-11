@@ -173,7 +173,9 @@ public class AdoptionOrder implements Serializable {
     private State status;
 
     private String filterBlanks(String s) {
-        return (s == null) ? null : (s.trim().length() == 0) ? null : s.trim().toUpperCase();
+        if (s == null) return null;
+        s = s.trim();
+        return s.length() == 0 ? null : s.toUpperCase();
     }
 
     public long getIdUKey() {
