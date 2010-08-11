@@ -175,7 +175,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionNotice() {
         adoption = service.getById(idUKey, user);
-        return SUCCESS;
+        if (adoption.getStatus() != AdoptionOrder.State.APPROVED ) {
+            addActionError(getText("adoption.not.permited.operation"));
+            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            return ERROR;
+        } else {
+            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
+            genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            return SUCCESS;
+        }
     }
 
     /**
@@ -206,9 +215,17 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
-        genderEn=GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
-        genderSi=GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
-        return SUCCESS;
+        if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED ) &&
+               ( adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+            addActionError(getText("adoption.not.permited.operation"));
+            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            return ERROR;
+        } else {
+            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
+            genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            return SUCCESS;
+        }
     }
 
     /**
@@ -442,6 +459,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             adoption = service.getById(getIdUKey(), user);
             logger.debug("Id u key : {}", getIdUKey());
         } catch (Exception e) {
+            addActionError(getText("adoption.error.no.permission"));
             logger.debug("catch exception : {}", e);
         }
         return SUCCESS;

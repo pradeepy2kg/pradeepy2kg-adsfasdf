@@ -235,7 +235,7 @@
         <td height="40px" width="250px">ස්ත්‍රී පුරුෂ භාවය <br/>
             Gender
         </td>
-        <td width="250px"><s:label name="" value="%{adoption.childGender}"/></td>
+        <td width="250px"><s:label name="" value="%{genderSi}"/></td>
     </tr>
     </tbody>
 </table>

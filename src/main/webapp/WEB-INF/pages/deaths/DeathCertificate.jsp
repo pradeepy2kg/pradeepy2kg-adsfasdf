@@ -139,7 +139,7 @@
         </tr>
         <tr>
             <td colspan="1" height="100px">දැනුම් ලිපිනය <br>கொடுப்பவரின் பெயர்<br>Informant's Address</td>
-            <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonPermanentAddress}"/></td>
+            <td colspan="7"><s:label name="" value="%{declarant.declarantAddress}"/></td>
         </tr>
         </tbody>
     </table>
