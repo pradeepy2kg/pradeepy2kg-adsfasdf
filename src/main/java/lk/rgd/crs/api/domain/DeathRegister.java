@@ -18,7 +18,11 @@ import java.io.Serializable;
     "deathRegister.death.deathDivision = :deathDivision"),
 
     @NamedQuery(name = "get.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision")
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision"),
+
+    @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY deathRegister.death.dateOfRegistration desc")
 })
 public class DeathRegister implements Serializable {
 

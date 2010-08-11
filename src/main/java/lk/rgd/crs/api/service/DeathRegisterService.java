@@ -6,6 +6,7 @@ import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -102,4 +103,19 @@ public interface DeathRegisterService {
      * @param user                the user initiating the action
      */
     public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user);
+
+    /**
+     * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.
+     * Results are ordered on the descending registration date. pageNo  and noOfRows used for pagination
+     *
+     * @param deathDivision the death division
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @param user          user initiating the action
+     * @return the death registration results
+     */
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 }

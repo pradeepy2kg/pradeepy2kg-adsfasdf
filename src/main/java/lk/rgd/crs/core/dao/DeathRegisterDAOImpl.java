@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Date;
 
 
 /**
@@ -76,5 +77,18 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         q.setParameter("deathSerialNo", deathSerialNo);
         q.setParameter("deathDivision", bdDivision);
         return (DeathRegister) q.getSingleResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows){
+        Query q = em.createNamedQuery("get.by.division.register.date").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("deathDivision", deathDivision);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return q.getResultList();
     }
 }
