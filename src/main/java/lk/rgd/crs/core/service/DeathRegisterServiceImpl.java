@@ -150,10 +150,10 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     /**
      * @inheritDoc
      */
-    public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
+    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
         try {
-            return deathRegisterDAO.getPaginatedListForAll(pageNo, noOfRows);
+            return deathRegisterDAO.getPaginatedListForAll(deathDivision,pageNo, noOfRows);
         } catch (NoResultException e) {
             logger.error("No result found ", e);
             return new ArrayList();

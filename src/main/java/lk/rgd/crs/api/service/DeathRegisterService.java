@@ -58,23 +58,25 @@ public interface DeathRegisterService {
     public List<DeathRegister> getPaginatedListForState(int pageNo, int noOfRows, DeathRegister.State status, User user);
 
     /**
-     * Get the list of all the death registrations
+     * Get the list of all the death registrations which are belonging to the given death division
      *
-     * @param pageNo   the page number for the results required(start from 1)
-     * @param noOfRows number of rows to return per page
-     * @param user     the user initiating the action
+     * @param deathDivision the death division
+     * @param pageNo        the page number for the results required(start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @param user          the user initiating the action
      * @return list of DeathRegister objects
      */
-    public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user);
+    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user);
 
     /**
-     * get a death registration based on requested serial number and BDDivision 
-     * @param bdDivision the birth death declaration division under which the death serial number should be searched
+     * get a death registration based on requested serial number and BDDivision
+     *
+     * @param bdDivision    the birth death declaration division under which the death serial number should be searched
      * @param user          the user initiating the action
      * @param deathSerialNo serial number of the death registration
      * @return DeathRegister object
      */
-    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision,String deathSerialNo, User user);
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo, User user);
 
     /**
      * Approve a death registration already captured by the DEO by an ADR or higher authority

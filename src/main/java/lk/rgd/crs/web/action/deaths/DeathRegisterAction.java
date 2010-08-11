@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
-import java.util.Date;
 import java.util.List;
 
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -17,7 +16,6 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.web.WebConstants;
@@ -177,7 +175,7 @@ return SUCCESS;
         if (currentStatus != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -218,7 +216,7 @@ return SUCCESS;
             addActionError(getText("death.error.no.permission"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -232,7 +230,7 @@ return SUCCESS;
             addActionError(getText("death.error.no.permission.reject"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
 
@@ -248,7 +246,7 @@ return SUCCESS;
             addActionError("death.error.no.permission.delete");
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -276,7 +274,7 @@ return SUCCESS;
         if (currentStatus != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         }
         return SUCCESS;
     }
