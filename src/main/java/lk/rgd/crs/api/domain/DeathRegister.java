@@ -17,7 +17,7 @@ import java.io.Serializable;
     @NamedQuery(name = "getAllDeathRegistrations", query = "SELECT deathRegister FROM DeathRegister deathRegister"),
 
     @NamedQuery(name = "get.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.birthDivision=:deathDivision")
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision=:deathDivision")
 })
 public class DeathRegister implements Serializable {
 

@@ -26,11 +26,10 @@ public interface AdoptionOrderDAO {
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows);
 
     /**
-     * Update existing adoption order state as archived and add a new adoption order entry with state adoption
-     * certificate printed
+     * Add new birth certificate number to the existing adoption order
      *
-     * @param adoption existing adoption order
-     * @param bdf      the BDF added for a adopted child
+     * @param adoption     existing adoption order
+     * @param serialNumber serial number of the new birth registration for the adopted child
      */
-    public void initiateBirthDeclaration(AdoptionOrder adoption, BirthDeclaration bdf);
+    public void initiateBirthDeclaration(AdoptionOrder adoption, long serialNumber);
 }
