@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
-import java.util.Date;
 import java.util.List;
 
 import lk.rgd.common.api.dao.DistrictDAO;
@@ -17,7 +16,6 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.web.WebConstants;
@@ -163,6 +161,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String lateDeath() {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
         service.addDeathRegistration(deathRegister, user);
         return SUCCESS;
@@ -176,7 +175,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (currentStatus != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+            //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -217,7 +216,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError(getText("death.error.no.permission"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -231,7 +230,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError(getText("death.error.no.permission.reject"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
 
@@ -247,7 +246,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError("death.error.no.permission.delete");
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -275,7 +274,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (currentStatus != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+            //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
         return SUCCESS;
     }
@@ -351,11 +350,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
     }
 
     private void populateDynamicLists(String language) {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());
@@ -631,6 +632,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public void setDeathPersonDeathDivision(String deathPersonDeathDivision) {
         this.deathPersonDeathDivision = deathPersonDeathDivision;
     }
+
 
     public String getDeathPersonDeathDivisionEn() {
         return deathPersonDeathDivisionEn;
