@@ -35,7 +35,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public void addDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding new death registration");
-        businessValidations(deathRegistration, user);
+        validateAccessToBDDivision(user,deathRegistration.getDeath().getDeathDivision());
         DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
             deathRegistration.getDeath().getDeathSerialNo());
         if (existing != null) {
