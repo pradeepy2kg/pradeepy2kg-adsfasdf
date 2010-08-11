@@ -164,7 +164,6 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo, User user) {
-        //todo after finalizing the requirements has to be modified whether to return a single entry or list
         try {
             return deathRegisterDAO.getByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
         } catch (NoResultException e) {
@@ -189,7 +188,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     private void validateAccess(User user) {
         String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()) ||
-            !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role))) {
+            !(Role.ROLE_ARG.equals(role) || Role.ROLE_RG.equals(role) || Role.ROLE_ADR.equals(role))) {
             handleException("User : " + user.getUserId() + " of role : " + role +
                 " is not allowed access to approve/reject an death registration : ", ErrorCodes.PERMISSION_DENIED);
         }
