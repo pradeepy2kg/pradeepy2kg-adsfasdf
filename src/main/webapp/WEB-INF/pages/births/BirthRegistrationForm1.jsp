@@ -158,7 +158,7 @@
                 <tr>
                     <td>
                         <s:if test="birthType.ordinal() == 1">
-                            <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
+                            <label><span class="font-8">යොමුකළ දිනය<br>in Tamil<br>Submitted Date</span></label>
                         </s:if>
                         <s:else>
                             <label><span class="font-8">ලියාපදිංචි කල දිනය<br>* In Tamil<br>Date of Registration</span></label>
