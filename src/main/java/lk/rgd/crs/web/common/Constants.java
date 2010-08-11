@@ -25,8 +25,6 @@ public class Constants {
     public static final String USERID = "userid";
     public static final char[] PASSWORD = "".toCharArray();
 
-    public static final SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy  HH:mm");
-
     // this is the default location to attach folder
     public static final String FOLDER_NODE="folder";
     //*****
