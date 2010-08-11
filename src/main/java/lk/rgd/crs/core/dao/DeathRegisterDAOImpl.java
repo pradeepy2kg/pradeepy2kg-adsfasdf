@@ -41,7 +41,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
-    @Transactional 
+    @Transactional
     public void deleteDeathRegistration(long deathRegistrationIdUKey) {
         DeathRegister dr = getById(deathRegistrationIdUKey);
         em.remove(dr);
@@ -69,10 +69,10 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
-    public DeathRegister getByDeathSerialNo(String deathSerialNo) {
-        //todo after finalizing the requirements has to be modified whether to return a single entry or list
-        //Query q = em.createNamedQuery("get.by.death.SerailNumber");
-        //q.setParameter("deathSerialNo", deathSerialNo);
-        return em.find(DeathRegister.class,deathSerialNo);
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo) {
+        Query q = em.createNamedQuery("get.by.bddivision.and.deathSerialNo");
+        q.setParameter("deathSerialNo", deathSerialNo);
+        q.setParameter("deathDivision", bdDivision);
+        return (DeathRegister) q.getSingleResult();
     }
 }
