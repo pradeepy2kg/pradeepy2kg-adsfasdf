@@ -2,7 +2,6 @@ package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.common.api.domain.User;
 
 import java.util.Date;
 import java.util.List;
@@ -144,5 +143,6 @@ public interface BirthDeclarationDAO {
      * @return the related historical records - if any
      */
     public List<BirthDeclaration> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo);
+
 }
 

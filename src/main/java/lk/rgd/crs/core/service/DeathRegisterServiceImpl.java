@@ -12,6 +12,7 @@ import lk.rgd.Permission;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,6 +148,15 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
             logger.error("No result found", e);
             return new ArrayList();
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user){
+        validateAccessToBDDivision(user,deathDivision);
+        return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision,startDate,endDate,pageNo,noOfRows);
     }
 
     /**
