@@ -44,7 +44,7 @@ public class DeathInfo implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "bdDivisionUKey", nullable = false)
-    private BDDivision birthDivision;
+    private BDDivision deathDivision;
 
     @Column(nullable = true, length = 255)
     private String placeOfDeathInEnglish;
@@ -191,12 +191,12 @@ public class DeathInfo implements Serializable {
         this.placeOfBurial = placeOfBurial;
     }
 
-    public BDDivision getBirthDivision() {
-        return birthDivision;
+    public BDDivision getDeathDivision() {
+        return deathDivision;
     }
 
-    public void setBirthDivision(BDDivision birthDivision) {
-        this.birthDivision = birthDivision;
+    public void setDeathDivision(BDDivision deathDivision) {
+        this.deathDivision = deathDivision;
     }
 
     public String getPreferredLanguage() {

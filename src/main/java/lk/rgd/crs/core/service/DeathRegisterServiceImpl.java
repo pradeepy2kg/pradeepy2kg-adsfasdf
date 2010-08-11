@@ -38,7 +38,8 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
         //todo user validation
         logger.debug("adding new death registration");
         businessValidations(deathRegistration);
-        DeathRegister dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getBirthDivision(), deathRegistration.getDeath().getDeathSerialNo());
+        DeathRegister dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
+            deathRegistration.getDeath().getDeathSerialNo());
         if (dr != null) {
             handleException("can not add death registration " + deathRegistration.getIdUKey() +
                 " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);

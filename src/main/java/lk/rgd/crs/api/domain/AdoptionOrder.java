@@ -62,8 +62,6 @@ public class AdoptionOrder implements Serializable {
         CERTIFICATE_ISSUE_REQUEST_CAPTURED, //4 Acertifcate is requested
 
         ADOPTION_CERTIFICATE_PRINTED, //5 Acertifcate is requested
-
-        ADOPTION_ORDER_ARCHIVED    // 6 - Adoption order archived due to new BDF adding. This is the state of old record
     }
 
     public enum ApplicantType {
@@ -145,13 +143,16 @@ public class AdoptionOrder implements Serializable {
     private int childGender;   //  Gender 0 - male, 1 - female, 2 - unknown
 
     @Column(nullable = true)
-    private long birthCertificateNumber; // idukey, not the serial !
+    private long birthCertificateNumber; // idukey, not the serial of old birth registration before adoption
 
     @Column(nullable = true)
     private long birthCertificateSerial; // if BC number not given
 
     @Column(nullable = true)
     private int birthDivisionId; // if BC number not given
+
+    @Column(nullable = true)
+    private long newBirthCertificateNumber; // idUKey of new birth registration after adoption 
 
     @Column(nullable = true)
     private String certificateApplicantName;
@@ -373,6 +374,14 @@ public class AdoptionOrder implements Serializable {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
+    }
+
+    public long getNewBirthCertificateNumber() {
+        return newBirthCertificateNumber;
+    }
+
+    public void setNewBirthCertificateNumber(long newBirthCertificateNumber) {
+        this.newBirthCertificateNumber = newBirthCertificateNumber;
     }
 
     public String getCertificateApplicantName() {

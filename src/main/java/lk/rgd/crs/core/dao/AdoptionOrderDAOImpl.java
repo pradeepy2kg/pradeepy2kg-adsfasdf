@@ -75,17 +75,8 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      * @inheritDoc
      */
     @Transactional
-    public void initiateBirthDeclaration(AdoptionOrder adoption, BirthDeclaration bdf) {
-        // mark existing adoption order as archived
-        adoption.setStatus(AdoptionOrder.State.ADOPTION_ORDER_ARCHIVED);
+    public void initiateBirthDeclaration(AdoptionOrder adoption, long serialNumber) {
+        adoption.setNewBirthCertificateNumber(serialNumber);
         em.merge(adoption);
-
-        // add new adoption order
-        adoption.setIdUKey(0);
-        adoption.setStatus(AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED);
-        adoption.setBirthCertificateNumber(bdf.getIdUKey());
-        adoption.setBirthCertificateSerial(bdf.getRegister().getBdfSerialNo());
-        adoption.setBirthDivisionId(bdf.getRegister().getBirthDivision().getBdDivisionUKey());
-        em.persist(adoption);
     }
 }

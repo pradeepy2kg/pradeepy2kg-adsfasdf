@@ -515,6 +515,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
                     }
                     session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
+
                 } catch (Exception e) {
                     handleErrors(e);
                     addActionError(getText("p1.invalid.Entry"));

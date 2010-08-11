@@ -107,14 +107,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Adding a new adoption birth declaration");
 
         // TODO adoption specific validations
-        addBirthDeclaration(bdf, ignoreWarnings, user);
 
         AdoptionOrder existing = adoptionOrderDAO.getById(bdf.getRegister().getAdoptionUKey());
         final AdoptionOrder.State currentState = existing.getStatus();
         if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED == currentState) {
-            adoptionOrderDAO.initiateBirthDeclaration(existing, bdf);
-            logger.debug("Changes captured for adoption record, new record : {} and archived record : {}",
-                existing.getIdUKey(), bdf.getRegister().getAdoptionUKey());
+            addBirthDeclaration(bdf, ignoreWarnings, user);
+            adoptionOrderDAO.initiateBirthDeclaration(existing, bdf.getIdUKey());
+            logger.debug("Changes captured for adoption record : {} added new birth certificate number : {}",
+                existing.getIdUKey(), bdf.getIdUKey());
 
         } else {
             handleException("Cannot archive adoption order : " + bdf.getRegister().getAdoptionUKey() +
