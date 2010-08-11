@@ -14,16 +14,103 @@
     $(function() {
         $("#informDatePicker").datepicker();
     });
+
     $(function() {
         $('img#informant_lookup').bind('click', function(evt1) {
             var id1 = $("input#informantNICorPIN").attr("value");
-            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#informantAddress").val(data1.lastAddress);
-                    });
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
+                    $("textarea#informantAddress").val(data1.lastAddress);
+                });
         });
-    })
+    });
+
+    var informPerson;
+    function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
+    {
+
+        var informantName = document.getElementById("informantName");
+        var informantNICorPIN = document.getElementById("informantNICorPIN");
+        var informantAddress = document.getElementById("informantAddress");
+        var informantPhoneNo = document.getElementById("informantPhoneNo");
+        var informantEmail = document.getElementById("informantEmail");
+
+        informantName.value = name;
+        informantNICorPIN.value = nICorPIN;
+        informantAddress.value = address;
+        informantPhoneNo.value = phonoNo;
+        informantEmail.value = email;
+    }
+
+    /**
+     * validate for informent details
+     */
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
+        /*date related validations*/
+        var submit = getDate(document.getElementById('informDatePicker').value);
+       // var submit = new Date(submitDatePicker);
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+            flag = true;
+        }
+
+        element = document.getElementsByName("informant.informantType");
+        if (element.checked) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+        }
+        element = document.getElementById('informantName');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+        }
+        element = document.getElementById('informantAddress');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+        }
+        element = document.getElementsByName("marriage.parentsMarried")[1];
+        if (element.checked)
+        {
+            element = document.getElementById('placeOfMarriage');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
+            }
+
+            submit =getDate(document.getElementById('marriageDatePicker').value);
+           // submit = new Date(submitDatePicker);
+            if (!(submit.getTime())) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
+                flag = true;
+            }
+
+
+        }
+        element = document.getElementsByName("marriage.parentsMarried")[2];
+        if (element.checked) {
+            element = document.getElementById('fatherName');
+            if (!element.checked && element.value.length > 0)
+            {
+                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+            }
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
+
+     function getDate(date) {
+        var y = date.substring(date.lastIndexOf("/")+1, date.length);
+        date=date.substring(0,date.lastIndexOf("/"));
+        var d=date.substring(date.lastIndexOf("/")+1, date.length);
+        var m=date.substring(0,date.lastIndexOf("/"));
+        return new Date(y,m,d);
+    }
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
@@ -309,96 +396,8 @@
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
-<script type="text/javascript">
-    var informPerson;
-    function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
-    {
-
-        var informantName = document.getElementById("informantName");
-        var informantNICorPIN = document.getElementById("informantNICorPIN");
-        var informantAddress = document.getElementById("informantAddress");
-        var informantPhoneNo = document.getElementById("informantPhoneNo");
-        var informantEmail = document.getElementById("informantEmail");
-
-        informantName.value = name;
-        informantNICorPIN.value = nICorPIN;
-        informantAddress.value = address;
-        informantPhoneNo.value = phonoNo;
-        informantEmail.value = email;
-    }
-
-    /**
-     * validate for informent details
-     */
-    function validate()
-    {
-        var errormsg = "";
-        var element;
-        var returnval;
-        /*date related validations*/
-        var submit = getDate(document.getElementById('informDatePicker').value);
-       // var submit = new Date(submitDatePicker);
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
-            flag = true;
-        }
-
-        element = document.getElementsByName("informant.informantType");
-        if (element.checked) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-        }
-        element = document.getElementById('informantName');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
-        }
-        element = document.getElementById('informantAddress');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
-        }
-        element = document.getElementsByName("marriage.parentsMarried")[1];
-        if (element.checked)
-        {
-            element = document.getElementById('placeOfMarriage');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
-            }
-
-            submit =getDate(document.getElementById('marriageDatePicker').value);
-           // submit = new Date(submitDatePicker);
-            if (!(submit.getTime())) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
-                flag = true;
-            }
-
-
-        }
-        element = document.getElementsByName("marriage.parentsMarried")[2];
-        if (element.checked) {
-            element = document.getElementById('fatherName');
-            if (!element.checked && element.value.length > 0)
-            {
-                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-            }
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        return returnval;
-    }
-
-     function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/")+1, date.length);
-        date=date.substring(0,date.lastIndexOf("/"));
-        var d=date.substring(date.lastIndexOf("/")+1, date.length);
-        var m=date.substring(0,date.lastIndexOf("/"));
-        return new Date(y,m,d);
-    }
-
-
-</script>
 <s:hidden name="pageNo" value="3"/>
+
 <div class="form-submit">
     <s:submit value="%{getText('next.label')}"/>
 </div>
@@ -411,5 +410,4 @@
 </div>
 </s:form>
 </div>
-<%-- Styling Completed --%>
 

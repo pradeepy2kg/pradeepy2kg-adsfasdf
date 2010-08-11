@@ -12,16 +12,48 @@
     $(function() {
         $("#modifiedDatePicker").datepicker();
     });
+
     $(function() {
         $('img#notifier_lookup').bind('click', function(evt1) {
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
-            $.getJSON('http://localhost:8080/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#notifyingAuthorityName").val(data1.fullNameInOfficialLanguage);
                         $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
                     });
         });
-    })
+    });
+
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
+        var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
+
+        /*date related validations*/
+        var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
+        var submit = new Date(submitDatePicker);
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
+            flag = true;
+        }
+        element = document.getElementById('notifyingAuthorityPIN');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
+        }
+        element = document.getElementById('notifyingAuthorityName');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
+        }
+
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
@@ -88,39 +120,6 @@
         <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
         <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>
 
-        <script type="text/javascript">
-            function validate()
-            {
-                var errormsg = "";
-                var element;
-                var returnval;
-                var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
-
-                /*date related validations*/
-                var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
-                var submit = new Date(submitDatePicker);
-                if (!(submit.getTime())) {
-                    errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
-                    flag = true;
-                }
-                element = document.getElementById('notifyingAuthorityPIN');
-                if (element.value == "") {
-                    errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
-                }
-                element = document.getElementById('notifyingAuthorityName');
-                if (element.value == "") {
-                    errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
-                }
-
-
-                if (errormsg != "") {
-                    alert(errormsg);
-                    returnval = false;
-                }
-                return returnval;
-            }
-        </script>
-
         <s:if test="birthType.ordinal() == 1">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
                 <table class="table_reg_page_04" width="100%" cellspacing="0" style="margin-top:20px;">
@@ -174,4 +173,3 @@
         </div>
     </s:form>
 </div>
-<%-- Styling Completed --%>
