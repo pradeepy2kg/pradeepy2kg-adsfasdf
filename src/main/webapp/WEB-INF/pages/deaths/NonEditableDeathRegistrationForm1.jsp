@@ -83,8 +83,7 @@
         <td colspan="3">දිස්ත්‍රික්කය /<br> மாவட்டம் / <br>District</td>
         <td colspan="5">
             <s:if test="#userPreferedLang == 'si'">
-                <s:label
-                        value="%{#session.deathRegister.death.deathDivision.dsDivision.district.siDistrictName}"/>
+                <s:label value="%{#session.deathRegister.death.deathDivision.dsDivision.district.siDistrictName}"/>
             </s:if>
             <s:elseif test="#userPreferedLang == 'en'">
                 <s:label value="%{#session.deathRegister.death.deathDivision.dsDivision.district.enDistrictName}"/>
@@ -112,9 +111,6 @@
     <tr>
         <td colspan="3">ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
         <td colspan="5">
-                <%--<s:select id="deathDivisionId" name="death.deathDivisionId" value="%{deathDivisionId}"--%>
-                <%--list="bdDivisionList"--%>
-                <%--cssStyle=" width:240px;float:left;"/>--%>
             <s:if test="#userPreferedLang == 'si'">
                 <s:label
                         value="%{#session.deathRegister.death.deathDivision.siDivisionName}"/>

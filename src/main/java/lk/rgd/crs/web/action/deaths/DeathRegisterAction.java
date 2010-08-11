@@ -84,7 +84,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Date endDate;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                               CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
+        CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -171,7 +171,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String lateDeath() {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
         service.addDeathRegistration(deathRegister, user);
         return SUCCESS;
@@ -351,13 +350,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
         boolean idsPopulated = false;
         if (death != null) {
-            // TODO remove these comments after BDDivision added
-//            if (death.getBirthDivision() != null) {  //if data present, populate with existing values
-//                deathDistrictId = death.getBirthDistrict().getDistrictUKey();
-//                deathDivisionId = death.getBirthDivision().getBdDivisionUKey();
-//                dsDivisionId = death.getDsDivision().getDsDivisionUKey();
-//                idsPopulated = true;
-//            }
+            if (death.getDeathDivision() != null) {  //if data present, populate with existing values
+                deathDistrictId = death.getDeathDivision().getDistrict().getDistrictUKey();
+                deathDivisionId = death.getDeathDivision().getBdDivisionUKey();
+                dsDivisionId = death.getDeathDivision().getDsDivision().getDsDivisionUKey();
+                idsPopulated = true;
+            }
             logger.debug("Districts, DS and BD divisions set from RegisterInfo : {} {}", deathDistrictId, dsDivisionId);
         }
 
@@ -399,13 +397,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
     }
 
     private void populateDynamicLists(String language) {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());

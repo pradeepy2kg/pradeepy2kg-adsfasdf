@@ -464,7 +464,6 @@
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
 
-        <!--TODO change this-->
         <action name="eprDeathViewMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationViewMode">
             <result type="tiles" name="form0">epr.non_editable_deathDeclaration_form1</result>
