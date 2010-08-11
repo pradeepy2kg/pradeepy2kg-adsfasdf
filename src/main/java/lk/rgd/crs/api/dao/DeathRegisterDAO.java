@@ -2,6 +2,7 @@ package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.BDDivision;
 
 import java.util.List;
 
@@ -59,10 +60,11 @@ public interface DeathRegisterDAO {
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows);
 
     /**
-     * get a death registration based on requested serial number
+     * get a death registration based on requested serial number and BDDivision
      *
+     * @param bdDivision    the birth death declaration division under which the death serial number should be searched
      * @param deathSerialNo serial number of the death registration
      * @return DeathRegister object
      */
-    public DeathRegister getByDeathSerialNo(String deathSerialNo);
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo);
 }

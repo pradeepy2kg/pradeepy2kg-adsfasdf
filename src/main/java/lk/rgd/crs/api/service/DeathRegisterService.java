@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.service;
 
 import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.common.api.domain.User;
 
@@ -67,13 +68,13 @@ public interface DeathRegisterService {
     public List<DeathRegister> getPaginatedListForAll(int pageNo, int noOfRows, User user);
 
     /**
-     * get a death registration based on requested serial number
-     *
+     * get a death registration based on requested serial number and BDDivision 
+     * @param bdDivision the birth death declaration division under which the death serial number should be searched
      * @param user          the user initiating the action
      * @param deathSerialNo serial number of the death registration
      * @return DeathRegister object
      */
-    public DeathRegister getByDeathSerialNo(String deathSerialNo, User user);
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision,String deathSerialNo, User user);
 
     /**
      * Approve a death registration already captured by the DEO by an ADR or higher authority

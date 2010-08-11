@@ -2,6 +2,7 @@ package lk.rgd.crs.core.service;
 
 import lk.rgd.crs.api.service.DeathRegisterService;
 import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
@@ -34,15 +35,17 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public void addDeathRegistration(DeathRegister deathRegistration, User user) {
+        //todo user validation
         logger.debug("adding new death registration");
         businessValidations(deathRegistration);
-        DeathRegister dr = getByDeathSerialNo(deathRegistration.getDeath().getDeathSerialNo(), user);
+        DeathRegister dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getBirthDivision(), deathRegistration.getDeath().getDeathSerialNo());
         if (dr != null) {
             handleException("can not add death registration " + deathRegistration.getIdUKey() +
                 " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
+        logger.debug("added a new death registration with idUKey : {} ", deathRegistration.getIdUKey());
     }
 
     /**
@@ -159,10 +162,10 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     /**
      * @inheritDoc
      */
-    public DeathRegister getByDeathSerialNo(String deathSerialNo, User user) {
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo, User user) {
         //todo after finalizing the requirements has to be modified whether to return a single entry or list
         try {
-            return deathRegisterDAO.getByDeathSerialNo(deathSerialNo);
+            return deathRegisterDAO.getByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
         } catch (NoResultException e) {
             logger.error("No result found", e);
             return null;
