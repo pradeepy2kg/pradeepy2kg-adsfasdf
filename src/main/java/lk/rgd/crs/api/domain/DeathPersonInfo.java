@@ -1,7 +1,12 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import java.io.Serializable;
 
 /**
@@ -15,9 +20,9 @@ public class DeathPersonInfo implements Serializable {
     @Column(nullable = true)
     private String deathPersonPINorNIC;
 
-    @Column(nullable = true)
-
-    private int deathPersonCountryId;
+    @ManyToOne
+    @JoinColumn(name = "deathPersonCountryId")
+    private Country deathPersonCountry;
 
     @Column(nullable = true)
     private String deathPersonPassportNo;
@@ -31,8 +36,12 @@ public class DeathPersonInfo implements Serializable {
     @Column(nullable = false)
     private int deathPersonGender;
 
-    @Column(nullable = true)
-    private int deathPersonRace;
+    /**
+     * Race of death person
+     */
+    @ManyToOne
+    @JoinColumn(name = "deathPersonRace")
+    private Race deathPersonRace;
 
     @Column(nullable = true, length = 600)
     private String deathPersonNameOfficialLang;
@@ -63,12 +72,12 @@ public class DeathPersonInfo implements Serializable {
         this.deathPersonPINorNIC = deathPersonPINorNIC;
     }
 
-    public int getDeathPersonCountryId() {
-        return deathPersonCountryId;
+    public Country getDeathPersonCountry() {
+        return deathPersonCountry;
     }
 
-    public void setDeathPersonCountryId(int deathPersonCountryId) {
-        this.deathPersonCountryId = deathPersonCountryId;
+    public void setDeathPersonCountry(Country deathPersonCountry) {
+        this.deathPersonCountry = deathPersonCountry;
     }
 
     public String getDeathPersonPassportNo() {
@@ -95,11 +104,11 @@ public class DeathPersonInfo implements Serializable {
         this.deathPersonGender = deathPersonGender;
     }
 
-    public int getDeathPersonRace() {
+    public Race getDeathPersonRace() {
         return deathPersonRace;
     }
 
-    public void setDeathPersonRace(int deathPersonRace) {
+    public void setDeathPersonRace(Race deathPersonRace) {
         this.deathPersonRace = deathPersonRace;
     }
 
