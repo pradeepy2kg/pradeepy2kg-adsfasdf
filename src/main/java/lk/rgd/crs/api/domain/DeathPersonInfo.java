@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Column;
@@ -69,7 +70,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonPINorNIC(String deathPersonPINorNIC) {
-        this.deathPersonPINorNIC = deathPersonPINorNIC;
+        this.deathPersonPINorNIC = WebUtils.filterBlanksAndToUpper(deathPersonPINorNIC);
     }
 
     public Country getDeathPersonCountry() {
@@ -85,7 +86,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonPassportNo(String deathPersonPassportNo) {
-        this.deathPersonPassportNo = deathPersonPassportNo;
+        this.deathPersonPassportNo = WebUtils.filterBlanksAndToUpper(deathPersonPassportNo);
     }
 
     public String getDeathPersonAge() {
@@ -125,7 +126,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonNameInEnglish(String deathPersonNameInEnglish) {
-        this.deathPersonNameInEnglish = deathPersonNameInEnglish;
+        this.deathPersonNameInEnglish = WebUtils.filterBlanksAndToUpper(deathPersonNameInEnglish);
     }
 
     public String getDeathPersonPermanentAddress() {
@@ -133,7 +134,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonPermanentAddress(String deathPersonPermanentAddress) {
-        this.deathPersonPermanentAddress = deathPersonPermanentAddress;
+        this.deathPersonPermanentAddress = WebUtils.filterBlanksAndToUpper(deathPersonPermanentAddress);
     }
 
     public String getDeathPersonFatherPINorNIC() {
@@ -141,7 +142,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonFatherPINorNIC(String deathPersonFatherPINorNIC) {
-        this.deathPersonFatherPINorNIC = deathPersonFatherPINorNIC;
+        this.deathPersonFatherPINorNIC = WebUtils.filterBlanksAndToUpper(deathPersonFatherPINorNIC);
     }
 
     public String getDeathPersonFatherFullName() {
@@ -149,7 +150,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonFatherFullName(String deathPersonFatherFullName) {
-        this.deathPersonFatherFullName = deathPersonFatherFullName;
+        this.deathPersonFatherFullName = WebUtils.filterBlanksAndToUpper(deathPersonFatherFullName);
     }
 
     public String getDeathPersonMotherPINorNIC() {
@@ -157,7 +158,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonMotherPINorNIC(String deathPersonMotherPINorNIC) {
-        this.deathPersonMotherPINorNIC = deathPersonMotherPINorNIC;
+        this.deathPersonMotherPINorNIC = WebUtils.filterBlanksAndToUpper(deathPersonMotherPINorNIC);
     }
 
     public String getDeathPersonMotherFullName() {
@@ -165,7 +166,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonMotherFullName(String deathPersonMotherFullName) {
-        this.deathPersonMotherFullName = deathPersonMotherFullName;
+        this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpper(deathPersonMotherFullName);
     }
 
 

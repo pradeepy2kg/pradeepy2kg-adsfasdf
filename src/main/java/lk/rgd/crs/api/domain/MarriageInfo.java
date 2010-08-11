@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -64,7 +66,7 @@ public class MarriageInfo implements Serializable {
     }
 
     public void setPlaceOfMarriage(String placeOfMarriage) {
-        this.placeOfMarriage = placeOfMarriage;
+        this.placeOfMarriage = WebUtils.filterBlanksAndToUpper(placeOfMarriage);
     }
 
     public Date getDateOfMarriage() {

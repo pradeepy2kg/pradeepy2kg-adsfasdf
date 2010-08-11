@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -42,7 +44,7 @@ public class GrandFatherInfo implements Serializable {
     }
 
     public void setGrandFatherFullName(String grandFatherFullName) {
-        this.grandFatherFullName = grandFatherFullName;
+        this.grandFatherFullName = WebUtils.filterBlanksAndToUpper(grandFatherFullName);
     }
 
     public Integer getGrandFatherBirthYear() {
@@ -58,7 +60,7 @@ public class GrandFatherInfo implements Serializable {
     }
 
     public void setGrandFatherBirthPlace(String grandFatherBirthPlace) {
-        this.grandFatherBirthPlace = grandFatherBirthPlace;
+        this.grandFatherBirthPlace = WebUtils.filterBlanksAndToUpper(grandFatherBirthPlace);
     }
 
     public String getGreatGrandFatherFullName() {
@@ -66,7 +68,7 @@ public class GrandFatherInfo implements Serializable {
     }
 
     public void setGreatGrandFatherFullName(String greatGrandFatherFullName) {
-        this.greatGrandFatherFullName = greatGrandFatherFullName;
+        this.greatGrandFatherFullName = WebUtils.filterBlanksAndToUpper(greatGrandFatherFullName);
     }
 
     public Integer getGreatGrandFatherBirthYear() {
@@ -82,7 +84,7 @@ public class GrandFatherInfo implements Serializable {
     }
 
     public void setGreatGrandFatherBirthPlace(String greatGrandFatherBirthPlace) {
-        this.greatGrandFatherBirthPlace = greatGrandFatherBirthPlace;
+        this.greatGrandFatherBirthPlace = WebUtils.filterBlanksAndToUpper(greatGrandFatherBirthPlace);
     }
 
     public String getGrandFatherNICorPIN() {
@@ -90,7 +92,7 @@ public class GrandFatherInfo implements Serializable {
     }
 
     public void setGrandFatherNICorPIN(String grandFatherNICorPIN) {
-        this.grandFatherNICorPIN = grandFatherNICorPIN;
+        this.grandFatherNICorPIN = WebUtils.filterBlanksAndToUpper(grandFatherNICorPIN);
     }
 
     public String getGreatGrandFatherNICorPIN() {
@@ -98,6 +100,6 @@ public class GrandFatherInfo implements Serializable {
     }
 
     public void setGreatGrandFatherNICorPIN(String greatGrandFatherNICorPIN) {
-        this.greatGrandFatherNICorPIN = greatGrandFatherNICorPIN;
+        this.greatGrandFatherNICorPIN = WebUtils.filterBlanksAndToUpper(greatGrandFatherNICorPIN);
     }
 }

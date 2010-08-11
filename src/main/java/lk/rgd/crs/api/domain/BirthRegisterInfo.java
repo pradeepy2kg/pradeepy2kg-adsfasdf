@@ -3,6 +3,7 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -150,7 +151,7 @@ public class BirthRegisterInfo implements Serializable {
     }
 
     public void setComments(String comments) {
-        this.comments = comments;
+        this.comments = WebUtils.filterBlanksAndToUpper(comments);
     }
 
     public Date getOriginalBCDateOfIssue() {

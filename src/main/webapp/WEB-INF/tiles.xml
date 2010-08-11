@@ -204,6 +204,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathHome.jsp"/>
         <put-attribute name="title" value="death_home.title"/>
     </definition>
+
     <definition name="epr.deathDeclaration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm1.jsp"/>
         <put-attribute name="title" value="death_declaration_form1.title"/>
@@ -213,11 +214,17 @@
         <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm2.jsp"/>
         <put-attribute name="title" value="death_declaration_form2.title"/>
     </definition>
-
-    <definition name="epr.deathDeclaration_form3" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathRegistrationForm3.jsp"/>
-        <put-attribute name="title" value="death_declaration_form3.title"/>
+                  <!--TODO change this 2-->
+    <definition name="epr.non_editable_deathDeclaration_form1" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm1.jsp"/>
+        <put-attribute name="title" value="death_declaration_form1.title"/>
     </definition>
+
+    <definition name="epr.non_editable_deathDeclaration_form2" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm2.jsp"/>
+        <put-attribute name="title" value="death_declaration_form2.title"/>
+    </definition>
+
     <definition name="epr.lateDeathDeclaration" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/LateDeclarationOfDeath.jsp"/>
         <put-attribute name="title" value="late_death_declaration.title"/>

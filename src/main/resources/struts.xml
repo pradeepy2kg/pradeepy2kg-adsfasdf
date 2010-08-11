@@ -406,7 +406,7 @@
                 method="initDeathHome">
             <result type="tiles" name="success">epr.deathHome</result>
         </action>
-        
+
         <action name="eprDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclaration">
             <result type="tiles" name="form0">epr.deathDeclaration_form1</result>
@@ -464,9 +464,13 @@
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
 
+        <!--TODO change this-->
         <action name="eprDeathViewMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationViewMode">
-            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+            <result type="tiles" name="form0">epr.non_editable_deathDeclaration_form1</result>
+            <result type="tiles" name="form1">epr.non_editable_deathDeclaration_form2</result>
+            <result type="tiles" name="success"></result>
+            <result type="tiles" name="error">epr.error</result>
         </action>
 
         <action name="eprPrintDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"

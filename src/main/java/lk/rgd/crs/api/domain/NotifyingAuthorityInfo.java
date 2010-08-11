@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -12,19 +14,27 @@ import java.util.Date;
  */
 @Embeddable
 public class NotifyingAuthorityInfo implements Serializable {
-    /** The notifying authority PIN */
+    /**
+     * The notifying authority PIN
+     */
     @Column(nullable = false)
     private String notifyingAuthorityPIN;
 
-    /** The notifying authority Name */
+    /**
+     * The notifying authority Name
+     */
     @Column(nullable = false, length = 120)
     private String notifyingAuthorityName;
 
-    /** The notifying authority Address */
+    /**
+     * The notifying authority Address
+     */
     @Column(nullable = false, length = 255)
     private String notifyingAuthorityAddress;
 
-    /** date the signature has been put. */
+    /**
+     * date the signature has been put.
+     */
     @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date notifyingAuthoritySignDate;
@@ -34,7 +44,7 @@ public class NotifyingAuthorityInfo implements Serializable {
     }
 
     public void setNotifyingAuthorityPIN(String notifyingAuthorityPIN) {
-        this.notifyingAuthorityPIN = notifyingAuthorityPIN;
+        this.notifyingAuthorityPIN = WebUtils.filterBlanksAndToUpper(notifyingAuthorityPIN);
     }
 
     public String getNotifyingAuthorityName() {
@@ -42,7 +52,7 @@ public class NotifyingAuthorityInfo implements Serializable {
     }
 
     public void setNotifyingAuthorityName(String notifyingAuthorityName) {
-        this.notifyingAuthorityName = notifyingAuthorityName;
+        this.notifyingAuthorityName = WebUtils.filterBlanksAndToUpper(notifyingAuthorityName);
     }
 
     public String getNotifyingAuthorityAddress() {
@@ -50,7 +60,7 @@ public class NotifyingAuthorityInfo implements Serializable {
     }
 
     public void setNotifyingAuthorityAddress(String notifyingAuthorityAddress) {
-        this.notifyingAuthorityAddress = notifyingAuthorityAddress;
+        this.notifyingAuthorityAddress = WebUtils.filterBlanksAndToUpper(notifyingAuthorityAddress);
     }
 
     public Date getNotifyingAuthoritySignDate() {

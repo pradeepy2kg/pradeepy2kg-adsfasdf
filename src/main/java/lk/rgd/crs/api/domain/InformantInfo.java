@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -55,7 +57,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantName(String informantName) {
-        this.informantName = informantName;
+        this.informantName = WebUtils.filterBlanksAndToUpper(informantName);
     }
 
     public String getInformantNICorPIN() {
@@ -63,7 +65,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantNICorPIN(String informantNICorPIN) {
-        this.informantNICorPIN = informantNICorPIN;
+        this.informantNICorPIN = WebUtils.filterBlanksAndToUpper(informantNICorPIN);
     }
 
     public String getInformantAddress() {
@@ -71,7 +73,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantAddress(String informantAddress) {
-        this.informantAddress = informantAddress;
+        this.informantAddress = WebUtils.filterBlanksAndToUpper(informantAddress);
     }
 
     public String getInformantPhoneNo() {
@@ -79,7 +81,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantPhoneNo(String informantPhoneNo) {
-        this.informantPhoneNo = informantPhoneNo;
+        this.informantPhoneNo = WebUtils.filterBlanksAndToUpper(informantPhoneNo);
     }
 
     public String getInformantEmail() {
@@ -87,7 +89,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantEmail(String informantEmail) {
-        this.informantEmail = informantEmail;
+        this.informantEmail = WebUtils.filterBlanksAndToUpper(informantEmail);
     }
 
     public Date getInformantSignDate() {

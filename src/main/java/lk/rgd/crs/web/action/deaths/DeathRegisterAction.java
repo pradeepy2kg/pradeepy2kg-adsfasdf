@@ -259,11 +259,32 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String deathDeclarationViewMode() {
-        //todo implement
-        logger.debug("initializing view mode for idUKey : {}", idUKey);
-        deathRegister = service.getById(idUKey, user);
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        return SUCCESS;
+
+        logger.debug("Non Editable Mode Step {} of 2", pageNo);
+        DeathRegister ddf;
+        if (back) {
+            populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
+            return "form" + pageNo;
+        } else {
+            if (pageNo < 0 || pageNo > 1) {
+                addActionError(getText("p1.invalid.Entry"));
+                return ERROR;
+            }
+            if (pageNo == 0) {
+                logger.debug("initializing non editable mode for IDUKey {}", idUKey);
+                try {
+                    ddf = service.getById(idUKey, user);
+                    session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
+
+                } catch (Exception e) {
+                    handleErrors(e);
+                    addActionError(getText("p1.invalid.Entry"));
+                    return ERROR;
+                }
+            }
+
+            return "form" + pageNo;
+        }
     }
 
     public String markDeathDeclarationAsPrinted() {
@@ -347,6 +368,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         deathPerson = ddf.getDeathPerson();
         notifyingAuthority = ddf.getNotifyingAuthority();
         declarant = ddf.getDeclarant();
+    }
+
+    private void handleErrors(Exception e) {
+        logger.error("Handle Error  ", e);
+        //todo pass the error to the error.jsp page
     }
 
     public void initPermissionForApprovalAndPrint() {

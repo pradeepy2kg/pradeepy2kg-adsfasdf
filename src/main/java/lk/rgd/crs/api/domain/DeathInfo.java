@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
@@ -87,7 +89,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setDeathSerialNo(String deathSerialNo) {
-        this.deathSerialNo = deathSerialNo;
+        this.deathSerialNo = WebUtils.filterBlanksAndToUpper(deathSerialNo);
     }
 
     public long getDeathCertificateNo() {
@@ -103,7 +105,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setPlaceOfDeath(String placeOfDeath) {
-        this.placeOfDeath = placeOfDeath;
+        this.placeOfDeath = WebUtils.filterBlanksAndToUpper(placeOfDeath);
     }
 
     public Date getDateOfDeath() {
@@ -127,7 +129,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setPlaceOfIssue(String placeOfIssue) {
-        this.placeOfIssue = placeOfIssue;
+        this.placeOfIssue = WebUtils.filterBlanksAndToUpper(placeOfIssue);
     }
 
     public String getTimeOfDeath() {
@@ -143,7 +145,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setPlaceOfDeathInEnglish(String placeOfDeathInEnglish) {
-        this.placeOfDeathInEnglish = placeOfDeathInEnglish;
+        this.placeOfDeathInEnglish = WebUtils.filterBlanksAndToUpper(placeOfDeathInEnglish);
     }
 
     public String getPlaceOfDeathInOfficialLang() {
@@ -151,7 +153,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setPlaceOfDeathInOfficialLang(String placeOfDeathInOfficialLang) {
-        this.placeOfDeathInOfficialLang = placeOfDeathInOfficialLang;
+        this.placeOfDeathInOfficialLang = WebUtils.filterBlanksAndToUpper(placeOfDeathInOfficialLang);
     }
 
     public boolean isCauseOfDeathEstablished() {
@@ -175,7 +177,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setCauseOfDeath(String causeOfDeath) {
-        this.causeOfDeath = causeOfDeath;
+        this.causeOfDeath = WebUtils.filterBlanksAndToUpper(causeOfDeath);
     }
 
     public String getIcdCodeOfCause() {
@@ -183,7 +185,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setIcdCodeOfCause(String icdCodeOfCause) {
-        this.icdCodeOfCause = icdCodeOfCause;
+        this.icdCodeOfCause = WebUtils.filterBlanksAndToUpper(icdCodeOfCause);
     }
 
     public String getPlaceOfBurial() {
@@ -191,7 +193,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setPlaceOfBurial(String placeOfBurial) {
-        this.placeOfBurial = placeOfBurial;
+        this.placeOfBurial = WebUtils.filterBlanksAndToUpper(placeOfBurial);
     }
 
     public BDDivision getDeathDivision() {
@@ -215,6 +217,6 @@ public class DeathInfo implements Serializable {
     }
 
     public void setReasonForLateRegistration(String reasonForLateRegistration) {
-        this.reasonForLateRegistration = reasonForLateRegistration;
+        this.reasonForLateRegistration = WebUtils.filterBlanksAndToUpper(reasonForLateRegistration);
     }
 }

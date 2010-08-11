@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Column;
 import java.io.Serializable;
@@ -45,51 +47,51 @@ public class DeclarantInfo implements Serializable {
     private DeclarantType declarantType;
 
 
-    public void setDeclarantNICorPIN(String declarantNICorPIN) {
-        this.declarantNICorPIN = declarantNICorPIN;
-    }
-
-    public void setDeclarantFullName(String declarantFullName) {
-        this.declarantFullName = declarantFullName;
-    }
-
-    public void setDeclarantAddress(String declarantAddress) {
-        this.declarantAddress = declarantAddress;
-    }
-
-    public void setDeclarantPhone(String declarantPhone) {
-        this.declarantPhone = declarantPhone;
-    }
-
-    public void setDeclarantEMail(String declarantEMail) {
-        this.declarantEMail = declarantEMail;
-    }
-
-    public void setDeclarantType(DeclarantType declarantType) {
-        this.declarantType = declarantType;
-    }
-
     public String getDeclarantNICorPIN() {
         return declarantNICorPIN;
+    }
+
+    public void setDeclarantNICorPIN(String declarantNICorPIN) {
+        this.declarantNICorPIN = WebUtils.filterBlanksAndToUpper(declarantNICorPIN);
     }
 
     public String getDeclarantFullName() {
         return declarantFullName;
     }
 
+    public void setDeclarantFullName(String declarantFullName) {
+        this.declarantFullName = WebUtils.filterBlanksAndToUpper(declarantFullName);
+    }
+
     public String getDeclarantAddress() {
         return declarantAddress;
+    }
+
+    public void setDeclarantAddress(String declarantAddress) {
+        this.declarantAddress = WebUtils.filterBlanksAndToUpper(declarantAddress);
     }
 
     public String getDeclarantPhone() {
         return declarantPhone;
     }
 
+    public void setDeclarantPhone(String declarantPhone) {
+        this.declarantPhone = WebUtils.filterBlanksAndToUpper(declarantPhone);
+    }
+
     public String getDeclarantEMail() {
         return declarantEMail;
     }
 
+    public void setDeclarantEMail(String declarantEMail) {
+        this.declarantEMail = WebUtils.filterBlanksAndToUpper(declarantEMail);
+    }
+
     public DeclarantType getDeclarantType() {
         return declarantType;
+    }
+
+    public void setDeclarantType(DeclarantType declarantType) {
+        this.declarantType = declarantType;
     }
 }

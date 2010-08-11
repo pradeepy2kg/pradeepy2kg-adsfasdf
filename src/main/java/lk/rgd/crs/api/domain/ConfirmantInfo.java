@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,25 +9,35 @@ import java.util.Date;
 @Embeddable
 public class ConfirmantInfo implements Serializable {
 
-    /** The last date for confirmation - set as 14 days from confirmation print date */
+    /**
+     * The last date for confirmation - set as 14 days from confirmation print date
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date lastDateForConfirmation;
 
-    /** PIN or NIC of person confirming BDF details */
+    /**
+     * PIN or NIC of person confirming BDF details
+     */
     @Column(nullable = true, length = 10)
     private String confirmantNICorPIN;
 
-    /** Name of person confirming BDF details  */
+    /**
+     * Name of person confirming BDF details
+     */
     @Column(nullable = true, length = 600)
     private String confirmantFullName;
 
-    /** Date of the confirmation */
+    /**
+     * Date of the confirmation
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date confirmantSignDate;
 
-    /** Date confirmation is received */
+    /**
+     * Date confirmation is received
+     */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date confirmationReceiveDate;
@@ -43,7 +55,7 @@ public class ConfirmantInfo implements Serializable {
     }
 
     public void setConfirmantNICorPIN(String confirmantNICorPIN) {
-        this.confirmantNICorPIN = confirmantNICorPIN;
+        this.confirmantNICorPIN = WebUtils.filterBlanksAndToUpper(confirmantNICorPIN);
     }
 
     public String getConfirmantFullName() {
@@ -51,7 +63,7 @@ public class ConfirmantInfo implements Serializable {
     }
 
     public void setConfirmantFullName(String confirmantFullName) {
-        this.confirmantFullName = confirmantFullName;
+        this.confirmantFullName = WebUtils.filterBlanksAndToUpper(confirmantFullName);
     }
 
     public Date getConfirmantSignDate() {

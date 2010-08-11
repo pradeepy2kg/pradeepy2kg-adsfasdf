@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.crs.web.util.WebUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -112,7 +114,7 @@ public class ChildInfo implements Serializable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
+        this.placeOfBirth = WebUtils.filterBlanksAndToUpper(placeOfBirth);
     }
 
     public String getChildFullNameOfficialLang() {
@@ -154,7 +156,7 @@ public class ChildInfo implements Serializable {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = childFullNameEnglish;
+        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpper(childFullNameEnglish);
     }
 
     public int getChildGender() {
@@ -202,7 +204,6 @@ public class ChildInfo implements Serializable {
     }
 
     public void setPin(Long pin) {
-
         this.pin = pin;
     }
 
@@ -227,6 +228,6 @@ public class ChildInfo implements Serializable {
     }
 
     public void setPlaceOfBirthEnglish(String placeOfBirthEnglish) {
-        this.placeOfBirthEnglish = placeOfBirthEnglish;
+        this.placeOfBirthEnglish = WebUtils.filterBlanksAndToUpper(placeOfBirthEnglish);
     }
 }

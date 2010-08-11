@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -189,7 +190,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setFatherNICorPIN(String fatherNICorPIN) {
-        this.fatherNICorPIN = fatherNICorPIN;
+        this.fatherNICorPIN = WebUtils.filterBlanksAndToUpper(fatherNICorPIN);
     }
 
     public String getFatherPassportNo() {
@@ -197,7 +198,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setFatherPassportNo(String fatherPassportNo) {
-        this.fatherPassportNo = fatherPassportNo;
+        this.fatherPassportNo = WebUtils.filterBlanksAndToUpper(fatherPassportNo);
     }
 
     public Country getFatherCountry() {
@@ -213,7 +214,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = fatherFullName;
+        this.fatherFullName = WebUtils.filterBlanksAndToUpper(fatherFullName);
     }
 
     public Date getFatherDOB() {
@@ -229,7 +230,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setFatherPlaceOfBirth(String fatherPlaceOfBirth) {
-        this.fatherPlaceOfBirth = fatherPlaceOfBirth;
+        this.fatherPlaceOfBirth = WebUtils.filterBlanksAndToUpper(fatherPlaceOfBirth);
     }
 
     public Race getFatherRace() {
@@ -245,7 +246,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherNICorPIN(String motherNICorPIN) {
-        this.motherNICorPIN = motherNICorPIN;
+        this.motherNICorPIN = WebUtils.filterBlanksAndToUpper(motherNICorPIN);
     }
 
     public String getMotherPassportNo() {
@@ -253,7 +254,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherPassportNo(String motherPassportNo) {
-        this.motherPassportNo = motherPassportNo;
+        this.motherPassportNo = WebUtils.filterBlanksAndToUpper(motherPassportNo);
     }
 
     public Country getMotherCountry() {
@@ -269,7 +270,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherFullName(String motherFullName) {
-        this.motherFullName = motherFullName;
+        this.motherFullName = WebUtils.filterBlanksAndToUpper(motherFullName);
     }
 
     public Date getMotherDOB() {
@@ -285,7 +286,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherPlaceOfBirth(String motherPlaceOfBirth) {
-        this.motherPlaceOfBirth = motherPlaceOfBirth;
+        this.motherPlaceOfBirth = WebUtils.filterBlanksAndToUpper(motherPlaceOfBirth);
     }
 
     public Race getMotherRace() {
@@ -309,7 +310,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherAddress(String motherAddress) {
-        this.motherAddress = motherAddress;
+        this.motherAddress = WebUtils.filterBlanksAndToUpper(motherAddress);
     }
 
     public String getMotherPhoneNo() {
@@ -317,7 +318,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherPhoneNo(String motherPhoneNo) {
-        this.motherPhoneNo = motherPhoneNo;
+        this.motherPhoneNo = WebUtils.filterBlanksAndToUpper(motherPhoneNo);
     }
 
     public String getMotherEmail() {
@@ -325,7 +326,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherEmail(String motherEmail) {
-        this.motherEmail = motherEmail;
+        this.motherEmail = WebUtils.filterBlanksAndToUpper(motherEmail);
     }
 
     public String getMotherAdmissionNo() {
@@ -333,7 +334,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherAdmissionNo(String motherAdmissionNo) {
-        this.motherAdmissionNo = motherAdmissionNo;
+        this.motherAdmissionNo = WebUtils.filterBlanksAndToUpper(motherAdmissionNo);
     }
 
     public Date getMotherAdmissionDate() {
