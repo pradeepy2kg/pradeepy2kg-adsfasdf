@@ -175,7 +175,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (currentStatus != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         } else {
-            //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -216,7 +216,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError(getText("death.error.no.permission"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -230,7 +230,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError(getText("death.error.no.permission.reject"));
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
 
@@ -246,7 +246,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError("death.error.no.permission.delete");
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -274,7 +274,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (currentStatus != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
         } else {
-            //deathApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),pageNo, noOfRows, user);
         }
         return SUCCESS;
     }
