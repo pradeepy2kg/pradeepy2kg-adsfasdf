@@ -61,9 +61,6 @@ public class DeathRegister implements Serializable {
     @Embedded
     private DeclarantInfo declarant = new DeclarantInfo();
 
-    @Embedded
-    private WitnessInfo witness = new WitnessInfo();
-
     @Column(nullable = false)
     private State status;
 
@@ -88,17 +85,6 @@ public class DeathRegister implements Serializable {
 
     public void setStatus(State status) {
         this.status = status;
-    }
-
-    public WitnessInfo getWitness() {
-        if (witness == null) {
-            witness = new WitnessInfo();
-        }
-        return witness;
-    }
-
-    public void setWitness(WitnessInfo witness) {
-        this.witness = witness;
     }
 
     public DeclarantInfo getDeclarant() {

@@ -38,7 +38,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathInfo death;
     private DeathPersonInfo deathPerson;
     private DeclarantInfo declarant;
-    private WitnessInfo witness;
     private NotifyingAuthorityInfo notifyingAuthority;
 
 
@@ -125,7 +124,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 break;
             case 2:
                 ddf.setDeclarant(declarant);
-                ddf.setWitness(witness);
                 ddf.setNotifyingAuthority(notifyingAuthority);
                 
                 service.addDeathRegistration(ddf, user);
@@ -349,7 +347,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         deathPerson = ddf.getDeathPerson();
         notifyingAuthority = ddf.getNotifyingAuthority();
         declarant = ddf.getDeclarant();
-        witness = ddf.getWitness();
     }
 
     public void initPermissionForApprovalAndPrint() {
@@ -504,14 +501,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeclarant(DeclarantInfo declarant) {
         this.declarant = declarant;
-    }
-
-    public WitnessInfo getWitness() {
-        return witness;
-    }
-
-    public void setWitness(WitnessInfo witness) {
-        this.witness = witness;
     }
 
     public NotifyingAuthorityInfo getNotifyingAuthority() {
