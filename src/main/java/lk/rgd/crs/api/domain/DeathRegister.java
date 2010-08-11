@@ -71,18 +71,6 @@ public class DeathRegister implements Serializable {
     @Column(nullable= false)
     private Type deathType;
 
-    public String getReasonForLateRegistration() {
-        return reasonForLateRegistration;
-    }
-
-    public void setReasonForLateRegistration(String reasonForLateRegistration) {
-        this.reasonForLateRegistration = reasonForLateRegistration;
-    }
-
-    @Column(nullable = true)
-    private String reasonForLateRegistration;
-
-
     public State getStatus() {
         return status;
     }

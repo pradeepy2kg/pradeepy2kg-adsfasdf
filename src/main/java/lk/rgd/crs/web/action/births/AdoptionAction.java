@@ -393,7 +393,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
-        adoptionApprovalAndPrintList = service.findAll(user);
+        adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -412,7 +412,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
-        adoptionApprovalAndPrintList = service.findAll(user);
+        adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -428,7 +428,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String deleteAdoption() {
         logger.debug("requested to delete AdoptionOrder with idUKey : {}", idUKey);
         service.deleteAdoptionOrder(idUKey, user);
-        adoptionApprovalAndPrintList = service.findAll(user);
+        adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;

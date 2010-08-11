@@ -39,7 +39,7 @@ public class DeathInfo implements Serializable {
     @Column(nullable = true)
     private String timeOfDeath;
 
-     /**
+    /**
      * The Birth/Death registration division where the death is registered (Includes District)
      */
     @ManyToOne
@@ -78,6 +78,9 @@ public class DeathInfo implements Serializable {
 
     @Column(nullable = false)
     private String placeOfBurial;
+
+    @Column(nullable = true)
+    private String reasonForLateRegistration;
 
     public String getDeathSerialNo() {
         return deathSerialNo;
@@ -205,5 +208,13 @@ public class DeathInfo implements Serializable {
 
     public void setPreferredLanguage(String preferredLanguage) {
         this.preferredLanguage = preferredLanguage;
+    }
+
+    public String getReasonForLateRegistration() {
+        return reasonForLateRegistration;
+    }
+
+    public void setReasonForLateRegistration(String reasonForLateRegistration) {
+        this.reasonForLateRegistration = reasonForLateRegistration;
     }
 }
