@@ -152,7 +152,7 @@ public class AdoptionOrder implements Serializable {
     private int birthDivisionId; // if BC number not given
 
     @Column(nullable = true)
-    private long newBirthCertificateNumber = 0; // idUKey of new birth registration after adoption 
+    private long newBirthCertificateNumber; // idUKey of new birth registration after adoption 
 
     @Column(nullable = true)
     private String certificateApplicantName;
