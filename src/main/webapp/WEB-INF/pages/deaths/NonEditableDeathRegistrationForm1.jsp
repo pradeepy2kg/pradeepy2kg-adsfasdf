@@ -74,9 +74,9 @@
     </tr>
     <tr>
         <td>මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
-        <td colspan="5" style="text-align:left;"><s:label value="%{#session.deathRegister.death.dateOfDeath}"/></td>
+        <td colspan="3" style="text-align:left;"><s:label value="%{#session.deathRegister.death.dateOfDeath}"/></td>
         <td>වෙලාව<br>*in tamil<br>Time</td>
-        <td colspan="2"><s:label value="%{#session.deathRegister.death.timeOfDeath}"/></td>
+        <td colspan="3"><s:label value="%{#session.deathRegister.death.timeOfDeath}"/></td>
     </tr>
     <tr>
         <td rowspan="5">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
