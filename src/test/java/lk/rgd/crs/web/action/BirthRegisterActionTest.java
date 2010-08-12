@@ -85,10 +85,10 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         //for 2 of 4BDF
         request.setParameter("pageNo", "1");
         request.setParameter("register.bdfSerialNo", "12345");
-        request.setParameter("register.dateOfRegistration", "2010-07-02T00:00:00+05:30");
+        request.setParameter("register.dateOfRegistration", "08/09/2010");
 
         request.setParameter("parent.motherAgeAtBirth", "42");
-        request.setParameter("child.dateOfBirth", "2010-07-01T00:00:00+05:30");
+        request.setParameter("child.dateOfBirth", "01/09/2010");
         request.setParameter("birthDistrictId", "1");
         request.setParameter("birthDivisionId", "10");
         request.setParameter("child.placeOfBirth", "මාතර");
@@ -129,7 +129,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("fatherCountry", "1");
         request.setParameter("parent.fatherPassportNo", "4832");
         request.setParameter("parent.fatherFullName", "ලෝගේස්වරන් යුවන් ශන්කර්");
-        request.setParameter("parent.fatherDOB", "07/02/1964");
+        request.setParameter("parent.fatherDOB", "08/09/1964");
 //        request.setParameter("parent.fatherDOB", "07/02/1964-07-02T00:00:00+05:30");
         request.setParameter("parent.fatherPlaceOfBirth", "Kandy");
         request.setParameter("fatherRace", "1");
@@ -139,7 +139,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("motherCountry", "2");
         request.setParameter("parent.motherPassportNo", "5999");
         request.setParameter("parent.motherFullName", "සංගුණි ෙද්ව ෙග්");
-        request.setParameter("parent.motherDOB", "1968-03-01T00:00:00+05:30");
+        request.setParameter("parent.motherDOB", "08/09/1968");
         request.setParameter("parent.motherAgeAtBirth", "43");
         request.setParameter("parent.motherAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
         request.setParameter("motherDistrictId", "1");
@@ -147,7 +147,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherPlaceOfBirth", "kandana");
         request.setParameter("parent.motherAdmissionNo", "125");
         request.setParameter("parent.motherEmail", "info@gmail.com");
-        request.setParameter("parent.motherAdmissionDate", "2010-06-28T00:00:00+05:30");
+        request.setParameter("parent.motherAdmissionDate", "01/09/2010");
         request.setParameter("parent.motherPhoneNo", "0112345678");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
@@ -188,7 +188,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("pageNo", "3");
         request.setParameter("marriage.parentsMarried", "1");
         request.setParameter("marriage.placeOfMarriage", "Kaduwela");
-        request.setParameter("marriage.dateOfMarriage", "2007-09-02T00:00:00+05:30");
+        request.setParameter("marriage.dateOfMarriage", "08/09/2008");
 
         request.setParameter("informant.informantType", "MOTHER");
 
@@ -197,7 +197,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("informant.informantAddress", "Kandy Road Matale");
         request.setParameter("informant.informantPhoneNo", "081234567");
         request.setParameter("informant.informantEmail", "info@gmail.com");
-        request.setParameter("informant.informantSignDate", "2010-07-20T00:00:00+05:30");
+        request.setParameter("informant.informantSignDate", "08/09/2010");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
@@ -221,7 +221,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "685031035V");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "සංගුණි ෙද්ව ෙග්");
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
-        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-02T00:00:00+05:30");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "08/09/2010");
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
@@ -265,8 +265,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         //for 2 of 4BDF
         request.setParameter("pageNo", "1");
         request.setParameter("register.bdfSerialNo", "12345");
-        request.setParameter("register.dateOfRegistration", "2010-07-02T00:00:00+05:30");
-        request.setParameter("child.dateOfBirth", "2010-07-01T00:00:00+05:30");
+        request.setParameter("register.dateOfRegistration", "08/09/2010");
+        request.setParameter("child.dateOfBirth", "01/09/2010");
         request.setParameter("birthDistrictId", "1");
         request.setParameter("birthDivisionId", "10");
         request.setParameter("child.placeOfBirth", "මාතර");
@@ -303,7 +303,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("fatherCountry", "1");
         request.setParameter("parent.fatherPassportNo", "4832");
         request.setParameter("parent.fatherFullName", "ලෝගේස්වරන් යුවන් ශන්කර්");
-        request.setParameter("parent.fatherDOB", "1964-07-02T00:00:00+05:30");
+        request.setParameter("parent.fatherDOB", "08/09/1964");
         request.setParameter("parent.fatherPlaceOfBirth", "Kandy");
         request.setParameter("fatherRace", "1");
 
@@ -312,7 +312,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("motherCountry", "2");
         request.setParameter("parent.motherPassportNo", "5999");
         request.setParameter("parent.motherFullName", "සංගුණි ෙද්ව ෙග්");
-        request.setParameter("parent.motherDOB", "1968-03-01T00:00:00+05:30");
+        request.setParameter("parent.motherDOB", "08/09/1968");
         request.setParameter("parent.motherAgeAtBirth", "43");
         request.setParameter("parent.motherAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
         request.setParameter("motherDistrictId", "1");
@@ -320,7 +320,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherPlaceOfBirth", "kandana");
         request.setParameter("parent.motherAdmissionNo", "125");
         request.setParameter("parent.motherEmail", "info@gmail.com");
-        request.setParameter("parent.motherAdmissionDate", "2010-06-28T00:00:00+05:30");
+        request.setParameter("parent.motherAdmissionDate", "01/09/2010");
         request.setParameter("parent.motherPhoneNo", "0112345678");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
@@ -335,7 +335,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("pageNo", "3");
         request.setParameter("marriage.parentsMarried", "1");
         request.setParameter("marriage.placeOfMarriage", "Kaduwela");
-        request.setParameter("marriage.dateOfMarriage", "2007-09-02T00:00:00+05:30");
+        request.setParameter("marriage.dateOfMarriage", "08/09/2008");
         request.setParameter("marriage.motherSigned", "0");
         request.setParameter("marriage.fatherSigned", "0");
         request.setParameter("grandFather.grandFatherFullName", "Grand Father Full Name");
@@ -354,7 +354,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("informant.informantAddress", "Kandy Road Matale");
         request.setParameter("informant.informantPhoneNo", "081234567");
         request.setParameter("informant.informantEmail", "info@gmail.com");
-        request.setParameter("informant.informantSignDate", "2010-07-20T00:00:00+05:30");
+        request.setParameter("informant.informantSignDate", "08/09/2010");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
@@ -367,7 +367,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "685031035V");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "සංගුණි ෙද්ව ෙග්");
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
-        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-02T00:00:00+05:30");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "08/09/2010");
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
@@ -430,8 +430,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         // Still birth page one
         request.setParameter("register.bdfSerialNo", "123");
-        request.setParameter("register.dateOfRegistration", "2010-07-14T00:00:00+05:30");
-        request.setParameter("child.dateOfBirth", "2010-07-14T00:00:00+05:30");
+        request.setParameter("register.dateOfRegistration", "08/09/2010");
+        request.setParameter("child.dateOfBirth", "01/09/2010");
         request.setParameter("birthDistrictId", "1");
         request.setParameter("dsDivisionId", "2");
         request.setParameter("birthDivisionId", "6");
@@ -447,8 +447,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
         assertEquals("Register bdf serial no failed", (long) 123, bd.getRegister().getBdfSerialNo());
-        assertEquals("Date of registration failed", "Wed Jul 14 00:00:00 IST 2010", bd.getRegister().getDateOfRegistration().toString());
-        assertEquals("Date of birth failed", "Wed Jul 14 00:00:00 IST 2010", bd.getChild().getDateOfBirth().toString());
+        assertEquals("Date of registration failed", "08/09/2010", bd.getRegister().getDateOfRegistration().toString());
+        assertEquals("Date of birth failed", "01/09/2010", bd.getChild().getDateOfBirth().toString());
         assertEquals("Birth district Id failed", 1, bd.getRegister().getBirthDistrict().getDistrictUKey());
         assertEquals("DSDivision Id failed", 2, bd.getRegister().getBirthDivision().getDsDivision().getDsDivisionUKey());
         assertEquals("Child Birth Division failed", 6, bd.getRegister().getBirthDivision().getBdDivisionUKey());
@@ -465,7 +465,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("fatherRace", "1");
         request.setParameter("parent.motherNICorPIN", "22222222v");
         request.setParameter("parent.motherFullName", "mother full name");
-        request.setParameter("parent.motherDOB", "1970-07-14T00:00:00+05:30");
+        request.setParameter("parent.motherDOB", "08/09/1970");
         request.setParameter("parent.motherAgeAtBirth", "40");
         request.setParameter("parent.motherAddress", "mother address");
         request.setParameter("motherDistrictId", "1");
@@ -491,7 +491,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("informant.informantAddress", "informant address");
         request.setParameter("informant.informantPhoneNo", "0123456789");
         request.setParameter("informant.informantEmail", "informant@email.mail");
-        request.setParameter("informant.informantSignDate", "2010-07-14T00:00:00+05:30");
+        request.setParameter("informant.informantSignDate", "08/09/2010");
         request.setParameter("pageNo", "3");
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
@@ -506,7 +506,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "44444444v");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "notifier name");
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "notifier address");
-        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-14T00:00:00+05:30");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "08/09/2010");
         request.setParameter("pageNo", "4");
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
@@ -516,7 +516,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("Informant NIC: ", "33333333v", bd.getInformant().getInformantNICorPIN());
         assertEquals("Notifier NIC: ", "44444444v", bd.getNotifyingAuthority().getNotifyingAuthorityPIN());
-        assertEquals("Notifier sign date: ", "Wed Jul 14 00:00:00 IST 2010", bd.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString());
+        assertEquals("Notifier sign date: ", "08/09/2010", bd.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString());
         assertEquals("No action errors", 0, action.getActionErrors().size());
 
     }

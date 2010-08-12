@@ -29,7 +29,7 @@ public class DeathPersonInfo implements Serializable {
     private String deathPersonPassportNo;
 
     @Column(nullable = true)
-    private String deathPersonAge;
+    private Integer deathPersonAge;
 
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
@@ -89,11 +89,11 @@ public class DeathPersonInfo implements Serializable {
         this.deathPersonPassportNo = WebUtils.filterBlanksAndToUpper(deathPersonPassportNo);
     }
 
-    public String getDeathPersonAge() {
+    public Integer getDeathPersonAge() {
         return deathPersonAge;
     }
 
-    public void setDeathPersonAge(String deathPersonAge) {
+    public void setDeathPersonAge(Integer deathPersonAge) {
         this.deathPersonAge = deathPersonAge;
     }
 

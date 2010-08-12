@@ -208,9 +208,9 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         assertEquals("Action erros for loading second page with back support", 0, action.getActionErrors().size());
 
         assertEquals("failed to populate child full name in official language", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක", action.getChild().getChildFullNameOfficialLang());
-        assertEquals("failed to populate childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka", action.getChild().getChildFullNameEnglish());
-        assertEquals("failed to populate Father full name", "Nishshanka Mudiyanselage Chandrasena Nishshanka", action.getParent().getFatherFullName());
-        assertEquals("failed to populate Mother full name", "Periyapperuma Arachchilage Premawathi", action.getParent().getMotherFullName());
+        assertEquals("failed to populate childFullNameEnglish", "NISHSHANKA MUDIYANSELAGE JANITH WIARSHANA NISHSHANKA", action.getChild().getChildFullNameEnglish());
+        assertEquals("failed to populate Father full name", "NISHSHANKA MUDIYANSELAGE CHANDRASENA NISHSHANKA", action.getParent().getFatherFullName());
+        assertEquals("failed to populate Mother full name", "PERIYAPPERUMA ARACHCHILAGE PREMAWATHI", action.getParent().getMotherFullName());
 
         session = action.getSession();
         //loading the 3 of 3BCFs
