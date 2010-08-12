@@ -5,7 +5,7 @@ var Manager;
     $(function () {
 
         Manager = new AjaxSolr.Manager({
-            solrUrl: 'http://' + window.location.hostname + ':9443/solr/prs/'
+            solrUrl: 'https://' + window.location.host + '/solr/prs/'
         });
 
         Manager.addWidget(new AjaxSolr.ResultWidget({
