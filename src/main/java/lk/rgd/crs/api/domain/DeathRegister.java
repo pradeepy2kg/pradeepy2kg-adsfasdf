@@ -29,9 +29,9 @@ public class DeathRegister implements Serializable {
     public enum State {
         DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
 
-        APPROVED, // 1 - An ARG or higher approved death registration
+        APPROVED, // 1 - An ADR or higher approved death registration
 
-        REJECTED,  // 2 - An death registration rejected by the ARG
+        REJECTED,  // 2 - An death registration rejected by the ADR
 
         DEATH_CERTIFICATE_PRINTED, // 3 A certifcate is printed
     }
