@@ -85,6 +85,17 @@ public class DeathInfo implements Serializable {
     @Column(nullable = true)
     private String reasonForLateRegistration;
 
+    @Column(nullable = true)
+    private String anyOtherInformation;
+
+    public String getAnyOtherInformation() {
+        return anyOtherInformation;
+    }
+
+    public void setAnyOtherInformation(String anyOtherInformation) {
+        this.anyOtherInformation = anyOtherInformation;
+    }
+
     public String getDeathSerialNo() {
         return deathSerialNo;
     }
