@@ -11,7 +11,12 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script>
     $(function() {
-        $("#submitDatePicker").datepicker();
+        $("#submitDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
         $('img#place').bind('click', function(evt) {
@@ -42,6 +47,51 @@
             ;
         }
     })
+
+     function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
+
+        /*date related validations*/
+        var submit = new Date(document.getElementById("submitDatePicker").value);
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
+            flag = true;
+        }
+        element = document.getElementById('SerialNo');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
+        }
+        element = document.getElementById('placeOfBirth');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
+            flag = true;
+        }
+
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
+
+    function validateSkipChanges() {
+        var noSerialEntered = document.getElementById('p1error1').value;
+        var notChecked = document.getElementById('p1errorckbx').value;
+        var serial = document.getElementById('SerialNo');
+        var skipChanges = document.getElementById('skipChangesCBox');
+        if (serial.value == 0) {
+            alert(noSerialEntered);
+            return false;
+        }
+        if (!skipChanges.checked) {
+            alert(notChecked);
+            return false;
+        }
+    }
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -126,7 +176,7 @@
     <tr>
         <td>2</td>
         <td><label>
-            යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත  දැනුම් දිය යුතු  අවසන් දිනය <br>
+            යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත දැනුම් දිය යුතු අවසන් දිනය <br>
             மாற்றங்கள் பதிவாளர் அதிகாரியின் அலுவலகத்தை அடைய வேண்டிய இறுதித் திகதி
             <br>Last date by which changes should be received by the registrar generals office.
         </label></td>
@@ -185,7 +235,7 @@
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
-        <td colspan="6" width="350px"><s:textfield name="child.dateOfBirth" id="submitDatePicker"></s:textfield>
+        <td colspan="6" width="350px"><s:textfield name="child.dateOfBirth" id="submitDatePicker"/>
         </td>
     </tr>
     <tr>
@@ -234,7 +284,7 @@
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
-        <td><label>ඉංග්‍රීසි භාෂාවෙන්     <br>இங்கிலீஷ்    <br>In English</label></td>
+        <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
         <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable"
                                     disabled="true" cols="38"/></td>
         <td colspan="6">
@@ -296,54 +346,6 @@
 <s:hidden id="p1error3" value="%{getText('cp1.date.error.value')}"/>
 <s:hidden id="p1error4" value="%{getText('cp1.parents.marriage.error.value')}"/>
 <s:hidden id="p1errorckbx" value="%{getText('cp1.skipChanges.checked.error.value')}"/>
-
-<script type="text/javascript">
-    function validate()
-    {
-        var errormsg = "";
-        var element;
-        var returnval;
-
-        /*date related validations*/
-        var submitDatePicker = dojo.widget.byId('submitDatePicker').inputNode.value;
-        var submit = new Date(submitDatePicker);
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
-            flag = true;
-        }
-        element = document.getElementById('SerialNo');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
-        }
-        element = document.getElementById('placeOfBirth');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
-            flag = true;
-        }
-
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        return returnval;
-    }
-
-    function validateSkipChanges() {
-        var noSerialEntered = document.getElementById('p1error1').value;
-        var notChecked = document.getElementById('p1errorckbx').value;
-        var serial = document.getElementById('SerialNo');
-        var skipChanges = document.getElementById('skipChangesCBox');
-        if (serial.value == 0) {
-            alert(noSerialEntered);
-            return false;
-        }
-        if (!skipChanges.checked) {
-            alert(notChecked);
-            return false;
-        }
-    }
-</script>
 
 <div class="form-submit">
     <s:submit value="%{getText('next.label')}"/>

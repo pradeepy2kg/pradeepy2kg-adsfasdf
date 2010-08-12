@@ -8,9 +8,9 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script type="text/javascript">
-     /* time picker */
-(function($){
-    $.cantipi = function(el, options){
+/* time picker */
+(function($) {
+    $.cantipi = function(el, options) {
         var base = this;
         var minutes;
         var hours;
@@ -22,15 +22,15 @@
         base.el = el;
         base.$el.data("cantipi", base);
 
-        base.init = function(){
-            base.options = $.extend({},$.cantipi.defaultOptions, options);
+        base.init = function() {
+            base.options = $.extend({}, $.cantipi.defaultOptions, options);
             size = base.options.size;
 
             var canvas = document.createElement('canvas');
             canvas.height = size;
             canvas.width = size;
             // Without this canvas can't get focus and can't fire blur event
-            canvas.tabIndex=1;
+            canvas.tabIndex = 1;
             canvas.style.display = 'none';
             canvas.style.position = 'absolute';
             canvas.style.background = '#FFF';
@@ -39,279 +39,279 @@
             canvas.style.left = offset.left;
 
             canvas.onmousedown = clickclock;
-            canvas.addEventListener('blur', function(e){canvas.style.display = 'none'}, true);
+            canvas.addEventListener('blur', function(e) {
+                canvas.style.display = 'none'
+            }, true);
 
             ctx = canvas.getContext('2d');
 
             var now = new Date();
             minutes = now.getMinutes();
-            hours  = now.getHours()%12;
+            hours = now.getHours() % 12;
 
-            el.onfocus = function(){
-              canvas.style.display = 'block';
-              canvas.focus();
+            el.onfocus = function() {
+                canvas.style.display = 'block';
+                canvas.focus();
             };
 
             base.$el.after(canvas);
             draw();
         };
 
-        var clickclock = function(e){
-          point = getMouse(e);
-          sethours(point);
-          var hr24 = ampm ? hours : hours + 12;
-          base.el.value = ('0'+hr24).substr(-2,2)+':'+('0'+minutes).substr(-2,2);
-          draw();
+        var clickclock = function(e) {
+            point = getMouse(e);
+            sethours(point);
+            var hr24 = ampm ? hours : hours + 12;
+            base.el.value = ('0' + hr24).substr(-2, 2) + ':' + ('0' + minutes).substr(-2, 2);
+            draw();
         }
 
         function draw() {
 
-          ctx.save();
-          ctx.clearRect(0,0,size,size);
-          ctx.translate(size/2,size/2);
-          ctx.scale(size/100,size/100);
-          ctx.rotate(-Math.PI/2);
-          ctx.strokeStyle = "#20";
-          ctx.fillStyle = "white";
-          ctx.lineWidth = 2;
-          ctx.lineCap = "round";
+            ctx.save();
+            ctx.clearRect(0, 0, size, size);
+            ctx.translate(size / 2, size / 2);
+            ctx.scale(size / 100, size / 100);
+            ctx.rotate(-Math.PI / 2);
+            ctx.strokeStyle = "#20";
+            ctx.fillStyle = "white";
+            ctx.lineWidth = 2;
+            ctx.lineCap = "round";
 
-          ctx.beginPath();
-          ctx.lineWidth = 2;
-          ctx.fillStyle = '#BABA00';
-          ctx.arc(0,0,35,0,Math.PI*2,true);
-          ctx.fill();
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.fillStyle = '#BABA00';
+            ctx.arc(0, 0, 35, 0, Math.PI * 2, true);
+            ctx.fill();
 
 
             // Hour marks
-          ctx.save();
-          for (var i=0;i<12;i++){
-            ctx.beginPath();
-            ctx.rotate(Math.PI/6);
-            ctx.moveTo(41,0);
-            ctx.lineTo(47,0);
-            ctx.stroke();
-          }
-          ctx.restore();
-
-          // Minute marks
-          ctx.save();
-          ctx.lineWidth = 1;
-          for (i=0;i<60;i++){
-            if (i%5!=0) {
-              ctx.beginPath();
-              ctx.moveTo(47,0);
-              ctx.lineTo(44,0);
-              ctx.stroke();
+            ctx.save();
+            for (var i = 0; i < 12; i++) {
+                ctx.beginPath();
+                ctx.rotate(Math.PI / 6);
+                ctx.moveTo(41, 0);
+                ctx.lineTo(47, 0);
+                ctx.stroke();
             }
-            ctx.rotate(Math.PI/30);
-          }
-          ctx.restore();
+            ctx.restore();
 
-          // write Hours
-          ctx.save();
-          ctx.rotate( hours*(Math.PI/6) + (Math.PI/360)*minutes)
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(-12,0);
-          ctx.lineTo(38,0);
-          ctx.stroke();
-          ctx.beginPath();
+            // Minute marks
+            ctx.save();
+            ctx.lineWidth = 1;
+            for (i = 0; i < 60; i++) {
+                if (i % 5 != 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(47, 0);
+                    ctx.lineTo(44, 0);
+                    ctx.stroke();
+                }
+                ctx.rotate(Math.PI / 30);
+            }
+            ctx.restore();
 
-          ctx.beginPath();
-          ctx.arc(28,0,4,0,Math.PI*2,true);
-          ctx.stroke();
+            // write Hours
+            ctx.save();
+            ctx.rotate(hours * (Math.PI / 6) + (Math.PI / 360) * minutes)
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-12, 0);
+            ctx.lineTo(38, 0);
+            ctx.stroke();
+            ctx.beginPath();
 
-          ctx.restore();
+            ctx.beginPath();
+            ctx.arc(28, 0, 4, 0, Math.PI * 2, true);
+            ctx.stroke();
 
-          // write Minutes
-          ctx.save();
-          ctx.rotate( (Math.PI/30)*minutes)
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(-14,0);
-          ctx.lineTo(44,0);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(34,0,5,0,Math.PI*2,true);
-          ctx.stroke();
-          ctx.restore();
+            ctx.restore();
 
-          ctx.beginPath();
-          ctx.lineWidth = 1;
-          ctx.strokeStyle = '#BABA00';
-          ctx.arc(0,0,49,0,Math.PI*2,true);
-          ctx.stroke();
+            // write Minutes
+            ctx.save();
+            ctx.rotate((Math.PI / 30) * minutes)
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(-14, 0);
+            ctx.lineTo(44, 0);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(34, 0, 5, 0, Math.PI * 2, true);
+            ctx.stroke();
+            ctx.restore();
 
-          ctx.save();
-          ctx.beginPath();
-          ctx.fillStyle = "white";
-          ctx.arc(0,0,10,0,Math.PI*2,true);
-          ctx.fill();
-          ctx.rotate(Math.PI/2);
-          var i = ampm ? 'AM':'PM';
-          ctx.font = 'normal 900 9px Lucida Grande';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = "black";
-          ctx.fillText(i, 0, 0);
-          ctx.restore();
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#BABA00';
+            ctx.arc(0, 0, 49, 0, Math.PI * 2, true);
+            ctx.stroke();
 
-          ctx.restore();
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = "white";
+            ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+            ctx.fill();
+            ctx.rotate(Math.PI / 2);
+            var i = ampm ? 'AM' : 'PM';
+            ctx.font = 'normal 900 9px Lucida Grande';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = "black";
+            ctx.fillText(i, 0, 0);
+            ctx.restore();
+
+            ctx.restore();
 
         }
 
         function getTrueOffsetLeft(ele)
         {
-          var n = 0;
-          while (ele)
-          {
-              n += ele.offsetLeft || 0;
-              ele = ele.offsetParent;
-          }
-          return n;
+            var n = 0;
+            while (ele)
+            {
+                n += ele.offsetLeft || 0;
+                ele = ele.offsetParent;
+            }
+            return n;
         }
 
         function getTrueOffsetTop(ele)
         {
-          var n = 0;
-          while (ele)
-          {
-            n += ele.offsetTop || 0;
-            ele = ele.offsetParent;
-          }
-          return n;
+            var n = 0;
+            while (ele)
+            {
+                n += ele.offsetTop || 0;
+                ele = ele.offsetParent;
+            }
+            return n;
         }
 
 
-        function getMouse(e){
-          var x = e.clientX - getTrueOffsetLeft(e.target) + window.pageXOffset - size/2;
-          var y = e.clientY - getTrueOffsetTop(e.target) + window.pageYOffset - size/2;
-          return { x:x, y:y };
-        };
+        function getMouse(e) {
+            var x = e.clientX - getTrueOffsetLeft(e.target) + window.pageXOffset - size / 2;
+            var y = e.clientY - getTrueOffsetTop(e.target) + window.pageYOffset - size / 2;
+            return { x:x, y:y };
+        }
 
-        function sethours(point){
-          var tumbler = ctx.isPointInPath(point.x + size/2, point.y + size/2);
-          ampm = tumbler ? !ampm : ampm;
-          if(tumbler) return;
+        ;
 
-          var angle = Math.atan2(point.y,point.x)  + Math.PI*2;
-          var distance = Math.sqrt(Math.pow(point.x,2) + Math.pow(point.y,2));
-          if( distance < size*35/100 ){
-            hours = (Math.floor(angle / (Math.PI/6))+3)%12;
-          } else {
-            minutes = Math.floor((Math.floor((angle / (Math.PI/30))+15)%60)/base.options.roundto)*base.options.roundto;
-          }
+        function sethours(point) {
+            var tumbler = ctx.isPointInPath(point.x + size / 2, point.y + size / 2);
+            ampm = tumbler ? !ampm : ampm;
+            if (tumbler) return;
+
+            var angle = Math.atan2(point.y, point.x) + Math.PI * 2;
+            var distance = Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
+            if (distance < size * 35 / 100) {
+                hours = (Math.floor(angle / (Math.PI / 6)) + 3) % 12;
+            } else {
+                minutes = Math.floor((Math.floor((angle / (Math.PI / 30)) + 15) % 60) / base.options.roundto) * base.options.roundto;
+            }
         }
 
         base.init();
     };
 
     $.cantipi.defaultOptions = {
-      size:150,
-      roundto: 1
+        size:150,
+        roundto: 1
     };
 
-    $.fn.cantipi = function(options){
-        return this.each(function(){
-          var clock =  new $.cantipi(this, options);
+    $.fn.cantipi = function(options) {
+        return this.each(function() {
+            var clock = new $.cantipi(this, options);
         });
     };
 
 })(jQuery);
 
 
-     $(function() {         $("#timePicker").cantipi({size:140, roundto: 5});       });
-     <%--end of time picker--%>
+$(function() {
+    $("#timePicker").cantipi({size:140, roundto: 5});
+});
+<%--end of time picker--%>
 
-    $(function() {
-        $("#deathDatePicker").datepicker();
+$(function() {
+    $("#deathDatePicker").datepicker({
+        createButton:false,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
+$(function() {
+    $("#dateOfRegistrationDatePicker").datepicker({
+        createButton:false,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
+
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#deathDistrictId').bind('change', function(evt1) {
+        var id = $("select#deathDistrictId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#deathDsDivisionId").html(options1);
+
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#deathDivisionId").html(options2);
+                });
     });
 
-    $(function() {
-        $("#dateOfRegistrationDatePicker").datepicker();
+    $('select#deathDsDivisionId').bind('change', function(evt2) {
+        var id = $("select#deathDsDivisionId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#deathDivisionId").html(options);
+                });
+    });
+
+    $('img#death_person_lookup').bind('click', function(evt3) {
+        var id1 = $("input#deathPerson_PINorNIC").attr("value");
+        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
+                    //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
+                    $("textarea#deathPersonPermanentAddress").val(data2.lastAddress);
+                });
+    });
+    $('img#death_person_father_lookup').bind('click', function(evt4) {
+        var id1 = $("input#deathPersonFather_PINorNIC").attr("value");
+        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("textarea#deathPersonFatherFullName").val(data1.fullNameInOfficialLanguage);
+                });
+    });
+    $('img#death_person_mother_lookup').bind('click', function(evt5) {
+        var id1 = $("input#deathPersonMother_PINorNIC").attr("value");
+        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("textarea#deathPersonMotherFullName").val(data1.fullNameInOfficialLanguage);
+                });
     });
 
 
-    // mode 1 = passing District, will return DS list
-    // mode 2 = passing DsDivision, will return BD list
-    // any other = passing district, will return DS list and the BD list for the first DS
-    $(function() {
-        $('select#deathDistrictId').bind('change', function(evt1) {
-            var id = $("select#deathDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#deathDsDivisionId").html(options1);
-
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#deathDivisionId").html(options2);
-                    });
-        });
-
-        $('select#deathDsDivisionId').bind('change', function(evt2) {
-            var id = $("select#deathDsDivisionId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#deathDivisionId").html(options);
-                    });
-        });
-
-        $('img#death_person_lookup').bind('click', function(evt3) {
-            var id1 = $("input#deathPerson_PINorNIC").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
-                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#deathPersonPermanentAddress").val(data2.lastAddress);
-                    });
-        });
-        $('img#death_person_father_lookup').bind('click', function(evt4) {
-            var id1 = $("input#deathPersonFather_PINorNIC").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#deathPersonFatherFullName").val(data1.fullNameInOfficialLanguage);
-                    });
-        });
-        $('img#death_person_mother_lookup').bind('click', function(evt5) {
-            var id1 = $("input#deathPersonMother_PINorNIC").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#deathPersonMotherFullName").val(data1.fullNameInOfficialLanguage);
-                    });
-        });
-
-
-    });
-    function addOption(selectbox, text, value)
-    {
-        var optn = document.createElement("OPTION");
-        optn.text = text;
-        optn.value = value;
-        selectbox.options.add(optn);
-    }
-    function setTime() {
-        alert("cdcn");
-        var month = new Array("January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December");
-        for (var i = 0; i < month.length; ++i) {
-
-            addOption(document.getElementsByName("deathTime"), month[i], month[i]);
-        }
-    }
+});
 
 </script>
 
@@ -457,9 +457,9 @@
         </td>
         <td>වෙලාව<br>*in tamil<br>Time</td>
         <td colspan="2">
-            <s:textfield name="time" id="timePicker" />
-         <%--   <input class="ctp" name="time" type="text" id="timePicker"/>--%>
-                    </td>
+            <s:textfield name="time" id="timePicker"/>
+                <%--   <input class="ctp" name="time" type="text" id="timePicker"/>--%>
+        </td>
     </tr>
     <tr>
         <td rowspan="5">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>

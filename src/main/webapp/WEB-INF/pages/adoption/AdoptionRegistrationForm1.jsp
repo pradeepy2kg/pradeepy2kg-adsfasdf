@@ -489,12 +489,6 @@
         }
     }
 
-    function validateNum(num) {
-        if (isNaN(num)) {
-            alert("not a number");
-        }
-    }
-
     function getDate(date) {
         var y = date.substring(date.lastIndexOf("/") + 1, date.length);
         date = date.substring(0, date.lastIndexOf("/"));

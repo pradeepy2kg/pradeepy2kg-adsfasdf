@@ -9,7 +9,12 @@
 
 <script>
     $(function() {
-        $("#datePicker").datepicker();
+        $("#datePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     $(function() {
@@ -37,11 +42,13 @@
         var returnval;
 
         /*date related validations*/
-        alert("xsdfv");
         var submit = document.getElementById('atePicker').value;
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
             flag = true;
+        }
+        else if(submit.is){
+            
         }
         element = document.getElementById('confirmantNICorPIN');
         if (element.value == "") {
