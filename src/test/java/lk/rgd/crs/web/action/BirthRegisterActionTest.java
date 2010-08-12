@@ -214,7 +214,6 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
         assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
         assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", df.format(bd.getInformant().getInformantSignDate()));
-        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
 
         //BirthDeclaration Form Details
         request.setParameter("pageNo", "4");
@@ -226,6 +225,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
         logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
+        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
         assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
         logger.debug("successfully persisted with the bdId :{}", action.getBdId());
 

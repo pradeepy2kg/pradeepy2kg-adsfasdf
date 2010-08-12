@@ -10,6 +10,8 @@ import com.opensymphony.xwork2.ActionContext;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -31,6 +33,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
     private ActionProxy proxy;
     private BirthRegisterAction action;
     private LoginAction loginAction;
+    private final DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 
     @Override
     protected void setUp() throws Exception {
@@ -158,7 +161,8 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertEquals("BDF NotifyingAutho Address miss match in previously added BDF and BDF in session",
             bdf.getNotifyingAuthority().getNotifyingAuthorityAddress(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
         assertEquals("BDF NotifyingAutho Sign Date miss match in previously added BDF and BDF in session",
-            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString(), batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString());
+            df.format(bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()),
+            df.format(batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
         logger.debug("Adding BDF auto populating fields populated correctly and Add new in batch mode passed");
         deleteBDF(colomboBdDivision, serialNum);
     }
