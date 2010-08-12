@@ -115,6 +115,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String marriedStatusEn;
 
 
+
     public String welcome() {
         return SUCCESS;
     }
@@ -329,7 +330,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
@@ -434,7 +435,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(existBDivisionId),
-                    existSerial, user);
+                        existSerial, user);
             } else {
                 // TODO display error msg                  
             }
@@ -549,7 +550,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -597,7 +598,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 if (birthType == BirthDeclaration.BirthType.LIVE) {
@@ -1332,4 +1333,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
+
+   
 }

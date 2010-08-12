@@ -68,8 +68,8 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
 
      public void testLateDeathDeclaration() throws Exception {
       Map session = UserLogin("ashoka", "ashoka");
-      initAndExucute("/deaths/eprLateDeathDeclaration.do", session);
-      session = deathAction.getSession();
+//      initAndExucute("/deaths/eprLateDeathDeclaration.do", session);
+//      session = deathAction.getSession();
 
 //      assertNotNull("Dsdivision list", deathAction.getDsDivisionList());
 //      assertNotNull("District list", deathAction.getDistrictList());

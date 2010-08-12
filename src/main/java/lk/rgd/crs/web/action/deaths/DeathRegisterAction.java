@@ -10,10 +10,7 @@ import java.util.Locale;
 import java.util.Date;
 import java.util.List;
 
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.dao.CountryDAO;
-import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -27,7 +24,6 @@ import lk.rgd.Permission;
 
 /**
  * @author Duminda Dharmakeerthi
- * @authar amith jayasekara
  */
 public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterAction.class);
@@ -40,9 +36,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeclarantInfo declarant;
     private NotifyingAuthorityInfo notifyingAuthority;
 
+
     private int deathDistrictId;
     private int deathDivisionId;
     private int dsDivisionId;
+    private int deathPersonCountry;
+    private int deathPersonRace;
+
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -50,13 +50,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
     private final DeathRegisterService service;
+    private final RaceDAO raceDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
-
     private Map<Integer, String> countryList;
     private List<DeathRegister> deathApprovalAndPrintList;
+    private Map<Integer, String> raceList;
 
     private long idUKey;
     private int pageNo;
@@ -67,6 +68,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathRegister.State state;
     private boolean nextFlag;
     private boolean previousFlag;
+    private DeathRegister.Type deathType;
     private boolean back;
     private boolean searchByDate;
 
@@ -84,13 +86,15 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Date endDate;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        CountryDAO countryDAO, DeathRegisterService deathRegisterService, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, DeathRegisterService deathRegisterService,
+                               AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
         this.service = deathRegisterService;
         this.appParametersDAO = appParametersDAO;
+        this.raceDAO = raceDAO;
     }
 
     public String welcome() {
@@ -105,6 +109,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         DeathRegister ddf;
         session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         ddf = new DeathRegister();
+        ddf.setDeathType(getDeathType());
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
         populate();
         return SUCCESS;
@@ -124,12 +129,18 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
+                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
+                deathType = ddf.getDeathType();
+                logger.debug("Date of Registration  of {}  is : {} ", deathPerson.getDeathPersonNameOfficialLang(), death.getDateOfRegistration());
+                logger.debug("death type of {} person is : {} ", deathPerson.getDeathPersonNameOfficialLang(), deathType);
                 break;
             case 2:
+                logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeclarant(declarant);
+                logger.info("witness was completed");
                 ddf.setNotifyingAuthority(notifyingAuthority);
-
+                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
                 service.addDeathRegistration(ddf, user);
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
@@ -142,7 +153,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         deathRegister = service.getById(idUKey, user);
         if (deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED) {
             addActionError(getText("death.error.no.permission.print"));
-            logger.debug("Current state of death certificate : {}", deathRegister.getStatus());
+            logger.debug("Current state of adoption certificate : {}", deathRegister.getStatus());
             return ERROR;
         } else {
             deathPerson = deathRegister.getDeathPerson();
@@ -170,11 +181,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String lateDeath() {
-        deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
-        service.addDeathRegistration(deathRegister, user);
-        return SUCCESS;
-    }
 
     public String deathApprovalAndPrint() {
         if (pageNo == 2) {
@@ -200,6 +206,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String filterByStatus() {
         logger.debug("requested to filter by : {}", currentStatus);
         setPageNo(1);
+        logger.debug("requested to filter by : {}", currentStatus);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
@@ -408,11 +415,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
+        setRaceList(raceDAO.getRaces(language));
     }
 
     private void populateDynamicLists(String language) {
+        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());
@@ -511,6 +521,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeathDivisionId(int deathDivisionId) {
         this.deathDivisionId = deathDivisionId;
+        if (death == null) {
+            death = new DeathInfo();
+        }
+        death.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(deathDivisionId));
+        logger.debug("setting DeathDivision: {}", death.getDeathDivision().getEnDivisionName());
+
     }
 
     public int getDsDivisionId() {
@@ -695,7 +711,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.deathPersonDeathDivision = deathPersonDeathDivision;
     }
 
-
     public String getDeathPersonDeathDivisionEn() {
         return deathPersonDeathDivisionEn;
     }
@@ -736,35 +751,47 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.deathRegister = deathRegister;
     }
 
-    public DeathRegister.State getState() {
-        return state;
+    public DeathRegister.Type getDeathType() {
+        return deathType;
     }
 
-    public void setState(DeathRegister.State state) {
-        this.state = state;
+    public void setDeathType(DeathRegister.Type deathType) {
+        this.deathType = deathType;
     }
 
-    public Date getFromDate() {
-        return fromDate;
+    public int getDeathPersonCountry() {
+        return deathPersonCountry;
     }
 
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
+    public void setDeathPersonCountry(int deathPersonCountry) {
+        this.deathPersonCountry = deathPersonCountry;
+        if (deathPerson == null) {
+            deathPerson = new DeathPersonInfo();
+        }
+        deathPerson.setDeathPersonCountry(countryDAO.getCountry(deathPersonCountry));
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public int getDeathPersonRace() {
+        return deathPersonRace;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDeathPersonRace(int deathPersonRace) {
+        this.deathPersonRace = deathPersonRace;
+        if (deathPerson == null) {
+            deathPerson = new DeathPersonInfo();
+        }
+        deathPerson.setDeathPersonRace(raceDAO.getRace(deathPersonRace));
     }
 
-    public boolean isSearchByDate() {
-        return searchByDate;
+    public RaceDAO getRaceDAO() {
+        return raceDAO;
     }
 
-    public void setSearchByDate(boolean searchByDate) {
-        this.searchByDate = searchByDate;
+    public Map<Integer, String> getRaceList() {
+        return raceList;
+    }
+
+    public void setRaceList(Map<Integer, String> raceList) {
+        this.raceList = raceList;
     }
 }
