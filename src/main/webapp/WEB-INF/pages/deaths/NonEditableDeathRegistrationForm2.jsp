@@ -66,51 +66,7 @@
             </tr>
             </tbody>
         </table>
-
-        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
-               class="font-9">
-            <col width="120px"/>
-            <col width="100px"/>
-            <col width="300px"/>
-            <col width="120px"/>
-            <col width="100px"/>
-            <col/>
-            <tbody>
-            <tr style="border:0;">
-                <td colspan="6" style="border:0; text-align:center;">පහත සඳහන් සාක්ෂි කරුවන් ඉදිරිපිටදී අත්සන් කරන
-                    ලදී<br>*in tamil<br>Subscribed in the presence of the
-                    following witnesses
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td colspan="1" class="find-person"><s:label
-                        value="%{#session.deathRegister.witness.firstWitnessNICorPIN}"/></td>
-                <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td colspan="1" class="find-person"><s:label
-                        value="%{#session.deathRegister.witness.secondWitnessNICorPIN}"/></td>
-            </tr>
-            <tr>
-                <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:label value="%{#session.deathRegister.witness.firstWitnessFullName}"/></td>
-                <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:label value="%{#session.deathRegister.witness.secondWitnessFullName}"/></td>
-            </tr>
-            <tr>
-                <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:label value="%{#session.deathRegister.witness.firstWitnessAddress}"/></td>
-                <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:label value="%{#session.deathRegister.witness.secondWitnessAddress}"/></td>
-            </tr>
-            <tr>
-                <td>අත්සන <br>தகவல் ...<br>Signature</td>
-                <td colspan="2"></td>
-                <td>අත්සන <br>தகவல் ...<br>Signature</td>
-                <td colspan="2"></td>
-            </tr>
-            </tbody>
-        </table>
-
+        
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
                class="font-9">
             <col width="150px"/>
