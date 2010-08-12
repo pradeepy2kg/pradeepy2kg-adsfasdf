@@ -14,7 +14,7 @@ import org.apache.struts2.util.StrutsTypeConverter;
  */
 public class DateTypeConverter extends StrutsTypeConverter {
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     @Override
     public Object convertFromString(Map context, String[] values, Class toClass) {

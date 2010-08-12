@@ -11,11 +11,21 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
     $(function() {
-        $("#submitDatePicker").datepicker();
+        $("#submitDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     $(function() {
-        $("#birthDatePicker").datepicker();
+        $("#birthDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     // mode 1 = passing District, will return DS list
@@ -77,13 +87,8 @@
 
         function processResponse1(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
-
-        ;
+            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        };
 
         $('img#place').bind('click', function(evt4) {
             var id = $("input#placeOfBirth").attr("value");
@@ -107,12 +112,99 @@
 
         function processResponse2(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
         }
-    })
+    });
+
+    function validate() {
+        var errormsg = "";
+        var element;
+        var returnval;
+        var flag = false;
+        var lateOrbelate = false;
+        var check = document.getElementById('skipjs');
+        /*date related validations*/
+        var birthdate = new Date(document.getElementById('birthDatePicker').value);
+        var submit = new Date(document.getElementById('submitDatePicker').value);
+        //compare two days
+        if (birthdate.getTime() > submit.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('error6').value;
+            flag = true;
+        }
+
+        var birthType = document.getElementById('birthTypeId').value;
+        if (birthType != 2) {
+            //comparing 90 days delay
+            var one_day = 1000 * 60 * 60 * 24 ;
+            var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+            if (numDays >= 90) {
+                if (numDays >= 365) {
+                    errormsg = errormsg + "\n" + document.getElementById('error8').value;
+                } else {
+                    errormsg = errormsg + "\n" + document.getElementById('error7').value;
+                }
+                lateOrbelate = true;
+            }
+        }
+
+        element = document.getElementById('bdfSerialNo');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error1').value;
+            flag = true;
+        }
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('error9').value;
+            flag = true;
+        }
+        if (!birthdate.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('error10').value;
+            flag = true;
+        }
+        element = document.getElementById('placeOfBirth');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error11').value;
+            flag = true;
+        }
+
+        if (!check.checked) {
+            element = document.getElementById('childFullNameOfficialLang');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('error2').value;
+                flag = true;
+            }
+
+            element = document.getElementById('childFullNameEnglish');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('error3').value;
+                flag = true;
+            }
+
+            element = document.getElementById('childBirthWeight');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('error4').value;
+                flag = true;
+            }
+
+            element = document.getElementById('childRank');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('error5').value;
+                flag = true;
+            }
+        }
+
+        if (errormsg != "") {
+            alert(errormsg);
+            if (flag) {
+                returnval = false;
+            } else {
+                if (lateOrbelate) {
+                    returnval = true;
+                }
+            }
+        }
+
+        return returnval;
+    }
 </script>
 
 
@@ -430,106 +522,6 @@
 
 
 <script type="text/javascript">
-    function validate()
-    {
-        var errormsg = "";
-        var element;
-        var returnval;
-        var flag = false;
-        var lateOrbelate = false;
-        var check = document.getElementById('skipjs');
-        /*date related validations*/
-        // var birthdate = new Date($("#birthDatePicker").attr("value"));
-        // var submitdate = new Date($("#submitDatePicker").attr("value"));
-        var birthdate = getDate(document.getElementById('birthDatePicker').value);
-        var submit = getDate(document.getElementById('submitDatePicker').value);
-        //compare two days
-        if (birthdate.getTime() > submit.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('error6').value;
-            flag = true;
-        }
-
-        var birthType = document.getElementById('birthTypeId').value;
-        if (birthType != 2) {
-            //comparing 90 days delay
-            var one_day = 1000 * 60 * 60 * 24 ;
-            var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-            if (numDays >= 90) {
-                if (numDays >= 365) {
-                    errormsg = errormsg + "\n" + document.getElementById('error8').value;
-                } else {
-                    errormsg = errormsg + "\n" + document.getElementById('error7').value;
-                }
-                lateOrbelate = true;
-            }
-        }
-
-        element = document.getElementById('bdfSerialNo');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error1').value;
-            flag = true;
-        }
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('error9').value;
-            flag = true;
-        }
-        if (!birthdate.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('error10').value;
-            flag = true;
-        }
-        element = document.getElementById('placeOfBirth');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error11').value;
-            flag = true;
-        }
-
-        if (!check.checked) {
-
-            element = document.getElementById('childFullNameOfficialLang');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error2').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childFullNameEnglish');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error3').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childBirthWeight');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error4').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childRank');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error5').value;
-                flag = true;
-            }
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            if (flag) {
-                returnval = false;
-            } else {
-                if (lateOrbelate) {
-                    returnval = true;
-                }
-            }
-        }
-
-        return returnval;
-    }
-    function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
-        date = date.substring(0, date.lastIndexOf("/"));
-        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
-        var m = date.substring(0, date.lastIndexOf("/"));
-        return new Date(y, m, d);
-    }
 </script>
 
 <div class="skip-validation">
