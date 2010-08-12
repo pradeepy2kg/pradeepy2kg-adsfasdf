@@ -107,7 +107,10 @@
 
         function processResponse2(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
         }
     })
 </script>
@@ -153,10 +156,11 @@
             </table>
 
             <table class="table_reg_datePicker_page_01">
-                 <tr>
-                    <td colspan="2" >කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக
+                <tr>
+                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக
                         பாவனைக்காக மட்டும்
-                        <br>For office use only <hr>
+                        <br>For office use only
+                        <hr>
                     </td>
                 </tr>
                 <tr>
@@ -282,29 +286,40 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="6"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
                       cssStyle="width:98.5%;"/>
         </td>
     </tr>
+
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
+        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br/>பிரிவு / <br/>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="float:left;  width:240px;"/>
-            <label style="float:right; line-height:25px; vertical-align:middle; margin-right:5px;">කොට්ඨාශය /பிரிவு
-                /Division</label>
-            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                      cssStyle=" width:240px;float:right;"/>
+
         </td>
+    </tr>
     <tr>
-        <td><label>සිංහල හෝ දෙමළ භාෂාවෙන්         <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
+        <td >  <label>
+                ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>
+                பிரிவு /<br/>
+                Registration Division</label>
+        </td>
+        <td colspan="6" >
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
+                      cssStyle=" width:240px;float:left;"/>
+        </td>
+    </tr>
+    <tr>
+
+        <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
-        <td><label>ඉංග්‍රීසි භාෂාවෙන්        <br>இங்கிலீஷ் <br>In English</label></td>
+        <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
         <td colspan="6">
             <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
@@ -340,7 +355,8 @@
             <td colspan="7">
                 <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
                             cssStyle="width:98.2%;text-transform: uppercase;"/>
-                <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="childName">
+                <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
+                     id="childName">
             </td>
         </tr>
     </s:if>
