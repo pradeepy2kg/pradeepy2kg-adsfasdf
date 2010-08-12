@@ -149,7 +149,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
 
     public String deathCertificate() {
-        idUKey = 8;
         deathRegister = service.getById(idUKey, user);
         if (deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED) {
             addActionError(getText("death.error.no.permission.print"));
