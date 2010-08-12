@@ -165,7 +165,7 @@
                 <tr>
                     <td>
                         <s:if test="birthType.ordinal() == 1">
-                            <label><span class="font-8">යොමුකළ දිනය<br>in Tamil<br>Submitted Date</span></label>
+                            <label><span class="font-8">ලියාපදිංචි කල දිනය<br>in Tamil<br>Submitted Date</span></label>
                         </s:if>
                         <s:else>
                             <label><span class="font-8">ලියාපදිංචි කල දිනය<br>* In Tamil<br>Date of Registration</span></label>
@@ -310,11 +310,11 @@
         <td><label>ඉංග්‍රීසි භාෂාවෙන්        <br>இங்கிலீஷ் <br>In English</label></td>
         <td colspan="6">
             <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
         </td>
     </tr>
     <tr>
-        <td colspan="3"><label> රෝහලේදී /*in Tamil/In a Hospital</label></td>
+        <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>In Tamil <br>Did the birth occur at a hospital?</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
         <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
                                     value="true"/></td>
@@ -343,7 +343,7 @@
             <td colspan="7">
                 <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
                             cssStyle="width:98.2%;text-transform: uppercase;"/>
-                <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="childName">
+                <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="childName">
             </td>
         </tr>
     </s:if>
