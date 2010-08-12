@@ -468,7 +468,6 @@
                 method="deathDeclarationViewMode">
             <result type="tiles" name="form0">epr.non_editable_deathDeclaration_form1</result>
             <result type="tiles" name="form1">epr.non_editable_deathDeclaration_form2</result>
-            <result type="tiles" name="success"></result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

@@ -144,7 +144,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         BirthDeclaration bdf;
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
-            if (pageNo == 1)
+            if (pageNo == 1 && parent.getMotherDSDivision() != null)
                 populateAllDSDivisionList(parent.getMotherDSDivision().getDistrict().getDistrictUKey(), ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             return "form" + pageNo;
         }
