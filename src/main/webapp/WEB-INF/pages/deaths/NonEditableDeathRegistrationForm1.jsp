@@ -72,6 +72,40 @@
             <br>Information about the Death
         </td>
     </tr>
+    <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+        <tr>
+            <td colspan="5">
+                හදිසි මරණයක්ද ? <br/>
+                in tamil <br/>
+                Sudden death?
+            </td>
+            <td colspan="3">
+                <s:if test="deathType.ordinal() == 0">
+                    <s:label value="%{getText('yes.label')}"/>
+                </s:if>
+                <s:elseif test="deathType.ordinal() == 1">
+                    <s:label value="%{getText('no.label')}"/>
+                </s:elseif>
+            </td>
+        </tr>
+    </s:if>
+    <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+        <tr>
+            <td>
+                නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <br/>
+                in tamil <br/>
+                Is the death of a missing person?
+            </td>
+            <td colspan="3">
+                <s:if test="deathType.ordinal() == 2">
+                    <s:label value="%{getText('yes.label')}"/>
+                </s:if>
+                <s:elseif test="deathType.ordinal() == 3">
+                    <s:label value="%{getText('no.label')}"/>
+                </s:elseif>
+            </td>
+        </tr>
+    </s:elseif>
     <tr>
         <td>මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
         <td colspan="3" style="text-align:left;"><s:label value="%{#session.deathRegister.death.dateOfDeath}"/></td>

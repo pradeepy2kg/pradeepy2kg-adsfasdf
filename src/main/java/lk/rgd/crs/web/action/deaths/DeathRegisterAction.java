@@ -86,8 +86,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Date endDate;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                               CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
-                               AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
+        CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
+        AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -116,7 +116,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String deathDeclaration() {
-       logger.debug("Step {} of 2", pageNo);
+        logger.debug("Step {} of 2", pageNo);
         populate();
         DeathRegister ddf;
         if (back) {
@@ -303,6 +303,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("initializing non editable mode for IDUKey {}", idUKey);
                 try {
                     ddf = service.getById(idUKey, user);
+                    deathType = ddf.getDeathType();
                     session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
 
                 } catch (Exception e) {
@@ -779,6 +780,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public void setSearchByDate(boolean searchByDate) {
         this.searchByDate = searchByDate;
     }
+
     public DeathRegister.Type getDeathType() {
         return deathType;
     }
