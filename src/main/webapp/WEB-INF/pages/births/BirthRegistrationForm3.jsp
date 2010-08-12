@@ -9,20 +9,29 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#marriageDatePicker").datepicker();
+        $("#marriageDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
-        $("#informDatePicker").datepicker();
+        $("#informDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
-
     $(function() {
         $('img#informant_lookup').bind('click', function(evt1) {
             var id1 = $("input#informantNICorPIN").attr("value");
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                function(data1) {
-                    $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
-                    $("textarea#informantAddress").val(data1.lastAddress);
-                });
+                    function(data1) {
+                        $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#informantAddress").val(data1.lastAddress);
+                    });
         });
     });
 
@@ -52,13 +61,12 @@
         var element;
         var returnval;
         /*date related validations*/
-        var submit = getDate(document.getElementById('informDatePicker').value);
-       // var submit = new Date(submitDatePicker);
+        var submit = new Date(document.getElementById('informDatePicker').value);
+        // var submit = new Date(submitDatePicker);
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
             flag = true;
         }
-
         element = document.getElementsByName("informant.informantType");
         if (element.checked) {
             errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
@@ -79,8 +87,8 @@
                 errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
             }
 
-            submit =getDate(document.getElementById('marriageDatePicker').value);
-           // submit = new Date(submitDatePicker);
+            submit = new Date(document.getElementById('marriageDatePicker').value);
+            // submit = new Date(submitDatePicker);
             if (!(submit.getTime())) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
                 flag = true;
@@ -90,8 +98,8 @@
         }
         element = document.getElementsByName("marriage.parentsMarried")[2];
         if (element.checked) {
-             element = document.getElementById('fatherName');
-            var element3=document.getElementById('fatherSigned');
+            element = document.getElementById('fatherName');
+            var element3 = document.getElementById('fatherSigned');
             if (element.value.length > 0 && !element3.checked)
             {
                 errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
@@ -103,14 +111,6 @@
             returnval = false;
         }
         return returnval;
-    }
-
-     function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/")+1, date.length);
-        date=date.substring(0,date.lastIndexOf("/"));
-        var d=date.substring(date.lastIndexOf("/")+1, date.length);
-        var m=date.substring(0,date.lastIndexOf("/"));
-        return new Date(y,m,d);
     }
 </script>
 

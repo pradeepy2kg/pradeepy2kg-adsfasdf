@@ -10,9 +10,13 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#modifiedDatePicker").datepicker();
+        $("#modifiedDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
-
     $(function() {
         $('img#notifier_lookup').bind('click', function(evt1) {
             var id1 = $("input#notifyingAuthorityPIN").attr("value");
@@ -32,8 +36,7 @@
         var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
 
         /*date related validations*/
-        var submitDatePicker = dojo.widget.byId('modifiedDatePicker').inputNode.value;
-        var submit = new Date(submitDatePicker);
+        var submit =new Date(document.getElementById("modifiedDatePicker"))
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
             flag = true;
