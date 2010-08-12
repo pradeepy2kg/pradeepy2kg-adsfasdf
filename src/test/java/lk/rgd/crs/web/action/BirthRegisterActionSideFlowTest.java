@@ -261,7 +261,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("informant.informantAddress", "mother address");
         request.setParameter("informant.informantPhoneNo", "0715516541");
         request.setParameter("informant.informantEmail", "mother@gmail.com");
-        request.setParameter("informant.informantSignDate", "2010-08-01T00:00:00+05:30");
+        request.setParameter("informant.informantSignDate", "08/01/2010");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();

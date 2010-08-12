@@ -81,6 +81,11 @@ public class DeathRegistrationDeclarionTest extends CustomStrutsTestCase {
         return loginAction.getSession();
     }
 
+    private void logOut() throws Exception {
+        ActionProxy proxy = getActionProxy("/eprLogout.do");
+        proxy.execute();
+    }
+
     private void initAndExucute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
         deathAction = (DeathRegisterAction) proxy.getAction();
@@ -108,19 +113,95 @@ public class DeathRegistrationDeclarionTest extends CustomStrutsTestCase {
 
     public void testFilterByStatus() throws Exception {
         Map session = userLogin("rg", "password");
+        //testing search by status
         //setting state to filtering
-        request.setParameter("currentStatus", "DATA_ENTRY");
+        request.setParameter("currentStatus", "2");
+        //setting death division as 1(colombo fort)
+        request.setParameter("deathDivisionId", "1");
         initAndExucute("/deaths/eprDeathFilterByStatus.do", session);
-        //check current state populated
-        //  assertEquals("Current state", DeathRegister.State.DATA_ENTRY, deathAction.getCurrentStatus());
-        //numbers of rows
-        //  assertEquals("Num of Rows", 50, deathAction.getNoOfRows());
-        // populate();
-        //  permissionToEditAndApprove();
-        //there is 4 data entry test data
-        //chcek print lis is not null
-      //  assertNotNull("Print list is not null", deathAction.getDeathApprovalAndPrintList());
-       // assertEquals("Print List Size when state is Data Entry", 5, deathAction.getDeathApprovalAndPrintList().size());
+
+        //check state enum
+        assertEquals("State APPROVED", DeathRegister.State.APPROVED, deathAction.getState());
+        //check death division is properlly setted
+        assertEquals("Death division", 1, deathAction.getDeathDivisionId());
+        //check is this a search by state
+        assertEquals("Search by date ", false, deathAction.isSearchByDate());
+        //there is  1 sample data for approved in colmbo fort
+        assertNotNull("Sample data not null", deathAction.getDeathApprovalAndPrintList());
+        assertEquals("Sample data", 1, deathAction.getDeathApprovalAndPrintList().size());
+
+        populate();
+        permissionToEditAndApprove();
+
+    }
+
+    public void testFilterByDate() throws Exception {
+        Map session = userLogin("rg", "password");
+        request.setParameter("deathDivisionId", "1");
+        request.setParameter("fromDate", "08/01/2009");
+        request.setParameter("endDate", "08/31/2010");
+        initAndExucute("/deaths/eprDeathFilterByStatus.do", session);
+        //check filter by date
+        assertEquals("Search by date", true, deathAction.isSearchByDate());
+        //check death divsion is setted properlly
+        assertEquals("Death division", 1, deathAction.getDeathDivisionId());
+        //there are two sample data for this senario
+        assertNotNull("Sample data not null", deathAction.getDeathApprovalAndPrintList());
+        assertEquals("Sample data", 2, deathAction.getDeathApprovalAndPrintList().size());
+    }
+
+    public void testDeathDeclarationEditMode() throws Exception {
+        Map session = userLogin("rg", "password");
+        //this is a DATA_ENTRY state recode
+        request.setParameter("idUKey", "1");
+        initAndExucute("/deaths/eprDeathEditMode.do", session);
+        assertEquals("No Action Errors", 0, deathAction.getActionErrors().size());
+        //check user object is retrieved properly
+        assertNotNull("User object ", deathAction.getUser());
+        //check Death declaration is populated
+        assertNotNull("Death declaration object", deathAction.getDeathRegister());
+        assertEquals("Death Declaration is in DATA_ENTRY", DeathRegister.State.DATA_ENTRY, deathAction.getDeathRegister().getStatus());
+
+        //try to edit non editable recode
+        //this recode in APPROVE state
+        request.setParameter("idUKey", "5");
+        initAndExucute("/deaths/eprDeathEditMode.do", session);
+        //check user object is retrieved properly
+        assertNotNull("User object ", deathAction.getUser());
+        //check Death declaration is populated
+        assertNotNull("Death declaration object", deathAction.getDeathRegister());
+        assertNotSame("Death Declaration is not DATA_ENTRY", DeathRegister.State.DATA_ENTRY, deathAction.getDeathRegister().getStatus());
+        //there shoud be an action error
+        assertEquals("Action Error", 1, deathAction.getActionErrors().size());
+    }
+
+    public void testDeathReject() throws Exception {
+/*        Map session = userLogin("rg", "password");
+        //try to approve recode in DATA_ENTRY state  this recode in DATA_ENTRY
+        request.setParameter("idUKey", "1");
+        initAndExucute("/deaths/eprRejectDeath.do", session);
+        //check idUkey is populated
+        assertEquals("IDUKEY ", 1, deathAction.getIdUKey());
+        populate();
+        permissionToEditAndApprove();
+
+        //try to reject alreafy approved death declaration
+        //idUKey 5 is APPROVED data
+        request.setParameter("idUKey", "5");
+        initAndExucute("/deaths/eprRejectDeath.do", session);
+        //check idUkey is populated
+        assertEquals("IDUKEY ", 1, deathAction.getIdUKey());
+        //check user object is retrieved properly
+        assertNotNull("User object ", deathAction.getUser());
+        //there must be an action error
+        assertEquals("Action Error", 1, deathAction.getActionErrors().size());
+        //check district list is not null for user
+        assertNotNull("District list", deathAction.getDistrictList());
+        //check country list is not null
+        assertNotNull("Country List ", deathAction.getCountryList());
+        //check bddivision list is not null for the user
+        assertNotNull("BD Division List for User", deathAction.getBdDivisionList());
+        permissionToEditAndApprove();*/
     }
 
     private void populate() {

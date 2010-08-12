@@ -24,6 +24,7 @@ import lk.rgd.Permission;
 
 /**
  * @author Duminda Dharmakeerthi
+ * @authar amith jayasekara
  */
 public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegisterAction.class);
@@ -35,7 +36,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathPersonInfo deathPerson;
     private DeclarantInfo declarant;
     private NotifyingAuthorityInfo notifyingAuthority;
-
 
     private int deathDistrictId;
     private int deathDivisionId;
@@ -55,6 +55,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+
     private Map<Integer, String> countryList;
     private List<DeathRegister> deathApprovalAndPrintList;
     private Map<Integer, String> raceList;
@@ -116,7 +117,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String deathDeclaration() {
-        logger.debug("Step {} of 2", pageNo);
+       logger.debug("Step {} of 2", pageNo);
         populate();
         DeathRegister ddf;
         if (back) {
@@ -205,7 +206,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String filterByStatus() {
         logger.debug("requested to filter by : {}", currentStatus);
         setPageNo(1);
-        logger.debug("requested to filter by : {}", currentStatus);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
@@ -414,14 +414,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         districtList = districtDAO.getAllDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
         setRaceList(raceDAO.getRaces(language));
     }
 
     private void populateDynamicLists(String language) {
-        User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         if (getDeathDistrictId() == 0) {
             if (!districtList.isEmpty()) {
                 setDeathDistrictId(districtList.keySet().iterator().next());
@@ -710,6 +708,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.deathPersonDeathDivision = deathPersonDeathDivision;
     }
 
+
     public String getDeathPersonDeathDivisionEn() {
         return deathPersonDeathDivisionEn;
     }
@@ -750,6 +749,37 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.deathRegister = deathRegister;
     }
 
+    public DeathRegister.State getState() {
+        return state;
+    }
+
+    public void setState(DeathRegister.State state) {
+        this.state = state;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isSearchByDate() {
+        return searchByDate;
+    }
+
+    public void setSearchByDate(boolean searchByDate) {
+        this.searchByDate = searchByDate;
+    }
     public DeathRegister.Type getDeathType() {
         return deathType;
     }
