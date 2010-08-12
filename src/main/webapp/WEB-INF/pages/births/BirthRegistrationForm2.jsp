@@ -8,16 +8,36 @@
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
+<s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
+<s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
+<s:hidden id="mother_age" value="%{getText('p2.motherAge.error.value')}"/>
+<s:hidden id="mother_birth_day_empty" value="%{getText('p2.motherAge.empty.error.value')}"/>
+<s:hidden id="childDateOfBirth" value="%{child.dateOfBirth}"/>
 
 <script>
     $(function() {
-        $("#fatherDatePicker").datepicker();
+        $("#fatherDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
-        $("#motherDatePicker").datepicker();
+        $("#motherDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
-        $("#admitDatePicker").datepicker();
+        $("#admitDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
         $('img#father_lookup').bind('click', function(evt1) {
@@ -56,6 +76,60 @@
                     });
         });
     })
+    //javascript for form validation
+    function validate()
+    {
+        var errormsg = "";
+        var element;
+        var returnval;
+        var check = document.getElementById('skipjs');
+        if (!check.checked) {
+
+            element = document.getElementById('fatherFullName');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
+            }
+            element = document.getElementById('motherFullName');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
+            }
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
+    function motherage() {
+        var child_bday = document.getElementById('childDateOfBirth').value;
+        var mother_dob = new Date(document.getElementById('motherDatePicker').value);
+        var check_mother_dob = mother_dob;
+        var child_dob = new Date(child_bday);
+        var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
+        var mother_age = child_dob.getYear() - mother_dob.getYear();
+        if (mother_age <= 10 || check_mother_dob.length == 0) {
+            if (check_mother_dob.length == 0)
+            {
+                alert(document.getElementById('mother_birth_day_empty').value);
+
+            }
+            else if (confirm(document.getElementById('mother_age').value + mother_age)) {
+                mother_age_at_birth.value = mother_age;
+            }
+            return false;
+        }
+        else {
+            mother_age_at_birth.value = mother_age;
+            return true;
+        }
+    }
+    function getDate(date) {
+        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
+        date = date.substring(0, date.lastIndexOf("/"));
+        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
+        var m = date.substring(0, date.lastIndexOf("/"));
+        return new Date(y, m, d);
+    }
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
@@ -189,7 +263,7 @@
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="3">
-                <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
+                <s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
@@ -204,8 +278,8 @@
             </s:else>
         </label>
         </td>
-        <td class="passport"><s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"
-                                          onclick="javascript:motherage()"/></td>
+        <td class="passport">
+            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"/></td>
     </tr>
     <tr style="border-bottom:none;">
         <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ ස්ථිර
@@ -282,70 +356,6 @@
 
 <s:hidden name="pageNo" value="2"/>
 <s:hidden name="rowNumber" value="%{row}"/>
-
-<s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
-<s:hidden id="p2error2" value="%{getText('p2.motherName.error.value')}"/>
-<s:hidden id="mother_age" value="%{getText('p2.motherAge.error.value')}"/>
-<s:hidden id="mother_birth_day_empty" value="%{getText('p2.motherAge.empty.error.value')}"/>
-<s:hidden id="childDateOfBirth" value="%{child.dateOfBirth}"/>
-<script type="text/javascript">
-    function validate()
-    {
-        var errormsg = "";
-        var element;
-        var returnval;
-        var check = document.getElementById('skipjs');
-        if (!check.checked) {
-
-            element = document.getElementById('fatherFullName');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
-            }
-            element = document.getElementById('motherFullName');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
-            }
-        }
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        return returnval;
-    }
-    function motherage() {
-        var child_bday = document.getElementById('childDateOfBirth').value;
-        var mother_dob = getDate(document.getElementById('motherDatePicker').value);
-        var check_mother_dob = mother_dob;
-        mother_dob = new Date(mother_dob);
-        var child_dob = new Date(child_bday);
-        var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
-        var mother_age = 100 - (mother_dob.getYear() - child_dob.getYear());
-        if (mother_age <= 10 || check_mother_dob.length == 0) {
-            if (check_mother_dob.length == 0)
-            {
-                alert(document.getElementById('mother_birth_day_empty').value);
-
-            }
-            else if (confirm(document.getElementById('mother_age').value + mother_age)) {
-                mother_age_at_birth.value = mother_age;
-            }
-            return false;
-        }
-        else {
-            mother_age_at_birth.value = mother_age;
-            return true;
-        }
-    }
-        function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/")+1, date.length);
-        date=date.substring(0,date.lastIndexOf("/"));
-        var d=date.substring(date.lastIndexOf("/")+1, date.length);
-        var m=date.substring(0,date.lastIndexOf("/"));
-        return new Date(y,m,d);
-    }
-</script>
-
-
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
         <s:label value="%{getText('skipvalidation.label')}"/>
