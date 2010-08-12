@@ -6,8 +6,10 @@ import lk.rgd.common.core.dao.BaseDAO;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Date;
+import java.util.ArrayList;
 
 
 /**
@@ -36,7 +38,13 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     public DeathRegister getById(long deathRegisterIdUKey) {
-        return em.find(DeathRegister.class, deathRegisterIdUKey);
+        DeathRegister dr = null;
+        try {
+            dr = em.find(DeathRegister.class, deathRegisterIdUKey);
+        } catch (NoResultException e) {
+            logger.error("No result found for the requested IdUKey", e);
+        }
+        return dr;
     }
 
     /**
@@ -52,43 +60,70 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status) {
+        List<DeathRegister> resultList;
         Query q = em.createNamedQuery("death.register.filter.by.and.deathDivision.status.paginated").setFirstResult((pageNo - 1)
             * noOfRows).setMaxResults(noOfRows);
         q.setParameter("deathDivision", deathDivision);
         q.setParameter("status", status);
-        return q.getResultList();
+        try {
+            resultList = q.getResultList();
+        } catch (NoResultException e) {
+            logger.error("No result found for the paginated list with the given state", e);
+            resultList = new ArrayList();
+        }
+        return resultList;
     }
 
     /**
      * @inheritDoc
      */
     public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows) {
+        List<DeathRegister> resultList;
         Query q = em.createNamedQuery("get.all.deaths.by.deathDivision").setFirstResult((pageNo - 1)
             * noOfRows).setMaxResults(noOfRows);
         q.setParameter("deathDivision", deathDivision);
-        return q.getResultList();
+        try {
+            resultList = q.getResultList();
+        } catch (NoResultException e) {
+            logger.error("No death result found", e);
+            resultList = new ArrayList();
+        }
+        return resultList;
     }
 
     /**
      * @inheritDoc
      */
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo) {
+        DeathRegister dr = null;
         Query q = em.createNamedQuery("get.by.bddivision.and.deathSerialNo");
         q.setParameter("deathSerialNo", deathSerialNo);
         q.setParameter("deathDivision", bdDivision);
-        return (DeathRegister) q.getSingleResult();
+        try {
+            dr = (DeathRegister) q.getSingleResult();
+        } catch (NoResultException e) {
+            logger.error("No result for the given bdDivision and serialNo", e);
+        }
+        return dr;
     }
 
     /**
      * @inheritDoc
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows) {
+        List<DeathRegister> resultList;
         Query q = em.createNamedQuery("get.by.division.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("deathDivision", deathDivision);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
-        return q.getResultList();
+        try {
+            resultList = q.getResultList();
+        } catch (NoResultException e) {
+            logger.error("No death result found for the given date range and bdDivision", e);
+            resultList = new ArrayList();
+        }
+        return resultList;
     }
 }

@@ -38,15 +38,11 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
         logger.debug("adding new death registration");
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         // has this serial number been used already?
-        try {
-            DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
-                deathRegistration.getDeath().getDeathSerialNo());
-            if (existing != null) {
-                handleException("can not add death registration " + deathRegistration.getIdUKey() +
-                    " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
-            }
-        } catch (NoResultException ignore) {
-            logger.error("No result found",ignore);
+        DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
+            deathRegistration.getDeath().getDeathSerialNo());
+        if (existing != null) {
+            handleException("can not add death registration " + deathRegistration.getIdUKey() +
+                " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
@@ -71,13 +67,9 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public DeathRegister getById(long deathRegisterIdUKey, User user) {
         logger.debug("Load death registration record : {}", deathRegisterIdUKey);
-        DeathRegister deathRegister = null;
-        try {
-            deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
-            validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
-        } catch (NoResultException ignore) {
-            logger.error("Requested entry not available ", ignore);
-        }
+        DeathRegister deathRegister;
+        deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
+        validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
         return deathRegister;
     }
 
@@ -147,12 +139,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, deathDivision);
-        try {
-            return deathRegisterDAO.getPaginatedListForState(deathDivision, pageNo, noOfRows, status);
-        } catch (NoResultException e) {
-            logger.error("No result found", e);
-            return new ArrayList();
-        }
+        return deathRegisterDAO.getPaginatedListForState(deathDivision, pageNo, noOfRows, status);
     }
 
     /**
@@ -170,25 +157,16 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
     public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
         validateAccessToBDDivision(user, deathDivision);
-        try {
-            return deathRegisterDAO.getPaginatedListForAll(deathDivision, pageNo, noOfRows);
-        } catch (NoResultException e) {
-            logger.error("No result found ", e);
-            return new ArrayList();
-        }
+        return deathRegisterDAO.getPaginatedListForAll(deathDivision, pageNo, noOfRows);
     }
 
     /**
      * @inheritDoc
      */
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo, User user) {
-        DeathRegister dr = null;
-        try {
-            dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
-            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
-        } catch (NoResultException e) {
-            logger.error("No result found", e);
-        }
+        DeathRegister dr;
+        dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
+        validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         return dr;
     }
 
