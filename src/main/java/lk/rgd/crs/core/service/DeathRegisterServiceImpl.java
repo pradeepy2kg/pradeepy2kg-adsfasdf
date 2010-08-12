@@ -36,12 +36,16 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      */
     public void addDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding new death registration");
-        validateAccessToBDDivision(user,deathRegistration.getDeath().getDeathDivision());
-        DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
-            deathRegistration.getDeath().getDeathSerialNo());
-        if (existing != null) {
-            handleException("can not add death registration " + deathRegistration.getIdUKey() +
-                " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+        validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
+        // has this serial number been used already?
+        try {
+            DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
+                deathRegistration.getDeath().getDeathSerialNo());
+            if (existing != null) {
+                handleException("can not add death registration " + deathRegistration.getIdUKey() +
+                    " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+            }
+        } catch (NoResultException ignore) {
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
@@ -154,9 +158,9 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
      * @inheritDoc
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user){
-        validateAccessToBDDivision(user,deathDivision);
-        return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision,startDate,endDate,pageNo,noOfRows);
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        validateAccessToBDDivision(user, deathDivision);
+        return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }
 
     /**
