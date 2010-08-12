@@ -46,6 +46,7 @@ public class DeathRegisterServiceImpl implements DeathRegisterService {
                     " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
             }
         } catch (NoResultException ignore) {
+            logger.error("No result found",ignore);
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
