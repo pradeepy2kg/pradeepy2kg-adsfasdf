@@ -97,7 +97,7 @@
         </property>
     </bean>
     
-    <bean id="deathRegisterService" class="lk.rgd.crs.core.service.DeathRegisterServiceImpl">
+    <bean id="deathRegisterService" class="lk.rgd.crs.core.service.DeathRegistrationServiceImpl">
         <constructor-arg ref="deathRegisterDAOImpl"/>
     </bean>
 

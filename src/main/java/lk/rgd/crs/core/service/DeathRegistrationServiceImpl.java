@@ -1,6 +1,6 @@
 package lk.rgd.crs.core.service;
 
-import lk.rgd.crs.api.service.DeathRegisterService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -8,26 +8,22 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.ErrorCodes;
-import lk.rgd.Permission;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.NoResultException;
-
 /**
  * @author Indunil Moremada
  */
-public class DeathRegisterServiceImpl implements DeathRegisterService {
+public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DeathRegisterService.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
     private final DeathRegisterDAO deathRegisterDAO;
 
-    DeathRegisterServiceImpl(DeathRegisterDAO deathRegisterDAO) {
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO) {
         this.deathRegisterDAO = deathRegisterDAO;
     }
 

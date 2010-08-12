@@ -14,9 +14,8 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.DeathRegisterService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
 import lk.rgd.crs.CRSRuntimeException;
@@ -49,7 +48,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
-    private final DeathRegisterService service;
+    private final DeathRegistrationService service;
     private final RaceDAO raceDAO;
 
     private Map<Integer, String> districtList;
@@ -87,13 +86,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Date endDate;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                               CountryDAO countryDAO, DeathRegisterService deathRegisterService,
+                               CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
                                AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
-        this.service = deathRegisterService;
+        this.service = deathRegistrationService;
         this.appParametersDAO = appParametersDAO;
         this.raceDAO = raceDAO;
     }
