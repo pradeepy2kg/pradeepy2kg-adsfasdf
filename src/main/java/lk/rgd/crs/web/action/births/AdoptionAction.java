@@ -45,7 +45,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int birthDivisionId;
     private int dsDivisionId;
     private String language;
-    private AdoptionOrder.State currentStatus;
+    private int currentStatus;
+    private AdoptionOrder.State state;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
@@ -175,12 +176,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionNotice() {
         adoption = service.getById(idUKey, user);
-        if (adoption.getStatus() != AdoptionOrder.State.APPROVED ) {
+        if (adoption.getStatus() != AdoptionOrder.State.APPROVED) {
             addActionError(getText("adoption.not.permited.operation"));
-            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
         } else {
-            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             return SUCCESS;
@@ -200,8 +201,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (currentStatus != null) {
-            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
@@ -215,13 +216,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
-        if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED ) &&
-               ( adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+        if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
+            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
-            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
         } else {
-            logger.debug("Current state of adoption certificate : {}",adoption.getStatus());
+            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             return SUCCESS;
@@ -244,8 +245,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (currentStatus != null) {
-            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
@@ -266,8 +267,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        if (currentStatus != null) {
-            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
@@ -287,8 +288,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (currentStatus != null) {
-            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
@@ -306,7 +307,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (currentStatus == 0) {
+            //no state is selected
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
+        }
         paginationHandler(adoptionApprovalAndPrintList.size());
         return SUCCESS;
     }
@@ -353,8 +359,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             setPageNo(getPageNo() - 1);
         }
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (currentStatus != null) {
-            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
@@ -368,8 +374,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         setPageNo(getPageNo() + 1);
 
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (currentStatus != null) {
-            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, currentStatus, user);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
@@ -760,12 +766,32 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.previousFlag = previousFlag;
     }
 
-    public AdoptionOrder.State getCurrentStatus() {
+    public int getCurrentStatus() {
         return currentStatus;
     }
 
-    public void setCurrentStatus(AdoptionOrder.State currentStatus) {
+    public void setCurrentStatus(int currentStatus) {
         this.currentStatus = currentStatus;
+        switch (currentStatus) {
+            case 1:
+                this.state = AdoptionOrder.State.DATA_ENTRY;
+                break;
+            case 2:
+                this.state = AdoptionOrder.State.APPROVED;
+                break;
+            case 3:
+                this.state = AdoptionOrder.State.NOTICE_LETTER_PRINTED;
+                break;
+            case 4:
+                this.state = AdoptionOrder.State.REJECTED;
+                break;
+            case 5:
+                this.state = AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED;
+                break;
+            case 6:
+                this.state = AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED;
+                //speacial case 0 all status
+        }
     }
 
     public String getGenderEn() {
@@ -782,5 +808,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setGenderSi(String genderSi) {
         this.genderSi = genderSi;
+    }
+
+    public AdoptionOrder.State getState() {
+        return state;
+    }
+
+    public void setState(AdoptionOrder.State state) {
+        this.state = state;
     }
 }
