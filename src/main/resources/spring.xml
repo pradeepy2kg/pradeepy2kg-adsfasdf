@@ -186,7 +186,6 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="deathRegisterService"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="raceDAOImpl"/>
     </bean>
-
-
 </beans>

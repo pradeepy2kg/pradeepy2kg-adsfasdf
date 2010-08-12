@@ -5,7 +5,7 @@
 <script type="text/javascript" src="lib/jquery/jquery.jqplot.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.categoryAxisRenderer.js"></script>
 <script type="text/javascript" src="lib/jquery/jqplot.barRenderer.js"></script>
-<script language="javascript" type="text/javascript" src="lib/jquery/dateAxisRenderer.js"></script>
+<%--<script language="javascript" type="text/javascript" src="lib/jquery/dateAxisRenderer.js"></script>--%>
 <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css"/>
 <s:hidden id="userName" value="%{userName}"/>
 <s:hidden id="userName" value="%{userName}"/>

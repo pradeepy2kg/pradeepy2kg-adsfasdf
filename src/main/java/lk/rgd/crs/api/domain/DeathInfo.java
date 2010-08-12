@@ -18,6 +18,7 @@ public class DeathInfo implements Serializable {
 
     private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
+
     @Column(nullable = false)
     private String deathSerialNo;
 

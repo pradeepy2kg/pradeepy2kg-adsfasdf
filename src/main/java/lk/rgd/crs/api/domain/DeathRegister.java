@@ -71,6 +71,8 @@ public class DeathRegister implements Serializable {
     @Column(nullable= false)
     private Type deathType;
 
+
+
     public State getStatus() {
         return status;
     }

@@ -119,53 +119,6 @@
             </tbody>
         </table>
 
-        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
-               class="font-9">
-            <col width="120px"/>
-            <col width="100px"/>
-            <col width="300px"/>
-            <col width="120px"/>
-            <col width="100px"/>
-            <col/>
-            <tbody>
-            <tr style="border:0;">
-                <td colspan="6" style="border:0; text-align:center;">පහත සඳහන් සාක්ෂි කරුවන් ඉදිරිපිටදී අත්සන් කරන
-                    ලදී<br>*in tamil<br>Subscribed in the presence of the
-                    following witnesses
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td colspan="1" class="find-person"><s:textfield id="first_witness_NICorPIN"
-                                                                 name="witness.firstWitnessNICorPIN"/><img
-                        src="<s:url value="/images/search-father.png"/>"
-                        style="vertical-align:middle; margin-left:20px;" id="first_witness_lookup"></td>
-                <td colspan="2">පු.අ.අ. / ජා.හැ.අ.<br>அடையாள எண் / அடையா<br>PIN / NIC</td>
-                <td colspan="1" class="find-person"><s:textfield id="second_witness_NICorPIN"
-                                                                 name="witness.secondWitnessNICorPIN"/><img
-                        src="<s:url value="/images/search-father.png"/>"
-                        style="vertical-align:middle; margin-left:20px;" id="second_witness_lookup"></td>
-            </tr>
-            <tr>
-                <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:textarea id="firstWitnessFullName" name="witness.firstWitnessFullName"/></td>
-                <td>නම<br>கொடு<br>Name</td>
-                <td colspan="2"><s:textarea id="secondWitnessFullName" name="witness.secondWitnessFullName"/></td>
-            </tr>
-            <tr>
-                <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:textarea id="firstWitnessAddress" name="witness.firstWitnessAddress"/></td>
-                <td>ලිපිනය<br>முகவரி<br>Address</td>
-                <td colspan="2"><s:textarea id="secondWitnessAddress" name="witness.secondWitnessAddress"/></td>
-            </tr>
-            <tr>
-                <td>අත්සන <br>தகவல் ...<br>Signature</td>
-                <td colspan="2"></td>
-                <td>අත්සන <br>தகவல் ...<br>Signature</td>
-                <td colspan="2"></td>
-            </tr>
-            </tbody>
-        </table>
 
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
                class="font-9">
@@ -175,7 +128,15 @@
             <col/>
             <tbody>
             <tr class="form-sub-title">
-                <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
+                <td colspan="4"><s:if  test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+                    තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority
+                </s:if>
+                    <s:elseif  test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+                        දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල් <br/>
+                        அதிகாரியிடம் தெரிவித்தல் <br/>
+                        District Registrar / Registrar General
+                    </s:elseif>
+                </td>
             </tr>
             <tr>
                 <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /

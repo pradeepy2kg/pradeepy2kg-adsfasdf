@@ -415,12 +415,14 @@
         </action>
         <action name="eprInitDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="initDeathDeclaration">
+            <param name="deathType">NORMAL</param>
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
         <action name="eprInitLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
-                method="initLateDeath">
-            <result type="tiles" name="success">epr.lateDeathDeclaration</result>
+                method="initDeathDeclaration">
+            <param name="deathType">LATE</param>
+            <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
         <action name="eprLateDeathDeclaration" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
