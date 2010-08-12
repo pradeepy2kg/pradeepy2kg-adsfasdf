@@ -27,7 +27,7 @@ public class DeathRegistrationDeclarionTest extends CustomStrutsTestCase {
 
         request.setParameter("pageNo", "1");
         request.setParameter("death.deathSerialNo", "1");
-        request.setParameter("death.dateOfDeath", "2010-07-21T00:00:00+05:30");
+        request.setParameter("death.dateOfDeath", "2010-07-21");
         request.setParameter("death.deathDistrictId", "11");
         request.setParameter("death.deathDsDivisionId", "3");
         request.setParameter("death.placeOfDeath", "කොළඹ කොටුව");
@@ -138,8 +138,8 @@ public class DeathRegistrationDeclarionTest extends CustomStrutsTestCase {
     public void testFilterByDate() throws Exception {
         Map session = userLogin("rg", "password");
         request.setParameter("deathDivisionId", "1");
-        request.setParameter("fromDate", "08/01/2009");
-        request.setParameter("endDate", "08/31/2010");
+        request.setParameter("fromDate", "2009-08-01");
+        request.setParameter("endDate", "2011-09-31");
         initAndExucute("/deaths/eprDeathFilterByStatus.do", session);
         //check filter by date
         assertEquals("Search by date", true, deathAction.isSearchByDate());

@@ -99,7 +99,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "685031035V");
         request.setParameter("notifyingAuthority.notifyingAuthorityName", "සංගුණි ෙද්ව ෙග්");
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
-        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-02T00:00:00+05:30");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-02");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
 
@@ -158,7 +158,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertEquals("BDF NotifyingAutho Address miss match in previously added BDF and BDF in session",
             bdf.getNotifyingAuthority().getNotifyingAuthorityAddress(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
         assertEquals("BDF NotifyingAutho Sign Date miss match in previously added BDF and BDF in session",
-            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate(), batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+            bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString(), batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate().toString());
         logger.debug("Adding BDF auto populating fields populated correctly and Add new in batch mode passed");
         deleteBDF(colomboBdDivision, serialNum);
     }
@@ -187,8 +187,8 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         // Filling BDF form 1 and submitting
         request.setParameter("pageNo", "1");
         request.setParameter("register.bdfSerialNo", "12345");
-        request.setParameter("register.dateOfRegistration", "2010-07-14T00:00:00+05:30");
-        request.setParameter("child.dateOfBirth", "2010-06-28T00:00:00+05:30");
+        request.setParameter("register.dateOfRegistration", "2010-07-14");
+        request.setParameter("child.dateOfBirth", "2010-06-28");
         request.setParameter("birthDistrictId", "2");
         request.setParameter("birthDivisionId", "13");
         request.setParameter("dsDivisionId", "15");
@@ -214,7 +214,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("fatherCountry", "3");
         request.setParameter("parent.fatherPassportNo", "4562354875");
         request.setParameter("parent.fatherFullName", "ලෝගේස්වරන් යුවන් ශන්කර්");
-        request.setParameter("parent.fatherDOB", "1953-01-23T00:00:00+05:30");
+        request.setParameter("parent.fatherDOB", "1953-01-23");
         request.setParameter("parent.fatherPlaceOfBirth", "birth place");
         request.setParameter("fatherRace", "3");
 
@@ -223,7 +223,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("motherCountry", "0");
         request.setParameter("parent.motherPassportNo", "2586598456");
         request.setParameter("parent.motherFullName", "සංගුණි ෙද්ව ෙග්");
-        request.setParameter("parent.motherDOB", "1968-01-03T00:00:00+05:30");
+        request.setParameter("parent.motherDOB", "1968-01-03");
         request.setParameter("parent.motherAgeAtBirth", "42");
         request.setParameter("parent.motherAddress", "mother address");
         request.setParameter("motherDistrictId", "2");
@@ -232,7 +232,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherPlaceOfBirth", "birth place");
         request.setParameter("parent.motherAdmissionNo", "288");
         request.setParameter("parent.motherEmail", "mother@gmail.com");
-        request.setParameter("parent.motherAdmissionDate", "2010-06-23T00:00:00+05:30");
+        request.setParameter("parent.motherAdmissionDate", "2010-06-23");
         request.setParameter("parent.motherPhoneNo", "0715516541");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
@@ -244,7 +244,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("pageNo", "3");
         request.setParameter("marriage.parentsMarried", "1");
         request.setParameter("marriage.placeOfMarriage", "Maharagama");
-        request.setParameter("marriage.dateOfMarriage", "2009-04-27T00:00:00+05:30");
+        request.setParameter("marriage.dateOfMarriage", "2009-04-27");
 
         request.setParameter("grandFather.grandFatherFullName", "grand father");
         request.setParameter("grandFather.grandFatherNICorPIN", "481254698V");
@@ -261,7 +261,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("informant.informantAddress", "mother address");
         request.setParameter("informant.informantPhoneNo", "0715516541");
         request.setParameter("informant.informantEmail", "mother@gmail.com");
-        request.setParameter("informant.informantSignDate", "08/01/2010");
+        request.setParameter("informant.informantSignDate", "2010-01-08");
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
