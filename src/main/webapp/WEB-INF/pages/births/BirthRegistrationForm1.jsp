@@ -10,201 +10,213 @@
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
-    $(function() {
-        $("#submitDatePicker").datepicker({
-            createButton:false,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+$(function() {
+    $("#submitDatePicker").datepicker({
+        createButton:false,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
+$(function() {
+    $("#birthDatePicker").datepicker({
+        createButton:false,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
+
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options2);
+                });
     });
 
-    $(function() {
-        $("#birthDatePicker").datepicker({
-            createButton:false,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options);
+                });
     });
 
-    // mode 1 = passing District, will return DS list
-    // mode 2 = passing DsDivision, will return BD list
-    // any other = passing district, will return DS list and the BD list for the first DS
-    $(function() {
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
+    $('img#childName').bind('click', function(evt3) {
+        var id = $("textarea#childFullNameOfficialLang").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options2);
-                    });
-        });
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-        $('select#dsDivisionId').bind('change', function(evt2) {
-            var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options);
-                    });
-        });
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-        $('img#childName').bind('click', function(evt3) {
-            var id = $("textarea#childFullNameOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
-        });
-
-        function processResponse1(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        };
-
-        $('img#place').bind('click', function(evt4) {
-            var id = $("input#placeOfBirth").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-        });
-
-        function processResponse2(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        }
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
     });
 
-    function validate() {
-        var errormsg = "";
-        var element;
-        var returnval;
-        var flag = false;
-        var lateOrbelate = false;
-        var check = document.getElementById('skipjs');
-        /*date related validations*/
-        var birthdate = new Date(document.getElementById('birthDatePicker').value);
-        var submit = new Date(document.getElementById('submitDatePicker').value);
-        //compare two days
-        if (birthdate.getTime() > submit.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('error6').value;
-            flag = true;
-        }
-
-        var birthType = document.getElementById('birthTypeId').value;
-        if (birthType != 2) {
-            //comparing 90 days delay
-            var one_day = 1000 * 60 * 60 * 24 ;
-            var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-            if (numDays >= 90) {
-                if (numDays >= 365) {
-                    errormsg = errormsg + "\n" + document.getElementById('error8').value;
-                } else {
-                    errormsg = errormsg + "\n" + document.getElementById('error7').value;
-                }
-                lateOrbelate = true;
-            }
-        }
-
-        element = document.getElementById('bdfSerialNo');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error1').value;
-            flag = true;
-        }
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('error9').value;
-            flag = true;
-        }
-        if (!birthdate.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('error10').value;
-            flag = true;
-        }
-        element = document.getElementById('placeOfBirth');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error11').value;
-            flag = true;
-        }
-
-        if (!check.checked) {
-            element = document.getElementById('childFullNameOfficialLang');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error2').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childFullNameEnglish');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error3').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childBirthWeight');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error4').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childRank');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error5').value;
-                flag = true;
-            }
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            if (flag) {
-                returnval = false;
-            } else {
-                if (lateOrbelate) {
-                    returnval = true;
-                }
-            }
-        }
-
-        return returnval;
+    function processResponse1(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
+
+    ;
+
+    $('img#place').bind('click', function(evt4) {
+        var id = $("input#placeOfBirth").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+    });
+
+    function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+});
+
+function validate() {
+    var errormsg = "";
+    var element;
+    var returnval;
+    var flag = false;
+    var lateOrbelate = false;
+    var check = document.getElementById('skipjs');
+    /*date related validations*/
+    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+    var submit = new Date(document.getElementById('submitDatePicker').value);
+    //compare two days
+    if (birthdate.getTime() > submit.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error6').value;
+        flag = true;
+    }
+
+    var birthType = document.getElementById('birthTypeId').value;
+    if (birthType != 2) {
+        //comparing 90 days delay
+        var one_day = 1000 * 60 * 60 * 24 ;
+        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+        if (numDays >= 90) {
+            if (numDays >= 365) {
+                errormsg = errormsg + "\n" + document.getElementById('error8').value;
+            } else {
+                errormsg = errormsg + "\n" + document.getElementById('error7').value;
+            }
+            lateOrbelate = true;
+        }
+    }
+
+    element = document.getElementById('bdfSerialNo');
+    if (element.value == "") {
+        errormsg = errormsg + "\n" + document.getElementById('error1').value;
+        flag = true;
+    }
+    if (!(submit.getTime())) {
+        errormsg = errormsg + "\n" + document.getElementById('error9').value;
+        flag = true;
+    }
+    if (!birthdate.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error10').value;
+        flag = true;
+    }
+    element = document.getElementById('placeOfBirth');
+    if (element.value == "") {
+        errormsg = errormsg + "\n" + document.getElementById('error11').value;
+        flag = true;
+    }
+
+    if (!check.checked) {
+        element = document.getElementById('childFullNameOfficialLang');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error2').value;
+            flag = true;
+        }
+
+        element = document.getElementById('childFullNameEnglish');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error3').value;
+            flag = true;
+        }
+
+        element = document.getElementById('childBirthWeight');
+        if (element.value == "")
+        {
+            errormsg = errormsg + "\n" + document.getElementById('error4').value;
+            flag = true;
+        }
+        else if (isNaN(element.value)) {
+            errormsg = errormsg + "\n" + document.getElementById('error4').value;
+            flag = true;
+        }
+        element = document.getElementById('childRank');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error5').value;
+            flag = true;
+        }
+    }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        if (flag) {
+            returnval = false;
+        } else {
+            if (lateOrbelate) {
+                returnval = true;
+            }
+        }
+    }
+
+    return returnval;
+}
 </script>
 
 
@@ -395,12 +407,12 @@
         </td>
     </tr>
     <tr>
-        <td >  <label>
-                ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>
-                பிரிவு /<br/>
-                Registration Division</label>
+        <td><label>
+            ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>
+            பிரிவு /<br/>
+            Registration Division</label>
         </td>
-        <td colspan="6" >
+        <td colspan="6">
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
                       cssStyle=" width:240px;float:left;"/>
         </td>

@@ -16,10 +16,20 @@
 
     /*date pickers for start and end dates*/
     $(function() {
-        $("#fromDateId").datepicker();
+        $("#fromDateId").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
-        $("#endDateId").datepicker();
+        $("#endDateId").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     $(document).ready(function() {

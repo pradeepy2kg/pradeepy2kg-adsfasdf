@@ -11,7 +11,12 @@
 <script type="text/javascript">
 
     $(function() {
-        $("#submitDatePicker").datepicker();
+        $("#submitDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     $(function() {
@@ -128,10 +133,10 @@
             <col/>
             <tbody>
             <tr class="form-sub-title">
-                <td colspan="4"><s:if  test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+                <td colspan="4"><s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
                     තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority
                 </s:if>
-                    <s:elseif  test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+                    <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
                         දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල් <br/>
                         அதிகாரியிடம் தெரிவித்தல் <br/>
                         District Registrar / Registrar General

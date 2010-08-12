@@ -8,14 +8,30 @@
 
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
     <script>
+
         $(function() {
-            $("#datePicker").datepicker();
+            $("#datePicker").datepicker({
+                createButton:false,
+                dateFormat:'yy-mm-dd',
+                startDate:'2000-01-01',
+                endDate:'2020-12-31'
+            });
         });
         $(function() {
-            $("#bcSearchDatePicker").datepicker();
+            $("#bcSearchDatePicker").datepicker({
+                createButton:false,
+                dateFormat:'yy-mm-dd',
+                startDate:'2000-01-01',
+                endDate:'2020-12-31'
+            });
         });
         $(function() {
-            $("#dateOfSubmission").datepicker();
+            $("#dateOfSubmission").datepicker({
+                createButton:false,
+                dateFormat:'yy-mm-dd',
+                startDate:'2000-01-01',
+                endDate:'2020-12-31'
+            });
         });
         // mode 1 = passing District, will return DS list
         $(function() {

@@ -9,12 +9,22 @@
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
 
-      $(function() {
-        $("#searchStartDatePicker").datepicker();
+    $(function() {
+        $("#searchStartDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
 
     $(function() {
-        $("#searchEndDatePicker").datepicker();
+        $("#searchEndDatePicker").datepicker({
+            createButton:false,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(document).ready(function() {
         $('#approval-list-table').dataTable({
