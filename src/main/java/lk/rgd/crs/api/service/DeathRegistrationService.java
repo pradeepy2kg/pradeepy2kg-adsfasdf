@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * @author Indunil Moremada
  */
-public interface DeathRegisterService {
+public interface DeathRegistrationService {
 
     /**
      * Adds a death registration to the system. This is a Data Entry operation, and only data entry level validations

@@ -24,7 +24,7 @@ public interface BCSearchDAO {
      *
      * @param dsDivision the DS division under which the BirthCertificateSearch serial number should be searched
      * @param serialNo   applicationNo given to the BirthCertificateSearch
-     * @return BirthCertificateSearch
+     * @return BirthCertificateSearch or null if results not found
      */
     public BirthCertificateSearch getByDSDivisionAndSerialNo(DSDivision dsDivision, String serialNo);
 }
