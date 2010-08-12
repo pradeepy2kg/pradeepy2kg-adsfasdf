@@ -8,7 +8,6 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.BCSearchDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
@@ -30,7 +29,6 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
-//    private final BCSearchDAO bcSearchDAO;    TODO chathuranga
 
     private Map session;
     private Map<Integer, String> bdDivisionList;
@@ -57,10 +55,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
-//        this.bcSearchDAO = bcSearchDAO;   TODO chathuranga
     }
 
     public String welcome() {
+        if (pageNo == 4) {
+            session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+            session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
+        }
         populate();
         return SUCCESS;
     }

@@ -499,6 +499,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         //todo add support for belated registration after finishing the backend
         logger.debug("Non Editable Mode Step {} of 4 ", pageNo);
         BirthDeclaration bdf;
+        OldBDInfo oldBDInfo;
         if (back) {
             populate((BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
             return "form" + pageNo;
@@ -515,6 +516,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     if (bdf.getRegister().getStatus().ordinal() == 5) {
                         logger.debug("serching rivisions for bdId {} ", bdId);
                         archivedEntryList = service.getArchivedCorrectedEntriesForGivenSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
+                    }
+                    if (BirthDeclaration.BirthType.ADOPTION == birthType) {
+                        oldBDInfo = new OldBDInfo();
+                        populateOldBD(oldBDInfo, bdf);
+                        session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
                     }
                     session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
 
