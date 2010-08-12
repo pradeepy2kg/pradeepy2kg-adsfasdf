@@ -362,6 +362,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private void populate(DeathRegister ddf) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
+        deathType = ddf.getDeathType();
 
         beanPopulate(ddf);
 

@@ -263,10 +263,6 @@
 
             <s:url id="viewSelected" action="eprDeathViewMode.do">
                 <s:param name="idUKey" value="idUKey"/>
-                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
             </s:url>
 
             <s:url id="cetificatePrintUrl" action="eprPrintDeath.do">
@@ -301,10 +297,6 @@
 
             <s:url id="viewSelected" action="eprDeathViewMode.do">
                 <s:param name="idUKey" value="idUKey"/>
-                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
             </s:url>
 
             <td></td>
@@ -325,10 +317,6 @@
 
             <s:url id="viewSelected" action="eprDeathViewMode.do">
                 <s:param name="idUKey" value="idUKey"/>
-                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
             </s:url>
 
             <td></td>
