@@ -117,11 +117,11 @@ public class DatabaseInitializer implements ApplicationContextAware {
         for (PreloadableDAO dao : preloadableDaos.values()) {
             dao.preload();
         }
-        logger.info("Pre-loaded master tables ...");
+        logger.info("Pre-loaded master tables ... Application initialized!");
 
-        BirthRecordsIndexer birthIndexer = (BirthRecordsIndexer) ctx.getBean("birthRecordsIndexer");
-        birthIndexer.indexAll();
-        logger.info("Re-indexed DB contents...");
+        //BirthRecordsIndexer birthIndexer = (BirthRecordsIndexer) ctx.getBean("birthRecordsIndexer");
+        //birthIndexer.indexAll();
+        //logger.info("Re-indexed DB contents...");
     }
 
     private void recreateCleanDB(boolean mysql) {
