@@ -120,7 +120,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
-        Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings"));
+        Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings".toUpperCase()));
 
         deleteBDF(colomboBDDivision, 2010101);
     }
@@ -277,7 +277,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals("Person confirming".toUpperCase(), bdf1.getConfirmant().getConfirmantFullName());
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf1.getRegister().getStatus());
 
         // simulate the system generation of the PIN
@@ -367,7 +367,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // reload new record with confirmation changes
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
-        Assert.assertEquals("Person confirming", bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals("Person confirming".toUpperCase(), bdf1.getConfirmant().getConfirmantFullName());
         Assert.assertEquals("NEW NAME 2 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
         Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, bdf1.getRegister().getStatus());
 
