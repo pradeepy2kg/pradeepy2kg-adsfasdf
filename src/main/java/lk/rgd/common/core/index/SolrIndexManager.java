@@ -16,9 +16,13 @@ public class SolrIndexManager {
     private static final Logger logger = LoggerFactory.getLogger(SolrIndexManager.class);
 
     private SolrServer server;
+    private String solrURL;
 
     public SolrIndexManager(String solrURL) {
+        this.solrURL = solrURL;
+    }
 
+    private void connect() {
         logger.info("Connecting to Solr indexer service at : {}", solrURL);
 
         try {
@@ -33,6 +37,10 @@ public class SolrIndexManager {
     }
 
     public SolrServer getServer() {
+        if (server == null) {
+            connect();
+        }
         return server;
     }
 }
+
