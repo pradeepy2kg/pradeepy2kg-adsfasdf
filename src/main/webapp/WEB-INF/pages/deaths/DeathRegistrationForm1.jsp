@@ -81,6 +81,25 @@
 
 
     });
+    function addOption(selectbox, text, value)
+    {
+        var optn = document.createElement("OPTION");
+        optn.text = text;
+        optn.value = value;
+        selectbox.options.add(optn);
+    }
+    function setTime() {
+        alert("cdcn");
+        var month = new Array("January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December");
+        for (var i = 0; i < month.length; ++i) {
+
+            addOption(document.getElementsByName("deathTime"), month[i], month[i]);
+        }
+    }
+    window.onload = function() {
+        alert('Hi there!');
+    }
 </script>
 
 
@@ -224,7 +243,9 @@
             <s:textfield id="deathDatePicker" name="death.dateOfDeath"/>
         </td>
         <td>වෙලාව<br>*in tamil<br>Time</td>
-        <td colspan="2"></td>
+        <td colspan="2">
+
+        </td>
     </tr>
     <tr>
         <td rowspan="5">මරණය සිදු වූ ස්ථානය<br>பிறந்த இடம்<br>Place of Death</td>
