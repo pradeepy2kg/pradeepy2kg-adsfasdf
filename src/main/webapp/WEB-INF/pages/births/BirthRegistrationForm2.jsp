@@ -298,8 +298,7 @@
     <tbody>
     <tr>
         <td width="200px" style="border-top:none; border-bottom:none;"></td>
-        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>*in Sinhala/*in
-            English/District</label></td>
+        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /மாவட்டம் /District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
             <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>
@@ -311,7 +310,7 @@
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>
-        <td colspan="2"><label>*in Sinhala/*in English/D.S Division</label></td>
+        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரிவு /Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_02">
             <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
                 <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"

@@ -143,26 +143,22 @@
                     <col width="20px" align="right"/>
                     <tbody>
                     <tr>
-                        <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
-                    </tr>
-                    <tr>
                         <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>*in tamil<br>No</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
                     </tr>
                     </tbody>
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"/></td>
+            <td colspan="2"  ><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage" cssStyle="float:right;"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -299,6 +295,18 @@
         </td>
     </tr>
     <tr>
+        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
+            අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
+            கொடுப்பவரின்
+            தனிநபர்
+            அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
+        <td colspan="3" class="find-person">
+            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                 id="informant_lookup"/>
+        </td>
+    </tr>
+    <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
             විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
             Information</label></td>
@@ -343,18 +351,7 @@
             </table>
         </td>
     </tr>
-    <tr>
-        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
-            අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
-            கொடுப்பவரின்
-            தனிநபர்
-            அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3" class="find-person">
-            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                 id="informant_lookup"/>
-        </td>
-    </tr>
+
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
             <br>Name</label></td>

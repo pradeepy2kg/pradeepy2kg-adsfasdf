@@ -226,7 +226,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
         logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
         assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
-        assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        assertEquals("Faild to remove BirthDeclaration", bd, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
         logger.debug("successfully persisted with the bdId :{}", action.getBdId());
 
     }
@@ -336,6 +336,153 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("marriage.parentsMarried", "1");
         request.setParameter("marriage.placeOfMarriage", "Kaduwela");
         request.setParameter("marriage.dateOfMarriage", "2008-08-09");
+
+        request.setParameter("informant.informantType", "MOTHER");
+
+        request.setParameter("informant.informantNICorPIN", "685031035V");
+        request.setParameter("informant.informantName", "සංගුණි ෙද්ව ෙග්");
+        request.setParameter("informant.informantAddress", "Kandy Road Matale");
+        request.setParameter("informant.informantPhoneNo", "081234567");
+        request.setParameter("informant.informantEmail", "info@gmail.com");
+        request.setParameter("informant.informantSignDate", "2010-08-09");
+
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        assertEquals("Action erros for 4 of 4BDF", 0, action.getActionErrors().size());
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+
+        assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
+        assertEquals("failed to update birth declaration session with place of marriage", "KADUWELA", bd.getMarriage().getPlaceOfMarriage());
+        assertEquals("failed to update birth declaration session with date of marriage", "Wed Jan 09 00:08:00 IST 2008", bd.getMarriage().getDateOfMarriage().toString());
+        assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
+        assertEquals("failed to update birth declaration session with informant NIC/PIN", "685031035V", bd.getInformant().getInformantNICorPIN());
+        assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
+        assertEquals("failed to update birth declaration session with informant address", "KANDY ROAD MATALE", bd.getInformant().getInformantAddress());
+        assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
+        assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
+        assertEquals("failed to update birth declaration session with informant signed date", "Sat Jan 09 00:08:00 IST 2010", bd.getInformant().getInformantSignDate().toString());
+//        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
+
+        //BirthDeclaration Form Details
+        request.setParameter("pageNo", "4");
+        request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "685031035V");
+        request.setParameter("notifyingAuthority.notifyingAuthorityName", "සංගුණි ෙද්ව ෙග්");
+        request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-08-09");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
+        logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
+        assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        logger.debug("successfully persisted with the bdId :{}", action.getBdId());
+
+    }
+
+  /*  public void testBirthDeclarationEditMode() throws Exception {
+        Map session = login("rg", "password");
+        request.setParameter("bdId", "166");
+        initAndExecute("/births/eprBirthRegistrationInit.do", session);
+        session = action.getSession();
+        assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
+
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertEquals("Data Entry Mode Faild", 0, bd.getRegister().getStatus().ordinal());
+
+        Object obj = session.get(WebConstants.SESSION_USER_LANG);
+        assertNotNull("Session User Local Presence", obj);
+        assertNotNull("Request District List Presence", action.getDistrictList());
+        assertNotNull("Request Race List Presence", action.getRaceList());
+        assertEquals("Not a live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());
+
+        //check whether required beans are populated
+        assertEquals("Request child Bean is Populated", bd.getChild(), action.getChild());
+        assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
+
+        assertEquals("Request birthDistrictId is set to existing district", action.getRegister().getBirthDistrict().getDistrictUKey(),
+            action.getBirthDistrictId());
+        assertEquals("Request birthDivisionId is set to existing birthDivision", action.getRegister().getBirthDivision().getBdDivisionUKey(),
+            action.getBirthDivisionId());
+        assertEquals("Request dsDivisionId is set to existing dsDivision", action.getRegister().getDsDivision().getDsDivisionUKey(),
+            action.getDsDivisionId());
+        assertEquals("Request father Country", action.getFatherCountry(), bd.getParent().getFatherCountry().getCountryId());
+        assertEquals("Request father Race", action.getFatherRace(), bd.getParent().getFatherRace().getRaceId());
+        assertEquals("Request Mother Country", action.getMotherCountry(), bd.getParent().getMotherCountry().getCountryId());
+        assertEquals("Request Mother Race", action.getMotherRace(), bd.getParent().getMotherRace().getRaceId());
+
+        //for 2 of 4BDF
+        request.setParameter("pageNo", "1");
+        request.setParameter("register.bdfSerialNo", "12345");
+        request.setParameter("register.dateOfRegistration", "08/09/2010");
+        request.setParameter("child.dateOfBirth", "01/09/2010");
+        request.setParameter("birthDistrictId", "1");
+        request.setParameter("birthDivisionId", "10");
+        request.setParameter("child.placeOfBirth", "මාතර");
+        request.setParameter("child.placeOfBirthEnglish", "Matara");
+        request.setParameter("child.birthAtHospital", "ture");
+        request.setParameter("child.childFullNameOfficialLang", bd.getChild().getChildFullNameOfficialLang());
+        request.setParameter("child.childFullNameEnglish", bd.getChild().getChildFullNameEnglish());
+        request.setParameter("register.preferredLanguage", "si");
+        request.setParameter("child.childGender", "1");
+        request.setParameter("child.childBirthWeight", "2");
+        request.setParameter("child.childRank", "1");
+        request.setParameter("child.numberOfChildrenBorn", "1");
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        assertEquals("Action erros for 2 of 4BDF", 0, action.getActionErrors().size());
+
+        bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
+        assertEquals("bdId matches with the previous faild", 166, bd.getIdUKey());
+        obj = session.get(WebConstants.SESSION_USER_LANG);
+        assertNotNull("Session User Local Presence Faild", obj);
+        assertNotNull("Request Country List Presence Faild", action.getCountryList());
+        assertNotNull("Request Race List Presence Faild", action.getRaceList());
+        assertNotNull("Request Country List Presence Faild", action.getCountryList());
+
+        assertNotNull("Request Full District List Presence Faild", action.getAllDistrictList());
+        assertNotNull("Request Full DS Division List Presence Faild", action.getAllDSDivisionList());
+
+        assertEquals("Request parent Bean population faild", bd.getParent(), action.getParent());
+
+        //for 3 of 4BDF
+        request.setParameter("pageNo", "2");
+        //father's information
+        request.setParameter("parent.fatherNICorPIN", "530232026V");
+        request.setParameter("fatherCountry", "1");
+        request.setParameter("parent.fatherPassportNo", "4832");
+        request.setParameter("parent.fatherFullName", "ලෝගේස්වරන් යුවන් ශන්කර්");
+        request.setParameter("parent.fatherDOB", "08/09/1964");
+        request.setParameter("parent.fatherPlaceOfBirth", "Kandy");
+        request.setParameter("fatherRace", "1");
+
+        //mother's information
+        request.setParameter("parent.motherNICorPIN", "685031035V");
+        request.setParameter("motherCountry", "2");
+        request.setParameter("parent.motherPassportNo", "5999");
+        request.setParameter("parent.motherFullName", "සංගුණි ෙද්ව ෙග්");
+        request.setParameter("parent.motherDOB", "08/09/1968");
+        request.setParameter("parent.motherAgeAtBirth", "43");
+        request.setParameter("parent.motherAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
+        request.setParameter("motherDistrictId", "1");
+        request.setParameter("motherRace", "1");
+        request.setParameter("parent.motherPlaceOfBirth", "kandana");
+        request.setParameter("parent.motherAdmissionNo", "125");
+        request.setParameter("parent.motherEmail", "info@gmail.com");
+        request.setParameter("parent.motherAdmissionDate", "01/09/2010");
+        request.setParameter("parent.motherPhoneNo", "0112345678");
+
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = action.getSession();
+        assertEquals("Action erros for 3 of 4BDF", 0, action.getActionErrors().size());
+
+        assertEquals("Request marriage Bean population faild", bd.getMarriage(), action.getMarriage());
+        assertEquals("Request grandFather Bean population faild", bd.getGrandFather(), action.getGrandFather());
+        assertEquals("Request informant Bean population faild", bd.getInformant(), action.getInformant());
+
+        //for 4 of 4BDF
+        request.setParameter("pageNo", "3");
+        request.setParameter("marriage.parentsMarried", "1");
+        request.setParameter("marriage.placeOfMarriage", "Kaduwela");
+        request.setParameter("marriage.dateOfMarriage", "08/09/2008");
         request.setParameter("marriage.motherSigned", "0");
         request.setParameter("marriage.fatherSigned", "0");
         request.setParameter("grandFather.grandFatherFullName", "Grand Father Full Name");
@@ -372,7 +519,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
         assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
     }
-
+                 */
     private Map login(String userName, String password) throws Exception {
         request.setParameter("userName", userName);
         request.setParameter("password", password);
@@ -446,6 +593,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("rowNumber", "8");
         request.setParameter("register.preferredLanguage", "si");
 
+        
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -520,5 +668,6 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Notifier NIC: ", "44444444V", bd.getNotifyingAuthority().getNotifyingAuthorityPIN());
         assertEquals("Notifier sign date: ", "2010-08-09", df.format(bd.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
         assertEquals("No action errors", 0, action.getActionErrors().size());
+
     }
 }

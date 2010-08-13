@@ -36,7 +36,7 @@
         var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
 
         /*date related validations*/
-        var submit =new Date(document.getElementById("modifiedDatePicker"))
+        var submit =new Date(document.getElementById("modifiedDatePicker").value)
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
             flag = true;
