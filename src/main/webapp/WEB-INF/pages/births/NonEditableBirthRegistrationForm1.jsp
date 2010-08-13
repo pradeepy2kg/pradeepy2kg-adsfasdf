@@ -285,52 +285,6 @@
         <s:set name="lang" value="%{#session.birthRegister.register.preferredLanguage}"/>
         <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
     </tr>
-   <%-- <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>
-            பால் <br>Gender of the child</label></td>
-        <td colspan="3">
-            <s:if test="session.birthRegister.child.childGender == 0">
-                <s:label name="" value="%{getText('male.label')}"/>
-            </s:if>
-            <s:elseif test="session.birthRegister.child.childGender == 1">
-                <s:label name="" value="%{getText('female.label')}"/>
-            </s:elseif>
-            <s:elseif test="session.birthRegister.child.childGender == 2">
-                <s:label name="" value="%{getText('unknown.label')}"/>
-            </s:elseif></td>
-        <s:if test="birthType.ordinal() == 1">
-            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு
-                நிறை<br>Birth Weight (kg)</label></td>
-            <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}"
-                                     cssStyle="width:95%;"/></td>
-        </s:if>
-        <s:if test="birthType.ordinal() == 2">
-            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ
-                නමි)<br>பிறப்பு நிறை<br>Birth Weight, if known (kg)</label></td>
-            <td colspan="2"><s:label value="%{#session.birthRegister.child.childBirthWeight}"/></td>
-        </s:if>
-        <s:elseif test="birthType.ordinal() == 0">
-            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී
-                උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
-                <br>* In Tamil
-                <br>Number of weeks pregnant at the time of still-birth</label></td>
-            <td colspan="2"><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
-        </s:elseif>
-    </tr>
-    <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල
-            අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
-            to Live Birth Order,
-            rank of the child?</label></td>
-        <td colspan="3" class="font-9"><s:label value="%{#session.birthRegister.child.childRank}"/></td>
-        <td colspan="2" class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු
-            උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
-            எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
-            multiple births, number of children</label></td>
-        <td colspan="2"><s:label value="%{#session.birthRegister.child.numberOfChildrenBorn}"
-                                 cssStyle="width:95%;"/></td>
-    </tr>
---%>
     </tbody>
 </table>
 <table class="table_reg_page_01" cellpadding="0" cellspacing="0">

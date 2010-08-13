@@ -548,8 +548,7 @@
         </action>
         <action name="eprAdoptionCertificateRequest" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="issueCertifiedCopy">
-            <!--//todo change this to adoption home page -->
-            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
         <action name="eprAdoptionFind" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="populateAdoption">
