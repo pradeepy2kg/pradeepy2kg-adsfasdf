@@ -528,7 +528,7 @@ function validate() {
     <tr>
         <td rowspan="2" colspan="1">ස්ථානය <br>பிறந்த <br>Place</td>
         <td colspan="2">සිංහල හෝ දෙමළ භාෂාවෙන්<br>சிங்களம் தமிழ்<br>In Sinhala or Tamil</td>
-        <td colspan="5"><s:textarea name="death.placeOfDeath" cssStyle="width:550px;"/></td>
+        <td colspan="5"><s:textarea name="death.placeOfDeath" cssStyle="width:550px;" id="placeOfDeath"/></td>
     </tr>
     <tr>
         <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>*in tamil<br>In English</td>
@@ -570,7 +570,7 @@ todo
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ආදාහන හෝ භූමදාන ස්ථානය<br>*in
             tamil<br>Place of burial or cremation
         </td>
-        <td colspan="8"><s:textarea name="death.placeOfBurial"/></td>
+        <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial"/></td>
     </tr>
     <s:if test="deathType.ordinal() == 2">
         <tr>
