@@ -30,7 +30,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
     private BirthRegisterAction action;
     private LoginAction loginAction;
     private BirthDeclaration bd;
-    private final DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
@@ -353,15 +353,14 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
         assertEquals("failed to update birth declaration session with place of marriage", "KADUWELA", bd.getMarriage().getPlaceOfMarriage());
-        assertEquals("failed to update birth declaration session with date of marriage", "Wed Jan 09 00:08:00 IST 2008", bd.getMarriage().getDateOfMarriage().toString());
+        assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", df.format(bd.getMarriage().getDateOfMarriage()));
         assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
         assertEquals("failed to update birth declaration session with informant NIC/PIN", "685031035V", bd.getInformant().getInformantNICorPIN());
         assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
         assertEquals("failed to update birth declaration session with informant address", "KANDY ROAD MATALE", bd.getInformant().getInformantAddress());
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
         assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
-        assertEquals("failed to update birth declaration session with informant signed date", "Sat Jan 09 00:08:00 IST 2010", bd.getInformant().getInformantSignDate().toString());
-//        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
+        assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", df.format(bd.getInformant().getInformantSignDate()));
 
         //BirthDeclaration Form Details
         request.setParameter("pageNo", "4");
@@ -370,6 +369,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
         request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-08-09");
         initAndExecute("/births/eprBirthRegistration.do", session);
+        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
         session = action.getSession();
         assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
         logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
