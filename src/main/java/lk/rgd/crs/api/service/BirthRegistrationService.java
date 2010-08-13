@@ -251,14 +251,14 @@ public interface BirthRegistrationService {
     public BirthDeclaration getById(long bdId, User user);
 
     /**
-     * Returns the Birth Declaration object for a given bdf serialNo under a selected BD Division
+     * Returns the active Birth Declaration record for a given bdf serialNo under a selected BD Division
      *
-     * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
-     * @param serialNo   bdfSerialNo given to the Birth Declarion
+     * @param bdDivision the Birth Death declaration division
+     * @param serialNo   serial number to check
      * @param user       the user making the request
-     * @return the BDF if found, and the user has access to the record
+     * @return true if the serial number is unique and not used at present
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
+    public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval

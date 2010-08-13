@@ -50,7 +50,8 @@ public interface BirthDeclarationDAO {
      * @param printed       return already printed items if true, or items pending printing if false
      * @return the birth declaration results
      */
-    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed);
+    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision,
+        int pageNo, int noOfRows, boolean printed);
 
     /**
      * Get Paginated list of BDFs for the given state
@@ -61,32 +62,35 @@ public interface BirthDeclarationDAO {
      * @param state         the state of the records to be returned
      * @return approved list for print
      */
-    public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision, int pageNo, int noOfRows, BirthDeclaration.State state);
+    public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision,
+        int pageNo, int noOfRows, BirthDeclaration.State state);
 
     /**
      * Returns the Birth Declaration object for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration
-     * @return BirthDeclaration
+     * @return BirthDeclaration or null if none exist
      */
     public BirthDeclaration getById(long bdId);
 
     /**
-     * Get existing records for the same mother
+     * Get existing records for the same mother for the given DOB range
      *
+     * @param start start date for DOB range
+     * @param end end date for DOB range
      * @param motherNICorPIN mothers NIC or PIN
      * @return existing records if any
      */
     public List<BirthDeclaration> getByDOBRangeandMotherNICorPIN(Date start, Date end, String motherNICorPIN);
 
     /**
-     * Returns the Birth Declaration object for a given bdf serialNo under a selected BD Division
+     * Get the active record by BD Division and Serial number
      *
-     * @param bdDivision the Birth Death declaration division under which the BDF serial number should be searched
-     * @param serialNo   bdfSerialNo given to the Birth Declarion
-     * @Return BirthDeclaration
+     * @param bdDivision the Birth Death declaration division
+     * @param serialNo   the Serial No within the division
+     * @return the BDF marked as active, or null if none exist
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
+    public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
 
     /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
@@ -102,12 +106,12 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
-     * by an ADR for selected BD Division and selected range of confirmation recevied dates.
-     * Results are ordered on the descending confirmationReceiveDate. pageNo  and noOfRows used for pagination
+     * by an ADR for selected BD Division and selected range of confirmation received dates.
+     * Results are ordered on the descending confirmationReceiveDate
      *
      * @param birthDivision the birth division
      * @param startDate     starting date of the range
@@ -117,7 +121,7 @@ public interface BirthDeclarationDAO {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-                                                                                       BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+        Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Returns a limited set of BirthDeclarations for a given birthDivision

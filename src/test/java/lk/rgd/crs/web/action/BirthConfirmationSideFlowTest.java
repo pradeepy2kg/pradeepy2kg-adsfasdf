@@ -80,7 +80,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
-        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
+        BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
             new Long("07000804"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry
         Long bdId = bdTemp.getIdUKey();
@@ -146,7 +146,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
-        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
+        BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
             new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
         session = action.getSession();
@@ -263,7 +263,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId wich is not having confirmation changes
-        BirthDeclaration bdTemp = action.getService().getByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
+        BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
             new Long("07000810"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry for which confirmation changes to be skipped
         Long bdId = bdTemp.getIdUKey();

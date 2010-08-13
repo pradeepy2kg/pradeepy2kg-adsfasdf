@@ -430,12 +430,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         if (existBdUKey != 0) {
             existingBdf = service.getById(existBdUKey, user);
         } else {
-            long existSerial = ao.getBirthCertificateSerial();
+            long existSerial = ao.getBirthRegistrationSerial();
             int existBDivisionId = ao.getBirthDivisionId();
 
             if (existSerial != 0 && existBDivisionId != 0) {
-                existingBdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(existBDivisionId),
-                        existSerial, user);
+                existingBdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 // TODO display error msg                  
             }

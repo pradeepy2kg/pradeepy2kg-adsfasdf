@@ -164,7 +164,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
             df.format(bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()),
             df.format(batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
         logger.debug("Adding BDF auto populating fields populated correctly and Add new in batch mode passed");
-        deleteBDF(colomboBdDivision, serialNum);
+        deleteBDF(bdf);
     }
 
 
@@ -335,10 +335,9 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
      * @param bdDivision
      * @param serial
      */
-    private void deleteBDF(BDDivision bdDivision, long serial) {
+    private void deleteBDF(BirthDeclaration bdf) {
         try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial).getIdUKey());
+            birthDeclarationDAO.deleteBirthDeclaration(bdf.getIdUKey());
         } catch (Exception e) {
         }
     }

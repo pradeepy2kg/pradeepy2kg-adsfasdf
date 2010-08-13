@@ -9,62 +9,98 @@ import java.util.List;
  * @author Ashoka Ekanayaka
  */
 public interface AdoptionOrderService {
+    /**
+     * Get adoption order by unique ID
+     * @param adoptionId the unique ID of the order
+     * @param user user invoking the action
+     * @return the order if found
+     */
     public AdoptionOrder getById(long adoptionId, User user);
 
-    public AdoptionOrder getByCourtOrderNumber(String courtOrderNumber, User user);
+    /**
+     * Get adoption order by the court ID and court order number
+     * @param courtUKey the unique court ID
+     * @param courtOrderNumber the number of the court order
+     * @param user user invoking the action
+     * @return the unique adoption order
+     */
+    public AdoptionOrder getByCourtAndCourtOrderNumber(int courtUKey, String courtOrderNumber, User user);
 
+    /**
+     * Add a new adoption order
+     * @param adoption order to be added
+     * @param user user invoking the action
+     */
     public void addAdoptionOrder(AdoptionOrder adoption, User user);
 
-    public void updateAdoptionOrder(AdoptionOrder bdf, User user);
+    /**
+     * Update an adoption order
+     * @param adoption order being updated
+     * @param user user invoking the action
+     */
+    public void updateAdoptionOrder(AdoptionOrder adoption, User user);
 
-    public List<AdoptionOrder> findAll(User user);
-
+    /**
+     * Deleta an adoption order
+     * @param adoptionId adoption order unique key in data entry state to be deleted
+     * @param user user invoking the action
+     */
     public void deleteAdoptionOrder(long adoptionId, User user);
 
+    /**
+     * Approve an adoption order
+     * @param adoptionId adoption order unique key to be approved
+     * @param user user invoking the action
+     */
     public void approveAdoptionOrder(long adoptionId, User user);
 
+    /**
+     * Reject adoption order
+     * @param adoptionId adoption order unique key to be approved
+     * @param user user invoking the action
+     */
     public void rejectAdoptionOrder(long adoptionId, User user);
 
     /**
      * Set the information of applicant who is requesting the adoption certificate and set the status to
      * CERTIFICATE_ISSUE_REQUEST_CAPTURED which is 4.
      * pre condition : Status has to be NOTICE_LETTER_PRINTED, 2
-     * @param adoption
-     * @param user
+     * @param adoption adoption order being updated
+     * @param user user invoking the action
      */
     public void setApplicantInfo(AdoptionOrder adoption, User user);
 
     /**
      * set the status to NOTICE_LETTER_PRINTED, which is 2. pre condition : Status has to be on 1 (APPROVED)
-     * @param adoptionId
-     * @param user
+     * @param adoptionId adoption order unique key to be marked as printed
+     * @param user user invoking the action
      */
     public void setStatusToPrintedNotice(long adoptionId, User user);
 
     /**
      * set the status to  ADOPTION_CERTIFICATE_PRINTED, which is 5.
      *  pre condition : Status need to be  CERTIFICATE_ISSUE_REQUEST_CAPTURED which is 4.
-     * @param adoptionId
-     * @param user
+     * @param adoptionId adoption order unique key to be marked as certificate printed
+     * @param user user invoking the action
      */
     public void setStatusToPrintedCertificate (long adoptionId, User user);
 
     /**
      *  Returns all records (page by page) which are in the given state
-     * @param pageNo
-     * @param noOfRows
-     * @param status
-     * @param user
-     * @return
+     * @param pageNo page number
+     * @param noOfRows number of rows
+     * @param status selected status for filtering
+     * @param user user invoking the action
+     * @return matching records
      */
     public List<AdoptionOrder> getPaginatedListForState(int pageNo, int noOfRows, AdoptionOrder.State status, User user);
 
     /**
      * Returns a paginated list of all records
-     * @param pageNo
-     * @param noOfRows
-     * @param user
-     * @return
+     * @param pageNo page number
+     * @param noOfRows number of rows
+     * @param user user invoking the action
+     * @return matching records
      */
     public List<AdoptionOrder> getPaginatedListForAll(int pageNo, int noOfRows, User user);
 }

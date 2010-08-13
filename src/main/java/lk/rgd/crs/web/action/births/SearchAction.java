@@ -82,7 +82,8 @@ public class SearchAction extends ActionSupport implements SessionAware {
             birthDivisionId, serialNo, birthDistrictId + " recieved");
         try {
             if (serialNo != null) {
-                bdf = service.getByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
+                bdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 setStatus(bdf.getRegister().getStatus().toString());
             } else {
                 searchResultList = service.getByBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), user);

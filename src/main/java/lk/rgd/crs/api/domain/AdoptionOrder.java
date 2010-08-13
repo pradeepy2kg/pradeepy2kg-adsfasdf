@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,43 +15,18 @@ import java.util.Date;
 @Table(name = "ADOPTION_ORDER", schema = "CRS")
 
 @NamedQueries({
-//
-//    @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-//        "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-//        "ORDER BY bdf.register.dateOfRegistration desc"),
-//
-//    @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-//        "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
-//        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
-//
-//    @NamedQuery(name = "get.by.bddivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.register.birthDivision = :birthDivision " +
-//        "ORDER BY bdf.register.dateOfRegistration desc"),
-//
-//    @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
-//        "AND bdf.activeRecord IS FALSE " +
-//        "ORDER BY bdf.lastUpdatedTime desc"),
-//
-//
-//    @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
-//
-//    @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-//        "WHERE bdf.register.status = 2 " +
-//        "AND bdf.register.dateOfRegistration < :date"),
     @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
 
-    @NamedQuery(name = "get.by.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
+    @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
+        // TODO fix this to use the courtUKey
 
     @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
+    
     public enum State {
         DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
 
@@ -75,6 +52,14 @@ public class AdoptionOrder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
+
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date lastUpdatedTime;
+
+    @OneToOne
+    @JoinColumn(name = "lastUpdatedUserId")
+    private User lastUpdatedUser;
 
     @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
@@ -143,10 +128,10 @@ public class AdoptionOrder implements Serializable {
     private int childGender;   //  Gender 0 - male, 1 - female, 2 - unknown
 
     @Column(nullable = true)
-    private long birthCertificateNumber; // idukey, not the serial of old birth registration before adoption
+    private long birthCertificateNumber; // idukey, not the serial of old birth certificate issued before adoption
 
     @Column(nullable = true)
-    private long birthCertificateSerial; // if BC number not given
+    private long birthRegistrationSerial; // if BC number not given
 
     @Column(nullable = true)
     private int birthDivisionId; // if BC number not given
@@ -354,12 +339,12 @@ public class AdoptionOrder implements Serializable {
         this.birthCertificateNumber = birthCertificateNumber;
     }
 
-    public long getBirthCertificateSerial() {
-        return birthCertificateSerial;
+    public long getBirthRegistrationSerial() {
+        return birthRegistrationSerial;
     }
 
-    public void setBirthCertificateSerial(long birthCertificateSerial) {
-        this.birthCertificateSerial = birthCertificateSerial;
+    public void setBirthRegistrationSerial(long birthRegistrationSerial) {
+        this.birthRegistrationSerial = birthRegistrationSerial;
     }
 
     public boolean isApplicantMother() {
@@ -432,5 +417,21 @@ public class AdoptionOrder implements Serializable {
 
     public void setCertificateApplicantPINorNIC(String certificateApplicantPINorNIC) {
         this.certificateApplicantPINorNIC = certificateApplicantPINorNIC;
+    }
+
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(Date lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
+    }
+
+    public User getLastUpdatedUser() {
+        return lastUpdatedUser;
+    }
+
+    public void setLastUpdatedUser(User lastUpdatedUser) {
+        this.lastUpdatedUser = lastUpdatedUser;
     }
 }

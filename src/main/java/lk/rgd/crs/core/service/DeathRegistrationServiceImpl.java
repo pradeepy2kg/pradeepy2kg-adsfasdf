@@ -14,6 +14,8 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Indunil Moremada
@@ -30,6 +32,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late death registration");
         addDeathRegistration(deathRegistration, user);
@@ -39,6 +42,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding normal death registration");
         addDeathRegistration(deathRegistration, user);
@@ -48,7 +52,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         // has this serial number been used already?
-        DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
+        DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
             deathRegistration.getDeath().getDeathSerialNo());
         if (existing != null) {
             handleException("can not add death registration " + deathRegistration.getIdUKey() +
@@ -61,6 +65,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathRegistration(DeathRegister deathRegistration, User user) {
         businessValidations(deathRegistration, user);
         DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
@@ -74,6 +79,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public DeathRegister getById(long deathRegisterIdUKey, User user) {
         logger.debug("Load death registration record : {}", deathRegisterIdUKey);
         DeathRegister deathRegister;
@@ -85,6 +91,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void approveDeathRegistration(long deathRegisterIdUKey, User user) {
         logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
         setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
@@ -93,6 +100,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void rejectDeathRegistration(long deathRegisterIdUKey, User user) {
         logger.debug("attempt to reject death registration record : {}", deathRegisterIdUKey);
         setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.REJECTED);
@@ -101,6 +109,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void markDeathCertificateAsPrinted(long deathRegisterIdUKey, User user) {
         logger.debug("requested to mark death certificate as printed for the record : {} ", deathRegisterIdUKey);
         DeathRegister dr = deathRegisterDAO.getById(deathRegisterIdUKey);
@@ -128,6 +137,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteDeathRegistration(long deathRegiserIdUKey, User user) {
         logger.debug("attempt to delete death registration record : {}", deathRegiserIdUKey);
         DeathRegister dr = deathRegisterDAO.getById(deathRegiserIdUKey);
@@ -136,12 +146,13 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot delete death registraion " + deathRegiserIdUKey +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        deathRegisterDAO.deleteDeathRegistration(deathRegiserIdUKey);
+        deathRegisterDAO.deleteDeathRegistration(deathRegisterDAO.getById(deathRegiserIdUKey));
     }
 
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get death registrations with the state : " + status
@@ -154,6 +165,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToBDDivision(user, deathDivision);
@@ -163,6 +175,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows, User user) {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
         validateAccessToBDDivision(user, deathDivision);
@@ -172,9 +185,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo, User user) {
-        DeathRegister dr;
-        dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
+        DeathRegister dr = null;
+        dr = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
         validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         return dr;
     }

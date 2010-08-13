@@ -24,8 +24,11 @@ import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import java.net.ConnectException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -72,6 +75,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
@@ -86,6 +90,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new still birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
@@ -99,6 +104,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new adoption birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
@@ -109,7 +115,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         final AdoptionOrder.State currentState = existing.getStatus();
         if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED == currentState) {
             addBirthDeclaration(bdf, ignoreWarnings, user);
-            adoptionOrderDAO.initiateBirthDeclaration(existing, bdf.getIdUKey());
+            adoptionOrderDAO.recordNewBirthDeclaration(existing, bdf.getIdUKey(), user);
             logger.debug("Changes captured for adoption record : {} added new birth certificate number : {}",
                 existing.getIdUKey(), bdf.getIdUKey());
 
@@ -140,15 +146,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
 
         // has this serial number been used already?
-        try {
-            BirthDeclaration existing = birthDeclarationDAO.getByBDDivisionAndSerialNo(
-                bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo());
-            if (existing != null) {
-                handleException("The birth declaration BD Division/Serial number is a duplicate : " +
-                    bdf.getRegister().getBirthDivision().getBdDivisionUKey() + " " +
-                    bdf.getRegister().getBdfSerialNo(), ErrorCodes.INVALID_DATA);
-            }
-        } catch (NoResultException ignore) {
+        BirthDeclaration existing = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(
+            bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo());
+        if (existing != null) {
+            handleException("The birth declaration BD Division/Serial number is a duplicate : " +
+                bdf.getRegister().getBirthDivision().getBdDivisionUKey() + " " +
+                bdf.getRegister().getBdfSerialNo(), ErrorCodes.INVALID_DATA);
         }
 
         bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
@@ -200,6 +203,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void editLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
@@ -229,6 +233,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void editStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
@@ -258,6 +263,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void editAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
@@ -287,6 +293,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
@@ -314,6 +321,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
@@ -342,6 +350,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
@@ -369,6 +378,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
@@ -438,6 +448,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
@@ -508,6 +519,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
@@ -577,6 +589,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void markLiveBirthConfirmationAsPrinted(BirthDeclaration bdf, User user) {
 
         validateLiveBirth(bdf);
@@ -612,6 +625,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void markLiveBirthDeclarationAsConfirmedWithoutChanges(BirthDeclaration bdf, User user) {
 
         validateLiveBirth(bdf);
@@ -646,6 +660,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void captureLiveBirthConfirmationChanges(BirthDeclaration bdf, User user) {
 
         validateLiveBirth(bdf);
@@ -711,6 +726,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void markLiveBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
@@ -740,6 +756,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
@@ -769,6 +786,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void markAdoptionBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
@@ -820,6 +838,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> approveConfirmationChanges(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
 
         validateLiveBirth(bdf);
@@ -896,6 +915,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
 
         logger.debug("Request to reject birth declaration record : {}", bdf.getIdUKey());
@@ -962,6 +982,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public BirthDeclaration getById(long bdId, User user) {
         logger.debug("Load birth declaration record : {}", bdId);
         BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
@@ -973,11 +994,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user) {
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user) {
 
-        logger.debug("Get records by BDDivision ID : {} and Serial No : {}", bdDivision.getBdDivisionUKey(), serialNo);
+        logger.debug("Get active record by BDDivision ID : {} and Serial No : {}", bdDivision.getBdDivisionUKey(), serialNo);
 
-        BirthDeclaration bdf = birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serialNo);
+        BirthDeclaration bdf = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(bdDivision, serialNo);
         // does the user have access to the BDF (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
         return bdf;
@@ -986,6 +1008,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmations pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
@@ -999,6 +1022,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationPrintList(
         BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
 
@@ -1014,6 +1038,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getBirthCertificatePrintList(
         BDDivision bdDivision, int pageNo, int noOfRows, boolean printed, User user) {
 
@@ -1029,6 +1054,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision bdDivision, int pageNo, int noOfRows, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
@@ -1041,6 +1067,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
@@ -1057,6 +1084,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
@@ -1067,7 +1095,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndConfirmationReceiveDateRange(
-            bdDivision, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED, startDate, endDate, pageNo, noOfRows);
+            bdDivision, startDate, endDate, pageNo, noOfRows);
     }
 
     /**
@@ -1076,6 +1104,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      * @param bdf the BirthDeclaration to populate transient values
      * @return populated BDF
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public BirthDeclaration loadValuesForPrint(BirthDeclaration bdf, User user) {
 
         logger.debug("Loading record : {} for printing", bdf.getIdUKey());
@@ -1133,6 +1162,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBirthDivision(BDDivision bdDivision, User user) {
         logger.debug("Get records birthDivision ID : {}", bdDivision.getBdDivisionUKey());
         validateAccessToBDDivision(user, bdDivision);
@@ -1300,6 +1330,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void triggerScheduledJobs() {
         logger.info("Start executing Birth registration related scheduled tasks..");
 
@@ -1350,6 +1381,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> performBirthCertificateSearch(BirthCertificateSearch bcs, User user) {
 
         logger.debug("Birth certificate search started");
@@ -1403,6 +1435,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user) {
         logger.debug("Searching for historical records for BD Division : {} and Serial number : {} ",
             bdDivision.getBdDivisionUKey(), serialNo);

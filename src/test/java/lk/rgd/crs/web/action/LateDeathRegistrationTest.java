@@ -48,6 +48,10 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         }
     }
 
+    public void testNothing() {
+        // TODO remove this dummy method when this class is properly implemented
+    }
+
      @Override
     public String getContextLocations() {
         return "unitTest_applicationContext.xml";

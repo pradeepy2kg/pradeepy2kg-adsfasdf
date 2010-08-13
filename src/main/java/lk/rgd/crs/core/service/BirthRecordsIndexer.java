@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.*;
 
 /**
@@ -85,7 +86,7 @@ public class BirthRecordsIndexer {
             solrIndexManager.getServer().commit();
             logger.info("Successfully indexed birth record : {}", bdf.getIdUKey());
         } catch (Exception e) {
-            logger.error("Error indexing birth record : " + bdf.getIdUKey(), e);
+            logger.error("Error indexing birth record : " + bdf.getIdUKey() + " cause : " + e.getMessage()); // do not stack trace
         }
     }
 

@@ -226,7 +226,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         } else {
             if (bdfSerialNo > 0) {
                 try {
-                    bdf = service.getByBDDivisionAndSerialNo(
+                    bdf = service.getActiveRecordByBDDivisionAndSerialNo(
                         bdDivisionDAO.getBDDivisionByPK(birthDivisionId), bdfSerialNo, user);
                 }
                 catch (Exception e) {
