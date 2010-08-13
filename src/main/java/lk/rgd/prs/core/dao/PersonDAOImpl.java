@@ -18,12 +18,12 @@ import java.util.List;
  */
 public class PersonDAOImpl extends BaseDAO implements PersonDAO {
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void addPerson(Person person) {
         em.persist(person);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void updatePerson(Person person) {
         em.merge(person);
     }
@@ -31,7 +31,7 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Person getByUKey(long personUKey) {
         return em.find(Person.class, personUKey);
     }
@@ -39,7 +39,7 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Person findPersonByPIN(long pin) {
         Query q = em.createNamedQuery("filter.by.pin");
         q.setParameter("pin", pin);
@@ -49,7 +49,7 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Person> findPersonsByNIC(String nic) {
         Query q = em.createNamedQuery("filter.by.nic");
         q.setParameter("nic", nic);

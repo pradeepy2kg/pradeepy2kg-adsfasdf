@@ -11,6 +11,8 @@ import lk.rgd.prs.api.service.PINGenerator;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public long addPerson(Person person, User user) {
         long pin = -1;
 
@@ -57,6 +60,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updatePerson(Person person, User user) {
         if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
             personDao.updatePerson(person);
@@ -70,6 +74,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Person getByUKey(long personUKey, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             return personDao.getByUKey(personUKey);
@@ -83,6 +88,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Person findPersonByPIN(long pin, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             return personDao.findPersonByPIN(pin);
@@ -96,6 +102,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Person> findPersonsByNIC(String nic, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             return personDao.findPersonsByNIC(nic);
@@ -109,6 +116,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Person findPersonByPINorNIC(String pinOrNic, User user) {
         try {
             if (!isBlankString(pinOrNic)) {
