@@ -30,8 +30,25 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
-    public void addDeathRegistration(DeathRegister deathRegistration, User user) {
-        logger.debug("adding new death registration");
+    public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
+        logger.debug("adding late death registration");
+        addDeathRegistration(deathRegistration, user);
+        logger.debug("added a late registration with idUKey : {} ", deathRegistration.getIdUKey());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
+        logger.debug("adding normal death registration");
+        addDeathRegistration(deathRegistration, user);
+        logger.debug("added a normal registration with idUKey : {} ", deathRegistration.getIdUKey());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
@@ -42,7 +59,6 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
-        logger.debug("added a new death registration with idUKey : {} ", deathRegistration.getIdUKey());
     }
 
     /**

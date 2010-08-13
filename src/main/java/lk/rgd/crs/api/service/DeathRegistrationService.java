@@ -14,16 +14,28 @@ import java.util.Date;
 public interface DeathRegistrationService {
 
     /**
-     * Adds a death registration to the system. This is a Data Entry operation, and only data entry level validations
-     * are performed at this stage.
+     * Adds a normal death registration to the system. This is a Data Entry operation,
+     * and only data entry level validations are performed at this stage.
+     * CRSRuntimeException will be thrown for invalid operations
      *
      * @param deathRegistration the death registration to be added
      * @param user              the user initiating the action
      */
-    public void addDeathRegistration(DeathRegister deathRegistration, User user);
+    public void addNormalDeathRegistration(DeathRegister deathRegistration, User user);
 
     /**
-     * updated an existing Death registration
+     * Adds a late death registration to the system. This is a Data Entry operation,
+     * and only data entry level validations are performed at this stage.
+     * CRSRuntimeException will be thrown for invalid operations
+     *
+     * @param deathRegistration
+     * @param user
+     */
+    public void addLateDeathRegistration(DeathRegister deathRegistration, User user);
+
+    /**
+     * updated an existing Death registration, CRSRuntimeException will be
+     * thrown for invalid operations
      *
      * @param deathRegistration the death registration to be updated
      * @param user              the user initiating the action
@@ -107,7 +119,7 @@ public interface DeathRegistrationService {
     /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.
      * Results are ordered on the descending registration date. pageNo  and noOfRows used for pagination
-     *
+     * CRSRuntimeException will be thrown for invalid operations
      * @param deathDivision the death division
      * @param startDate     starting date of the range
      * @param endDate       ending date of the range
