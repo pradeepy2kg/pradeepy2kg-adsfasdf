@@ -59,10 +59,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
-            deathRegistration.getDeath().getDeathSerialNo());
+                deathRegistration.getDeath().getDeathSerialNo());
         if (existing != null) {
             handleException("can not add death registration " + deathRegistration.getIdUKey() +
-                " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+                    " deathRegistration number already exists : " + deathRegistration.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration);
@@ -77,7 +77,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
-                " Illegal state at target : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state at target : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         deathRegisterDAO.updateDeathRegistration(deathRegistration);
     }
@@ -122,7 +122,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         if (DeathRegister.State.APPROVED != dr.getStatus()) {
             handleException("Cannot change status , " + dr.getIdUKey() +
-                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         dr.setStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED);
         deathRegisterDAO.updateDeathRegistration(dr);
@@ -135,7 +135,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             dr.setStatus(state);
         } else {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
-                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         deathRegisterDAO.updateDeathRegistration(dr);
     }
@@ -150,7 +150,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot delete death registraion " + deathRegiserIdUKey +
-                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         deathRegisterDAO.deleteDeathRegistration(deathRegisterDAO.getById(deathRegiserIdUKey));
     }
@@ -162,7 +162,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get death registrations with the state : " + status
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getPaginatedListForState(deathDivision, pageNo, noOfRows, status);
@@ -173,7 +173,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }
@@ -208,7 +208,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
             handleException("can not update death registration " + deathRegister.getIdUKey() +
-                " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
 
     }
@@ -216,19 +216,19 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            ((Role.ROLE_RG.equals(role) || Role.ROLE_ARG.equals(role) || Role.ROLE_ADR.equals(role))
-                ||
-                (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                    &&
-                    user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                &&
+                ((Role.ROLE_RG.equals(role) || Role.ROLE_ARG.equals(role) || Role.ROLE_ADR.equals(role))
+                        ||
+                        (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
+                                &&
+                                user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                        )
                 )
-            )
         )) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+                    bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                    bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 }
