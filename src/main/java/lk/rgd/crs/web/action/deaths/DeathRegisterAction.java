@@ -141,7 +141,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 logger.info("witness was completed");
                 ddf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
-                service.addDeathRegistration(ddf, user);
+                service.addNormalDeathRegistration(ddf, user);
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
         return "form" + pageNo;

@@ -49,9 +49,6 @@ public class DeathInfo implements Serializable {
     @Column(nullable = true, length = 255)
     private String placeOfDeathInEnglish;
 
-    @Column(nullable = true, length = 255)
-    private String placeOfDeathInOfficialLang;
-
     /**
      * The preferred language of for the record
      */
@@ -155,14 +152,6 @@ public class DeathInfo implements Serializable {
 
     public void setPlaceOfDeathInEnglish(String placeOfDeathInEnglish) {
         this.placeOfDeathInEnglish = WebUtils.filterBlanksAndToUpper(placeOfDeathInEnglish);
-    }
-
-    public String getPlaceOfDeathInOfficialLang() {
-        return placeOfDeathInOfficialLang;
-    }
-
-    public void setPlaceOfDeathInOfficialLang(String placeOfDeathInOfficialLang) {
-        this.placeOfDeathInOfficialLang = WebUtils.filterBlanksAndToUpper(placeOfDeathInOfficialLang);
     }
 
     public boolean isCauseOfDeathEstablished() {
