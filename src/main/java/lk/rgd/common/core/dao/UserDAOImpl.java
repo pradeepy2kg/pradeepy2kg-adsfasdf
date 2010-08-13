@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class UserDAOImpl extends BaseDAO implements UserDAO {
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS)
     public User getUserByPK(String userId) {
         logger.debug("Loading user : {}", userId);
         return em.find(User.class, userId);
