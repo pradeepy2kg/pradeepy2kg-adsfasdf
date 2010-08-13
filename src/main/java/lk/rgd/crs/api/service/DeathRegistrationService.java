@@ -78,7 +78,7 @@ public interface DeathRegistrationService {
      * @param deathSerialNo serial number of the death registration
      * @return DeathRegister object
      */
-    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo, User user);
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo, User user);
 
     /**
      * Approve a death registration already captured by the DEO by an ADR or higher authority

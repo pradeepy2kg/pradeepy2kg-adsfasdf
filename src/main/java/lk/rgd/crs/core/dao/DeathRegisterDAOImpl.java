@@ -95,7 +95,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     /**
      * @inheritDoc
      */
-    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo) {
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo) {
         DeathRegister dr = null;
         Query q = em.createNamedQuery("get.by.bddivision.and.deathSerialNo");
         q.setParameter("deathSerialNo", deathSerialNo);
