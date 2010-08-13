@@ -84,7 +84,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     private Date fromDate;
     private Date endDate;
-    private String time;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
@@ -825,13 +824,5 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setRaceList(Map<Integer, String> raceList) {
         this.raceList = raceList;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 }

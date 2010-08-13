@@ -457,8 +457,7 @@ $(function() {
         </td>
         <td>වෙලාව<br>*in tamil<br>Time</td>
         <td colspan="2">
-            <s:textfield name="time" id="timePicker"/>
-                <%--   <input class="ctp" name="time" type="text" id="timePicker"/>--%>
+            <s:textfield name="death.timeOfDeath" id="timePicker"/>
         </td>
     </tr>
     <tr>
