@@ -79,8 +79,10 @@ public class DeathRegistrationServiceTest extends TestCase {
         try {
             deathRegService.addNormalDeathRegistration(ddf2, deoColomboColombo);
             fail("Should not allow addition of duplicate records");
-        } catch (Exception expectd) {
+        } catch (Exception expected) {
         }
+
+        
 
     }
 
