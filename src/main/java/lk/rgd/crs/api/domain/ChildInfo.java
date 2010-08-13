@@ -135,7 +135,7 @@ public class ChildInfo implements Serializable {
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = childFullNameOfficialLang;
+        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpper(childFullNameOfficialLang);
     }
 
     public String getChildFullNameEnglish() {

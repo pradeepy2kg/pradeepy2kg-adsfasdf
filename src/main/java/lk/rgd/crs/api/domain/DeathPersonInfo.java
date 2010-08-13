@@ -118,7 +118,7 @@ public class DeathPersonInfo implements Serializable {
     }
 
     public void setDeathPersonNameOfficialLang(String deathPersonNameOfficialLang) {
-        this.deathPersonNameOfficialLang = deathPersonNameOfficialLang;
+        this.deathPersonNameOfficialLang = WebUtils.filterBlanksAndToUpper(deathPersonNameOfficialLang);
     }
 
     public String getDeathPersonNameInEnglish() {

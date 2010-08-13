@@ -64,22 +64,23 @@ public class DeathRegistrationServiceTest extends TestCase {
     }
 
     public void testAddMinimalNormalDDF() {
+        final DeathRegister.Type deathType = DeathRegister.Type.NORMAL;
         Calendar dob = Calendar.getInstance();
         dob.add(Calendar.DATE, -3);
 
         // test colombo deo adding for colombo
         DeathRegister ddf1 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
+        ddf1.setDeathType(deathType);
         deathRegService.addNormalDeathRegistration(ddf1, deoColomboColombo);
 
         // try adding a duplicate
         DeathRegister ddf2 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
+        ddf2.setDeathType(deathType);
         try {
             deathRegService.addNormalDeathRegistration(ddf2, deoColomboColombo);
             fail("Should not allow addition of duplicate records");
-        } catch (Exception e) {
-            // TODO shoud use a message
+        } catch (Exception expectd) {
         }
-
 
     }
 
