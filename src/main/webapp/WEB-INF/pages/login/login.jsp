@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>EPR Login</title>
-    <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
+    <link rel="stylesheet" type="text/css" href="/popreg/css/layout.css"/>
     <style type="text/css">
         html {
-            background: <s:url value="/images/body-bg1.png"/> repeat;
+            background: /popreg/images/body-bg1.png repeat;
         }
 
         body {
@@ -28,7 +28,7 @@
         }
     %>
 
-    <img src="<s:url value="/images/epr-header.png" />" align="center" width="1250px"/>
+    <img src="/popreg/images/epr-header.png" />" align="center" width="1250px"/>
 
     <div id="login-error" style="text-align:center;">
         <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt; margin:150px auto -170px auto;"/>
