@@ -69,7 +69,7 @@ public interface DeathRegisterDAO {
      * @param deathSerialNo serial number of the death registration
      * @return DeathRegister object
      */
-    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo);
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo);
 
     /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.

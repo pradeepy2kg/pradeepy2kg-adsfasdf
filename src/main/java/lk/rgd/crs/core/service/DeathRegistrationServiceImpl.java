@@ -159,7 +159,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     /**
      * @inheritDoc
      */
-    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, String deathSerialNo, User user) {
+    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo, User user) {
         DeathRegister dr;
         dr = deathRegisterDAO.getByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
         validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
