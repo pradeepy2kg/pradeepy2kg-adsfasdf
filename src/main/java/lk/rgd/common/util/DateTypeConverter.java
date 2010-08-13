@@ -25,7 +25,7 @@ public class DateTypeConverter extends StrutsTypeConverter {
     @Override
     public String convertToString(Map context, Object o) {
         if (o instanceof Date) {
-            DateTimeUtils.getISO8601FormattedString((Date) o);
+            return DateTimeUtils.getISO8601FormattedString((Date) o);
         }
         return "";
     }
