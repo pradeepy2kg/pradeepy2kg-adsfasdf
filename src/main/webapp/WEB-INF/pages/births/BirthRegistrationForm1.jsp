@@ -28,42 +28,42 @@
         });
     });
 
-    // mode 1 = passing District, will return DS list
-    // mode 2 = passing DsDivision, will return BD list
-    // any other = passing district, will return DS list and the BD list for the first DS
-    $(function() {
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
 
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options2);
-                    });
-        });
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options2);
+                });
+    });
 
-        $('select#dsDivisionId').bind('change', function(evt2) {
-            var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
-                    function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                        }
-                        $("select#birthDivisionId").html(options);
-                    });
-        });
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#birthDivisionId").html(options);
+                });
+    });
 
         $('img#childName').bind('click', function(evt3) {
             var id = $("textarea#childFullNameOfficialLang").attr("value");
@@ -116,98 +116,104 @@
         }
     });
 
-    function validate() {
-        var errormsg = "";
-        var element;
-        var returnval;
-        var flag = false;
-        var lateOrbelate = false;
-        var check = document.getElementById('skipjs');
-        /*date related validations*/
-        var birthdate = new Date(document.getElementById('birthDatePicker').value);
-        var submit = new Date(document.getElementById('submitDatePicker').value);
-        //compare two days
-        if (birthdate.getTime() > submit.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('error6').value;
-            flag = true;
-        }
+function validate() {
+    var errormsg = "";
+    var element;
+    var returnval;
+    var flag = false;
+    var lateOrbelate = false;
+    var check = document.getElementById('skipjs');
+    /*date related validations*/
+    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+    var submit = new Date(document.getElementById('submitDatePicker').value);
+    //compare two days
+    if (birthdate.getTime() > submit.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error6').value;
+        flag = true;
+    }
 
-        var birthType = document.getElementById('birthTypeId').value;
-        if (birthType != 2) {
-            //comparing 90 days delay
-            var one_day = 1000 * 60 * 60 * 24 ;
-            var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-            if (numDays >= 90) {
-                if (numDays >= 365) {
-                    errormsg = errormsg + "\n" + document.getElementById('error8').value;
-                } else {
-                    errormsg = errormsg + "\n" + document.getElementById('error7').value;
-                }
-                lateOrbelate = true;
+    var birthType = document.getElementById('birthTypeId').value;
+    if (birthType != 2) {
+        //comparing 90 days delay
+        var one_day = 1000 * 60 * 60 * 24 ;
+        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+        if (numDays >= 90) {
+            if (numDays >= 365) {
+                errormsg = errormsg + "\n" + document.getElementById('error8').value;
+            } else {
+                errormsg = errormsg + "\n" + document.getElementById('error7').value;
             }
+            lateOrbelate = true;
         }
+    }
 
-        element = document.getElementById('bdfSerialNo');
+    element = document.getElementById('bdfSerialNo');
+    if (element.value == "") {
+        errormsg = errormsg + "\n" + document.getElementById('error1').value;
+        flag = true;
+    }
+    if (!(submit.getTime())) {
+        errormsg = errormsg + "\n" + document.getElementById('error9').value;
+        flag = true;
+    }
+    if (!birthdate.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error10').value;
+        flag = true;
+    }
+    element = document.getElementById('placeOfBirth');
+    if (element.value == "") {
+        errormsg = errormsg + "\n" + document.getElementById('error11').value;
+        flag = true;
+    }
+
+    if (!check.checked) {
+        element = document.getElementById('childFullNameOfficialLang');
         if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error1').value;
+            errormsg = errormsg + "\n" + document.getElementById('error2').value;
             flag = true;
         }
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('error9').value;
-            flag = true;
-        }
-        if (!birthdate.getTime()) {
-            errormsg = errormsg + "\n" + document.getElementById('error10').value;
-            flag = true;
-        }
-        element = document.getElementById('placeOfBirth');
+
+        element = document.getElementById('childFullNameEnglish');
         if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error11').value;
+            errormsg = errormsg + "\n" + document.getElementById('error3').value;
             flag = true;
         }
 
-        if (!check.checked) {
-            element = document.getElementById('childFullNameOfficialLang');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error2').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childFullNameEnglish');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error3').value;
-                flag = true;
-            }
-
-            element = document.getElementById('childBirthWeight');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error4').value;
-                flag = true;
-            }
+        element = document.getElementById('childBirthWeight');
+        if (element.value == "")
+        {
+            errormsg = errormsg + "\n" + document.getElementById('error4').value;
+            flag = true;
+        }
         else if (isNaN(element.value)) {
             errormsg = errormsg + "\n" + document.getElementById('error4').value;
             flag = true;
         }
-            element = document.getElementById('childRank');
-            if (element.value == "") {
-                errormsg = errormsg + "\n" + document.getElementById('error5').value;
-                flag = true;
-            }
+        element = document.getElementById('childRank');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('error5').value;
+            flag = true;
         }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            if (flag) {
-                returnval = false;
-            } else {
-                if (lateOrbelate) {
-                    returnval = true;
-                }
-            }
+        element = document.getElementById("numberOfChildrenBorn")
+        if (isNaN(element.value)) {
+            errormsg = errormsg + "\n" + document.getElementById('error12').value;
+            flag = true;
         }
-
-        return returnval;
     }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        if (flag) {
+            returnval = false;
+        } else {
+            if (lateOrbelate) {
+                returnval = true;
+            }
+        }
+    }
+
+    return returnval;
+}
 </script>
 
 
@@ -501,7 +507,8 @@
             උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
             multiple births, number of children</label></td>
-        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" cssStyle="width:95%;"/></td>
+        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"
+                                     cssStyle="width:95%;"/></td>
     </tr>
 
     </tbody>
@@ -522,7 +529,7 @@
 <s:hidden id="error9" value="%{getText('p1.submitDate.error.value')}"/>
 <s:hidden id="error10" value="%{getText('p1.dob.error.value')}"/>
 <s:hidden id="error11" value="%{getText('p1.placeOfBirth.error.value')}"/>
-
+<s:hidden id="error12" value="%{getText('p1.numbeOfChildren')}"/>
 
 <script type="text/javascript">
 </script>

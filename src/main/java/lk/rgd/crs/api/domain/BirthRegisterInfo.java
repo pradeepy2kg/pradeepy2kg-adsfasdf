@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Embeddable
 public class BirthRegisterInfo implements Serializable {
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat dfm = new SimpleDateFormat("yyyy-mm-dd");
 
     /**
      * The preferred language of for the record

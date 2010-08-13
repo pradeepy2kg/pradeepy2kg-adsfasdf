@@ -86,8 +86,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Date endDate;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
-        AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
+                               CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
+                               AppParametersDAO appParametersDAO, RaceDAO raceDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -129,6 +129,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
+                ddf.setDeathType(deathType);
                 logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 deathType = ddf.getDeathType();
@@ -138,10 +139,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             case 2:
                 logger.debug("Death Declaration Step {} of 2 ", pageNo);
                 ddf.setDeclarant(declarant);
-                logger.info("witness was completed");
                 ddf.setNotifyingAuthority(notifyingAuthority);
                 logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
-                service.addNormalDeathRegistration(ddf, user);
+                deathType = ddf.getDeathType();
+                if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
+                    service.addNormalDeathRegistration(ddf, user);
+                } else if (DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType) {
+                    service.addLateDeathRegistration(ddf, user);
+                }
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
         return "form" + pageNo;
@@ -192,10 +197,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         initPermissionForApprovalAndPrint();
         if (state != null) {
             deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                pageNo, noOfRows, state, user);
+                    pageNo, noOfRows, state, user);
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -215,16 +220,16 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (searchByDate) {
             //search by date in given divission deathDivisions and all the status
             deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
-                bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
         } else {
             if (currentStatus == 0) {
                 //search by state with all state with in a deathDivision
                 deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                    pageNo, noOfRows, user);
+                        pageNo, noOfRows, user);
             } else {
                 //search by state with a state with in a deathDivision
                 deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                    pageNo, noOfRows, state, user);
+                        pageNo, noOfRows, state, user);
             }
         }
         paginationHandler(deathApprovalAndPrintList.size());

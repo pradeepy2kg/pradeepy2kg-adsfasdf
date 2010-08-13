@@ -313,11 +313,42 @@ $(function() {
 
 });
 
+function validate() {
+    var errormsg = "";
+    var element;
+    var returnval;
+    var flag = false;
+    var lateOrbelate = false;
+    var check = document.getElementById('skipjs');
+    var elementArray = new Array(6);
+    //these fields can not be null
+    elementArray [0] = document.getElementById("deathSerialNo").value;
+    elementArray [1] = document.getElementById("dateOfRegistrationDatePicker").value;
+    elementArray [2] = document.getElementById("deathDatePicker").value;
+    elementArray [3] = document.getElementById("placeOfDeath").value;
+    elementArray [4] = document.getElementById("placeOfBurial").value;
+    elementArray [5] = document.getElementById("deathPersonGender").value;
+    var errorMsgArray = new Array('deathSerialNo', 'dateOfRegistrationDatePicker', 'deathDatePicker', 'placeOfDeath', 'placeOfBurial'
+            , 'deathPersonGender');
+    var i = 0;
+    for (i = 0; i < 6; i++) {
+        if (elementArray[i]=='') {
+            errormsg = errormsg + errorMsgArray[i] + "\n";
+        }
+    }
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    return returnval;
+}
+
 </script>
 
 
 <div id="death-declaration-form-1-outer">
-<s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST">
+<s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
+        onsubmit="javascript:return validate()">
 <table style="width: 100%; border:none; border-collapse:collapse;" class="font-9">
     <col width="180px"/>
     <col width="350px"/>
@@ -331,7 +362,7 @@ $(function() {
                  width="80" height="100">
         </td>
         <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
-        <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo"/></td>
+        <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo" id="deathSerialNo"/></td>
     </tr>
     <tr>
         <td colspan="2" style="border:1px solid #000;text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக
@@ -479,7 +510,7 @@ $(function() {
     <tr>
         <td rowspan="2" colspan="1">ස්ථානය <br>பிறந்த <br>Place</td>
         <td colspan="2">සිංහල හෝ දෙමළ භාෂාවෙන්<br>சிங்களம் தமிழ்<br>In Sinhala or Tamil</td>
-        <td colspan="5"><s:textarea name="death.placeOfDeath" cssStyle="width:550px;"/></td>
+        <td colspan="5"><s:textarea name="death.placeOfDeath" id="placeOfDeath" cssStyle="width:550px;"/></td>
     </tr>
     <tr>
         <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>*in tamil<br>In English</td>
@@ -511,7 +542,7 @@ $(function() {
     </tr>
     <tr>
         <td colspan="1">ආදාහන හෝ භූමදාන ස්ථානය<br>*in tamil<br>Place of burial or cremation</td>
-        <td colspan="8"><s:textarea name="death.placeOfBurial"/></td>
+        <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial"/></td>
     </tr>
     <s:if test="deathType.ordinal() == 2">
         <tr>
@@ -519,7 +550,7 @@ $(function() {
                 in tamil <br/>
                 Any other information
             </td>
-            <td colspan="8"><s:textarea name="death.placeOfBurial"/></td>
+            <td colspan="8"><s:textarea name="death.anyOtherInformation"/></td>
         </tr>
     </s:if>
     </tbody>
@@ -562,7 +593,8 @@ $(function() {
         <td colspan="1">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender</td>
         <td colspan="1"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                name="deathPerson.deathPersonGender" id="deathPersonGender" headerKey="0"
+                headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
         <td colspan="1">ජාතිය<br>பிறப்<br>Race</td>
         <td colspan="2">

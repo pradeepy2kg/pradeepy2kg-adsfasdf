@@ -14,7 +14,7 @@ import java.text.DateFormat;
 @Embeddable
 public class ChildInfo implements Serializable {
 
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat dfm = new SimpleDateFormat("yyyy-mm-dd");
 
     /**
      * This is the PIN number generated to the child
