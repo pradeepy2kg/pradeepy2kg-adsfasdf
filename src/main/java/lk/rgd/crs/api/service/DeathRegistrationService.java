@@ -14,7 +14,7 @@ import java.util.Date;
 public interface DeathRegistrationService {
 
     /**
-     * Adds a normal death registration to the system. This is a Data Entry operation,
+     * Adds a normal or missing death registration to the system. This is a Data Entry operation,
      * and only data entry level validations are performed at this stage.
      * CRSRuntimeException will be thrown for un-authorized operations
      * and invalid data
@@ -25,7 +25,7 @@ public interface DeathRegistrationService {
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user);
 
     /**
-     * Adds a late death registration to the system. This is a Data Entry operation,
+     * Adds a late or sudden death registration to the system. This is a Data Entry operation,
      * and only data entry level validations are performed at this stage.
      * CRSRuntimeException will be thrown for invalid operations
      *

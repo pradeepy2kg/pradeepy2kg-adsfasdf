@@ -34,9 +34,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
-        logger.debug("adding late death registration");
+        logger.debug("adding late/missing death registration");
+        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE || deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
+            handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
+        }
         addDeathRegistration(deathRegistration, user);
-        logger.debug("added a late registration with idUKey : {} ", deathRegistration.getIdUKey());
+        logger.debug("added a late/missing registration with idUKey : {} ", deathRegistration.getIdUKey());
     }
 
     /**
@@ -44,9 +47,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
-        logger.debug("adding normal death registration");
+        logger.debug("adding normal/sudden death registration");
+        if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL || deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
+            handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
+        }
         addDeathRegistration(deathRegistration, user);
-        logger.debug("added a normal registration with idUKey : {} ", deathRegistration.getIdUKey());
+        logger.debug("added a normal/sudden registration with idUKey : {} ", deathRegistration.getIdUKey());
     }
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
