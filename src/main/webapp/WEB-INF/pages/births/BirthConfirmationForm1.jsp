@@ -12,7 +12,7 @@
 <script>
     $(function() {
         $("#submitDatePicker").datepicker({
-            createButton:false,
+            changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
