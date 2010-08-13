@@ -10,7 +10,7 @@
 <script type="text/javascript">
     $(function() {
         $("#marriageDatePicker").datepicker({
-            createButton:false,
+            changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
@@ -18,7 +18,7 @@
     });
     $(function() {
         $("#informDatePicker").datepicker({
-            createButton:false,
+            changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'

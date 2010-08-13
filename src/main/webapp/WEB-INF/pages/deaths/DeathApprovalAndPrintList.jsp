@@ -17,7 +17,7 @@
     /*date pickers for start and end dates*/
     $(function() {
         $("#fromDateId").datepicker({
-            createButton:false,
+            changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
@@ -25,7 +25,7 @@
     });
     $(function() {
         $("#endDateId").datepicker({
-            createButton:false,
+            changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
