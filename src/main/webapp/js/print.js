@@ -1,6 +1,7 @@
 /* @author Duminda Dharmakeerthi */
 
 function printPage() {
+    alert("print page");
         if (!jsPrintSetup) {
             var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
             if (option) {

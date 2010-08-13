@@ -649,7 +649,6 @@
     </s:url>
 </s:else>
 <div class="form-submit">
-    <s:a href="%{print}" onclick="printPage();"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:a href="%{print}" onclick="printPage()"><s:label value="%{getText('print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
-</div>
 </div>

@@ -15,24 +15,21 @@ public class MarriedStatusUtil {
 
         if (AppConstants.SINHALA.equals(language)) {
             switch (code) {
-                case 0: return "නොදනී";
                 case 1: return "විවාහිකයි";
-                case 2: return "අවිවාහකයි";
-                case 3: return "පසු විවාහයකි";
+                case 0: return "අවිවාහකයි";
+                case 2: return "පසු විවාහයකි";
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (code) {
-                case 0: return "#Unknown#";
                 case 1: return "#Married#";
-                case 2: return "#Unmarried#";
-                case 3: return "#Married Later#";
+                case 0: return "#Unmarried#";
+                case 2: return "#Married Later#";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (code) {
-                case 0: return "Unknown"; 
                 case 1: return "Married";
-                case 2: return "Unmarried";
-                case 3: return "Married Later";
+                case 0: return "Unmarried";
+                case 2: return "Married Later";
             }
         } else {
             logger.error("Invalid language : {}", language);
