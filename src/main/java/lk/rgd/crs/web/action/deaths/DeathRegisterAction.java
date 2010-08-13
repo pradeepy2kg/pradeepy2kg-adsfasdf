@@ -14,6 +14,7 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
@@ -59,18 +60,22 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private List<DeathRegister> deathApprovalAndPrintList;
     private Map<Integer, String> raceList;
 
-    private long idUKey;
+
     private int pageNo;
     private int noOfRows;
+    private int currentStatus;
+    private int rowNumber;
+
+    private long idUKey;
+
     private boolean allowEditDeath;
     private boolean allowApproveDeath;
-    private int currentStatus;
-    private DeathRegister.State state;
     private boolean nextFlag;
     private boolean previousFlag;
-    private DeathRegister.Type deathType;
     private boolean back;
     private boolean searchByDate;
+    private boolean rePrint;
+    private boolean lateDeath;
 
     private String genderEn;
     private String genderSi;
@@ -81,9 +86,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String deathPersonDistrictEn;
     private String deathPersondsDivision;
     private String deathPersondsDivisionEn;
+    private String time;
 
     private Date fromDate;
     private Date endDate;
+
+    private DeathRegister.State state;
+    private DeathRegister.Type deathType;
+
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                                CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
@@ -181,6 +191,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
+    //todo this method doesnt have a usage
     public String initLateDeath() {
         populate();
         return SUCCESS;
@@ -189,7 +200,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String deathApprovalAndPrint() {
         if (pageNo == 2) {
-            session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);    //remove death register
+            session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
         setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
@@ -327,20 +338,18 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String markDeathDeclarationAsPrinted() {
+
         logger.debug("requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
+        deathRegister = service.getById(idUKey, user);
         try {
-            service.markDeathCertificateAsPrinted(idUKey, user);
+            if (!rePrint) {
+                service.markDeathCertificateAsPrinted(idUKey, user);
+            } else {
+
+            }
         }
         catch (CRSRuntimeException e) {
             addActionError("death.error.no.permission.print");
-        }
-        populate();
-        initPermissionForApprovalAndPrint();
-        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (state != null) {
-            deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, state, user);
-        } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
         }
         return SUCCESS;
     }
@@ -830,5 +839,37 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setRaceList(Map<Integer, String> raceList) {
         this.raceList = raceList;
+    }
+
+    public boolean isRePrint() {
+        return rePrint;
+    }
+
+    public void setRePrint(boolean rePrint) {
+        this.rePrint = rePrint;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public boolean isLateDeath() {
+        return lateDeath;
+    }
+
+    public void setLateDeath(boolean lateDeath) {
+        this.lateDeath = lateDeath;
+    }
+
+    public int getRowNumber() {
+        return rowNumber;
+    }
+
+    public void setRowNumber(int rowNumber) {
+        this.rowNumber = rowNumber;
     }
 }

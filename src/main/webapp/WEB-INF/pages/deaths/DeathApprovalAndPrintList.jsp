@@ -281,6 +281,7 @@
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:param name="rePrint" value="false"/>
             </s:url>
 
             <td></td>
@@ -340,11 +341,18 @@
                      border="none"/></s:a>
             </td>
             <td align="center">
-                <s:a href="#"
+                <s:url id="cetificatePrintUrl" action="eprPrintDeath.do">
+                    <s:param name="idUKey" value="idUKey"/>
+                    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+                    <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                </s:url>
+                <s:a href="%{cetificatePrintUrl}"
                      title="%{getText('printDeathRegistrationTooltipAgain.label')}">
                     <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
                          width="25"
-                         height="25" onclick="print()"/>
+                         height="25"/>
                 </s:a>
             </td>
         </s:if>
