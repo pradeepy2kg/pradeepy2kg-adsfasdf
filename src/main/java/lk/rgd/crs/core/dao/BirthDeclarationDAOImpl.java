@@ -3,9 +3,11 @@ package lk.rgd.crs.core.dao;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -16,34 +18,50 @@ import java.util.List;
  */
 public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclarationDAO {
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.MANDATORY)
     public void addBirthDeclaration(BirthDeclaration bdf) {
         bdf.setLastUpdatedTime(new Date());
         bdf.setActiveRecord(true);
         em.persist(bdf);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)  // this is not Mandatory as unit tests directly invoke this
     public void updateBirthDeclaration(BirthDeclaration bdf) {
         bdf.setLastUpdatedTime(new Date());
         em.merge(bdf);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.MANDATORY)
     public void deleteBirthDeclaration(long idUKey) {
         em.remove(getById(idUKey));
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<BirthDeclaration> findAll() {
         Query q = em.createNamedQuery("findAll");
         return q.getResultList();
     }
 
-    // TODO move to service class
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision, int pageNo, int noOfRows, boolean printed) {
-        Query q = em.createNamedQuery("filter.by.division.and.status").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+    public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision,
+        int pageNo, int noOfRows, boolean printed) {
+        Query q = em.createNamedQuery("filter.by.division.and.status").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
         q.setParameter("status", printed ? BirthDeclaration.State.APPROVED : BirthDeclaration.State.DATA_ENTRY);
         return q.getResultList();
@@ -52,8 +70,11 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
-    public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision, int pageNo, int noOfRows, BirthDeclaration.State status) {
-        Query q = em.createNamedQuery("filter.by.division.and.status").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision,
+        int pageNo, int noOfRows, BirthDeclaration.State status) {
+        Query q = em.createNamedQuery("filter.by.division.and.status").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
         q.setParameter("status", status);
         return q.getResultList();
@@ -62,6 +83,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public BirthDeclaration getById(long bdfidUKey) {
         logger.debug("Get BDF by ID : {}", bdfidUKey);
         return em.find(BirthDeclaration.class, bdfidUKey);
@@ -70,6 +92,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<BirthDeclaration> getByDOBRangeandMotherNICorPIN(Date start, Date end, String motherNICorPIN) {
         Query q = em.createNamedQuery("get.by.dateOfBirth_range.and.motherNICorPIN");
         q.setParameter("start", start, TemporalType.DATE);
@@ -81,16 +104,22 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
-    public BirthDeclaration getByBDDivisionAndSerialNo(BDDivision bdDivision, long bdfSerialNo) {
-        Query q = em.createNamedQuery("get.by.bddivision.and.serialNo");
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long bdfSerialNo) {
+        Query q = em.createNamedQuery("get.active.by.bddivision.and.serialNo");
         q.setParameter("birthDivision", bdDivision);
         q.setParameter("bdfSerialNo", bdfSerialNo);
-        return (BirthDeclaration) q.getSingleResult();
+        try {
+            return (BirthDeclaration) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
         BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.register.date").
@@ -105,12 +134,13 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+        Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.confirmation.receive.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
-        q.setParameter("status", status);
+        q.setParameter("status", BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
         return q.getResultList();
@@ -119,6 +149,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBirthDivision(BDDivision birthDivision) {
         Query q = em.createNamedQuery("get.by.bddivision");
         q.setParameter("birthDivision", birthDivision);
@@ -128,6 +159,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getUnconfirmedByRegistrationDate(Date date) {
         Query q = em.createNamedQuery("filter.by.unconfirmed.by.register.date");
         q.setParameter("date", date);
@@ -137,6 +169,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo) {
         Query q = em.createNamedQuery("get.historical.records.by.bddivision.and.serialNo");
         q.setParameter("birthDivision", birthDivision);

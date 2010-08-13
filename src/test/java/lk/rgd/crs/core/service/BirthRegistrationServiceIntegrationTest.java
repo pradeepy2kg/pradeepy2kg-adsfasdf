@@ -127,8 +127,5 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bcs.setApplicationNo("8");
         results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
         Assert.assertEquals(3, results.size());
-
-        deleteBDF(colomboBDDivision, 2010108);
-        deleteBDF(colomboBDDivision, 2010109);
     }
 }

@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -34,7 +36,7 @@ import java.util.Date;
         "AND bdf.activeRecord IS FALSE " +
         "ORDER BY bdf.lastUpdatedTime desc"),
 
-    @NamedQuery(name = "get.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
+    @NamedQuery(name = "get.active.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
         "AND bdf.activeRecord IS TRUE"),
 
@@ -135,6 +137,10 @@ public class BirthDeclaration implements Serializable {
     @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date lastUpdatedTime;
+
+    @OneToOne
+    @JoinColumn(name = "lastUpdatedUserId")
+    private User lastUpdatedUser;
 
     @Embedded
     private ChildInfo child = new ChildInfo();
@@ -270,5 +276,13 @@ public class BirthDeclaration implements Serializable {
 
     public void setRegister(BirthRegisterInfo register) {
         this.register = register;
+    }
+
+    public User getLastUpdatedUser() {
+        return lastUpdatedUser;
+    }
+
+    public void setLastUpdatedUser(User lastUpdatedUser) {
+        this.lastUpdatedUser = lastUpdatedUser;
     }
 }

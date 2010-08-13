@@ -1,7 +1,10 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -17,8 +20,9 @@ import java.io.Serializable;
     @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
         "deathRegister.death.deathDivision = :deathDivision"),
 
-    @NamedQuery(name = "get.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision"),
+    @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
+        "AND deathRegister.activeRecord IS TRUE"),
 
     @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
@@ -52,6 +56,17 @@ public class DeathRegister implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
+
+    @Column(nullable = false)
+    private boolean activeRecord = true;
+
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date lastUpdatedTime;
+
+    @OneToOne
+    @JoinColumn(name = "lastUpdatedUserId")
+    private User lastUpdatedUser;
 
     @Embedded
     private DeathInfo death = new DeathInfo();
@@ -139,5 +154,29 @@ public class DeathRegister implements Serializable {
 
     public void setDeathType(Type deathType) {
         this.deathType = deathType;
+    }
+
+    public boolean isActiveRecord() {
+        return activeRecord;
+    }
+
+    public void setActiveRecord(boolean activeRecord) {
+        this.activeRecord = activeRecord;
+    }
+
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(Date lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
+    }
+
+    public User getLastUpdatedUser() {
+        return lastUpdatedUser;
+    }
+
+    public void setLastUpdatedUser(User lastUpdatedUser) {
+        this.lastUpdatedUser = lastUpdatedUser;
     }
 }

@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
-import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.common.CustomStrutsTestCase;
 import com.opensymphony.xwork2.ActionProxy;
@@ -13,8 +12,8 @@ import com.opensymphony.xwork2.ActionContext;
 import java.util.Map;
 import java.util.HashMap;
 
-public class DeathRegistrationDeclarionTest extends CustomStrutsTestCase {
-    private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationDeclarionTest.class);
+public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
+    private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationDeclarationTest.class);
     private DeathRegisterAction deathAction;
     private ActionProxy proxy;
 

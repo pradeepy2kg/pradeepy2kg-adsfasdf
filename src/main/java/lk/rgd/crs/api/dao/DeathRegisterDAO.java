@@ -37,9 +37,9 @@ public interface DeathRegisterDAO {
     /**
      * remove a death registration
      *
-     * @param deathRegistrationIdUKey the unique id of the death registration to be removed
+     * @param dr the entry to be removed
      */
-    public void deleteDeathRegistration(long deathRegistrationIdUKey);
+    public void deleteDeathRegistration(DeathRegister dr);
 
     /**
      * Get the list of death registrations for a given state based on given death division
@@ -69,7 +69,7 @@ public interface DeathRegisterDAO {
      * @param deathSerialNo serial number of the death registration
      * @return DeathRegister object
      */
-    public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo);
+    public DeathRegister getActiveRecordByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo);
 
     /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.

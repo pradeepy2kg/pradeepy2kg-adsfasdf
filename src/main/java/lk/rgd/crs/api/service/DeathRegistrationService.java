@@ -29,8 +29,8 @@ public interface DeathRegistrationService {
      * and only data entry level validations are performed at this stage.
      * CRSRuntimeException will be thrown for invalid operations
      *
-     * @param deathRegistration
-     * @param user
+     * @param deathRegistration the late death registration to be added
+     * @param user              the user initiating the action
      */
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user);
 

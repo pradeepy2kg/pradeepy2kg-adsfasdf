@@ -14,6 +14,8 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.InformantInfo;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,11 +44,6 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         birthDeclarationDAO = (BirthDeclarationDAO)
             ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
-
-        // delete records we may have added
-        for (int i = 2010101; i < 2010110; i++) {
-            deleteBDF(colomboBDDivision, i);
-        }
     }
 
     public BirthRegistrationServiceTest() {
@@ -118,8 +115,6 @@ public class BirthRegistrationServiceTest extends TestCase {
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
         Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings".toUpperCase()));
-
-        deleteBDF(colomboBDDivision, 2010101);
     }
 
     public void testDuplicateBDF() throws Exception {
@@ -192,11 +187,6 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
         if (found) {
             fail("Did not expect a warning for possible duplicate record after 28 weeks");
-        }
-
-        // delete records we may have added
-        for (int i = 2010102; i < 2010105; i++) {
-            deleteBDF(colomboBDDivision, i);
         }
     }
 
@@ -319,8 +309,6 @@ public class BirthRegistrationServiceTest extends TestCase {
             }
         }
         Assert.assertTrue("confirmed record must not show up for BC printing again if requested", found);
-
-        deleteBDF(colomboBDDivision, 2010106);
     }
 
     public void testConfirmationWithChanges() throws Exception {
@@ -391,8 +379,6 @@ public class BirthRegistrationServiceTest extends TestCase {
         // reload again and check for update
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_PRINTED, bdf1.getRegister().getStatus());
-
-        deleteBDF(colomboBDDivision, 2010107);
     }
 
     protected BirthDeclaration getMinimalBDF(long serial, Date dob, BDDivision bdDivision) {
@@ -416,13 +402,5 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
         bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
         return bdf;
-    }
-
-    protected void deleteBDF(BDDivision bdDivision, long serial) {
-        try {
-            birthDeclarationDAO.deleteBirthDeclaration(
-                birthDeclarationDAO.getByBDDivisionAndSerialNo(bdDivision, serial).getIdUKey());
-        } catch (Exception e) {
-        }
     }
 }
