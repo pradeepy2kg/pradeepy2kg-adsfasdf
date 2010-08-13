@@ -275,7 +275,7 @@
                 <s:param name="idUKey" value="idUKey"/>
             </s:url>
 
-            <s:url id="cetificatePrintUrl" action="eprPrintDeath.do">
+            <s:url id="cetificatePrintUrl" action="eprDeathCertificate.do">
                 <s:param name="idUKey" value="idUKey"/>
                 <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>

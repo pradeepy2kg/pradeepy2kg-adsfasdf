@@ -475,7 +475,7 @@
 
         <action name="eprPrintDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="markDeathDeclarationAsPrinted">
-            <result type="tiles" name="success">epr.deathCertificate</result>
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
 
     </package>

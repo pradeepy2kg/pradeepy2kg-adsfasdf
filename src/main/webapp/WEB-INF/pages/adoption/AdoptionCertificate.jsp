@@ -212,7 +212,6 @@
 </table>
 
 <div class="form-submit">
-    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
     <s:hidden name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
@@ -222,7 +221,6 @@
 </div>
 </form>
 <s:form action="eprAdoptionBackToPreviousState.do">
-    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
@@ -231,3 +229,4 @@
     </div>
 </s:form>
 </div>
+<%--eprPrintDeath.do?idUKey=5&currentStatus=0&pageNo=1&nextFlag=false&previousFlag=false--%>
