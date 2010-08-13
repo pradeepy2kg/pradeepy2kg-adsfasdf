@@ -65,11 +65,11 @@ public class DeathRegister implements Serializable {
     @Embedded
     private DeclarantInfo declarant = new DeclarantInfo();
 
+    @Enumerated
     @Column(nullable = false)
     private State status;
 
     @Enumerated
-    @Column(nullable = false)
     private Type deathType;
 
 

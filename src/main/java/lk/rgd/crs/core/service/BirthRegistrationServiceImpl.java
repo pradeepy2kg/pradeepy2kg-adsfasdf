@@ -75,6 +75,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
         String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
+        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
         // TODO add case file number and additional document list as comments
         addBirthDeclaration(bdf, ignoreWarnings, user);
@@ -87,6 +88,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> addStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new still birth declaration");
+        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
 
         // TODO still birth specific validations
         addBirthDeclaration(bdf, ignoreWarnings, user);
@@ -99,6 +101,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public List<UserWarning> addAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new adoption birth declaration");
+        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
 
         // TODO adoption specific validations
 
@@ -895,7 +898,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     public void rejectBirthDeclaration(BirthDeclaration bdf, String comments, User user) {
 
-        logger.debug("Request to reject birth declaration record : {}", bdf.getIdUKey());        
+        logger.debug("Request to reject birth declaration record : {}", bdf.getIdUKey());
         if (comments == null || comments.trim().length() < 1) {
             handleException("A comment is required to reject a birth declaration",
                 ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
