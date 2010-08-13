@@ -210,7 +210,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        validateBirthType(existing, BirthDeclaration.BirthType.LIVE);
         validateAccessOfUser(user, existing);
 
         // TODO check validations as per addLiveBirthDeclaration
@@ -241,7 +241,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
+        validateBirthType(existing, BirthDeclaration.BirthType.STILL);
         validateAccessOfUser(user, existing);
 
         // TODO check validations as per addStillBirthDeclaration
@@ -270,7 +270,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        validateBirthType(existing, BirthDeclaration.BirthType.ADOPTION);
         validateAccessOfUser(user, existing);
 
         // TODO check validations as per addAdoptionBirthDeclaration
@@ -300,7 +300,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        validateBirthType(existing, BirthDeclaration.BirthType.LIVE);
         validateAccessOfUser(user, existing);
 
         // a live BDF can be edited by a DEO or ADR only before being approved
@@ -329,7 +329,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
+        validateBirthType(existing, BirthDeclaration.BirthType.STILL);
         validateAccessOfUser(user, existing);
 
         // a still BDF can be edited by a ADR only before being approved
@@ -357,7 +357,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, bdf);
         // does the user have access to the existing BDF (if district and division is changed somehow)
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        validateBirthType(existing, BirthDeclaration.BirthType.ADOPTION);
         validateAccessOfUser(user, existing);
 
         // a live BDF can be edited by a DEO or ADR only before being approved
@@ -383,7 +383,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        validateBirthType(existing, BirthDeclaration.BirthType.LIVE);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -450,7 +450,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
+        validateBirthType(existing, BirthDeclaration.BirthType.STILL);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -518,7 +518,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        validateBirthType(existing, BirthDeclaration.BirthType.ADOPTION);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -722,7 +722,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        validateBirthType(existing, BirthDeclaration.BirthType.LIVE);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -752,7 +752,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
+        validateBirthType(existing, BirthDeclaration.BirthType.STILL);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);
@@ -782,7 +782,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         // load the existing record
         BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+        validateBirthType(existing, BirthDeclaration.BirthType.ADOPTION);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, bdf);

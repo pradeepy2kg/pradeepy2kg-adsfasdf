@@ -12,9 +12,12 @@ import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeclarantInfo;
+import lk.rgd.crs.api.bean.UserWarning;
+import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author Chathuranga Withana
@@ -37,12 +40,6 @@ public class DeathRegistrationServiceTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         deathRegisterDAO = (DeathRegisterDAO) ctx.getBean("deathRegisterDAOImpl", DeathRegisterDAO.class);
-
-        // TODO uncomment
-        // delete records we may have added
-//        for (int i = 2010101; i < 2010110; i++) {
-//            deleteDDF(colomboBDDivision, i);
-//        }
     }
 
     public DeathRegistrationServiceTest() {
@@ -82,7 +79,41 @@ public class DeathRegistrationServiceTest extends TestCase {
         } catch (Exception expected) {
         }
 
-        
+        // try adding a late death
+        DeathRegister ddf3 = getMinimalDDF(20101010, dob.getTime(), colomboBDDivision);
+        ddf3.setDeathType(DeathRegister.Type.LATE);
+        try {
+            deathRegService.addNormalDeathRegistration(ddf3, deoColomboColombo);
+            fail("Should not allow addition of illegal death type records");
+        } catch (CRSRuntimeException expected) {
+        }
+
+        // reload again to fill all fields as we still only have IDUkey of new record
+        ddf1 = deathRegService.getById(ddf1.getIdUKey(), deoColomboColombo);
+        assertEquals(20101010, ddf1.getDeath().getDeathSerialNo());
+        // TODO cannot approve death declarations
+        // colombo deo cannot approve
+//        try {
+//            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoColomboColombo);
+//            fail("DEO cannot approve DDFs");
+//        } catch (CRSRuntimeException expected) {
+//        }
+        // negambo deo cannot approve either
+        try {
+            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoGampahaNegambo);
+            fail("Negambo DEO cannot approve DDFs of Colombo BD division");
+        } catch (CRSRuntimeException expected) {
+        }
+        // negambo adr cannot approve either
+        try {
+            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrGampahaNegambo);
+            fail("Negambo ADR cannot approve DDFs of Colombo BD division");
+        } catch (CRSRuntimeException expected) {
+        }
+
+        // TODO still implementing
+        // colombo ADR approves - should raise warnings
+//        deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo);
 
     }
 
@@ -105,9 +136,5 @@ public class DeathRegistrationServiceTest extends TestCase {
         ddf.getNotifyingAuthority().setNotifyingAuthorityAddress("Address of the Death registrar");
         ddf.getNotifyingAuthority().setNotifyingAuthoritySignDate(today);
         return ddf;
-    }
-
-    protected void deleteDDF(BDDivision deathDivision, long serial) {
-        // TODO delete added records
     }
 }
