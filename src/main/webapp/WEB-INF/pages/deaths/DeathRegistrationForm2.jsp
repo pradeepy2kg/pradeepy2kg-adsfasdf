@@ -65,10 +65,37 @@
     }
 
 
+    function validate() {
+        var errormsg = "";
+        var element;
+        var returnval;
+        var flag = false;
+        var lateOrbelate = false;
+        var check = document.getElementById('skipjs');
+        var elementArray = new Array(5);
+        elementArray[0] = document.getElementById("notifying_authority_NICorPIN").value;
+        elementArray[1] = document.getElementById("notifyingAuthorityName").value;
+        elementArray[2] = document.getElementById("notifyingAuthorityAddress").value;
+        elementArray[3] = document.getElementById("submitDatePicker").value;
+        var err = new Array("notifying_authority_NICorPIN", "notifyingAuthorityName", "notifyingAuthorityAddress", "submitDatePicker");
+        var i;
+        for (i = 0; i < elementArray.length; i++) {
+            if (elementArray[i] == "") {
+                errormsg = errormsg + err[i] + "\n";
+            }
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        return returnval;
+    }
+
 </script>
 
 <div id="death-declaration-form-2-outer">
-    <s:form name="deathRegistrationForm2" action="eprDeathDeclaration.do" id="death-registration-form-2" method="POST">
+    <s:form name="deathRegistrationForm2" action="eprDeathDeclaration.do" id="death-registration-form-2" method="POST"
+            onsubmit="javascript:return validate()">
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
                class="font-9">
             <col width="150px"/>
@@ -141,6 +168,7 @@
                 <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
                 <td colspan="2"><s:textfield id="declarantEMail" name="declarant.declarantEMail"/></td>
             </tr>
+
             </tbody>
         </table>
 
@@ -190,7 +218,7 @@
                 <td colspan="1"></td>
                 <td colspan="1">දිනය<br>திகதி<br>Date</td>
                 <td colspan="1"><s:textfield id="submitDatePicker"
-                                             name="notifyingAuthority.notifyingAuthoritySignDate"></s:textfield></td>
+                                             name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
             </tr>
             </tbody>
         </table>

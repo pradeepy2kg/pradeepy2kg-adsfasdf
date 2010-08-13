@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 
-
 <s:if test="deathType.ordinal()==2">
     <s:set name="row" value="3"/>
 </s:if>
@@ -322,11 +321,50 @@ $(function() {
 
 });
 
+function validate() {
+    var errormsg = "";
+    var element;
+    var returnval;
+    var flag = false;
+    var lateOrbelate = false;
+    var check = document.getElementById('skipjs');
+    var elementArray = new Array(6);
+
+    //these fields can not be null
+    elementArray [0] = document.getElementById("deathSerialNo").value;
+    elementArray [1] = document.getElementById("dateOfRegistrationDatePicker").value;
+    elementArray [2] = document.getElementById("deathDatePicker").value;
+    elementArray [3] = document.getElementById("placeOfDeath").value;
+    elementArray [4] = document.getElementById("placeOfBurial").value;
+    elementArray [5] = document.getElementById("deathPersonGender").value;
+    var i = 0;
+    for (i = 0; i < 6; i++) {
+        if (elementArray[i] == '') {
+            errormsg = errormsg + document.getElementById("error" + i).value + "\n";
+        }
+    }
+    if (isNaN(elementArray[0])) {
+        errormsg = errormsg + document.getElementById("error6").value + "\n";
+    }
+    var dateOfReg = new Date(elementArray[1]);
+    var dateOfDeath = new Date(elementArray[2]);
+    if (dateOfReg < dateOfDeath) {
+        errormsg = errormsg + document.getElementById("error7").value + "\n";
+    }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    return returnval;
+}
+
 </script>
 
 
 <div id="death-declaration-form-1-outer">
-<s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST">
+<s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
+        onsubmit="javascript:return validate()">
 <table style="width: 100%; border:none; border-collapse:collapse;" class="font-9">
     <col width="180px"/>
     <col width="350px"/>
@@ -340,7 +378,7 @@ $(function() {
                  width="80" height="100">
         </td>
         <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
-        <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo"/></td>
+        <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo" id="deathSerialNo"/></td>
     </tr>
     <tr>
         <td colspan="2" style="border:1px solid #000;text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக
@@ -460,7 +498,9 @@ $(function() {
         </tr>
     </s:elseif>
     <tr>
-        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of death</td>
+        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණය සිදුවූ දිනය<br>பிறந்த திகதி<br>Date of
+            death
+        </td>
         <td colspan="5" style="text-align:right;">
             <s:textfield id="deathDatePicker" name="death.dateOfDeath"/>
         </td>
@@ -497,11 +537,14 @@ $(function() {
         <td colspan="5"><s:textarea name="death.placeOfDeathInEnglish" cssStyle="width:550px;"/></td>
     </tr>
     <tr>
-        <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණයට හේතුව තහවුරුද?<br>*in tamil<br>Is the cause of death established?</td>
+        <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණයට හේතුව
+            තහවුරුද?<br>*in tamil<br>Is the cause of death established?
+        </td>
         <td colspan="1">නැත / xx / No</td>
         <td colspan="2"><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'false':''}"
                                  id=""/></td>
-        <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණය දින 30 කට අඩු ළදරුවෙකුගේද?<br>*in tamil<br>Is the death of an infant
+        <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණය දින 30 කට අඩු
+            ළදරුවෙකුගේද?<br>*in tamil<br>Is the death of an infant
             less
             than 30 days?
         </td>
@@ -515,14 +558,20 @@ $(function() {
         <td colspan="1"><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'true':''}"/></td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණයට හේතුව<br>*in tamil<br>Cause of death</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණයට හේතුව<br>*in tamil<br>Cause
+            of death
+        </td>
         <td colspan="4"><s:textarea name="death.causeOfDeath" cssStyle="width:400px; "/></td>
-        <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>
+        <td colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)හේතුවේ ICD කේත අංකය<br>*in
+            tamil<br>ICD Code of cause
+        </td>
         <td colspan="2"><s:textfield name="death.icdCodeOfCause"/></td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ආදාහන හෝ භූමදාන ස්ථානය<br>*in tamil<br>Place of burial or cremation</td>
-        <td colspan="8"><s:textarea name="death.placeOfBurial"/></td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ආදාහන හෝ භූමදාන ස්ථානය<br>*in
+            tamil<br>Place of burial or cremation
+        </td>
+        <td colspan="8"><s:textarea name="death.placeOfDeath" id="placeOfDeath"/></td>
     </tr>
     <s:if test="deathType.ordinal() == 2">
         <tr>
@@ -530,7 +579,7 @@ $(function() {
                 in tamil <br/>
                 Any other information
             </td>
-            <td colspan="8"><s:textarea name="death.placeOfBurial"/></td>
+            <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial"/></td>
         </tr>
     </s:if>
     </tbody>
@@ -551,7 +600,8 @@ $(function() {
         </td>
     </tr>
     <tr>
-        <td rowspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
+        <td rowspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය / ජාතික
+            හැදුනුම්පත් අංකය<br>தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
             <br>PIN / NIC
         </td>
         <td rowspan="2" colspan="3"><s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
@@ -568,13 +618,16 @@ $(function() {
         <td><s:textfield name="deathPerson.deathPersonPassportNo"/></td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)වයස හෝ අනුමාන වයස<br>பிறப்ப<br>Age or probable Age</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)වයස හෝ අනුමාන වයස<br>பிறப்ப<br>Age
+            or probable Age
+        </td>
         <td colspan="1"><s:textfield name="deathPerson.deathPersonAge"/></td>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
+        </td>
         <td colspan="1"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
-                cssStyle="width:190px; margin-left:5px;"/></td>
+                id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/></td>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ජාතිය<br>பிறப்<br>Race</td>
         <td colspan="2">
             <s:select list="raceList" name="deathPersonRace" headerKey="0" headerValue="%{getText('select_race.label')}"
@@ -582,26 +635,33 @@ $(function() {
         </td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)<br>Name
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම රාජ්‍ය භාෂාවෙන් (සිංහල /
+            දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)<br>Name
             in either of the official languages (Sinhala / Tamil)
         </td>
         <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு அத்தாட்சி …..<br>Name in English</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම ඉංග්‍රීසි භාෂාවෙන්<br>பிறப்பு
+            அத்தாட்சி …..<br>Name in English
+        </td>
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர
+            வதிவிட முகவரி<br>Permanent Address
+        </td>
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ පු.අ.අ. / ජා.හැ.අ.<br>*in tamil<br>Fathers PIN / NIC</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ පු.අ.අ. / ජා.හැ.අ.<br>*in
+            tamil<br>Fathers PIN / NIC
+        </td>
         <td colspan="6">
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
                          cssStyle="float:left;margin-left:695px;"/>
@@ -609,13 +669,17 @@ $(function() {
                  style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup"></td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ සම්පුර්ණ නම<br>*in tamil <br>Fathers full name</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ සම්පුර්ණ නම<br>*in tamil
+            <br>Fathers full name
+        </td>
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ පු.අ.අ. / ජා.හැ.අ.<br>*in tamil<br>Mothers PIN / NIC</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ පු.අ.අ. / ජා.හැ.අ.<br>*in
+            tamil<br>Mothers PIN / NIC
+        </td>
         <td colspan="6">
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
                          cssStyle="float:left;margin-left:695px;"/>
@@ -623,14 +687,23 @@ $(function() {
                  style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
     </tr>
     <tr>
-        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ සම්පුර්ණ නම<br>*in tamil <br>Mothers full name</td>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ සම්පුර්ණ නම<br>*in tamil <br>Mothers
+            full name
+        </td>
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"/>
         </td>
     </tr>
     </tbody>
 </table>
-
+<s:hidden id="error0" value="%{getText('p1.errorlable.serialNumber')}"/>
+<s:hidden id="error1" value="%{getText('p1.errorlable.dateofReg')}"/>
+<s:hidden id="error2" value="%{getText('p1.errorlable.dateofDeath')}"/>
+<s:hidden id="error3" value="%{getText('p1.errorlable.placeofBurial')}"/>
+<s:hidden id="error4" value="%{getText('p1.errorlable.placeofDeath')}"/>
+<s:hidden id="error5" value="%{getText('p1.errorlable.gerder')}"/>
+<s:hidden id="error6" value="%{getText('p1.errorlable.serialNumberIsNum')}"/>
+<s:hidden id="error7" value="%{getText('p1.errorlable.dateofRegAndDateofDeath')}"/>
 <div class="form-submit">
     <s:hidden name="pageNo" value="1"/>
     <s:hidden name="rowNumber" value="%{row}"/>
