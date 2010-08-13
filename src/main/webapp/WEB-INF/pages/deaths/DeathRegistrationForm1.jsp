@@ -320,7 +320,6 @@ $(function() {
 
 
 });
-
 function validate() {
     var errormsg = "";
     var element;
@@ -358,7 +357,6 @@ function validate() {
     }
     return returnval;
 }
-
 </script>
 
 
@@ -567,11 +565,12 @@ function validate() {
         </td>
         <td colspan="2"><s:textfield name="death.icdCodeOfCause"/></td>
     </tr>
-    <tr>
+todo   
+ <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ආදාහන හෝ භූමදාන ස්ථානය<br>*in
             tamil<br>Place of burial or cremation
         </td>
-        <td colspan="8"><s:textarea name="death.placeOfDeath" id="placeOfDeath"/></td>
+        <td colspan="8"><s:textarea name="death.placeOfBurial"/></td>
     </tr>
     <s:if test="deathType.ordinal() == 2">
         <tr>
@@ -579,9 +578,19 @@ function validate() {
                 in tamil <br/>
                 Any other information
             </td>
-            <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial"/></td>
+            <td colspan="8"><s:textarea name="death.anyOtherInformation" id="anyOtherInfo"/></td>
         </tr>
     </s:if>
+    <tr>
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            මරණ
+            සහතිකය නිකුත් කල යුතු භාෂාව <br>*in tamil<br>Preferred
+            Language for
+            Death Certificate </label></td>
+        <td colspan="7"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
+                                  name="death.preferredLanguage"
+                                  cssStyle="width:190px; margin-left:5px;"></s:select></td>
+    </tr>
     </tbody>
 </table>
 
