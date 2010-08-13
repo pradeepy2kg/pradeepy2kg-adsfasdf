@@ -14,8 +14,8 @@ import java.io.Serializable;
     @NamedQuery(name = "death.register.filter.by.and.deathDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision = :deathDivision " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-    @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE "+
-    "deathRegister.death.deathDivision = :deathDivision"),
+    @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.death.deathDivision = :deathDivision"),
 
     @NamedQuery(name = "get.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision"),
@@ -42,7 +42,7 @@ public class DeathRegister implements Serializable {
         SUDDEN,  // 1 - A sudden death
 
         LATE,   // 2 - A late death registration
-        
+
         MISSING   // 3 - A death of a missing person
     }
 
@@ -68,9 +68,9 @@ public class DeathRegister implements Serializable {
     @Column(nullable = false)
     private State status;
 
-    @Column(nullable= false)
+    @Enumerated
+    @Column(nullable = false)
     private Type deathType;
-
 
 
     public State getStatus() {
@@ -132,7 +132,7 @@ public class DeathRegister implements Serializable {
     public void setDeath(DeathInfo death) {
         this.death = death;
     }
-    
+
     public Type getDeathType() {
         return deathType;
     }
