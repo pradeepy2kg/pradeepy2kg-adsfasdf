@@ -16,11 +16,8 @@ import java.text.SimpleDateFormat;
 @Embeddable
 public class DeathInfo implements Serializable {
 
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
-
-
     @Column(nullable = false)
-    private String deathSerialNo;
+    private long deathSerialNo;
 
     @Column(nullable = true)
     private long deathCertificateNo;
@@ -96,12 +93,12 @@ public class DeathInfo implements Serializable {
         this.anyOtherInformation = anyOtherInformation;
     }
 
-    public String getDeathSerialNo() {
+    public long getDeathSerialNo() {
         return deathSerialNo;
     }
 
-    public void setDeathSerialNo(String deathSerialNo) {
-        this.deathSerialNo = WebUtils.filterBlanksAndToUpper(deathSerialNo);
+    public void setDeathSerialNo(long deathSerialNo) {
+        this.deathSerialNo = deathSerialNo;
     }
 
     public long getDeathCertificateNo() {
