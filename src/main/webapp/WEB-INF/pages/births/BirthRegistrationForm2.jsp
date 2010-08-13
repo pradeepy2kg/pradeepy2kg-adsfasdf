@@ -57,7 +57,7 @@
                         $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                         $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                         $("textarea#motherAddress").val(data2.lastAddress);
-                        $("input#motherDatePicker").setValue(data2.dateOfBirth);
+                        $("input#motherDatePicker").val(data2.dateOfBirth);
                     });
         });
 

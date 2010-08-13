@@ -62,11 +62,6 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
     <s:form action="eprBirthRegistration.do" name="birthRegistrationForm4" id="birth-registration-form-4" method="POST"
             onsubmit="javascript:return validate()">
-        <script>
-            function view_NotifyerInfo() {
-                dojo.event.topic.publish("view_NotifyerInfo");
-            }
-        </script>
 
         <table class="table_reg_page_04" width="100%" cellspacing="0">
             <caption></caption>
