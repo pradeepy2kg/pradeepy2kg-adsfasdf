@@ -8,11 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.Collections;
 
 
 /**
@@ -90,7 +87,6 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         try {
             return (DeathRegister) q.getSingleResult();
         } catch (NoResultException e) {
-            logger.debug("No record found for bdDivision : {} and serialNo : {}", bdDivision.getBdDivisionUKey(), deathSerialNo);
             return null;
         }
     }

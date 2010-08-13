@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,13 +21,13 @@ import java.util.Date;
 
     @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
         "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
-        // TODO fix this to use the courtUKey
+    // TODO fix this to use the courtUKey
 
     @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
-    
+
     public enum State {
         DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
 
@@ -157,12 +158,6 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = false)
     private State status;
 
-    private String filterBlanks(String s) {
-        if (s == null) return null;
-        s = s.trim();
-        return s.length() == 0 ? null : s.toUpperCase();
-    }
-
     public long getIdUKey() {
         return idUKey;
     }
@@ -192,7 +187,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setCourt(String court) {
-        this.court = filterBlanks(court);
+        this.court = WebUtils.filterBlanksAndToUpper(court);
     }
 
     public String getJudgeName() {
@@ -200,7 +195,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setJudgeName(String judgeName) {
-        this.judgeName = filterBlanks(judgeName);
+        this.judgeName = WebUtils.filterBlanksAndToUpper(judgeName);
     }
 
     public String getApplicantName() {
@@ -208,7 +203,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setApplicantName(String applicantName) {
-        this.applicantName = filterBlanks(applicantName);
+        this.applicantName = WebUtils.filterBlanksAndToUpper(applicantName);
     }
 
     public String getApplicantAddress() {
@@ -216,7 +211,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setApplicantAddress(String applicantAddress) {
-        this.applicantAddress = filterBlanks(applicantAddress);
+        this.applicantAddress = WebUtils.filterBlanksAndToUpper(applicantAddress);
     }
 
     public String getApplicantPINorNIC() {
@@ -224,7 +219,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setApplicantPINorNIC(String applicantPINorNIC) {
-        this.applicantPINorNIC = applicantPINorNIC;
+        this.applicantPINorNIC = WebUtils.filterBlanksAndToUpper(applicantPINorNIC);
     }
 
     public int getApplicantCountryId() {
@@ -240,7 +235,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setApplicantPassport(String applicantPassport) {
-        this.applicantPassport = applicantPassport;
+        this.applicantPassport = WebUtils.filterBlanksAndToUpper(applicantPassport);
     }
 
     public String getWifePINorNIC() {
@@ -248,7 +243,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setWifePINorNIC(String wifePINorNIC) {
-        this.wifePINorNIC = wifePINorNIC;
+        this.wifePINorNIC = WebUtils.filterBlanksAndToUpper(wifePINorNIC);
     }
 
     public int getWifeCountryId() {
@@ -264,7 +259,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setWifePassport(String wifePassport) {
-        this.wifePassport = wifePassport;
+        this.wifePassport = WebUtils.filterBlanksAndToUpper(wifePassport);
     }
 
     public String getWifeName() {
@@ -272,7 +267,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setWifeName(String wifeName) {
-        this.wifeName = filterBlanks(wifeName);
+        this.wifeName = WebUtils.filterBlanksAndToUpper(wifeName);
     }
 
     public String getCourtOrderNumber() {
@@ -280,7 +275,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setCourtOrderNumber(String courtOrderNumber) {
-        this.courtOrderNumber = filterBlanks(courtOrderNumber);
+        this.courtOrderNumber = WebUtils.filterBlanksAndToUpper(courtOrderNumber);
     }
 
     public String getChildExistingName() {
@@ -288,7 +283,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setChildExistingName(String childExistingName) {
-        this.childExistingName = filterBlanks(childExistingName);
+        this.childExistingName = WebUtils.filterBlanksAndToUpper(childExistingName);
     }
 
     public String getChildNewName() {
@@ -296,7 +291,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setChildNewName(String childNewName) {
-        this.childNewName = filterBlanks(childNewName);
+        this.childNewName = WebUtils.filterBlanksAndToUpper(childNewName);
     }
 
     public Date getChildBirthDate() {
@@ -376,7 +371,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setCertificateApplicantName(String certificateApplicantName) {
-        this.certificateApplicantName = certificateApplicantName;
+        this.certificateApplicantName = WebUtils.filterBlanksAndToUpper(certificateApplicantName);
     }
 
     public String getCertificateApplicantAddress() {
@@ -384,7 +379,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setCertificateApplicantAddress(String certificateApplicantAddress) {
-        this.certificateApplicantAddress = certificateApplicantAddress;
+        this.certificateApplicantAddress = WebUtils.filterBlanksAndToUpper(certificateApplicantAddress);
     }
 
     public ApplicantType getCertificateApplicantType() {
@@ -416,7 +411,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setCertificateApplicantPINorNIC(String certificateApplicantPINorNIC) {
-        this.certificateApplicantPINorNIC = certificateApplicantPINorNIC;
+        this.certificateApplicantPINorNIC = WebUtils.filterBlanksAndToUpper(certificateApplicantPINorNIC);
     }
 
     public Date getLastUpdatedTime() {

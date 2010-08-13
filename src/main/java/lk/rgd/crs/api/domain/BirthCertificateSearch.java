@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -139,10 +140,6 @@ public class BirthCertificateSearch implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date searchPerformDate;
 
-    private String filterBlanks(String s) {
-        return (s == null) ? null : (s.trim().length() == 0) ? null : s.trim().toUpperCase();
-    }
-
     public long getSearchUKey() {
         return searchUKey;
     }
@@ -164,7 +161,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setApplicationNo(String applicationNo) {
-        this.applicationNo = filterBlanks(applicationNo);
+        this.applicationNo = WebUtils.filterBlanksAndToUpper(applicationNo);
     }
 
     public Date getDateOfSubmission() {
@@ -180,7 +177,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setApplicantFullName(String applicantFullName) {
-        this.applicantFullName = filterBlanks(applicantFullName);
+        this.applicantFullName = WebUtils.filterBlanksAndToUpper(applicantFullName);
     }
 
     public String getApplicantAddress() {
@@ -188,7 +185,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setApplicantAddress(String applicantAddress) {
-        this.applicantAddress = filterBlanks(applicantAddress);
+        this.applicantAddress = WebUtils.filterBlanksAndToUpper(applicantAddress);
     }
 
     public String getChildFullNameOfficialLang() {
@@ -196,7 +193,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setChildFullNameOfficialLang(String childFullNameOfficialLang) {
-        this.childFullNameOfficialLang = filterBlanks(childFullNameOfficialLang);
+        this.childFullNameOfficialLang = WebUtils.filterBlanksAndToUpper(childFullNameOfficialLang);
     }
 
     public int getGender() {
@@ -220,7 +217,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setFatherFullName(String fatherFullName) {
-        this.fatherFullName = filterBlanks(fatherFullName);
+        this.fatherFullName = WebUtils.filterBlanksAndToUpper(fatherFullName);
     }
 
     public String getMotherFullName() {
@@ -228,7 +225,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setMotherFullName(String motherFullName) {
-        this.motherFullName = filterBlanks(motherFullName);
+        this.motherFullName = WebUtils.filterBlanksAndToUpper(motherFullName);
     }
 
     public Date getDateOfBirth() {
@@ -244,7 +241,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = filterBlanks(placeOfBirth);
+        this.placeOfBirth = WebUtils.filterBlanksAndToUpper(placeOfBirth);
     }
 
     public Long getCertificateNo() {
@@ -284,7 +281,7 @@ public class BirthCertificateSearch implements Serializable {
     }
 
     public void setChildFullNameEnglish(String childFullNameEnglish) {
-        this.childFullNameEnglish = filterBlanks(childFullNameEnglish);
+        this.childFullNameEnglish = WebUtils.filterBlanksAndToUpper(childFullNameEnglish);
     }
 
     public int getResultsFound() {

@@ -35,7 +35,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addLateDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding late/missing death registration");
-        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE || deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
+        if (deathRegistration.getDeathType() != DeathRegister.Type.LATE && deathRegistration.getDeathType() != DeathRegister.Type.MISSING) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
         addDeathRegistration(deathRegistration, user);
@@ -48,7 +48,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addNormalDeathRegistration(DeathRegister deathRegistration, User user) {
         logger.debug("adding normal/sudden death registration");
-        if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL || deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
+        if (deathRegistration.getDeathType() != DeathRegister.Type.NORMAL && deathRegistration.getDeathType() != DeathRegister.Type.SUDDEN) {
             handleException("Invalid death type : " + deathRegistration.getDeathType(), ErrorCodes.ILLEGAL_STATE);
         }
         addDeathRegistration(deathRegistration, user);

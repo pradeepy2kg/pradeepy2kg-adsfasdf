@@ -5,8 +5,6 @@ import lk.rgd.crs.web.util.WebUtils;
 import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 /**
  * @author Indunil Moremada
@@ -87,7 +85,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setAnyOtherInformation(String anyOtherInformation) {
-        this.anyOtherInformation = anyOtherInformation;
+        this.anyOtherInformation = WebUtils.filterBlanksAndToUpper(anyOtherInformation);
     }
 
     public long getDeathSerialNo() {
@@ -143,7 +141,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setTimeOfDeath(String timeOfDeath) {
-        this.timeOfDeath = timeOfDeath;
+        this.timeOfDeath = WebUtils.filterBlanksAndToUpper(timeOfDeath);
     }
 
     public String getPlaceOfDeathInEnglish() {
