@@ -105,7 +105,10 @@
                 errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
             }
         }
-
+        element = document.getElementById("greatGrandFatherBirthYear").value;
+        if (isNaN(element)) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
+        }
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -241,7 +244,8 @@
             <td><s:textfield name="grandFather.greatGrandFatherNICorPIN"/></td>
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthYear" cssStyle="width:95%;"/></td>
+            <td><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
+                             cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:95%;"/></td>
         </tr>
@@ -394,6 +398,7 @@
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
+<s:hidden id="p3error9" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
 <s:hidden name="pageNo" value="3"/>
 
 <div class="form-submit">
