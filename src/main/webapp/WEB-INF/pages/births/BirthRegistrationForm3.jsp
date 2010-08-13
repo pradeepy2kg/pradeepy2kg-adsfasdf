@@ -298,18 +298,7 @@
             தகவல்கள் <br>Details of the Informant
         </td>
     </tr>
-    <tr>
-        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
-            අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
-            கொடுப்பவரின்
-            தனிநபர்
-            அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3" class="find-person">
-            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
-                 id="informant_lookup"/>
-        </td>
-    </tr>
+
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
             විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
@@ -356,6 +345,19 @@
         </td>
     </tr>
 
+     <tr>
+        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
+            අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
+            கொடுப்பவரின்
+            தனிநபர்
+            அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
+        <td colspan="3" class="find-person">
+            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                 id="informant_lookup"/>
+        </td>
+    </tr>
+    
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
             <br>Name</label></td>

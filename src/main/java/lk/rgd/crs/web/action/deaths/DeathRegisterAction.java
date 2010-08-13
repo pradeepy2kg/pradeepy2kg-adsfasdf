@@ -191,13 +191,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    //todo this method doesnt have a usage
-    public String initLateDeath() {
-        populate();
-        return SUCCESS;
-    }
-
-
     public String deathApprovalAndPrint() {
         if (pageNo == 2) {
             session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -344,9 +337,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         try {
             if (!rePrint) {
                 service.markDeathCertificateAsPrinted(idUKey, user);
-            } else {
-
-            }
+            } 
         }
         catch (CRSRuntimeException e) {
             addActionError("death.error.no.permission.print");
