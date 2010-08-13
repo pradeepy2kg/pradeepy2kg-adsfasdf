@@ -23,6 +23,7 @@
             endDate:'2020-12-31'
         });
     });
+
     $(function() {
         $("#motherDatePicker").datepicker({
             changeYear: true,
@@ -30,7 +31,12 @@
             startDate:'2000-01-01',
             endDate:'2020-12-31'
         });
+        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+        var mother_bday = new Date(document.getElementById('motherDatePicker').value);
+        var mother_age = child_bday.getYear() - mother_bday.getYear();
+        $("input#motherAgeAtBirth").val(mother_age);
     });
+
     $(function() {
         $("#admitDatePicker").datepicker({
             changeYear: true,
@@ -39,6 +45,7 @@
             endDate:'2020-12-31'
         });
     });
+
     $(function() {
         $('img#father_lookup').bind('click', function(evt1) {
             var id1 = $("input#father_pinOrNic").attr("value");
@@ -76,6 +83,7 @@
                     });
         });
     })
+
     //javascript for form validation
     function validate()
     {
@@ -100,15 +108,16 @@
         }
         return returnval;
     }
+
     function motherage() {
-        var child_bday = document.getElementById('childDateOfBirth').value;
-        var mother_dob = new Date(document.getElementById('motherDatePicker').value);
-        var check_mother_dob = mother_dob;
-        var child_dob = new Date(child_bday);
+        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+        var mother_bday = new Date(document.getElementById('motherDatePicker').value);
+        <%--var mother_dob = new Date(mother_bday);--%>
+        <%--var child_dob = new Date(child_bday);--%>
         var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
         var mother_age = child_dob.getYear() - mother_dob.getYear();
-        if (mother_age <= 10 || check_mother_dob.length == 0) {
-            if (check_mother_dob.length == 0)
+        if (mother_age <= 10 || mother_bday.length == 0) {
+            if (mother_bday.length == 0)
             {
                 alert(document.getElementById('mother_birth_day_empty').value);
 
@@ -122,13 +131,6 @@
             mother_age_at_birth.value = mother_age;
             return true;
         }
-    }
-    function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
-        date = date.substring(0, date.lastIndexOf("/"));
-        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
-        var m = date.substring(0, date.lastIndexOf("/"));
-        return new Date(y, m, d);
     }
 </script>
 
@@ -263,7 +265,8 @@
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="3">
-                <s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>
+            <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
+            <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
