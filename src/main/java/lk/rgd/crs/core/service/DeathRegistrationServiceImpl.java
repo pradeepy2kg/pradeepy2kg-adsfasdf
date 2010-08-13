@@ -45,9 +45,6 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         logger.debug("added a normal registration with idUKey : {} ", deathRegistration.getIdUKey());
     }
 
-    /**
-     * @inheritDoc
-     */
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         // has this serial number been used already?

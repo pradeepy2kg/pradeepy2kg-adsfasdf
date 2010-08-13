@@ -16,7 +16,8 @@ public interface DeathRegistrationService {
     /**
      * Adds a normal death registration to the system. This is a Data Entry operation,
      * and only data entry level validations are performed at this stage.
-     * CRSRuntimeException will be thrown for invalid operations
+     * CRSRuntimeException will be thrown for un-authorized operations
+     * and invalid data
      *
      * @param deathRegistration the death registration to be added
      * @param user              the user initiating the action
@@ -35,7 +36,7 @@ public interface DeathRegistrationService {
 
     /**
      * updated an existing Death registration, CRSRuntimeException will be
-     * thrown for invalid operations
+     * thrown for un-authorized operations and invalid data
      *
      * @param deathRegistration the death registration to be updated
      * @param user              the user initiating the action
@@ -61,6 +62,7 @@ public interface DeathRegistrationService {
 
     /**
      * Get the list of death registrations for a given state based on given death division
+     * CRSRuntimeException will be thrown for un-authorized operations
      *
      * @param deathDivision the death division
      * @param pageNo        the page number for the results required (start from 1)
@@ -73,6 +75,7 @@ public interface DeathRegistrationService {
 
     /**
      * Get the list of all the death registrations which are belonging to the given death division
+     * CRSRuntimeException will be thrown for un-authorized operations
      *
      * @param deathDivision the death division
      * @param pageNo        the page number for the results required(start from 1)
@@ -84,6 +87,7 @@ public interface DeathRegistrationService {
 
     /**
      * get a death registration based on requested serial number and BDDivision
+     * CRSRuntimeException will be thrown for un-authorized operations
      *
      * @param bdDivision    the birth death declaration division under which the death serial number should be searched
      * @param user          the user initiating the action
@@ -94,6 +98,7 @@ public interface DeathRegistrationService {
 
     /**
      * Approve a death registration already captured by the DEO by an ADR or higher authority
+     * CRSRuntimeException will be thrown for un-authorized operations
      *
      * @param deathRegisterIdUKey the unique id of the death registration which is to be approved
      * @param user                the user initiating the action
@@ -102,6 +107,7 @@ public interface DeathRegistrationService {
 
     /**
      * Reject a death registration already captured by the DEO by an ADR or higher authority
+     * CRSRuntimeException will be thrown for un-authorized operations
      *
      * @param deathRegisterIdUKey the unique id of the death registration which is to be rejected
      * @param user                the user initiating the action
@@ -110,6 +116,7 @@ public interface DeathRegistrationService {
 
     /**
      * mark that death certificate for the death registration as printed
+     * CRSRuntimeException will be thrown for un-authorized operations
      *
      * @param deathRegisterIdUKey the unique id of the death registration
      * @param user                the user initiating the action
@@ -119,7 +126,8 @@ public interface DeathRegistrationService {
     /**
      * Returns a limited set of DeathRegister for selected BD Division and selected range of registration dates.
      * Results are ordered on the descending registration date. pageNo  and noOfRows used for pagination
-     * CRSRuntimeException will be thrown for invalid operations
+     * CRSRuntimeException will be thrown for un-authorized operations
+     *
      * @param deathDivision the death division
      * @param startDate     starting date of the range
      * @param endDate       ending date of the range
