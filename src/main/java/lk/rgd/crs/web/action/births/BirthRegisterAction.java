@@ -246,6 +246,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getChild().setDateOfBirth(child.getDateOfBirth());
                 bdf.getChild().setChildGender(child.getChildGender());
                 bdf.getChild().setPlaceOfBirth(child.getPlaceOfBirth());
+                bdf.getChild().setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
 
                 bdf.getParent().setFatherNICorPIN(parent.getFatherNICorPIN());
                 bdf.getParent().setFatherRace(parent.getFatherRace());

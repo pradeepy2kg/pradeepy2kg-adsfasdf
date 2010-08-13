@@ -55,7 +55,7 @@
                     </s:a>
                 </s:if>
                 <s:if test="%{key == '7adoption'}">
-                    <s:a href="/popreg/adoption/eprAdoptionRegistrationHome.do">
+                    <s:a href="#">
                         <s:label value="%{getText('category_adoption')}"/>
                     </s:a>
                 </s:if>
