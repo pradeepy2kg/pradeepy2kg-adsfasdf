@@ -10,14 +10,11 @@ import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.InformantInfo;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import org.springframework.context.ApplicationContext;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

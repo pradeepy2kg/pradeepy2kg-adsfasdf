@@ -96,23 +96,22 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo) {
-        DeathRegister dr = null;
         Query q = em.createNamedQuery("get.by.bddivision.and.deathSerialNo");
         q.setParameter("deathSerialNo", deathSerialNo);
         q.setParameter("deathDivision", bdDivision);
         try {
-            dr = (DeathRegister) q.getSingleResult();
+            return (DeathRegister) q.getSingleResult();
         } catch (NoResultException e) {
-            logger.error("No result for the given bdDivision and serialNo", e);
+            logger.debug("No record found for bdDivision : {} and serialNo : {}", bdDivision.getBdDivisionUKey(), deathSerialNo);
+            return null;
         }
-        return dr;
     }
 
     /**
      * @inheritDoc
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows) {
+        Date startDate, Date endDate, int pageNo, int noOfRows) {
         List<DeathRegister> resultList;
         Query q = em.createNamedQuery("get.by.division.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);

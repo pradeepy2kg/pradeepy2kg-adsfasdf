@@ -155,7 +155,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }

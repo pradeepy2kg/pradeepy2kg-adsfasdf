@@ -825,7 +825,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtID, language, user);
     }
 
-
     public int getPageNo() {
         return pageNo;
     }
@@ -1194,9 +1193,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public boolean isDirectPrintBirthCertificate() {
         return directPrintBirthCertificate;
-
     }
-
 
     public void setGender(String gender) {
         this.gender = gender;
@@ -1204,9 +1201,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDirectPrintBirthCertificate(boolean directPrintBirthCertificate) {
         this.directPrintBirthCertificate = directPrintBirthCertificate;
-
     }
-
 
     public String getChildDistrict() {
         return childDistrict;
@@ -1338,7 +1333,5 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
-    }
-
-   
+    }   
 }
