@@ -5,7 +5,6 @@ import lk.rgd.common.api.dao.RoleDAO;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.PINNumber;
@@ -25,8 +24,6 @@ import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -41,7 +38,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
     public static final String USE_NW_DERBY = "nwderby";
     private static final Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     private DataSource dataSource;
     private boolean createCleanDB = true;

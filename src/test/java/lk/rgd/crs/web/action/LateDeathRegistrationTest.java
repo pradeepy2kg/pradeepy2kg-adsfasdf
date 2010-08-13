@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.DeathRegister;
@@ -14,21 +15,12 @@ import lk.rgd.crs.api.domain.DeathRegister;
 import java.util.Map;
 import java.util.HashMap;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
-/**
- * Created by IntelliJ IDEA.
- * User: widu
- * Date: Aug 9, 2010
- * Time: 10:30:37 AM
- * To change this template use File | Settings | File Templates.
- */
 public class LateDeathRegistrationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     private ActionProxy proxy;
     private User user;
     private DeathRegisterAction deathAction;
-    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     private Map UserLogin(String username, String passwd) throws Exception {
         request.setParameter("userName", username);
@@ -118,8 +110,8 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
         assertEquals("Caurse of Death","BUS ACCIDENT",ddf.getDeath().getCauseOfDeath());
-        assertEquals("Date of Death","2010-08-01",df.format(ddf.getDeath().getDateOfDeath()));
-        assertEquals("date of Registration","2010-08-17",df.format(ddf.getDeath().getDateOfRegistration()));
+        assertEquals("Date of Death","2010-08-01", DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfDeath()));
+        assertEquals("date of Registration","2010-08-17",DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfRegistration()));
         assertEquals("Cause Of Death Established",false,ddf.getDeath().isCauseOfDeathEstablished());
         assertEquals("Infant Less Than 30 Days",false,ddf.getDeath().isInfantLessThan30Days());
         assertEquals("Icd Code Of Cause","33EE",ddf.getDeath().getIcdCodeOfCause());

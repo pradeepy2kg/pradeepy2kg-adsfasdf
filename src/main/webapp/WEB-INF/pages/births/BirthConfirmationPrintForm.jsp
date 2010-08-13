@@ -1,5 +1,5 @@
-<%@ page import="java.text.DateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%--
  @author amith jayasekara
 --%>
@@ -625,7 +625,7 @@
         <tr>
             <td>Printed On</td>
 
-            <td style="text-align:right;margin-left:auto;margin-right:0;"><%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()) %>
+            <td style="text-align:right;margin-left:auto;margin-right:0;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
             </td>
         </tr>
         </tbody>

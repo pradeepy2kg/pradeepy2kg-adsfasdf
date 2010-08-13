@@ -10,6 +10,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -28,9 +29,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
-import java.net.ConnectException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -39,7 +37,6 @@ import java.util.*;
 public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthRegistrationServiceImpl.class);
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     private final BirthDeclarationDAO birthDeclarationDAO;
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
@@ -419,11 +416,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 sb.append(existing.getRegister().getComments()).append("\n");
             }
 
-            // SimpleDateFormat is not thread-safe
-            synchronized (dfm) {
-                sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
-            }
+            sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
+                append(user.getUserId()).append("\n");
 
             for (UserWarning w : warnings) {
                 sb.append(w.getSeverity());
@@ -490,11 +484,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 sb.append(existing.getRegister().getComments()).append("\n");
             }
 
-            // SimpleDateFormat is not thread-safe
-            synchronized (dfm) {
-                sb.append(dfm.format(new Date())).append(" - Approved still birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
-            }
+            sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved still birth declaration ignoring warnings. User : ").
+                append(user.getUserId()).append("\n");
 
             for (UserWarning w : warnings) {
                 sb.append(w.getSeverity());
@@ -560,11 +551,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 sb.append(existing.getRegister().getComments()).append("\n");
             }
 
-            // SimpleDateFormat is not thread-safe
-            synchronized (dfm) {
-                sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
-            }
+            sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
+                append(user.getUserId()).append("\n");
 
             for (UserWarning w : warnings) {
                 sb.append(w.getSeverity());
@@ -896,11 +884,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                 sb.append(existing.getRegister().getComments()).append("\n");
             }
 
-            // SimpleDateFormat is not thread-safe
-            synchronized (dfm) {
-                sb.append(dfm.format(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
-                    append(user.getUserId()).append("\n");
-            }
+            sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
+                append(user.getUserId()).append("\n");
 
             for (UserWarning w : warnings) {
                 sb.append(w.getSeverity());

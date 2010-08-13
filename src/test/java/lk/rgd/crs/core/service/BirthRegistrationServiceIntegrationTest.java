@@ -1,24 +1,9 @@
 package lk.rgd.crs.core.service;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
-import lk.rgd.UnitTestManager;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.common.core.service.UserManagerImpl;
-import lk.rgd.crs.api.bean.UserWarning;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.BirthDeclarationDAO;
-import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.InformantInfo;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import org.springframework.context.ApplicationContext;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +14,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
 
     public void testBirthRecordIndexing() throws Exception {
 
-        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
-        BirthDeclaration bdf1 = getMinimalBDF(2010108, dfm.parse("2010-07-21"), colomboBDDivision);
+        BirthDeclaration bdf1 = getMinimalBDF(2010108, DateTimeUtils.getDateFromISO8601String("2010-07-21"), colomboBDDivision);
         bdf1.getChild().setChildFullNameEnglish("aaaa bbbb cccc zzzz");
         bdf1.getChild().setChildGender(0);
         bdf1.getParent().setMotherFullName("hhhh iiii zzzz");
@@ -40,7 +24,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
 
-        BirthDeclaration bdf2 = getMinimalBDF(2010109, dfm.parse("2010-07-22"), colomboBDDivision);
+        BirthDeclaration bdf2 = getMinimalBDF(2010109, DateTimeUtils.getDateFromISO8601String("2010-07-22"), colomboBDDivision);
         bdf2.getChild().setChildFullNameEnglish("eeee ffff gggg zzzz");
         bdf2.getChild().setChildGender(0);
         bdf2.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
@@ -50,7 +34,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf2 = birthRegSvc.getById(bdf2.getIdUKey(), deoColomboColombo);
         birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf2, deoColomboColombo);
 
-        BirthDeclaration bdf3 = getMinimalBDF(2010110, dfm.parse("2010-07-22"), colomboBDDivision);
+        BirthDeclaration bdf3 = getMinimalBDF(2010110, DateTimeUtils.getDateFromISO8601String("2010-07-22"), colomboBDDivision);
         bdf3.getChild().setChildFullNameEnglish("hhhh iiii zzzz");
         bdf3.getChild().setChildGender(0);
         bdf3.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
@@ -103,7 +87,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bcs.setGender(0);
         bcs.setDateOfBirth(null);
         bcs.setMotherFullName("zzzz");
-        bcs.setDateOfBirth(dfm.parse("2010-07-22"));
+        bcs.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("2010-07-22"));
 
         bcs.setSearchUKey(0);
         bcs.setApplicationNo("6");
@@ -112,7 +96,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
 
         bcs.setMotherFullName("zzzz");
         bcs.setChildFullNameEnglish(null);
-        bcs.setDateOfBirth(dfm.parse("2010-07-21"));
+        bcs.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("2010-07-21"));
         bcs.setSearchUKey(0);
         bcs.setApplicationNo("7");
         results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);

@@ -46,7 +46,7 @@
                     function(data1) {
                         $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                         $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                        dojo.widget.byId('fatherDatePicker').setValue(data1.dateOfBirth);
+                        $("input#fatherDatePicker").val(data1.dateOfBirth);
                     });
         });
 
@@ -57,7 +57,7 @@
                         $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                         $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                         $("textarea#motherAddress").val(data2.lastAddress);
-                        dojo.widget.byId('motherDatePicker').setValue(data2.dateOfBirth);
+                        $("input#motherDatePicker").setValue(data2.dateOfBirth);
                     });
         });
 

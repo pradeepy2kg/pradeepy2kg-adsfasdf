@@ -12,8 +12,6 @@ import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -26,8 +24,6 @@ import java.util.List;
 public class PopulationRegistryImpl implements PopulationRegistry {
 
     private static final Logger logger = LoggerFactory.getLogger(PopulationRegistryImpl.class);
-
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 
     private final PersonDAO personDao;
     private final PINGenerator pinGenerator;

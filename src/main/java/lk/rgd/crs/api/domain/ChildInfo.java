@@ -1,20 +1,17 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.crs.web.util.WebUtils;
+import lk.rgd.common.util.DateTimeUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
 
 /**
  * An instance representing child information submitted for the declaration of a birth (page 1 of the form)
  */
 @Embeddable
 public class ChildInfo implements Serializable {
-
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-mm-dd");
 
     /**
      * This is the PIN number generated to the child
@@ -100,9 +97,7 @@ public class ChildInfo implements Serializable {
     }
 
     public String getChildDateOfBirthForPrint() {
-        synchronized (dfm) {
-            return dfm.format(dateOfBirth);
-        }
+        return DateTimeUtils.getISO8601FormattedString(dateOfBirth);
     }
 
     public void setDateOfBirth(Date dateOfBirth) {

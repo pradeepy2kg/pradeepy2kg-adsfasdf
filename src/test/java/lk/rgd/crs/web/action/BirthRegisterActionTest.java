@@ -1,19 +1,15 @@
 package lk.rgd.crs.web.action;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.util.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import org.apache.log4j.helpers.ISO8601DateFormat;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
 
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.WebConstants;
@@ -30,7 +26,6 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
     private BirthRegisterAction action;
     private LoginAction loginAction;
     private BirthDeclaration bd;
-    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
@@ -162,7 +157,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with father country", 1, bd.getParent().getFatherCountry().getCountryId());
         assertEquals("failed to update birth declaration session with father passport number", "4832", bd.getParent().getFatherPassportNo());
         assertEquals("failed to update birth declaration session with father full name", "ලෝගේස්වරන් යුවන් ශන්කර්", bd.getParent().getFatherFullName());
-        assertEquals("failed to update birth declaration session with father DOB", "1964-08-09", df.format(bd.getParent().getFatherDOB()));
+        assertEquals("failed to update birth declaration session with father DOB", "1964-08-09",
+                DateTimeUtils.getISO8601FormattedString(bd.getParent().getFatherDOB()));
         assertEquals("failed to update birth declaration session with father place of birth", "Kandy".toUpperCase(), bd.getParent().getFatherPlaceOfBirth());
         assertEquals("failed to update birth declaration session with father Race", 1, bd.getParent().getFatherRace().getRaceId());
 
@@ -170,14 +166,14 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with mother country", 2, bd.getParent().getMotherCountry().getCountryId());
         assertEquals("failed to update birth declaration session with mother passport number", "5999", bd.getParent().getMotherPassportNo());
         assertEquals("failed to update birth declaration session with mother full Name", "සංගුණි ෙද්ව ෙග්", bd.getParent().getMotherFullName());
-        assertEquals("failed to update birth declaration session with mother mother DOB", "1968-08-09", df.format(bd.getParent().getMotherDOB()));
+        assertEquals("failed to update birth declaration session with mother mother DOB", "1968-08-09", DateTimeUtils.getISO8601FormattedString(bd.getParent().getMotherDOB()));
         assertEquals("failed to update birth declaration session with mother age at birth", 43, bd.getParent().getMotherAgeAtBirth().intValue());
         assertEquals("failed to update birth declaration session with mother address", "65 C මල්වත්ත පාර, කොට්ටාව", bd.getParent().getMotherAddress());
         assertEquals("failed to update birth declaration session with mother race id", 1, bd.getParent().getMotherRace().getRaceId());
         assertEquals("failed to update birth declaration session with mother place of birth", "KANDANA", bd.getParent().getMotherPlaceOfBirth());
         assertEquals("failed to update birth declaration session with mother admission number", "125", bd.getParent().getMotherAdmissionNo());
         assertEquals("failed to update birth declaration session with mother email", "INFO@GMAIL.COM", bd.getParent().getMotherEmail());
-        assertEquals("failed to update birth declaration session with mother admission date", "2010-01-09", df.format(bd.getParent().getMotherAdmissionDate()));
+        assertEquals("failed to update birth declaration session with mother admission date", "2010-01-09", DateTimeUtils.getISO8601FormattedString(bd.getParent().getMotherAdmissionDate()));
         assertEquals("failed to update birth declaration session with mother phone number", "0112345678", bd.getParent().getMotherPhoneNo());
 
         assertNotNull("marriage Bean population faild", action.getMarriage());
@@ -206,14 +202,14 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
         assertEquals("failed to update birth declaration session with place of marriage", "KADUWELA", bd.getMarriage().getPlaceOfMarriage());
-        assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", df.format(bd.getMarriage().getDateOfMarriage()));
+        assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", DateTimeUtils.getISO8601FormattedString(bd.getMarriage().getDateOfMarriage()));
         assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
         assertEquals("failed to update birth declaration session with informant NIC/PIN", "685031035V", bd.getInformant().getInformantNICorPIN());
         assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
         assertEquals("failed to update birth declaration session with informant address", "KANDY ROAD MATALE", bd.getInformant().getInformantAddress());
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
         assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
-        assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", df.format(bd.getInformant().getInformantSignDate()));
+        assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", DateTimeUtils.getISO8601FormattedString(bd.getInformant().getInformantSignDate()));
 
         //BirthDeclaration Form Details
         request.setParameter("pageNo", "4");
@@ -353,14 +349,14 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
         assertEquals("failed to update birth declaration session with place of marriage", "KADUWELA", bd.getMarriage().getPlaceOfMarriage());
-        assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", df.format(bd.getMarriage().getDateOfMarriage()));
+        assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", DateTimeUtils.getISO8601FormattedString(bd.getMarriage().getDateOfMarriage()));
         assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
         assertEquals("failed to update birth declaration session with informant NIC/PIN", "685031035V", bd.getInformant().getInformantNICorPIN());
         assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
         assertEquals("failed to update birth declaration session with informant address", "KANDY ROAD MATALE", bd.getInformant().getInformantAddress());
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
         assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
-        assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", df.format(bd.getInformant().getInformantSignDate()));
+        assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", DateTimeUtils.getISO8601FormattedString(bd.getInformant().getInformantSignDate()));
 
         //BirthDeclaration Form Details
         request.setParameter("pageNo", "4");
@@ -457,8 +453,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
         assertEquals("Register bdf serial no failed", (long) 123, bd.getRegister().getBdfSerialNo());
-        assertEquals("Date of registration failed", "2010-08-10", df.format(bd.getRegister().getDateOfRegistration()));
-        assertEquals("Date of birth failed", "2010-07-10", df.format(bd.getChild().getDateOfBirth()));
+        assertEquals("Date of registration failed", "2010-08-10", DateTimeUtils.getISO8601FormattedString(bd.getRegister().getDateOfRegistration()));
+        assertEquals("Date of birth failed", "2010-07-10", DateTimeUtils.getISO8601FormattedString(bd.getChild().getDateOfBirth()));
         assertEquals("Birth district Id failed", 1, bd.getRegister().getBirthDistrict().getDistrictUKey());
         assertEquals("DSDivision Id failed", 2, bd.getRegister().getBirthDivision().getDsDivision().getDsDivisionUKey());
         assertEquals("Child Birth Division failed", 6, bd.getRegister().getBirthDivision().getBdDivisionUKey());
@@ -524,7 +520,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("Informant NIC: ", "33333333V", bd.getInformant().getInformantNICorPIN());
         assertEquals("Notifier NIC: ", "44444444V", bd.getNotifyingAuthority().getNotifyingAuthorityPIN());
-        assertEquals("Notifier sign date: ", "2010-08-09", df.format(bd.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
+        assertEquals("Notifier sign date: ", "2010-08-09", DateTimeUtils.getISO8601FormattedString(bd.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
         assertEquals("No action errors", 0, action.getActionErrors().size());
 
     }

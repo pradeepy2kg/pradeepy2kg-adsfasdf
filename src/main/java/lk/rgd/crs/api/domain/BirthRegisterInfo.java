@@ -3,12 +3,11 @@ package lk.rgd.crs.api.domain;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,6 @@ import java.io.Serializable;
  */
 @Embeddable
 public class BirthRegisterInfo implements Serializable {
-    private static final DateFormat dfm = new SimpleDateFormat("yyyy-mm-dd");
-
     /**
      * The preferred language of for the record
      */
@@ -159,9 +156,7 @@ public class BirthRegisterInfo implements Serializable {
     }
 
     public String getOriginalBCDateOfIssueForPrint() {
-        synchronized (dfm) {
-            return dfm.format(originalBCDateOfIssue);
-        }
+        return DateTimeUtils.getISO8601FormattedString(originalBCDateOfIssue);
     }
 
     public void setOriginalBCDateOfIssue(Date originalBCDateOfIssue) {
@@ -205,9 +200,7 @@ public class BirthRegisterInfo implements Serializable {
     }
 
     public String getDateOfRegistrationForPrint() {
-        synchronized (dfm) {
-            return dfm.format(dateOfRegistration);
-        }
+       return DateTimeUtils.getISO8601FormattedString(dateOfRegistration);
     }
 
     public void setDateOfRegistration(Date dateOfRegistration) {

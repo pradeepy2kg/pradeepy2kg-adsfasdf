@@ -14,30 +14,18 @@ import org.apache.struts2.util.StrutsTypeConverter;
  */
 public class DateTypeConverter extends StrutsTypeConverter {
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     @Override
     public Object convertFromString(Map context, String[] values, Class toClass) {
-
         if (values.length == 0 || values[0] == null || values[0].trim().equals("")) {
             return null;
         }
-        try {
-            synchronized (dateFormat) {
-                return dateFormat.parse(values[0]);
-            }
-        } catch (ParseException e) {
-            return null;
-        }
+        return DateTimeUtils.getDateFromISO8601String(values[0]);
     }
 
     @Override
     public String convertToString(Map context, Object o) {
-
         if (o instanceof Date) {
-            synchronized (dateFormat) {
-                return dateFormat.format((Date) o);
-            }
+            DateTimeUtils.getISO8601FormattedString((Date) o);
         }
         return "";
     }

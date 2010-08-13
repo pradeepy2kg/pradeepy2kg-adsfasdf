@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.util.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
@@ -10,8 +11,6 @@ import com.opensymphony.xwork2.ActionContext;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -33,7 +32,6 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
     private ActionProxy proxy;
     private BirthRegisterAction action;
     private LoginAction loginAction;
-    private final DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 
     @Override
     protected void setUp() throws Exception {
@@ -161,8 +159,8 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertEquals("BDF NotifyingAutho Address miss match in previously added BDF and BDF in session",
             bdf.getNotifyingAuthority().getNotifyingAuthorityAddress(), batchBdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
         assertEquals("BDF NotifyingAutho Sign Date miss match in previously added BDF and BDF in session",
-            df.format(bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()),
-            df.format(batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
+            DateTimeUtils.getISO8601FormattedString(bdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()),
+            DateTimeUtils.getISO8601FormattedString(batchBdf.getNotifyingAuthority().getNotifyingAuthoritySignDate()));
         logger.debug("Adding BDF auto populating fields populated correctly and Add new in batch mode passed");
         deleteBDF(bdf);
     }

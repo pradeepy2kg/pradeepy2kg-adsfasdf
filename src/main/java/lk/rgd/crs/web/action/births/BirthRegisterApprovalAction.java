@@ -9,9 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import java.util.Map;
 import java.util.Locale;
 import java.util.List;
@@ -24,6 +21,7 @@ import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.Permission;
 
 
@@ -42,7 +40,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private final BDDivisionDAO bdDivisionDAO;
     private final AppParametersDAO appParametersDAO;
     private final BirthRegistrationService service;
-    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private static final String BR_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
 
     private Map session;
@@ -575,12 +572,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             approvalPendingList = service.getConfirmationApprovalPending(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else if (searchDateRangeFlag) {
-            try {
-                searchStartDate = df.parse(startDate);
-                searchEndDate = df.parse(endDate);
-            } catch (ParseException e) {
-                logger.error("in nextPage() startDate and endDate conversion failed: {}", e);
-            }
+            searchStartDate = DateTimeUtils.getDateFromISO8601String(startDate);
+            searchEndDate = DateTimeUtils.getDateFromISO8601String(endDate);
             approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
         } else {
@@ -638,12 +631,8 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                 pageNo, noOfRows, user);
         } else if (searchDateRangeFlag) {
-            try {
-                searchStartDate = df.parse(startDate);
-                searchEndDate = df.parse(endDate);
-            } catch (ParseException e) {
-                logger.error("in previousPage() startDate and endDate conversion failed: {}", e);
-            }
+            searchStartDate = DateTimeUtils.getDateFromISO8601String(startDate);
+            searchEndDate = DateTimeUtils.getDateFromISO8601String(endDate);
             approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
         } else {
@@ -864,7 +853,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setSearchStartDate(Date searchStartDate) {
         this.searchStartDate = searchStartDate;
-        startDate = df.format(searchStartDate);
+        startDate = DateTimeUtils.getISO8601FormattedString(searchStartDate);
     }
 
     public Date getSearchEndDate() {
@@ -873,7 +862,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
 
     public void setSearchEndDate(Date searchEndDate) {
         this.searchEndDate = searchEndDate;
-        endDate = df.format(searchEndDate);
+        endDate = DateTimeUtils.getISO8601FormattedString(searchEndDate);
     }
 
     public boolean isSearchDateRangeFlag() {

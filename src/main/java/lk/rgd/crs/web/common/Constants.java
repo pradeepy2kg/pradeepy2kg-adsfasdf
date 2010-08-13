@@ -1,7 +1,5 @@
 package lk.rgd.crs.web.common;
 
-import java.text.SimpleDateFormat;
-
 /**
  * Constants which holds all the constant belogs to the project
 @author Indunil Moremada

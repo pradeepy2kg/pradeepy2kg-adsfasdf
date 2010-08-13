@@ -1,4 +1,5 @@
 <%@ page import="java.util.Date" %>
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
@@ -28,7 +29,7 @@
         </td>
     </tr>
     <tr style="text-align:right;font-size:10pt">
-        <td><s:label><%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()) %>
+        <td><s:label><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
         </s:label></td>
     </tr>
     <tr height="50px" style="text-align:left;font-size:10pt">
