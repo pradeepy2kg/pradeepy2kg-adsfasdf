@@ -24,7 +24,7 @@ public class RoleDAOImpl extends BaseDAO implements RoleDAO, PreloadableDAO {
         return em.find(Role.class, roleId);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)  // this is called by the Database initializer, and hence this propagation
     public void save(Role role) {
         logger.debug("Saving role : {}", role.getRoleId());
         //Role merged = em.merge(role);
