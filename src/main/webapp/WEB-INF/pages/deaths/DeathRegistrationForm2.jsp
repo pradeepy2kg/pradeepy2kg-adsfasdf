@@ -7,7 +7,7 @@
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
-
+<s:set value="rowNumber" name="row"/>
 <script type="text/javascript">
 
     $(function() {
@@ -56,6 +56,15 @@
                     });
         });
     });
+
+    var informPerson;
+    function setInformPerson(nICorPIN, name)
+    {
+        var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
+        var informantNICorPIN = document.getElementById("declarantFullName").value = name;
+    }
+
+
 </script>
 
 <div id="death-declaration-form-2-outer">
@@ -74,38 +83,18 @@
                 <td colspan="7">ප්‍රකාශකයාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>Details of the Declarant</td>
             </tr>
             <tr>
-                <td colspan="4">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
-                    <br>PIN / NIC
-                </td>
-                <td colspan="3" class="find-person"><s:textfield id="declarant_pinOrNic"
-                                                                 name="declarant.declarantNICorPIN"/><img
-                        src="<s:url value="/images/search-father.png"/>"
-                        style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
-            </tr>
-            <tr>
-                <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">ඇමතුම් විස්තර<br>இலக்க வகை <br>Contact Details</td>
-                <td colspan="1">දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
-                <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
-                <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td colspan="2"><s:textfield id="declarantEMail" name="declarant.declarantEMail"/></td>
-            </tr>
-            <tr>
-                <td rowspan="2" colspan="1">දැනුම් දෙන්නේ කවරකු වශයෙන්ද<br>*in tamil<br>Capacity for giving information
+                <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ
+                    කවරකු
+                    වශයෙන්ද<br>*in tamil<br>Capacity for giving information
                 </td>
                 <td colspan="1">මව <br>*in tamil<br>Mother</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'FATHER':''}"/></td>
+                                         list="#@java.util.HashMap@{'FATHER':''}"
+                                         onchange="setInformPerson('%{deathPerson.deathPersonMotherPINorNIC}','%{deathPerson.deathPersonMotherFullName}');"/></td>
                 <td colspan="1">පියා<br>*in tamil<br>Father</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
-                                         list="#@java.util.HashMap@{'MOTHER':''}"/></td>
+                                         list="#@java.util.HashMap@{'MOTHER':''}"
+                                         onchange="setInformPerson('%{deathPerson.deathPersonFatherPINorNIC}','%{deathPerson.deathPersonFatherFullName}');"/></td>
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"/></td>
@@ -120,6 +109,37 @@
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
                 <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'OTHER':''}"/></td>
+            </tr>
+            <tr>
+                <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය /
+                    ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
+                    <br>PIN / NIC
+                </td>
+                <td colspan="3" class="find-person"><s:textfield id="declarant_pinOrNic"
+                                                                 name="declarant.declarantNICorPIN"/><img
+                        src="<s:url value="/images/search-father.png"/>"
+                        style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
+            </tr>
+            <tr>
+                <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම<br>கொடுப்பவரின்
+                    பெயர்<br>Name
+                </td>
+                <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"/></td>
+            </tr>
+            <tr>
+                <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
+                    முகவரி<br>Postal Address
+                </td>
+                <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"/></td>
+            </tr>
+            <tr>
+                <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර<br>இலக்க வகை
+                    <br>Contact Details
+                </td>
+                <td colspan="1">දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
+                <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
+                <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
+                <td colspan="2"><s:textfield id="declarantEMail" name="declarant.declarantEMail"/></td>
             </tr>
             </tbody>
         </table>
