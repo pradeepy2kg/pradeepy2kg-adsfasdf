@@ -28,7 +28,7 @@
         }
     %>
 
-    <img src="/popreg/images/epr-header.png" />" align="center" width="1250px"/>
+    <img src="/popreg/images/epr-header.png" align="center" width="1250px"/>
 
     <div id="login-error" style="text-align:center;">
         <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt; margin:150px auto -170px auto;"/>
