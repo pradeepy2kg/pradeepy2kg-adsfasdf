@@ -29,12 +29,24 @@
             changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
-            endDate:'2020-12-31'
+            endDate:'2020-12-31',
+            onSelect: function(dateText, inst) {
+                var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+                var mother_bday = document.getElementById('motherDatePicker').value;
+                if (mother_bday != "") {
+                    var motherbday = new Date(mother_bday);
+                    var mother_age = child_bday.getYear() - motherbday.getYear();
+                    $("input#motherAgeAtBirth").val(mother_age);
+                }
+            }
         });
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-        var mother_bday = new Date(document.getElementById('motherDatePicker').value);
-        var mother_age = child_bday.getYear() - mother_bday.getYear();
-        $("input#motherAgeAtBirth").val(mother_age);
+        var mother_bday = document.getElementById('motherDatePicker').value;
+        if (mother_bday != "") {
+            var motherbday = new Date(mother_bday);
+            var mother_age = child_bday.getYear() - motherbday.getYear();
+            $("input#motherAgeAtBirth").val(mother_age);
+        }
     });
 
     $(function() {
@@ -65,6 +77,14 @@
                         $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                         $("textarea#motherAddress").val(data2.lastAddress);
                         $("input#motherDatePicker").val(data2.dateOfBirth);
+
+                        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+                        var mother_bday = document.getElementById('motherDatePicker').value;
+                        if (mother_bday != "") {
+                            var motherbday = new Date(mother_bday);
+                            var mother_age = child_bday.getYear() - motherbday.getYear();
+                            $("input#motherAgeAtBirth").val(mother_age);
+                        }
                     });
         });
 
