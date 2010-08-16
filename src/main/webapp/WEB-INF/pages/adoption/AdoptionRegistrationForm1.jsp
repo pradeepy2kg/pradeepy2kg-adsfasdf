@@ -21,9 +21,33 @@
             changeYear: true,
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
-            endDate:'2020-12-31'
+            endDate:'2020-12-31',
+            onSelect: function() {
+                var bday = new Date(document.getElementById('bdayDatePicker').value);
+                var today = new Date();
+                var ageMonthBDay = bday.getMonth();
+                var ageYearBDay = bday.getYear();
+                var ageMonthTOday = today.getMonth();
+                var ageYearTOday = today.getYear();
+                var ageMonth,ageYear = 0;
+                if (ageMonthTOday >= ageMonthBDay) {
+                    ageMonth = ageMonthTOday - ageMonthBDay;
+                    ageYear = ageYearTOday - ageYearBDay;
+                }
+                else    if (ageYearTOday > ageYearBDay) {
+                    ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
+                    ageYear = (ageYearTOday - 1) - ageYearBDay;
+                }
+
+                if (confirm(document.getElementById("lable01").value + "   :" + ageYear
+                        + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
+                    document.getElementById("childAgeYears").value = ageYear;
+                    document.getElementById("childAgeMonths").value = ageMonth;
+                }
+            }
         });
     });
+
     $(function() {
         $("#orderIssuedDatePicker").datepicker({
             changeYear: true,
@@ -68,6 +92,68 @@
     })
 
 
+    //these inpute can not be null
+
+    function validate() {
+        var errormsgOut = "";
+        var element;
+        var returnval;
+        var flag = false;
+        var inputs = new Array(9);
+
+        //these inpute can not be null
+        inputs[0] = new Date(document.getElementById("receivedDatePicker").value)
+        inputs[1] = document.getElementById("court").value;
+        inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
+        inputs[3] = document.getElementById("courtOrderNumber").value;
+        inputs[4] = document.getElementById("judgeName").value;
+        inputs[5] = document.getElementById("applicantName").value;
+        inputs[6] = document.getElementById("applicantAddress").value;
+        inputs[7] = document.getElementById("childAgeYears").value;
+        inputs[8] = document.getElementById("childAgeMonths").value;
+        //these inputs may be null with conditions
+        var childExistingName = document.getElementById("childExistingName").value;
+        var childNewName = document.getElementById("childNewName").value;
+        //var adoptionApplicantFather=document.getElementById("adoptionApplicantFather").value;
+        //alert(adoptionApplicantFather);
+        //check elements which are can not be null
+        for (i = 0; i < inputs.length; i++)
+        {
+            if (inputs[i].length <= 0)
+            {
+                errormsgOut = errormsgOut + document.getElementById("error" + i).value + "\n";
+            }
+        }
+        if (childExistingName.length <= 0 && childNewName.length <= 0) {
+
+            errormsgOut = errormsgOut + document.getElementById("error9").value + "\n";
+        }
+        if (isNaN(inputs[7]) && inputs[7].length > 0)
+        {
+            errormsgOut = errormsgOut + document.getElementById("error10").value + "\n";
+        }
+        if ((isNaN(inputs[8]) && inputs[8].length > 0)) {
+
+            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
+        }
+        else if ((inputs[8] > 12 || inputs[8] < 0) && (inputs[8].length > 0)) {
+            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
+        }
+        if (errormsgOut.length > 0) {
+            alert(errormsgOut);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    function disable(mode) {
+        document.getElementById('wifePINorNIC').disabled = mode;
+        document.getElementById('wifeCountryId').disabled = mode;
+        document.getElementById('wifePassport').disabled = mode;
+        document.getElementById('wifeName').disabled = mode;
+    }
 </script>
 
 <div id="adoption-registration-form-outer">
@@ -99,7 +185,7 @@
             Received Date
         </td>
         <td style="text-align:center;" width="70"><s:textfield id="receivedDatePicker"
-                                                   name="adoption.orderReceivedDate"></s:textfield>
+                                                               name="adoption.orderReceivedDate"></s:textfield>
         </td>
     </tr>
     <tr>
@@ -113,7 +199,7 @@
             Issued Date
         </td>
         <td style="text-align:center;"><s:textfield id="orderIssuedDatePicker"
-                                                   name="adoption.orderIssuedDate"></s:textfield>
+                                                    name="adoption.orderIssuedDate"></s:textfield>
         </td>
     </tr>
     <tr>
@@ -171,7 +257,7 @@
         <td>මව <br/>
             Mother
         </td>
-        <td >
+        <td>
             <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}" onclick="disable(true);"/>
         </td>
     </tr>
@@ -180,7 +266,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2" align="center"><s:textfield name="adoption.applicantPINorNIC" id="applcantPIN"  /></td>
+        <td colspan="2" align="center"><s:textfield name="adoption.applicantPINorNIC" id="applcantPIN"/></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -212,7 +298,8 @@
         <td>ලිපිනය <br/>
             Address
         </td>
-        <td colspan="4" align="center"><s:textarea name="adoption.applicantAddress" id="applicantAddress"></s:textarea></td>
+        <td colspan="4" align="center"><s:textarea name="adoption.applicantAddress"
+                                                   id="applicantAddress"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -280,8 +367,8 @@
             Date of birth
         </td>
         <td colspan="2" style="text-align:center;"><s:textfield id="bdayDatePicker"
-                                                               name="adoption.childBirthDate"
-                                                               onchange="calYearAndMonth()"></s:textfield>
+                                                                name="adoption.childBirthDate"
+                                                                onchange="calYearAndMonth()"></s:textfield>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
             Gender
@@ -299,7 +386,7 @@
             Years
         </td>
         <td align="center"><s:textfield name="adoption.childAgeYears" id="childAgeYears"
-                         onchange="validateNum(document.getElementById('childAgeYears').value)"/></td>
+                                        onchange="validateNum(document.getElementById('childAgeYears').value)"/></td>
         <td>මාස <br/>
             Months
         </td>
@@ -312,7 +399,8 @@
             Existing Name <br/>
             (if already given)
         </td>
-        <td colspan=" 4" align="center"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
+        <td colspan=" 4" align="center"><s:textarea name="adoption.childExistingName"
+                                                    id="childExistingName"></s:textarea></td>
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
@@ -338,7 +426,7 @@
             The serial number of the Birth Certificate
         </td>
         <td width="40%" align="center"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
-                                     cssStyle="width:85%;"/></td>
+                                                    cssStyle="width:85%;"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -362,7 +450,7 @@
             District
         </td>
         <td colspan="1"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                      value="birthDistrictId" cssStyle="width:280px;"/>
+                                  value="birthDistrictId" cssStyle="width:280px;"/>
         </td>
     </tr>
     <tr>
@@ -415,103 +503,5 @@
 <s:hidden id="error11" value="%{getText('er.lable.childAgeMonthsValid')}"/>
 <s:hidden id="lable01" value="%{getText('lable.childAgeYear')}"/>
 <s:hidden id="lable02" value="%{getText('lable.childAgeMonth')}"/>
-<script type="text/javascript">
 
-    //these inpute can not be null
-
-    function validate() {
-        var errormsgOut = "";
-        var element;
-        var returnval;
-        var flag = false;
-        var inputs = new Array(9);
-
-        //these inpute can not be null
-        inputs[0] = getDate(document.getElementById("receivedDatePicker").value)
-        inputs[1] = document.getElementById("court").value;
-        inputs[2] = getDate(document.getElementById("orderIssuedDatePicker").value);
-        inputs[3] = document.getElementById("courtOrderNumber").value;
-        inputs[4] = document.getElementById("judgeName").value;
-        inputs[5] = document.getElementById("applicantName").value;
-        inputs[6] = document.getElementById("applicantAddress").value;
-        inputs[7] = document.getElementById("childAgeYears").value;
-        inputs[8] = document.getElementById("childAgeMonths").value;
-        //these inputs may be null with conditions
-        var childExistingName = document.getElementById("childExistingName").value;
-        var childNewName = document.getElementById("childNewName").value;
-        //var adoptionApplicantFather=document.getElementById("adoptionApplicantFather").value;
-        //alert(adoptionApplicantFather);
-        //check elements which are can not be null
-        for (i = 0; i < inputs.length; i++)
-        {
-            if (inputs[i].length <= 0)
-            {
-                errormsgOut = errormsgOut + document.getElementById("error" + i).value + "\n";
-            }
-        }
-        if (childExistingName.length <= 0 && childNewName.length <= 0) {
-
-            errormsgOut = errormsgOut + document.getElementById("error9").value + "\n";
-        }
-        if (isNaN(inputs[7]) && inputs[7].length > 0)
-        {
-            errormsgOut = errormsgOut + document.getElementById("error10").value + "\n";
-        }
-        if ((isNaN(inputs[8]) && inputs[8].length > 0)) {
-
-            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
-        }
-        else if ((inputs[8] > 12 || inputs[8] < 0) && (inputs[8].length > 0)) {
-            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
-        }
-        if (errormsgOut.length > 0) {
-            alert(errormsgOut);
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    function disable(mode) {
-        document.getElementById('wifePINorNIC').disabled = mode;
-        document.getElementById('wifeCountryId').disabled = mode;
-        document.getElementById('wifePassport').disabled = mode;
-        document.getElementById('wifeName').disabled = mode;
-    }
-    function calYearAndMonth()
-    {
-        var bday = getDate(document.getElementById("bdayDatePicker").value);
-        var today = new Date();
-        var ageMonthBDay = bday.getMonth();
-        var ageYearBDay = bday.getYear();
-        var ageMonthTOday = today.getMonth();
-        var ageYearTOday = today.getYear();
-        var ageMonth,ageYear = 0;
-        if (ageMonthTOday >= ageMonthBDay) {
-            ageMonth = ageMonthTOday - ageMonthBDay;
-            ageYear = ageYearTOday - ageYearBDay;
-        }
-        else if (ageYearTOday > ageYearBDay) {
-            ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
-            ageYear = (ageYearTOday - 1) - ageYearBDay;
-        }
-        if (ageMonth != null) {
-            if (confirm(document.getElementById("lable01").value + "   :" + ageYear
-                    + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
-                document.getElementById("childAgeYears").value = ageYear;
-                document.getElementById("childAgeMonths").value = ageMonth;
-            }
-        }
-    }
-
-    function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
-        date = date.substring(0, date.lastIndexOf("/"));
-        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
-        var m = date.substring(0, date.lastIndexOf("/"));
-        return new Date(y, m, d);
-    }
-
-</script>
 </div>

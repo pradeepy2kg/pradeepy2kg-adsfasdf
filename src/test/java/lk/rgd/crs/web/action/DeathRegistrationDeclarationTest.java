@@ -20,7 +20,6 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     private DeathRegister ddf;
 
 
-
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         deathAction = (DeathRegisterAction) proxy.getAction();
@@ -40,7 +39,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     public void testBirthConfirmationInitMappingProxy() throws Exception {
         Object obj;
         Map session = userLogin("ashoka", "ashoka");
-        /*ActionMapping mapping = getActionMapping("/deaths/eprInitDeathDeclaration.do");
+        initAndExecute("/deaths/eprInitDeathDeclaration.do", session);
         session = deathAction.getSession();
         assertEquals("Action erros for 1 of 2DDF", 0, deathAction.getActionErrors().size());
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -73,25 +72,30 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("deathPerson.deathPersonFatherFullName", "selverdorei kanawathi amma");
         request.setParameter("deathPerson.deathPersonMotherPINorNIC", "707433191V");
         request.setParameter("deathPerson.deathPersonMotherFullNamed", "selverdorei kanawathi amma");
-        initAndExecute("/births/eprBirthRegistration.do", session);
+        initAndExecute("/deaths/eprDeathDeclaration.do", session);
         session = deathAction.getSession();
 
-        request.setParameter("declarant.declarantFullName","Tharanga Punchihewa")
-         request.setParameter("declarant.declarantAddress","Erapalamulla,Ruwanwella");
-         request.setParameter("declarant.declarantPhone","0718617804V");
-         request.setParameter("declarant.declarantEMail","htpunchihewa@gmail.com");
-         request.setParameter("declarant.declarantType","3");
-         request.setParameter("firstWitness.witnessNICorPIN","782790393");
-         request.setParameter("firstWitness.witnessFullName","Sampath Naline");
-         request.setParameter("firstWitness.witnessAddress",""Molawaththa,Morawaththa,Ruwanwella);
-         request.setParameter("secondWitness.witnessNICorPIN","892790393V");
-         request.setParameter("secondWitness.witnessFullName","Rasika Niranjana Punchihewa");
-         request.setParameter("secondWitness.witnessAddress","E51 Erapalamulla Ruwanwella");
-         request.setParameter("notifyingAuthority.notifyingAuthorityPIN","853303399v");
-         request.setParameter("notifyingAuthority.notifyingAuthorityName","Saman kUmara";
-         request.setParameter("notifyingAuthority.notifyingAuthorityAddress","කැලුම් කොඩිප්පිලි"");
-         request.setParameter("notifyingAuthority.notifyingAuthoritySignDate","2010-07-28T00:00:00+05:30");
-        */
+        request.setParameter("pageNo", "2");
+        request.setParameter("declarant.declarantFullName", "Tharanga Punchihewa");
+        request.setParameter("declarant.declarantAddress", "Erapalamulla,Ruwanwella");
+        request.setParameter("declarant.declarantPhone", "0718617804V");
+        request.setParameter("declarant.declarantEMail", "htpunchihewa@gmail.com");
+        request.setParameter("declarant.declarantType", "3");
+
+        request.setParameter("notifyingAuthority.notifyingAuthorityPIN", "853303399v");
+        request.setParameter("notifyingAuthority.notifyingAuthorityName", "Saman kUmara");
+        request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "කැලුම් කොඩිප්පිලි");
+        request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-07-28T00:00:00+05:30");
+
+        initAndExecute("/deaths/eprDeathDeclaration.do", session);
+        session = deathAction.getSession();
+
+
+        assertEquals("Action erros for Death Declaration Form Details", 0, deathAction.getActionErrors().size());
+        logger.debug("approval permission for the user : {}", deathAction.isAllowApproveDeath());
+        assertNotNull("notifyingAuthority Bean population faild", deathAction.getNotifyingAuthority());
+        assertEquals("Faild to remove DeathDeclaration", ddf, session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
+        logger.debug("successfully persisted with the IdUKey :{}", deathAction.getIdUKey());
 
 
     }
