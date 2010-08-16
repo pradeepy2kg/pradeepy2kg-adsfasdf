@@ -4,7 +4,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/> 
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script>
     $(function() {
@@ -82,7 +82,7 @@
         <td width="330px">නියෝගය ලැබුණු දිනය <br/>
             Received Date
         </td>
-        <td style="text-align:right;"><s:textfield id="receivedDatePicker"
+        <td style="text-align:center;" width="70"><s:textfield id="receivedDatePicker"
                                                    name="adoption.orderReceivedDate"></s:textfield>
         </td>
     </tr>
@@ -90,13 +90,13 @@
         <td>අධිකරණය<br/>
             Court
         </td>
-        <td><s:textfield name="adoption.court" id="court"/></td>
+        <td style="text-align:center;" width="70"><s:textfield name="adoption.court" id="court"/></td>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
-        <td style="text-align:right;"><s:textfield id="orderIssuedDatePicker"
+        <td style="text-align:center;"><s:textfield id="orderIssuedDatePicker"
                                                    name="adoption.orderIssuedDate"></s:textfield>
         </td>
     </tr>
@@ -104,20 +104,20 @@
         <td>නියෝග අංකය<br/>
             Serial number
         </td>
-        <td><s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber"/></td>
+        <td style="text-align:center;"><s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber"/></td>
     </tr>
     <tr>
         <td>විනිසුරු නම <br/>
             Name of the Judge
         </td>
-        <td><s:textfield name="adoption.judgeName" id="judgeName"/></td>
+        <td style="text-align:center;"><s:textfield name="adoption.judgeName" id="judgeName"/></td>
     </tr>
     <tr>
         <td>******* සහතිකය නිකුත් කල යුතු භාෂාව <br>***in tamil***<br>Preferred
             Language for
             ******
         </td>
-        <td>
+        <td style="text-align:left;" width="30px">
             <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
                       name="adoption.languageToTransliterate"
                       cssStyle="width:190px; margin-left:5px;"></s:select>
@@ -144,7 +144,7 @@
         <td>අයදුම් කරු <br/>
             Applicant
         </td>
-        <td>පියා   </br>
+        <td>පියා <br/>
             Father
         </td>
         <td>
@@ -155,7 +155,7 @@
         <td>මව <br/>
             Mother
         </td>
-        <td>
+        <td >
             <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}" onclick="disable(true);"/>
         </td>
     </tr>
@@ -164,7 +164,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2"><s:textfield name="adoption.applicantPINorNIC" id="applcantPIN"> </s:textfield></td>
+        <td colspan="2" align="center"><s:textfield name="adoption.applicantPINorNIC" id="applcantPIN"  /></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -175,7 +175,7 @@
             நாடு <br/>
             Country
         </td>
-        <td>
+        <td align="center">
             <s:select name="adoption.applicantCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('adoption.select_country.label')}"/>
         </td>
@@ -183,20 +183,20 @@
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber"> </s:textfield></td>
+        <td align="left"><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber"/></td>
     </tr>
     <tr>
         <td>නම <br/>
             Name of the Applicant
         </td>
-        <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"></s:textarea></td>
+        <td colspan="4" align="center"><s:textarea id="applicantName" name="adoption.applicantName"></s:textarea></td>
     </tr>
 
     <tr>
         <td>ලිපිනය <br/>
             Address
         </td>
-        <td colspan="4"><s:textarea name="adoption.applicantAddress" id="applicantAddress"></s:textarea></td>
+        <td colspan="4" align="center"><s:textarea name="adoption.applicantAddress" id="applicantAddress"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -213,7 +213,7 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"></s:textfield></td>
+        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"></s:textfield></td>
     </tr>
     <tr>
         <td width="330px">විදේශිකය‍කු නම් <br/>
@@ -224,7 +224,7 @@
             நாடு <br/>
             Country
         </td>
-        <td width="175px">
+        <td width="175px" align="center">
             <s:select id="wifeCountryId" name="adoption.wifeCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('adoption.select_country.label')}"/>
         </td>
@@ -232,7 +232,7 @@
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td width="175px">
+        <td width="175px" align="center">
             <s:textfield name="adoption.wifePassport" id="wifePassport"> </s:textfield>
         </td>
     </tr>
@@ -240,7 +240,7 @@
         <td> මවගේ නම <br/>
             Name of Mother
         </td>
-        <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"></s:textarea></td>
+        <td colspan="4" align="center"><s:textarea name="adoption.wifeName" id="wifeName"></s:textarea></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -263,14 +263,14 @@
         <td>උපන් දිනය<br/>
             Date of birth
         </td>
-        <td colspan="2" style="text-align:right;"><s:textfield id="bdayDatePicker"
+        <td colspan="2" style="text-align:center;"><s:textfield id="bdayDatePicker"
                                                                name="adoption.childBirthDate"
                                                                onchange="calYearAndMonth()"></s:textfield>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
             Gender
         </td>
-        <td><s:select
+        <td align="center"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="adoption.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
@@ -282,7 +282,7 @@
         <td>අවුරුදු <br/>
             Years
         </td>
-        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears"
+        <td align="center"><s:textfield name="adoption.childAgeYears" id="childAgeYears"
                          onchange="validateNum(document.getElementById('childAgeYears').value)"/></td>
         <td>මාස <br/>
             Months
@@ -296,13 +296,13 @@
             Existing Name <br/>
             (if already given)
         </td>
-        <td colspan=" 4"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
+        <td colspan=" 4" align="center"><s:textarea name="adoption.childExistingName" id="childExistingName"></s:textarea></td>
     </tr>
     <tr>
         <td>ලබා දෙන නම <br/>
             New name given
         </td>
-        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName"></s:textarea></td>
+        <td colspan="4" align="center"><s:textarea name="adoption.childNewName" id="childNewName"></s:textarea></td>
     </tr>
     </tbody>
 </table>
@@ -318,10 +318,10 @@
 
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
     <tr>
-        <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
+        <td width="60%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
             The serial number of the Birth Certificate
         </td>
-        <td width="30%"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
+        <td width="40%" align="center"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
                                      cssStyle="width:85%;"/></td>
     </tr>
 </table>
@@ -331,10 +331,10 @@
         </td>
     </tr>
 </table>
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
+<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="2">
     <caption></caption>
-    <col width="330px"/>
-    <col width="700px"/>
+    <col width="400px"/>
+    <col width="400px"/>
     <tbody>
     <tr>
         <td colspan="2" style="text-align:center;">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
@@ -342,11 +342,11 @@
         </td>
     </tr>
     <tr>
-        <td>දිස්ත්‍රික්කය <br/>
+        <td colspan="1">දිස්ත්‍රික්කය <br/>
             District
         </td>
-        <td><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                      value="birthDistrictId" cssStyle="width:240px;"/>
+        <td colspan="1"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                      value="birthDistrictId" cssStyle="width:280px;"/>
         </td>
     </tr>
     <tr>
@@ -355,7 +355,7 @@
         </td>
         <td>
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                      cssStyle="float:left;  width:240px;"/>
+                      cssStyle="float:left;  width:280px;"/>
         </td>
     </tr>
     <tr>
@@ -365,7 +365,7 @@
         <td>
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                       list="bdDivisionList"
-                      cssStyle=" width:240px;float:left;"/>
+                      cssStyle=" width:280px;float:left;"/>
         </td>
     </tr>
     <tr>
@@ -374,14 +374,14 @@
         </td>
         <td>
             <s:textfield name="adoption.birthCertificateSerial" id="birthCertificateSrialNum"
-                         cssStyle="width:200px"> </s:textfield>
+                         cssStyle="width:280px;"> </s:textfield>
         </td>
     </tr>
     </tbody>
 </table>
 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
 <s:hidden name="pageNo" value="1"/>
-<div class="adoption-form-submit">
+<div class="button" align="right">
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
