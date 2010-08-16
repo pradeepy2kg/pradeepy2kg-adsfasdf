@@ -187,6 +187,7 @@
     <td align="center">
         <s:url id="cetificatePrintUrl" action="eprPrintAdoptionNotice.do">
             <s:param name="idUKey" value="idUKey"/>
+            <s:param name="certificateflag" value="false"/>
             <s:param name="currentStatus" value="%{#request.currentStatus}"/>
             <s:param name="pageNo" value="%{#request.pageNo}"/>
             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
