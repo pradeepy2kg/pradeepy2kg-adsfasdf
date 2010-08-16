@@ -236,31 +236,31 @@
                 <s:param name="idUKey" value="idUKey"/>
             </s:url>
 
-            <td align="center">
+            <td align="center" width="60px">
                 <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                     <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"
                          border="none"/></s:a>
             </td>
-            <td align="center"><s:a href="%{approveSelected}"
+            <td align="center" width="60px"><s:a href="%{approveSelected}"
                                     title="%{getText('approveTooltip.label')}">
                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                      border="none" id="approveImage"/></s:a>
             </td>
-            <td align="center"><s:a href="%{rejectSelected}"
+            <td align="center" width="60px"><s:a href="%{rejectSelected}"
                                     title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
                                                                                    src="<s:url value='/images/reject.gif'/>"
                                                                                    width="25"
                                                                                    height="25"
                                                                                    border="none"/></s:a>
             </td>
-            <td align="center"><s:a href="%{deleteSelected}"
+            <td align="center" width="60px"><s:a href="%{deleteSelected}"
                                     title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
                                                                                    src="<s:url value='/images/delete.gif'/>"
                                                                                    width="25"
                                                                                    height="25"
                                                                                    border="none"/></s:a>
             </td>
-            <td align="center"><s:a href="%{viewSelected}"
+            <td align="center" width="60px"><s:a href="%{viewSelected}"
                                     title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
@@ -288,12 +288,12 @@
             <td></td>
             <td></td>
             <td></td>
-            <td align="center"><s:a href="%{viewSelected}"
+            <td align="center" width="60px"><s:a href="%{viewSelected}"
                                     title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
-            <td align="center">
+            <td align="center" width="60px">
                 <s:a href="%{cetificatePrintUrl}"
                      title="%{getText('printDeathRegistrationTooltip.label')}">
                     <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
@@ -315,7 +315,7 @@
             <td></td>
             <td></td>
 
-            <td align="center"><s:a href="%{viewSelected}"
+            <td align="center" width="60px"><s:a href="%{viewSelected}"
                                     title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
@@ -335,12 +335,12 @@
             <td></td>
             <td></td>
 
-            <td align="center"><s:a href="%{viewSelected}"
+            <td align="center" width="60px"><s:a href="%{viewSelected}"
                                     title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
-            <td align="center">
+            <td align="center" width="60px">
                 <s:url id="cetificatePrintUrl" action="eprPrintDeath.do">
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
