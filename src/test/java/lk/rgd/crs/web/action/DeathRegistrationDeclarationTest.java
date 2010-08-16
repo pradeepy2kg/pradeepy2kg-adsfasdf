@@ -40,7 +40,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     public void testBirthConfirmationInitMappingProxy() throws Exception {
         Object obj;
         Map session = userLogin("ashoka", "ashoka");
-        ActionMapping mapping = getActionMapping("/deaths/eprInitDeathDeclaration.do");
+        /*ActionMapping mapping = getActionMapping("/deaths/eprInitDeathDeclaration.do");
         session = deathAction.getSession();
         assertEquals("Action erros for 1 of 2DDF", 0, deathAction.getActionErrors().size());
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
@@ -76,7 +76,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = deathAction.getSession();
 
-        /*request.setParameter("declarant.declarantFullName","Tharanga Punchihewa")
+        request.setParameter("declarant.declarantFullName","Tharanga Punchihewa")
          request.setParameter("declarant.declarantAddress","Erapalamulla,Ruwanwella");
          request.setParameter("declarant.declarantPhone","0718617804V");
          request.setParameter("declarant.declarantEMail","htpunchihewa@gmail.com");
