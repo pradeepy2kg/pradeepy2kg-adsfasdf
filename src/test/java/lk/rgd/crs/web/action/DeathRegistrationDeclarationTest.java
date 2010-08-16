@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
+import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.common.CustomStrutsTestCase;
 import com.opensymphony.xwork2.ActionProxy;
@@ -16,18 +17,43 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationDeclarationTest.class);
     private DeathRegisterAction deathAction;
     private ActionProxy proxy;
+    private DeathRegister ddf;
+
+
+
+    private String initAndExecute(String mapping, Map session) throws Exception {
+        proxy = getActionProxy(mapping);
+        deathAction = (DeathRegisterAction) proxy.getAction();
+        logger.debug("Action Method to be executed is {} ", proxy.getMethod());
+        ActionContext.getContext().setSession(session);
+        String result = null;
+        try {
+            result = proxy.execute();
+        } catch (NullPointerException e) {
+            logger.error("non fatal proxy execution error", e.getMessage(), e);
+        }
+        logger.debug("result for mapping {} is {}", mapping, result);
+        return result;
+    }
+
 
     public void testBirthConfirmationInitMappingProxy() throws Exception {
+        Object obj;
         Map session = userLogin("ashoka", "ashoka");
         ActionMapping mapping = getActionMapping("/deaths/eprInitDeathDeclaration.do");
-        assertNotNull("Mapping not null {}", mapping);
-        assertEquals("/deaths", mapping.getNamespace());
-        assertEquals("eprInitDeathDeclaration", mapping.getName());
+        session = deathAction.getSession();
+        assertEquals("Action erros for 1 of 2DDF", 0, deathAction.getActionErrors().size());
+        ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+        assertNotNull("Faild to put Death Declaration to the session", ddf);
+        obj = session.get(WebConstants.SESSION_USER_LANG);
+        assertNotNull("Session User Local Presence", obj);
+        assertNotNull("Request District List Presence", deathAction.getDistrictList());
+        assertNotNull("Request Race List Presence", deathAction.getRaceList());
+
 
         request.setParameter("pageNo", "1");
-        request.setParameter("death.deathSerialNo", "1");
+        request.setParameter("death.deathSerialNo", "120");
         request.setParameter("death.dateOfDeath", "2010-07-21");
-        request.setParameter("death.deathDistrictId", "11");
         request.setParameter("death.deathDsDivisionId", "3");
         request.setParameter("death.placeOfDeath", "කොළඹ කොටුව");
         request.setParameter("death.placeOfDeathInEnglish", "colombo port");
@@ -47,7 +73,8 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("deathPerson.deathPersonFatherFullName", "selverdorei kanawathi amma");
         request.setParameter("deathPerson.deathPersonMotherPINorNIC", "707433191V");
         request.setParameter("deathPerson.deathPersonMotherFullNamed", "selverdorei kanawathi amma");
-
+        initAndExecute("/births/eprBirthRegistration.do", session);
+        session = deathAction.getSession();
 
         /*request.setParameter("declarant.declarantFullName","Tharanga Punchihewa")
          request.setParameter("declarant.declarantAddress","Erapalamulla,Ruwanwella");
