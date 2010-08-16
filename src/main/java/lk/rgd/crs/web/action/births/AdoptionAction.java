@@ -492,7 +492,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String populateAdoption() {
         adoption = service.getByCourtAndCourtOrderNumber(0 /* TODO FIX ME*/, courtOrderNo, user);
         if (adoption != null) {
-            session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
+            if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
+                session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
+            } else {
+               addActionError(getText("er.label.cannot_capture_data"));
+            }
         } else {
             addActionError(getText("adoption_order_notfound.message"));
         }

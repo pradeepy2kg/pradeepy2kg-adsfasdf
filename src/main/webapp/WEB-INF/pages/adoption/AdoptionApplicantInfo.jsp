@@ -29,7 +29,7 @@
 <div id="adoption-applicant-info-form-outer">
 <form action="eprAdoptionFind.do" method="post">
     <table style=" border:1px solid #000000; width:300px">
-        <tr><s:actionerror/></tr>
+        <tr><s:actionerror cssStyle="color:red;"/></tr>
         <tr>
             <td>
                 <s:label value="%{getText('adoption_court_order_serial.label')}"/>
