@@ -42,7 +42,7 @@
         var returnval;
 
         /*date related validations*/
-        var submit = document.getElementById('atePicker').value;
+        var submit = new Date(document.getElementById('atePicker').value);
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
             flag = true;
@@ -63,14 +63,6 @@
             returnval = false;
         }
         return returnval;
-    }
-
-    function getDate(date) {
-        var y = date.substring(date.lastIndexOf("/") + 1, date.length);
-        date = date.substring(0, date.lastIndexOf("/"));
-        var d = date.substring(date.lastIndexOf("/") + 1, date.length);
-        var m = date.substring(0, date.lastIndexOf("/"));
-        return new Date(y, m, d);
     }
 </script>
 
