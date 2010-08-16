@@ -9,13 +9,13 @@
         text-align: center;
     }
 
-    .link-data-entry {font-size: 9pt;text-align: center;position: absolute;width: 135px;margin: 200px 0px 0px 467px;}
+    .link-data-entry {font-size: 9pt;text-align: center;position: absolute;width: 135px;margin: 180px 0px 0px 320px;}
 
-    .link-approval {font-size: 9pt;text-align: center;position: absolute;width: 135px;margin: 270px 0px 0px 467px;}
+    .link-approval {font-size: 9pt;text-align: center;position: absolute;width: 135px;margin: 250px 0px 0px 330px;}
 
     .link-print-application {font-size: 9pt;text-align: center;position: absolute;width: 145px; margin: 335px 0px 0px 463px;}
 
-    .link-print-certified {font-size: 9pt;text-align: center;position: absolute;width: 140px;margin: 460px 0px 0px 467px;}
+    .link-print-certified {font-size: 9pt;text-align: center;position: absolute;width: 140px;margin: 310px 0px 0px 325px;}
 
     .link-data-entry-02 {font-size: 9pt; text-align: center; position: absolute; width: 135px; margin: 460px 0px 0px 302px; }
 
@@ -31,9 +31,9 @@
 
     .label06 { font-size: 9pt; text-align: center; position: absolute; width: 175px; margin: 105px 0px 0px 55px; }
 
-    .label07 { font-size: 9pt;  text-align: center;position: absolute; width: 175px; margin: 210px 0px 0px 560px; }
+    .label07 { font-size: 9pt;  text-align: center;position: absolute; width: 175px; margin: 180px 0px 0px 400px; }
 
-    .label08 {font-size: 9pt;  text-align: center; position: absolute; width: 175px; margin: 280px 0px 0px 560px;}
+    .label08 {font-size: 9pt;  text-align: center; position: absolute; width: 175px; margin: 250px 0px 0px 400px;}
 
     .label09 {font-size: 9pt; text-align: center; position: absolute;width: 175px; margin: 330px 0px 0px 630px; }
 
@@ -41,14 +41,10 @@
 
 </style>
 <%-- div tags for main links --%>
-<%--<div class=" link-data-entry"><s:label value="%{getText('lb.data.entry')}"/></div>--%>
-<%--<div class="link-approval"><s:label value="%{getText('lb.approve.ADR')}"/></div>--%>
-<%--<div class="link-print-application"><s:label value="%{getText('lb.print.application.lable01')}"/><br/>--%>
-                                       <%--<s:label value="%{getText('lb.print.application.lable02')}"/></div>--%>
-<%--<div class="link-print-certified"><s:label value="%{getText('Print Certified Copy')}"/> <br/>--%>
-                                    <%--<s:label value="%{getText('lb.deo.adr.lable')}"/>--%>
-<%--</div>--%>
-<%--<div class="link-data-entry-02"><s:label value="%{getText('lb.data.entry')}"/></div>--%>
+<div class=" link-data-entry"><s:label value="%{getText('lb.data.entry')}"/></div>
+<div class="link-approval"><s:label value="%{getText('lb.approve.ADR')}"/></div
+<div class="link-print-certified"><s:label value="%{getText('la.print.lable')}"/> <br/>
+                                    <s:label value="%{getText('lb.deo.adr.lable')}"/></div>
  <%--div tags for labels of image--%>
 <%--<div class="label01"><s:label value="%{getText('lb.receive.copy')}"/></div>--%>
 <%--<div class="label02"><s:label value="%{getText('lb.application')}"/><br/><s:label value="%{getText('lb.fee.for.issue')}"/></div>--%>
@@ -56,8 +52,8 @@
 <%--<div class="label04"><s:label value="%{getText('lb.req.adoption')}"/></div>--%>
 <%--<div class="label05"><s:label value="%{getText('lb.adoption.order')}"/></div>--%>
 <%--<div class="label06"><s:label value="%{getText('lb.adoption.parent')}"/></div>--%>
-<%--<div class="label07"><s:label value="%{getText('lb.edit.lable')}"/></div>--%>
-<%--<div class="label08"><s:label value="%{getText('lb.edit.lable')}"/></div>--%>
+<div class="label07"><s:label value="%{getText('lb.edit.lable')}"/></div>
+<div class="label08"><s:label value="%{getText('lb.edit.lable')}"/></div>
 <%--<div class="label09"><s:label value="%{getText('lb.approval.lable')}"/><br/><s:label value="%{getText('lb.arg.lable')}"/></div>--%>
 <%--<div class="label10"><s:label value="%{getText('lb.office')}"/></div>--%>
 <%-- background image div --%>

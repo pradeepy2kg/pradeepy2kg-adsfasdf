@@ -83,7 +83,7 @@
                         if (mother_bday != "") {
                             var motherbday = new Date(mother_bday);
                             var mother_age = child_bday.getYear() - motherbday.getYear();
-                            $("input#motherAgeAtBirth").val(mother_age);
+                            $("input#motherAgeAtBirth").val(mother_age);       
                         }
                     });
         });
