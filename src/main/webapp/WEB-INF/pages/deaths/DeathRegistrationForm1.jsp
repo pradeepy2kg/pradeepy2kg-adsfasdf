@@ -452,13 +452,13 @@ function validate() {
 </s:if>
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
     <col width="150px"/>
-    <col width="100px"/>
+    <col width="120px"/>
     <col width="120px"/>
     <col width="90px"/>
     <col width="120px"/>
     <col width="90px"/>
     <col width="120px"/>
-    <col width="100px"/>
+    <col width="120px"/>
     <col/>
     <tbody>
 
@@ -477,9 +477,9 @@ function validate() {
                 Sudden death?
             </td>
             <td colspan="3">ඔව් xx Yes</td>
-            <td><s:radio name="deathType" list="#@java.util.HashMap@{'SUDDEN':''}" value="false"/></td>
+            <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'SUDDEN':''}" value="false"/></td>
             <td colspan="3">නැත xx No</td>
-            <td><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}" value="false"/></td>
+            <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}" value="false"/></td>
         </tr>
     </s:if>
     <s:elseif test="deathType.ordinal() == 2">
@@ -565,7 +565,6 @@ function validate() {
         </td>
         <td colspan="2"><s:textfield name="death.icdCodeOfCause"/></td>
     </tr>
-todo   
  <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ආදාහන හෝ භූමදාන ස්ථානය<br>*in
             tamil<br>Place of burial or cremation
@@ -613,8 +612,8 @@ todo
             හැදුනුම්පත් අංකය<br>தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
             <br>PIN / NIC
         </td>
-        <td rowspan="2" colspan="3"><s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                                                 cssStyle="float:left;margin-left:225px;"/>
+        <td rowspan="2" colspan="3" class="find-person"><s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
+                                                 cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_lookup"></td>
         <td rowspan="2">විදේශිකය‍කු නම්<br>வெளிநாட்டவர் <br>If a foreigner</td>
@@ -671,9 +670,9 @@ todo
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ පු.අ.අ. / ජා.හැ.අ.<br>*in
             tamil<br>Fathers PIN / NIC
         </td>
-        <td colspan="6">
+        <td colspan="6" class="find-person">
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
-                         cssStyle="float:left;margin-left:695px;"/>
+                         cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup"></td>
     </tr>
@@ -689,9 +688,9 @@ todo
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ පු.අ.අ. / ජා.හැ.අ.<br>*in
             tamil<br>Mothers PIN / NIC
         </td>
-        <td colspan="6">
+        <td colspan="6" class="find-person">
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
-                         cssStyle="float:left;margin-left:695px;"/>
+                         cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_mother_lookup"></td>
     </tr>
