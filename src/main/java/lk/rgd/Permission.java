@@ -101,24 +101,24 @@ public final class Permission {
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED = 117;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED = 118;
     public static final int PAGE_ADOPTION_BDF_HOME = 119;
-    public static final int PAGE_ADOPTION_PROCESS_APPLICANT_INFO = 134;
+    public static final int PAGE_ADOPTION_PROCESS_APPLICANT_INFO = 120;
 
 
     //permission for death
-    public static final int PAGE_DEATH_REGISTRATION_INIT = 120;
-    public static final int PAGE_DEATH_REGISTRATION = 121;
-    public static final int PAGE_LATE_DEATH_REGISTRATION = 122;
-    public static final int PAGE_DEATH_CERTIFICATE = 123;
-    public static final int PAGE_LATE_DEATH_HOME = 124;
-    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 125;
-    public static final int PAGE_DEATH_APPROVAL_PRINT = 126;
-    public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 127;
-    public static final int PAGE_DEATH_EDIT_MODE = 128;
-    public static final int PAGE_DEATH_APPROVE = 139;
-    public static final int PAGE_DEATH_REJECT = 130;
-    public static final int PAGE_DEATH_DELETE = 131;
-    public static final int PAGE_DEATH_VEIW_MODE = 132;
-    public static final int PAGE_DEATH_PRINT = 133;
+    public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
+    public static final int PAGE_DEATH_REGISTRATION = 122;
+    public static final int PAGE_LATE_DEATH_REGISTRATION = 123;
+    public static final int PAGE_DEATH_CERTIFICATE = 124;
+    public static final int PAGE_LATE_DEATH_HOME = 125;
+    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 126;
+    public static final int PAGE_DEATH_APPROVAL_PRINT = 127;
+    public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 128;
+    public static final int PAGE_DEATH_EDIT_MODE = 129;
+    public static final int PAGE_DEATH_APPROVE = 130;
+    public static final int PAGE_DEATH_REJECT = 131;
+    public static final int PAGE_DEATH_DELETE = 132;
+    public static final int PAGE_DEATH_VEIW_MODE = 133;
+    public static final int PAGE_DEATH_PRINT = 134;
 
 
 }
