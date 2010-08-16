@@ -631,4 +631,34 @@
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
     </package>
+    <package name="management" namespace="/management" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initUser">
+            <result type="tiles" name="pageLoad">epr.creatUser</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="creatUser">
+            <result type="tiles" name="pageLoad">epr.creatUser</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprViewUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="viewUsers">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+        <action name="eprdeleteUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="deleteUser">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+
+        <action name="eprViewSelectedUsers" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="selectUsers">
+            <result type="tiles" name="success">epr.viewUsers</result>
+        </action>
+    </package>
 </struts>
