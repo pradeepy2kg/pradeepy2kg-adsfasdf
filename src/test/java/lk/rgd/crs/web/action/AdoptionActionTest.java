@@ -205,7 +205,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
       request.setParameter("previousFlag", "false");
       initAndExucute("/adoption/eprPrintAdoptionNotice.do", session);
       session = adoptionAction.getSession();
-      assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
+      assertEquals("Action erros for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
 
       assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
       assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());
