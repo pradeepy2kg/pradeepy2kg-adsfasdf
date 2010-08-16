@@ -114,7 +114,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
-        Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings".toUpperCase()));
+        Assert.assertTrue(bdfSaved.getRegister().getComments().contains("ignoring warnings"));
     }
 
     public void testDuplicateBDF() throws Exception {

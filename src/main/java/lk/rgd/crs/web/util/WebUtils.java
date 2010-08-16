@@ -104,4 +104,8 @@ public class WebUtils {
         s = s.trim();
         return s.length() == 0 ? null : s.toUpperCase();
     }
+
+    public static String filterBlanks(String s) {
+        return s == null ? null : (s = s.trim()).length() == 0 ? null : s;
+    }
 }

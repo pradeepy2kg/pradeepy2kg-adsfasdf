@@ -172,7 +172,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with mother race id", 1, bd.getParent().getMotherRace().getRaceId());
         assertEquals("failed to update birth declaration session with mother place of birth", "KANDANA", bd.getParent().getMotherPlaceOfBirth());
         assertEquals("failed to update birth declaration session with mother admission number", "125", bd.getParent().getMotherAdmissionNo());
-        assertEquals("failed to update birth declaration session with mother email", "INFO@GMAIL.COM", bd.getParent().getMotherEmail());
+        assertEquals("failed to update birth declaration session with mother email", "info@gmail.com", bd.getParent().getMotherEmail());
         assertEquals("failed to update birth declaration session with mother admission date", "2010-01-09", DateTimeUtils.getISO8601FormattedString(bd.getParent().getMotherAdmissionDate()));
         assertEquals("failed to update birth declaration session with mother phone number", "0112345678", bd.getParent().getMotherPhoneNo());
 
@@ -208,7 +208,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
         assertEquals("failed to update birth declaration session with informant address", "KANDY ROAD MATALE", bd.getInformant().getInformantAddress());
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
-        assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
+        assertEquals("failed to update birth declaration session with informant Email", "info@gmail.com", bd.getInformant().getInformantEmail());
         assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", DateTimeUtils.getISO8601FormattedString(bd.getInformant().getInformantSignDate()));
 
         //BirthDeclaration Form Details
@@ -355,7 +355,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with informant name", "සංගුණි ෙද්ව ෙග්", bd.getInformant().getInformantName());
         assertEquals("failed to update birth declaration session with informant address", "KANDY ROAD MATALE", bd.getInformant().getInformantAddress());
         assertEquals("failed to update birth declaration session with informant phone number", "081234567", bd.getInformant().getInformantPhoneNo());
-        assertEquals("failed to update birth declaration session with informant Email", "INFO@GMAIL.COM", bd.getInformant().getInformantEmail());
+        assertEquals("failed to update birth declaration session with informant Email", "info@gmail.com", bd.getInformant().getInformantEmail());
         assertEquals("failed to update birth declaration session with informant signed date", "2010-08-09", DateTimeUtils.getISO8601FormattedString(bd.getInformant().getInformantSignDate()));
 
         //BirthDeclaration Form Details

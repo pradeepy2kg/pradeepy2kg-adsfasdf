@@ -143,7 +143,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
         assertEquals("Declarent Address","EGODAWATHTHA,MAHARAGAMA.",ddf.getDeclarant().getDeclarantAddress());
-        assertEquals("Declarent E-Mail Address","WWWWW@GMAIL.COM",ddf.getDeclarant().getDeclarantEMail());
+        assertEquals("Declarent E-Mail Address","wwwww@gmail.com",ddf.getDeclarant().getDeclarantEMail());
         assertEquals("Declarent Name","RANGITH KUMARA",ddf.getDeclarant().getDeclarantFullName());
         assertEquals("NotifyingAuthority Name","RAJAPAKSHA M.",ddf.getNotifyingAuthority().getNotifyingAuthorityName());
         assertEquals("NotifyingAuthority Address","GANGODAVILA,EGODAWATHTHA",ddf.getNotifyingAuthority().getNotifyingAuthorityAddress());

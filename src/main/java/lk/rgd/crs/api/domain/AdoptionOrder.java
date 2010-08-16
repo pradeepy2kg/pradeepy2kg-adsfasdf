@@ -275,7 +275,7 @@ public class AdoptionOrder implements Serializable {
     }
 
     public void setCourtOrderNumber(String courtOrderNumber) {
-        this.courtOrderNumber = WebUtils.filterBlanksAndToUpper(courtOrderNumber);
+        this.courtOrderNumber = WebUtils.filterBlanks(courtOrderNumber);
     }
 
     public String getChildExistingName() {

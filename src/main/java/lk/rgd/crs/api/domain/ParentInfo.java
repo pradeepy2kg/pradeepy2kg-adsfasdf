@@ -2,7 +2,6 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.crs.web.util.WebUtils;
 
@@ -318,7 +317,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherPhoneNo(String motherPhoneNo) {
-        this.motherPhoneNo = WebUtils.filterBlanksAndToUpper(motherPhoneNo);
+        this.motherPhoneNo = WebUtils.filterBlanks(motherPhoneNo);
     }
 
     public String getMotherEmail() {
@@ -326,7 +325,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherEmail(String motherEmail) {
-        this.motherEmail = WebUtils.filterBlanksAndToUpper(motherEmail);
+        this.motherEmail = WebUtils.filterBlanks(motherEmail);
     }
 
     public String getMotherAdmissionNo() {
@@ -334,7 +333,7 @@ public class ParentInfo implements Serializable {
     }
 
     public void setMotherAdmissionNo(String motherAdmissionNo) {
-        this.motherAdmissionNo = WebUtils.filterBlanksAndToUpper(motherAdmissionNo);
+        this.motherAdmissionNo = WebUtils.filterBlanks(motherAdmissionNo);
     }
 
     public Date getMotherAdmissionDate() {
