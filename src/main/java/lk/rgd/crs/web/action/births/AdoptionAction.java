@@ -113,22 +113,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String initAdoptionReRegistration() {
-        logger.debug("Adoption reregistration for IdUKey : {}", idUKey);
-        AdoptionOrder adoption;
-        if (idUKey != 0) {
-            try {
-                adoption = service.getById(getIdUKey(), user);
-                logger.debug("Id u key : {}", getIdUKey());
-            } catch (Exception e) {
-                logger.debug("catch exception : {}", e);
-            }
-        } else {
-            logger.debug("idUkey is zero");
-        }
-        return SUCCESS;
-    }
-
     /**
      * responsible for loading the AdoptionOrder based
      * on requested idUKey. Error will be thrown if it
