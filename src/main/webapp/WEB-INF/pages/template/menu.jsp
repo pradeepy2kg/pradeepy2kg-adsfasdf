@@ -12,16 +12,14 @@
                 <s:if test="%{#session.context==key}">
                     <li class="expand">
                 </s:if><s:else><li></s:else>
-
+                <s:if test="%{key == '6management'}">
+                    <s:a href="#">
+                        <s:label value="%{getText('category_admin_task')}"/>
+                    </s:a>
+                </s:if>
                 <s:if test="%{key=='0births'}">
                     <s:a href="/popreg/births/eprBirthRegistrationHome.do">
                         <s:label value="%{getText('category_birth_registration')}"/>
-                    </s:a>
-                </s:if>
-
-                <s:if test="%{key == '5management'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_admin_task')}"/>
                     </s:a>
                 </s:if>
 
@@ -37,24 +35,24 @@
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '4reprots'}">
+                <s:if test="%{key == '5reprots'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_reports')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '3preferences'}">
+                <s:if test="%{key == '4preferences'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_user_preferance')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '6prs'}">
+                <s:if test="%{key == '7prs'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_prs')}"/>
                     </s:a>
                 </s:if>
-                <s:if test="%{key == '7adoption'}">
+                <s:if test="%{key == '3adoption'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_adoption')}"/>
                     </s:a>

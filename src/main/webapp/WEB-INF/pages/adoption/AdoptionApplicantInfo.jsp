@@ -15,6 +15,15 @@
                     });
         });
     });
+
+    function setApplicantInfo(pin, name, address)
+    {
+        var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+        var applicantName = document.getElementById("certificateApplicantName").value = name;
+        var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+    }
+
+
 </script>
 
 <div id="adoption-applicant-info-form-outer">
@@ -167,14 +176,14 @@
             </td>
             <td>
                 <s:radio name="certificateApplicantType"
-                         list="#@java.util.HashMap@{'FATHER':''}"/>
+                         list="#@java.util.HashMap@{'FATHER':''}" onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
             </td>
             <td>මව <br/>
                 Mother
             </td>
             <td>
                 <s:radio name="certificateApplicantType"
-                         list="#@java.util.HashMap@{'MOTHER':''}"/>
+                         list="#@java.util.HashMap@{'MOTHER':''}" onchange="setApplicantInfo('%{#request.adoption.wifePINorNIC}','%{#request.adoption.wifeName}','');"/>
             </td>
             <td>වෙනත් <br/>
                 Other

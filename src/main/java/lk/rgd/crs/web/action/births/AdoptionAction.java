@@ -217,7 +217,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
@@ -450,11 +450,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (pageNo == 1) {
             //set type
             adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
-            adoption.setCertificateApplicantAddress(certificateApplicantAddress);
-            adoption.setCertificateApplicantName(certificateApplicantName);
-            adoption.setCertificateApplicantPINorNIC(certificateApplicantPINorNIC);
-            adoption.setCertificateApplicantType(certificateApplicantType);
-            service.setApplicantInfo(adoption, user);
+            //cannot capture data if it is not approved
+            if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
+                adoption.setCertificateApplicantAddress(certificateApplicantAddress);
+                adoption.setCertificateApplicantName(certificateApplicantName);
+                adoption.setCertificateApplicantPINorNIC(certificateApplicantPINorNIC);
+                adoption.setCertificateApplicantType(certificateApplicantType);
+                service.setApplicantInfo(adoption, user);
+            } else {
+                addActionError("er.label.cannot_capture_data");
+            }
             session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         }
         return SUCCESS;

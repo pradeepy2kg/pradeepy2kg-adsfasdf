@@ -16,13 +16,13 @@ import lk.rgd.Permission;
 
 /**
  * @author Indunil Moremada
- *         amith jayasekara
- *         action class which handles the login and logout actions
- *         of the EPR system
+ * @authar amith jayasekara
+ * action class which handles the login and logout actions
+ * of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
     public static Map<Integer, Link> linkPermission = new TreeMap<Integer, Link>();
-    public Map<String, Map> allowedLinks = new HashMap<String, Map>();
+    public Map<String, Map> allowedLinks = new TreeMap<String, Map>();
     private List userRoles;
     private String userName;
     private String password;
@@ -80,7 +80,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (language.equals("en")) {
                 country = "US";
             }
-            HashMap map = (HashMap) allowedLinks(user);
+            TreeMap map = (TreeMap) allowedLinks(user);
 
             if (map != null) {
                 session.put(WebConstants.SESSION_USER_MENUE_LIST, map);
@@ -113,7 +113,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             else
                 return result;
         } catch (Exception e) {
-            logger.error("Exception {} {} ", e, e.toString());
+            logger.error("Exception is :P {} {} ", e, e.toString());
             return "error";
         }
     }
@@ -158,14 +158,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
                 logger.debug("put link {} as category {}", e.getValue().getAction(), e.getValue().getCategory());
             }
         }
-        allowedLinks.put("0births", birthLink);
+
         allowedLinks.put("1deaths", deathLink);
         allowedLinks.put("2marriages", marrageLink);
-        allowedLinks.put("4reprots", reportLink);
-        allowedLinks.put("5management", adminLink);
-        allowedLinks.put("3preferences", preferanceLink);
-        allowedLinks.put("6prs", prsLink);
-        allowedLinks.put("7adoption", adoptionLink);
+        allowedLinks.put("5reprots", reportLink);
+        allowedLinks.put("6management", adminLink);
+        allowedLinks.put("4preferences", preferanceLink);
+        allowedLinks.put("7prs", prsLink);
+        allowedLinks.put("3adoption", adoptionLink);
+        allowedLinks.put("0births", birthLink);
         return allowedLinks;
     }
 
