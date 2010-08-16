@@ -8,6 +8,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 
 import java.util.List;
 import java.util.Date;
@@ -130,6 +131,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
         DeathRegister dr = deathRegisterDAO.getById(idUKey);
+        if (!user.isAuthorized(Permission.APPROVE_DEATH)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject death registration",
+                ErrorCodes.PERMISSION_DENIED);
+        }
         if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
             validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
             dr.setStatus(state);
@@ -173,7 +178,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }
@@ -216,19 +221,19 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         final String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()
-                &&
-                ((Role.ROLE_RG.equals(role) || Role.ROLE_ARG.equals(role) || Role.ROLE_ADR.equals(role))
-                        ||
-                        (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                                &&
-                                user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
-                        )
+            &&
+            ((Role.ROLE_RG.equals(role) || Role.ROLE_ARG.equals(role) || Role.ROLE_ADR.equals(role))
+                ||
+                (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
+                    &&
+                    user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
                 )
+            )
         )) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                    bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-                    bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 }
