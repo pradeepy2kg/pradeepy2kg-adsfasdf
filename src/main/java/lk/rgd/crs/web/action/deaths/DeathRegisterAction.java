@@ -421,7 +421,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     private void populateBasicLists(String language) {
-        districtList = districtDAO.getAllDistrictNames(language, user);
+        districtList = districtDAO.getDistrictNames(language, user);
         setCountryList(countryDAO.getCountries(language));
         setRaceList(raceDAO.getRaces(language));
     }
