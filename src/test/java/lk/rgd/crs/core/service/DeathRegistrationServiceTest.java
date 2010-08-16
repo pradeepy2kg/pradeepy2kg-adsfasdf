@@ -91,13 +91,13 @@ public class DeathRegistrationServiceTest extends TestCase {
         // reload again to fill all fields as we still only have IDUkey of new record
         ddf1 = deathRegService.getById(ddf1.getIdUKey(), deoColomboColombo);
         assertEquals(20101010, ddf1.getDeath().getDeathSerialNo());
-        // TODO cannot approve death declarations
+
         // colombo deo cannot approve
-//        try {
-//            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoColomboColombo);
-//            fail("DEO cannot approve DDFs");
-//        } catch (CRSRuntimeException expected) {
-//        }
+        try {
+            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoColomboColombo);
+            fail("DEO cannot approve DDFs");
+        } catch (CRSRuntimeException expected) {
+        }
         // negambo deo cannot approve either
         try {
             deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoGampahaNegambo);

@@ -130,11 +130,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     }
 
     private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
-        DeathRegister dr = deathRegisterDAO.getById(idUKey);
+        // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_DEATH)) {
-            handleException("User : " + user.getUserId() + " is not allowed to approve/reject death registration",
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject death declarations",
                 ErrorCodes.PERMISSION_DENIED);
         }
+        DeathRegister dr = deathRegisterDAO.getById(idUKey);
         if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
             validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
             dr.setStatus(state);
@@ -178,7 +179,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }
@@ -222,7 +223,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         final String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()
             &&
-            ((Role.ROLE_RG.equals(role) || Role.ROLE_ARG.equals(role) || Role.ROLE_ADR.equals(role))
+            (Role.ROLE_RG.equals(role)
                 ||
                 (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
                     &&
