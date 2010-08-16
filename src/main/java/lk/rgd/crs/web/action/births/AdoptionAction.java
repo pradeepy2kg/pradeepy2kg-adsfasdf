@@ -451,7 +451,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             //set type
             adoption = (AdoptionOrder) session.get(WebConstants.SESSION_ADOPTION_ORDER);
             //cannot capture data if it is not approved
-            if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
+            if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 adoption.setCertificateApplicantAddress(certificateApplicantAddress);
                 adoption.setCertificateApplicantName(certificateApplicantName);
                 adoption.setCertificateApplicantPINorNIC(certificateApplicantPINorNIC);
@@ -492,11 +492,15 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String populateAdoption() {
         adoption = service.getByCourtAndCourtOrderNumber(0 /* TODO FIX ME*/, courtOrderNo, user);
         if (adoption != null) {
-            if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
+            if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
+
             } else {
-                adoption=null;
-               addActionError(getText("er.label.cannot_capture_data"));
+                if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
+                    addActionError(getText("er.label.notice.not.printed.cannot_capture_data"));
+                }
+                adoption = null;
+                addActionError(getText("er.label.cannot_capture_data"));
             }
         } else {
             addActionError(getText("adoption_order_notfound.message"));
