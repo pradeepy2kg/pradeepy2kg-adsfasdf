@@ -148,7 +148,7 @@ public class BirthRegisterInfo implements Serializable {
     }
 
     public void setComments(String comments) {
-        this.comments = WebUtils.filterBlanksAndToUpper(comments);
+        this.comments = WebUtils.filterBlanks(comments);
     }
 
     public Date getOriginalBCDateOfIssue() {

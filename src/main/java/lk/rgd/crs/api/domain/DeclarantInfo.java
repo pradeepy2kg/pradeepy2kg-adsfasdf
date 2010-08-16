@@ -76,7 +76,7 @@ public class DeclarantInfo implements Serializable {
     }
 
     public void setDeclarantPhone(String declarantPhone) {
-        this.declarantPhone = WebUtils.filterBlanksAndToUpper(declarantPhone);
+        this.declarantPhone = WebUtils.filterBlanks(declarantPhone);
     }
 
     public String getDeclarantEMail() {
@@ -84,7 +84,7 @@ public class DeclarantInfo implements Serializable {
     }
 
     public void setDeclarantEMail(String declarantEMail) {
-        this.declarantEMail = WebUtils.filterBlanksAndToUpper(declarantEMail);
+        this.declarantEMail = WebUtils.filterBlanks(declarantEMail);
     }
 
     public DeclarantType getDeclarantType() {

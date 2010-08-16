@@ -85,7 +85,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setAnyOtherInformation(String anyOtherInformation) {
-        this.anyOtherInformation = WebUtils.filterBlanksAndToUpper(anyOtherInformation);
+        this.anyOtherInformation = WebUtils.filterBlanks(anyOtherInformation);
     }
 
     public long getDeathSerialNo() {
@@ -141,7 +141,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setTimeOfDeath(String timeOfDeath) {
-        this.timeOfDeath = WebUtils.filterBlanksAndToUpper(timeOfDeath);
+        this.timeOfDeath = WebUtils.filterBlanks(timeOfDeath);
     }
 
     public String getPlaceOfDeathInEnglish() {
@@ -181,7 +181,7 @@ public class DeathInfo implements Serializable {
     }
 
     public void setIcdCodeOfCause(String icdCodeOfCause) {
-        this.icdCodeOfCause = WebUtils.filterBlanksAndToUpper(icdCodeOfCause);
+        this.icdCodeOfCause = WebUtils.filterBlanks(icdCodeOfCause);
     }
 
     public String getPlaceOfBurial() {
@@ -213,6 +213,6 @@ public class DeathInfo implements Serializable {
     }
 
     public void setReasonForLateRegistration(String reasonForLateRegistration) {
-        this.reasonForLateRegistration = WebUtils.filterBlanksAndToUpper(reasonForLateRegistration);
+        this.reasonForLateRegistration = WebUtils.filterBlanks(reasonForLateRegistration);
     }
 }

@@ -81,7 +81,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantPhoneNo(String informantPhoneNo) {
-        this.informantPhoneNo = WebUtils.filterBlanksAndToUpper(informantPhoneNo);
+        this.informantPhoneNo = WebUtils.filterBlanks(informantPhoneNo);
     }
 
     public String getInformantEmail() {
@@ -89,7 +89,7 @@ public class InformantInfo implements Serializable {
     }
 
     public void setInformantEmail(String informantEmail) {
-        this.informantEmail = WebUtils.filterBlanksAndToUpper(informantEmail);
+        this.informantEmail = WebUtils.filterBlanks(informantEmail);
     }
 
     public Date getInformantSignDate() {
