@@ -495,6 +495,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             if (adoption.getStatus().equals(AdoptionOrder.State.APPROVED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
             } else {
+                adoption=null;
                addActionError(getText("er.label.cannot_capture_data"));
             }
         } else {

@@ -542,6 +542,10 @@
                 method="adoptionApplicantInfo">
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
         </action>
+        <action name="eprAdoptionProcessApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="adoptionApplicantInfo">
+            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+        </action>
         <action name="eprAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionCertificate">
             <result type="tiles" name="success">epr.adoptionCertificate</result>

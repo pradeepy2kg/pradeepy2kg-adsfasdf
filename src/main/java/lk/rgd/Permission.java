@@ -101,6 +101,7 @@ public final class Permission {
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED = 117;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED = 118;
     public static final int PAGE_ADOPTION_BDF_HOME = 119;
+    public static final int PAGE_ADOPTION_PROCESS_APPLICANT_INFO = 134;
 
 
     //permission for death
@@ -109,7 +110,7 @@ public final class Permission {
     public static final int PAGE_LATE_DEATH_REGISTRATION = 122;
     public static final int PAGE_DEATH_CERTIFICATE = 123;
     public static final int PAGE_LATE_DEATH_HOME = 124;
-	public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 125;
+    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 125;
     public static final int PAGE_DEATH_APPROVAL_PRINT = 126;
     public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 127;
     public static final int PAGE_DEATH_EDIT_MODE = 128;
@@ -120,4 +121,4 @@ public final class Permission {
     public static final int PAGE_DEATH_PRINT = 133;
 
 
-}                                                                   
+}
