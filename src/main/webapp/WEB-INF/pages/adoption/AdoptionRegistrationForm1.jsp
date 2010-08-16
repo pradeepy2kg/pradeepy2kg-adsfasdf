@@ -8,13 +8,29 @@
 
 <script>
     $(function() {
-        $("#receivedDatePicker").datepicker();
+        $("#receivedDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+
+        });
     });
     $(function() {
-        $("#bdayDatePicker").datepicker();
+        $("#bdayDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
-        $("#orderIssuedDatePicker").datepicker();
+        $("#orderIssuedDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
     $(function() {
         $('select#birthDistrictId').bind('change', function(evt1) {
