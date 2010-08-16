@@ -105,8 +105,8 @@ public class LoginActionTest extends CustomStrutsTestCase {
 
         Map session = action.getSession();
         Map menu = (Map) session.get(WebConstants.SESSION_USER_MENUE_LIST);
-        assertTrue(menu.containsKey("5management"));
-        assertTrue(((Map) menu.get("5management")).containsKey(Permission.PAGE_CREATE_USER));        // check admin menu is there
+        assertTrue(menu.containsKey("6management"));
+        assertTrue(((Map) menu.get("6management")).containsKey(Permission.PAGE_CREATE_USER));        // check admin menu is there
         assertFalse(((Map) menu.get("0births")).containsKey(Permission.PAGE_BIRTH_REGISTRATON));     // check birth menu links are not there
     }
 

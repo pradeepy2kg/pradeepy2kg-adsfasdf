@@ -10,23 +10,23 @@
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
-    $(function() {
-        $("#submitDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+$(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
+});
 
-    $(function() {
-        $("#birthDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+$(function() {
+    $("#birthDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
+});
 
 // mode 1 = passing District, will return DS list
 // mode 2 = passing DsDivision, will return BD list
@@ -65,160 +65,220 @@ $(function() {
                 });
     });
 
-        $('img#childName').bind('click', function(evt3) {
-            var id = $("textarea#childFullNameOfficialLang").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+    $('img#childName').bind('click', function(evt3) {
+        var id = $("textarea#childFullNameOfficialLang").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
-        });
-
-        function processResponse1(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        };
-
-        $('img#place').bind('click', function(evt4) {
-            var id = $("input#placeOfBirth").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
-
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
-
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
-
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-        });
-
-        function processResponse2(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-        }
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
     });
 
-function validate() {
-    var errormsg = "";
-    var element;
-    var returnval;
-    var flag = false;
-    var lateOrbelate = false;
-    var check = document.getElementById('skipjs');
-    /*date related validations*/
-    var birthdate = new Date(document.getElementById('birthDatePicker').value);
-    var submit = new Date(document.getElementById('submitDatePicker').value);
-    //compare two days
-    if (birthdate.getTime() > submit.getTime()) {
-        errormsg = errormsg + "\n" + document.getElementById('error6').value;
-        flag = true;
+    function processResponse1(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 
-    var birthType = document.getElementById('birthTypeId').value;
-    if (birthType != 2) {
-        //comparing 90 days delay
-        var one_day = 1000 * 60 * 60 * 24 ;
-        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-        if (numDays >= 90) {
-            if (numDays >= 365) {
-                errormsg = errormsg + "\n" + document.getElementById('error8').value;
-            } else {
-                errormsg = errormsg + "\n" + document.getElementById('error7').value;
-            }
-            lateOrbelate = true;
-        }
-    }
+    ;
 
-    element = document.getElementById('bdfSerialNo');
-    if (element.value == "") {
-        errormsg = errormsg + "\n" + document.getElementById('error1').value;
-        flag = true;
-    }
-    if (!(submit.getTime())) {
-        errormsg = errormsg + "\n" + document.getElementById('error9').value;
-        flag = true;
-    }
-    if (!birthdate.getTime()) {
-        errormsg = errormsg + "\n" + document.getElementById('error10').value;
-        flag = true;
-    }
-    element = document.getElementById('placeOfBirth');
-    if (element.value == "") {
-        errormsg = errormsg + "\n" + document.getElementById('error11').value;
-        flag = true;
-    }
+    $('img#place').bind('click', function(evt4) {
+        var id = $("input#placeOfBirth").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-    if (!check.checked) {
-        element = document.getElementById('childFullNameOfficialLang');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-            flag = true;
-        }
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-        element = document.getElementById('childFullNameEnglish');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error3').value;
-            flag = true;
-        }
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-        element = document.getElementById('childBirthWeight');
-        if (element.value == "")
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+    });
+
+    function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+});
+
+var errormsg = "";
+var lateOrbelate = false;
+var isLive = true;
+/*function validate() {
+
+ var returnval;
+ var flag = false;
+ var lateOrbelate = false;
+ var check = document.getElementById('skipjs');
+ *//*date related validations*//*
+ var birthdate = new Date(document.getElementById('birthDatePicker').value);
+ var submit = new Date(document.getElementById('submitDatePicker').value);
+ var element = document.getElementById('bdfSerialNo');
+
+ //compare two days
+ if (birthdate.getTime() > submit.getTime()) {
+ errormsg = errormsg + "\n" + document.getElementById('error6').value;
+ flag = true;
+ }
+
+ var birthType = document.getElementById('birthTypeId').value;
+ if (birthType != 2) {
+ //comparing 90 days delay
+ var one_day = 1000 * 60 * 60 * 24 ;
+ var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+ if (numDays >= 90) {
+ if (numDays >= 365) {
+ errormsg = errormsg + "\n" + document.getElementById('error8').value;
+ } else {
+ errormsg = errormsg + "\n" + document.getElementById('error7').value;
+ }
+ lateOrbelate = true;
+ }
+ }
+
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error1').value;
+ flag = true;
+ }
+ //validate serial number is a number
+ IsNumeric(element.value, 'SERIALNUMBER')
+
+ if (!(submit.getTime())) {
+ errormsg = errormsg + "\n" + document.getElementById('error9').value;
+ flag = true;
+ }
+ if (!birthdate.getTime()) {
+ errormsg = errormsg + "\n" + document.getElementById('error10').value;
+ flag = true;
+ }
+ element = document.getElementById('placeOfBirth');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error11').value;
+ flag = true;
+ }
+
+ if (!check.checked) {
+ alert("skip")
+ *//*
+ element = document.getElementById("weeksPregnant");
+ alert("weeks : " + element.value)
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error14').value;
+ }
+ *//*
+
+ element = document.getElementById('childFullNameOfficialLang');
+ alert("1")
+ if (element.value == "") {
+ alert("called")
+ errormsg = errormsg + "\n" + document.getElementById('error2').value;
+ flag = true;
+ }
+ alert("2")
+ alert(errormsg)
+ element = document.getElementById('childFullNameEnglish');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error3').value;
+ flag = true;
+ }
+
+ element = document.getElementById('childBirthWeight');
+ if (element.value == "")
+ {
+ errormsg = errormsg + "\n" + document.getElementById('error4').value;
+ flag = true;
+ }
+ else if (isNaN(element.value)) {
+ errormsg = errormsg + "\n" + document.getElementById('error4').value;
+ flag = true;
+ }
+ element = document.getElementById('childRank');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error5').value;
+ flag = true;
+ }
+ //check child rank is numeric
+ IsNumeric(element.value, 'CHILD RANK')
+
+ element = document.getElementById("numberOfChildrenBorn")
+ if (isNaN(element.value)) {
+ errormsg = errormsg + "\n" + document.getElementById('error12').value;
+ flag = true;
+ }
+ //check number of children fields are
+ IsNumeric(element.value, "NUMBER OF CHILDRENS")
+
+ }
+ if (errormsg != "") {
+ alert(errormsg);
+ if (flag) {
+ returnval = false;
+ } else {
+ if (lateOrbelate) {
+ returnval = true;
+ }
+ }
+ }
+ errormsg = "";
+ return returnval;
+ }*/
+
+function IsNumeric(sText, massage)
+{
+    var ValidChars = "0123456789.";
+    var IsNumber = true;
+    var Char;
+
+
+    for (i = 0; i < sText.length && IsNumber == true; i++)
+    {
+        Char = sText.charAt(i);
+        if (ValidChars.indexOf(Char) == -1)
         {
-            errormsg = errormsg + "\n" + document.getElementById('error4').value;
-            flag = true;
-        }
-        else if (isNaN(element.value)) {
-            errormsg = errormsg + "\n" + document.getElementById('error4').value;
-            flag = true;
-        }
-        element = document.getElementById('childRank');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error5').value;
-            flag = true;
-        }
-        element = document.getElementById("numberOfChildrenBorn")
-        if (isNaN(element.value)) {
-            errormsg = errormsg + "\n" + document.getElementById('error12').value;
-            flag = true;
+            IsNumber = false;
         }
     }
-
-    if (errormsg != "") {
-        alert(errormsg);
-        if (flag) {
-            returnval = false;
-        } else {
-            if (lateOrbelate) {
-                returnval = true;
-            }
-        }
+    if (!IsNumber) {
+        errormsg = errormsg + "\n" + document.getElementById('error13').value + " for " + massage;
     }
-
-    return returnval;
 }
+
+function validate2() {
+    //skipping low priority data validations
+    var check = document.getElementById('skipjs');
+
+}
+
+function validate
+                                                              
 </script>
 
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
-        onsubmit="javascript:return validate()">
+        onsubmit="javascript:return validate2()">
 
 <table class="table_reg_header_01" style="font-size:9pt">
     <caption></caption>
@@ -391,7 +451,7 @@ function validate() {
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      cssStyle="width:98.5%;"/>
+                      cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>
 
@@ -530,6 +590,9 @@ function validate() {
 <s:hidden id="error10" value="%{getText('p1.dob.error.value')}"/>
 <s:hidden id="error11" value="%{getText('p1.placeOfBirth.error.value')}"/>
 <s:hidden id="error12" value="%{getText('p1.numbeOfChildren')}"/>
+<s:hidden id="error14" value="%{getText('p1.numbeOfWeeksPregnant')}"/>
+
+<s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
 
 <script type="text/javascript">
 </script>

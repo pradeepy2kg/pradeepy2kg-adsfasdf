@@ -152,7 +152,7 @@
 <br>
 <br>
 
-<s:form action="eprAdoptionProcessApplicantInfo.do">
+<s:form action="eprAdoptionApplicantInfo.do">
     <s:hidden name="pageNo" value="1"/>
     <table border="1" class="adoption-applicant" cellspacing="0" cellpadding="0"
            style="border:1px solid #000; border-collapse:collapse;">
