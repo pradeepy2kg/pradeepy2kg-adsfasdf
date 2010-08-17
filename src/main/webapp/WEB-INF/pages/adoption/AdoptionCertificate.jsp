@@ -95,8 +95,8 @@
         <td width="150px">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
         <td width="150px">
-                <s:label name=""  value="%{genderSi}" /> <br>
-                <s:label name=""  value="%{genderEn}" />
+            <s:label name="" value="%{genderSi}"/> <br>
+            <s:label name="" value="%{genderEn}"/>
         </td>
     </tr>
 
@@ -217,7 +217,7 @@
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
     <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-    <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
+    <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
 </div>
 </form>
 <s:form action="eprAdoptionBackToPreviousState.do">
@@ -228,5 +228,8 @@
         <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
     </div>
 </s:form>
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
 </div>
 <%--eprPrintDeath.do?idUKey=5&currentStatus=0&pageNo=1&nextFlag=false&previousFlag=false--%>

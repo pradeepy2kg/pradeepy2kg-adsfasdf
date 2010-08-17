@@ -304,7 +304,7 @@
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
     <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-    <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
+    <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
 <s:form action="eprAdoptionBackToPreviousState.do">
@@ -316,4 +316,7 @@
         <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
     </div>
 </s:form>
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
 </div>

@@ -1,19 +1,15 @@
 /* @author Duminda Dharmakeerthi */
 
 function printPage() {
-    //alert("print page");
-    if (!jsPrintSetup) {
-        var option = confirm("You don't have Printer plugin.\nDo you wan't to download it?");
-        if (option) {
-            window.open("https://addons.mozilla.org/en-US/firefox/addon/8966/");
-        }
+    if (typeof(jsPrintSetup) == 'undefined') {
+        installjsPrintSetup();
     } else {
         var printContentWrapper = $("#body-content-data").clone();
 
         var windowUrl = 'about:blank';
         var uniqueName = new Date();
         var windowName = 'Print' + uniqueName.getTime();
-        var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=400px,height=400px');
+        var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=200px,height=200px');
         printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/popreg/css/webform.css\"/>");
         printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/popreg/css/style.css\"/>");
         printWindow.document.write("<script language=\"JavaScript\" src=\"/popreg/js/print.js\"><\/script>");
@@ -47,4 +43,13 @@ function printForm() {
     jsPrintSetup.setOption('footerStrRight', '');
 
     jsPrintSetup.print();
+}
+
+// Install JSPrintSetup
+function installjsPrintSetup(){
+    if(confirm("You don't have printer plugin.\nDo you want to install the Printer Plugin now?")){
+        var xpi = new Object();
+        xpi['jsprintsetup'] = 'https://addons.mozilla.org/en-US/firefox/downloads/latest/8966/addon-8966-latest.xpi';
+        InstallTrigger.install(xpi);
+    }
 }
