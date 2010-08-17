@@ -194,7 +194,7 @@
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
             <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:submit onclick="printPage();" value="%{getText('print.button')}" cssStyle="margin-top:10px;"/>
+            <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
         </div>
     </s:form>
     <s:form action="eprAdoptionBackToPreviousState.do">
@@ -206,6 +206,9 @@
             <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
         </div>
     </s:form>
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    </div>
 </div>
 
 <%--idUKey=5&currentStatus=0&pageNo=1&nextFlag=false&previousFlag=false&rePrint=false--%>
