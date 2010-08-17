@@ -14,4 +14,17 @@ import java.util.Date;
  *  */
 @Embeddable
 public class BDFMetaInfo extends BaseMetaInfo implements Serializable {
+    /**
+     * Confirmation changes Approved Date
+     */
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date confirmationlastUpdatedDate;
+
+    /**
+     * Confirmeation changes approved user
+     */
+    @Column(nullable = false)
+    private long userId;
+
 }
