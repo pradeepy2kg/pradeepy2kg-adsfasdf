@@ -125,139 +125,144 @@ $(function() {
 });
 
 var errormsg = "";
-var lateOrbelate = false;
-var isLive = true;
+/*var lateOrbelate = false;
+ var isLive = true;
+ function validate() {
+
+ var returnval;
+ var flag = false;
+ var lateOrbelate = false;
+ var check = document.getElementById('skipjs');
+ *//**//*date related validations*//**//*
+ var birthdate = new Date(document.getElementById('birthDatePicker').value);
+ var submit = new Date(document.getElementById('submitDatePicker').value);
+ var element = document.getElementById('bdfSerialNo');
+
+ //compare two days
+ if (birthdate.getTime() > submit.getTime()) {
+ errormsg = errormsg + "\n" + document.getElementById('error6').value;
+ flag = true;
+ }
+
+ var birthType = document.getElementById('birthTypeId').value;
+ if (birthType != 2) {
+ //comparing 90 days delay
+ var one_day = 1000 * 60 * 60 * 24 ;
+ var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+ if (numDays >= 90) {
+ if (numDays >= 365) {
+ errormsg = errormsg + "\n" + document.getElementById('error8').value;
+ } else {
+ errormsg = errormsg + "\n" + document.getElementById('error7').value;
+ }
+ lateOrbelate = true;
+ }
+ }
+
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error1').value;
+ flag = true;
+ }
+ //validate serial number is a number
+ IsNumeric(element.value, 'SERIALNUMBER')
+
+ if (!(submit.getTime())) {
+ errormsg = errormsg + "\n" + document.getElementById('error9').value;
+ flag = true;
+ }
+ if (!birthdate.getTime()) {
+ errormsg = errormsg + "\n" + document.getElementById('error10').value;
+ flag = true;
+ }
+ element = document.getElementById('placeOfBirth');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error11').value;
+ flag = true;
+ }
+
+ if (!check.checked) {
+ alert("skip")
+
+ element = document.getElementById("weeksPregnant");
+ alert("weeks : " + element.value)
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error14').value;
+ }
+
+
+ element = document.getElementById('childFullNameOfficialLang');
+ if (element.value == "") {
+ alert("called")
+ errormsg = errormsg + "\n" + document.getElementById('error2').value;
+ flag = true;
+ }
+ alert("2")
+ alert(errormsg)
+ element = document.getElementById('childFullNameEnglish');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error3').value;
+ flag = true;
+ }
+
+ element = document.getElementById('childBirthWeight');
+ if (element.value == "")
+ {
+ errormsg = errormsg + "\n" + document.getElementById('error4').value;
+ flag = true;
+ }
+ else if (isNaN(element.value)) {
+ errormsg = errormsg + "\n" + document.getElementById('error4').value;
+ flag = true;
+ }
+ element = document.getElementById('childRank');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('error5').value;
+ flag = true;
+ }
+ //check child rank is numeric
+ IsNumeric(element.value, 'CHILD RANK')
+
+ element = document.getElementById("numberOfChildrenBorn")
+ if (isNaN(element.value)) {
+ errormsg = errormsg + "\n" + document.getElementById('error12').value;
+ flag = true;
+ }
+ //check number of children fields are
+ IsNumeric(element.value, "NUMBER OF CHILDRENS")
+
+ }
+ if (errormsg != "") {
+ alert(errormsg);
+ if (flag) {
+ returnval = false;
+ } else {
+ if (lateOrbelate) {
+ returnval = true;
+ }
+ }
+ }
+ errormsg = "";
+ return returnval;
+ }*/
+
 function validate() {
-
-    var returnval;
-    var flag = false;
-    var lateOrbelate = false;
-    var check = document.getElementById('skipjs');
-*//*date related validations*//*
-    var birthdate = new Date(document.getElementById('birthDatePicker').value);
-    var submit = new Date(document.getElementById('submitDatePicker').value);
-    var element = document.getElementById('bdfSerialNo');
-
-    //compare two days
-    if (birthdate.getTime() > submit.getTime()) {
-        errormsg = errormsg + "\n" + document.getElementById('error6').value;
-        flag = true;
-    }
-
-    var birthType = document.getElementById('birthTypeId').value;
-    if (birthType != 2) {
-        //comparing 90 days delay
-        var one_day = 1000 * 60 * 60 * 24 ;
-        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-        if (numDays >= 90) {
-            if (numDays >= 365) {
-                errormsg = errormsg + "\n" + document.getElementById('error8').value;
-            } else {
-                errormsg = errormsg + "\n" + document.getElementById('error7').value;
-            }
-            lateOrbelate = true;
-        }
-    }
-
-    if (element.value == "") {
-        errormsg = errormsg + "\n" + document.getElementById('error1').value;
-        flag = true;
-    }
-    //validate serial number is a number
-    IsNumeric(element.value, 'SERIALNUMBER')
-
-    if (!(submit.getTime())) {
-        errormsg = errormsg + "\n" + document.getElementById('error9').value;
-        flag = true;
-    }
-    if (!birthdate.getTime()) {
-        errormsg = errormsg + "\n" + document.getElementById('error10').value;
-        flag = true;
-    }
-    element = document.getElementById('placeOfBirth');
-    if (element.value == "") {
-        errormsg = errormsg + "\n" + document.getElementById('error11').value;
-        flag = true;
-    }
-
-    if (!check.checked) {
-        alert("skip")
-
-        element = document.getElementById("weeksPregnant");
-        alert("weeks : " + element.value)
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error14').value;
-        }
-
-
-        element = document.getElementById('childFullNameOfficialLang');
-        alert("1")
-        if (element.value == "") {
-            alert("called")
-            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-            flag = true;
-        }
-        alert("2")
-        alert(errormsg)
-        element = document.getElementById('childFullNameEnglish');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error3').value;
-            flag = true;
-        }
-
-        element = document.getElementById('childBirthWeight');
-        if (element.value == "")
-        {
-            errormsg = errormsg + "\n" + document.getElementById('error4').value;
-            flag = true;
-        }
-        else if (isNaN(element.value)) {
-            errormsg = errormsg + "\n" + document.getElementById('error4').value;
-            flag = true;
-        }
-        element = document.getElementById('childRank');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('error5').value;
-            flag = true;
-        }
-        //check child rank is numeric
-        IsNumeric(element.value, 'CHILD RANK')
-
-        element = document.getElementById("numberOfChildrenBorn")
-        if (isNaN(element.value)) {
-            errormsg = errormsg + "\n" + document.getElementById('error12').value;
-            flag = true;
-        }
-        //check number of children fields are
-        IsNumeric(element.value, "NUMBER OF CHILDRENS")
-
-    }
-    if (errormsg != "") {
-        alert(errormsg);
-        if (flag) {
-            returnval = false;
-        } else {
-            if (lateOrbelate) {
-                returnval = true;
-            }
-        }
-    }
-    errormsg = "";
-    return returnval;
-}
-
-function validate2() {
     //skipping low priority data validations
     var check = document.getElementById('skipjs');
     var returnval = true;
     var declarationType = document.getElementById('birthTypeId');
-    alert(declarationType.value)
-    switch (declarationType.value) {
-        case 0: alert("case 0");break;
-        case 1: alert("case 1");break;
-        case 2: alert("case 2");
+    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+    var submit = new Date(document.getElementById('submitDatePicker').value);
+    if (declarationType.value == 0) {
+        commanTags(check);
+        stillBirthCommanTags(check);
     }
-    isEmpty(document.getElementById('childRank'), "hik", 'error5')
+    if (declarationType.value == 1) {
+        commanTags(check);
+        liveBirthCommanTags(check)
+    }
+    if (declarationType.value == 2) {
+        commanTags(check);
+    }
 
     if (errormsg != "") {
         alert(errormsg);
@@ -265,8 +270,64 @@ function validate2() {
     }
     errormsg = "";
     return returnval;
-
 }
+
+
+//comment tags
+function commanTags(check) {
+    var domObject;
+
+    //place of birth
+    domObject = document.getElementById('placeOfBirth');
+    isEmpty(domObject, "", 'error11')
+
+    //todo check date format
+    //date of birth
+    domObject = document.getElementById('birthDatePicker');
+    isEmpty(domObject, "", 'error10')
+
+    //date of register
+    domObject = document.getElementById('submitDatePicker');
+    isEmpty(domObject, "", 'error9')
+
+
+    //child rank
+    domObject = document.getElementById('childRank');
+    if (!check) {
+        isEmpty(domObject, "", 'error16')
+    }
+    isNumeric(domObject.value, 'error24')
+
+    //number of child
+    domObject = document.getElementById('numberOfChildrenBorn');
+    if (!check) {
+        isEmpty(domObject, "", 'error12')
+    }
+    isNumeric(domObject.value, 'error25')
+
+    //serial number
+    domObject = document.getElementById('bdfSerialNo');
+    isEmpty(domObject, "", 'error1')
+    isNumeric(domObject.value, 'error20')
+}
+
+//still birth tags
+function stillBirthCommanTags(check) {
+    var domObject;
+    //Number of weeks pregnant
+    domObject = document.getElementById('weeksPregnant');
+    if (!check)
+        isEmpty(domObject, "", 'error14');
+}
+
+function liveBirthCommanTags(check) {
+    var domObject;
+    //birth weight
+    domObject = document.getElementById('childBirthWeight');
+    if (!check)
+        isEmpty(domObject, "", 'error4');
+}
+
 //check given element is empty
 function isEmpty(domElement, errorMassage, errorCode) {
     with (domElement) {
@@ -288,7 +349,7 @@ function isNumeric(text, massage) {
         }
     }
     if (!isNumber) {
-        errormsg = errormsg + "\n" + document.getElementById('error13').value + " for " + massage;
+        errormsg = errormsg + "\n" + document.getElementById('error13').value + " for " + document.getElementById(massage).value;
     }
 }
 
@@ -622,6 +683,16 @@ function validateEmail(domElement) {
 
 <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error15" value="%{getText('p1.invalide.email')}"/>
+<s:hidden id="error16" value="%{getText('p1.child.rank')}"/>
+
+<%--hidden fields for input fields--%>   .
+<s:hidden id="error20" value="%{getText('p1.serial.text')}"/>
+<s:hidden id="error21" value="%{getText('p1.dob.text')}"/>
+<s:hidden id="error22" value="%{getText('p1.dateOfRegistration.text')}"/>
+<s:hidden id="error23" value="%{getText('p1.birthWeight.text')}"/>
+<s:hidden id="error24" value="%{getText('p1.child.rank.text')}"/>
+<s:hidden id="error25" value="%{getText('p1.numOfChildren.text')}"/>
+
 
 <script type="text/javascript">
 </script>
