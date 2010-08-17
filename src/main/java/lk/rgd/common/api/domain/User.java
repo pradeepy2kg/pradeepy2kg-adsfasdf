@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 import java.util.Date;
 
@@ -40,7 +41,7 @@ import java.util.Date;
                 "WHERE u.status != 3 " +
                 "ORDER BY u.userName")
 })
-public class User {
+public class User implements Serializable {
 
     public enum State {
         INACTIVE, /** 0 - state. Cannot login */
