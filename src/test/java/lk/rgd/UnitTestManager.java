@@ -40,11 +40,6 @@ public class UnitTestManager extends TestCase {
                 xmlReader.loadBeanDefinitions(new ClassPathResource("unitTest_applicationContext.xml"));
             }
             ctx.refresh();
-
-            // create Lucene indexes
-            /*createTestLuceneIndex(Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY) ?
-                "jdbc:derby://localhost:1527/unit-testing-jpa;create=true" :
-                "jdbc:derby:memory:unit-testing-jpa");*/
             return ctx;
 
         } catch (Exception e) {
@@ -52,75 +47,4 @@ public class UnitTestManager extends TestCase {
             throw new IllegalStateException("Couldn't start Spring...", e);
         }
     }
-
-    /*private static void createTestLuceneIndex(String url) {
-
-        // delete any existing index
-        File f = new File("/tmp/index/person");
-        if (f.exists()) {
-            if (Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY)) {
-                logger.info("Reusing existing Lucene indexes ...");
-                return;
-            } else {
-                f.delete();
-            }
-        }
-        f.mkdirs();
-
-        logger.info("Creating Lucene indexes ...");
-
-        try {
-            Connection c = DriverManager.getConnection(url, "epop", "epop");
-            Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery("select * from PRS.PERSON");
-
-            IndexWriter writer = new IndexWriter(
-                FSDirectory.open(new File("/tmp/index/person")),
-                new WhitespaceAnalyzer(), true, IndexWriter.MaxFieldLength.LIMITED);
-
-            long start = System.currentTimeMillis();
-            int count = 0;
-
-            while (rs.next()) {
-
-                Document d = new Document();
-                d.add(new Field("personUKey", rs.getString("personUKey"), Field.Store.YES, Field.Index.NO));
-                final Date dateOfBirth = rs.getDate("dateOfBirth");
-                if (dateOfBirth != null) {
-                    d.add(new Field("dateOfBirth", DateTools.dateToString(dateOfBirth, DateTools.Resolution.DAY), Field.Store.YES, Field.Index.ANALYZED));
-                }
-                d.add(new Field("fullNameInEnglishLanguage", rs.getString("fullNameInEnglishLanguage"), Field.Store.YES, Field.Index.ANALYZED));
-                d.add(new Field("fullNameInOfficialLanguage", rs.getString("fullNameInOfficialLanguage"), Field.Store.YES, Field.Index.ANALYZED));
-                d.add(new Field("gender", NumericUtils.intToPrefixCoded(rs.getInt("gender")), Field.Store.YES, Field.Index.ANALYZED));
-                d.add(new Field("lastNameInEnglish", rs.getString("lastNameInEnglish"), Field.Store.YES, Field.Index.ANALYZED));
-                d.add(new Field("lastNameInOfficialLanguage", rs.getString("lastNameInOfficialLanguage"), Field.Store.YES, Field.Index.ANALYZED));
-                final String nic = rs.getString("nic");
-                if (nic != null) {
-                    d.add(new Field("nic", nic, Field.Store.YES, Field.Index.ANALYZED));
-                }
-                final String pin = rs.getString("pin");
-                if (pin != null) {
-                    d.add(new Field("pin", pin, Field.Store.YES, Field.Index.ANALYZED));
-                }
-                final String placeOfBirth = rs.getString("placeOfBirth");
-                if (placeOfBirth != null) {
-                    d.add(new Field("placeOfBirth", placeOfBirth, Field.Store.YES, Field.Index.ANALYZED));
-                }
-                writer.addDocument(d);
-                count++;
-            }
-
-            System.out.println("Indexed : " + count + " documents in : " + (System.currentTimeMillis() - start) + " ms");
-
-            writer.optimize();
-            writer.close();
-
-            rs.close();
-            c.close();
-            
-        } catch (Exception e) {
-            logger.error("Error indexing the Person records of the PRS", e);
-            throw new RuntimeException("Error indexing the Person records of the PRS", e);
-        }
-    }*/
 }

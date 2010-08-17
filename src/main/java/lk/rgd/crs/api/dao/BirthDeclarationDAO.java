@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.dao;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 
@@ -15,15 +16,17 @@ public interface BirthDeclarationDAO {
      * Add a birth declaration
      *
      * @param bdf the BDF to be added
+     * @param user the User initiating the action
      */
-    public void addBirthDeclaration(BirthDeclaration bdf);
+    public void addBirthDeclaration(BirthDeclaration bdf, User user);
 
     /**
      * Update a birth declaration
      *
      * @param bdf the updated BDF
+     * @param user the User initiating the action
      */
-    public void updateBirthDeclaration(BirthDeclaration bdf);
+    public void updateBirthDeclaration(BirthDeclaration bdf, User user);
 
     /**
      * Remove a birth declaration
@@ -111,7 +114,7 @@ public interface BirthDeclarationDAO {
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR for selected BD Division and selected range of confirmation received dates.
-     * Results are ordered on the descending confirmationReceiveDate
+     * Results are ordered on the descending confirmationProcessedTimestamp
      *
      * @param birthDivision the birth division
      * @param startDate     starting date of the range

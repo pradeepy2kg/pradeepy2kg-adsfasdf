@@ -174,7 +174,7 @@
                                 fieldValue="%{#approvalList.idUKey}"/></s:if></td>
                         <td><s:property value="idUKey"/></td>
                         <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
-                        <td><s:property value="confirmant.confirmationReceiveDate"/></td>
+                        <td><s:property value="confirmant.confirmationProcessedTimestamp"/></td>
                         <td align="center">
                             <s:if test="#request.allowEditBDF">
                                 <s:url id="editSelected" action="eprBirthConfirmationInit.do">

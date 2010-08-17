@@ -67,24 +67,10 @@ public class BirthRegisterInfo implements Serializable {
     private BirthDeclaration.State status;
 
     /**
-     * The ADR or higher approving the record
-     */
-    @OneToOne
-    @JoinColumn(name = "approveUser")
-    private User approveUser;
-
-    /**
-     * The timestamp when an ADR or higher approves the record
-     */
-    @Column(nullable = true)
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date approveDate;
-
-    /**
      * The user printing the confirmation
      */
-    @OneToOne
-    @JoinColumn(name = "confirmationPrintUser")
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "confirmationPrintUserId", nullable = false)
     private User confirmationPrintUser;
 
     /**
@@ -92,7 +78,7 @@ public class BirthRegisterInfo implements Serializable {
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date confirmationPrintDate;
+    private Date confirmationPrintTimestamp;
 
     @Transient
     private Date lastDayForConfirmation;
@@ -103,20 +89,6 @@ public class BirthRegisterInfo implements Serializable {
     @Lob
     @Column(nullable = true, length = 4096)
     private String comments;
-
-    /**
-     * The user printing the original BC
-     */
-    @OneToOne
-    @JoinColumn(name = "originalBCPrintUser")
-    private User originalBCPrintUser;
-
-    /**
-     * The date of issue for the original birth certificate - free copy
-     */
-    @Column(nullable = true, updatable = false)
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date originalBCDateOfIssue;
 
     /**
      * The place of issue for the original birth certificate - free copy (Stores the DS Division ID)
@@ -149,18 +121,6 @@ public class BirthRegisterInfo implements Serializable {
 
     public void setComments(String comments) {
         this.comments = WebUtils.filterBlanks(comments);
-    }
-
-    public Date getOriginalBCDateOfIssue() {
-        return originalBCDateOfIssue;
-    }
-
-    public String getOriginalBCDateOfIssueForPrint() {
-        return DateTimeUtils.getISO8601FormattedString(originalBCDateOfIssue);
-    }
-
-    public void setOriginalBCDateOfIssue(Date originalBCDateOfIssue) {
-        this.originalBCDateOfIssue = originalBCDateOfIssue;
     }
 
     public Integer getOriginalBCPlaceOfIssue() {
@@ -263,22 +223,6 @@ public class BirthRegisterInfo implements Serializable {
         this.birthType = birthType;
     }
 
-    public User getApproveUser() {
-        return approveUser;
-    }
-
-    public void setApproveUser(User approveUser) {
-        this.approveUser = approveUser;
-    }
-
-    public Date getApproveDate() {
-        return approveDate;
-    }
-
-    public void setApproveDate(Date approveDate) {
-        this.approveDate = approveDate;
-    }
-
     public User getConfirmationPrintUser() {
         return confirmationPrintUser;
     }
@@ -287,12 +231,12 @@ public class BirthRegisterInfo implements Serializable {
         this.confirmationPrintUser = confirmationPrintUser;
     }
 
-    public Date getConfirmationPrintDate() {
-        return confirmationPrintDate;
+    public Date getConfirmationPrintTimestamp() {
+        return confirmationPrintTimestamp;
     }
 
-    public void setConfirmationPrintDate(Date confirmationPrintDate) {
-        this.confirmationPrintDate = confirmationPrintDate;
+    public void setConfirmationPrintTimestamp(Date confirmationPrintTimestamp) {
+        this.confirmationPrintTimestamp = confirmationPrintTimestamp;
     }
 
     public Date getLastDayForConfirmation() {
@@ -301,14 +245,6 @@ public class BirthRegisterInfo implements Serializable {
 
     public void setLastDayForConfirmation(Date lastDayForConfirmation) {
         this.lastDayForConfirmation = lastDayForConfirmation;
-    }
-
-    public User getOriginalBCPrintUser() {
-        return originalBCPrintUser;
-    }
-
-    public void setOriginalBCPrintUser(User originalBCPrintUser) {
-        this.originalBCPrintUser = originalBCPrintUser;
     }
 
     public Long getAdoptionUKey() {

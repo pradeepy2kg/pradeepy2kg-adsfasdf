@@ -1,10 +1,7 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.api.domain.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * An instance represents information submitted for the declaration of a birth, and the confirmation of changes
@@ -24,8 +21,8 @@ import java.util.Date;
 
     @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-        "AND (bdf.confirmant.confirmationReceiveDate BETWEEN :startDate AND :endDate) " +
-        "ORDER BY bdf.confirmant.confirmationReceiveDate desc"),
+        "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.confirmant.confirmationProcessedTimestamp desc"),
 
     @NamedQuery(name = "get.by.bddivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision " +
@@ -34,7 +31,7 @@ import java.util.Date;
     @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
         "AND bdf.activeRecord IS FALSE " +
-        "ORDER BY bdf.lastUpdatedTime desc"),
+        "ORDER BY bdf.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
     @NamedQuery(name = "get.active.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
@@ -134,13 +131,8 @@ public class BirthDeclaration implements Serializable {
     @Column(nullable = false)
     private boolean activeRecord = true;
 
-    @Column(nullable = true)
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date lastUpdatedTime;
-
-    @OneToOne
-    @JoinColumn(name = "lastUpdatedUserId")
-    private User lastUpdatedUser;
+    @Embedded
+    private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
     @Embedded
     private ChildInfo child = new ChildInfo();
@@ -180,14 +172,6 @@ public class BirthDeclaration implements Serializable {
 
     public void setActiveRecord(boolean activeRecord) {
         this.activeRecord = activeRecord;
-    }
-
-    public Date getLastUpdatedTime() {
-        return lastUpdatedTime;
-    }
-
-    public void setLastUpdatedTime(Date lastUpdatedTime) {
-        this.lastUpdatedTime = lastUpdatedTime;
     }
 
     public ChildInfo getChild() {
@@ -278,11 +262,14 @@ public class BirthDeclaration implements Serializable {
         this.register = register;
     }
 
-    public User getLastUpdatedUser() {
-        return lastUpdatedUser;
+    public CRSLifeCycleInfo getLifeCycleInfo() {
+        if (lifeCycleInfo == null) {
+            return new CRSLifeCycleInfo();
+        }
+        return lifeCycleInfo;
     }
 
-    public void setLastUpdatedUser(User lastUpdatedUser) {
-        this.lastUpdatedUser = lastUpdatedUser;
+    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
     }
 }

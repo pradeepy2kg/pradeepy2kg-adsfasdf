@@ -13,7 +13,7 @@
         <tr>
             <td><s:label name="received" value="%{getText('received.label')}"/></td>
             <td><s:if test="#request.confirmationApprovalFlag == true">
-                <s:label value=": %{bdf.confirmant.confirmationReceiveDate}"/>
+                <s:label value=": %{bdf.confirmant.confirmationProcessedTimestamp}"/>
             </s:if><s:else>
             <s:label value=": %{bdf.register.dateOfRegistration}"/></td>
         </s:else>

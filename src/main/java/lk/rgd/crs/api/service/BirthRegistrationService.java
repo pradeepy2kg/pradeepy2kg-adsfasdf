@@ -262,7 +262,7 @@ public interface BirthRegistrationService {
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
-     * by an ADR. Results are ordered on the descending confirmationReceiveDate
+     * by an ADR. Results are ordered on the descending confirmationProcessedTimestamp
      *
      * @param birthDivision the birth division
      * @param pageNo        the page number for the results required (start from 1)
@@ -298,7 +298,7 @@ public interface BirthRegistrationService {
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
-     * by an ADR. Results are ordered on the descending confirmationReceiveDate
+     * by an ADR. Results are ordered on the descending confirmationProcessedTimestamp
      *
      * @param birthDivision the birth division
      * @param pageNo        the page number for the results required (start from 1)
@@ -336,7 +336,7 @@ public interface BirthRegistrationService {
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR for selected BD Division and selected range of confirmation recevied dates.
-     * Results are ordered on the descending confirmationReceiveDate. pageNo  and noOfRows used for pagination
+     * Results are ordered on the descending confirmationProcessedTimestamp. pageNo  and noOfRows used for pagination
      *
      * @param birthDivision the birth division
      * @param startDate     starting date of the range

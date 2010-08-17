@@ -152,7 +152,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         bdf.getRegister().setStatus(BirthDeclaration.State.DATA_ENTRY);
-        birthDeclarationDAO.addBirthDeclaration(bdf);
+        birthDeclarationDAO.addBirthDeclaration(bdf, user);
         return null;
     }
 
@@ -218,7 +218,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // a BDF can be edited by a DEO or ADR only before being approved
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (currentState == BirthDeclaration.State.DATA_ENTRY) {
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Saved edit changes to live birth declaration record : {}  in data entry state", bdf.getIdUKey());
 
         } else {
@@ -248,7 +248,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // a still BDF can be edited by a ADR only before being approved
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (currentState == BirthDeclaration.State.DATA_ENTRY) {
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Saved edit changes to still birth declaration record : {}  in data entry state", bdf.getIdUKey());
 
         } else {
@@ -278,7 +278,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // a BDF can be edited by a DEO or ADR only before being approved
         final BirthDeclaration.State currentState = existing.getRegister().getStatus();
         if (currentState == BirthDeclaration.State.DATA_ENTRY) {
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Saved edit changes to adoption birth declaration record : {}  in data entry state", bdf.getIdUKey());
 
         } else {
@@ -429,9 +429,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
-            bdf.getRegister().setApproveDate(new Date());
-            bdf.getRegister().setApproveUser(user);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Approved live birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
         } else {
             logger.debug("Approval of live birth declaration record : {} stopped due to warnings", bdf.getIdUKey());
@@ -497,9 +497,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
-            bdf.getRegister().setApproveDate(new Date());
-            bdf.getRegister().setApproveUser(user);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Approved still birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
         } else {
             logger.debug("Approval of still birth declaration record : {} stopped due to warnings", bdf.getIdUKey());
@@ -564,9 +564,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         if (warnings.isEmpty() || ignoreWarnings) {
             bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
-            bdf.getRegister().setApproveDate(new Date());
-            bdf.getRegister().setApproveUser(user);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Approved adoption birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
         } else {
             logger.debug("Approval of adoption birth declaration record : {} stopped due to warnings", bdf.getIdUKey());
@@ -592,10 +592,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         // does the user have access to the existing BDF (if district and division is changed somehow)
         validateAccessOfUser(user, existing);
 
-        existing.getRegister().setConfirmationPrintDate(new Date());
+        existing.getRegister().setConfirmationPrintTimestamp(new Date());
         existing.getRegister().setConfirmationPrintUser(user);
         existing.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_PRINTED);
-        birthDeclarationDAO.updateBirthDeclaration(existing);
+        birthDeclarationDAO.updateBirthDeclaration(existing, user);
         logger.debug("Marked confirmation printed for live birth declaration record : {}", bdf.getIdUKey());
     }
 
@@ -633,7 +633,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         final BirthDeclaration.State currentState = bdf.getRegister().getStatus();
         if (BirthDeclaration.State.CONFIRMATION_PRINTED == currentState) {
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMED_WITHOUT_CHANGES);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            bdf.getConfirmant().setConfirmationProcessedTimestamp(new Date());
+            bdf.getConfirmant().setConfirmationProcessedUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Marked birth record : {} as confirmed without changes", bdf.getIdUKey());
 
         } else {
@@ -667,18 +669,20 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             existing.setConfirmant(bdf.getConfirmant());
             existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CORRECTED);
             existing.setActiveRecord(false);
-            birthDeclarationDAO.updateBirthDeclaration(existing);
+            birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
             // add new record
             bdf.setIdUKey(0); // force addition
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
-            birthDeclarationDAO.addBirthDeclaration(bdf);
+            bdf.getConfirmant().setConfirmationProcessedTimestamp(new Date());
+            bdf.getConfirmant().setConfirmationProcessedUser(user);
+            birthDeclarationDAO.addBirthDeclaration(bdf, user);
             logger.debug("Changes captured as birth record : {} and the old record : {} archived",
                 bdf.getIdUKey(), existing.getIdUKey());
 
         } else if (BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED == currentState) {
             bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Changes captured for birth record : {} ", bdf.getIdUKey());
 
         } else {
@@ -731,12 +735,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
-        existing.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
-        bdf.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
-        existing.getRegister().setOriginalBCPrintUser(user);
-        bdf.getRegister().setOriginalBCPrintUser(user);
+        existing.getLifeCycleInfo().setCertificatePrintTimestamp(originalBCDateOfIssue);
+        existing.getLifeCycleInfo().setCertificatePrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
-        birthDeclarationDAO.updateBirthDeclaration(existing);
+        birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Birth certificate printed for record : {}", bdf.getIdUKey());
     }
@@ -761,12 +763,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
-        existing.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
-        bdf.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
-        existing.getRegister().setOriginalBCPrintUser(user);
-        bdf.getRegister().setOriginalBCPrintUser(user);
+        existing.getLifeCycleInfo().setCertificatePrintTimestamp(originalBCDateOfIssue);
+        existing.getLifeCycleInfo().setCertificatePrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
-        birthDeclarationDAO.updateBirthDeclaration(existing);
+        birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Still Birth certificate printed for record : {}", bdf.getIdUKey());
     }
@@ -791,12 +791,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
-        existing.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
-        bdf.getRegister().setOriginalBCDateOfIssue(originalBCDateOfIssue);
-        existing.getRegister().setOriginalBCPrintUser(user);
-        bdf.getRegister().setOriginalBCPrintUser(user);
+        existing.getLifeCycleInfo().setCertificatePrintTimestamp(originalBCDateOfIssue);
+        existing.getLifeCycleInfo().setCertificatePrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
-        birthDeclarationDAO.updateBirthDeclaration(existing);
+        birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
         logger.debug("Marked as Adoption Birth certificate printed for record : {}", bdf.getIdUKey());
     }
@@ -844,9 +842,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             List<UserWarning> warnings = prepareForConfirmation(bdf, ignoreWarnings, user);
             if (warnings.isEmpty() || ignoreWarnings) {
                 bdf.getRegister().setStatus(BirthDeclaration.State.CONFIRMATION_CHANGES_APPROVED);
-                bdf.getRegister().setApproveDate(new Date());
-                bdf.getRegister().setApproveUser(user);
-                birthDeclarationDAO.updateBirthDeclaration(bdf);
+                bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+                bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
+                birthDeclarationDAO.updateBirthDeclaration(bdf, user);
                 logger.debug("Approved confirmation changes for record : {}", bdf.getIdUKey());
 
                 // generate PIN number and add record to PRS
@@ -927,7 +925,10 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     ErrorCodes.PERMISSION_DENIED);
             }
             bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_REJECTED);
-            birthDeclarationDAO.updateBirthDeclaration(bdf);
+            bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
+
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
             logger.debug("Rejected birth declaration record : {} by user : {}", bdf.getIdUKey(), user.getUserId());
 
         } else {
@@ -1213,7 +1214,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
 
         logger.debug("Generated PIN for record IDUKey : {} issued PIN : {}", bdf.getIdUKey(), pin);
-        birthDeclarationDAO.updateBirthDeclaration(bdf);
+        birthDeclarationDAO.updateBirthDeclaration(bdf, user);
 
         // index record
         birthRecordsIndexer.add(bdf);
