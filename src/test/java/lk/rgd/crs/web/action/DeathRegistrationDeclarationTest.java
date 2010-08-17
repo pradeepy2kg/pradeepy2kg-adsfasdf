@@ -37,7 +37,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     }
 
 
-    public void testBirthConfirmationInitMappingProxy() throws Exception {
+    public void testDeathRegister() throws Exception {
         Object obj;
         Map session = userLogin("ashoka", "ashoka");
         initAndExecute("/deaths/eprInitDeathDeclaration.do", session);
@@ -75,8 +75,8 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("deathPerson.deathPersonMotherFullNamed", "selverdorei kanawathi amma");
         initAndExecute("/deaths/eprDeathDeclaration.do", session);
         session = deathAction.getSession();
-
         request.setParameter("pageNo", "2");
+        
         request.setParameter("declarant.declarantFullName", "Tharanga Punchihewa");
         request.setParameter("declarant.declarantAddress", "Erapalamulla,Ruwanwella");
         request.setParameter("declarant.declarantPhone", "0718617804V");
@@ -97,6 +97,8 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         assertNotNull("notifyingAuthority Bean population faild", deathAction.getNotifyingAuthority());
         assertEquals("Faild to remove DeathDeclaration", ddf, session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
         logger.debug("successfully persisted with the IdUKey :{}", deathAction.getIdUKey());
+
+
 
 
     }

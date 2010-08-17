@@ -83,7 +83,7 @@
                         if (mother_bday != "") {
                             var motherbday = new Date(mother_bday);
                             var mother_age = child_bday.getYear() - motherbday.getYear();
-                            $("input#motherAgeAtBirth").val(mother_age);       
+                            $("input#motherAgeAtBirth").val(mother_age);
                         }
                     });
         });
@@ -285,8 +285,8 @@
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="3">
-            <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
-            <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
+                <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
+                <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
@@ -321,7 +321,8 @@
     <tbody>
     <tr>
         <td width="200px" style="border-top:none; border-bottom:none;"></td>
-        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /மாவட்டம் /District</label></td>
+        <td colspan="2" class="table_reg_cell_02" style="border-top:1px solid #000;"><label>දිස්ත්‍රික්කය /மாவட்டம்
+            /District</label></td>
         <td colspan="6" class="table_reg_cell_02" style="border-top:1px solid #000;">
             <s:if test="#parent.motherDSDivision.district.districtUKey >0">
             <s:select id="motherDistrictId" name="motherDistrictId" list="allDistrictList" cssStyle="width:99%;"/></td>

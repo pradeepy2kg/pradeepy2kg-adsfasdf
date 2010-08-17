@@ -98,6 +98,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         user = service.getUsersByIDMatch(userId).get(0);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
+        logger.debug("Deleting  user {} is successfull",user.getUserId());
         usersList = service.getAllUsers();
         session.put("viewUsers", null);
         return "success";
@@ -106,7 +107,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String initUser() {
         populate();
-
         if (userId != null) {
             user = service.getUsersByIDMatch(getUserId()).get(0);
         }
