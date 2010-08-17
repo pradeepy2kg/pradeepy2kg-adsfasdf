@@ -1,9 +1,9 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +22,11 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void addBirthDeclaration(BirthDeclaration bdf) {
-        bdf.setLastUpdatedTime(new Date());
+    public void addBirthDeclaration(BirthDeclaration bdf, User user) {
+        bdf.getLifeCycleInfo().setCreatedTimestamp(new Date());
+        bdf.getLifeCycleInfo().setCreatedUser(user);
+        bdf.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        bdf.getLifeCycleInfo().setLastUpdatedUser(user);
         bdf.setActiveRecord(true);
         em.persist(bdf);
     }
@@ -32,8 +35,9 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)  // this is not Mandatory as unit tests directly invoke this
-    public void updateBirthDeclaration(BirthDeclaration bdf) {
-        bdf.setLastUpdatedTime(new Date());
+    public void updateBirthDeclaration(BirthDeclaration bdf, User user) {
+        bdf.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        bdf.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(bdf);
     }
 

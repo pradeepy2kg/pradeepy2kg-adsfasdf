@@ -117,11 +117,11 @@ public class BirthDeclarationValidator {
 
             Calendar start = Calendar.getInstance();
             start.setTime(bdf.getChild().getDateOfBirth());
-            start.add(Calendar.DATE, -30 * WEEKS_FOR_FOETUS_TO_SURVIVE);
+            start.add(Calendar.DATE, -7 * WEEKS_FOR_FOETUS_TO_SURVIVE);
 
             Calendar end = Calendar.getInstance();
             end.setTime(bdf.getChild().getDateOfBirth());
-            end.add(Calendar.DATE, 30 * WEEKS_FOR_FOETUS_TO_SURVIVE);
+            end.add(Calendar.DATE, 7 * WEEKS_FOR_FOETUS_TO_SURVIVE);
 
             List<BirthDeclaration> existingRecords = birthDeclarationDAO.getByDOBRangeandMotherNICorPIN(
                 start.getTime(), end.getTime(), bdf.getParent().getMotherNICorPIN());

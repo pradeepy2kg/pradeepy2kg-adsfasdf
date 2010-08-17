@@ -124,9 +124,9 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // add another record for the same mother, and check if the duplication warning was issued
         BirthDeclaration bdf1 = getMinimalBDF(2010102, dob.getTime(), colomboBDDivision);
-        dob.add(Calendar.DATE, -30 * 27);
+        dob.add(Calendar.DATE, -7 * 27);
         BirthDeclaration bdf2 = getMinimalBDF(2010103, dob.getTime(), colomboBDDivision);
-        dob.add(Calendar.DATE, 2 * 30 * 27);
+        dob.add(Calendar.DATE, 2 * 7 * 27);
         BirthDeclaration bdf3 = getMinimalBDF(2010104, dob.getTime(), colomboBDDivision);
         dob.add(Calendar.DATE, 30 * 12);
         BirthDeclaration bdf4 = getMinimalBDF(2010105, dob.getTime(), colomboBDDivision);
@@ -270,7 +270,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // simulate the system generation of the PIN
         bdf1.getChild().setPin(1000100001L);
         bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
-        birthDeclarationDAO.updateBirthDeclaration(bdf1);
+        birthDeclarationDAO.updateBirthDeclaration(bdf1, deoColomboColombo);
 
         // assert that the confirmed record now exists in the print queue for BC
         printList = birthRegSvc.getBirthCertificatePrintList(colomboBDDivision, 1, 100, false, deoColomboColombo);
@@ -372,7 +372,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // simulate the system generation of the PIN
         bdf1.getChild().setPin(1000100002L);
         bdf1.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
-        birthDeclarationDAO.updateBirthDeclaration(bdf1);
+        birthDeclarationDAO.updateBirthDeclaration(bdf1, deoColomboColombo);
 
         // DEO prints BC - mark BC as printed
         birthRegSvc.markLiveBirthCertificateAsPrinted(bdf1, deoColomboColombo);

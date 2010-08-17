@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
@@ -36,11 +37,15 @@ public class ConfirmantInfo implements Serializable {
     private Date confirmantSignDate;
 
     /**
-     * Date confirmation is received
+     * Date confirmation is entered into the system
      */
     @Column(nullable = true)
-    @Temporal(value = TemporalType.DATE)
-    private Date confirmationReceiveDate;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date confirmationProcessedTimestamp;
+
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "confirmationProcessedUserId", nullable = false)
+    private User confirmationProcessedUser;
 
     public Date getLastDateForConfirmation() {
         return lastDateForConfirmation;
@@ -74,11 +79,19 @@ public class ConfirmantInfo implements Serializable {
         this.confirmantSignDate = confirmantSignDate;
     }
 
-    public Date getConfirmationReceiveDate() {
-        return confirmationReceiveDate;
+    public Date getConfirmationProcessedTimestamp() {
+        return confirmationProcessedTimestamp;
     }
 
-    public void setConfirmationReceiveDate(Date confirmationReceiveDate) {
-        this.confirmationReceiveDate = confirmationReceiveDate;
+    public void setConfirmationProcessedTimestamp(Date confirmationProcessedTimestamp) {
+        this.confirmationProcessedTimestamp = confirmationProcessedTimestamp;
+    }
+
+    public User getConfirmationProcessedUser() {
+        return confirmationProcessedUser;
+    }
+
+    public void setConfirmationProcessedUser(User confirmationProcessedUser) {
+        this.confirmationProcessedUser = confirmationProcessedUser;
     }
 }

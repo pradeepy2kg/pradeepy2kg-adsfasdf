@@ -20,8 +20,8 @@
                 <td class="table-row-index"><s:property value="%{#archivedStatus.count}"/></td>
                 <s:set value="getRegister().getStatus()" name="status"/>
                 <td><s:label value="%{getText(#status)}"/></td>
-                <td><s:property value="lastUpdatedTime"/></td>
-                <s:set name="abc" value="lastUpdatedTime"/>
+                <td><s:property value="getLifeCycleInfo().getLastUpdatedTimestamp()"/></td>
+                <s:set name="abc" value="getLifeCycleInfo().getLastUpdatedTimestamp()"/>
 
                 <s:url id="viewSelected" action="eprViewBDFInNonEditableMode.do">
                     <s:param name="bdId" value="idUKey"/>
