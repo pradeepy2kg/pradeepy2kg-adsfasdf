@@ -271,25 +271,25 @@
      <div class="lable-nochanges"><s:label value="%{getText('lb.nochanges')}"/></div>
     <div class="lable-DSoffice"><s:label value="%{getText('sb.office')}"/></div>
     <s:a href="eprStillBirth.do">
-        <div class="link7"><s:label value="%{getText('lb.still.birth')}" /></div>
+        <div class="link7"><s:label value="%{getText('lb.still.birth')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <s:a href="eprBirthRegistrationInit.do">
-        <div class="link1"><s:label value="%{getText('lb.data.entry')}"/></div>
+        <div class="link1"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <s:a href="eprBirthRegisterApproval.do">
-        <div class="link2"><s:label value="%{getText('lb.approve.ADR')}"/></div>
+        <div class="link2"><s:label value="%{getText('lb.approve.ADR')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <s:a href="eprBirthConfirmationPrintList.do?confirmListFlag=true">
-        <div class="link3"><s:label value="%{getText('lb.print.confirmation')}"/></div>
+        <div class="link3"><s:label value="%{getText('lb.print.confirmation')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <s:a href="eprBirthConfirmationApproval.do">
-        <div class="link4"><s:label value="%{getText('lb.approve.changes')}"/></div>
+        <div class="link4"><s:label value="%{getText('lb.approve.changes')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <s:a href="eprBirthCertificateList.do">
-        <div class="link5"><s:label value="%{getText('lb.print.certificate')}"/></div>
+        <div class="link5"><s:label value="%{getText('lb.print.certificate')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <s:a href="eprBirthConfirmationInit.do">
-        <div class="link6"><s:label value="%{getText('lb.capture.confirmation')}"/></div>
+        <div class="link6"><s:label value="%{getText('lb.capture.confirmation')}" cssStyle="cursor:pointer"/></div>
     </s:a>
     <div class="bg1"></div>
 </div>
