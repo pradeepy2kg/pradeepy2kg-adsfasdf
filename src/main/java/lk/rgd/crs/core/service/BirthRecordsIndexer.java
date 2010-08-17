@@ -83,7 +83,7 @@ public class BirthRecordsIndexer {
     public void add(BirthDeclaration bdf) {
         try {
             addRecord(bdf);
-            solrIndexManager.getServer().commit();
+            solrIndexManager.getBirthServer().commit();
             logger.info("Successfully indexed birth record : {}", bdf.getIdUKey());
         } catch (Exception e) {
             logger.error("Error indexing birth record : " + bdf.getIdUKey() + " cause : " + e.getMessage()); // do not stack trace
@@ -182,7 +182,7 @@ public class BirthRecordsIndexer {
 
         List<BirthDeclaration> bdfList = new ArrayList<BirthDeclaration>();
         try {
-            QueryResponse qr = solrIndexManager.getServer().query(query);
+            QueryResponse qr = solrIndexManager.getBirthServer().query(query);
             SolrDocumentList docList = qr.getResults();
             Iterator<SolrDocument> iter = docList.iterator();
             while (iter.hasNext()) {
@@ -212,7 +212,7 @@ public class BirthRecordsIndexer {
 
         // delete all existing
         try {
-            solrIndexManager.getServer().deleteByQuery("*:*");
+            solrIndexManager.getBirthServer().deleteByQuery("*:*");
         } catch (Exception e) {
             logger.error("Error deleting existing records off Solr index");
         }
@@ -226,8 +226,8 @@ public class BirthRecordsIndexer {
                 count++;
             }
 
-            solrIndexManager.getServer().optimize();
-            solrIndexManager.getServer().commit();
+            solrIndexManager.getBirthServer().optimize();
+            solrIndexManager.getBirthServer().commit();
             
             logger.debug("Successfully indexed : " + count + " documents..");
 
@@ -308,6 +308,6 @@ public class BirthRecordsIndexer {
             d.addField(FIELD_GREAT_GRAND_FATHER_BIRTH_YEAR, grandFatherInfo.getGreatGrandFatherBirthYear());
         }
 
-        solrIndexManager.getServer().add(d);
+        solrIndexManager.getBirthServer().add(d);
     }
 }

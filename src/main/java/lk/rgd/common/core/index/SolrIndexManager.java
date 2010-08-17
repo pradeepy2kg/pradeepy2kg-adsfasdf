@@ -6,8 +6,6 @@ import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
-
 /**
  * @author asankha
  */
@@ -15,32 +13,53 @@ public class SolrIndexManager {
 
     private static final Logger logger = LoggerFactory.getLogger(SolrIndexManager.class);
 
-    private SolrServer server;
-    private String solrURL;
+    private SolrServer birthServer;
+    private SolrServer prsServer;
+    private String solrBirthURL;
+    private String solrPRSURL;
 
-    public SolrIndexManager(String solrURL) {
-        this.solrURL = solrURL;
+    public SolrIndexManager(String solrBirthURL, String solrPRSURL) {
+        this.solrBirthURL = solrBirthURL;
+        this.solrPRSURL =  solrPRSURL;
     }
 
-    private void connect() {
-        logger.info("Connecting to Solr indexer service at : {}", solrURL);
+    private synchronized void connect() {
+
+        logger.info("Connecting to Solr indexer services..");
 
         try {
-            server = new CommonsHttpSolrServer(solrURL);
-            SolrPingResponse pingResponse = server.ping();
+            birthServer = new CommonsHttpSolrServer(solrBirthURL);
+            prsServer   = new CommonsHttpSolrServer(solrPRSURL);
+
+            SolrPingResponse pingResponse = birthServer.ping();
             if (pingResponse.getStatus() == 0) {
-                logger.info("Successfully connected to Solr at : " + solrURL);
+                logger.info("Successfully connected to Birth Registration Solr instance at : " + solrBirthURL);
             }
+
+            pingResponse = prsServer.ping();
+            if (pingResponse.getStatus() == 0) {
+                logger.info("Successfully connected to Population Registry Solr instance at : " + solrPRSURL);
+            }
+
         } catch (Exception e) {
-            logger.error("Failed to connect to Solr at : " + solrURL + " - " + e.getMessage());
+            logger.error("Failed to connect to : " + solrBirthURL + " or : " + solrPRSURL + " - " + e.getMessage());
+            birthServer = null;
+            prsServer = null;
         }
     }
 
-    public SolrServer getServer() {
-        if (server == null) {
+    public SolrServer getBirthServer() {
+        if (birthServer == null) {
             connect();
         }
-        return server;
+        return birthServer;
+    }
+
+    public SolrServer getPRSServer() {
+        if (prsServer == null) {
+            connect();
+        }
+        return prsServer;
     }
 }
 
