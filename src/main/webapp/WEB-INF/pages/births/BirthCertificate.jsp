@@ -95,7 +95,7 @@
     </s:if>
     <s:else>
         <tr>
-            <td height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+            <td height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය                       
                 <br>பிரிவு
                 <br>Registration Division
             </td>

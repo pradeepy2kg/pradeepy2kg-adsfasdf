@@ -527,12 +527,28 @@
             <result type="tiles" name="success">epr.home</result>
         </action>
         <action name="eprAdoptionRegistrationHome" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="initAdoptionRegistration">
+                method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionAction">
-            <result type="tiles" name="success">epr.home</result>
+                method="addOrEditAdoption">
+            <result type="tiles" name="success">epr.adoptionSummary</result>
+        </action>
+        <action name="eprAdoptionDirectApproval" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="directApproveAdoption">
+            <result type="tiles" name="success">epr.adoptionSummary</result>
+        </action>
+        <action name="eprMarkDirectlyAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="markDirectlyAdoptionNoticeAsPrinted">
+            <result type="tiles" name="success">epr.adoptionSummary</result>
+        </action>
+        <action name="cancelPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
+            <result type="tiles" name="success">epr.adoptionSummary</result>
+        </action>
+        <action name="eprAdoptionNoticeDirectPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="loadAdoptionNotice">
+            <result type="tiles" name="success">epr.AdoptionReReg</result>
         </action>
         <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
@@ -592,7 +608,7 @@
             <result type="tiles" name="success">epr.AdoptionReReg</result>
         </action>
 
-        <action name="eprMarkAdoptionNoticeAsPirnted" class="lk.rgd.crs.web.action.births.AdoptionAction"
+        <action name="eprMarkAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="markAdoptionNoticeAsPrinted">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
