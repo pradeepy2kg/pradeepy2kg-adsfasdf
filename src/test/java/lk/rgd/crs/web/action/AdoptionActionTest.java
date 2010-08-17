@@ -16,13 +16,6 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 
-/**
- * Created by IntelliJ IDEA.
- * User: widu
- * Date: Aug 2, 2010
- * Time: 3:13:33 PM
- * To change this template use File | Settings | File Templates.
- */
 public class AdoptionActionTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     private AdoptionAction adoptionAction;
