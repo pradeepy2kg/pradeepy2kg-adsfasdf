@@ -79,6 +79,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private int noOfRows;
     private String genderEn;
     private String genderSi;
+    private boolean approved;
+    private boolean printed;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
@@ -90,12 +92,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
     }
 
-    public String initAdoptionRegistration() {
+    public String initAdoptionRegistrationOrCancelPrintAdoptionNotice() {
         return SUCCESS;
-
     }
 
-    public String adoptionAction() {
+    public String addOrEditAdoption() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         if (idUKey > 0) {
@@ -103,6 +104,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             service.updateAdoptionOrder(adoption, user);
         } else {
             service.addAdoptionOrder(adoption, user);
+            logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
+            setIdUKey(adoption.getIdUKey());
+            setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
         }
         return SUCCESS;
     }
@@ -185,11 +189,24 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (state != null) {
+        if (currentStatus != 0) {
             adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
         }
+        return SUCCESS;
+    }
+
+    /**
+     * this method is responsible for mariking adoption notice
+     * as printed. then directed to the adoption summary page
+     *
+     * @return
+     */
+    public String markDirectlyAdoptionNoticeAsPrinted() {
+        logger.debug("initiating Adoption marking as its notice as printed for the idUKey : {}", idUKey);
+        service.setStatusToPrintedNotice(idUKey, user);
+        setPrinted(true);
         return SUCCESS;
     }
 
@@ -201,7 +218,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
@@ -229,7 +246,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (state != null) {
+        if (currentStatus != 0) {
             adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
@@ -251,7 +268,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         populate();
         initPermissionForApprovalAndPrint();
-        if (state != null) {
+        if (currentStatus != 0) {
             adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
         } else {
             adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
@@ -383,9 +400,33 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
-        adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         initPermissionForApprovalAndPrint();
         populate();
+        return SUCCESS;
+    }
+
+    /**
+     * responsible for approving an adoption immediately after
+     * adding to the system. if the approval is success approved
+     * boolean is set to true in order to makesure it is approved
+     * for printing its Notice letter.
+     *
+     * @return
+     */
+    public String directApproveAdoption() {
+        logger.debug("initiating adoption direct approval with idUKey : {}", idUKey);
+        try {
+            service.approveAdoptionOrder(idUKey, user);
+            setApproved(true);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("adoption.error.no.permission"));
+        }
         return SUCCESS;
     }
 
@@ -402,7 +443,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } catch (CRSRuntimeException e) {
             addActionError(getText("adoption.error.no.permission"));
         }
-        adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -418,7 +464,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String deleteAdoption() {
         logger.debug("requested to delete AdoptionOrder with idUKey : {}", idUKey);
         service.deleteAdoptionOrder(idUKey, user);
-        adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+        if (state != null) {
+            adoptionApprovalAndPrintList = service.getPaginatedListForState(pageNo, noOfRows, state, user);
+        } else {
+            adoptionApprovalAndPrintList = service.getPaginatedListForAll(pageNo, noOfRows, user);
+        }
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
@@ -814,5 +865,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setState(AdoptionOrder.State state) {
         this.state = state;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(boolean printed) {
+        this.printed = printed;
     }
 }

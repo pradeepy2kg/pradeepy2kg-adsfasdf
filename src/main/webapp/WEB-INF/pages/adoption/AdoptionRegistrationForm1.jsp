@@ -477,14 +477,19 @@
             Serial Number
         </td>
         <td>
-            <s:textfield name="adoption.birthCertificateSerial" id="birthCertificateSrialNum"
+            <s:textfield name="adoption.birthRegistrationSerial" id="birthRegistrationSrialNum"
                          cssStyle="width:280px;"> </s:textfield>
         </td>
     </tr>
     </tbody>
 </table>
+
+<s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+<s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+<s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
+<s:hidden name="pageNo" value="%{#request.pageNo}"/>
 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-<s:hidden name="pageNo" value="1"/>
+<%--<s:hidden name="pageNo" value="1"/>--%>
 <div class="button" align="right">
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>

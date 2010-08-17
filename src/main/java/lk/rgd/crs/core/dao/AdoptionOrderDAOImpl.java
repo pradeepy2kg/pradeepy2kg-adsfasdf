@@ -68,7 +68,7 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public AdoptionOrder getByCourtAndCourtOrderNumber(int courtUKey, String courtOrderNumber) {
         Query q = em.createNamedQuery("get.by.court.and.courtOrderNumber");
         q.setParameter("courtOrderNumber", courtOrderNumber);

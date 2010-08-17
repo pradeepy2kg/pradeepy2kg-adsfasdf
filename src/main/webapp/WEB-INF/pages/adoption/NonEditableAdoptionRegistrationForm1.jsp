@@ -319,7 +319,7 @@
     </tbody>
 </table>
 
-<div class="adoption-form-submit">
+<div class="button" align="right">
     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
     <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
