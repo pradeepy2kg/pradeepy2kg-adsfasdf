@@ -518,6 +518,7 @@
 
     </package>
     <package name="adoption" namespace="/adoption" extends="NG">
+        <default-interceptor-ref name="default"/>
         <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclaration">
             <result type="tiles" name="success">epr.AdoptionReg</result>
@@ -568,8 +569,7 @@
         </action>
         <action name="eprAdoptionFind" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="populateAdoption">
-            <!--//todo change this to adoption home page -->
-            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
 
         <!--approve and print list related-->
@@ -636,6 +636,10 @@
         <action name="eprAdoptionFilterByStatus" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="filterByStatus">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
+        </action>
+
+        <action name="eprAdoptionHome" class="lk.rgd.crs.web.action.births.AdoptionAction" method="initAdoptionHome">
+            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
 
         <action name="eprAdoptionBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"

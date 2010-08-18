@@ -25,7 +25,7 @@ import lk.rgd.AppConstants;
 
 /**
  * @author Duminda Dharmakeerthi
- * @author amith jayasekaa
+ * @author amith jayasekara
  * @author Indunil Moremada
  */
 @SuppressWarnings({"ALL"})
@@ -540,6 +540,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         } else {
             addActionError(getText("adoption_order_notfound.message"));
         }
+        return SUCCESS;
+    }
+
+    public String initAdoptionHome() {
         return SUCCESS;
     }
 

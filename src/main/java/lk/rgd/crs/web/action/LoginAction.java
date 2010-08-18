@@ -165,8 +165,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
         allowedLinks.put("6management", adminLink);
         allowedLinks.put("4preferences", preferanceLink);
         allowedLinks.put("7prs", prsLink);
-        allowedLinks.put("3adoption", adoptionLink);
         allowedLinks.put("0births", birthLink);
+        allowedLinks.put("3adp", adoptionLink);
         return allowedLinks;
     }
 
@@ -358,6 +358,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_ADOPTION_INIT, new Link("adoption_registration.label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_PROCESS_APPLICANT_INFO, new Link(null, "/popreg/adoption/", "eprAdoptionProcessApplicantInfo.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_HOME, new Link(null, "/popreg/adoption/", "eprBirthRegistrationHome.do"));
+
         //    linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/popreg/adoption/", "eprAdoptionCertificate.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_BDF_ENTRY, new Link(null, "/popreg/births/", "eprAdoptionBirthRegistrationInit.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE, new Link(null, "/popreg/adoption/", "eprAdoptionViewMode.do"));
