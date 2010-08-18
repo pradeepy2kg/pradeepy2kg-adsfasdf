@@ -390,7 +390,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_BDF_HOME);
+            //bs.set(Permission.PAGE_ADOPTION_BDF_HOME);
             bs.set(Permission.PAGE_ADOPTION_PROCESS_APPLICANT_INFO);
             bs.set(Permission.PAGE_ADOPTION_HOME);
             //death realated

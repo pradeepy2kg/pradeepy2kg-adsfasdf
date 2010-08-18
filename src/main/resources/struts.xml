@@ -523,10 +523,6 @@
                 method="adoptionDeclaration">
             <result type="tiles" name="success">epr.AdoptionReg</result>
         </action>
-        <action name="eprAdoptionReRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionReRegistration">
-            <result type="tiles" name="success">epr.home</result>
-        </action>
         <action name="eprAdoptionRegistrationHome" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>

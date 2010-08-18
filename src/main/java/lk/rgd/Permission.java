@@ -100,7 +100,7 @@ public final class Permission {
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE = 116;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED = 117;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED = 118;
-    public static final int PAGE_ADOPTION_BDF_HOME = 119;
+    /*public static final int PAGE_ADOPTION_BDF_HOME = 119*/;
     public static final int PAGE_ADOPTION_PROCESS_APPLICANT_INFO = 120;
     public static final int PAGE_ADOPTION_HOME = 121;
 
