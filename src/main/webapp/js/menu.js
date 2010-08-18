@@ -48,7 +48,7 @@ jQuery.fn.initMenu = function() {
     return this.each(function() {
         var theMenu = $(this).get(0);
         $('.acitem', this).hide();
-        $('li.exp> .acitem', this).show();
+        $('li.exp > .acitem', this).show();
         $('li.exp > .acitem', this).prev().addClass('active');
         $('li a ', this).click(
                 function(e) {
