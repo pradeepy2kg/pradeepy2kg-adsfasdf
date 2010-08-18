@@ -91,6 +91,37 @@
         })
     })
 
+    $(function() {
+        $('img#adoption_applicant_lookup').bind('click', function(evt3) {
+            var id1 = $("input#applicantPin").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#applicantName").val(data1.fullNameInOfficialLanguage);
+                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#applicantAddress").val(data1.lastAddress);
+                    });
+        });
+    });
+    $(function() {
+        $('img#mother_lookup').bind('click', function(evt3) {
+            var id1 = $("input#wifePINorNIC").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#wifeName").val(data1.fullNameInOfficialLanguage);
+                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
+                        $("textarea#applicantAddress").val(data1.lastAddress);
+                    });
+        });
+    });
+
+//    $('img#mother_lookup').bind('click', function(evt4) {
+//        var id2 = $("input#wifePINorNIC").attr("value");
+//        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
+//                function(data) {
+//                    $("textarea#wifeName").val(data.fullNameInOfficialLanguage);
+//                });
+//    });
+
 
     //these inpute can not be null
 
@@ -266,7 +297,10 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2" align="center"><s:textfield name="adoption.applicantPINorNIC" id="applcantPIN"/></td>
+        <td colspan="2" align="center" class="find-person"><s:textfield name="adoption.applicantPINorNIC"
+                                                                                      id="applicantPin" cssStyle="float:left;width:250px;" />
+            <img src="<s:url value="/images/search-father.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup" ></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -316,7 +350,9 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"></s:textfield></td>
+        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC" cssStyle="float:left;width:250px;"/>
+            <img src="<s:url value="/images/search-mother.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="mother_lookup"></td>
     </tr>
     <tr>
         <td width="330px">විදේශිකය‍කු නම් <br/>

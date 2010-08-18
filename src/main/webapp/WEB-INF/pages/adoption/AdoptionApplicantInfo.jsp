@@ -11,7 +11,7 @@
                     function(data1) {
                         $("textarea#certificateApplicantName").val(data1.fullNameInOfficialLanguage);
                         //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#certificateApplicantAddress").val(data2.lastAddress);
+                        $("textarea#certificateApplicantAddress").val(data1.lastAddress);
                     });
         });
     });
