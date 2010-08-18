@@ -44,7 +44,7 @@ public class ConfirmantInfo implements Serializable {
     private Date confirmationProcessedTimestamp;
 
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "confirmationProcessedUserId", nullable = false)
+    @JoinColumn(name = "confirmationProcessedUserId", nullable = true)
     private User confirmationProcessedUser;
 
     public Date getLastDateForConfirmation() {
