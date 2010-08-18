@@ -96,7 +96,7 @@
             </list>
         </property>
     </bean>
-    
+
     <bean id="deathRegisterService" class="lk.rgd.crs.core.service.DeathRegistrationServiceImpl">
         <constructor-arg ref="deathRegisterDAOImpl"/>
     </bean>
@@ -180,13 +180,12 @@
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
-    <bean id="deathRegisterAction" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction">
+    <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagmentAction">
         <constructor-arg ref="districtDAOImpl"/>
-        <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
-        <constructor-arg ref="deathRegisterService"/>
-        <constructor-arg ref="appParametersDAOImpl"/>
-        <constructor-arg ref="raceDAOImpl"/>
+        <constructor-arg ref="roleDAOImpl"/>
+        <constructor-arg ref="userManagerService"/>
     </bean>
+
 </beans>
