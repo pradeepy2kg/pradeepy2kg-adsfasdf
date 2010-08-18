@@ -94,6 +94,7 @@
     <th><s:label name="delete" value="%{getText('view.label')}"/></th>
     <th><s:label name="delete" value="%{getText('printNotice.label')}"/></th>
     <th><s:label name="delete" value="%{getText('printCertificete.label')}"/></th>
+    <th></th>
 </tr>
 </thead>
 
@@ -165,6 +166,7 @@
     <td></td>
     <td></td>
     <td></td>
+    <td></td>
 </s:if>
 
 <s:elseif test="status.ordinal()==1">
@@ -201,6 +203,7 @@
         </s:a>
     </td>
     <td></td>
+    <td></td>
 </s:elseif>
 
 <s:elseif test="status.ordinal()==2">
@@ -230,6 +233,7 @@
             </s:a>--%>
     </td>
     <td></td>
+    <td></td>
 </s:elseif>
 
 <s:elseif test="status.ordinal()==3">
@@ -249,6 +253,7 @@
         <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
              border="none"/></s:a>
     </td>
+    <td></td>
     <td></td>
 </s:elseif>
 
@@ -284,6 +289,7 @@
                  height="25"/>
         </s:a>
     </td>
+    <td></td>
 </s:elseif>
 
 <s:elseif test="status.ordinal()==5">
@@ -319,7 +325,16 @@
                  height="25"/>
         </s:a>
     </td>
+    <td>
+        <s:url id="reRegisterBirthUrl" action="../births/eprAdoptionBirthRegistrationInit.do">
+            <s:param name="adoptionId" value="idUKey"/>
+        </s:url>
+        <s:a href="%{reRegisterBirthUrl}">
+            <img src="<s:url value='/images/add_page.png'/>" border="none" width="25" height="25"/>
+        </s:a>
+    </td>
 </s:elseif>
+
 </tr>
 </s:iterator>
 
