@@ -69,10 +69,10 @@
         <s:form action="eprFilterBirthCetificateList.do" name="birth_register_approval_head" method="POST"
                 id="birth-certificate-print-form">
         <table width="100%" cellpadding="5" cellspacing="0">
-            <col width="220px"/>
+            <col width="200px"/>
             <col/>
-            <col width="160px"/>
-            <col width="160px"/>
+            <col width="200px"/>
+            <col width="100px"/>
             <tbody>
             <tr>
                 <td><s:label name="district" value="%{getText('district.label')}"/></td>
@@ -88,10 +88,12 @@
                                            name="printed"/></td>
             </tr>
             <tr>
-                <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
-                <td colspan="3">
+                <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+                <td>
                     <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                              cssStyle="float:left;  width:240px;"/>
+                              cssStyle="float:left;  width:240px;"/></td>
+                <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+                <td>
                     <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                               list="bdDivisionList"
                               cssStyle=" width:240px;float:right;"/>

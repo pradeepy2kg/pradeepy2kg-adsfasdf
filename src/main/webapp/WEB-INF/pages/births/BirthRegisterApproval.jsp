@@ -154,9 +154,9 @@
 <fieldset style="margin-bottom:10px;margin-top:20px; border:none">
     <legend></legend>
     <table width="100%" cellpadding="5" cellspacing="0">
-        <col width="220px"/>
+        <col width="200px"/>
         <col/>
-        <col width="220px"/>
+        <col width="300px"/>
         <col/>
         <tbody>
         <tr>
@@ -167,15 +167,14 @@
             </td>
         </tr>
         <tr>
-            <td><s:label name="division" value="%{getText('select_ds_division.label')}"/></td>
-            <td colspan="3">
-                <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                          cssStyle="float:left;  width:240px;"/>
-                <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                          list="bdDivisionList"
+            <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+            <td><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                          cssStyle="float:left;  width:240px;"/></td>
+            <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+            <td colspan="1">
+                <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
                           cssStyle=" width:240px;float:right;"/>
             </td>
-
         </tr>
         <tr>
             <td><s:label value="%{getText('serial.label')}"/></td>
