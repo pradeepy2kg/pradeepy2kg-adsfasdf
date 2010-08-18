@@ -295,16 +295,14 @@ function commanTags(check) {
     domObject = document.getElementById('placeOfBirth');
     isEmpty(domObject, "", 'error11')
 
-    //child  birth weight
-
-    //child rank
+    // child rank
     domObject = document.getElementById('childRank');
     if (!check) {
         isEmpty(domObject, "", 'error16')
     }
     isNumeric(domObject.value, 'error24')
 
-    //number of child
+    // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
     if (!check) {
         isEmpty(domObject, "", 'error12')
@@ -325,21 +323,23 @@ function liveBirthCommanTags(check) {
     var domObject;
     //birth weight
     domObject = document.getElementById('childBirthWeight');
-    if (!check)
+    if (!check) {
         isEmpty(domObject, "", 'error4');
+    }
+    isNumeric(domObject.value, 'error23')
 }
 
 //check given element is empty
-function isEmpty(domElement, errorMassage, errorCode) {
+function isEmpty(domElement, errorMessage, errorCode) {
     with (domElement) {
         if (value == null || value == "") {
-            errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMassage;
+            errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
         }
     }
 }
 
 //check given text is numeric value
-function isNumeric(text, massage) {
+function isNumeric(text, message) {
     var validChars = "0123456789.";
     var isNumber = true;
     var characters;
@@ -350,7 +350,7 @@ function isNumeric(text, massage) {
         }
     }
     if (!isNumber) {
-        errormsg = errormsg + "\n" + document.getElementById('error13').value + " for " + document.getElementById(massage).value;
+        errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById(message).value;
     }
 }
 
@@ -654,7 +654,7 @@ function validateEmail(domElement) {
             rank of the child?</label></td>
         <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank"/></td>
         <td colspan="2" class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු
-            උපතක් නම්, දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
+            උපතක් නම්, දරුවන් ගණන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
             எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
             multiple births, number of children</label></td>
         <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"
