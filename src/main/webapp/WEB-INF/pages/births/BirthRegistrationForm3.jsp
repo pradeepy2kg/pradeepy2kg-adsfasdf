@@ -383,7 +383,7 @@
 
     </tr>
     <tr>
-        <td colspan="1"><label>දිනය <br>*in tamil<br>Date</label></td>
+        <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
         <td colspan="4">
                 <s:textfield name="informant.informantSignDate" id="informDatePicker"/>
     </tr>

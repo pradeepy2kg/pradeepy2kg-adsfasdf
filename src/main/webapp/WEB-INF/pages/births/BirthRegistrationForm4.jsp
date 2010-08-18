@@ -104,7 +104,7 @@
                                             cssStyle="width:98%;"/></td>
             </tr>
             <tr>
-                <td width="200px"><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
                 <td colspan="4"><s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
                                              id="modifiedDatePicker"></s:textfield>
                 </td>

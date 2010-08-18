@@ -32,6 +32,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private String nameOfUser;
     private String userId;
     private String userName;
+    private String add;
+    private String edit;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -98,7 +100,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         user = service.getUsersByIDMatch(userId).get(0);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
-        logger.debug("Deleting  user {} is successfull",user.getUserId());
+        logger.debug("Deleting  user {} is successfull", user.getUserId());
         usersList = service.getAllUsers();
         session.put("viewUsers", null);
         return "success";
@@ -117,6 +119,34 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         session.put("viewUsers", null);
         return "success";
+    }
+
+    public String initAddEditDivisions() {
+        populate();
+        return "success";
+    }
+
+    public String addEditDivisions() {
+        logger.debug("lllllllllll");
+        if(add.equals("Add")){
+            logger.debug("load ADD 1");
+            generateDSDivisions();
+            populate();
+            logger.debug("load ADD 2");
+            return "pageLoad";
+        }
+        else if(edit.equals("Edit")){
+            logger.debug("load edit 1");
+            generateDSDivisions();
+            populate();
+            logger.debug("load edit 2");
+            return "pageLoad";
+        }
+        else {
+            logger.debug("load oooo 1");
+            return "success";
+            
+        }
     }
 
     public String selectUsers() {
@@ -140,7 +170,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         session.put("viewUsers", usersList);
         return "success";
     }
-
 
     private void populate() {
         String language = "en";//((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
@@ -275,5 +304,19 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.userName = userName;
     }
 
+    public String getAdd() {
+        return add;
+    }
 
+    public void setAdd(String add) {
+        this.add = add;
+    }
+
+    public String getEdit() {
+        return edit;
+    }
+
+    public void setEdit(String edit) {
+        this.edit = edit;
+    }
 }
