@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <style type="text/css">
     .bg1 {
-        background: url('<s:url value="/images/death_flow.gif"/>') no-repeat;
+        background: url('<s:url value="/images/death.png"/>') no-repeat;
         width: 960px;
         height: 702px;
         margin: 40px 0px 0px 100px;
@@ -15,7 +15,7 @@
         position: absolute;
         width: 140px;
         height:29px;
-        margin: 169px 0px 0px 320px;
+        margin: 399px 0px 0px 390px;
         padding-top:11px;
     }
 
@@ -25,7 +25,7 @@
         position: absolute;
         width: 140px;
         height:26px;
-        margin: 236px 0px 0px 319px;
+        margin: 466px 0px 0px 389px;
         padding-top:15px;
     }
 
@@ -34,7 +34,7 @@
         text-align: center;
         position: absolute;
         width: 140px;
-        margin: 311px 0px 0px 324px;
+        margin: 541px 0px 0px 394px;
         padding-top:1px;
     }
 
@@ -43,7 +43,7 @@
         text-align: center;
         position: absolute;
         width: 120px;
-        margin: 180px 0px 0px 460px;
+        margin: 410px 0px 0px 530px;
     }
 
     .label02 {
@@ -51,7 +51,7 @@
         text-align: center;
         position: absolute;
         width: 120px;
-        margin: 250px 0px 0px 460px;
+        margin: 480px 0px 0px 530px;
     }
 
 </style>
