@@ -447,6 +447,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
+            bs.set(Permission.PAGE_ADOPTION_CAPTURE_APPLICANT_INFO);
             bs.or(drRole.getPermBitSet());
             // TODO add any ARG specific permissions
             argRole.setPermBitSet(bs);
@@ -475,6 +476,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
+            bs.set(Permission.PAGE_ADOPTION_CAPTURE_APPLICANT_INFO);
             bs.or(argRole.getPermBitSet());
             // TODO add any RG specific permissions
             rgRole.setPermBitSet(bs);
@@ -487,8 +489,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_USER_CREATION);
             bs.set(Permission.USER_MANAGEMENT);
             bs.set(Permission.PAGE_VIEW_USERS);
-
-
 
 
             //user preferance
