@@ -106,22 +106,22 @@ public final class Permission {
 
 
     //permission for death
-    public static final int PAGE_DEATH_REGISTRATION_INIT = 121;
-    public static final int PAGE_DEATH_REGISTRATION = 122;
-    public static final int PAGE_LATE_DEATH_REGISTRATION = 123;
-    public static final int PAGE_DEATH_CERTIFICATE = 124;
-    public static final int PAGE_LATE_DEATH_HOME = 125;
-    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 126;
-    public static final int PAGE_DEATH_APPROVAL_PRINT = 127;
-    public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 128;
-    public static final int PAGE_DEATH_EDIT_MODE = 129;
-    public static final int PAGE_DEATH_APPROVE = 130;
-    public static final int PAGE_DEATH_REJECT = 131;
-    public static final int PAGE_DEATH_DELETE = 132;
-    public static final int PAGE_DEATH_VEIW_MODE = 133;
-    public static final int PAGE_DEATH_PRINT = 134;
+    public static final int PAGE_DEATH_REGISTRATION_INIT = 122;
+    public static final int PAGE_DEATH_REGISTRATION = 123;
+    public static final int PAGE_LATE_DEATH_REGISTRATION = 124;
+    public static final int PAGE_DEATH_CERTIFICATE = 125;
+    public static final int PAGE_LATE_DEATH_HOME = 126;
+    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 127;
+    public static final int PAGE_DEATH_APPROVAL_PRINT = 128;
+    public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 129;
+    public static final int PAGE_DEATH_EDIT_MODE = 130;
+    public static final int PAGE_DEATH_APPROVE = 131;
+    public static final int PAGE_DEATH_REJECT = 132;
+    public static final int PAGE_DEATH_DELETE = 133;
+    public static final int PAGE_DEATH_VEIW_MODE = 134;
+    public static final int PAGE_DEATH_PRINT = 135;
 
     //Permision for add and edit division page
-    public static final int INIT_ADD_EDIT_DIVISIONS = 135;
-    public static final int ADD_EDIT_DIVISIONS = 136;
+    public static final int INIT_ADD_EDIT_DIVISIONS = 136;
+    public static final int ADD_EDIT_DIVISIONS = 137;
 }
