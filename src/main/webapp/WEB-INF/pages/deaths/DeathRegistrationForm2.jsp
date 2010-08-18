@@ -115,26 +115,26 @@
                     වශයෙන්ද<br>*in tamil<br>Capacity for giving information
                 </td>
                 <td colspan="1">මව <br>*in tamil<br>Mother</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
+                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'FATHER':''}"
                                          onchange="setInformPerson('%{deathPerson.deathPersonMotherPINorNIC}','%{deathPerson.deathPersonMotherFullName}');"/></td>
                 <td colspan="1">පියා<br>*in tamil<br>Father</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
+                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'MOTHER':''}"
                                          onchange="setInformPerson('%{deathPerson.deathPersonFatherPINorNIC}','%{deathPerson.deathPersonFatherFullName}');"/></td>
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
+                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"/></td>
             </tr>
             <tr>
                 <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
+                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"/></td>
                 <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
+                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'RELATIVE':''}"/></td>
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
-                <td colspan="1"><s:radio id="declarantType" name="declarant.declarantType"
+                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                          list="#@java.util.HashMap@{'OTHER':''}"/></td>
             </tr>
             <tr>
@@ -151,13 +151,13 @@
                 <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම<br>கொடுப்பவரின்
                     பெயர்<br>Name
                 </td>
-                <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"/></td>
+                <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName" cssStyle="width:880px;"/></td>
             </tr>
             <tr>
                 <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
                     முகவரி<br>Postal Address
                 </td>
-                <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"/></td>
+                <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress" cssStyle="width:880px;"/></td>
             </tr>
             <tr>
                 <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර<br>இலக்க வகை
@@ -204,12 +204,12 @@
             <tr>
                 <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
                 <td colspan="3"><s:textarea id="notifyingAuthorityName"
-                                            name="notifyingAuthority.notifyingAuthorityName"/></td>
+                                            name="notifyingAuthority.notifyingAuthorityName" cssStyle="width:880px;"/></td>
             </tr>
             <tr>
                 <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
                 <td colspan="3"><s:textarea id="notifyingAuthorityAddress"
-                                            name="notifyingAuthority.notifyingAuthorityAddress"/></td>
+                                            name="notifyingAuthority.notifyingAuthorityAddress" cssStyle="width:880px;"/></td>
             </tr>
             <tr>
                 <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
