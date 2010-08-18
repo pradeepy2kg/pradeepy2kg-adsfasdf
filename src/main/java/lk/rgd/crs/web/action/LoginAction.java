@@ -362,12 +362,27 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_PROCESS_APPLICANT_INFO, new Link(null, "/popreg/adoption/", "eprAdoptionProcessApplicantInfo.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_HOME, new Link(null, "/popreg/adoption/", "eprBirthRegistrationHome.do"));
-
         //    linkPermission.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/popreg/adoption/", "eprAdoptionCertificate.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_BDF_ENTRY, new Link(null, "/popreg/births/", "eprAdoptionBirthRegistrationInit.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE, new Link(null, "/popreg/adoption/", "eprAdoptionViewMode.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED, new Link(null, "/popreg/adoption/", "eprApproveAdoption.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED, new Link(null, "/popreg/adoption/", "eprRejectAdoption.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_DIRECT_APPROVAL, new Link(null, "/popreg/adoption/", "eprAdoptionDirectApproval.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_MARK_ADOPTION_NOTICE_AS_PRINTED, new Link(null, "/popreg/adoption/", "eprMarkDirectlyAdoptionNoticeAsPrinted.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE, new Link(null, "/popreg/adoption/", "cancelPrintAdoptionNotice.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER, new Link(null, "/popreg/adoption/", "eprAdoptionNoticeDirectPrint.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_CERTIFICATE_REQUEST, new Link(null, "/popreg/adoption/", "eprAdoptionCertificateRequest.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_FIND_ADOPTION_CERTIFICATE_REQUEST, new Link(null, "/popreg/adoption/", "eprAdoptionFind.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED, new Link(null, "/popreg/adoption/", "eprDeleteAdoption.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE, new Link(null, "/popreg/adoption/", "eprAdoptionEditMode.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER, new Link(null, "/popreg/adoption/", "eprPrintAdoptionNotice.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED, new Link(null, "/popreg/adoption/", "eprMarkAdoptionNoticeAsPrinted.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES, new Link(null, "/popreg/adoption/", "eprPrintAdoptionCertificate.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED, new Link(null, "/popreg/adoption/", "eprMarkAdoptionCertificateAsPrinted.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS, new Link(null, "/popreg/adoption/", "eprAdoptionNext.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS, new Link(null, "/popreg/adoption/", "eprAdoptionPrevious.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS, new Link(null, "/popreg/adoption/", "eprAdoptionFilterByStatus.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE, new Link(null, "/popreg/adoption/", "eprAdoptionBackToPreviousState.do"));
         //linkPermission.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/popreg/births/", "eprAdoptionRegistrationHome.do"));
     }
 

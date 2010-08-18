@@ -550,23 +550,23 @@
         </action>
         <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
-            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
+            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
         <action name="eprAdoptionProcessApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
-        <action name="eprAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
+        <!--<action name="eprAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionCertificate">
             <result type="tiles" name="success">epr.adoptionCertificate</result>
-        </action>
+        </action>-->
         <action name="eprAdoptionCertificateRequest" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="issueCertifiedCopy">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
         <action name="eprAdoptionFind" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="populateAdoption">
-            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
+            <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
         </action>
 
         <!--approve and print list related-->
@@ -635,9 +635,9 @@
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
 
-        <action name="eprAdoptionHome" class="lk.rgd.crs.web.action.births.AdoptionAction" method="initAdoptionHome">
+        <!--<action name="eprAdoptionHome" class="lk.rgd.crs.web.action.births.AdoptionAction" method="initAdoptionHome">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
-        </action>
+        </action>-->
 
         <action name="eprAdoptionBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionBackToPreviouseState">
