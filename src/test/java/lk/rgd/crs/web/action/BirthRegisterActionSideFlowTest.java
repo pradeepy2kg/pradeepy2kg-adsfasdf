@@ -331,6 +331,10 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertNotNull("Warnings should not be null", approveAction.getWarnings());
         assertEquals(2, approveAction.getWarnings().size());
 
+<<<<<<< local
+        initAndExecute(BIRTH_REGISTER_MAPPING, session);
+        session = action.getSession();
+=======
         // submit ignore 2 warnings
         approveId = approveAction.getBdId();
         session = approveAction.getSession();
@@ -340,16 +344,33 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertEquals(1, getBDFById(approveAction.getBdId()).getRegister().getStatus().ordinal());
         logger.debug("BDF direct approved ignoring warnings for IDUKey : " + approveAction.getBdId());
         assertEquals(approveId.longValue(), approveAction.getBdId());
+>>>>>>> other
 
+<<<<<<< local
+        assertEquals("session size incorrect", 5, session.size());      // TODO continue from here problems in session size         4 but 5
+        assertNull(session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        assertNull(session.get(WebConstants.SESSION_OLD_BD_FOR_ADOPTION));
+        assertEquals("BDF approval permission failed", true, action.isAllowApproveBDF());
+
+        Long approveId = action.getBdId();
+=======
         // print birth confirmation
         approveId = approveAction.getBdId();
         session = approveAction.getSession();
+>>>>>>> other
         request.setParameter("bdId", approveId.toString());
+<<<<<<< local
+        initAndExecute(BIRTH_APPROVAL_MAPPING, session);
+        session = approveAction.getSession();
+        assertEquals("session size incorrect", 4, session.size());      // TODO continue from here problems in session size         4 but 5
+
+=======
         request.setParameter("directPrint", "true");
         initAndExecute(BIRTH_CONFIRM_PRINT, session);
         assertEquals(2, getBDFById(approveAction.getBdId()).getRegister().getStatus().ordinal());
         logger.debug("Birth Confirmation Printed for IDUKey : " + action.getBdId());
         deleteBDF(bdf);
+>>>>>>> other
     }
 
     *//**
