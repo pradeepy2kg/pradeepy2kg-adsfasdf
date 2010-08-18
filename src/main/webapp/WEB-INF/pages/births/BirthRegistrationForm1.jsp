@@ -277,19 +277,25 @@ function validate() {
 function commanTags(check) {
     var domObject;
 
-    //place of birth
-    domObject = document.getElementById('placeOfBirth');
-    isEmpty(domObject, "", 'error11')
+    //serial number
+    domObject = document.getElementById('bdfSerialNo');
+    isEmpty(domObject, "", 'error1')
+    isNumeric(domObject.value, 'error20')
+
+    //date of register
+    domObject = document.getElementById('submitDatePicker');
+    isEmpty(domObject, "", 'error9')
 
     //todo check date format
     //date of birth
     domObject = document.getElementById('birthDatePicker');
     isEmpty(domObject, "", 'error10')
 
-    //date of register
-    domObject = document.getElementById('submitDatePicker');
-    isEmpty(domObject, "", 'error9')
+    //place of birth
+    domObject = document.getElementById('placeOfBirth');
+    isEmpty(domObject, "", 'error11')
 
+    //child  birth weight
 
     //child rank
     domObject = document.getElementById('childRank');
@@ -304,11 +310,6 @@ function commanTags(check) {
         isEmpty(domObject, "", 'error12')
     }
     isNumeric(domObject.value, 'error25')
-
-    //serial number
-    domObject = document.getElementById('bdfSerialNo');
-    isEmpty(domObject, "", 'error1')
-    isNumeric(domObject.value, 'error20')
 }
 
 //still birth tags
