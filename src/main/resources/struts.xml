@@ -676,5 +676,17 @@
                 method="selectUsers">
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
+
+        <action name="eprInitAddEditDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddEditDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
+
+        <action name="eprAddEditDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="addEditDivisions">
+            <result type="tiles" name="pageLoad">epr.addEditDivisions</result>
+            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
     </package>
 </struts>

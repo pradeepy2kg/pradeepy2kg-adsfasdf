@@ -366,9 +366,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
 
             //Admin task
-            bs.set(Permission.PAGE_USER_CREATION);
-            bs.set(Permission.PAGE_DELETE_USER);
-            bs.set(Permission.VIEW_SELECTED_USERS);
             bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME);
@@ -443,6 +440,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.BACK_CHANGE_PASSWORD);
             bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
             bs.set(Permission.PAGE_DELETE_USER);
+            bs.set(Permission.ADD_EDIT_DIVISIONS);
 
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
