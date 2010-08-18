@@ -11,6 +11,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
 
 
 /**
@@ -27,13 +28,15 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private String divisions = new String();
     private int[] assignedDistricts;
     private int[] assignedDivisions;
-    private int UserDistrictId;
     private List<User> usersList;
     private String nameOfUser;
     private String userId;
     private String userName;
-    private String add;
-    private String edit;
+
+    private int UserDistrictId;
+    private int dsDivisionId;
+    private int divisionId;
+
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -46,18 +49,22 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     private String roleId;
     private final DistrictDAO districtDAO;
-    private final DSDivisionDAO dsDivisionDAO;
     private final RoleDAO roleDAO;
+    private final BDDivisionDAO bdDivisionDAO;
+    private final DSDivisionDAO dsDivisionDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
     private Map<String, String> roleList;
+    private Map<Integer, String> dsDivisionList;
 
-    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManagerImpl service) {
+    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManagerImpl service,
+                               BDDivisionDAO bdDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
         this.service = service;
+        this.bdDivisionDAO = bdDivisionDAO;
     }
 
     public String creatUser() {
@@ -102,7 +109,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("Deleting  user {} is successfull", user.getUserId());
         usersList = service.getAllUsers();
-        session.put("viewUsers", null);
+        session.put("viewUsers", usersList);
         return "success";
     }
 
@@ -158,15 +165,38 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             districtList = districtDAO.getAllDistrictNames(language, user);
         if (roleList == null)
             roleList = roleDAO.getRoleList();
+       populateDynamicLists(language);
     }
 
+    private void populateDynamicLists(String language) {
+        if (getUserDistrictId() == 0) {
+            if (!districtList.isEmpty()) {
+                setUserDistrictId(districtList.keySet().iterator().next());
+                logger.debug("first allowed district in the list {} was set", getUserDistrictId());
+            }
+        }
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(getUserDistrictId(), language,user);
+
+        if (getDsDivisionId() == 0) {
+            if (!dsDivisionList.isEmpty()) {
+                setDsDivisionId(dsDivisionList.keySet().iterator().next());
+                logger.debug("first allowed DS Div in the list {} was set", getDsDivisionId());
+            }
+        }
+
+        setDivisionList(bdDivisionDAO.getBDDivisionNames(getDsDivisionId(), language,user));
+        if (getDivisionId() == 0) {
+           setDivisionId(dsDivisionList.keySet().iterator().next());
+           logger.debug("first allowed BD Div in the list {} was set", getDivisionId());
+        }
+   }
 
     private void generateDSDivisions() {
         for (int i = 0; i < assignedDistricts.length; i++) {
             if (i == 0) {
                 setDivisionList(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
             } else {
-                divisionList.putAll(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
+                getDivisionList().putAll(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
             }
         }
     }
@@ -243,6 +273,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
+        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     public int getUserDistrictId() {
@@ -285,19 +316,31 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.userName = userName;
     }
 
-    public String getAdd() {
-        return add;
+    public int getDivisionId() {
+        return divisionId;
     }
 
-    public void setAdd(String add) {
-        this.add = add;
+    public void setDivisionId(int divisionId) {
+        this.divisionId = divisionId;
     }
 
-    public String getEdit() {
-        return edit;
+    public int getDsDivisionId() {
+        return dsDivisionId;
     }
 
-    public void setEdit(String edit) {
-        this.edit = edit;
+    public void setDsDivisionId(int dsDivisionId) {
+        this.dsDivisionId = dsDivisionId;
+    }
+
+    public BDDivisionDAO getBdDivisionDAO() {
+        return bdDivisionDAO;
+    }
+
+    public Map<Integer, String> getDsDivisionList() {
+        return dsDivisionList;
+    }
+
+    public void setDsDivisionList(Map<Integer, String> dsDivisionList) {
+        this.dsDivisionList = dsDivisionList;
     }
 }

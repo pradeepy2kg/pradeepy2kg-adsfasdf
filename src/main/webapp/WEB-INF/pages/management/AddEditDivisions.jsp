@@ -1,6 +1,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript">
+$('select#districtId').bind('change', function(evt1) {
+           var id = $("select#districtId").attr("value");
+           $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                   function(data) {
+                       var options1 = '';
+                       var ds = data.dsDivisionList;
+                       for (var i = 0; i < ds.length; i++) {
+                           options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                       }
+                       $("select#dsDivisionId").html(options1);
+
+                       var options2 = '';
+                       var bd = data.bdDivisionList;
+                       for (var j = 0; j < bd.length; j++) {
+                           options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                       }
+                       $("select#birthDivisionId").html(options2);
+                   });
+       });
+
+       $('select#dsDivisionId').bind('change', function(evt2) {
+           var id = $("select#dsDivisionId").attr("value");
+           $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                   function(data) {
+                       var options = '';
+                       var bd = data.bdDivisionList;
+                       for (var i = 0; i < bd.length; i++) {
+                           options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                       }
+                       $("select#divisionId").html(options);
+                   });
+       });
     function Add()
     {
         try
@@ -74,19 +108,9 @@
         }
     }
 </script>
-
 <div>
     <s:form action="eprAddEditDivisions" name="addEditDivision_Form" method="POST">
         <table>
-            <tr>
-                <td colspan="1"><s:radio id="add" name="add"
-                                         list="#@java.util.HashMap@{'ADD':'Add'}" onclick="javascript:Add();"/>
-                </td>
-                <td colspan="1"><s:radio id="edit" name="add"
-                                         list="#@java.util.HashMap@{'EDIT':'Edit'}" onclick="javascript:Edit();"/>
-                </td>
-
-            </tr>
             <tr>
                 <td>
                     <s:label>Select a District</s:label>
@@ -181,110 +205,6 @@
                 </td>
                 <td>
                     <s:textfield name="tamilName"/>
-                </td>
-            </tr>
-
-        </table>
-        <table id="editDsDivisionFields" style="display:none;">
-            <tr>
-            <td>
-                <s:label>Select Ds Division</s:label>
-            </td>
-            <td>
-                <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"/>
-            </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter English Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="englishName" disabled="true"/>
-                </td>
-                <td>
-                    <s:textfield name="englishName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Sinhala Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="sinhalaName" disabled="true"/>
-                </td>
-                <td>
-                    <s:textfield name="sinhalaName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Tamil Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="tamilName" disabled="true"/>
-                </td>
-                <td>
-                    <s:textfield name="tamilName"/>
-                </td>
-            </tr>
-
-        </table>
-        <table id="editDivisionFields" style="display:none;">
-            <td>
-                <s:label>Select Ds Division</s:label>
-            </td>
-            <td>
-                <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"/>
-            </td>
-            <td>
-                <s:label>Select Division</s:label>
-            </td>
-            <td>
-                <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"/>
-            </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter English Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="englishName" disabled="true"/>
-                </td>
-                <td>
-                    <s:textfield name="englishName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Sinhala Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="sinhalaName" disabled="true"/>
-                </td>
-                <td>
-                    <s:textfield name="sinhalaName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Tamil Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="tamilName" disabled="true"/>
-                </td>
-                <td>
-                    <s:textfield name="tamilName"/>
-                </td>
-            </tr>
-
-        </table>
-        <br>
-        <table>
-            <tr>
-                <td>
-                    <div id="Content"></div>
-                    <br>
-                    <div id="Content1"></div>
                 </td>
             </tr>
         </table>

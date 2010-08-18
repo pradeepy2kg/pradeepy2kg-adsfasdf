@@ -1,4 +1,4 @@
-/* 
+/*
  Simple JQuery menu.
  HTML structure to use:
 
