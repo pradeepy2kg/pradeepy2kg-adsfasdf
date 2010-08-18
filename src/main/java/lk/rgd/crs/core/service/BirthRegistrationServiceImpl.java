@@ -78,6 +78,12 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.debug("Adding a new live birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
+        // if this is a late registration, and a case file number is specified, record that along with comments
+        if (!isEmptyString(caseFileNumber) || !isEmptyString(additionalDocumentsComment)) {
+            bdf.getRegister().setCaseFileNumber(caseFileNumber);
+            bdf.getRegister().setComments(additionalDocumentsComment);
+        }
+
         // TODO add case file number and additional document list as comments
         addBirthDeclaration(bdf, ignoreWarnings, user);
         logger.debug("Added a new live birth declaration. IDUKey : {}", bdf.getIdUKey());
@@ -1338,7 +1344,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         logger.info("Stopped executing Birth registration related scheduled tasks..");
     }
 
-    private static boolean isEmptyString(String s) {
+    private static final boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }
 

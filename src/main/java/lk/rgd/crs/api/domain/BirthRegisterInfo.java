@@ -115,6 +115,13 @@ public class BirthRegisterInfo implements Serializable {
     @Column(nullable = true)
     private Long adoptionUKey;
 
+    /**
+     * For late registrations the case file number that retains the physical file number where supplementary
+     * documents have been filed
+     */
+    @Column(nullable = true)
+    private String caseFileNumber;
+
     public String getComments() {
         return comments;
     }
@@ -253,5 +260,13 @@ public class BirthRegisterInfo implements Serializable {
 
     public void setAdoptionUKey(Long adoptionUKey) {
         this.adoptionUKey = adoptionUKey;
+    }
+
+    public String getCaseFileNumber() {
+        return caseFileNumber;
+    }
+
+    public void setCaseFileNumber(String caseFileNumber) {
+        this.caseFileNumber = caseFileNumber;
     }
 }
