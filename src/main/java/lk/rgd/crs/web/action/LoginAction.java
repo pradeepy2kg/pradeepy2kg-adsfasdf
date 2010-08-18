@@ -383,6 +383,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS, new Link(null, "/popreg/adoption/", "eprAdoptionPrevious.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS, new Link(null, "/popreg/adoption/", "eprAdoptionFilterByStatus.do"));
         linkPermission.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE, new Link(null, "/popreg/adoption/", "eprAdoptionBackToPreviousState.do"));
+        linkPermission.put(Permission.PAGE_ADOPTION_CAPTURE_APPLICANT_INFO, new Link(null, "/popreg/adoption/", "eprCaptureAdoptionApplicantInfo.do"));
         //linkPermission.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/popreg/births/", "eprAdoptionRegistrationHome.do"));
     }
 
