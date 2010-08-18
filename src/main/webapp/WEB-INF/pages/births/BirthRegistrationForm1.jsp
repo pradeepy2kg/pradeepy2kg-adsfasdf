@@ -353,17 +353,6 @@ function isNumeric(text, message) {
         errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById(message).value;
     }
 }
-
-function validateEmail(domElement) {
-    with (domElement) {
-        apos = value.indexOf("@");
-        dotpos = value.lastIndexOf(".");
-        if (apos < 1 || dotpos - apos < 2) {
-            errormsg = errormsg + "\n" + document.getElementById(error15).value;
-        }
-    }
-}
-
 </script>
 
 
@@ -625,8 +614,7 @@ function validateEmail(domElement) {
             பால் <br>Gender of the child</label></td>
         <td colspan="3"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="child.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
-                cssStyle="width:190px; margin-left:5px;"/></td>
+                name="child.childGender" cssStyle="width:190px; margin-left:5px;"/></td>
         <s:if test="birthType.ordinal() == 1">
             <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு
                 நிறை<br>Birth Weight (kg)</label></td>
@@ -683,7 +671,6 @@ function validateEmail(domElement) {
 <s:hidden id="error14" value="%{getText('p1.numbeOfWeeksPregnant')}"/>
 
 <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
-<s:hidden id="error15" value="%{getText('p1.invalide.email')}"/>
 <s:hidden id="error16" value="%{getText('p1.child.rank')}"/>
 
 <%--hidden fields for input fields--%>   .
@@ -693,10 +680,6 @@ function validateEmail(domElement) {
 <s:hidden id="error23" value="%{getText('p1.birthWeight.text')}"/>
 <s:hidden id="error24" value="%{getText('p1.child.rank.text')}"/>
 <s:hidden id="error25" value="%{getText('p1.numOfChildren.text')}"/>
-
-
-<script type="text/javascript">
-</script>
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
