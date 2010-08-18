@@ -117,8 +117,8 @@
 
     <!--Solr index manager-->
     <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
-        <constructor-arg value="http://192.168.1.150:9443/solr/births"/>
-        <constructor-arg value="http://192.168.1.150:9443/solr/prs"/>
+        <constructor-arg value="http://localhost:9443/solr/births"/>
+        <constructor-arg value="http://localhost:9443/solr/prs"/>
     </bean>
     <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
         <constructor-arg ref="solrIndexManager"/>
