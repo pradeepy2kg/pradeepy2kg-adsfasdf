@@ -440,6 +440,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.BACK_CHANGE_PASSWORD);
             bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
             bs.set(Permission.PAGE_DELETE_USER);
+            bs.set(Permission.INIT_ADD_EDIT_DIVISIONS);
             bs.set(Permission.ADD_EDIT_DIVISIONS);
 
             // TODO add any ADMIN specific permissions

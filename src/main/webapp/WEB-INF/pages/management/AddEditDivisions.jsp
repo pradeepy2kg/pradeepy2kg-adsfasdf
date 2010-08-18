@@ -2,23 +2,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div>
-    <form action="eprAddEditDivisions" name="addEditDivision_Form" method="POST">
+    <s:form action="eprAddEditDivisions" name="addEditDivision_Form" method="POST">
         <table>
-            <tr>
-                <td>
-                    <s:label>You want to Add or Edit ? </s:label>
-                </td>
-                <td>
-                    <div class="form-submit">
-                        <s:submit value="Add" name="add"/>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-submit">
-                        <s:submit value="Edit" name="edit"/>
-                    </div>
-                </td>
-            </tr>
             <tr>
                 <td>
                     <s:label>Select a District</s:label>
@@ -29,26 +14,32 @@
             </tr>
             <tr>
                 <td>
-                <td colspan="1"><s:radio id="enteringType" name="declarant.declarantType"
+                <td colspan="1"><s:radio id="enteringType" name="enteringType"
                                          list="#@java.util.HashMap@{'DSdivision':'Add Divisional Secretariat'}"/>
                 </td>
                 <td>
-                <td colspan="1"><s:radio id="enteringType" name="declarant.declarantType"
+                <td colspan="1"><s:radio id="enteringType" name="enteringType"
                                          list="#@java.util.HashMap@{'Division':'Add Registration Division'}"/>
+                </td>
+                <td colspan="1"><s:radio id="addDivisions" name="addDivisions"
+                                         list="#@java.util.HashMap@{'DSdivision':'Add'}"/>
+                </td>
+                <td>
+                <td colspan="1"><s:radio id="editDivisions" name="addDivisions"
+                                         list="#@java.util.HashMap@{'Division':'Edit'}"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                <td colspan="1"><s:radio id="enteringType" name="declarant.declarantType"
+                <td colspan="1"><s:radio id="enteringType" name="enteringType"
                                          list="#@java.util.HashMap@{'DSdivision':'Edit Divisional Secretariat'}"/>
                 </td>
                 <td>
-                <td colspan="1"><s:radio id="enteringType" name="declarant.declarantType"
+                <td colspan="1"><s:radio id="enteringType" name="denteringType"
                                          list="#@java.util.HashMap@{'Division':'Edit Registration Division'}"/>
                 </td>
             </tr>
             <tr>
-
                 <td>
                     <s:label>Select Ds Division</s:label>
                 </td>
@@ -88,7 +79,7 @@
             </tr>
         </table>
         <div class="form-submit">
-            <s:submit value="%{getText('add_division.label')}" cssStyle="margin-top:10px;"/>
+            <s:submit value="Submit" cssStyle="margin-top:10px;"/>
         </div>
-    </form>
+    </s:form>
 </div>

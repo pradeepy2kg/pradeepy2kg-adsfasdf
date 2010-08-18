@@ -248,7 +248,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_USER_CREATION, new Link(null, "/popreg/management/", "eprUserCreation.do"));
         linkPermission.put(Permission.PAGE_DELETE_USER, new Link(null, "/popreg/management/", "eprdeleteUsers.do"));
         linkPermission.put(Permission.VIEW_SELECTED_USERS, new Link(null, "/popreg/management/", "eprViewSelectedUsers.do"));
-        linkPermission.put(Permission.ADD_EDIT_DIVISIONS, new Link("addEditDivision.label", "/popreg/management/", "eprInitAddEditDivisions.do"));
+        linkPermission.put(Permission.INIT_ADD_EDIT_DIVISIONS, new Link("addEditDivision.label", "/popreg/management/", "eprInitAddEditDivisions.do"));
+        linkPermission.put(Permission.ADD_EDIT_DIVISIONS, new Link(null, "/popreg/management/", "eprAddEditDivisions.do"));
 
         //Birth Registration
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_INIT, new Link("birth_registration.label", "/popreg/births/", "eprBirthRegistrationInit.do"));
