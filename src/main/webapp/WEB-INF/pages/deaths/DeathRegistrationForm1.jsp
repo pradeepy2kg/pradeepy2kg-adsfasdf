@@ -446,7 +446,7 @@ function validate() {
                 in tamil <br/>
                 Reason for the late registration of the death
             </td>
-            <td><s:textarea name="death.reasonForLateRegistration"/></td>
+            <td><s:textarea name="death.reasonForLateRegistration" cssStyle="width:880px;"/></td>
         </tr>
     </table>
 </s:if>
@@ -538,21 +538,25 @@ function validate() {
             තහවුරුද?<br>*in tamil<br>Is the cause of death established?
         </td>
         <td colspan="1">නැත / xx / No</td>
-        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'false':''}"
-                                 id=""/></td>
+        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
+                                                list="#@java.util.HashMap@{'false':''}"
+                                                id=""/></td>
         <td rowspan="2" colspan="3">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණය දින 30 කට අඩු
             ළදරුවෙකුගේද?<br>*in tamil<br>Is the death of an infant
             less
             than 30 days?
         </td>
         <td colspan="1">නැත / xx / No</td>
-        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'false':''}"/></td>
+        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
+                                                list="#@java.util.HashMap@{'false':''}"/></td>
     </tr>
     <tr>
         <td colspan="1">ඔව් / xx /Yes</td>
-        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished" list="#@java.util.HashMap@{'true':''}"/></td>
+        <td colspan="2" align="center"><s:radio name="death.causeOfDeathEstablished"
+                                                list="#@java.util.HashMap@{'true':''}"/></td>
         <td colspan="1">ඔව් / xx /Yes</td>
-        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days" list="#@java.util.HashMap@{'true':''}"/></td>
+        <td colspan="1" align="center"><s:radio name="death.infantLessThan30Days"
+                                                list="#@java.util.HashMap@{'true':''}"/></td>
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණයට හේතුව<br>*in tamil<br>Cause
@@ -564,7 +568,7 @@ function validate() {
         </td>
         <td colspan="2"><s:textfield name="death.icdCodeOfCause" cssStyle="width:225px;"/></td>
     </tr>
- <tr>
+    <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ආදාහන හෝ භූමදාන ස්ථානය<br>*in
             tamil<br>Place of burial or cremation
         </td>
@@ -576,7 +580,8 @@ function validate() {
                 in tamil <br/>
                 Any other information
             </td>
-            <td colspan="8"><s:textarea name="death.anyOtherInformation" id="anyOtherInfo"/></td>
+            <td colspan="8"><s:textarea name="death.anyOtherInformation" id="anyOtherInfo"
+                                        cssStyle="width:880px;"/></td>
         </tr>
     </s:if>
     <tr>
@@ -607,12 +612,14 @@ function validate() {
         </td>
     </tr>
     <tr>
-        <td rowspan="2" colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය / ජාතික
+        <td rowspan="2" colspan="2">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය /
+            ජාතික
             හැදුනුම්පත් අංකය<br>தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
             <br>PIN / NIC
         </td>
-        <td rowspan="2" colspan="2" class="find-person"><s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                                                 cssStyle="float:left;"/>
+        <td rowspan="2" colspan="2" class="find-person"><s:textfield name="deathPerson.deathPersonPINorNIC"
+                                                                     id="deathPerson_PINorNIC"
+                                                                     cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_lookup"></td>
         <td rowspan="2">විදේශිකය‍කු නම්<br>வெளிநாட்டவர் <br>If a foreigner</td>
@@ -646,7 +653,8 @@ function validate() {
             දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)<br>Name
             in either of the official languages (Sinhala / Tamil)
         </td>
-        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang" cssStyle="width:880px;"/>
+        <td colspan="6"><s:textarea name="deathPerson.deathPersonNameOfficialLang" id="deathPersonNameOfficialLang"
+                                    cssStyle="width:880px;"/>
         </td>
     </tr>
     <tr>
@@ -654,7 +662,8 @@ function validate() {
             அத்தாட்சி …..<br>Name in English
         </td>
         <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish" cssStyle="width:880px;"/>
+            <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"
+                        cssStyle="width:880px;"/>
         </td>
     </tr>
     <tr>
@@ -662,7 +671,8 @@ function validate() {
             வதிவிட முகவரி<br>Permanent Address
         </td>
         <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress" cssStyle="width:880px;"/>
+            <s:textarea name="deathPerson.deathPersonPermanentAddress" id="deathPersonPermanentAddress"
+                        cssStyle="width:880px;"/>
         </td>
     </tr>
     <tr>
@@ -680,7 +690,8 @@ function validate() {
             <br>Fathers full name
         </td>
         <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName" cssStyle="width:880px;"/>
+            <s:textarea name="deathPerson.deathPersonFatherFullName" id="deathPersonFatherFullName"
+                        cssStyle="width:880px;"/>
         </td>
     </tr>
     <tr>
@@ -698,7 +709,8 @@ function validate() {
             full name
         </td>
         <td colspan="6">
-            <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName" cssStyle="width:880px;"/>
+            <s:textarea name="deathPerson.deathPersonMotherFullName" id="deathPersonMotherFullName"
+                        cssStyle="width:880px;"/>
         </td>
     </tr>
     </tbody>
