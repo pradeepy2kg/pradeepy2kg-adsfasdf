@@ -324,6 +324,15 @@ function stillBirthCommanTags(check) {
 
 function liveBirthCommanTags(check) {
     var domObject;
+    // child name
+    domObject = document.getElementById('childFullNameOfficialLangId');
+    if (!check.checked)
+        isEmpty(domObject, "", 'error2');
+
+    domObject = document.getElementById('childFullNameEnglish');
+    if (!check.checked)
+        isEmpty(domObject, "", 'error3');
+
     //birth weight
     domObject = document.getElementById('childBirthWeight');
     if (!check) {
@@ -335,7 +344,7 @@ function liveBirthCommanTags(check) {
 function validateDateFormat() {
     alert('called');
 
-   // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
+    // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
     var dateToValidate = new Date();
 
     alert(dateFormat(dateToValidate.format("m/dd/yy")));
@@ -557,10 +566,13 @@ function isNumeric(text, message) {
     <tr style="border-left:1px solid #000000;">
         <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
         </td>
-        <td colspan="7">
+        <td colspan="3"style="border-right:none;">
                 <%--todo--%>
             <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
-            <div id="belatedError" style="color:red;"/>
+
+        </td>
+        <td colspan="4" style="border-left:none;">
+           <div id="belatedError" style="color:red; "/>
         </td>
     </tr>
     <tr>
@@ -620,7 +632,7 @@ function isNumeric(text, message) {
                 / தமிழ்) <br>Name in
                 any of the official languages (Sinhala / Tamil)</label></td>
             <td colspan="7">
-                <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
+                <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLangId"
                             cssStyle="width:98.2%;"/>
             </td>
         </tr>
