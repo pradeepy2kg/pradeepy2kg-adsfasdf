@@ -127,26 +127,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String addEditDivisions() {
-        logger.debug("lllllllllll");
-        if(add.equals("Add")){
-            logger.debug("load ADD 1");
-            generateDSDivisions();
-            populate();
-            logger.debug("load ADD 2");
-            return "pageLoad";
-        }
-        else if(edit.equals("Edit")){
-            logger.debug("load edit 1");
-            generateDSDivisions();
-            populate();
-            logger.debug("load edit 2");
-            return "pageLoad";
-        }
-        else {
-            logger.debug("load oooo 1");
-            return "success";
-            
-        }
+        return "success";
     }
 
     public String selectUsers() {

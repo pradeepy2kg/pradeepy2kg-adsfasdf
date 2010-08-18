@@ -122,5 +122,6 @@ public final class Permission {
     public static final int PAGE_DEATH_PRINT = 134;
 
     //Permision for add and edit division page
-    public static final int ADD_EDIT_DIVISIONS = 135;
+    public static final int INIT_ADD_EDIT_DIVISIONS = 135;
+    public static final int ADD_EDIT_DIVISIONS = 136;
 }
