@@ -127,7 +127,7 @@ $(function() {
 var errormsg = "";
 /*var lateOrbelate = false;
  var isLive = true;
- function validate() {
+ function validate2() {
 
  var returnval;
  var flag = false;
@@ -252,16 +252,20 @@ function validate() {
     var declarationType = document.getElementById('birthTypeId');
     var birthdate = new Date(document.getElementById('birthDatePicker').value);
     var submit = new Date(document.getElementById('submitDatePicker').value);
+
     if (declarationType.value == 0) {
         commanTags(check);
         stillBirthCommanTags(check);
+        dateRange(submit, birthdate, 0);
     }
     if (declarationType.value == 1) {
         commanTags(check);
         liveBirthCommanTags(check)
+        dateRange(submit, birthdate, 1);
     }
     if (declarationType.value == 2) {
         commanTags(check);
+        dateRange(submit, birthdate, 2);
     }
 
     if (errormsg != "") {
@@ -276,7 +280,6 @@ function validate() {
 //comment tags
 function commanTags(check) {
     var domObject;
-
     //serial number
     domObject = document.getElementById('bdfSerialNo');
     isEmpty(domObject, "", 'error1')
@@ -328,6 +331,38 @@ function liveBirthCommanTags(check) {
     }
     isNumeric(domObject.value, 'error23')
 }
+//validate date format to iso date format
+function validateDateFormat() {
+    alert('called');
+
+   // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
+    var dateToValidate = new Date();
+
+    alert(dateFormat(dateToValidate.format("m/dd/yy")));
+}
+
+//check live birth is a belated birth gives warnings
+function dateRange() {
+    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+    var submit = new Date(document.getElementById('submitDatePicker').value);
+    //comparing 90 days delay
+    var one_day = 1000 * 60 * 60 * 24 ;
+    var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+    if (numDays >= 90) {
+        if (numDays >= 365) {
+            document.getElementById('belatedError').innerHTML = document.getElementById('error8').value;
+        } else {
+
+            document.getElementById('belatedError').innerHTML = document.getElementById('error7').value;
+        }
+
+    }
+    else {
+
+        document.getElementById('belatedError').innerHTML = '';
+    }
+}
+
 
 //check given element is empty
 function isEmpty(domElement, errorMessage, errorCode) {
@@ -520,9 +555,12 @@ function isNumeric(text, message) {
     </s:if>
     <tr></tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
+        </td>
         <td colspan="7">
-            <s:textfield id="birthDatePicker" name="child.dateOfBirth"/>
+                <%--todo--%>
+            <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
+            <div id="belatedError" style="color:red;"/>
         </td>
     </tr>
     <tr>

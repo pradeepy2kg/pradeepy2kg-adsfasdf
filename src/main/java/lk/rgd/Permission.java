@@ -124,4 +124,8 @@ public final class Permission {
     //Permision for add and edit division page
     public static final int INIT_ADD_EDIT_DIVISIONS = 136;
     public static final int ADD_EDIT_DIVISIONS = 137;
+
+    //permission for user preferance
+      public static final int PAGE_DIRECT_HOME= 138;
+
 }

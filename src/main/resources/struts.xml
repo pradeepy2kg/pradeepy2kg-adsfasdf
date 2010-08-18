@@ -518,6 +518,7 @@
 
     </package>
     <package name="adoption" namespace="/adoption" extends="NG">
+        
         <default-interceptor-ref name="default"/>
         <action name="eprAdoptionRegistrationAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclaration">

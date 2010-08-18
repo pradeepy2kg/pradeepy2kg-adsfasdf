@@ -30,13 +30,13 @@ public class SecurityInterceptor extends AbstractInterceptor {
         }
 
         Map<String, Map> map = (Map<String, Map>) session.get(WebConstants.SESSION_USER_MENUE_LIST);
+        
         User user = (User) obj;
         boolean found = false;
         String cat = null;
         int key = 0;
         for (Map.Entry<String, Map> category : map.entrySet()) {
             cat = category.getKey();
-
             Map<Integer, Link> links = (Map<Integer, Link>) category.getValue();
             for (Map.Entry<Integer, Link> entry : links.entrySet()) {
                 key = entry.getKey();
