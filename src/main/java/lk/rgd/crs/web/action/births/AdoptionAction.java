@@ -464,7 +464,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String adoptionCertificate() {
+    /* public String adoptionCertificate() {
         try {
             adoption = service.getById(getIdUKey(), user);
             logger.debug("Id u key : {}", getIdUKey());
@@ -473,7 +473,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             logger.debug("catch exception : {}", e);
         }
         return SUCCESS;
-    }
+    }*/
 
     public void initPermissionForApprovalAndPrint() {
 
@@ -507,9 +507,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    public String initAdoptionHome() {
+    /*public String initAdoptionHome() {
         return SUCCESS;
-    }
+    }*/
 
     private void populateBasicLists(String language) {
         countryList = countryDAO.getCountries(language);

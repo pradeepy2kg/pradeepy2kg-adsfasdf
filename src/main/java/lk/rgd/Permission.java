@@ -101,31 +101,46 @@ public final class Permission {
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED = 117;
     public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED = 118;
     /*public static final int PAGE_ADOPTION_BDF_HOME = 119*/;
+    public static final int PAGE_ADOPTION_DIRECT_APPROVAL = 119;
     public static final int PAGE_ADOPTION_PROCESS_APPLICANT_INFO = 120;
     public static final int PAGE_ADOPTION_HOME = 121;
+    public static final int PAGE_ADOPTION_MARK_ADOPTION_NOTICE_AS_PRINTED = 122;
+    public static final int PAGE_ADOPTION_CANCEL_PRINT_NOTICE = 123;
+    public static final int PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER = 124;
+    public static final int PAGE_ADOPTION_CERTIFICATE_REQUEST = 125;
+    public static final int PAGE_ADOPTION_FIND_ADOPTION_CERTIFICATE_REQUEST = 126;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED = 127;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE = 128;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER = 129;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED = 130;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES = 131;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED = 132;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS = 133;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS = 134;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS = 135;
+    public static final int PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE = 136;
 
 
     //permission for death
-    public static final int PAGE_DEATH_REGISTRATION_INIT = 122;
-    public static final int PAGE_DEATH_REGISTRATION = 123;
-    public static final int PAGE_LATE_DEATH_REGISTRATION = 124;
-    public static final int PAGE_DEATH_CERTIFICATE = 125;
-    public static final int PAGE_LATE_DEATH_HOME = 126;
-    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 127;
-    public static final int PAGE_DEATH_APPROVAL_PRINT = 128;
-    public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 129;
-    public static final int PAGE_DEATH_EDIT_MODE = 130;
-    public static final int PAGE_DEATH_APPROVE = 131;
-    public static final int PAGE_DEATH_REJECT = 132;
-    public static final int PAGE_DEATH_DELETE = 133;
-    public static final int PAGE_DEATH_VEIW_MODE = 134;
-    public static final int PAGE_DEATH_PRINT = 135;
+    public static final int PAGE_DEATH_REGISTRATION_INIT = 137;
+    public static final int PAGE_DEATH_REGISTRATION = 138;
+    public static final int PAGE_LATE_DEATH_REGISTRATION = 139;
+    public static final int PAGE_DEATH_CERTIFICATE = 140;
+    public static final int PAGE_LATE_DEATH_HOME = 141;
+    public static final int PAGE_LATE_DEATH_REGISTRATION_INIT = 142;
+    public static final int PAGE_DEATH_APPROVAL_PRINT = 143;
+    public static final int PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH = 144;
+    public static final int PAGE_DEATH_EDIT_MODE = 145;
+    public static final int PAGE_DEATH_APPROVE = 146;
+    public static final int PAGE_DEATH_REJECT = 147;
+    public static final int PAGE_DEATH_DELETE = 148;
+    public static final int PAGE_DEATH_VEIW_MODE = 149;
+    public static final int PAGE_DEATH_PRINT = 150;
 
     //Permision for add and edit division page
-    public static final int INIT_ADD_EDIT_DIVISIONS = 136;
-    public static final int ADD_EDIT_DIVISIONS = 137;
+    public static final int INIT_ADD_EDIT_DIVISIONS = 151;
+    public static final int ADD_EDIT_DIVISIONS = 152;
 
     //permission for user preferance
-      public static final int PAGE_DIRECT_HOME= 138;
-
+    public static final int PAGE_DIRECT_HOME = 153;
 }

@@ -234,10 +234,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE);
             bs.set(Permission.EDIT_BDF);
 
-            //Adoption
-            bs.set(Permission.EDIT_ADOPTION);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
-
             //Birth registration
             bs.set(Permission.PAGE_BIRTH_REGISTRATON);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_INIT);
@@ -259,6 +255,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.EDIT_DEATH);
             bs.set(Permission.PAGE_DEATH_EDIT_MODE);
             bs.set(Permission.PAGE_DEATH_VEIW_MODE);
+            bs.set(Permission.PAGE_DEATH_DELETE);
+            bs.set(Permission.PAGE_DEATH_PRINT);
 
 
             //Search
@@ -277,10 +275,16 @@ public class DatabaseInitializer implements ApplicationContextAware {
             //PRS related
             bs.set(Permission.PRS_ADD_PERSON);
 
-            //adoption related
+            //Adoption related
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_HOME);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION);
+            bs.set(Permission.EDIT_ADOPTION);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT);
+            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
+
 
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
@@ -384,22 +388,30 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_ADOPTION_INIT);
             bs.set(Permission.PAGE_ADOPTION_APPLICANT_INFO);
             bs.set(Permission.PAGE_ADOPTION_BDF_ENTRY);
-
-            //Adoption
+            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
+            bs.set(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER);
             bs.set(Permission.EDIT_ADOPTION);
             bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
             //bs.set(Permission.PAGE_ADOPTION_BDF_HOME);
             bs.set(Permission.PAGE_ADOPTION_PROCESS_APPLICANT_INFO);
             bs.set(Permission.PAGE_ADOPTION_HOME);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
+
             //death realated
             bs.set(Permission.APPROVE_DEATH);
             bs.set(Permission.PAGE_DEATH_APPROVE);
             bs.set(Permission.PAGE_DEATH_REJECT);
             bs.set(Permission.PAGE_DEATH_DELETE);
             bs.set(Permission.PAGE_DEATH_PRINT);
-
 
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
@@ -415,6 +427,26 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs = new BitSet();
             bs.set(Permission.APPROVE_ADOPTION);
             bs.set(Permission.APPROVE_DEATH);
+            bs.set(Permission.PAGE_ADOPTION_DIRECT_APPROVAL);
+            bs.set(Permission.PAGE_ADOPTION_MARK_ADOPTION_NOTICE_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
+            bs.set(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER);
+            bs.set(Permission.PAGE_ADOPTION_CERTIFICATE_REQUEST);
+            bs.set(Permission.PAGE_ADOPTION_FIND_ADOPTION_CERTIFICATE_REQUEST);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
             bs.or(drRole.getPermBitSet());
             // TODO add any ARG specific permissions
             argRole.setPermBitSet(bs);
@@ -423,7 +455,26 @@ public class DatabaseInitializer implements ApplicationContextAware {
             Role rgRole = roleDao.getRole("RG");
             bs = new BitSet();
             bs.set(Permission.APPROVE_ADOPTION);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
             bs.set(Permission.APPROVE_DEATH);
+            bs.set(Permission.PAGE_ADOPTION_DIRECT_APPROVAL);
+            bs.set(Permission.PAGE_ADOPTION_MARK_ADOPTION_NOTICE_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
+            bs.set(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER);
+            bs.set(Permission.PAGE_ADOPTION_CERTIFICATE_REQUEST);
+            bs.set(Permission.PAGE_ADOPTION_FIND_ADOPTION_CERTIFICATE_REQUEST);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
+            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
             bs.or(argRole.getPermBitSet());
             // TODO add any RG specific permissions
             rgRole.setPermBitSet(bs);
