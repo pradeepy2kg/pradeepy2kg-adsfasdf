@@ -105,9 +105,10 @@
     })
 
     //javascript for form validation
+    var errormsg = "";
     function validate()
     {
-        var errormsg = "";
+        var domObject;
         var element;
         var returnval;
         var check = document.getElementById('skipjs');
@@ -122,18 +123,24 @@
                 errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
             }
         }
+        //validating mothers email
+        domObject = document.getElementById('motherEmail');
+        if (!isEmpty(domObject))
+            validateEmail(domObject, 'error1')
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
+        errormsg = "";
         return returnval;
     }
 
     function motherage() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
         var mother_bday = new Date(document.getElementById('motherDatePicker').value);
-        <%--var mother_dob = new Date(mother_bday);--%>
-        <%--var child_dob = new Date(child_bday);--%>
+    <%--var mother_dob = new Date(mother_bday);--%>
+    <%--var child_dob = new Date(child_bday);--%>
         var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
         var mother_age = child_dob.getYear() - mother_dob.getYear();
         if (mother_age <= 10 || mother_bday.length == 0) {
@@ -150,6 +157,36 @@
         else {
             mother_age_at_birth.value = mother_age;
             return true;
+        }
+    }
+
+    //check given element is empty
+    function isEmpty(domElement, errorMessage, errorCode) {
+        with (domElement) {
+            if (value == null || value == "") {
+                errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
+            }
+        }
+    }
+
+    //check given element is empty and return true if empty else false
+    function isEmpty(domElement) {
+        with (domElement) {
+            if (value == null || value == "") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function validateEmail(domElement, errorCode) {
+        with (domElement) {
+            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            if (reg.test(value) == false) {
+                errormsg = errormsg + "\n" + document.getElementById('error2').value + " : " + document.getElementById(errorCode).value;
+                return false;
+            }
         }
     }
 </script>
@@ -350,17 +387,17 @@
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌වගේ ජාතිය<br>இனம்<br>
             Mother's Race</label></td>
-        <td colspan="3"><s:select list="raceList" name="motherRace" headerKey="0"
+        <td colspan="2"><s:select list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
 
-        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
         <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ අංකය<br>*in
             tamil<br>Hospital Admission Number</label></td>
-        <td colspan="3" class="passport"><s:textfield name="parent.motherAdmissionNo"/></td>
+        <td colspan="2" class="passport"><s:textfield name="parent.motherAdmissionNo"/></td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3"><s:textfield name="parent.motherAdmissionDate" id="admitDatePicker"/></td>
@@ -369,13 +406,16 @@
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌ව සම්බන්ධ කල හැකි තොරතුරු <br>தாயின்
             தொடர்பு இலக்க தகவல் <br>Contact Details of the
             Mother</label></td>
-        <td><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
-        <td colspan="3"><s:textfield name="parent.motherPhoneNo"/></td>
+        <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
+        <td colspan="1"><s:textfield name="parent.motherPhoneNo"/></td>
         <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
-        <td colspan="2" class="passport"><s:textfield name="parent.motherEmail"/></td>
+        <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"/></td>
     </tr>
     </tbody>
 </table>
+
+<s:hidden id="error1" value="%{getText('p1.invalid.emailMother.text')}"/>
+<s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
 
 <s:hidden name="pageNo" value="2"/>
 <s:hidden name="rowNumber" value="%{row}"/>

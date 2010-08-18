@@ -55,11 +55,13 @@
     /**
      * validate for informent details
      */
+    var errormsg = "";
     function validate()
     {
-        var errormsg = "";
+        var domObject;
         var element;
         var returnval;
+        var flag;
         /*date related validations*/
         var submit = new Date(document.getElementById('informDatePicker').value);
         // var submit = new Date(submitDatePicker);
@@ -109,11 +111,38 @@
         if (isNaN(element)) {
             errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
         }
+        //validating informant email
+        domObject = document.getElementById('informantEmail');
+        if (!isEmpty(domObject))
+            validateEmail(domObject, 'error10')
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
+        errormsg = "";
         return returnval;
+    }
+
+    //check given element is empty and return true if empty else false
+    function isEmpty(domElement) {
+        with (domElement) {
+            if (value == null || value == "") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function validateEmail(domElement, errorCode) {
+        with (domElement) {
+            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            if (reg.test(value) == false) {
+                errormsg = errormsg + "\n" + document.getElementById('error11').value + " : " + document.getElementById(errorCode).value;
+                return false;
+            }
+        }
     }
 </script>
 
@@ -161,7 +190,8 @@
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"  ><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage" cssStyle="float:right;"/></td>
+            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
+                                         cssStyle="float:right;"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -345,7 +375,7 @@
         </td>
     </tr>
 
-     <tr>
+    <tr>
         <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
             අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>தகவல்
             கொடுப்பவரின்
@@ -357,7 +387,7 @@
                  id="informant_lookup"/>
         </td>
     </tr>
-    
+
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
             <br>Name</label></td>
@@ -401,6 +431,8 @@
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="p3error9" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
+<s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
+<s:hidden id="error11" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden name="pageNo" value="3"/>
 
 <div class="form-submit">
