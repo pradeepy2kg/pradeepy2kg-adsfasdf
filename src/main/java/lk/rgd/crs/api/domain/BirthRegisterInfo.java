@@ -70,7 +70,7 @@ public class BirthRegisterInfo implements Serializable {
      * The user printing the confirmation
      */
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "confirmationPrintUserId", nullable = false)
+    @JoinColumn(name = "confirmationPrintUserId", nullable = true)
     private User confirmationPrintUser;
 
     /**
