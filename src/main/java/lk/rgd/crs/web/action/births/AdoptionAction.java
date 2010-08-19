@@ -103,6 +103,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             adoption.setIdUKey(idUKey);
             service.updateAdoptionOrder(adoption, user);
         } else {
+            adoption.setBirthDivisionId(birthDivisionId);
             service.addAdoptionOrder(adoption, user);
             logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
             setIdUKey(adoption.getIdUKey());
