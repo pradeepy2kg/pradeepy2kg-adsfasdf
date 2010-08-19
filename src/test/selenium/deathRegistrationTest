@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>deathRegistration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">deathRegistration</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/popreg/deaths/eprInitDeathHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='death-home-outer']/a[1]/div/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathSerialNo</td>
+	<td>111</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>dateOfRegistrationDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=13</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-registration-form-1_deathTypeSUDDEN</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>deathDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathDivisionId</td>
+	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfDeath</td>
+	<td>කුසුමාවතී රාම්‍යා ජයසිංහකුසුමාවතී රාම්‍යා ජයසිංහ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>death-registration-form-1_death_placeOfDeathInEnglish</td>
+	<td>aaaaaaaaaaaaaaaaaaa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>death-registration-form-1_death_causeOfDeathEstablishedtrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>death-registration-form-1_death_causeOfDeath</td>
+	<td>bbbbbbbbbbbbbbbb</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>death-registration-form-1_death_icdCodeOfCause</td>
+	<td>222</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBurial</td>
+	<td>cccccccccccc</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPerson_PINorNIC</td>
+	<td>855012132V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>death-registration-form-1_deathPerson_deathPersonAge</td>
+	<td>24</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>deathPersonGender</td>
+	<td>label=ගැහැණු</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>death-registration-form-1_deathPersonRace</td>
+	<td>label=2 : ශ්‍රී ලංකික දෙමල</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameOfficialLang</td>
+	<td>කුසුමාවතී රාම්‍යා ජයසිංහකුසුමාවතී රාම්‍යා ජයසිංහ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonNameInEnglish</td>
+	<td>ddddddddddddddddd</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonPermanentAddress</td>
+	<td>eeeeeeeeeeeeeeeeeeeeee</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonFather_PINorNIC</td>
+	<td>855012132V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonFatherFullName</td>
+	<td>කුසුමාවතී රාම්‍යා ජයසිංහකුසුමාවතී රාම්‍යා ජයසිංහකුසුමාවතී රාම්‍යා ජයසිංහ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonMother_PINorNIC</td>
+	<td>855012132V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>deathPersonMotherFullName</td>
+	<td>කුසුමාවතී රාම්කුසුමාවතී රාම්‍යා ජයසිංහ</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarant_pinOrNic</td>
+	<td>813112362V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantFullName</td>
+	<td>ක්‍රිෂාන්ත සුබසිංහ කුසුමාවතී රාම්‍යා ජයසිංහ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantAddress</td>
+	<td>32 වේවා පාර, කොට්ටාව කුසුමාවතී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantPhone</td>
+	<td>333333333</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantEMail</td>
+	<td>ssdfs</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifying_authority_NICorPIN</td>
+	<td>707433191V</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>සෙල්ලදොරේයි කනවති අමිමාකුසුමාවතී රාම්‍යා ජයසිංහ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>fffffffffffffffffffff</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=17</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>death-registration-form-2_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
