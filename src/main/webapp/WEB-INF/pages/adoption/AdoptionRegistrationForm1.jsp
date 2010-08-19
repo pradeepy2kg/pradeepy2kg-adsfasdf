@@ -499,16 +499,16 @@ function enableSerialNumber(mode) {
             The serial number of the Birth Certificate
         </td>
         <td colspan="1">
-            available
+            ඇත
             <br>
-            available in si
+            Available
         <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
                                  onclick="enableCertificateNumber(false)"/></td>
 
         </td>
-        <td colspan="1">unavailable <br>unavailable in si</td>
+        <td colspan="1">නැත <br>Un-available</td>
         <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
-                                 onclick="enableCertificateNumber(true)"/></td>
+                                 onclick="enableCertificateNumber(true);enableSerialNumber(false)"/></td>
         </td>
         <td colspan="1" align="center"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
                                                     cssStyle="width:85%;"/></td>
@@ -523,8 +523,6 @@ function enableSerialNumber(mode) {
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="2">
     <caption></caption>
     <col width="320px"/>
-    <col width="130px">
-    <col width="60px">
     <col/>
     <tbody>
     <tr>
@@ -563,12 +561,7 @@ function enableSerialNumber(mode) {
         <td colspan="1">අනුක්‍රමික අංකය <br/>
             Serial Number
         </td>
-        <td colspan="1"> available
-            <br>
-            available in si
-        </td>
-        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabeSerial"
-                                 name="availabeSerial" onclick="enableSerialNumber(false)"/></td>
+       
         <td colspan="1">
             <s:textfield name="adoption.birthRegistrationSerial" id="birthRegistrationSrialNum"
                          cssStyle="width:280px;"> </s:textfield>
