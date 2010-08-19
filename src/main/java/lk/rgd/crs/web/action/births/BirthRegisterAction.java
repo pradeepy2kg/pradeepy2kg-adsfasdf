@@ -404,20 +404,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String adoptionDeclarationInit() {
         BirthDeclaration bdf;
-        BirthDeclaration existingBdf = null;
+        BirthDeclaration existingBDF=null;
         AdoptionOrder ao;
         logger.debug("Adding BDF of an adopted child. Birth Type : {}", birthType);
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
 
         if (adoptionId == 0) {
-            addActionError(getText("Adoption order id invalid"));       // TODO add to property file
+            addActionError(getText("adoption_order_id_invalid.label"));       
             return ERROR;
         }
         ao = adoptionService.getById(adoptionId, user);
 
         if (ao.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) {
-            addActionError(getText("Can not add BDF"));              // TODO add to property file
+            addActionError(getText("adoption_invalid_state.label"));          
             return ERROR;
         }
         bdf = new BirthDeclaration();
@@ -425,25 +425,31 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
         // population fields in adoption order to birth declaration
         bdf.getRegister().setAdoptionUKey(ao.getIdUKey());
-        long existBdUKey = ao.getBirthCertificateNumber();
+        long existBDUKey = ao.getBirthCertificateNumber();
 
-        if (existBdUKey != 0) {
-            existingBdf = service.getById(existBdUKey, user);
+        if (existBDUKey != 0) {
+            try{
+            existingBDF = service.getById(existBDUKey, user);
+            }catch (NullPointerException e){
+                logger.error("faild to find requested BDF :",e);
+                addActionError(getText("adoption_invalid_birth_certificate_number.label"));
+                return ERROR;
+            }
         } else {
             long existSerial = ao.getBirthRegistrationSerial();
             int existBDivisionId = ao.getBirthDivisionId();
 
             if (existSerial != 0 && existBDivisionId != 0) {
-                existingBdf = service.getActiveRecordByBDDivisionAndSerialNo(
+                existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
                     bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
-                // TODO display error msg                  
+                addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
         }
-        logger.debug("Existing birth declaration IDUKey : {}", existBdUKey);
-        if (existingBdf != null) {
+        logger.debug("Existing birth declaration IDUKey : {}", existBDUKey);
+        if (existingBDF != null) {
             oldBDInfo = new OldBDInfo();
-            populateOldBD(oldBDInfo, existingBdf);
+            populateOldBD(oldBDInfo, existingBDF);
             session.put(WebConstants.SESSION_OLD_BD_FOR_ADOPTION, oldBDInfo);
         }
 
