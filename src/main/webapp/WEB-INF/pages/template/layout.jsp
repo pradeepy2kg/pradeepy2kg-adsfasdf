@@ -7,11 +7,12 @@
 <html>
 <head>
     <title>E-Population System</title>
-    
+
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/layout.css"/>'/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/webform.css"/> '/>
     <link rel="stylesheet" type="text/css" href='<s:url value="/css/style.css"/>'/>
     <link rel="stylesheet" type="text/css" media="print" href='<s:url value="/css/print.css"/>'/>
+<%--    <script type="text/javascript" src="/js/validate.js"/>--%>
     <style type="text/css">
         @font-face
         {
@@ -37,12 +38,12 @@
 
         }
     </style>
-    
+
 </head>
 <body onload="initPage()">
 <div id="wrapper">
     <%-- Header  --%>
-    <div id="layout-header" >
+    <div id="layout-header">
         <tiles:insertAttribute name="header"/>
     </div>
     <%-- Menu & Body--%>
@@ -52,8 +53,8 @@
             <br>
             <s:form action="/eprLogout.do" method="POST" name="eprLogout">
                 <div class="form-submit">
-                <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
-                    </div>
+                    <s:submit name="submit" value="%{getText('logout.label')}" id="logout-button"></s:submit>
+                </div>
             </s:form>
         </div>
         <div id="body-content">

@@ -5,6 +5,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 
@@ -36,7 +37,7 @@
         var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
 
         /*date related validations*/
-        var submit =new Date(document.getElementById("modifiedDatePicker").value)
+        var submit = new Date(document.getElementById("modifiedDatePicker").value)
         if (!(submit.getTime())) {
             errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
             flag = true;

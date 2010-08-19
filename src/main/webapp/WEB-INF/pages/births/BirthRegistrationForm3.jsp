@@ -5,6 +5,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script type="text/javascript">
@@ -122,27 +123,6 @@
         }
         errormsg = "";
         return returnval;
-    }
-
-    //check given element is empty and return true if empty else false
-    function isEmpty(domElement) {
-        with (domElement) {
-            if (value == null || value == "") {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-    function validateEmail(domElement, errorCode) {
-        with (domElement) {
-            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-            if (reg.test(value) == false) {
-                errormsg = errormsg + "\n" + document.getElementById('error11').value + " : " + document.getElementById(errorCode).value;
-                return false;
-            }
-        }
     }
 
     function disableMarrage(mode) {

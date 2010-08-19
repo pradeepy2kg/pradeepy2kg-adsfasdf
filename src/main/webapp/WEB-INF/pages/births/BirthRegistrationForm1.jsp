@@ -6,6 +6,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
@@ -87,7 +88,10 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 
     ;
@@ -114,7 +118,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -334,15 +341,6 @@ function liveBirthCommanTags(check) {
     }
     isNumeric(domObject.value, 'error23')
 }
-//validate date format to iso date format
-function validateDateFormat() {
-    alert('called');
-
-    // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
-    var dateToValidate = new Date();
-
-    alert(dateFormat(dateToValidate.format("m/dd/yy")));
-}
 
 //check live birth is a belated birth gives warnings
 function dateRange() {
@@ -366,31 +364,6 @@ function dateRange() {
     }
 }
 
-
-//check given element is empty
-function isEmpty(domElement, errorMessage, errorCode) {
-    with (domElement) {
-        if (value == null || value == "") {
-            errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
-        }
-    }
-}
-
-//check given text is numeric value
-function isNumeric(text, message) {
-    var validChars = "0123456789.";
-    var isNumber = true;
-    var characters;
-    for (i = 0; i < text.length && isNumber == true; i++) {
-        characters = text.charAt(i);
-        if (validChars.indexOf(characters) == -1) {
-            isNumber = false;
-        }
-    }
-    if (!isNumber) {
-        errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById(message).value;
-    }
-}
 </script>
 
 
@@ -558,7 +531,8 @@ function isNumeric(text, message) {
     </s:if>
     <tr></tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
+        <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන්
+            දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
         </td>
         <td colspan="3" style="border-right:none;">
                 <%--todo--%>
@@ -570,7 +544,8 @@ function isNumeric(text, message) {
         </td>
     </tr>
     <tr>
-        <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br>
+            Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"

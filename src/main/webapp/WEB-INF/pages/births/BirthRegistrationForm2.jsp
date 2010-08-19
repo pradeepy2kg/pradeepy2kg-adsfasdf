@@ -6,6 +6,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <s:hidden id="p2error1" value="%{getText('p2.fatherName.error.value')}"/>
@@ -16,180 +17,148 @@
 
 <script>
 
-$(function() {
-    $("#fatherDatePicker").datepicker({
-        changeYear: true,
-        dateFormat:'yy-mm-dd',
-        startDate:'2000-01-01',
-        endDate:'2020-12-31'
+    $(function() {
+        $("#fatherDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
     });
-});
 
-$(function() {
-    $("#motherDatePicker").datepicker({
-        changeYear: true,
-        dateFormat:'yy-mm-dd',
-        startDate:'2000-01-01',
-        endDate:'2020-12-31',
-        onSelect: function(dateText, inst) {
-            var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-            var mother_bday = document.getElementById('motherDatePicker').value;
-            if (mother_bday != "") {
-                var motherbday = new Date(mother_bday);
-                var mother_age = child_bday.getYear() - motherbday.getYear();
-                $("input#motherAgeAtBirth").val(mother_age);
+    $(function() {
+        $("#motherDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31',
+            onSelect: function(dateText, inst) {
+                var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+                var mother_bday = document.getElementById('motherDatePicker').value;
+                if (mother_bday != "") {
+                    var motherbday = new Date(mother_bday);
+                    var mother_age = child_bday.getYear() - motherbday.getYear();
+                    $("input#motherAgeAtBirth").val(mother_age);
+                }
+            }
+        });
+        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+        var mother_bday = document.getElementById('motherDatePicker').value;
+        if (mother_bday != "") {
+            var motherbday = new Date(mother_bday);
+            var mother_age = child_bday.getYear() - motherbday.getYear();
+            $("input#motherAgeAtBirth").val(mother_age);
+        }
+    });
+
+    $(function() {
+        $("#admitDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
+    });
+
+    $(function() {
+        $('img#father_lookup').bind('click', function(evt1) {
+            var id1 = $("input#father_pinOrNic").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                    function(data1) {
+                        $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
+                        $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
+                        $("input#fatherDatePicker").val(data1.dateOfBirth);
+                    });
+        });
+
+        $('img#mother_lookup').bind('click', function(evt2) {
+            var id2 = $("input#mother_pinOrNic").attr("value");
+            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
+                    function(data2) {
+                        $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
+                        $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
+                        $("textarea#motherAddress").val(data2.lastAddress);
+                        $("input#motherDatePicker").val(data2.dateOfBirth);
+
+                        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+                        var mother_bday = document.getElementById('motherDatePicker').value;
+                        if (mother_bday != "") {
+                            var motherbday = new Date(mother_bday);
+                            var mother_age = child_bday.getYear() - motherbday.getYear();
+                            $("input#motherAgeAtBirth").val(mother_age);
+                        }
+                    });
+        });
+
+        $('select#motherDistrictId').bind('change', function(evt3) {
+            var id = $("select#motherDistrictId").attr("value");
+            var label = $("input#dsDivisionLabel").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:3},
+                    function(data) {
+                        var options = '';
+                        var ds = data.dsDivisionList;
+                        options += '<option value="-1">' + label + '</option>';
+                        for (var i = 0; i < ds.length; i++) {
+                            options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#motherDSDivisionId").html(options);
+                    });
+        });
+    })
+
+    //javascript for form validation
+    var errormsg = "";
+    function validate()
+    {
+        var domObject;
+        var element;
+        var returnval;
+        var check = document.getElementById('skipjs');
+        if (!check.checked) {
+
+            element = document.getElementById('fatherFullName');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
+            }
+            element = document.getElementById('motherFullName');
+            if (element.value == "") {
+                errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
             }
         }
-    });
-    var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-    var mother_bday = document.getElementById('motherDatePicker').value;
-    if (mother_bday != "") {
-        var motherbday = new Date(mother_bday);
-        var mother_age = child_bday.getYear() - motherbday.getYear();
-        $("input#motherAgeAtBirth").val(mother_age);
-    }
-});
+        //validating mothers email
+        domObject = document.getElementById('motherEmail');
+        if (!isEmpty(domObject))
+            validateEmail(domObject, 'error1')
 
-$(function() {
-    $("#admitDatePicker").datepicker({
-        changeYear: true,
-        dateFormat:'yy-mm-dd',
-        startDate:'2000-01-01',
-        endDate:'2020-12-31'
-    });
-});
-
-$(function() {
-    $('img#father_lookup').bind('click', function(evt1) {
-        var id1 = $("input#father_pinOrNic").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                function(data1) {
-                    $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
-                    $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                    $("input#fatherDatePicker").val(data1.dateOfBirth);
-                });
-    });
-
-    $('img#mother_lookup').bind('click', function(evt2) {
-        var id2 = $("input#mother_pinOrNic").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
-                function(data2) {
-                    $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
-                    $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
-                    $("textarea#motherAddress").val(data2.lastAddress);
-                    $("input#motherDatePicker").val(data2.dateOfBirth);
-
-                    var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-                    var mother_bday = document.getElementById('motherDatePicker').value;
-                    if (mother_bday != "") {
-                        var motherbday = new Date(mother_bday);
-                        var mother_age = child_bday.getYear() - motherbday.getYear();
-                        $("input#motherAgeAtBirth").val(mother_age);
-                    }
-                });
-    });
-
-    $('select#motherDistrictId').bind('change', function(evt3) {
-        var id = $("select#motherDistrictId").attr("value");
-        var label = $("input#dsDivisionLabel").attr("value");
-        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:3},
-                function(data) {
-                    var options = '';
-                    var ds = data.dsDivisionList;
-                    options += '<option value="-1">' + label + '</option>';
-                    for (var i = 0; i < ds.length; i++) {
-                        options += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                    }
-                    $("select#motherDSDivisionId").html(options);
-                });
-    });
-})
-
-//javascript for form validation
-var errormsg = "";
-function validate()
-{
-    var domObject;
-    var element;
-    var returnval;
-    var check = document.getElementById('skipjs');
-    if (!check.checked) {
-
-        element = document.getElementById('fatherFullName');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
         }
-        element = document.getElementById('motherFullName');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
-        }
+        errormsg = "";
+        return returnval;
     }
-    //validating mothers email
-    domObject = document.getElementById('motherEmail');
-    if (!isEmpty(domObject))
-        validateEmail(domObject, 'error1')
 
-    if (errormsg != "") {
-        alert(errormsg);
-        returnval = false;
-    }
-    errormsg = "";
-    return returnval;
-}
+    function motherage() {
+        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+        var mother_bday = new Date(document.getElementById('motherDatePicker').value);
+        var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
+        var mother_age = child_dob.getYear() - mother_dob.getYear();
+        if (mother_age <= 10 || mother_bday.length == 0) {
+            if (mother_bday.length == 0)
+            {
+                alert(document.getElementById('mother_birth_day_empty').value);
 
-function motherage() {
-    var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-    var mother_bday = new Date(document.getElementById('motherDatePicker').value);
-<%--var mother_dob = new Date(mother_bday);--%>
-<%--var child_dob = new Date(child_bday);--%>
-    var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
-    var mother_age = child_dob.getYear() - mother_dob.getYear();
-    if (mother_age <= 10 || mother_bday.length == 0) {
-        if (mother_bday.length == 0)
-        {
-            alert(document.getElementById('mother_birth_day_empty').value);
-
+            }
+            else if (confirm(document.getElementById('mother_age').value + mother_age)) {
+                mother_age_at_birth.value = mother_age;
+            }
+            return false;
         }
-        else if (confirm(document.getElementById('mother_age').value + mother_age)) {
+        else {
             mother_age_at_birth.value = mother_age;
-        }
-        return false;
-    }
-    else {
-        mother_age_at_birth.value = mother_age;
-        return true;
-    }
-}
-
-//check given element is empty
-function isEmpty(domElement, errorMessage, errorCode) {
-    with (domElement) {
-        if (value == null || value == "") {
-            errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
-        }
-    }
-}
-
-//check given element is empty and return true if empty else false
-function isEmpty(domElement) {
-    with (domElement) {
-        if (value == null || value == "") {
             return true;
-        } else {
-            return false;
         }
     }
-}
-
-function validateEmail(domElement, errorCode) {
-    with (domElement) {
-        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-        if (reg.test(value) == false) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value + " : " + document.getElementById(errorCode).value;
-            return false;
-        }
-    }
-}
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
