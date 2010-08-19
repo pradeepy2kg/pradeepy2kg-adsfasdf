@@ -7,58 +7,58 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script>
-    $(function() {
-        $("#receivedDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
+$(function() {
+    $("#receivedDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
 
-        });
     });
-    $(function() {
-        $("#bdayDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31',
-            onSelect: function() {
-                var bday = new Date(document.getElementById('bdayDatePicker').value);
-                var today = new Date();
-                var ageMonthBDay = bday.getMonth();
-                var ageYearBDay = bday.getYear();
-                var ageMonthTOday = today.getMonth();
-                var ageYearTOday = today.getYear();
-                var ageMonth,ageYear = 0;
-                if (ageMonthTOday >= ageMonthBDay) {
-                    ageMonth = ageMonthTOday - ageMonthBDay;
-                    ageYear = ageYearTOday - ageYearBDay;
-                }
-                else    if (ageYearTOday > ageYearBDay) {
-                    ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
-                    ageYear = (ageYearTOday - 1) - ageYearBDay;
-                }
-
-                if (confirm(document.getElementById("lable01").value + "   :" + ageYear
-                        + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
-                    document.getElementById("childAgeYears").value = ageYear;
-                    document.getElementById("childAgeMonths").value = ageMonth;
-                }
+});
+$(function() {
+    $("#bdayDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31',
+        onSelect: function() {
+            var bday = new Date(document.getElementById('bdayDatePicker').value);
+            var today = new Date();
+            var ageMonthBDay = bday.getMonth();
+            var ageYearBDay = bday.getYear();
+            var ageMonthTOday = today.getMonth();
+            var ageYearTOday = today.getYear();
+            var ageMonth,ageYear = 0;
+            if (ageMonthTOday >= ageMonthBDay) {
+                ageMonth = ageMonthTOday - ageMonthBDay;
+                ageYear = ageYearTOday - ageYearBDay;
             }
-        });
-    });
+            else    if (ageYearTOday > ageYearBDay) {
+                ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
+                ageYear = (ageYearTOday - 1) - ageYearBDay;
+            }
 
-    $(function() {
-        $("#orderIssuedDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+            if (confirm(document.getElementById("lable01").value + "   :" + ageYear
+                    + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
+                document.getElementById("childAgeYears").value = ageYear;
+                document.getElementById("childAgeMonths").value = ageMonth;
+            }
+        }
     });
-  
+});
 
-    $(function() {
+$(function() {
+    $("#orderIssuedDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
+
+$(function() {
     $('select#birthDistrictId').bind('change', function(evt1) {
         var id = $("select#birthDistrictId").attr("value");
         $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
@@ -114,7 +114,7 @@
                     });
         });
     });
-        })
+})
 
 //    $('img#mother_lookup').bind('click', function(evt4) {
 //        var id2 = $("input#wifePINorNIC").attr("value");
@@ -125,70 +125,96 @@
 //    });
 
 
+//these inpute can not be null
+
+function validate() {
+    var errormsgOut = "";
+    var element;
+    var returnval;
+    var flag = false;
+    var inputs = new Array(9);
+
     //these inpute can not be null
-
-    function validate() {
-        var errormsgOut = "";
-        var element;
-        var returnval;
-        var flag = false;
-        var inputs = new Array(9);
-
-        //these inpute can not be null
-        inputs[0] = new Date(document.getElementById("receivedDatePicker").value)
-        inputs[1] = document.getElementById("court").value;
-        inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
-        inputs[3] = document.getElementById("courtOrderNumber").value;
-        inputs[4] = document.getElementById("judgeName").value;
-        inputs[5] = document.getElementById("applicantName").value;
-        inputs[6] = document.getElementById("applicantAddress").value;
-        inputs[7] = document.getElementById("childAgeYears").value;
-        inputs[8] = document.getElementById("childAgeMonths").value;
-        //these inputs may be null with conditions
-        var childExistingName = document.getElementById("childExistingName").value;
-        var childNewName = document.getElementById("childNewName").value;
-        //var adoptionApplicantFather=document.getElementById("adoptionApplicantFather").value;
-        //alert(adoptionApplicantFather);
-        //check elements which are can not be null
-        for (i = 0; i < inputs.length; i++)
+    inputs[0] = new Date(document.getElementById("receivedDatePicker").value)
+    inputs[1] = document.getElementById("court").value;
+    inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
+    inputs[3] = document.getElementById("courtOrderNumber").value;
+    inputs[4] = document.getElementById("judgeName").value;
+    inputs[5] = document.getElementById("applicantName").value;
+    inputs[6] = document.getElementById("applicantAddress").value;
+    inputs[7] = document.getElementById("childAgeYears").value;
+    inputs[8] = document.getElementById("childAgeMonths").value;
+    //these inputs may be null with conditions
+    var childExistingName = document.getElementById("childExistingName").value;
+    var childNewName = document.getElementById("childNewName").value;
+    //var adoptionApplicantFather=document.getElementById("adoptionApplicantFather").value;
+    //alert(adoptionApplicantFather);
+    //check elements which are can not be null
+    for (i = 0; i < inputs.length; i++)
+    {
+        if (inputs[i].length <= 0)
         {
-            if (inputs[i].length <= 0)
-            {
-                errormsgOut = errormsgOut + document.getElementById("error" + i).value + "\n";
-            }
-        }
-        if (childExistingName.length <= 0 && childNewName.length <= 0) {
-
-            errormsgOut = errormsgOut + document.getElementById("error9").value + "\n";
-        }
-        if (isNaN(inputs[7]) && inputs[7].length > 0)
-        {
-            errormsgOut = errormsgOut + document.getElementById("error10").value + "\n";
-        }
-        if ((isNaN(inputs[8]) && inputs[8].length > 0)) {
-
-            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
-        }
-        else if ((inputs[8] > 12 || inputs[8] < 0) && (inputs[8].length > 0)) {
-            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
-        }
-        if (errormsgOut.length > 0) {
-            alert(errormsgOut);
-            return false;
-        }
-        else
-        {
-            return true;
+            errormsgOut = errormsgOut + document.getElementById("error" + i).value + "\n";
         }
     }
-    function disable(mode) {
-        document.getElementById('wifePINorNIC').disabled = mode;
-        document.getElementById('wifeCountryId').disabled = mode;
-        document.getElementById('wifePassport').disabled = mode;
-        document.getElementById('wifeName').disabled = mode;
+    if (childExistingName.length <= 0 && childNewName.length <= 0) {
+
+        errormsgOut = errormsgOut + document.getElementById("error9").value + "\n";
     }
+    if (isNaN(inputs[7]) && inputs[7].length > 0)
+    {
+        errormsgOut = errormsgOut + document.getElementById("error10").value + "\n";
+    }
+    if ((isNaN(inputs[8]) && inputs[8].length > 0)) {
+
+        errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
+    }
+    else if ((inputs[8] > 12 || inputs[8] < 0) && (inputs[8].length > 0)) {
+        errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
+    }
+    if (errormsgOut.length > 0) {
+        alert(errormsgOut);
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+function disable(mode) {
+    document.getElementById('wifePINorNIC').disabled = mode;
+    document.getElementById('wifeCountryId').disabled = mode;
+    document.getElementById('wifePassport').disabled = mode;
+    document.getElementById('wifeName').disabled = mode;
+}
+//todo fdjfkhsk
+function initPage() {
+    document.getElementById('birthCertificateNumber').disabled = true;
+    document.getElementById('birthDistrictId').disabled = true;
+    document.getElementById('dsDivisionId').disabled = true;
+    document.getElementById('birthDivisionId').disabled = true;
+    document.getElementById('birthRegistrationSrialNum').disabled = true;
+    document.getElementById('availabeSerial').disabled = true;
+
+}
+
+function enableCertificateNumber(mode) {
+    document.getElementById('birthCertificateNumber').disabled = mode;
+    if (!mode) {
+        enableSerialNumber(!mode)
+    }
+}
+
+function enableSerialNumber(mode) {
+    document.getElementById('birthDistrictId').disabled = mode;
+    document.getElementById('dsDivisionId').disabled = mode;
+    document.getElementById('birthDivisionId').disabled = mode;
+    document.getElementById('birthRegistrationSrialNum').disabled = mode;
+    if (!mode) {
+        enableCertificateNumber(!mode);
+    }
+}
 </script>
-
 <div id="adoption-registration-form-outer">
 <s:form action="eprAdoptionAction.do" name="" id="" method="POST" onsubmit="javascript:return validate()">
 <table class="adoption-reg-form-header-table" cellspacing="1" cellpadding="1">
@@ -300,9 +326,10 @@
             Applicant's PIN / NIC Number
         </td>
         <td colspan="2" align="center" class="find-person"><s:textfield name="adoption.applicantPINorNIC"
-                                                                                      id="applicantPin" cssStyle="float:left;width:250px;" />
+                                                                        id="applicantPin"
+                                                                        cssStyle="float:left;width:250px;"/>
             <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup" ></td>
+                 style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup"></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -352,7 +379,8 @@
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC" cssStyle="float:left;width:250px;"/>
+        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
+                                                  cssStyle="float:left;width:250px;"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="mother_lookup"></td>
     </tr>
@@ -459,11 +487,29 @@
 
 
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
+    <col width="250px"/>
+    <col width="100px"/>
+    <col width="50px">
+    <col width="100px"/>
+    <col width="50px">
+    <col width="250px"/>
     <tr>
-        <td width="60%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
+        <td colspan="1">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
             The serial number of the Birth Certificate
         </td>
-        <td width="40%" align="center"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
+        <td colspan="1">
+            available
+            <br>
+            available in si
+        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
+                                 onclick="enableCertificateNumber(false)"/></td>
+
+        </td>
+        <td colspan="1">unavailable <br>unavailable in si</td>
+        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
+                                 onclick="enableCertificateNumber(true)"/></td>
+        </td>
+        <td colspan="1" align="center"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
                                                     cssStyle="width:85%;"/></td>
     </tr>
 </table>
@@ -475,11 +521,13 @@
 </table>
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="2">
     <caption></caption>
-    <col width="400px"/>
-    <col width="400px"/>
+    <col width="320px"/>
+    <col width="130px">
+    <col width="60px">
+    <col/>
     <tbody>
     <tr>
-        <td colspan="2" style="text-align:center;">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
+        <td colspan="6" style="text-align:center;">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
             Birth Registration acknowledgement slip
         </td>
     </tr>
@@ -487,34 +535,40 @@
         <td colspan="1">දිස්ත්‍රික්කය <br/>
             District
         </td>
-        <td colspan="1"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+        <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
                                   value="birthDistrictId" cssStyle="width:280px;"/>
         </td>
     </tr>
     <tr>
-        <td>ප්‍රාදේශීය ලේකම් කොට්ටාශය <br/>
+        <td colspan="1">ප්‍රාදේශීය ලේකම් කොට්ටාශය <br/>
             Divisional Secretariat
         </td>
-        <td>
+        <td colspan="5">
             <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                       cssStyle="float:left;  width:280px;"/>
         </td>
     </tr>
     <tr>
-        <td>ලියාපදිංචි කිරීමේ කොට්ටාශය <br/>
+        <td colspan="1">ලියාපදිංචි කිරීමේ කොට්ටාශය <br/>
             Registration Division
         </td>
-        <td>
+        <td colspan="5">
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                       list="bdDivisionList"
                       cssStyle=" width:280px;float:left;"/>
         </td>
     </tr>
     <tr>
-        <td>අනුක්‍රමික අංකය <br/>
+        <td colspan="1">අනුක්‍රමික අංකය <br/>
             Serial Number
         </td>
-        <td>
+        <td colspan="1"> available
+            <br>
+            available in si
+        </td>
+        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabeSerial"
+                                 name="availabeSerial" onclick="enableSerialNumber(false)"/></td>
+        <td colspan="1">
             <s:textfield name="adoption.birthRegistrationSerial" id="birthRegistrationSrialNum"
                          cssStyle="width:280px;"> </s:textfield>
         </td>

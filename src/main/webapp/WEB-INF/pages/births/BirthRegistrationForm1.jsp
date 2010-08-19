@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:set value="3" name="row"/>
+<s:set value="1" name="row"/>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
@@ -558,7 +558,7 @@ function isNumeric(text, message) {
     </s:if>
     <tr></tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
+        <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
         </td>
         <td colspan="3" style="border-right:none;">
                 <%--todo--%>
@@ -570,7 +570,7 @@ function isNumeric(text, message) {
         </td>
     </tr>
     <tr>
-        <td rowspan="6"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"

@@ -39,7 +39,7 @@
     </style>
     
 </head>
-<body >
+<body onload="initPage()">
 <div id="wrapper">
     <%-- Header  --%>
     <div id="layout-header" >
