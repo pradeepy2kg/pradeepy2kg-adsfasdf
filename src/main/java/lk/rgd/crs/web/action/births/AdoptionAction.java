@@ -152,8 +152,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
         birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
         dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
-        applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
-        wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+
+        try {
+            applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
+        }
+        catch (NullPointerException e) {
+            applicantCountryName = "";
+            logger.error("applicantCountryName not specified", e);
+        }
+        try {
+            wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        }
+        catch (NullPointerException e) {
+            wifeCountryName = "";
+            logger.error("wifeContryName not specified", e);
+        }
         birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
         return SUCCESS;
     }
