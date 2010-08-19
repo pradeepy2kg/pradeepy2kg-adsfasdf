@@ -293,7 +293,7 @@
 </s:elseif>
 
 <s:elseif test="status.ordinal()==5">
-    <s:url id="viewSelected" action="eprPrintAdoptionCertificate.do">
+    <s:url id="viewSelected" action="eprAdoptionViewMode.do">
         <s:param name="idUKey" value="idUKey"/>
         <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -325,7 +325,7 @@
                  height="25"/>
         </s:a>
     </td>
-    <td>
+    <td align="center">
         <s:url id="reRegisterBirthUrl" action="../births/eprAdoptionBirthRegistrationInit.do">
             <s:param name="adoptionId" value="idUKey"/>
         </s:url>
