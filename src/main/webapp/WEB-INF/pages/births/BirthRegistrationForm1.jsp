@@ -87,10 +87,7 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 
     ;
@@ -117,10 +114,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
@@ -325,7 +319,7 @@ function stillBirthCommanTags(check) {
 function liveBirthCommanTags(check) {
     var domObject;
     // child name
-    domObject = document.getElementById('childFullNameOfficialLangId');
+    domObject = document.getElementById('childFullNameOfficialLang');
     if (!check.checked)
         isEmpty(domObject, "", 'error2');
 
@@ -566,13 +560,13 @@ function isNumeric(text, message) {
     <tr style="border-left:1px solid #000000;">
         <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
         </td>
-        <td colspan="3"style="border-right:none;">
+        <td colspan="3" style="border-right:none;">
                 <%--todo--%>
             <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
 
         </td>
         <td colspan="4" style="border-left:none;">
-           <div id="belatedError" style="color:red; "/>
+            <div id="belatedError" style="color:red; "/>
         </td>
     </tr>
     <tr>
@@ -600,7 +594,7 @@ function isNumeric(text, message) {
         </td>
         <td colspan="6">
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                      cssStyle=" width:240px;float:left;"/>
+                      cssStyle="float:left;  width:240px;"/>
         </td>
     </tr>
     <tr>
@@ -632,7 +626,7 @@ function isNumeric(text, message) {
                 / தமிழ்) <br>Name in
                 any of the official languages (Sinhala / Tamil)</label></td>
             <td colspan="7">
-                <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLangId"
+                <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
                             cssStyle="width:98.2%;"/>
             </td>
         </tr>
