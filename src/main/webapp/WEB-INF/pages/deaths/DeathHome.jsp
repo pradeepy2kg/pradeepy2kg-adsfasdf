@@ -9,6 +9,20 @@
         text-align: center;
     }
 
+    #death-declaration-link {
+        width:110px;
+        height:110px;
+        position:absolute;
+        margin: 170px 0px 0px 410px;
+    }
+
+    #late-death-declaration-link {
+        width:110px;
+        height:80px;
+        position:absolute;
+        margin: 130px 0px 0px 620px;
+    }
+
     .link-data-entry {
         font-size: 9pt;
         text-align: center;
@@ -114,6 +128,12 @@
             <s:label value="%{getText('la.print.lable')}" cssStyle="cursor:pointer;"/><br/>
             <s:label value="%{getText('lb.deo.adr.lable')}" cssStyle="cursor:pointer;"/>
         </div>
+    </s:a>
+    <s:a href="eprInitDeathDeclaration.do">
+        <div id="death-declaration-link"></div>
+    </s:a>
+    <s:a href="eprInitLateDeathDeclaration.do">
+        <div id="late-death-declaration-link"></div>
     </s:a>
     <div class="label01">
         <s:label value="%{getText('lb.edit.lable')}"/>
