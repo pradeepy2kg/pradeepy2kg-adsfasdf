@@ -51,6 +51,7 @@ body {
     float: left;
     margin-top: 2px;
     font-size: 10pt;
+    background:url(../images/title-bg-1.png) repeat-x;
 }
 
 #user-language {
