@@ -94,7 +94,7 @@
     <th><s:label name="delete" value="%{getText('view.label')}"/></th>
     <th><s:label name="delete" value="%{getText('printNotice.label')}"/></th>
     <th><s:label name="delete" value="%{getText('printCertificete.label')}"/></th>
-    <th></th>
+    <th><s:label name="delete" value="%{getText('ReRegistration.label')}"/></th>
 </tr>
 </thead>
 
