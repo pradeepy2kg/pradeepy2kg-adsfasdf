@@ -357,6 +357,62 @@ function validate() {
     }
     return returnval;
 }
+
+$('img#place').bind('click', function(evt6) {
+    var id = $("input#placeOfDeath").attr("value");
+    var wsMethod = "transliterate";
+    var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+    var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+    soapBody.attr("xmlns:trans", soapNs);
+    soapBody.appendChild(new SOAPObject('InputName')).val(id);
+    soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+    soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+    soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+    //Create a new SOAP Request
+    var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+    //Lets send it
+    SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+    SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+});
+
+function processResponse1(respObj) {
+    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+    $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
+    return[0].Text
+)
+    ;
+};
+
+$('img#deathName').bind('click', function(evt7) {
+        var id = $("textarea#deathPersonNameOfficialLang").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+    });
+
+    function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    };
 </script>
 
 
@@ -527,11 +583,14 @@ function validate() {
     <tr>
         <td rowspan="2" colspan="1">ස්ථානය <br>பிறந்த <br>Place</td>
         <td colspan="2">සිංහල හෝ දෙමළ භාෂාවෙන්<br>சிங்களம் தமிழ்<br>In Sinhala or Tamil</td>
-        <td colspan="5"><s:textarea name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"/></td>
+        <td colspan="5"><s:textfield name="death.placeOfDeath" cssStyle="width:555px;" id="placeOfDeath"/></td>
     </tr>
     <tr>
         <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>*in tamil<br>In English</td>
-        <td colspan="5"><s:textarea name="death.placeOfDeathInEnglish" cssStyle="width:555px;"/></td>
+        <td colspan="5">
+            <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;" id="place">
+        </td>
     </tr>
     <tr>
         <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මරණයට හේතුව
@@ -664,6 +723,7 @@ function validate() {
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"
                         cssStyle="width:880px;"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;" id="deathName">
         </td>
     </tr>
     <tr>
