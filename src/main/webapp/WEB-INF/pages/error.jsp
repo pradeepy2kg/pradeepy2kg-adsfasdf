@@ -4,10 +4,16 @@
     <s:actionerror/>
     <hr/>
 <div class="error-title" > Error Message</div>
+    <div class="form-submit">
+        <input type=button value="Back" onClick="history.go(-1)">
+    </div>
    <div class="error"> <s:property value="%{exception.message}"/> </div>
       </p>
       <hr/>
       <div class="technical-msg-title">Technical Details</div>
       <p>
    <div class="technical-error-msg"> <s:property  value="%{exceptionStack}"/></div>
+    <div class="form-submit">
+        <input type=button value="Back" onClick="history.go(-1)">
+    </div>
 </div>

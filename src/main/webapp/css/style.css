@@ -1,3 +1,6 @@
+/* Styles to show all inputs in uppercase */
+input, textarea{text-transform:uppercase;}
+
 .alreadyPrinted{
    color:red;
 }
