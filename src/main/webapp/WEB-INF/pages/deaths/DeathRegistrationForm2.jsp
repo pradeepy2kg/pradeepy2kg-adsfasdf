@@ -166,7 +166,7 @@
                 <td colspan="1">දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
                 <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
                 <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td colspan="2"><s:textfield id="declarantEMail" name="declarant.declarantEMail"/></td>
+                <td colspan="2"><s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"/></td>
             </tr>
 
             </tbody>
