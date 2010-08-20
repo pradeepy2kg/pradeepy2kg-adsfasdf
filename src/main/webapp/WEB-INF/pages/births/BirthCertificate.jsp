@@ -267,8 +267,9 @@
 </s:elseif>
 <s:else>
     <%--TODO remove unused parameters--%>
-    <s:url id="print" action="eprFilterBirthCetificateList.do">
+    <s:url id="print" action="eprMarkCertificateAsPrinted.do">
         <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="bdId" value="%{#request.bdId}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
         <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
         <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>

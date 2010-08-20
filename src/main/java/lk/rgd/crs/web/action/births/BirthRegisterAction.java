@@ -333,7 +333,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
-                service.markLiveBirthConfirmationAsPrinted(bdf, user);
                 beanPopulate(bdf);
                 addActionMessage(getText("error.print.success"));
                 return "pageLoad";
@@ -613,13 +612,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
-                if (birthType == BirthDeclaration.BirthType.LIVE) {
+               /* if (birthType == BirthDeclaration.BirthType.LIVE) {
                     service.markLiveBirthCertificateAsPrinted(bdf, user);
                 } else if (birthType == BirthDeclaration.BirthType.STILL) {
                     service.markStillBirthCertificateAsPrinted(bdf, user);
                 } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
                     service.markAdoptionBirthCertificateAsPrinted(bdf, user);
-                }
+                }*/
                 beanPopulate(bdf);
 
                 gender = child.getChildGenderPrint();

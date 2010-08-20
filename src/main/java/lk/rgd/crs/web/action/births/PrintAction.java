@@ -15,7 +15,6 @@ import java.util.Locale;
 
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.BirthRegisterInfo;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.common.api.domain.User;
 
@@ -55,6 +54,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private int printStart;
     private int pageNo;
     private long[] index;
+    private long bdId;
+    private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
@@ -107,13 +108,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         if (confirmListFlag) {
             printList = service.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    noOfRows, printed, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                noOfRows, printed, user);
             logger.debug("Initializing confirmation Print list with {} items ", printList.size());
         } else {
             printList = service.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             logger.debug("Initializing certificate Print list with {} items ", printList.size());
         }
     }
@@ -125,26 +126,60 @@ public class PrintAction extends ActionSupport implements SessionAware {
      *
      * @return String success
      */
-
     public String filterPrintList() {
-
-
         setPageNo(1);
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         logger.debug("Filtering list with birthDivision {} and printedFlag {}", birthDivisionId, printed);
         if (confirmListFlag) {
             printList = service.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    noOfRows, printed, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                noOfRows, printed, user);
             logger.debug("Confirmation Print list {}  items  found ", printList.size());
         } else {
             printList = service.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
 
             logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
         // TODO remove this
+        populate();
+        return SUCCESS;
+    }
+
+    /**
+     * method responsible for marking requested birth confirmations
+     * and birth certificate as printed
+     *
+     * @return
+     */
+    public String markAsPrinted() {
+        BirthDeclaration bdf = service.getById(bdId, user);
+
+        int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
+        if (confirmListFlag) {
+            //todo if want validation
+            service.markLiveBirthConfirmationAsPrinted(bdf, user);
+            printList = service.getConfirmationPrintList(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                noOfRows, printed, user);
+            logger.debug("Confirmation Print list {}  items  found ", printList.size());
+        } else {
+            birthType = bdf.getRegister().getBirthType();
+            //todo validation
+            if (birthType == BirthDeclaration.BirthType.LIVE) {
+                service.markLiveBirthCertificateAsPrinted(bdf, user);
+            } else if (birthType == BirthDeclaration.BirthType.STILL) {
+                service.markStillBirthCertificateAsPrinted(bdf, user);
+            } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                service.markAdoptionBirthCertificateAsPrinted(bdf, user);
+            }
+            printList = service.getBirthCertificatePrintList(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+
+            logger.debug("Certificate Print list {}  items  found ", printList.size());
+        }
         populate();
         return SUCCESS;
     }
@@ -174,11 +209,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
         populate();
         if (confirmListFlag) {
             printList = service.getConfirmationPrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
 
         } else {
             printList = service.getBirthCertificatePrintList(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
 
         }
         return SUCCESS;
@@ -198,11 +233,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
         if (confirmListFlag) {
             printList = service.getConfirmationPrintList
-                    (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
+                (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
             logger.debug("next {}  items  loaded to birthConfirmation print list ", printList.size());
         } else {
             printList = service.getBirthCertificatePrintList
-                    (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
+                (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
             logger.debug("next {}  items  loaded to birthCertificate print list ", printList.size());
         }
         printStart += noOfRows;
@@ -224,11 +259,11 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
         if (confirmListFlag) {
             printList = service.getConfirmationPrintList
-                    (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
+                (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
             logger.debug("previous {}  items  loaded to birthConfirmation print list ", printList.size());
         } else {
             printList = service.getBirthCertificatePrintList
-                    (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
+                (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
             logger.debug("previous {}  items  loaded to birthCertificate print list ", printList.size());
         }
         printStart -= noOfRows;
@@ -406,11 +441,19 @@ public class PrintAction extends ActionSupport implements SessionAware {
         this.index = index;
     }
 
-    public BirthRegistrationService getService(){
+    public BirthRegistrationService getService() {
         return this.service;
     }
 
-    public Map getSession(){
+    public Map getSession() {
         return this.session;
+    }
+
+    public long getBdId() {
+        return bdId;
+    }
+
+    public void setBdId(long bdId) {
+        this.bdId = bdId;
     }
 }

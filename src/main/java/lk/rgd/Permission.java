@@ -82,6 +82,8 @@ public final class Permission {
     public static final int PAGE_BIRTH_CONFIRMATION_DIRECT_PRINT_BIRTH_CERTIFICATE = 106;
     public static final int PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL_IGNORING_WARNINGS = 107;
     public static final int PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE = 108;
+    public static final int PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED = 154;
+    public static final int PAGE_BIRTH_CERTIFICATE_PRINT_MARK_BIRTH_CERTIFICATE_AS_PRINTED = 155;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
@@ -143,4 +145,5 @@ public final class Permission {
     public static final int ADD_EDIT_DIVISIONS = 153;
 
     //permission for user preferance
+
 }

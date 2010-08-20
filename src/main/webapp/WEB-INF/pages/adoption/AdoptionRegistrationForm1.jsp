@@ -117,14 +117,6 @@
     });
         })
 
-//    $('img#mother_lookup').bind('click', function(evt4) {
-//        var id2 = $("input#wifePINorNIC").attr("value");
-//        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
-//                function(data) {
-//                    $("textarea#wifeName").val(data.fullNameInOfficialLanguage);
-//                });
-//    });
-
 
     //these inpute can not be null
 

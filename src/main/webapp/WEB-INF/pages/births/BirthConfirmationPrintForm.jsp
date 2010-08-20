@@ -638,7 +638,7 @@
 </s:if>
 <s:else>
     <%--TODO remove unused parameters--%>
-    <s:url id="print" action="eprFilterBirthConfirmationPrint.do">
+    <s:url id="print" action="eprMarkBirthConfirmationAsPrint.do">
         <s:param name="bdId" value="#request.bdId"/>
         <s:param name="confirmListFlag" value="true"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -649,7 +649,9 @@
     </s:url>
 </s:else>
 <div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/> 
-    <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+</div>
+<div id="birthRegistration-page">
+    <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>

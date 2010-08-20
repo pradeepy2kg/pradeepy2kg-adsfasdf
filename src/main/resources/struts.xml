@@ -319,6 +319,18 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprMarkCertificateAsPrinted" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="markAsPrinted">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprMarkBirthConfirmationAsPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="markAsPrinted">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="printBulkOfEntries">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
@@ -521,54 +533,62 @@
                 method="adoptionDeclaration">
             <result type="tiles" name="success">epr.AdoptionReg</result>
         </action>
+
         <action name="eprAdoptionRegistrationHome" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
+
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="addOrEditAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
         </action>
+
         <action name="eprAdoptionDirectApproval" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="directApproveAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
         </action>
+
         <action name="eprMarkDirectlyAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="markDirectlyAdoptionNoticeAsPrinted">
             <result type="tiles" name="success">epr.adoptionSummary</result>
         </action>
+
         <action name="cancelPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="initAdoptionRegistrationOrCancelPrintAdoptionNotice">
             <result type="tiles" name="success">epr.adoptionSummary</result>
         </action>
+
         <action name="eprAdoptionNoticeDirectPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>
         </action>
+
         <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclaration">
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
         </action>
+
         <action name="eprAdoptionProcessApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
-        <!--<action name="eprAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionCertificate">
-            <result type="tiles" name="success">epr.adoptionCertificate</result>
-        </action>-->
+
         <action name="eprAdoptionCertificateRequest" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="issueCertifiedCopy">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
+
         <action name="eprAdoptionFind" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="populateAdoption">
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
         </action>
+
         <action name="eprCaptureAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApplicantInfo">
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
+
         <!--approve and print list related-->
         <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApprovalAndPrint">
@@ -635,15 +655,12 @@
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
 
-        <!--<action name="eprAdoptionHome" class="lk.rgd.crs.web.action.births.AdoptionAction" method="initAdoptionHome">
-            <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
-        </action>-->
-
         <action name="eprAdoptionBackToPreviousState" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionBackToPreviouseState">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
     </package>
+
     <package name="management" namespace="/management" extends="NG">
         <default-interceptor-ref name="default"/>
 
