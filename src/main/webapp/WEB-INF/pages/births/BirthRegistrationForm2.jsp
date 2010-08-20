@@ -192,7 +192,7 @@
     <col/>
     <tbody>
     <tr>
-        <td colspan="9" style="text-align:center;font-size:12pt">පියාගේ විස්තර
+        <td colspan="9" style="text-align:center;font-size:12pt;">පියාගේ විස්තර
             <br>தந்தை பற்றிய தகவல்
             <br>Details of the Father
         </td>

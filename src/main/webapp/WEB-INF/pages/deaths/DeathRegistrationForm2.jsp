@@ -66,10 +66,11 @@
     }
 
 
+    
     function validate() {
-        var errormsg = "";
-        var element;
+		var errormsg = "";
         var domObject;
+        var element;
         var returnval;
         var flag = false;
         var lateOrbelate = false;
@@ -96,6 +97,16 @@
             returnval = false;
         }
         return returnval;
+    }
+
+    function isEmpty(domElement) {
+        with (domElement) {
+            if (value == null || value == "") {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 </script>
