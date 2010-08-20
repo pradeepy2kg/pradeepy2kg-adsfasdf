@@ -21,6 +21,14 @@
     });
 
     $(function() {
+        $("#declarantDatePicker").datepicker({
+            changeYear: true,
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2020-12-31'
+        });
+    });
+    $(function() {
         $('img#declarant_lookup').bind('click', function(evt1) {
             var id1 = $("input#declarant_pinOrNic").attr("value");
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
@@ -66,9 +74,8 @@
     }
 
 
-    
     function validate() {
-		var errormsg = "";
+        var errormsg = "";
         var domObject;
         var element;
         var returnval;
@@ -80,6 +87,7 @@
         elementArray[1] = document.getElementById("notifyingAuthorityName").value;
         elementArray[2] = document.getElementById("notifyingAuthorityAddress").value;
         elementArray[3] = document.getElementById("submitDatePicker").value;
+        elementArray[4] = document.getElementById("declarantDatePicker").value;
         var err = new Array("notifying_authority_NICorPIN", "notifyingAuthorityName", "notifyingAuthorityAddress", "submitDatePicker");
         var i;
         for (i = 0; i < elementArray.length; i++) {
@@ -91,6 +99,11 @@
         domObject = document.getElementById('declarantEMail');
         if (!isEmpty(domObject))
             validateEmail(domObject, 'error2', 'error1')
+        var declarant = new Date(elementArray[4]);
+        var notify = new Date(elementArray[3]);
+        if (notify < declarant) {
+            errormsg = errormsg + document.getElementById("error3").value + "\n";
+        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -188,11 +201,14 @@
                 <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
                 <td colspan="2">
                     <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"/>
-                    <s:hidden id="error1" value="%{getText('declarant_email.text')}"/>
-                    <s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
                 </td>
             </tr>
-
+            <tr>
+                <td colspan="1">*in sinhala<br> *in tamil<br>Declaranat Signed Date</td>
+                <td colspan="5">
+                    <s:textfield id="declarantDatePicker" name=""/>
+                </td>
+            </tr>
             </tbody>
         </table>
 
@@ -249,6 +265,9 @@
             </tbody>
         </table>
 
+        <s:hidden id="error1" value="%{getText('declarant_email.text')}"/>
+        <s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
+        <s:hidden id="error3" value="%{getText('declarantAndNotifyDate.text')}"/>
 
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 
