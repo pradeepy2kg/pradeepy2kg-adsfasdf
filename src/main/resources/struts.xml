@@ -327,7 +327,7 @@
 
         <action name="eprMarkBirthConfirmationAsPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="markAsPrinted">
-            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
