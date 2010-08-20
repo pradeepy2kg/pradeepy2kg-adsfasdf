@@ -143,5 +143,4 @@ public final class Permission {
     public static final int ADD_EDIT_DIVISIONS = 153;
 
     //permission for user preferance
-    public static final int PAGE_DIRECT_HOME = 153;
 }
