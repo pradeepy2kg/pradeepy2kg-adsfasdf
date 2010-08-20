@@ -37,4 +37,5 @@ public class WebConstants {
     public static final String SESSION_OLD_BD_FOR_ADOPTION = "oldBdfForAdoption";
 
     public static final String SESSION_DEATH_DECLARATION_BEAN="deathRegister";
+    public static final String SESSION_USER_ADMIN="ADMIN";
 }

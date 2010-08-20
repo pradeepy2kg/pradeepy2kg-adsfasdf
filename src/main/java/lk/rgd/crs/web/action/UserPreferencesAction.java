@@ -22,6 +22,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     private String newPassword;
     private String retypeNewPassword;
     private String prefLanguage;
+    private String userType;
     private int birthDistrictId;
     private int dsDivisionId;
 
@@ -64,7 +65,9 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public String userPreferenceInit() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-
+        userType=user.getRole().getRoleId();
+        logger.debug("Role of the {} is  :{}",user.getUserName(),userType);
+        if(!(userType.equals(WebConstants.SESSION_USER_ADMIN))){
         districtList = districtDAO.getDistrictNames(language, user);
         if (user.getPrefBDDistrict() != null) {
             birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
@@ -78,7 +81,7 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
         } else {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
         }
-
+        }
         return "pageload";
     }
 
@@ -293,5 +296,13 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }
