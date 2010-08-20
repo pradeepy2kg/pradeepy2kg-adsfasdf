@@ -1,4 +1,4 @@
-//validate date format to iso date format
+/*//validate date format to iso date format
 function validateDateFormat() {
     //todo
     alert('called');
@@ -7,7 +7,7 @@ function validateDateFormat() {
     var dateToValidate = new Date();
 
     alert(dateFormat(dateToValidate.format("m/dd/yy")));
-}
+}*/
 
 
 //check given element is empty

@@ -110,12 +110,12 @@
     var errormsg = "";
     function validate()
     {
+        alert('validate');
         var domObject;
         var element;
         var returnval;
         var check = document.getElementById('skipjs');
         if (!check.checked) {
-
             element = document.getElementById('fatherFullName');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
@@ -136,6 +136,17 @@
         }
         errormsg = "";
         return returnval;
+    }
+
+    function motherAgeBirth() {
+        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+        var mother_bday = new Date(document.getElementById('motherDatePicker').value);
+        var mother_age = child_bday.getYear() - mother_bday.getYear();
+        document.getElementById("motherAgeAtBirth").value = mother_age;
+        if (mother_age <= 0) {
+            document.getElementById("motherAgeAtBirth").value = 0;
+            document.getElementById("motherAgeAtChildBirth").innerHTML = document.getElementById("error3").value;
+        }
     }
 
     function motherage() {
@@ -310,7 +321,10 @@
         </label>
         </td>
         <td class="passport">
-            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth"/></td>
+            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth" onfocus="motherAgeBirth();"/>
+            <div id="motherAgeAtChildBirth" style="color:red;"/>
+        </td>
+
     </tr>
     <tr style="border-bottom:none;">
         <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ ස්ථිර
@@ -387,6 +401,7 @@
 
 <s:hidden id="error1" value="%{getText('p1.invalid.emailMother.text')}"/>
 <s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error3" value="%{getText('p2.motherAgeAthBirthBelowZero.error')}"/>
 
 <s:hidden name="pageNo" value="2"/>
 <s:hidden name="rowNumber" value="%{row}"/>
