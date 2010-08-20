@@ -20,15 +20,15 @@ function isEmpty(domElement, errorMessage, errorCode) {
 }
 
 //check given element is empty and return true if empty else false
-function isEmpty(domElement) {
-    with (domElement) {
-        if (value == null || value == "") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
+//function isEmpty(domElement) {
+//    with (domElement) {
+//        if (value == null || value == "") {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+//}
 
 
 //check given text is numeric value
