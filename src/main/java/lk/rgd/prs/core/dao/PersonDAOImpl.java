@@ -6,6 +6,7 @@ import lk.rgd.prs.api.domain.Person;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -43,7 +44,12 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     public Person findPersonByPIN(long pin) {
         Query q = em.createNamedQuery("filter.by.pin");
         q.setParameter("pin", pin);
-        return (Person) q.getSingleResult();
+        try {
+            return (Person) q.getSingleResult();
+        } catch (NoResultException ignore) {
+            return null;
+        }
+        // A NonUniqueResultException will not be thrown since pin is a unique column
     }
 
     /**

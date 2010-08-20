@@ -1252,7 +1252,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
                     // TODO issue a user warning
                 }
-            } catch (NoResultException ignore) {
             }
 
             // if we couldn't locate the mother, add an unverified record to the PRS
@@ -1300,7 +1299,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
                     // TODO issue a user warning
                     logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
                 }
-            } catch (NoResultException ignore) {
             }
 
             // if we couldn't locate the father, add an unverified record to the PRS
