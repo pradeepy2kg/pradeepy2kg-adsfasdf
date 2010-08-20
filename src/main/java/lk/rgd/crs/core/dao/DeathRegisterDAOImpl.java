@@ -89,6 +89,8 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
         } catch (NoResultException e) {
             return null;
         }
+        // NonUniqueResultException should not occur since only one record for a serial number + BD division will be
+        // marked as active at any given point in time
     }
 
     /**

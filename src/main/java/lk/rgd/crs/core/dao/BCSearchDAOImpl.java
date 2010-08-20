@@ -27,6 +27,7 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public BirthCertificateSearch getByDSDivisionAndSerialNo(DSDivision dsDivision, String serialNo) {
         Query q = em.createNamedQuery("get.by.serialNo.and.dsDivision");
         q.setParameter("serialNo", serialNo);
@@ -36,5 +37,6 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
         } catch (NoResultException ignore) {
             return null;
         }
+        // TODO Fix me and handle NonUniqueResultException
     }
 }
