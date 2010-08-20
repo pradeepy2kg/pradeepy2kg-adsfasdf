@@ -176,7 +176,7 @@ function stillBirthCommanTags(check) {
     var domObject;
     //Number of weeks pregnant
     domObject = document.getElementById('weeksPregnant');
-    if (!check)
+    if (!check.checked)
         isEmpty(domObject, "", 'error14');
 
     // child rank
@@ -184,7 +184,6 @@ function stillBirthCommanTags(check) {
     if (!check.checked) {
         isEmpty(domObject, "", 'error5')
     }
-    alert(document.getElementById('error5'))
     isNumeric(domObject.value, 'error24')
 
     // number of child
@@ -249,8 +248,10 @@ function dateRange() {
     }
 }
 
+function initPage(){
+    
+}
 </script>
-
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
         onsubmit="javascript:return validate()">
@@ -401,14 +402,14 @@ function dateRange() {
     </s:if>
     <tr></tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
+        <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="3" style="border-right:none;">
             <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
         </td>
         <td colspan="4" style="border-left:none;"><div id="belatedError" style="color:red; font-size:11pt"/></td>
     </tr>
     <tr>
-        <td rowspan="6"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
+        <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId" cssStyle="width:98.5%; width:240px;"/>

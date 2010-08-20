@@ -58,6 +58,10 @@
         }
         return returnval;
     }
+
+    function initPage(){
+        // TODO 
+    }
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-4-outer">
