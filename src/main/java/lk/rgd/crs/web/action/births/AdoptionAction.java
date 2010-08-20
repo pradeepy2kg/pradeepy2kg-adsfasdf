@@ -478,17 +478,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    /* public String adoptionCertificate() {
-        try {
-            adoption = service.getById(getIdUKey(), user);
-            logger.debug("Id u key : {}", getIdUKey());
-        } catch (Exception e) {
-            addActionError(getText("adoption.error.no.permission"));
-            logger.debug("catch exception : {}", e);
-        }
-        return SUCCESS;
-    }*/
-
     public void initPermissionForApprovalAndPrint() {
 
         allowApproveAdoption = user.isAuthorized(Permission.APPROVE_ADOPTION);

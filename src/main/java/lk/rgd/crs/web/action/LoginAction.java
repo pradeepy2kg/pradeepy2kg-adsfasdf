@@ -259,6 +259,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_HOME, new Link(null, "/popreg/births/", "eprBirthRegistrationHome.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME, new Link(null, "/popreg/births/", "eprStillBirth.do"));
         linkPermission.put(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT, new Link(null, "/popreg/births/", "eprDirectPrintBirthConfirmation.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_MARK_BIRTH_CERTIFICATE_AS_PRINTED, new Link(null, "/popreg/births/", "eprMarkCertificateAsPrinted.do"));
 
         //Birth Confirmation
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT, new Link("birth_confirmation_print.label", "/popreg/births/", "eprBirthConfirmationPrintList.do"));
@@ -272,6 +273,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         linkPermission.put(Permission.PAGE_STILL_BIRTH_REGISTRATION, new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do"));
         linkPermission.put(Permission.PAGE_ADVANCE_SEARCH_BIRTHS, new Link("advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do"));
         linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE, new Link(null, "/popreg/births/", "eprDirectPrintBirthCertificate.do"));
+        linkPermission.put(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED, new Link(null, "/popreg/births/", "eprMarkBirthConfirmationAsPrint.do"));
 
         //Death Registration
         linkPermission.put(Permission.PAGE_DEATH_REGISTRATION_INIT, new Link("death_registration.label", "/popreg/deaths/", "eprInitDeathDeclaration.do"));

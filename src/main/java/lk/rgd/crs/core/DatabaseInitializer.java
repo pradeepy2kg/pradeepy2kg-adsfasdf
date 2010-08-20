@@ -232,6 +232,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE);
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED);
             bs.set(Permission.EDIT_BDF);
 
             //Birth registration
@@ -242,6 +243,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT);
             bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME);
             bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
+            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_MARK_BIRTH_CERTIFICATE_AS_PRINTED);
 
             //Death Registration
             bs.set(Permission.PAGE_DEATH_REGISTRATION_INIT);
@@ -305,7 +307,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
-
+            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED);
+            
             //Birth Registration
             bs.set(Permission.PAGE_BIRTH_REGISTRATON);
             bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
@@ -327,6 +330,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT);
             bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT);
+            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_MARK_BIRTH_CERTIFICATE_AS_PRINTED);
 
             //Approval
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL);
