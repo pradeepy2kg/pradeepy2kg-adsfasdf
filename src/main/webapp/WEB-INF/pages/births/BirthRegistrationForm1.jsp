@@ -227,15 +227,6 @@ function liveBirthCommanTags(check) {
     }
     isNumeric(domObject.value, 'error25')
 }
-//validate date format to iso date format
-function validateDateFormat() {
-    alert('called');
-
-    // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
-    var dateToValidate = new Date();
-
-    alert(dateFormat(dateToValidate.format("m/dd/yy")));
-}
 
 //check live birth is a belated birth gives warnings
 function dateRange() {
@@ -251,7 +242,6 @@ function dateRange() {
 
             document.getElementById('belatedError').innerHTML = document.getElementById('error7').value;
         }
-
     }
     else {
 
