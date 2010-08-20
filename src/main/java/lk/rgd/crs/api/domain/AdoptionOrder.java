@@ -14,6 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "ADOPTION_ORDER", schema = "CRS")
+// TODO add a constraint to ensure court ID and court order number combination is unique
 
 @NamedQueries({
     @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +

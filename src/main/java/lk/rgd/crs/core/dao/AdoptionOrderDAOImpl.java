@@ -78,6 +78,8 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
         } catch (NoResultException e) {
             return null;
         }
+        // NonUniqueResultException should not occur since only one record for a court + order number should exist
+        // this is enforced with a unique constraint on the AdoptionOrder table
     }
 
     /**
