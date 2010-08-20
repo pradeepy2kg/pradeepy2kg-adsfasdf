@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 
-<s:if test="deathType.ordinal()==2">
+<s:if test="deathType.ordinal()==2 || deathType.ordinal() == 3">
     <s:set name="row" value="3"/>
 </s:if>
 <s:else>
@@ -442,12 +442,12 @@ $('img#deathName').bind('click', function(evt7) {
     </tr>
     <tr>
         <td align="center" class="font-12">
-            <s:if test="deathType.ordinal() == 0">
+            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
                 ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ <br/>
                 ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
                 Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
             </s:if>
-            <s:elseif test="deathType.ordinal() == 2">
+            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
                 මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ <br/>
                 ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
                 Declaration of Death [Section 36] – Late registration or Death of missing person
@@ -464,7 +464,7 @@ $('img#deathName').bind('click', function(evt7) {
     </tr>
     <tr>
         <td colspan="4" class="font-9" style="text-align:justify;">
-            <s:if test="deathType.ordinal() == 0">
+            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
                 ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත
                 සිවිල්
                 ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
@@ -475,7 +475,7 @@ $('img#deathName').bind('click', function(evt7) {
                 the
                 Civil Registration System based on the information provided in this form.
             </s:if>
-            <s:elseif test="deathType.ordinal() == 2">
+            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
                 ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප
                 ්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය
                 සම්බවී,
@@ -495,7 +495,7 @@ $('img#deathName').bind('click', function(evt7) {
     </tr>
     </tbody>
 </table>
-<s:if test="deathType.ordinal() == 2">
+<s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
     <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
         <tr>
             <td width="150px">(1)මරණය ලියාපදිංචි කිරීම ප්‍රමාද වීමට කාරණය <br/>
@@ -525,7 +525,7 @@ $('img#deathName').bind('click', function(evt7) {
             <br>Information about the Death
         </td>
     </tr>
-    <s:if test="deathType.ordinal() == 0">
+    <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
         <tr>
             <td>
                 (1)හදිසි මරණයක්ද ? <br/>
@@ -538,7 +538,7 @@ $('img#deathName').bind('click', function(evt7) {
             <td align="center"><s:radio name="deathType" list="#@java.util.HashMap@{'NORMAL':''}" value="false"/></td>
         </tr>
     </s:if>
-    <s:elseif test="deathType.ordinal() == 2">
+    <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
         <tr>
             <td>
                 (2)නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <br/>
@@ -633,7 +633,7 @@ $('img#deathName').bind('click', function(evt7) {
         </td>
         <td colspan="8"><s:textarea name="death.placeOfBurial" id="placeOfBurial" cssStyle="width:880px;"/></td>
     </tr>
-    <s:if test="deathType.ordinal() == 2">
+    <s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
         <tr>
             <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)වෙනත් තොරතුරු <br/>
                 in tamil <br/>
@@ -778,8 +778,8 @@ $('img#deathName').bind('click', function(evt7) {
 <s:hidden id="error0" value="%{getText('p1.errorlable.serialNumber')}"/>
 <s:hidden id="error1" value="%{getText('p1.errorlable.dateofReg')}"/>
 <s:hidden id="error2" value="%{getText('p1.errorlable.dateofDeath')}"/>
-<s:hidden id="error3" value="%{getText('p1.errorlable.placeofBurial')}"/>
-<s:hidden id="error4" value="%{getText('p1.errorlable.placeofDeath')}"/>
+<s:hidden id="error3" value="%{getText('p1.errorlable.placeofDeath')}"/>
+<s:hidden id="error4" value="%{getText('p1.errorlable.placeofBurial')}"/>
 <s:hidden id="error5" value="%{getText('p1.errorlable.gerder')}"/>
 <s:hidden id="error6" value="%{getText('p1.errorlable.serialNumberIsNum')}"/>
 <s:hidden id="error7" value="%{getText('p1.errorlable.dateofRegAndDateofDeath')}"/>
