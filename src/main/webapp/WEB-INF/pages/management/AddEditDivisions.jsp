@@ -1,215 +1,115 @@
+<%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+
+
 <script type="text/javascript">
-$('select#districtId').bind('change', function(evt1) {
-           var id = $("select#districtId").attr("value");
-           $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
-                   function(data) {
-                       var options1 = '';
-                       var ds = data.dsDivisionList;
-                       for (var i = 0; i < ds.length; i++) {
-                           options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                       }
-                       $("select#dsDivisionId").html(options1);
 
-                       var options2 = '';
-                       var bd = data.bdDivisionList;
-                       for (var j = 0; j < bd.length; j++) {
-                           options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                       }
-                       $("select#birthDivisionId").html(options2);
-                   });
-       });
 
-       $('select#dsDivisionId').bind('change', function(evt2) {
-           var id = $("select#dsDivisionId").attr("value");
-           $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
-                   function(data) {
-                       var options = '';
-                       var bd = data.bdDivisionList;
-                       for (var i = 0; i < bd.length; i++) {
-                           options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
-                       }
-                       $("select#divisionId").html(options);
-                   });
-       });
-    function Add()
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-            document.getElementById("Content").innerHTML = document.getElementById("selectAddFields").innerHTML;
-        }
-        catch (e)
-        {
-            document.getElementById("Content").innerHTML = "<h1>XMLHttp cannot be created!</h1>";
-        }
-    }
-    function AddDsDivisions()
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-            document.getElementById("Content1").innerHTML = document.getElementById("addDsDivisionFields").innerHTML;
-        }
-        catch (e)
-        {
-            document.getElementById("Content1").innerHTML = "<h1>XMLHttp cannot be created!</h1>";
-        }
-    }
-    function AddDivisions()
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-            document.getElementById("Content1").innerHTML = document.getElementById("addDivisionFields").innerHTML;
-        }
-        catch (e)
-        {
-            document.getElementById("Content1").innerHTML = "<h1>XMLHttp cannot be created!</h1>";
-        }
-    }
-    function Edit()
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-            document.getElementById("Content").innerHTML = document.getElementById("selectEditFields").innerHTML;
-        }
-        catch (e)
-        {
-            document.getElementById("Content").innerHTML = "<h1>XMLHttp cannot be created!</h1>";
-        }
-    }
-    function EditDsDivisions()
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-            document.getElementById("Content1").innerHTML = document.getElementById("editDsDivisionFields").innerHTML;
-        }
-        catch (e)
-        {
-            document.getElementById("Content1").innerHTML = "<h1>XMLHttp cannot be created!</h1>";
-        }
-    }
-    function EditDivisions()
-    {
-        try
-        {
-            xmlhttp = new XMLHttpRequest();
-            document.getElementById("Content1").innerHTML = document.getElementById("editDivisionFields").innerHTML;
-        }
-        catch (e)
-        {
-            document.getElementById("Content1").innerHTML = "<h1>XMLHttp cannot be created!</h1>";
-        }
-    }
+// mode 1 = passing District, will return DS list
+// mode 2 = passing DsDivision, will return BD list
+// any other = passing district, will return DS list and the BD list for the first DS
+$(function() {
+    $('select#districtId').bind('change', function(evt1) {
+        var id = $("select#districtId").attr("value");
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                function(data) {
+                    var options1 = '';
+                    var ds = data.dsDivisionList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                    }
+                    $("select#dsDivisionId").html(options1);
+
+                    var options2 = '';
+                    var bd = data.bdDivisionList;
+                    for (var j = 0; j < bd.length; j++) {
+                        options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                    }
+                    $("select#divisionId").html(options2);
+                });
+    });
+
+    $('select#dsDivisionId').bind('change', function(evt2) {
+        var id = $("select#dsDivisionId").attr("value");
+        var dsDivision=document.getElementById("dsDivisionId").list;
+        document.getElementById("editDsDivisionNameId").value=dsDivision;
+        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+                function(data) {
+                    var options = '';
+                    var bd = data.bdDivisionList;
+                    for (var i = 0; i < bd.length; i++) {
+                        options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                    }
+                    $("select#divisionId").html(options);
+                });
+    });
+
+
+
+});
+
 </script>
-<div>
-    <s:form action="eprAddEditDivisions" name="addEditDivision_Form" method="POST">
-        <table>
-            <tr>
-                <td>
-                    <s:label>Select a District</s:label>
-                </td>
-                <td>
-                    <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"/>
-                </td>
-            </tr>
-        </table>
-        <table id="selectEditFields" style="display:none;">
-            <tr>
-                <td>
-                <td colspan="1"><s:radio id="editDsDivision" name="editDivision"
-                                         list="#@java.util.HashMap@{'EditDSDivision':'Edit Divisional Secretariat'}"
-                                         onclick="javascript:EditDsDivisions()"/>
-                </td>
-                <td>
-                <td colspan="1"><s:radio id="editDivision" name="editDivision"
-                                         list="#@java.util.HashMap@{'EditDivision':'Edit Registration Division'}"
-                                         onclick="javascript:EditDivisions()"/>
-                </td>
-            </tr>
-        </table>
-        <table id="selectAddFields" style="display:none;">
-            <tr>
-                <td colspan="1"><s:radio id="addDsDivision" name="addDivision"
-                                         list="#@java.util.HashMap@{'AddDsDivision':'Add Divisional Secretariat'}"
-                                         onclick="javascript:AddDsDivisions()"/>
 
-                </td>
-                <td colspan="1"><s:radio id="addDivision" name="addDivision"
-                                         list="#@java.util.HashMap@{'AddDivision':'Add Registration Division'}"
-                                         onclick="javascript:AddDivisions()"/>
-                </td>
-            </tr>
-        </table>
-        <table id="addDsDivisionFields" style="display:none;">
-            <tr>
-                <td>
-                    <s:label>Enter English Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="englishName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Sinhala Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="sinhalaName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Tamil Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="tamilName"/>
-                </td>
-            </tr>
 
-        </table>
-        <table id="addDivisionFields" style="display:none;">
-            <tr>
-            <td>
-                <s:label>Select Ds Division</s:label>
-            </td>
-            <td>
-                <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"/>
-            </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter English Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="englishName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Sinhala Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="sinhalaName"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label>Enter Tamil Name</s:label>
-                </td>
-                <td>
-                    <s:textfield name="tamilName"/>
-                </td>
-            </tr>
-        </table>
-        <div class="form-submit">
-            <s:submit value="Submit" cssStyle="margin-top:10px;"/>
-        </div>
-    </s:form>
+<div id="death-declaration-form-1-outer">
+<s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
+        >
+
+<table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;" class="font-9">
+    <col width="400px"/>
+    <col width="400px"/>
+    <col/>
+    <tbody>
+    <tr>
+       
+        <td>දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+        <td><s:select id="deathDistrictId" name="districtId" list="districtList"/></td>
+    </tr>
+    <tr>
+        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+        <td><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                  cssStyle="float:left; "/></td>
+    </tr>
+    <tr>
+        <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
+        <td><s:select id="divisionId"  list="divisionList"
+                                  cssStyle="float:left;"/></td>
+    </tr>
+
+    </tbody>
+</table>
+<table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;margin-top:20px;" class="font-9">
+    <col width="400px"/>
+    <col width="400px"/>
+    <col/>
+    <tbody>
+    <tr>
+
+        <td>දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+        <td><s:textfield name="" id="editDistricNameId"/></td>
+    </tr>
+    <tr>
+        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+        <td><s:textfield name="" id="editDsDivisionNameId"/></td>
+    </tr>
+    <tr>
+        <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
+        <td><s:textfield name="" id="editDivisionNameId"/></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<div class="form-submit">
+    <s:hidden name="pageNo" value="1"/>
+    <s:hidden name="rowNumber" value="%{row}"/>
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
+</s:form>
 </div>

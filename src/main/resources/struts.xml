@@ -510,10 +510,7 @@
         <!-- -->
         <action name="eprUserPreferencesAction" class="lk.rgd.crs.web.action.UserPreferencesAction"
                 method="selectUserPreference">
-            <result type="redirectAction">
-                <param name="actionName">eprHome</param>
-                <param name="namespace">/births</param>
-            </result>
+            <result type="tiles" name="success">epr.home</result>
         </action>
 
     </package>
