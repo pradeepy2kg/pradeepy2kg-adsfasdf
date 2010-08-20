@@ -128,7 +128,7 @@
         //validating mothers email
         domObject = document.getElementById('motherEmail');
         if (!isEmpty(domObject))
-            validateEmail(domObject, 'error1')
+            validateEmail(domObject, 'error2', 'error1')
 
         if (errormsg != "") {
             alert(errormsg);
