@@ -1,13 +1,13 @@
 /*//validate date format to iso date format
-function validateDateFormat() {
-    //todo
-    alert('called');
+ function validateDateFormat() {
+ //todo
+ alert('called');
 
-    // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
-    var dateToValidate = new Date();
+ // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
+ var dateToValidate = new Date();
 
-    alert(dateFormat(dateToValidate.format("m/dd/yy")));
-}*/
+ alert(dateFormat(dateToValidate.format("m/dd/yy")));
+ }*/
 
 
 //check given element is empty
@@ -35,7 +35,6 @@ function isNumeric(text, message) {
     }
 }
 
-
 //valdating email address
 function validateEmail(domElement, errorText, errorCode) {
     with (domElement) {
@@ -46,3 +45,12 @@ function validateEmail(domElement, errorText, errorCode) {
         }
     }
 }
+
+// validate PIN or NIC
+function validatePINorNIC(message, errorText, errorCode) {
+    // TODO still implementing chathuranga
+    if (message.value.length > 10) {
+        errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+    }
+}
+
