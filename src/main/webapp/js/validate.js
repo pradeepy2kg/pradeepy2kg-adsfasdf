@@ -49,11 +49,11 @@ function isNumeric(text, message) {
 
 
 //valdating email address
-function validateEmail(domElement, errorCode) {
+function validateEmail(domElement, errorText, errorCode) {
     with (domElement) {
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
         if (reg.test(value) == false) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value + " : " + document.getElementById(errorCode).value;
+            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
             return false;
         }
     }
