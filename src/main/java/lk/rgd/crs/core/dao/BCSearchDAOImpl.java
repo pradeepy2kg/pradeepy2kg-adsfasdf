@@ -37,6 +37,6 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
         } catch (NoResultException ignore) {
             return null;
         }
-        // TODO Fix me and handle NonUniqueResultException
+        // A NonUniqueResultException will never be thrown as a unique constraint guards against it for the above case 
     }
 }
