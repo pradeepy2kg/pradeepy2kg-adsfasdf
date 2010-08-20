@@ -16,11 +16,11 @@
             font-size: 8pt;
         }
     }
-
+    #birth-certificate-outer .form-submit {margin:5px 0 15px 0;}
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
-<div id="birth-certificate-outer">
+<div id="birth-certificate-outer" >
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
@@ -277,9 +277,11 @@
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
 </s:else>
+<div class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
 <%--</s:form>--%>
