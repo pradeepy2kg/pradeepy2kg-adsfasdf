@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="rowNumber" name="row"/>
 
-
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
@@ -115,6 +114,7 @@
         var element;
         var returnval;
         var check = document.getElementById('skipjs');
+
         if (!check.checked) {
             element = document.getElementById('fatherFullName');
             if (element.value == "") {
@@ -158,7 +158,6 @@
             if (mother_bday.length == 0)
             {
                 alert(document.getElementById('mother_birth_day_empty').value);
-
             }
             else if (confirm(document.getElementById('mother_age').value + mother_age)) {
                 mother_age_at_birth.value = mother_age;
@@ -169,6 +168,10 @@
             mother_age_at_birth.value = mother_age;
             return true;
         }
+    }
+
+    function initPage() {
+
     }
 </script>
 

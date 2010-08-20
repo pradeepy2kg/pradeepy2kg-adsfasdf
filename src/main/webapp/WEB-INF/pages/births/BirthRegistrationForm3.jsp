@@ -9,160 +9,240 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script type="text/javascript">
-    $(function() {
-        $("#marriageDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+$(function() {
+    $("#marriageDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $("#informDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+});
+$(function() {
+    $("#informDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $('img#informant_lookup').bind('click', function(evt1) {
-            var id1 = $("input#informantNICorPIN").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#informantAddress").val(data1.lastAddress);
-                    });
-        });
+});
+$(function() {
+    $('img#informant_lookup').bind('click', function(evt1) {
+        var id1 = $("input#informantNICorPIN").attr("value");
+        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
+                    $("textarea#informantAddress").val(data1.lastAddress);
+                });
     });
+});
 
-    var informPerson;
-    function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
-    {
+var informPerson;
+function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
+{
 
-        var informantName = document.getElementById("informantName");
-        var informantNICorPIN = document.getElementById("informantNICorPIN");
-        var informantAddress = document.getElementById("informantAddress");
-        var informantPhoneNo = document.getElementById("informantPhoneNo");
-        var informantEmail = document.getElementById("informantEmail");
+    var informantName = document.getElementById("informantName");
+    var informantNICorPIN = document.getElementById("informantNICorPIN");
+    var informantAddress = document.getElementById("informantAddress");
+    var informantPhoneNo = document.getElementById("informantPhoneNo");
+    var informantEmail = document.getElementById("informantEmail");
 
-        informantName.value = name;
-        informantNICorPIN.value = nICorPIN;
-        informantAddress.value = address;
-        informantPhoneNo.value = phonoNo;
-        informantEmail.value = email;
+    informantName.value = name;
+    informantNICorPIN.value = nICorPIN;
+    informantAddress.value = address;
+    informantPhoneNo.value = phonoNo;
+    informantEmail.value = email;
+}
+
+/**
+ * validate for informent details
+ */
+/*var errormsg = ""
+ function validate()
+ {
+ var domObject;
+ var element;
+ var returnval;
+ var flag;
+ var check = document.getElementById('skipjs');
+
+ element = document.getElementsByName("marriage.parentsMarried")[0];
+ if (element.checked)
+ {
+ element = document.getElementById('placeOfMarriage');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
+ }
+
+ submit = new Date(document.getElementById('marriageDatePicker').value);
+ // submit = new Date(submitDatePicker);
+ if (!(submit.getTime())) {
+ errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
+ flag = true;
+ }
+ }
+ element = document.getElementsByName("marriage.parentsMarried")[2];
+ if (element.checked) {
+ alert('later married')
+ element = document.getElementById('fatherName');
+ alert(element.value)
+ var element3 = document.getElementById('fatherSigned');
+ //            if (element.value.length > 0 && !element3.checked)
+ //            {
+ errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+ //            }
+ }
+ element = document.getElementById("greatGrandFatherBirthYear").value;
+ if (isNaN(element)) {
+ errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
+ }
+
+ // check informant type selected
+ element = document.getElementsByName('informant.informantType');
+ alert(element.value)
+ if (element.value == null) {
+ errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+ }
+
+ *//**//*date related validations*//**//*
+ var submit = new Date(document.getElementById('informDatePicker').value);
+ // var submit = new Date(submitDatePicker);
+ if (!(submit.getTime())) {
+ errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+ flag = true;
+ }
+
+ element = document.getElementById('informantName');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+ }
+ element = document.getElementById('informantAddress');
+ if (element.value == "") {
+ errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+ }
+ //validating informant email
+ domObject = document.getElementById('informantEmail');
+ if (!isEmpty(domObject))
+ validateEmail(domObject, 'error10')
+
+ if (errormsg != "") {
+ alert(errormsg);
+ returnval = false;
+ }
+ errormsg = "";
+ return returnval;
+ }*/
+
+var errormsg = "";
+// validations for BDF page 3
+function validate() {
+    // used to skip non trivial validation in the page
+    var check = document.getElementById('skipjs');
+    var returnval = true;
+
+    validateMarriage(check);
+    validateInformant();
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
     }
+    errormsg = "";
+    return returnval;
+}
 
-    /**
-     * validate for informent details
-     */
-    var errormsg = "";
-    function validate()
-    {
-        var domObject;
-        var element;
-        var returnval;
-        var flag;
+function validateMarriage(check) {
+    var element;
+    var submit = new Date(document.getElementById('marriageDatePicker').value);
 
-        // check informant type selected
-        element = document.getElementById('informantType');
-        alert(element.checked)
-        if (element == null) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-        }
-
-        /*date related validations*/
-        var submit = new Date(document.getElementById('informDatePicker').value);
-        // var submit = new Date(submitDatePicker);
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
-            flag = true;
-        }
-
-        element = document.getElementById('informantName');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
-        }
-        element = document.getElementById('informantAddress');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
-        }
-        element = document.getElementsByName("marriage.parentsMarried")[0];      
-        if (element.checked)
-        {
+    // for parrents married - Yes
+    element = document.getElementsByName("marriage.parentsMarried")[0];
+    if (!check.checked) {
+        if (element.checked) {
             element = document.getElementById('placeOfMarriage');
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
             }
 
-            submit = new Date(document.getElementById('marriageDatePicker').value);
-            // submit = new Date(submitDatePicker);
             if (!(submit.getTime())) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
-                flag = true;
-            }
-
-
-        }
-        element = document.getElementsByName("marriage.parentsMarried")[2];
-        if (element.checked) {
-            element = document.getElementById('fatherName');
-            var element3 = document.getElementById('fatherSigned');
-            if (element.value.length > 0 && !element3.checked)
-            {
-                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-            }
-        }
-        element = document.getElementById("greatGrandFatherBirthYear").value;
-        if (isNaN(element)) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
-        }
-        //validating informant email
-        domObject = document.getElementById('informantEmail');
-        if (!isEmpty(domObject))
-            validateEmail(domObject, 'error10')
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
-    }
-
-    //check given element is empty and return true if empty else false
-    function isEmpty(domElement) {
-        with (domElement) {
-            if (value == null || value == "") {
-                return true;
-            } else {
-                return false;
             }
         }
     }
 
-    function validateEmail(domElement, errorCode) {
-        with (domElement) {
-            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-            if (reg.test(value) == false) {
-                errormsg = errormsg + "\n" + document.getElementById('error11').value + " : " + document.getElementById(errorCode).value;
-                return false;
-            }
+    // for parrents married - Yes
+    element = document.getElementsByName("marriage.parentsMarried")[1];
+    if (element.checked) {
+        element = document.getElementById('fatherName');
+        var element3 = document.getElementById('fatherSigned');
+        if (!element3.checked) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+        }
+
+        var element4 = document.getElementById('motherSigned');
+        if (!element4.checked) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
         }
     }
+}
 
-    function disableMarrage(mode){
-        document.getElementById('placeOfMarriage').disabled=mode;
-        document.getElementById('marriageDatePicker').disabled=mode;
+function validateInformant() {
+    var element;
+    var domObject;
+            
+    // check informant type selected
+    element = document.getElementsByName('informant.informantType');
+    if (element.value == null) {
+        errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
     }
-
-    function initPage() {
-        document.getElementById('placeOfMarriage').disabled = mode;
-        document.getElementById('placeOfMarriage').disabled = mode;
-        document.getElementById('placeOfMarriage').disabled = mode;
-        document.getElementById('placeOfMarriage').disabled = mode;
-
+    element = document.getElementById('informantName');
+    if (element.value == "") {
+        errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
     }
+    element = document.getElementById('informantAddress');
+    if (element.value == "") {
+        errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+    }
+    //validating informant email
+    domObject = document.getElementById('informantEmail');
+    if (!isEmpty(domObject))
+        validateEmail(domObject, 'error11', 'error10')
+
+    var submit = new Date(document.getElementById('informDatePicker').value);
+    if (!(submit.getTime())) {
+        errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+    }
+}
+
+//check given element is empty and return true if empty else false
+function isEmpty(domElement) {
+    with (domElement) {
+        if (value == null || value == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function disableMarriage(mode) {
+    document.getElementById('placeOfMarriage').disabled = mode;
+    document.getElementById('marriageDatePicker').disabled = mode;
+}
+
+function disableSigns(mode) {
+    if (!mode) {
+        var name = document.getElementById('fatherName');
+        if (name.value.length == 0) {
+            mode = true;
+        }
+    }
+    document.getElementById('motherSigned').disabled = mode;
+    document.getElementById('fatherSigned').disabled = mode;
+}
+
+function initPage() {
+    disableSigns(true);
+}
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
@@ -195,15 +275,18 @@
                     <tbody>
                     <tr>
                         <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1" onclick="disableMarrage(false)"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                     onclick="disableMarriage(false);disableSigns(true)"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>*in tamil<br>No</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}" onclick="disableMarrage(true)"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
+                                     onclick="disableMarriage(true);disableSigns(false)"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}" onclick="disableMarrage(false)"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
+                                     onclick="disableMarriage(false);disableSigns(true)"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -217,7 +300,7 @@
             <td colspan="2">
                     <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"/>
         </tr>
-        <tr>
+        <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
                 විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
                 සහ
@@ -321,11 +404,11 @@
                     Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1" onclick="disableMarrage(false)"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/>
                 <label> ඔවි/*in tamil / Yes</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}" onclick="disableMarrage(true)"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/>
                 <label> නැත / *in tamil / No</label>
             </td>
         </tr>
@@ -356,7 +439,8 @@
             <table class="sub_table">
                 <tr>
                     <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'MOTHER':''}"
+                    <td align="center" width="150px"><s:radio name="informant.informantType"
+                                                              list="#@java.util.HashMap@{'MOTHER':''}"
                                                               onchange="javascript:setInformPerson('MOTHER',
             '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
             '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
@@ -367,7 +451,8 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType" list="#{'FATHER':''}"
+                    <td align="center" width="150px"><s:radio name="informant.informantType"
+                                                              list="#@java.util.HashMap@{'FATHER':''}"
                                                               onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
             '%{parent.fatherFullName}','','','')"/></td>
@@ -380,13 +465,13 @@
                     <s:if test="birthType.ordinal() != 0">
                         <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
                         <td align="center" width="150px">
-                            <s:radio name="informant.informantType" list="#{'GUARDIAN':''}"
+                            <s:radio name="informant.informantType" list="#@java.util.HashMap@{'GUARDIAN':''}"
                                      onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
                     </s:if>
                     <s:else>
                         <td><label>නෑයන් <br> * In Tamil <br>Relative</label></td>
                         <td align="center" width="150px">
-                            <s:radio name="informant.informantType" list="#{'RELATIVE':''}"
+                            <s:radio name="informant.informantType" list="#@java.util.HashMap@{'RELATIVE':''}"
                                      onchange="javascript:setInformPerson('RELATIVE','','','','','','')"/></td>
                     </s:else>
                 </tr>
@@ -453,6 +538,12 @@
 <s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
 <s:hidden id="error11" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden name="pageNo" value="3"/>
+
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
 
 <div class="form-submit">
     <s:submit value="%{getText('next.label')}"/>
