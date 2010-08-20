@@ -149,30 +149,35 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     /**
      * method responsible for marking requested birth confirmations
-     * and birth certificate as printed
+     * and birth certificate as printed.
      *
      * @return
      */
     public String markAsPrinted() {
         BirthDeclaration bdf = service.getById(bdId, user);
-
+        logger.debug("requested to mark as print confirmListFlag : {} and bdId : {}", confirmListFlag, bdId);
         int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
         if (confirmListFlag) {
-            //todo if want validation
-            service.markLiveBirthConfirmationAsPrinted(bdf, user);
+            if (bdf.getRegister().getStatus() != BirthDeclaration.State.APPROVED) {
+                addActionError(getText("birth.confirmation.invalid.state.to.marak.as.print"));
+            } else {
+                service.markLiveBirthConfirmationAsPrinted(bdf, user);
+            }
             printList = service.getConfirmationPrintList(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
                 noOfRows, printed, user);
-            logger.debug("Confirmation Print list {}  items  found ", printList.size());
         } else {
             birthType = bdf.getRegister().getBirthType();
-            //todo validation
-            if (birthType == BirthDeclaration.BirthType.LIVE) {
-                service.markLiveBirthCertificateAsPrinted(bdf, user);
-            } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                service.markStillBirthCertificateAsPrinted(bdf, user);
-            } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                service.markAdoptionBirthCertificateAsPrinted(bdf, user);
+            if (bdf.getRegister().getStatus() != BirthDeclaration.State.ARCHIVED_CERT_GENERATED) {
+                addActionError(getText("birth.certificate.invalid.state.to.mark.as.print"));
+            } else {
+                if (birthType == BirthDeclaration.BirthType.LIVE) {
+                    service.markLiveBirthCertificateAsPrinted(bdf, user);
+                } else if (birthType == BirthDeclaration.BirthType.STILL) {
+                    service.markStillBirthCertificateAsPrinted(bdf, user);
+                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                    service.markAdoptionBirthCertificateAsPrinted(bdf, user);
+                }
             }
             printList = service.getBirthCertificatePrintList(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
