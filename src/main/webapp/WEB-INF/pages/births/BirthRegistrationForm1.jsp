@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <s:set value="1" name="row"/>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
@@ -88,13 +87,8 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    ;
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    };
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -118,134 +112,11 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
 var errormsg = "";
-/*var lateOrbelate = false;
- var isLive = true;
- function validate2() {
-
- var returnval;
- var flag = false;
- var lateOrbelate = false;
- var check = document.getElementById('skipjs');
- *//**//*date related validations*//**//*
- var birthdate = new Date(document.getElementById('birthDatePicker').value);
- var submit = new Date(document.getElementById('submitDatePicker').value);
- var element = document.getElementById('bdfSerialNo');
-
- //compare two days
- if (birthdate.getTime() > submit.getTime()) {
- errormsg = errormsg + "\n" + document.getElementById('error6').value;
- flag = true;
- }
-
- var birthType = document.getElementById('birthTypeId').value;
- if (birthType != 2) {
- //comparing 90 days delay
- var one_day = 1000 * 60 * 60 * 24 ;
- var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
- if (numDays >= 90) {
- if (numDays >= 365) {
- errormsg = errormsg + "\n" + document.getElementById('error8').value;
- } else {
- errormsg = errormsg + "\n" + document.getElementById('error7').value;
- }
- lateOrbelate = true;
- }
- }
-
- if (element.value == "") {
- errormsg = errormsg + "\n" + document.getElementById('error1').value;
- flag = true;
- }
- //validate serial number is a number
- IsNumeric(element.value, 'SERIALNUMBER')
-
- if (!(submit.getTime())) {
- errormsg = errormsg + "\n" + document.getElementById('error9').value;
- flag = true;
- }
- if (!birthdate.getTime()) {
- errormsg = errormsg + "\n" + document.getElementById('error10').value;
- flag = true;
- }
- element = document.getElementById('placeOfBirth');
- if (element.value == "") {
- errormsg = errormsg + "\n" + document.getElementById('error11').value;
- flag = true;
- }
-
- if (!check.checked) {
- alert("skip")
-
- element = document.getElementById("weeksPregnant");
- alert("weeks : " + element.value)
- if (element.value == "") {
- errormsg = errormsg + "\n" + document.getElementById('error14').value;
- }
-
-
- element = document.getElementById('childFullNameOfficialLang');
- if (element.value == "") {
- alert("called")
- errormsg = errormsg + "\n" + document.getElementById('error2').value;
- flag = true;
- }
- alert("2")
- alert(errormsg)
- element = document.getElementById('childFullNameEnglish');
- if (element.value == "") {
- errormsg = errormsg + "\n" + document.getElementById('error3').value;
- flag = true;
- }
-
- element = document.getElementById('childBirthWeight');
- if (element.value == "")
- {
- errormsg = errormsg + "\n" + document.getElementById('error4').value;
- flag = true;
- }
- else if (isNaN(element.value)) {
- errormsg = errormsg + "\n" + document.getElementById('error4').value;
- flag = true;
- }
- element = document.getElementById('childRank');
- if (element.value == "") {
- errormsg = errormsg + "\n" + document.getElementById('error5').value;
- flag = true;
- }
- //check child rank is numeric
- IsNumeric(element.value, 'CHILD RANK')
-
- element = document.getElementById("numberOfChildrenBorn")
- if (isNaN(element.value)) {
- errormsg = errormsg + "\n" + document.getElementById('error12').value;
- flag = true;
- }
- //check number of children fields are
- IsNumeric(element.value, "NUMBER OF CHILDRENS")
-
- }
- if (errormsg != "") {
- alert(errormsg);
- if (flag) {
- returnval = false;
- } else {
- if (lateOrbelate) {
- returnval = true;
- }
- }
- }
- errormsg = "";
- return returnval;
- }*/
-
 function validate() {
     //skipping low priority data validations
     var check = document.getElementById('skipjs');
@@ -298,20 +169,6 @@ function commanTags(check) {
     //place of birth
     domObject = document.getElementById('placeOfBirth');
     isEmpty(domObject, "", 'error11')
-
-    // child rank
-    domObject = document.getElementById('childRank');
-    if (!check) {
-        isEmpty(domObject, "", 'error16')
-    }
-    isNumeric(domObject.value, 'error24')
-
-    // number of child
-    domObject = document.getElementById('numberOfChildrenBorn');
-    if (!check) {
-        isEmpty(domObject, "", 'error12')
-    }
-    isNumeric(domObject.value, 'error25')
 }
 
 //still birth tags
@@ -321,6 +178,21 @@ function stillBirthCommanTags(check) {
     domObject = document.getElementById('weeksPregnant');
     if (!check)
         isEmpty(domObject, "", 'error14');
+
+    // child rank
+    domObject = document.getElementById('childRank');
+    if (!check.checked) {
+        isEmpty(domObject, "", 'error5')
+    }
+    alert(document.getElementById('error5'))
+    isNumeric(domObject.value, 'error24')
+
+    // number of child
+    domObject = document.getElementById('numberOfChildrenBorn');
+    if (!check.checked) {
+        isEmpty(domObject, "", 'error12')
+    }
+    isNumeric(domObject.value, 'error25')
 }
 
 function liveBirthCommanTags(check) {
@@ -336,10 +208,33 @@ function liveBirthCommanTags(check) {
 
     //birth weight
     domObject = document.getElementById('childBirthWeight');
-    if (!check) {
+    if (!check.checked) {
         isEmpty(domObject, "", 'error4');
     }
     isNumeric(domObject.value, 'error23')
+
+    // child rank
+    domObject = document.getElementById('childRank');
+    if (!check.checked) {
+        isEmpty(domObject, "", 'error5')
+    }
+    isNumeric(domObject.value, 'error24')
+
+    // number of child
+    domObject = document.getElementById('numberOfChildrenBorn');
+    if (!check.checked) {
+        isEmpty(domObject, "", 'error12')
+    }
+    isNumeric(domObject.value, 'error25')
+}
+//validate date format to iso date format
+function validateDateFormat() {
+    alert('called');
+
+    // var dateToValidate = new Date(document.getElementById('birthDatePicker').value);
+    var dateToValidate = new Date();
+
+    alert(dateFormat(dateToValidate.format("m/dd/yy")));
 }
 
 //check live birth is a belated birth gives warnings
@@ -377,11 +272,9 @@ function dateRange() {
     <tbody>
     <tr>
         <td width="300px"></td>
-        <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
-                                                                    alt=""/><br>
+        <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>" alt=""/><br>
             <s:if test="birthType.ordinal() == 1">
-                <label>
-                    උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
+                <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
                     <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
             </s:if>
@@ -400,16 +293,14 @@ function dateRange() {
         <td>
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
-                    </td>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label></td>
                     <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
                 </tr>
             </table>
 
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக
-                        பாவனைக்காக மட்டும்
+                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
                         <br>For office use only
                         <hr>
                     </td>
@@ -423,9 +314,7 @@ function dateRange() {
                             <label><span class="font-8">ලියාපදිංචි කල දිනය<br>* In Tamil<br>Date of Registration</span></label>
                         </s:else>
                     </td>
-                    <td>
-                        <s:textfield name="register.dateOfRegistration" id="submitDatePicker"/>
-                    </td>
+                    <td><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>
                 </tr>
             </table>
         </td>
@@ -467,8 +356,7 @@ function dateRange() {
 </table>
 
 
-<table class="table_reg_page_01" cellspacing="0" cellpadding="0">
-
+<table class="table_reg_page_01" cellspacing="0" cellpadding="0" style="margin-bottom:0;">
     <caption></caption>
     <col/>
     <col/>
@@ -499,30 +387,22 @@ function dateRange() {
             <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දරුකමට
                 ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial
                 Number of the Certificate of Adoption</label></td>
-            <td colspan="7">
-                <s:label value="%{#session.birthRegister.register.adoptionUKey}"/>
-            </td>
+            <td colspan="7"><s:label value="%{#session.birthRegister.register.adoptionUKey}"/></td>
         </tr>
         <tr>
             <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) ළමයාගේ උපත කලින්
                 ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was
                 previously registered</label></td>
             <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
-            <td colspan="6" class="table_reg_cell_01">
-                <s:label value="%{#session.oldBdfForAdoption.districtName}"/>
-            </td>
+            <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.districtName}"/></td>
         </tr>
         <tr>
-            <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
-            <td colspan="6" class="table_reg_cell_01">
-                <s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/>
-            </td>
+            <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>* In Tamil<br>Divisional Secretariat</label></td>
+            <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/></td>
         </tr>
         <tr>
-            <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
-            <td colspan="6" class="table_reg_cell_01">
-                <s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/>
-            </td>
+            <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය<br>* In Tamil<br>Registration Division</label></td>
+            <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
         </tr>
         <tr>
             <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
@@ -531,34 +411,23 @@ function dateRange() {
     </s:if>
     <tr></tr>
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන්
-            දිනය<br> பிறந்த திகதி <br>Date of Birth</label>
-        </td>
+        <td width="150px" align="left"><label>(1)උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
         <td colspan="3" style="border-right:none;">
-                <%--todo--%>
             <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
-
         </td>
-        <td colspan="4" style="border-left:none;">
-            <div id="belatedError" style="color:red; "/>
-        </td>
+        <td colspan="4" style="border-left:none;"><div id="belatedError" style="color:red; font-size:11pt"/></td>
     </tr>
     <tr>
-        <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br>
-            Place of Birth</label></td>
+        <td rowspan="6"><label>(2) උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
-                      cssStyle="width:98.5%; width:240px;"/>
+            <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId" cssStyle="width:98.5%; width:240px;"/>
         </td>
     </tr>
-
     <tr>
         <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br/>பிரிவு / <br/>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                      cssStyle="float:left;  width:240px;"/>
-
+            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}" cssStyle="float:left;  width:240px;"/>
         </td>
     </tr>
     <tr>
@@ -568,106 +437,99 @@ function dateRange() {
             Registration Division</label>
         </td>
         <td colspan="6">
-            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                      cssStyle="float:left;  width:240px;"/>
+            <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList" cssStyle="float:left;  width:240px; margin:2px 5px;"/>
         </td>
     </tr>
     <tr>
-
         <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
     </tr>
     <tr>
         <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
         <td colspan="6">
-            <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%;"/>
+            <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish" cssStyle="width:97.6%; text-transform:uppercase;"/>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
         </td>
     </tr>
     <tr>
         <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>In Tamil <br>Did the birth occur at a hospital?</label></td>
         <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
-        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
-                                    value="true"/></td>
+        <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}" value="true"/></td>
         <td><label>නැත / *in Tamil / No</label></td>
         <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම රාජ්‍ය භාෂාවෙන්
-                (සිංහල / දෙමළ)<br>பிறப்பு
-                அத்தாட்சி
-                பாத்த.... (சிங்களம்
-                / தமிழ்) <br>Name in
-                any of the official languages (Sinhala / Tamil)</label></td>
+            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+                <br>பிறப்பு   அத்தாட்சி     பாத்த.... (சிங்களம் / தமிழ்)
+                <br>Name in any of the official languages (Sinhala / Tamil)</label>
+            </td>
             <td colspan="7">
-                <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang"
-                            cssStyle="width:98.2%;"/>
+                <s:textarea name="child.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="width:98.2%;"/>
             </td>
         </tr>
-
         <tr>
-            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම ඉංග්‍රීසි
-                භාෂාවෙන් <br>பிறப்பு அத்தாட்சி
-                ….. <br>Name in English
+            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                නම ඉංග්‍රීසි  භාෂාවෙන් <br>பிறப்பு அத்தாட்சி  ….. <br>Name in English
             </label></td>
             <td colspan="7">
-                <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
-                            cssStyle="width:98.2%;text-transform: uppercase;"/>
-                <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;"
-                     id="childName">
+                <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish" cssStyle="width:98.2%;text-transform: uppercase;"/>
+                <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="childName">
             </td>
         </tr>
     </s:if>
     <tr>
         <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
-            සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred
-            Language for
-            Birth Certificate </label></td>
-        <td colspan="6"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
-                                  name="register.preferredLanguage"
-                                  cssStyle="width:190px; margin-left:5px;"></s:select></td>
+            සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
+        </td>
+        <td colspan="6">
+            <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}" name="register.preferredLanguage" cssStyle="width:190px; margin-left:5px;"/>
+        </td>
     </tr>
     <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>
-            பால் <br>Gender of the child</label></td>
-        <td colspan="3"><s:select
-                list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="child.childGender" cssStyle="width:190px; margin-left:5px;"/></td>
+        <td class="font-9">
+            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender of the child</label>
+        </td>
+        <td colspan="3">
+            <s:select list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
+        </td>
         <s:if test="birthType.ordinal() == 1">
-            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு
-                நிறை<br>Birth Weight (kg)</label></td>
-            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                         cssStyle="width:95%;"/></td>
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு      நிறை<br>Birth Weight (kg)</label>
+            </td>
+            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight" cssStyle="width:95%;"/></td>
         </s:if>
         <s:if test="birthType.ordinal() == 2">
-            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ
-                නමි)<br>பிறப்பு நிறை<br>Birth Weight, if known (kg)</label></td>
-            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                         cssStyle="width:95%;"/></td>
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ නමි)<br>பிறப்பு நிறை<br>Birth Weight, if known (kg)</label>
+            </td>
+            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight" cssStyle="width:95%;"/></td>
         </s:if>
         <s:elseif test="birthType.ordinal() == 0">
-            <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට
-                ගර්භයට සති කීයක් වී තිබුනේද යන්න
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට  ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
-                <br>Number of weeks pregnant at the time of still-birth</label></td>
+                <br>Number of weeks pregnant at the time of still-birth</label>
+            </td>
             <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" cssStyle="width:95%;"/></td>
         </s:elseif>
     </tr>
     <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල
-            අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
-            to Live Birth Order,
-            rank of the child?</label></td>
+        <td class="font-9">
+            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා ද?
+                <br>பிறப்பு ஒழுங்கு
+                <br>According to Live Birth Order, rank of the child?</label>
+        </td>
         <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank"/></td>
-        <td colspan="2" class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු
-            උපතක් නම්, දරුවන් ගණන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
-            எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
-            multiple births, number of children</label></td>
-        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"
-                                     cssStyle="width:95%;"/></td>
+        <td colspan="2" class="font-9">
+            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු  උපතක් නම්, දරුවන් ගණන
+                <br>பல்வகைத்தன்மை (இரட்டையர்கள்     எனின்),<br> பிள்னளகளின் எண்ணிக்கை
+                <br>If multiple births, number of children</label>
+        </td>
+        <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn" cssStyle="width:95%;"/></td>
     </tr>
-
     </tbody>
 </table>
 
@@ -710,4 +572,3 @@ function dateRange() {
 </div>
 </s:form>
 </div>
-

@@ -63,6 +63,14 @@
         var element;
         var returnval;
         var flag;
+
+        // check informant type selected
+        element = document.getElementById('informantType');
+        alert(element.checked)
+        if (element == null) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+        }
+
         /*date related validations*/
         var submit = new Date(document.getElementById('informDatePicker').value);
         // var submit = new Date(submitDatePicker);
@@ -70,10 +78,7 @@
             errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
             flag = true;
         }
-        element = document.getElementsByName("informant.informantType");
-        if (element.checked) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-        }
+
         element = document.getElementById('informantName');
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
@@ -82,7 +87,7 @@
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
         }
-        element = document.getElementsByName("marriage.parentsMarried")[0];
+        element = document.getElementsByName("marriage.parentsMarried")[0];      
         if (element.checked)
         {
             element = document.getElementById('placeOfMarriage');
@@ -125,9 +130,30 @@
         return returnval;
     }
 
-    function disableMarrage(mode) {
-        document.getElementById('placeOfMarriage').disabled = mode;
-        document.getElementById('marriageDatePicker').disabled = mode;
+    //check given element is empty and return true if empty else false
+    function isEmpty(domElement) {
+        with (domElement) {
+            if (value == null || value == "") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function validateEmail(domElement, errorCode) {
+        with (domElement) {
+            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            if (reg.test(value) == false) {
+                errormsg = errormsg + "\n" + document.getElementById('error11').value + " : " + document.getElementById(errorCode).value;
+                return false;
+            }
+        }
+    }
+
+    function disableMarrage(mode){
+        document.getElementById('placeOfMarriage').disabled=mode;
+        document.getElementById('marriageDatePicker').disabled=mode;
     }
 
     function initPage() {
@@ -169,18 +195,15 @@
                     <tbody>
                     <tr>
                         <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
-                                     onclick="disableMarrage(false)"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1" onclick="disableMarrage(false)"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>*in tamil<br>No</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
-                                     onclick="disableMarrage(true)"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}" onclick="disableMarrage(true)"/></td>
                     </tr>
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
-                                     onclick="disableMarrage(true)"/></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}" onclick="disableMarrage(false)"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -298,13 +321,11 @@
                     Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
-                         onclick="disableMarrage(false)"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1" onclick="disableMarrage(false)"/>
                 <label> ඔවි/*in tamil / Yes</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
-                         onclick="disableMarrage(true)"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}" onclick="disableMarrage(true)"/>
                 <label> නැත / *in tamil / No</label>
             </td>
         </tr>
@@ -346,7 +367,7 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="center" width="150px"><s:radio name="informant.informantType" list="#{'FATHER':''}"
+                    <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType" list="#{'FATHER':''}"
                                                               onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
             '%{parent.fatherFullName}','','','')"/></td>
