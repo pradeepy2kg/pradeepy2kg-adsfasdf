@@ -60,6 +60,7 @@
                               value="%{#session.WW_TRANS_I18N_LOCALE.language}"></s:select>
                 </td>
             </tr>
+             <s:if test="userType != 'ADMIN'">
             <tr>
                 <td>
                     <div id="user-district" class="font-10">
@@ -82,6 +83,7 @@
                                             cssStyle="float:left;  width:240px;"/>
                 </td>
             </tr>
+            </s:if>
             <tr>
                 <td></td>
                 <td>
