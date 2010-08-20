@@ -612,13 +612,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
-               /* if (birthType == BirthDeclaration.BirthType.LIVE) {
-                    service.markLiveBirthCertificateAsPrinted(bdf, user);
-                } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                    service.markStillBirthCertificateAsPrinted(bdf, user);
-                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                    service.markAdoptionBirthCertificateAsPrinted(bdf, user);
-                }*/
                 beanPopulate(bdf);
 
                 gender = child.getChildGenderPrint();
