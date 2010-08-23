@@ -691,16 +691,27 @@
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
+        <action name="eprInitAddEditDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddEditDivisionsAndDsDivision">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+        </action>
         <action name="eprInitAddEditDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initAddEditDivisions">
             <result type="tiles" name="success">epr.addEditDivisions</result>
+            <result type="tiles" name="deletesuccess">epr.home</result>
         </action>
-
         <action name="eprAddEditDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="addEditDivisions">
-            <result type="tiles" name="pageLoad">epr.addEditDivisions</result>
             <result type="tiles" name="success">epr.home</result>
-            <result type="tiles" name="error">epr.error</result>
+        </action>
+        <action name="eprInitAddEditDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddEditDsDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+            <result type="tiles" name="deletesuccess">epr.home</result>
+        </action>
+        <action name="eprAddEditDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="addEditDsDivisions">
+            <result type="tiles" name="success">epr.home</result>
         </action>
     </package>
 </struts>
