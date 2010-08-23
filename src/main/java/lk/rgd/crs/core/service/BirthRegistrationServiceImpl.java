@@ -1454,6 +1454,28 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
-        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
+        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
+            BirthDeclaration.State.DATA_ENTRY);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision, Date startDate,
+                                                                                        Date endDate, int pageNo, int noOfRows, User user) {
+        if (!(User.State.ACTIVE == user.getStatus()
+            &&
+            (Role.ROLE_RG.equals(user.getRole().getRoleId())
+                ||
+                (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
+            )
+        )
+            ) {
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
+        }
+        return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
+            startDate, endDate, pageNo, noOfRows);
     }
 }

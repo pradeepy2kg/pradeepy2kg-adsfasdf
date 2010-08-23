@@ -27,6 +27,7 @@
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                    <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                     <s:hidden value="%{#request.bdId}" name="bdId"/>
                     <s:hidden name="confirmationApprovalFlag" value="true"/>
                         <%--<tr>

@@ -395,5 +395,22 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
+
+    /**
+     * Returns a limited set of approval pending BirthDeclarations for selected DS Division and selected range of
+     * registration dates.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param startDate  starting date of the range
+     * @param endDate    ending date of the range
+     * @param pageNo     page number
+     * @param noOfRows   number of rows
+     * @param user       user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+
 }
 

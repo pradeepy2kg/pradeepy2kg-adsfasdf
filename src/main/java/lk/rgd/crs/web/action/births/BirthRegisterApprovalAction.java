@@ -145,8 +145,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             approvalPendingList = service.getConfirmationApprovalPending(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else {
-            /*approvalPendingList = service.getDeclarationApprovalPending(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), getPageNo(), noOfRows, user);*/
             approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         paginationHandler(approvalPendingList.size());
@@ -215,10 +213,14 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 approvalPendingList = service.getByBDDivisionStatusAndConfirmationReceiveDateRange(
                     bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
             } else {
-                approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                if (birthDivisionId != 0) {
+                    approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                } else {
+                    approvalPendingList = service.getDeclarationPendingByDSDivisionAndRegisterDateRange(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                        searchStartDate, searchEndDate, pageNo, noOfRows, user);
+                }
             }
-            addActionMessage("select according to date");
         } else {
             if (bdfSerialNo > 0) {
                 try {
@@ -414,8 +416,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                 pageNo, noOfRows, user);
         } else {
-            approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                pageNo, noOfRows, user);
+            if (birthDivisionId != 0) {
+                approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                    pageNo, noOfRows, user);
+            } else {
+                approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                    pageNo, noOfRows, user);
+            }
         }
         paginationHandler(approvalPendingList.size());
         populate();
@@ -460,8 +467,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             approvalPendingList = service.getConfirmationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                 pageNo, noOfRows, user);
         } else {
-            approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                pageNo, noOfRows, user);
+            if (birthDivisionId != 0) {
+                approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                    pageNo, noOfRows, user);
+            } else {
+                approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                    pageNo, noOfRows, user);
+            }
         }
         paginationHandler(approvalPendingList.size());
         return SUCCESS;
@@ -497,8 +509,13 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 addActionMessage(getText("message.success.ConfirmationReject"));
                 return "successConfirmationReject";
             } else {
-                approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    pageNo, noOfRows, user);
+                if (birthDivisionId != 0) {
+                    approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                        pageNo, noOfRows, user);
+                } else {
+                    approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                        pageNo, noOfRows, user);
+                }
                 paginationHandler(approvalPendingList.size());
                 addActionMessage(getText("message.success.DeclarationReject"));
                 return "successDeclarationReject";
@@ -529,8 +546,14 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             addActionError(getText("brapproval.delete.error." + e.getErrorCode()));
             logger.error("inside delete: {} ", e);
         }
-        approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-            getPageNo(), appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE), user);
+        if (birthDivisionId != 0) {
+            noOfRows = appParametersDAO.getIntParameter(BR_APPROVAL_ROWS_PER_PAGE);
+            approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                pageNo, noOfRows, user);
+        } else {
+            approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                pageNo, noOfRows, user);
+        }
         paginationHandler(approvalPendingList.size());
         populate();
         addActionMessage(getText("message.success.Declaration.delete"));
@@ -583,11 +606,21 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         } else if (searchDateRangeFlag) {
             searchStartDate = DateTimeUtils.getDateFromISO8601String(startDate);
             searchEndDate = DateTimeUtils.getDateFromISO8601String(endDate);
-            approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            if (birthDivisionId != 0) {
+                approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            } else {
+                approvalPendingList = service.getDeclarationPendingByDSDivisionAndRegisterDateRange(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                    searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            }
         } else {
-            approvalPendingList = service.getDeclarationApprovalPending(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), getPageNo(), noOfRows, user);
+            if (birthDivisionId != 0) {
+                approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                    pageNo, noOfRows, user);
+            } else {
+                approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                    pageNo, noOfRows, user);
+            }
         }
         paginationHandler(approvalPendingList.size());
         /**
@@ -642,11 +675,21 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
         } else if (searchDateRangeFlag) {
             searchStartDate = DateTimeUtils.getDateFromISO8601String(startDate);
             searchEndDate = DateTimeUtils.getDateFromISO8601String(endDate);
-            approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            if (birthDivisionId != 0) {
+                approvalPendingList = service.getDeclarationPendingByBDDivisionAndRegisterDateRange(
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            } else {
+                approvalPendingList = service.getDeclarationPendingByDSDivisionAndRegisterDateRange(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                    searchStartDate, searchEndDate, pageNo, noOfRows, user);
+            }
         } else {
-            approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                getPageNo(), noOfRows, user);
+            if (birthDivisionId != 0) {
+                approvalPendingList = service.getDeclarationApprovalPending(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                    pageNo, noOfRows, user);
+            } else {
+                approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
+                    pageNo, noOfRows, user);
+            }
         }
         if (getRecordCounter() > 0) {
             setRecordCounter(getRecordCounter() - noOfRows);
