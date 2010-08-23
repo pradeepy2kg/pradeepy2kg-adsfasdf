@@ -1,6 +1,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <s:set value="rowNumber" name="row"/>
+<s:set value="0" name="i"/>
+<s:set value="counter" name="prev"/>
+
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
@@ -109,12 +113,11 @@
     var errormsg = "";
     function validate()
     {
-        alert('validate');
+
         var domObject;
         var element;
         var returnval;
         var check = document.getElementById('skipjs');
-
         if (!check.checked) {
             element = document.getElementById('fatherFullName');
             if (element.value == "") {
@@ -128,7 +131,7 @@
         //validating mothers email
         domObject = document.getElementById('motherEmail');
         if (!isEmpty(domObject))
-            validateEmail(domObject, 'error2', 'error1')
+            validateEmail(domObject, 'error1')
 
         if (errormsg != "") {
             alert(errormsg);
@@ -149,30 +152,6 @@
         }
     }
 
-    function motherage() {
-        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-        var mother_bday = new Date(document.getElementById('motherDatePicker').value);
-        var mother_age_at_birth = document.getElementById("motherAgeAtBirth");
-        var mother_age = child_dob.getYear() - mother_dob.getYear();
-        if (mother_age <= 10 || mother_bday.length == 0) {
-            if (mother_bday.length == 0)
-            {
-                alert(document.getElementById('mother_birth_day_empty').value);
-            }
-            else if (confirm(document.getElementById('mother_age').value + mother_age)) {
-                mother_age_at_birth.value = mother_age;
-            }
-            return false;
-        }
-        else {
-            mother_age_at_birth.value = mother_age;
-            return true;
-        }
-    }
-
-    function initPage() {
-
-    }
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
@@ -198,7 +177,7 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)අනන්‍යතා අංකය
+        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)අනන්‍යතා අංකය
             / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
@@ -222,19 +201,19 @@
 
 <table class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின்
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)සම්පුර්ණ නම<br>தந்தையின்
             முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="2">
             <s:textfield name="parent.fatherDOB" id="fatherDatePicker"/>
         </td>
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
         <td colspan="2"><s:textfield id="fatherPlaceOfBirth" name="parent.fatherPlaceOfBirth"
                                      cssStyle="width:95%;"/></td>
@@ -245,7 +224,7 @@
 <table class="table_reg_page_02" cellspacing="0" style="border-top:none;">
     <tbody>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ ජාතිය<br>இனம்<br>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)පියාගේ ජාතිය<br>இனம்<br>
             Father's Race</label></td>
         <td colspan="6" class="table_reg_cell_02">
             <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"
@@ -273,7 +252,7 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)අනන්‍යතා අංකය
+        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)අනන්‍යතා අංකය
             / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
@@ -297,14 +276,14 @@
 <table class="table_reg_page_02" cellspacing="0" style="margin:0; border-top:none; border-bottom:none;">
     <tbody>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின்
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)සම්පුර්ණ නම<br>தந்தையின்
             முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:textarea name="parent.motherFullName" id="motherFullName" cssStyle="width:98%;"/>
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය <br>பிறந்த
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)උපන් දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="3">
                 <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
@@ -312,13 +291,13 @@
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+                                                  value="#row+1"/><s:set name="i" value="#i+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
                 as at
                 the date of birth of child
             </s:if>
             <s:else>
                 (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
+                                                  value="#row+1"/><s:set name="i" value="#i+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
                 as at the date of still-birth of child
             </s:else>
         </label>
@@ -330,7 +309,7 @@
 
     </tr>
     <tr style="border-bottom:none;">
-        <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මවගේ ස්ථිර
+        <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)මවගේ ස්ථිර
             ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
             Address of the Mother</label>
         </td>
@@ -373,25 +352,30 @@
         </td>
     </tr>
     <tr>
-        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌වගේ ජාතිය<br>இனம்<br>
+        <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>
+            )ම‌වගේ ජාතිය<br>இனம்<br>
             Mother's Race</label></td>
         <td colspan="2"><s:select list="raceList" name="motherRace" headerKey="0"
                                   headerValue="%{getText('select_race.label')}"/></td>
 
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් ස්ථානය <br>பிறந்த இடம்
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>
+            )උපන් ස්ථානය <br>பிறந்த இடம்
             <br>Place of Birth</label></td>
         <td colspan="3" class="passport"><s:textfield id="motherPlaceOfBirth" name="parent.motherPlaceOfBirth"/></td>
     </tr>
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ අංකය<br>*in
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)රෝහලට
+            ඇතුලත් කිරිමේ අංකය<br>*in
             tamil<br>Hospital Admission Number</label></td>
         <td colspan="2" class="passport"><s:textfield name="parent.motherAdmissionNo"/></td>
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)රෝහලට ඇතුලත් කිරිමේ
+        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>
+            )රෝහලට ඇතුලත් කිරිමේ
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3"><s:textfield name="parent.motherAdmissionDate" id="admitDatePicker"/></td>
     </tr>
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ම‌ව සම්බන්ධ කල හැකි තොරතුරු <br>தாயின்
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)ම‌ව සම්බන්ධ
+            කල හැකි තොරතුරු <br>தாயின்
             தொடர்பு இலக்க தகவல் <br>Contact Details of the
             Mother</label></td>
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
@@ -408,6 +392,7 @@
 
 <s:hidden name="pageNo" value="2"/>
 <s:hidden name="rowNumber" value="%{row}"/>
+<s:hidden name="counter" value="%{i}"/>
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">
         <s:label value="%{getText('skipvalidation.label')}"/>
@@ -421,9 +406,11 @@
     <s:url id="backUrl" action="eprBirthRegistration">
         <s:param name="back" value="true"/>
         <s:param name="pageNo" value="{pageNo - 1}"/>
+        <s:param name="rowNumber" value="{rowNumber+#prev-#i}"/>
     </s:url>
     <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
+<s:set value="0" name="counter"/>
 </s:form>
 </div>
 <%-- Styling Completed --%>
