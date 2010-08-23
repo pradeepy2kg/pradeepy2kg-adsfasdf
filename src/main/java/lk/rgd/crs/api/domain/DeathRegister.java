@@ -22,13 +22,20 @@ import java.util.Date;
 
     @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
-        "AND deathRegister.activeRecord IS TRUE"),
+        "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"),
 
     @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
         "ORDER BY deathRegister.death.dateOfRegistration desc")
 })
 public class DeathRegister implements Serializable {
+    public CRSLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
+    }
+
+    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
+    }
 
     public enum State {
         DATA_ENTRY, // 0 - A newly entered death registration - can be edited by DEO, ADR
@@ -57,16 +64,8 @@ public class DeathRegister implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    @Column(nullable = false)
-    private boolean activeRecord = true;
-
-    @Column(nullable = true)
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date lastUpdatedTime;
-
-    @OneToOne
-    @JoinColumn(name = "lastUpdatedUserId")
-    private User lastUpdatedUser;
+    @Embedded
+    private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
     @Embedded
     private DeathInfo death = new DeathInfo();
@@ -154,29 +153,5 @@ public class DeathRegister implements Serializable {
 
     public void setDeathType(Type deathType) {
         this.deathType = deathType;
-    }
-
-    public boolean isActiveRecord() {
-        return activeRecord;
-    }
-
-    public void setActiveRecord(boolean activeRecord) {
-        this.activeRecord = activeRecord;
-    }
-
-    public Date getLastUpdatedTime() {
-        return lastUpdatedTime;
-    }
-
-    public void setLastUpdatedTime(Date lastUpdatedTime) {
-        this.lastUpdatedTime = lastUpdatedTime;
-    }
-
-    public User getLastUpdatedUser() {
-        return lastUpdatedUser;
-    }
-
-    public void setLastUpdatedUser(User lastUpdatedUser) {
-        this.lastUpdatedUser = lastUpdatedUser;
     }
 }

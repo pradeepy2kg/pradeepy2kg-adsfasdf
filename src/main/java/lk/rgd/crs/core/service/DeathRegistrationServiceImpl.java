@@ -66,7 +66,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
                 " deathRegistration number already exists : " + existing.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
-        deathRegisterDAO.addDeathRegistration(deathRegistration);
+        deathRegisterDAO.addDeathRegistration(deathRegistration, user);
     }
 
     /**
@@ -80,7 +80,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
                 " Illegal state at target : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        deathRegisterDAO.updateDeathRegistration(deathRegistration);
+        deathRegisterDAO.updateDeathRegistration(deathRegistration, user);
     }
 
     /**
@@ -126,7 +126,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         dr.setStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED);
-        deathRegisterDAO.updateDeathRegistration(dr);
+        deathRegisterDAO.updateDeathRegistration(dr, null);
     }
 
     private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
@@ -139,11 +139,17 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
             validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
             dr.setStatus(state);
+            dr.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            dr.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            if (state == DeathRegister.State.APPROVED) {
+                dr.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
+                dr.getLifeCycleInfo().setCertificateGeneratedUser(user);
+            }    
         } else {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        deathRegisterDAO.updateDeathRegistration(dr);
+        deathRegisterDAO.updateDeathRegistration(dr, null);
     }
 
     /**
@@ -158,7 +164,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot delete death registraion " + deathRegiserIdUKey +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        deathRegisterDAO.deleteDeathRegistration(deathRegisterDAO.getById(deathRegiserIdUKey));
+        deathRegisterDAO.deleteDeathRegistration(deathRegisterDAO.getById(deathRegiserIdUKey), user);
     }
 
     /**
