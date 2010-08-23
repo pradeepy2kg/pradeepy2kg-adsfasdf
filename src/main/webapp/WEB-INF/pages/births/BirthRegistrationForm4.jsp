@@ -43,7 +43,8 @@
         element = document.getElementById('notifyingAuthorityPIN');
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
-        }                     
+        }
+//        TODO
 //        validatePINorNIC(element, 'error1', 'p4error5');
 
         // notifier name

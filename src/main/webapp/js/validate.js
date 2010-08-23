@@ -10,7 +10,7 @@
  }*/
 
 
-//check given element is empty
+// check given element is empty
 function isEmpty(domElement, errorMessage, errorCode) {
     with (domElement) {
         if (value == null || value == "") {
@@ -19,7 +19,7 @@ function isEmpty(domElement, errorMessage, errorCode) {
     }
 }
 
-//check given element is empty and return true if empty else false
+// check given element is empty and return true if empty else false
 function isFieldEmpty(domElement) {
     with (domElement) {
         if (value == null || value == "") {
@@ -30,7 +30,7 @@ function isFieldEmpty(domElement) {
     }
 }
 
-//check given text is numeric value
+// check given text is a numeric value
 function isNumeric(text, errorText, message) {
     var validChars = "0123456789.";
     var isNumber = true;
@@ -46,7 +46,7 @@ function isNumeric(text, errorText, message) {
     }
 }
 
-//valdating email address
+// valdate an email address
 function validateEmail(domElement, errorText, errorCode) {
     with (domElement) {
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

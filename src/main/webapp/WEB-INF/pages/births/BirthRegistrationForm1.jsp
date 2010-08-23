@@ -152,7 +152,6 @@ function validate() {
     return returnval;
 }
 
-
 //comment tags
 function commanTags(check) {
     var domObject;
@@ -188,7 +187,6 @@ function stillBirthCommanTags(check) {
     if (!check.checked) {
         isEmpty(domObject, "", 'error5')
     }
-    alert(document.getElementById('error5'))
     isNumeric(domObject.value,'error13', 'error24')
 
     // number of child
@@ -254,10 +252,8 @@ function dateRange() {
 }
 
 function initPage() {
-
 }
 </script>
-
 
 <s:form action="eprBirthRegistration.do" name="birthRegistrationForm1" id="birth-registration-form-1" method="POST"
         onsubmit="javascript:return validate()">
