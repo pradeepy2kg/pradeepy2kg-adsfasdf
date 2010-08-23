@@ -13,6 +13,12 @@ import java.util.Date;
 public class BaseLifeCycleInfo implements Serializable {
 
     // ----- Database Row level information - not null ---------
+    /**
+     * Is this record currently considered as active?
+     */
+    @Column(nullable = false)
+    private boolean active;
+
     @Column(nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     /**
@@ -71,5 +77,13 @@ public class BaseLifeCycleInfo implements Serializable {
 
     public void setLastUpdatedUser(User lastUpdatedUser) {
         this.lastUpdatedUser = lastUpdatedUser;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
