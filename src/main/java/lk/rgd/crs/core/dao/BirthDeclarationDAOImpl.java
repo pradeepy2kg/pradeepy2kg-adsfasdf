@@ -211,4 +211,19 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("endDate", endDate);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision, Date startDate, Date endDate,
+                                                                                       int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("get.by.dsdivision.status.confirmation.receive.date").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("dsDivision", dsDivision);
+        q.setParameter("status", BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return q.getResultList();
+    }
 }
