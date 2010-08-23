@@ -19,8 +19,19 @@ function isEmpty(domElement, errorMessage, errorCode) {
     }
 }
 
+//check given element is empty and return true if empty else false
+function isFieldEmpty(domElement) {
+    with (domElement) {
+        if (value == null || value == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 //check given text is numeric value
-function isNumeric(text, message) {
+function isNumeric(text, errorText, message) {
     var validChars = "0123456789.";
     var isNumber = true;
     var characters;
@@ -31,7 +42,7 @@ function isNumeric(text, message) {
         }
     }
     if (!isNumber) {
-        errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById(message).value;
+        errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(message).value;
     }
 }
 
@@ -47,10 +58,14 @@ function validateEmail(domElement, errorText, errorCode) {
 }
 
 // validate PIN or NIC
-function validatePINorNIC(message, errorText, errorCode) {
-    // TODO still implementing chathuranga
-    if (message.value.length > 10) {
-        errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-    }
-}
+//function validatePINorNIC(message, errorText, errorCode) {
+//    with (message) {
+//        // TODO still implementing chathuranga
+//        if (value.length != 10) {
+//            alert(value.length + 'aaa')
+//            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+//            return false;
+//        }
+//    }
+//}
 

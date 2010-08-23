@@ -14,15 +14,17 @@
 $(function() {
     $("#submitDatePicker").datepicker({
         changeYear: true,
+        yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2020-12-31'
+        endDate:'2040-12-31'
     });
 });
 
 $(function() {
     $("#birthDatePicker").datepicker({
         changeYear: true,
+        yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31'
@@ -89,13 +91,8 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    ;
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    };
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -119,10 +116,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
@@ -195,7 +189,7 @@ function stillBirthCommanTags(check) {
         isEmpty(domObject, "", 'error5')
     }
     alert(document.getElementById('error5'))
-    isNumeric(domObject.value, 'error24')
+    isNumeric(domObject.value,'error13', 'error24')
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
