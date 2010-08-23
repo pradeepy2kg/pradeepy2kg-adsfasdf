@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Service API implementation to manage Adoption Orders and related activities
@@ -122,6 +123,19 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    public void recordNewBirthDeclaration(AdoptionOrder adoption, long serialNumber, User user) {
+        //todo permission check for this adoption and bdf
+        adoption.setNewBirthCertificateNumber(serialNumber);
+        adoption.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
+        adoption.getLifeCycleInfo().setCertificateGeneratedUser(user);
+
+        adoptionOrderDAO.updateAdoptionOrder(adoption, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void setApplicantInfo(AdoptionOrder adoption, User user) {
 
         logger.debug("Recording adoption certificate applicant information for : {}", adoption.getIdUKey());
@@ -195,6 +209,8 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
         if (adoption.getStatus() == AdoptionOrder.State.DATA_ENTRY) {
             validateAccess(user);
             adoption.setStatus(state);
+            adoption.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            adoption.getLifeCycleInfo().setApprovalOrRejectUser(user);
         } else {
             handleException("Cannot approve/reject adoption order " + adoption.getIdUKey() +
                 " Illegal state : " + adoption.getStatus(), ErrorCodes.ILLEGAL_STATE);

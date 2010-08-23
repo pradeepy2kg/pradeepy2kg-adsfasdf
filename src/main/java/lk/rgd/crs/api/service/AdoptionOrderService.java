@@ -62,6 +62,14 @@ public interface AdoptionOrderService {
     public void rejectAdoptionOrder(long adoptionId, User user);
 
     /**
+     *
+     * @param adoption  Adoption Record representing the court order
+     * @param serialNumber  Serial number of the generated birth certificate
+     * @param user  executing User
+     */
+    public void recordNewBirthDeclaration(AdoptionOrder adoption, long serialNumber, User user);
+
+    /**
      * Set the information of applicant who is requesting the adoption certificate and set the status to
      * CERTIFICATE_ISSUE_REQUEST_CAPTURED which is 4.
      * pre condition : Status has to be NOTICE_LETTER_PRINTED, 2

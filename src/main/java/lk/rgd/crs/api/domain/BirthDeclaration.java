@@ -137,9 +137,6 @@ public class BirthDeclaration implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    @Column(nullable = false)
-    private boolean activeRecord = true;
-
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
@@ -173,14 +170,6 @@ public class BirthDeclaration implements Serializable {
 
     public void setIdUKey(long idUKey) {
         this.idUKey = idUKey;
-    }
-
-    public boolean isActiveRecord() {
-        return activeRecord;
-    }
-
-    public void setActiveRecord(boolean activeRecord) {
-        this.activeRecord = activeRecord;
     }
 
     public ChildInfo getChild() {

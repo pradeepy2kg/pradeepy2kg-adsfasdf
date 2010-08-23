@@ -24,8 +24,11 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
     @Transactional(propagation = Propagation.MANDATORY)
     public void addAdoptionOrder(AdoptionOrder adoption, User user) {
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
-        adoption.setLastUpdatedTime(new Date());
-        adoption.setLastUpdatedUser(user);
+        adoption.getLifeCycleInfo().setCreatedTimestamp(new Date());
+        adoption.getLifeCycleInfo().setCreatedUser(user);
+        adoption.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        adoption.getLifeCycleInfo().setLastUpdatedUser(user);
+        adoption.getLifeCycleInfo().setActiveRecord(true);
         em.persist(adoption);
     }
 
@@ -34,7 +37,8 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateAdoptionOrder(AdoptionOrder adoption, User user) {
-        adoption.setLastUpdatedUser(user);
+        adoption.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        adoption.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(adoption);
     }
 
@@ -59,9 +63,6 @@ public class AdoptionOrderDAOImpl extends BaseDAO implements AdoptionOrderDAO {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void recordNewBirthDeclaration(AdoptionOrder adoption, long serialNumber, User user) {
-        adoption.setNewBirthCertificateNumber(serialNumber);
-        adoption.setLastUpdatedTime(new Date());
-        adoption.setLastUpdatedUser(user);
         em.merge(adoption);
     }
 
