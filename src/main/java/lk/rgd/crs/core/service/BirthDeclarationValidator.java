@@ -3,6 +3,7 @@ package lk.rgd.crs.core.service;
 import lk.rgd.AppConstants;
 import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.PinAndNicUtils;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
@@ -149,7 +150,7 @@ public class BirthDeclarationValidator {
         }
 
         // validate notifying authority - initially we will need to allow a PIC or NIC for the NA
-        if (!isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), popreg, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_na_pin"),
                 bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
             w.setSeverity(UserWarning.Severity.ERROR);
@@ -161,7 +162,7 @@ public class BirthDeclarationValidator {
 
         // mother pin or nic
         String pinOrNic = bdf.getParent().getMotherNICorPIN();
-        if (!isValidPINorNIC(pinOrNic, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_mother_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -171,7 +172,7 @@ public class BirthDeclarationValidator {
 
         // father pin or nic
         pinOrNic = bdf.getParent().getFatherNICorPIN();
-        if (!isValidPINorNIC(pinOrNic, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_father_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -179,7 +180,7 @@ public class BirthDeclarationValidator {
 
         // informant pin or nic
         pinOrNic = bdf.getInformant().getInformantNICorPIN();
-        if (!isValidPINorNIC(pinOrNic, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -189,7 +190,7 @@ public class BirthDeclarationValidator {
 
         // confirmant pin or nic
         pinOrNic = bdf.getConfirmant().getConfirmantNICorPIN();
-        if (!isValidPINorNIC(pinOrNic, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -208,46 +209,6 @@ public class BirthDeclarationValidator {
     private static final void checkValidString(String s, List<UserWarning> warnings, ResourceBundle rb, String key) {
         if (s == null || s.trim().length() == 0) {
             warnings.add(new UserWarning(rb.getString(key), UserWarning.Severity.WARN));
-        }
-    }
-
-    /**
-     * Check if a valid PIN or NIC
-     * PIN - <century> <year> <day> <number-4-digits> e.g. 1 10 208 0001
-     * NIC - <year> <day> <number-4-digits> <letter-V-X> e.g. 75 211 1111 V
-     */
-    private final boolean isValidPINorNIC(String pinOrNic, User user) {
-
-        if (pinOrNic == null) return true;
-        
-        pinOrNic = pinOrNic.trim();
-        if (pinOrNic.length() == 10) {
-            try {
-                long pin = Long.parseLong(pinOrNic);
-                return popreg.findPersonByPIN(pin, user) != null;
-            } catch (NumberFormatException e) {
-                // validate NIC
-                try {
-                    int year = Integer.parseInt(pinOrNic.substring(0, 2));
-                    int day  = Integer.parseInt(pinOrNic.substring(2, 5));
-                    int number = Integer.parseInt(pinOrNic.substring(5, 9));
-                    String letter = pinOrNic.substring(9, 10);
-
-                    if ((day >= 367 && day <= 501) || (day >= 867)) {
-                        return false;
-                    }
-                    if (!"V".equals(letter) && !"X".equals(letter)) {
-                        return false;
-                    }
-                } catch (NumberFormatException ne) {
-                    logger.debug("Invalid NIC : {}", pinOrNic);
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            logger.debug("Invalid NIC or PIN (Expected 10 characters) : {}", pinOrNic);
-            return false;
         }
     }
 
