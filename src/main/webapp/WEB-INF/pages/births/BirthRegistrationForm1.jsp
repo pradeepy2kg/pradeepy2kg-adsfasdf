@@ -1,13 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:set value="1" name="row"/>
-<s:set value="0" name="i"/>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<s:if test="birthType.ordinal()==0">
+    <%--still birth--%>
+    <s:set name="row" value="1"/>
+</s:if>
+<s:elseif test="birthType.ordinal()==1">
+    <%--live birth--%>
+    <s:set name="row" value="1"/>
+</s:elseif>
+<s:elseif test="birthType.ordinal()==2">
+    <%--adoption--%>
+    <s:set name="row" value="1"/>
+</s:elseif>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-1-outer">
 <script>
@@ -141,6 +152,7 @@ function validate() {
     }
     if (declarationType.value == 2) {
         commanTags(check);
+        adoptionCommanTags(check);
         dateRange(submit, birthdate, 2);
     }
 
@@ -163,11 +175,12 @@ function commanTags(check) {
     //date of register
     domObject = document.getElementById('submitDatePicker');
     isEmpty(domObject, "", 'error9')
+    isDate(domObject.value, "error13", "submitDate")
 
-    //todo check date format
     //date of birth
     domObject = document.getElementById('birthDatePicker');
     isEmpty(domObject, "", 'error10')
+    isDate(domObject.value, "error13", "dob")
 
     //place of birth
     domObject = document.getElementById('placeOfBirth');
@@ -382,15 +395,13 @@ function initPage() {
     <%--TODO style not added--%>
 <s:if test="birthType.ordinal() == 2">
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)දරුකමට
+        <td width="150px" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දරුකමට
             ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial
             Number of the Certificate of Adoption</label></td>
         <td colspan="7"><s:label value="%{#session.birthRegister.register.adoptionUKey}"/></td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                   value="#i+1"/>)
+        <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             ළමයාගේ උපත කලින්
             ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was
             previously registered</label></td>
@@ -414,8 +425,7 @@ function initPage() {
 </s:if>
 <tr></tr>
 <tr style="border-left:1px solid #000000;">
-    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-            name="i" value="#i+1"/>)උපන් දිනය<br>
+    <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br>
         பிறந்த திகதி <br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
         <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
@@ -425,8 +435,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                               value="#i+1"/>) උපන්
+    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
         ස්ථානය<br>பிறந்த
         இடம்<br> Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
@@ -486,8 +495,7 @@ function initPage() {
         </td>
     </tr>
     <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                      value="#i+1"/>)
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
         </label></td>
         <td colspan="7">
@@ -499,8 +507,7 @@ function initPage() {
     </tr>
 </s:if>
 <tr>
-    <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-            name="i" value="#i+1"/>) උප්පැන්න
+    <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
         සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி ….. <br>Preferred Language for Birth Certificate </label>
     </td>
     <td colspan="6">
@@ -510,7 +517,7 @@ function initPage() {
 </tr>
 <tr>
     <td class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)ස්ත්‍රී
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී
             පුරුෂ භාවය<br>பால் <br>Gender
             of the child</label>
     </td>
@@ -521,7 +528,7 @@ function initPage() {
     </td>
     <s:if test="birthType.ordinal() == 1">
         <td colspan="2">
-            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) උපත්
+            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
                 බර<br>பிறப்பு நிறை<br>Birth
                 Weight (kg)</label>
         </td>
@@ -530,7 +537,7 @@ function initPage() {
     </s:if>
     <s:if test="birthType.ordinal() == 2">
         <td colspan="2">
-            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>) උපත්
+            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
                 බර (දන්නේ නමි)<br>பிறப்பு
                 நிறை<br>Birth Weight, if known (kg)</label>
         </td>
@@ -539,7 +546,7 @@ function initPage() {
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
-            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                 දරැවා මැරී උපදින විට ගර්භයට සති
                 කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
@@ -550,7 +557,7 @@ function initPage() {
 </tr>
 <tr>
     <td class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)සජිවි
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි
             උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
             ද?
             <br>பிறப்பு ஒழுங்கு
@@ -558,7 +565,7 @@ function initPage() {
     </td>
     <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank"/></td>
     <td colspan="2" class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)නිවුන්
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන්
             දරු උපතක් නම්, දරුවන් ගණන
             <br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்),<br> பிள்னளகளின் எண்ணிக்கை
             <br>If multiple births, number of children</label>
@@ -598,6 +605,8 @@ function initPage() {
 <s:hidden id="error23" value="%{getText('p1.birthWeight.text')}"/>
 <s:hidden id="error24" value="%{getText('p1.child.rank.text')}"/>
 <s:hidden id="error25" value="%{getText('p1.numOfChildren.text')}"/>
+<s:hidden id="dob" value="%{getText('p1.dob')}"/>
+<s:hidden id="submitDate" value="%{getText('p1.submit.date')}"/>
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">

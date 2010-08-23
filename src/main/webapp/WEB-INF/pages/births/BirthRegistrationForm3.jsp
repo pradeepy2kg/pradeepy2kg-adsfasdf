@@ -1,7 +1,18 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="rowNumber" name="row"/>
-
+<s:if test="birthType.ordinal()==0">
+    <%--still birth--%>
+    <s:set name="row" value="23"/>
+</s:if>
+<s:elseif test="birthType.ordinal()==1">
+    <%--live birth--%>
+    <s:set name="row" value="25"/>
+</s:elseif>
+<s:elseif test="birthType.ordinal()==27">
+    <%--adoption--%>
+    <s:set name="row" value="1"/>
+</s:elseif>
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
@@ -60,7 +71,20 @@
     function validate() {
         // used to skip non trivial validation in the page
         var check = document.getElementById('skipjs');
+    var declarationType = document.getElementById('birthTypeId');
         var returnval = true;
+
+    if (declarationType.value == 0) {
+        commanTags(check);
+    }
+    //validation for live birth
+    if (declarationType.value == 1) {
+        commanTags(check);
+    }
+    if (declarationType.value == 2) {
+        commanTags(check);
+    }
+
 
         validateMarriage(check);
         validateInformant();
@@ -72,6 +96,14 @@
         errormsg = "";
         return returnval;
     }
+
+function commanTags() {
+    var domObject;
+    //infomant date
+    domObject = document.getElementById('informDatePicker');
+    isDate(domObject.value, "error11", "infomantDate")
+
+}
 
     // validation marriage related fields
     function validateMarriage(check) {
@@ -169,7 +201,7 @@
     function informantAvailable(inf1, inf2, inf3) {
         if (!(inf1 || inf2 || inf3))
             errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-    }    
+    }
 
     function disableMarriage(mode) {
         document.getElementById('placeOfMarriage').disabled = mode;
@@ -242,7 +274,8 @@
                 </table>
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
-            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage" cssStyle="float:right;"/></td>
+            <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
+                                         cssStyle="float:right;"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
@@ -324,7 +357,8 @@
             <td><s:textfield name="grandFather.greatGrandFatherNICorPIN"/></td>
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear" cssStyle="width:95%;"/></td>
+            <td><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
+                             cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:95%;"/></td>
         </tr>
@@ -341,9 +375,8 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala
-                <br>*in Tamil
-                <br>Details of the Marriage
+            <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Details of the
+                Marriage
             </td>
         </tr>
         <tr>
@@ -387,11 +420,11 @@
             <table class="sub_table">
                 <tr>
                     <td><label>මව <br>மாதா <br>Mother</label></td>
-                    <td align="center" width="150px">
-                        <s:radio id="informantType" name="informant.informantType" list="#@java.util.HashMap@{'MOTHER':''}"
+                    <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType"
+                                                              list="#@java.util.HashMap@{'MOTHER':''}"
                                                               onchange="javascript:setInformPerson('MOTHER',
-            '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}','%{parent.motherPhoneNo}','%{parent.motherEmail}')"/>
-                    </td>
+            '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
+            '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
                 </tr>
             </table>
         </td>
@@ -399,12 +432,11 @@
             <table class="sub_table">
                 <tr>
                     <td><label>පියා<br> பிதா <br>Father</label></td>
-                    <td align="center" width="150px">
-                        <s:radio id="informantType" name="informant.informantType" list="#@java.util.HashMap@{'FATHER':''}"
+                    <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType"
+                                                              list="#@java.util.HashMap@{'FATHER':''}"
                                                               onchange="javascript:setInformPerson('FATHER',
             '%{parent.fatherNICorPIN}',
-            '%{parent.fatherFullName}','','','')"/>
-                    </td>
+            '%{parent.fatherFullName}','','','')"/></td>
                 </tr>
             </table>
         </td>
@@ -414,13 +446,15 @@
                     <s:if test="birthType.ordinal() != 0">
                         <td><label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label></td>
                         <td align="center" width="150px">
-                            <s:radio id="informantType" name="informant.informantType" list="#@java.util.HashMap@{'GUARDIAN':''}"
+                            <s:radio id="informantType" name="informant.informantType"
+                                     list="#@java.util.HashMap@{'GUARDIAN':''}"
                                      onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
                     </s:if>
                     <s:else>
                         <td><label>නෑයන් <br> * In Tamil <br>Relative</label></td>
                         <td align="center" width="150px">
-                            <s:radio id="informantType" name="informant.informantType" list="#@java.util.HashMap@{'RELATIVE':''}"
+                            <s:radio id="informantType" name="informant.informantType"
+                                     list="#@java.util.HashMap@{'RELATIVE':''}"
                                      onchange="javascript:setInformPerson('RELATIVE','','','','','','')"/></td>
                     </s:else>
                 </tr>
@@ -436,7 +470,8 @@
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
         <td colspan="3" class="find-person">
             <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="informant_lookup"/>
+            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                 id="informant_lookup"/>
         </td>
     </tr>
 
@@ -448,7 +483,8 @@
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
             முகவரி <br>Postal Address</label></td>
-        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress" cssStyle="width:98%;"/></td>
+        <td colspan="4"><s:textarea name="informant.informantAddress" id="informantAddress"
+                                    cssStyle="width:98%;"/></td>
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)***සම්බන්ධ කල හැකි තොරතුරු
@@ -456,13 +492,18 @@
             தொடர்பு இலக்க தகவல் <br>Contact Details of the
             Informant</label></td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
-        <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo" cssStyle="width:95%;"/></td>
+        <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
+                         cssStyle="width:95%;"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
-        <td><s:textfield name="informant.informantEmail" id="informantEmail" cssStyle="width:95%;text-transform:none;"/></td>
+        <td><s:textfield name="informant.informantEmail" id="informantEmail"
+                         cssStyle="width:95%;"/></td>
+
     </tr>
     <tr>
         <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
-        <td colspan="4"><s:textfield name="informant.informantSignDate" id="informDatePicker"/></tr>
+        <td colspan="4">
+                <s:textfield name="informant.informantSignDate" id="informDatePicker"/>
+    </tr>
     </tbody>
 </table>
 <s:hidden name="rowNumber" value="%{row}"/>
@@ -481,7 +522,9 @@
 <s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
 <s:hidden id="error11" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error12" value="%{getText('informantNIC.text')}"/>
+<s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
 <s:hidden name="pageNo" value="3"/>
+
 
 <div class="skip-validation">
     <s:checkbox name="skipjavaScript" id="skipjs" value="false">

@@ -2,8 +2,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <s:set value="rowNumber" name="row"/>
-<s:set value="0" name="i"/>
-<s:set value="counter" name="prev"/>
+<s:if test="birthType.ordinal()==0">
+    <%--still birth--%>
+    <s:set name="row" value="29"/>
+</s:if>
+<s:elseif test="birthType.ordinal()==1">
+    <%--live birth--%>
+    <s:set name="row" value="34"/>
+</s:elseif>
+<s:elseif test="birthType.ordinal()==2">
+    <%--adoption--%>
+    <s:set name="row" value="36"/>
+</s:elseif>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
@@ -34,7 +44,7 @@
 
     var errormsg = "";
     function validate() {
-
+         alert("called");
         var element;
         var returnval;
         var signdate = new Date(document.getElementById('modifiedDatePicker').value);
@@ -97,8 +107,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                           value="#i+1"/>)
+                <td colspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                     පුද්ගල අනන්‍යතා
                     අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
@@ -110,8 +119,7 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                        name="i" value="#i+1"/>)
+                <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                     නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
@@ -119,18 +127,17 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>
-                    <s:set name="i" value="#i+1"/>)තැපැල් ලිපිනය<br>தபால்
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල්
+                    ලිපිනය<br>தபால்
                     முகவரி <br>Postal Address</label></td>
-                <td colspan="4">
-                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
-                                cssStyle="width:98%;"/>
-                </td>
+                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
+                                            id="notifyingAuthorityAddress"
+                                            cssStyle="width:98%;"/></td>
             </tr>
             <tr>
                 <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
-                <td colspan="4">
-                    <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"/>
+                <td colspan="4"><s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
+                                             id="modifiedDatePicker"></s:textfield>
                 </td>
             </tr>
             </tbody>
@@ -193,7 +200,6 @@
             <s:url id="backUrl" action="eprBirthRegistration">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
-                <s:param name="rowNumber" value="{rowNumber-#prev}"/>
             </s:url>
 
             <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>

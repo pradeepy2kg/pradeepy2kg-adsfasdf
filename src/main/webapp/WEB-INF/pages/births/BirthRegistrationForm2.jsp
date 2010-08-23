@@ -2,9 +2,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <s:set value="rowNumber" name="row"/>
-<s:set value="0" name="i"/>
-<s:set value="counter" name="prev"/>
 
+<s:if test="birthType.ordinal()==0">
+    <%--still birth--%>
+    <s:set name="row" value="8"/>
+</s:if>
+<s:elseif test="birthType.ordinal()==1">
+    <%--live birth--%>
+    <s:set name="row" value="10"/>
+</s:elseif>
+<s:elseif test="birthType.ordinal()==2">
+    <%--adoption--%>
+    <s:set name="row" value="12"/>
+</s:elseif>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
@@ -151,6 +161,8 @@
         if (!isFieldEmpty(domObject))
             validateEmail(domObject, 'error1')
 
+commanTags(check);
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -172,6 +184,18 @@
 
     function initPage() {
 
+    }
+    function commanTags(check) {
+        var domObject;
+        //father date of birth
+        domObject = document.getElementById('fatherDatePicker');
+        isDate(domObject.value, "error2", "fatherDOB")
+        //mother date of birth
+        domObject = document.getElementById('motherDatePicker');
+        isDate(domObject.value, "error2", "motherDOB")
+        //hospital addmission date
+        domObject = document.getElementById('admitDatePicker');
+        isDate(domObject.value, "error2", "dateOfAddmission")
     }
 
 </script>
@@ -424,8 +448,7 @@
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
         <td colspan="1"><s:textfield name="parent.motherPhoneNo"/></td>
         <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
-        <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"
-                                                      cssStyle="text-transform:none;"/></td>
+        <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"/></td>
     </tr>
     </tbody>
 </table>
@@ -433,6 +456,9 @@
 <s:hidden id="error1" value="%{getText('p1.invalid.emailMother.text')}"/>
 <s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error3" value="%{getText('p2.motherAgeAthBirthBelowZero.error')}"/>
+<s:hidden id="fatherDOB" value="%{getText('p2.father.dob')}"/>
+<s:hidden id="motherDOB" value="%{getText('p2.mother.dob')}"/>
+<s:hidden id="dateOfAddmission" value="%{getText('p2.hospital.addmission.date')}"/>
 
 <s:hidden name="pageNo" value="2"/>
 <s:hidden name="rowNumber" value="%{row}"/>
@@ -450,7 +476,6 @@
     <s:url id="backUrl" action="eprBirthRegistration">
         <s:param name="back" value="true"/>
         <s:param name="pageNo" value="{pageNo - 1}"/>
-        <s:param name="rowNumber" value="{rowNumber+#prev-#i}"/>
     </s:url>
     <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
