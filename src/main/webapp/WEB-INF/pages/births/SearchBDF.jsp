@@ -11,6 +11,10 @@
 <!--//todo not completed JSON -->
 
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../js/validate.js"></script>
+
+<s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
+<s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
 <script>
     $(document).ready(function() {
         $('#search-list-table').dataTable({
@@ -59,11 +63,40 @@
                     });
         })
     });
+    var errormsg = "";
+    function validate() {
+        var domObject;
+        var returnval = true;
+        domObject = document.getElementById('bdfSerialNoId');
+        isNumeric(domObject.value, "error5");
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
+
+
+    function validate2() {
+        var domObject;
+        var returnval = true;
+        domObject = document.getElementById('bdfSerialNoId2');
+        isNumeric(domObject.value, "error5");
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
+
 </script>
 <div id="birth-confirmation-search">
     <s:actionerror/>
     <br/>
-    <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form" method="post">
+    <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
+            onsubmit="javascript:return validate()" method="post">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="registrationSerchLegend"
                              value="%{getText('registrationSerchLegend.label')}"/></legend>
@@ -79,7 +112,7 @@
                 <tr>
                     <td><s:label name="declarationSearialNumber"
                                  value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td width="360px"><s:textfield name="serialNo"/></td>
+                    <td width="360px"><s:textfield name="serialNo" id="bdfSerialNoId"/></td>
                     <td width="200x"><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
@@ -107,7 +140,7 @@
         </fieldset>
     </s:form>
     <br/>
-    <s:form action="eprBDFSearchByIdUKey.do" method="post">
+    <s:form action="eprBDFSearchByIdUKey.do" method="post"  onsubmit="javascript:return validate2()">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend><s:label name="confirmatinSearchLegend"
                              value="%{getText('confirmationSearchLegend.label')}"/></legend>
@@ -115,7 +148,7 @@
                 <tr>
                     <td width="300px"><s:label name="confirmationSearch"
                                                value="%{getText('searchConfirmationSerial.label')}"/></td>
-                    <td width="250px"><s:textfield name="idUKey"/></td>
+                    <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
                     <td>
                         <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search"/></div>
                     </td>

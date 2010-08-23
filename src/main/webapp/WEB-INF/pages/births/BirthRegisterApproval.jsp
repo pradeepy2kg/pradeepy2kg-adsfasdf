@@ -5,7 +5,7 @@
 </style>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
-
+<script type="text/javascript" src="../js/validate.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
 
@@ -144,12 +144,26 @@
             allCheck.checked = true;
         }
     }
+    var errormsg = "";
+    function validate() {
+        var domObject;
+        var returnval = true;
+        domObject= document.getElementById('bdfSerialNoId');
+        isNumeric(domObject.value, 'error20');
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
 </script>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
-<s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form">
+<s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form"
+        onsubmit="javascript:return validate()">
 <div id="birth-register-approval-header">
 <fieldset style="margin-bottom:10px;margin-top:20px; border:none">
     <legend></legend>
@@ -178,13 +192,13 @@
         </tr>
         <tr>
             <td><s:label value="%{getText('serial.label')}"/></td>
-            <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;"/></td>
+            <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;" id="bdfSerialNoId"/></td>
             <td align="right"><s:label value="%{getText('date.from.label')}"
                                        cssStyle=" margin-right:5px;"/><s:textfield id="searchStartDatePicker"
-                                                                                   name="searchStartDate"></s:textfield></td>
+                                                                                   name="searchStartDate"/></td>
             <td align="right"><s:label value="%{getText('date.to.label')}"
                                        cssStyle=" margin-right:5px;"/><s:textfield id="searchEndDatePicker"
-                                                                                   name="searchEndDate"></s:textfield></td>
+                                                                                   name="searchEndDate"/></td>
         </tr>
         <tr>
             <td colspan="4" class="button" align="right">
@@ -373,6 +387,8 @@
                                                     cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
                 <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
         </div>
+        <s:hidden id="error20" value="%{getText('p1.serial.text')}"/>
+        <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
     </s:form>
 </div>
 </div>
