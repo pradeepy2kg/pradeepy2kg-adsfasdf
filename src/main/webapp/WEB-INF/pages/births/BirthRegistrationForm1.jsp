@@ -209,28 +209,22 @@ function liveBirthCommanTags(check) {
         isEmpty(domObject, "", 'error3');
 
     //birth weight
-    alert('1')
     domObject = document.getElementById('childBirthWeight');
     if (!check.checked) {
-        alert('2')
         isEmpty(domObject, "", 'error4');
     }
-    alert('4')
     isNumeric(domObject.value, 'error13', 'error23')
-             alert('5')
+
     // child rank
     domObject = document.getElementById('childRank');
     if (!check.checked) {
-        alert('6')
         isEmpty(domObject, "", 'error5')
     }
-    alert('7')
     isNumeric(domObject.value, 'error13', 'error24')
-            alert('8')
+
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
     if (!check.checked) {
-        alert('9')
         isEmpty(domObject, "", 'error12')
     }
     isNumeric(domObject.value, 'error13', 'error25')

@@ -13,7 +13,6 @@
 // check given element is empty
 function isEmpty(domElement, errorMessage, errorCode) {
     with (domElement) {
-        alert('isEmpty')
         if (value == null || value == "") {
             errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
         }
@@ -33,7 +32,6 @@ function isFieldEmpty(domElement) {
 
 // check given text is a numeric value
 function isNumeric(text, errorText, message) {
-    alert('isNumeric')
     var validChars = "0123456789.";
     var isNumber = true;
     var characters;
