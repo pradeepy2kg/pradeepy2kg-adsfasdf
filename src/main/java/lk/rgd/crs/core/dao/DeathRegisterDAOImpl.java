@@ -3,6 +3,7 @@ package lk.rgd.crs.core.dao;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.common.api.domain.User;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +22,12 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void addDeathRegistration(DeathRegister dr) {
-        dr.setLastUpdatedTime(new Date());
-        dr.setActiveRecord(true);
+    public void addDeathRegistration(DeathRegister dr, User user) {
+        dr.getLifeCycleInfo().setCreatedTimestamp(new Date());
+        dr.getLifeCycleInfo().setCreatedUser(user);
+        dr.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        dr.getLifeCycleInfo().setLastUpdatedUser(user);
+        dr.getLifeCycleInfo().setActiveRecord(true);
         em.persist(dr);
     }
 
@@ -31,8 +35,9 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void updateDeathRegistration(DeathRegister dr) {
-        dr.setLastUpdatedTime(new Date());
+    public void updateDeathRegistration(DeathRegister dr, User user) {
+        dr.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        dr.getLifeCycleInfo().setLastUpdatedUser(user);
         em.merge(dr);
     }
 
@@ -48,7 +53,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void deleteDeathRegistration(DeathRegister dr) {
+    public void deleteDeathRegistration(DeathRegister dr, User user) {
         em.remove(dr);
     }
 

@@ -30,7 +30,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
 
     /**
      * @inheritDoc
-     * This method is there for getting all t he DS division names for a given district
+     * This method is there for getting all the DS division names for a given district
      * Without restricting on user/role permissions. This is needed to capture mothers DS division in
      * Birth dicration data entry.
      */

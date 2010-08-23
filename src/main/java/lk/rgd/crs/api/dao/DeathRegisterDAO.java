@@ -3,6 +3,7 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.common.api.domain.User;
 
 import java.util.List;
 import java.util.Date;
@@ -16,15 +17,17 @@ public interface DeathRegisterDAO {
      * Add a death registration
      *
      * @param dr the death register to be added
+     * @param user
      */
-    public void addDeathRegistration(DeathRegister dr);
+    public void addDeathRegistration(DeathRegister dr, User user);
 
     /**
      * update death registration
      *
      * @param dr the death registration to be updated
+     * @param user
      */
-    public void updateDeathRegistration(DeathRegister dr);
+    public void updateDeathRegistration(DeathRegister dr, User user);
 
     /**
      * returns the death registration object for a given IDUKey
@@ -38,8 +41,9 @@ public interface DeathRegisterDAO {
      * remove a death registration
      *
      * @param dr the entry to be removed
+     * @param user
      */
-    public void deleteDeathRegistration(DeathRegister dr);
+    public void deleteDeathRegistration(DeathRegister dr, User user);
 
     /**
      * Get the list of death registrations for a given state based on given death division
