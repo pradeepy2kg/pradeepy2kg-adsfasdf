@@ -1164,6 +1164,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * Generates a PIN and adds the record to the PRS
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     private List<UserWarning> generatePINandAddToPRS(BirthDeclaration bdf, User user) {
 
         logger.debug("Generating a PIN and adding record to the PRS for BDF UKey : {}", bdf.getIdUKey());
@@ -1320,7 +1321,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.NEVER)
     public void triggerScheduledJobs() {
         logger.info("Start executing Birth registration related scheduled tasks..");
 
