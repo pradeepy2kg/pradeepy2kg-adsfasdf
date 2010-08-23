@@ -28,7 +28,6 @@ import java.util.Date;
 })
 
 public class AdoptionOrder implements Serializable {
-
     public enum State {
         DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
 
@@ -55,13 +54,8 @@ public class AdoptionOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    @Column(nullable = true)
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date lastUpdatedTime;
-
-    @OneToOne
-    @JoinColumn(name = "lastUpdatedUserId")
-    private User lastUpdatedUser;
+    @Embedded
+    private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
 
     @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
@@ -415,19 +409,11 @@ public class AdoptionOrder implements Serializable {
         this.certificateApplicantPINorNIC = WebUtils.filterBlanksAndToUpper(certificateApplicantPINorNIC);
     }
 
-    public Date getLastUpdatedTime() {
-        return lastUpdatedTime;
+    public CRSLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
     }
 
-    public void setLastUpdatedTime(Date lastUpdatedTime) {
-        this.lastUpdatedTime = lastUpdatedTime;
-    }
-
-    public User getLastUpdatedUser() {
-        return lastUpdatedUser;
-    }
-
-    public void setLastUpdatedUser(User lastUpdatedUser) {
-        this.lastUpdatedUser = lastUpdatedUser;
+    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
     }
 }

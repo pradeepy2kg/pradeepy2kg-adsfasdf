@@ -1,6 +1,5 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.common.api.domain.User;
 
 import javax.persistence.*;
@@ -28,11 +27,11 @@ public class CRSLifeCycleInfo implements Serializable {
     // ----- Certificate print information - optional ---------
     @Column
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date certificatePrintTimestamp;
+    private Date certificateGeneratedTimestamp;
 
     @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "certificatePrintUserId")
-    private User certificatePrintUser;
+    @JoinColumn(name = "certificateGeneratedUserId")
+    private User certificateGeneratedUser;
 
     // ----- Database Row level information - not null ---------
     @Column(nullable = false)
@@ -62,6 +61,9 @@ public class CRSLifeCycleInfo implements Serializable {
      * The database row level last updated user
      */
     private User lastUpdatedUser;
+
+    @Column(nullable = false)
+    private boolean activeRecord = true;
 
     public Date getCreatedTimestamp() {
         return createdTimestamp;
@@ -111,19 +113,27 @@ public class CRSLifeCycleInfo implements Serializable {
         this.approvalOrRejectUser = approvalOrRejectUser;
     }
 
-    public Date getCertificatePrintTimestamp() {
-        return certificatePrintTimestamp;
+    public Date getCertificateGeneratedTimestamp() {
+        return certificateGeneratedTimestamp;
     }
 
-    public void setCertificatePrintTimestamp(Date certificatePrintTimestamp) {
-        this.certificatePrintTimestamp = certificatePrintTimestamp;
+    public void setCertificateGeneratedTimestamp(Date certificateGeneratedTimestamp) {
+        this.certificateGeneratedTimestamp = certificateGeneratedTimestamp;
     }
 
-    public User getCertificatePrintUser() {
-        return certificatePrintUser;
+    public User getCertificateGeneratedUser() {
+        return certificateGeneratedUser;
     }
 
-    public void setCertificatePrintUser(User certificatePrintUser) {
-        this.certificatePrintUser = certificatePrintUser;
+    public void setCertificateGeneratedUser(User certificateGeneratedUser) {
+        this.certificateGeneratedUser = certificateGeneratedUser;
+    }
+
+    public boolean isActiveRecord() {
+        return activeRecord;
+    }
+
+    public void setActiveRecord(boolean activeRecord) {
+        this.activeRecord = activeRecord;
     }
 }

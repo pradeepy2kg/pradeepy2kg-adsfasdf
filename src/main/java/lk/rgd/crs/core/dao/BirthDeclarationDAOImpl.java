@@ -28,7 +28,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         bdf.getLifeCycleInfo().setCreatedUser(user);
         bdf.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         bdf.getLifeCycleInfo().setLastUpdatedUser(user);
-        bdf.setActiveRecord(true);
+        bdf.getLifeCycleInfo().setActiveRecord(true);
         em.persist(bdf);
     }
 

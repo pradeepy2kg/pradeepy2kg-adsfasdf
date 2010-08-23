@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import java.util.*;
 
 /**
@@ -678,7 +677,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             // mark existing as archived with a newer record of corrections
             existing.setConfirmant(bdf.getConfirmant());
             existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CORRECTED);
-            existing.setActiveRecord(false);
+            existing.getLifeCycleInfo().setActiveRecord(false);
             birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
             // add new record
@@ -745,8 +744,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
-        existing.getLifeCycleInfo().setCertificatePrintTimestamp(originalBCDateOfIssue);
-        existing.getLifeCycleInfo().setCertificatePrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
@@ -773,8 +770,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
-        existing.getLifeCycleInfo().setCertificatePrintTimestamp(originalBCDateOfIssue);
-        existing.getLifeCycleInfo().setCertificatePrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
@@ -801,8 +796,6 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
 
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
-        existing.getLifeCycleInfo().setCertificatePrintTimestamp(originalBCDateOfIssue);
-        existing.getLifeCycleInfo().setCertificatePrintUser(user);
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
         birthDeclarationDAO.updateBirthDeclaration(existing, user);
 
@@ -1170,7 +1163,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     /**
      * Generates a PIN and adds the record to the PRS
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     private List<UserWarning> generatePINandAddToPRS(BirthDeclaration bdf, User user) {
 
         logger.debug("Generating a PIN and adding record to the PRS for BDF UKey : {}", bdf.getIdUKey());
@@ -1227,6 +1220,8 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
 
         logger.debug("Generated PIN for record IDUKey : {} issued PIN : {}", bdf.getIdUKey(), pin);
+        bdf.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
+        bdf.getLifeCycleInfo().setCertificateGeneratedUser(user);
         birthDeclarationDAO.updateBirthDeclaration(bdf, user);
 
         // index record
@@ -1338,6 +1333,9 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         List<BirthDeclaration> list = birthDeclarationDAO.getUnconfirmedByRegistrationDate(cal.getTime());
         for (BirthDeclaration bdf : list) {
             try {
+                //todo
+                //bdf.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
+                //bdf.getLifeCycleInfo().setCertificateGeneratedUser(user);
                 List<UserWarning> warnings = generatePINandAddToPRS(bdf, systemUser);
                 for (UserWarning w : warnings) {
                     logger.warn(w.getMessage());
