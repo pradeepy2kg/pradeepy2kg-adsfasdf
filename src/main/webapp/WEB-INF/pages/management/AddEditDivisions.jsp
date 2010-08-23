@@ -15,10 +15,8 @@
     // mode 2 = passing DsDivision, will return BD list
     // any other = passing district, will return DS list and the BD list for the first DS
     $(function() {
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            var lis = document.getElementById("districtId").options[id - 1].text;
-            document.getElementById("editDistricNameId").value = lis;
+           $('select#editDsDivisionDistrictId').bind('change', function(evt1) {
+            var id = $("select#editDsDivisionDistrictId").attr("value");
             $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
                     function(data) {
                         var options1 = '';
@@ -26,24 +24,34 @@
                         for (var i = 0; i < ds.length; i++) {
                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
-                        $("select#dsDivisionId").html(options1);
-                        lis = document.getElementById("dsDivisionId").options[id - 1].text;
-                        document.getElementById("editDsDivisionNameId").value = lis;
+                        $("select#editDsDivisionDsDivisionId").html(options1);
+                    });
+        });
+
+
+        $('select#editDivisionDistrictId').bind('change', function(evt1) {
+            var id = $("select#editDivisionDistrictId").attr("value");
+            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#editDivisionDsDivisionId").html(options1);
+
                         var options2 = '';
                         var bd = data.bdDivisionList;
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
-                        $("select#divisionId").html(options2);
-                        lis = document.getElementById("divisionId").options[id - 1].text;
-                        document.getElementById("editDsDivisionNameId").value = lis;
+                        $("select#editDivisionDivisionId").html(options2);
+
                     });
         });
 
-        $('select#dsDivisionId').bind('change', function(evt2) {
-            var id = $("select#dsDivisionId").attr("value");
-            var lis = document.getElementById("dsDivisionId").options[id - 1].text;
-            document.getElementById("editDsDivisionNameId").value = lis;
+        $('select#editDivisionDsDivisionId').bind('change', function(evt2) {
+            var id = $("select#editDivisionDsDivisionId").attr("value");
             $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
                     function(data) {
                         var options = '';
@@ -51,26 +59,24 @@
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
-                        $("select#divisionId").html(options);
-                        id = $("select#divisionId").attr("value");
-                        lis = document.getElementById("divisionId").options[id - 1].text;
-                        document.getElementById("editDivisionNameId").value = lis;
+                        $("select#editDivisionDivisionId").html(options);
                     });
         });
-        $('select#divisionId').bind('change', function(evt3) {
-            var id = $("select#divisionId").attr("value");
-            var lis = document.getElementById("divisionId").options[id - 1].text;
-            document.getElementById("editDivisionNameId").value = lis;
-        });
+
     });
 </script>
 
 
 <div id="death-declaration-form-1-outer">
-    <s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
-            >
-
-        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;" class="font-9">
+<s:if test="!(pageNo == 1 || pageNo==2 || pageNo == 3 || pageNo==4)">
+    <table style="border:none;margin-top:15px;text-align:center;" align="center">
+        <tr>
+            <td>Add And Edit Ds Division</td>
+        </tr>
+    </table>
+    <s:form name="editDsDivisions" action="eprInitAddEditDsDivisions.do" method="POST">
+        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;" class="font-9"
+               align="center">
             <col width="400px"/>
             <col width="400px"/>
             <col/>
@@ -78,48 +84,219 @@
             <tr>
 
                 <td>දිස්ත්‍රික්කය / மாவட்டம் / District</td>
-                <td><s:select id="districtId" name="districtId" list="districtList"/></td>
+                <td><s:select id="editDsDivisionDistrictId" name="districtId" list="districtList"/></td>
             </tr>
             <tr>
                 <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
-                <td><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                <td><s:select id="editDsDivisionDsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                              cssStyle="float:left; "/></td>
+            </tr>
+
+            </tbody>
+        </table>
+        </div>
+        <table style="border:none; width:70%; text-align:center;" align="center">
+            <tr>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="EDIT" cssStyle="margin-top:10px;" name="button"/>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="DELETE" cssStyle="margin-top:10px;" name="button"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table style="border:none;margin-top:15px;text-align:center;" align="center">
+            <tr>
+                <td>Add And Edit Division</td>
+            </tr>
+        </table>
+    </s:form>
+    <s:form name="editDsDivisions" action="eprInitAddEditDivisions.do" method="POST">
+        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;" class="font-9"
+               align="center">
+            <col width="400px"/>
+            <col width="400px"/>
+            <col/>
+            <tbody>
+            <tr>
+
+                <td>දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+                <td><s:select id="editdivisionDistrictId" name="districtId" list="districtList"/></td>
+            </tr>
+            <tr>
+                <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+                <td><s:select id="editdivisionDsDivisionId" name="dsDivisionId" list="dsDivisionList"
                               cssStyle="float:left; "/></td>
             </tr>
             <tr>
                 <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
-                <td><s:select id="divisionId" list="divisionList"
+                <td><s:select id="editdivisionDivisionId" list="divisionList"
                               cssStyle="float:left;"/></td>
             </tr>
 
             </tbody>
         </table>
-        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;margin-top:20px;"
-               class="font-9">
-            <col width="400px"/>
-            <col width="400px"/>
-            <col/>
-            <tbody>
+        <table style="border:none; width:70%; text-align:center;" align="center">
             <tr>
-
-                <td>දිස්ත්‍රික්කය / மாவட்டம் / District</td>
-                <td><s:textfield name="" id="editDistricNameId"/></td>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="EDIT" cssStyle="margin-top:10px;" name="button"/>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-submit">
+                        <s:submit value="DELETE" cssStyle="margin-top:10px;" name="button"/>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
-                <td><s:textfield name="" id="editDsDivisionNameId"/></td>
-            </tr>
-            <tr>
-                <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය / <br>பிரிவு / <br>Registration Division</td>
-                <td><s:textfield name="" id="editDivisionNameId"/></td>
-            </tr>
-
-            </tbody>
         </table>
-
-        <div class="form-submit">
-            <s:hidden name="pageNo" value="1"/>
-            <s:hidden name="rowNumber" value="%{row}"/>
-            <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-        </div>
     </s:form>
-</div>
+</s:if>
+<s:if test="pageNo == 3 || pageNo==4">
+    <s:form name="editDsDivisions" action="eprAddEditDsDivisions.do" method="POST">
+        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;margin-top:20px;"
+               class="font-9" align="center">
+            <tr>
+                <s:if test="pageNo == 3">
+                    <td colspan="3">දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+                </s:if>
+                <s:if test="pageNo == 4">
+                    <td colspan="2">දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+                </s:if>
+                <td></td>
+            </tr>
+            <tr>
+                <s:if test="pageNo == 3">
+                    <td colspan="3">Number</td>
+                </s:if>
+                <s:if test="pageNo == 4">
+                    <td colspan="2">Number</td>
+                </s:if>
+                <s:if test="pageNo == 3">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <s:if test="pageNo==4">
+                    <td><s:textfield name=""/></td>
+                </s:if>
+            </tr>
+            <tr>
+                <td rowspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+                <td>Divisional Secretariat in English</td>
+                <s:if test="pageNo == 3">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <td><s:textfield name=""/></td>
+            </tr>
+            <tr>
+                <td>Divisional Secretariat in Sinhala</td>
+                <s:if test="pageNo == 3">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <td><s:textfield name=""/></td>
+            </tr>
+            <tr>
+                <td>Divisional Secretariat in Tamil</td>
+                <s:if test="pageNo == 3">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <td><s:textfield name=""/></td>
+            </tr>
+        </table>
+        <s:if test="pageNo==4">
+            <div class="form-submit">
+                <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
+            </div>
+        </s:if>
+        <s:if test="pageNo==3">
+            <div class="form-submit">
+                <s:submit value="EDIT" cssStyle="margin-top:10px;" name="button"/>
+            </div>
+        </s:if>
+    </s:form>
+</s:if>
+<s:if test="pageNo == 1 || pageNo==2">
+    <s:form name="editDivisions" action="eprAddEditDivisions.do" method="POST">
+        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;margin-top:20px;"
+               class="font-9" align="center">
+            <tr>
+                <s:if test="pageNo == 1">
+                    <td colspan="3">දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+                </s:if>
+                <s:if test="pageNo == 2">
+                    <td colspan="2">දිස්ත්‍රික්කය / மாவட்டம் / District</td>
+                </s:if>
+            </tr>
+            <tr>
+                <s:if test="pageNo == 1">
+                    <td colspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரிவு / Divisional Secretariat</td>
+                </s:if>
+                <s:if test="pageNo == 2">
+                    <td colspan="2">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / பிரிவு / Divisional Secretariat</td>
+                </s:if>
+            </tr>
+            <tr>
+                <s:if test="pageNo == 1">
+                    <td colspan="3">Number</td>
+                </s:if>
+                <s:if test="pageNo == 2">
+                    <td colspan="2">Number</td>
+                </s:if>
+                <s:if test="pageNo == 1">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <s:if test="pageNo==2">
+                    <td><s:textfield name=""/></td>
+                </s:if>
+            </tr>
+            <tr>
+                <td rowspan="3">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / <br>பிரிவு / <br>Divisional Secretariat</td>
+                <td>Divisional Secretariat in English</td>
+                <s:if test="pageNo == 1">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <td><s:textfield name=""/></td>
+            </tr>
+            <tr>
+                <td>Divisional Secretariat in Sinhala</td>
+                <s:if test="pageNo == 1">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <td><s:textfield name=""/></td>
+            </tr>
+            <tr>
+                <td>Divisional Secretariat in Tamil</td>
+                <s:if test="pageNo == 1">
+                    <td><s:label value=""/></td>
+                </s:if>
+                <td><s:textfield name=""/></td>
+            </tr>
+        </table>
+        <s:if test="pageNo==2">
+            <div class="form-submit">
+                <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
+            </div>
+        </s:if>
+        <s:if test="pageNo==1">
+            <div class="form-submit">
+                <s:submit value="EDIT" cssStyle="margin-top:10px;" name="button"/>
+            </div>
+        </s:if>
+
+    </s:form>
+    </div>
+</s:if>
