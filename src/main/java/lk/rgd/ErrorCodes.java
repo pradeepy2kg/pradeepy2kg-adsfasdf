@@ -18,10 +18,6 @@ public class ErrorCodes {
      */
     public static final int INVALID_DATA = 1001;
     /**
-     * non existing DS division
-     */
-    public static final int INVALID_DSDIVISION = 1004;
-    /**
      * Data requested for a non existant country id
      */
     public static final int COUNTRY_NOT_FOUND = 1002;
@@ -45,6 +41,14 @@ public class ErrorCodes {
      * The BDF is not in a state where confirmation changes can be captured
      */
     public static final int INVALID_STATE_FOR_CONFIRMATION_CHANGES = 1007;
+    /**
+     * non existing DS division
+     */
+    public static final int INVALID_DSDIVISION = 1008;
+    /**
+     * invalid PIN number
+     */
+    public static final int INVALID_PIN = 1009;
 
     // error codes 2001 - 3000 indicate permission denied errors
     /**

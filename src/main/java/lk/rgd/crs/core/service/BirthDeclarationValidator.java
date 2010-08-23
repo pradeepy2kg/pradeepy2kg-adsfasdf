@@ -10,6 +10,8 @@ import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.ChildInfo;
 import lk.rgd.crs.api.domain.InformantInfo;
 import lk.rgd.crs.api.domain.ParentInfo;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,12 @@ public class BirthDeclarationValidator {
     private static final Logger logger = LoggerFactory.getLogger(BirthDeclarationValidator.class);
     private static final int WEEKS_FOR_FOETUS_TO_SURVIVE = 28;
 
+    private final PopulationRegistry popreg;
+
+    public BirthDeclarationValidator(PopulationRegistry popreg) {
+        this.popreg = popreg;
+    }
+
     /**
      * Validate if the record satisfy the minimum requirements for acceptance and storage. These checks does not
      * even mandate the name of the child being registered - but simply the declaration division, serial, date, sex
@@ -40,7 +48,7 @@ public class BirthDeclarationValidator {
      *
      * @param bdf the BDF to validate
      */
-    public static void validateMinimalRequirements(BirthDeclaration bdf) {
+    public void validateMinimalRequirements(BirthDeclaration bdf) {
 
         if (bdf.getRegister().getBdfSerialNo() == 0 ||
             bdf.getRegister().getDateOfRegistration() == null ||
@@ -80,7 +88,7 @@ public class BirthDeclarationValidator {
      *                            The resulting warnings will be in the language preferred by the user
      * @return a list of warnings issued against the BDF
      */
-    public static List<UserWarning> validateStandardRequirements(
+    public List<UserWarning> validateStandardRequirements(
         BirthDeclarationDAO birthDeclarationDAO, BirthDeclaration bdf, User user) {
 
         // create a holder to capture any warnings
@@ -134,11 +142,60 @@ public class BirthDeclarationValidator {
                     ) {
                     warnings.add(
                         new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
-                            new Object[]{b.getIdUKey(), b.getRegister().getDateOfRegistration(),
-                                b.getChild().getChildFullNameOfficialLangToLength(20)})));
+                            b.getIdUKey(), b.getRegister().getDateOfRegistration(),
+                            b.getChild().getChildFullNameOfficialLangToLength(20))));
                 }
             }
         }
+
+        // validate notifying authority - initially we will need to allow a PIC or NIC for the NA
+        if (!isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_na_pin"),
+                bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+        
+        // TODO cross check if this person is a valid registrar on the date of registration
+        // for the selected BD division
+
+        // mother pin or nic
+        String pinOrNic = bdf.getParent().getMotherNICorPIN();
+        if (!isValidPINorNIC(pinOrNic, user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_mother_pin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // TODO validate if mother is known to be dead on this date
+
+        // father pin or nic
+        pinOrNic = bdf.getParent().getFatherNICorPIN();
+        if (!isValidPINorNIC(pinOrNic, user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_father_pin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // informant pin or nic
+        pinOrNic = bdf.getInformant().getInformantNICorPIN();
+        if (!isValidPINorNIC(pinOrNic, user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // TODO validate if informant is known to be dead on this date
+
+        // confirmant pin or nic
+        pinOrNic = bdf.getConfirmant().getConfirmantNICorPIN();
+        if (!isValidPINorNIC(pinOrNic, user)) {
+            UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
+            w.setSeverity(UserWarning.Severity.ERROR);
+            warnings.add(w);
+        }
+
+        // TODO validate if confirmant is known to be dead on this date
 
         return warnings;
     }
@@ -148,13 +205,53 @@ public class BirthDeclarationValidator {
         throw new CRSRuntimeException(msg, errorCode);
     }
 
-    private static void checkValidString(String s, List<UserWarning> warnings, ResourceBundle rb, String key) {
+    private static final void checkValidString(String s, List<UserWarning> warnings, ResourceBundle rb, String key) {
         if (s == null || s.trim().length() == 0) {
             warnings.add(new UserWarning(rb.getString(key), UserWarning.Severity.WARN));
         }
     }
 
-    private static boolean isEmptyString(String s) {
+    /**
+     * Check if a valid PIN or NIC
+     * PIN - <century> <year> <day> <number-4-digits> e.g. 1 10 208 0001
+     * NIC - <year> <day> <number-4-digits> <letter-V-X> e.g. 75 211 1111 V
+     */
+    private final boolean isValidPINorNIC(String pinOrNic, User user) {
+
+        if (pinOrNic == null) return true;
+        
+        pinOrNic = pinOrNic.trim();
+        if (pinOrNic.length() == 10) {
+            try {
+                long pin = Long.parseLong(pinOrNic);
+                return popreg.findPersonByPIN(pin, user) != null;
+            } catch (NumberFormatException e) {
+                // validate NIC
+                try {
+                    int year = Integer.parseInt(pinOrNic.substring(0, 2));
+                    int day  = Integer.parseInt(pinOrNic.substring(2, 5));
+                    int number = Integer.parseInt(pinOrNic.substring(5, 9));
+                    String letter = pinOrNic.substring(9, 10);
+
+                    if ((day >= 367 && day <= 501) || (day >= 867)) {
+                        return false;
+                    }
+                    if (!"V".equals(letter) && !"X".equals(letter)) {
+                        return false;
+                    }
+                } catch (NumberFormatException ne) {
+                    logger.debug("Invalid NIC : {}", pinOrNic);
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            logger.debug("Invalid NIC or PIN (Expected 10 characters) : {}", pinOrNic);
+            return false;
+        }
+    }
+
+    private static final boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }
 

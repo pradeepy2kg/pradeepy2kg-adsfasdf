@@ -50,12 +50,14 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final BCSearchDAO bcSearchDAO;
     private final AdoptionOrderDAO adoptionOrderDAO;
+    private final BirthDeclarationValidator birthDeclarationValidator;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
         PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
-        BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO, AdoptionOrderDAO adoptionOrderDAO) {
+        BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO, AdoptionOrderDAO adoptionOrderDAO,
+        BirthDeclarationValidator birthDeclarationValidator) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -68,6 +70,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.bcSearchDAO = bcSearchDAO;
         this.adoptionOrderDAO = adoptionOrderDAO;
+        this.birthDeclarationValidator = birthDeclarationValidator;
     }
 
     /**
@@ -411,11 +414,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         // validate if the minimum required fields are adequately filled
-        BirthDeclarationValidator.validateMinimalRequirements(bdf);
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // validate standard validations anyway, since even if validations are rejected a note of it will be made
         // against the approval for audit requirements
-        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
@@ -479,11 +482,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         // validate if the minimum required fields are adequately filled
-        BirthDeclarationValidator.validateMinimalRequirements(bdf);
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // validate standard validations anyway, since even if validations are rejected a note of it will be made
         // against the approval for audit requirements
-        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
@@ -546,11 +549,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         }
 
         // validate if the minimum required fields are adequately filled
-        BirthDeclarationValidator.validateMinimalRequirements(bdf);
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // validate standard validations anyway, since even if validations are rejected a note of it will be made
         // against the approval for audit requirements
-        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
@@ -877,11 +880,11 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
         validateAccessOfUser(user, existing);
 
         // validate if the minimum required fields are adequately filled
-        BirthDeclarationValidator.validateMinimalRequirements(bdf);
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // validate standard validations anyway, since even if validations are rejected a note of it will be made
         // against the approval for audit requirements
-        List<UserWarning> warnings = BirthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
