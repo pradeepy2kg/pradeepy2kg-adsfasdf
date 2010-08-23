@@ -11,11 +11,11 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
-
 <script type="text/javascript">
     $(function() {
         $("#modifiedDatePicker").datepicker({
             changeYear: true,
+            yearRange: '1960:2020',
             dateFormat:'yy-mm-dd',
             startDate:'2000-01-01',
             endDate:'2020-12-31'
@@ -32,33 +32,43 @@
         });
     });
 
-    function validate()
-    {
-        var errormsg = "";
+    var errormsg = "";
+    function validate() {
+
         var element;
         var returnval;
-        var dat = document.getElementsByTagName("notifyingAuthority.notifyingAuthoritySignDate");
+        var signdate = new Date(document.getElementById('modifiedDatePicker').value);
 
-        /*date related validations*/
-        var submit = new Date(document.getElementById("modifiedDatePicker").value)
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
-            flag = true;
-        }
+        // notifier PIN or NIC
         element = document.getElementById('notifyingAuthorityPIN');
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
-        }
+        }                     
+//        validatePINorNIC(element, 'error1', 'p4error5');
+
+        // notifier name
         element = document.getElementById('notifyingAuthorityName');
         if (element.value == "") {
             errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
         }
 
+        // notifier adderss
+        element = document.getElementById('notifyingAuthorityAddress');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p4error4').value;
+        }
+
+        /*date related validations*/
+        element = document.getElementById('modifiedDatePicker');
+        if (element.value == "") {
+            errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
+        }
 
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
+        errormsg = "";
         return returnval;
     }
 
@@ -108,18 +118,18 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                             value="#i+1"/>)තැපැල්
-                    ලිපිනය<br>தபால்
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>
+                    <s:set name="i" value="#i+1"/>)තැපැල් ලිපිනය<br>தபால்
                     முகவரி <br>Postal Address</label></td>
-                <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
-                                            id="notifyingAuthorityAddress"
-                                            cssStyle="width:98%;"/></td>
+                <td colspan="4">
+                    <s:textarea name="notifyingAuthority.notifyingAuthorityAddress" id="notifyingAuthorityAddress"
+                                cssStyle="width:98%;"/>
+                </td>
             </tr>
             <tr>
                 <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
-                <td colspan="4"><s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
-                                             id="modifiedDatePicker"></s:textfield>
+                <td colspan="4">
+                    <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"/>
                 </td>
             </tr>
             </tbody>
@@ -130,6 +140,8 @@
         <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value')}"/>
         <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
         <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>
+        <s:hidden id="p4error4" value="%{getText('p4.notifierAddress.text')}"/>
+        <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
 
         <s:if test="birthType.ordinal() == 1">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
