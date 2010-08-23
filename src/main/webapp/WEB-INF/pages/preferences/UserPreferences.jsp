@@ -88,7 +88,7 @@
                 <td></td>
                 <td>
                     <div class="form-submit">
-                        <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"></s:submit>
+                        <s:submit value="%{getText('submit.label')}" cssStyle="float:right;"/>
                         <s:submit action="passChangePageLoad" value="%{getText('change_pass.label')}"
                                   cssStyle="float:right;"/>
                     </div>
