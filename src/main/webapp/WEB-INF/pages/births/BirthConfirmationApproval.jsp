@@ -125,7 +125,7 @@
         <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
         <td>
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                      list="bdDivisionList"
+                      list="bdDivisionList" headerValue="%{getText('all.district.label')}" headerKey="0"
                       cssStyle=" width:240px;float:right;"/>
         </td>
     </tr>
@@ -133,15 +133,16 @@
         <td><s:label value="%{getText('serial.label')}"/></td>
         <td><s:textfield value="" name="bdId" cssStyle="width:232px;" id="bdfSerialNoId"/></td>
         <td align="right"><s:label value="%{getText('date.from.label')}"
-                                   cssStyle="margin-right:5px;"/><s:textfield name="searchStartDate"
-                                                                              id="searchStartDatePicker"/></td>
+                                   cssStyle=" margin-right:5px;"/><s:textfield id="searchStartDatePicker"
+                                                                               name="searchStartDate"/></td>
         <td align="right"><s:label value="%{getText('date.to.label')}"
-                                   cssStyle="margin-right:5px;"/><s:textfield name="searchEndDate"
-                                                                              id="searchEndDatePicker"/></td>
+                                   cssStyle=" margin-right:5px;"/><s:textfield id="searchEndDatePicker"
+                                                                               name="searchEndDate"/></td>
     </tr>
     <tr>
         <td colspan="4" class="button" align="right">
             <s:hidden name="confirmationApprovalFlag" value="true"/>
+            <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
             <s:submit name="refresh" value="%{getText('refresh.label')}"/>
         </td>
     </tr>
@@ -282,6 +283,7 @@
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                     <s:param name="recordCounter" value="#request.recordCounter"/>
+                    <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
 
                 <s:url id="nextUrl" action="eprConfirmationApprovalNext.do">
@@ -293,6 +295,7 @@
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                     <s:param name="recordCounter" value="#request.recordCounter"/>
+                    <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
                 </s:url>
                 <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
                     <img src="<s:url value='/images/previous.gif'/>" width="40px" height="35px"

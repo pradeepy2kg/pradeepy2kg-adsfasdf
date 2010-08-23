@@ -179,5 +179,20 @@ public interface BirthDeclarationDAO {
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndRegisterDateRange(DSDivision dsDivision,
                                                                             BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
+     * by an ADR for selected DS Division and selected range of confirmation received dates.
+     * Results are ordered on the descending confirmationProcessedTimestamp
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows);
 }
 
