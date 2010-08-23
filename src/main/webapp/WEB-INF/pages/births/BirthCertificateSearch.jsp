@@ -5,6 +5,10 @@
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<script type="text/javascript" src="../js/validate.js"></script>
+
+<s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
+<s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
 
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
     <script>
@@ -48,6 +52,21 @@
                         });
             });
         })
+
+        var errormsg = "";
+        function validate() {
+            var domObject;
+            var returnval = true;
+            domObject = document.getElementById('applicationNo');
+            isNumeric(domObject.value, "error5");
+            if (errormsg != "") {
+                alert(errormsg);
+                returnval = false;
+            }
+            errormsg = "";
+            return returnval;
+        }
+
     </script>
     <%--TODO insert specific css for tables in this page still implementing--%>
     <s:form action="eprBirthCertificateSearch.do" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
@@ -70,7 +89,8 @@
                         <tr>
                             <td><label><span class="font-8">*Sinhala<br>*Tamil<br>Application No</span></label>
                             </td>
-                            <td><s:textfield name="bcSearch.applicationNo" id="applicationNo" cssStyle="text-transform:uppercase;"/></td>
+                            <td><s:textfield name="bcSearch.applicationNo" id="applicationNo"
+                                             cssStyle="text-transform:uppercase;"/></td>
                         </tr>
                     </table>
                     <table class="table_reg_datePicker_page_01">
@@ -97,26 +117,30 @@
             <tr>
                 <td class="font-9" width="400px"><label>(1) ඉල්ලුම්කරැගේ සම්පූර්ණ නම<br>*Tamil<br>
                     Full Name of the Applicant</label></td>
-                <td colspan="6"><s:textarea name="bcSearch.applicantFullName" id="applicantFullName" cssStyle="text-transform:uppercase;"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.applicantFullName" id="applicantFullName"
+                                            cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label> ඉල්ලුම්කරැගේ ලිපිනය<br>*Tamil<br>
                     Address of the Applicant</label></td>
-                <td colspan="6"><s:textarea name="bcSearch.applicantAddress" id="applicantAddress" cssStyle="text-transform:uppercase;"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.applicantAddress" id="applicantAddress"
+                                            cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>(2) ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම රාජ්‍ය භාෂාවෙන්
                     (සිංහල / දෙමළ)<br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made ?
                 </label></td>
-                <td colspan="6"><s:textarea name="bcSearch.childFullNameOfficialLang" id="childFullNameOfficialLang" cssStyle="text-transform:uppercase;"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.childFullNameOfficialLang" id="childFullNameOfficialLang"
+                                            cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label> ඉල්ලුම්කරන්නේ කාගේ උප්පැන්නය ගැනද? එම අයගේ සම්පූර්ණ නම ඉංග්‍රීසි භාෂාවෙන්
                     <br>*Tamil<br>
                     Full Name of the person respecting whose birth application is made in English?
                 </label></td>
-                <td colspan="6"><s:textarea name="bcSearch.childFullNameEnglish" id="childFullNameEnglish" cssStyle="text-transform:uppercase;"/></td>
+                <td colspan="6"><s:textarea name="bcSearch.childFullNameEnglish" id="childFullNameEnglish"
+                                            cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>ස්ත්‍රී පුරුෂ භාවය<br> பால் <br>Gender of the child</label></td>
@@ -132,21 +156,24 @@
                     Father's Full Name
                 </label></td>
                 <td colspan="6">
-                    <s:textarea name="bcSearch.fatherFullName" id="fatherFullName" cssStyle="text-transform:uppercase;"/></td>
+                    <s:textarea name="bcSearch.fatherFullName" id="fatherFullName"
+                                cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr>
                 <td class="font-9"><label>(4) මවගේ සම්පූර්ණ නම<br>*Tamil<br>
                     Mother's Full Name (maiden name)
                 </label></td>
                 <td colspan="6">
-                    <s:textarea name="bcSearch.motherFullName" id="motherFullName" cssStyle="text-transform:uppercase;"/></td>
+                    <s:textarea name="bcSearch.motherFullName" id="motherFullName"
+                                cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr style="border-left:1px solid #000000;">
                 <td class="font-9" width="150px"><label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
                 <td><s:textfield id="bcSearchDatePicker" name="bcSearch.dateOfBirth"></s:textfield>
                 </td>
                 <td class="font-9"><label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
-                <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth" cssStyle="text-transform:uppercase;"/></td>
+                <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth"
+                                 cssStyle="text-transform:uppercase;"/></td>
             </tr>
             <tr>
                 <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's
