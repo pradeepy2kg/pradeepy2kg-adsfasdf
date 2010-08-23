@@ -158,7 +158,7 @@ function commanTags(check) {
     //serial number
     domObject = document.getElementById('bdfSerialNo');
     isEmpty(domObject, "", 'error1')
-    isNumeric(domObject.value, 'error20')
+    isNumeric(domObject.value, 'error13', 'error20')
 
     //date of register
     domObject = document.getElementById('submitDatePicker');
@@ -194,7 +194,7 @@ function stillBirthCommanTags(check) {
     if (!check.checked) {
         isEmpty(domObject, "", 'error12')
     }
-    isNumeric(domObject.value, 'error25')
+    isNumeric(domObject.value, 'error13', 'error25')
 }
 
 function liveBirthCommanTags(check) {
@@ -209,25 +209,31 @@ function liveBirthCommanTags(check) {
         isEmpty(domObject, "", 'error3');
 
     //birth weight
+    alert('1')
     domObject = document.getElementById('childBirthWeight');
     if (!check.checked) {
+        alert('2')
         isEmpty(domObject, "", 'error4');
     }
-    isNumeric(domObject.value, 'error23')
-
+    alert('4')
+    isNumeric(domObject.value, 'error13', 'error23')
+             alert('5')
     // child rank
     domObject = document.getElementById('childRank');
     if (!check.checked) {
+        alert('6')
         isEmpty(domObject, "", 'error5')
     }
-    isNumeric(domObject.value, 'error24')
-
+    alert('7')
+    isNumeric(domObject.value, 'error13', 'error24')
+            alert('8')
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
     if (!check.checked) {
+        alert('9')
         isEmpty(domObject, "", 'error12')
     }
-    isNumeric(domObject.value, 'error25')
+    isNumeric(domObject.value, 'error13', 'error25')
 }
 
 //check live birth is a belated birth gives warnings
