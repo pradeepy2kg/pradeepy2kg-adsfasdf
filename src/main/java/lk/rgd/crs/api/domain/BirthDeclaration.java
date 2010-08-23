@@ -30,12 +30,12 @@ import java.io.Serializable;
 
     @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
-        "AND bdf.activeRecord IS FALSE " +
+        "AND bdf.lifeCycleInfo.activeRecord IS FALSE " +
         "ORDER BY bdf.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
     @NamedQuery(name = "get.active.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
-        "AND bdf.activeRecord IS TRUE"),
+        "AND bdf.lifeCycleInfo.activeRecord IS TRUE"),
 
     @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
