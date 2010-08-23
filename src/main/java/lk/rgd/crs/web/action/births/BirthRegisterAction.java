@@ -73,6 +73,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private long adoptionId; // adoption order id, used in registering an adopted child
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
     private int rowNumber;
+    private int counter;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -120,7 +121,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -154,6 +155,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
+                //checking serial number is taken already for addnew mode
+                BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(), register.getBdfSerialNo(), user);
+                if (bd != null) {
+                    addFieldError("serialNumberError", "p1.serial.already.taken");
+                    pageNo = 0;
+                }
+
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
@@ -330,7 +338,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -403,20 +411,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String adoptionDeclarationInit() {
         BirthDeclaration bdf;
-        BirthDeclaration existingBDF=null;
+        BirthDeclaration existingBDF = null;
         AdoptionOrder ao;
         logger.debug("Adding BDF of an adopted child. Birth Type : {}", birthType);
         session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
 
         if (adoptionId == 0) {
-            addActionError(getText("adoption_order_id_invalid.label"));       
+            addActionError(getText("adoption_order_id_invalid.label"));
             return ERROR;
         }
         ao = adoptionService.getById(adoptionId, user);
 
         if (ao.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) {
-            addActionError(getText("adoption_invalid_state.label"));          
+            addActionError(getText("adoption_invalid_state.label"));
             return ERROR;
         }
         bdf = new BirthDeclaration();
@@ -427,10 +435,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         long existBDUKey = ao.getBirthCertificateNumber();
 
         if (existBDUKey != 0) {
-            try{
-            existingBDF = service.getById(existBDUKey, user);
-            }catch (NullPointerException e){
-                logger.error("faild to find requested BDF :",e);
+            try {
+                existingBDF = service.getById(existBDUKey, user);
+            } catch (NullPointerException e) {
+                logger.error("faild to find requested BDF :", e);
                 addActionError(getText("adoption_invalid_birth_certificate_number.label"));
                 return ERROR;
             }
@@ -440,7 +448,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -561,7 +569,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -609,9 +617,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
+                /* if (birthType == BirthDeclaration.BirthType.LIVE) {
+                    service.markLiveBirthCertificateAsPrinted(bdf, user);
+                } else if (birthType == BirthDeclaration.BirthType.STILL) {
+                    service.markStillBirthCertificateAsPrinted(bdf, user);
+                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
+                    service.markAdoptionBirthCertificateAsPrinted(bdf, user);
+                }*/
                 beanPopulate(bdf);
 
                 gender = child.getChildGenderPrint();
@@ -1331,5 +1346,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 }

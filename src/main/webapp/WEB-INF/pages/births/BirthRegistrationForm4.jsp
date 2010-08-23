@@ -1,6 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <s:set value="rowNumber" name="row"/>
+<s:set value="0" name="i"/>
+<s:set value="counter" name="prev"/>
 
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
@@ -59,7 +62,7 @@
         return returnval;
     }
 
-    function initPage(){
+    function initPage() {
         // TODO 
     }
 </script>
@@ -83,7 +86,9 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) පුද්ගල අනන්‍යතා
+                <td colspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                                           value="#i+1"/>)
+                    පුද්ගල අනන්‍යතා
                     අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
@@ -94,7 +99,8 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                <td width="200px" colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
+                        name="i" value="#i+1"/>)
                     නම<br>கொடுப்பவரின் பெயர் <br>Name</label></td>
                 <td colspan="4">
                     <s:textarea name="notifyingAuthority.notifyingAuthorityName" id="notifyingAuthorityName"
@@ -102,7 +108,9 @@
                 </td>
             </tr>
             <tr>
-                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
+                <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
+                                                                                                             value="#i+1"/>)තැපැල්
+                    ලිපිනය<br>தபால்
                     முகவரி <br>Postal Address</label></td>
                 <td colspan="4"><s:textarea name="notifyingAuthority.notifyingAuthorityAddress"
                                             id="notifyingAuthorityAddress"
@@ -168,10 +176,13 @@
             <s:submit value="%{getText('next.label')}"/>
         </div>
         <div class="next-previous">
+
             <s:url id="backUrl" action="eprBirthRegistration">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
+                <s:param name="rowNumber" value="{rowNumber-#prev}"/>
             </s:url>
+
             <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
         </div>
     </s:form>
