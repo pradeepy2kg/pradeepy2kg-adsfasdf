@@ -73,6 +73,7 @@
         return returnval;
     }
 
+    // validation marriage related fields
     function validateMarriage(check) {
         var element;
         var submit = new Date(document.getElementById('marriageDatePicker').value);
@@ -81,11 +82,13 @@
         element = document.getElementsByName("marriage.parentsMarried")[0];
         if (!check.checked) {
             if (element.checked) {
+                // validate place of marriage
                 element = document.getElementById('placeOfMarriage');
                 if (element.value == "") {
                     errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
                 }
 
+                // validate marriage date
                 if (!(submit.getTime())) {
                     errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
                 }
@@ -97,10 +100,13 @@
         if (element.checked) {
             element = document.getElementById('fatherName');
             var element3 = document.getElementById('fatherSigned');
+
+            // validate father signed
             if (!element3.checked && element.value.length > 0) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
             }
 
+            // validate mother signed
             var element4 = document.getElementById('motherSigned');
             if (!element4.checked && element.value.length > 0) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
@@ -108,6 +114,7 @@
         }
     }
 
+    // validate informant fields
     function validateInformant() {
         var element;
         var domObject;
@@ -116,6 +123,7 @@
 
         // check informant PIN or NIC
         element = document.getElementById('informantNICorPIN');
+//        TODO
 //        validatePINorNIC(element, 'error11', 'error12')
 
         // check informant name
