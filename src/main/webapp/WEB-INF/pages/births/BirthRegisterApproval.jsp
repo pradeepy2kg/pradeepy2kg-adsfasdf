@@ -186,8 +186,8 @@
                           cssStyle="float:left;  width:240px;"/></td>
             <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
             <td colspan="1">
-                <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                          cssStyle=" width:240px;float:right;"/>
+                <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}" list="bdDivisionList" headerValue="%{getText('all.district.label')}" headerKey="0"
+                          cssStyle=" width:240px;float:right;" />
             </td>
         </tr>
         <tr>

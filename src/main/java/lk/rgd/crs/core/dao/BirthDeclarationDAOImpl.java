@@ -1,6 +1,7 @@
 package lk.rgd.crs.core.dao;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.*;
@@ -34,7 +35,8 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)  // this is not Mandatory as unit tests directly invoke this
+    @Transactional(propagation = Propagation.REQUIRED)
+    // this is not Mandatory as unit tests directly invoke this
     public void updateBirthDeclaration(BirthDeclaration bdf, User user) {
         bdf.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         bdf.getLifeCycleInfo().setLastUpdatedUser(user);
@@ -63,7 +65,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getConfirmationPrintPending(BDDivision birthDivision,
-        int pageNo, int noOfRows, boolean printed) {
+                                                              int pageNo, int noOfRows, boolean printed) {
         Query q = em.createNamedQuery("filter.by.division.and.status").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -76,7 +78,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision,
-        int pageNo, int noOfRows, BirthDeclaration.State status) {
+                                                           int pageNo, int noOfRows, BirthDeclaration.State status) {
         Query q = em.createNamedQuery("filter.by.division.and.status").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -127,7 +129,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndRegisterDateRange(BDDivision birthDivision,
-        BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                            BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.register.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -142,7 +144,7 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows) {
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.by.division.status.confirmation.receive.date").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("birthDivision", birthDivision);
@@ -180,6 +182,19 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         Query q = em.createNamedQuery("get.historical.records.by.bddivision.and.serialNo");
         q.setParameter("birthDivision", birthDivision);
         q.setParameter("bdfSerialNo", serialNo);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, BirthDeclaration.State status) {
+        //todo has to be implemented
+        Query q = em.createNamedQuery("filter.by.dsdivision.and.status").
+            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("dsDivision", dsDivision);
+        q.setParameter("status", status);
         return q.getResultList();
     }
 }

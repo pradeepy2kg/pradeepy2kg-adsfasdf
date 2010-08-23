@@ -7,6 +7,7 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
@@ -74,7 +75,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-        String caseFileNumber, String additionalDocumentsComment) {
+                                                     String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
@@ -1061,7 +1062,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
@@ -1078,7 +1079,7 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
@@ -1432,5 +1433,24 @@ public class BirthRegistrationServiceImpl implements BirthRegistrationService {
             bdDivision.getBdDivisionUKey(), serialNo);
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getHistoricalRecordsForBDDivisionAndSerialNo(bdDivision, serialNo);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
+        if (!(User.State.ACTIVE == user.getStatus()
+            &&
+            (Role.ROLE_RG.equals(user.getRole().getRoleId())
+                ||
+                (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
+            )
+        )
+            ) {
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
+        }
+        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, BirthDeclaration.State.DATA_ENTRY);
     }
 }

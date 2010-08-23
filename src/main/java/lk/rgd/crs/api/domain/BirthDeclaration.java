@@ -28,6 +28,10 @@ import java.io.Serializable;
         "WHERE bdf.register.birthDivision = :birthDivision " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
+    @NamedQuery(name = "filter.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
     @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
         "AND bdf.activeRecord IS FALSE " +

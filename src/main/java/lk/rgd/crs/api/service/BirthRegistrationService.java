@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -28,7 +29,7 @@ public interface BirthRegistrationService {
      *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-        String caseFileNumber, String additionalDocumentsComment);
+                                                     String caseFileNumber, String additionalDocumentsComment);
 
     /**
      * Add a Still Birth declaration to the system.
@@ -331,7 +332,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -347,7 +348,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -382,5 +383,17 @@ public interface BirthRegistrationService {
      * @return the related historical records - if any
      */
     public List<BirthDeclaration> getArchivedCorrectedEntriesForGivenSerialNo(BDDivision bdDivision, long serialNo, User user);
+
+    /**
+     * Returns a limited set of BirthDeclarations for which confirmation changes are not captured yet awaiting approval
+     * by an ADR and based on given DSDivison id. Results are ordered on the descending confirmationProcessedTimestamp
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param user       user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
 }
 

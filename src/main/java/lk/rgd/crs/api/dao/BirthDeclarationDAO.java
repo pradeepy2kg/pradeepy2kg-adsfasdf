@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 
@@ -64,7 +65,7 @@ public interface BirthDeclarationDAO {
      * @param noOfRows      number of rows
      * @param state         the state of the records to be returned
      * @return approved list for print
-     */
+     */                                                                                              
     public List<BirthDeclaration> getPaginatedListForState(BDDivision birthDivision,
         int pageNo, int noOfRows, BirthDeclaration.State state);
 
@@ -151,5 +152,16 @@ public interface BirthDeclarationDAO {
      */
     public List<BirthDeclaration> getHistoricalRecordsForBDDivisionAndSerialNo(BDDivision birthDivision, long serialNo);
 
+   /**
+     * Get Paginated list of BDFs for the given state based on given DSDivision
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @param state         the state of the records to be returned
+     * @return approved list for print
+     */
+    public List<BirthDeclaration> getPaginatedListForStateByDSDivision(DSDivision dsDivision,int pageNo, int noOfRows,
+                                                                       BirthDeclaration.State state);
 }
 

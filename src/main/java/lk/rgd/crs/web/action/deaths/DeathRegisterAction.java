@@ -43,7 +43,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int deathPersonCountry;
     private int deathPersonRace;
 
-
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
