@@ -9,6 +9,7 @@ import lk.rgd.common.CustomStrutsTestCase;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
+import lk.rgd.common.CustomStrutsTestCase;
 
 public class SampleTest extends CustomStrutsTestCase {
 
@@ -20,7 +21,7 @@ public class SampleTest extends CustomStrutsTestCase {
             }
 
             protected void tearDown() throws Exception {
-                System.out.println("===============> show this once for class - setup");
+                System.out.println("===============> show this once for class - tear");
                 super.tearDown();
             }
         };
@@ -46,5 +47,14 @@ public class SampleTest extends CustomStrutsTestCase {
     public void testMethod2() {
         System.out.println("run test method 2");
     }
+
+    public void testMethod3() {
+        System.out.println("run test method 3");
+    }
+
+    public void testMethod4() {
+        System.out.println("run test method 45");
+    }
+
 }
 

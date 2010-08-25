@@ -28,6 +28,7 @@
 <s:hidden id="mother_birth_day_empty" value="%{getText('p2.motherAge.empty.error.value')}"/>
 <s:hidden id="childDateOfBirth" value="%{child.dateOfBirth}"/>
 
+
 <script>
 
     $(function() {

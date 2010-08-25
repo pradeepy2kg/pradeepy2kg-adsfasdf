@@ -664,6 +664,15 @@
     <package name="management" namespace="/management" extends="NG">
         <default-interceptor-ref name="default"/>
 
+        <!--registrars managment actions-->
+
+        <action name="eprRegistrarsManagment" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="registrarsManagmentHome">
+            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initUser">
             <result type="tiles" name="pageLoad">epr.creatUser</result>

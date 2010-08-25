@@ -151,4 +151,7 @@ public final class Permission {
 
     //permission for user preferance
 
+    //permission for admin task registrars managment
+    public static final int PAGE_REGISTRARS_MANAGMENT_LIST = 159;
+
 }

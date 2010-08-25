@@ -231,8 +231,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
+        if (adoption == null) {
+            //todo   add to property files handle the redirect as well 
+            addActionMessage(getText("invalid.idUKey"));
+            return SUCCESS;
+        }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;

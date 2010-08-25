@@ -220,7 +220,7 @@
         <put-attribute name="title" value="death_declaration_details.title"/>
     </definition>
 
-                  <!--TODO change this 2-->
+    <!--TODO change this 2-->
     <definition name="epr.non_editable_deathDeclaration_form1" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/deaths/NonEditableDeathRegistrationForm1.jsp"/>
         <put-attribute name="title" value="death_declaration_form1.title"/>
@@ -260,6 +260,12 @@
     <definition name="epr.addEditDivisions" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/AddEditDivisions.jsp"/>
         <put-attribute name="title" value="search Users"/>
+    </definition>
+
+    <!--registrars managment tiles-->
+    <definition name="epr.registrarsManagmentList" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/ManageRegistrars.jsp"/>
+        <put-attribute name="title" value="registrars.managment.title"/>
     </definition>
 
     <!--  User Preferences Tiles -->
