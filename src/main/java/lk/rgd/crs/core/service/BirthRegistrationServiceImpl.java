@@ -1509,6 +1509,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision, Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by DSDivision ID : " +
                 dsDivision.getDsDivisionUKey() + " and date range : " + startDate + " to " + endDate +
@@ -1525,6 +1526,10 @@ public class BirthRegistrationServiceImpl implements
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
+        //setting the time of the endDate to the current time
+        Date d = new Date();
+        endDate.setHours(d.getHours());
+        endDate.setMinutes(d.getMinutes());
         return birthDeclarationDAO.getByDSDivisionStatusAndConfirmationReceiveDateRange(dsDivision, startDate, endDate, pageNo, noOfRows);
     }
 }
