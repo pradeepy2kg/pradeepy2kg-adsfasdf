@@ -21,7 +21,7 @@ import lk.rgd.Permission;
  * of the EPR system
  */
 public class LoginAction extends ActionSupport implements SessionAware {
-    public static Map<Integer, Link> linkPermission = new TreeMap<Integer, Link>();
+    private static final Map<Integer, Link> linkPermission = new TreeMap<Integer, Link>();
     public Map<String, Map> allowedLinks = new TreeMap<String, Map>();
     private List userRoles;
     private String userName;
