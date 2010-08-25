@@ -111,15 +111,15 @@
         <s:actionerror/>
         <s:actionmessage/>
         <s:if test="printList.size==0 && printStart==0">
-            <p class="alreadyPrinted"><s:label value="%{getText('noitemMsg.label')}"/></p>
+            <p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>
         </s:if>
         <s:else>
             <fieldset style="border:none">
                 <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                     <thead>
                     <tr>
-                        <th></th>
-                        <th width="30px"></th>
+                        <%--<th></th>--%>
+                        <th width="15px"></th>
                         <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
                         <th width="110px"><s:label name="registered_date"
@@ -132,7 +132,7 @@
                         <%--following code used for pagination--%>
                     <s:iterator status="printStatus" value="printList" id="printListId">
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                            <td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>
+                            <%--<td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>--%>
                             <td><s:checkbox name="index"
                                             onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
                                             fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
