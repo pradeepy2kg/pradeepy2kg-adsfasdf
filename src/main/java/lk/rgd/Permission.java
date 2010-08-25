@@ -15,6 +15,7 @@ public final class Permission {
     public static final int APPROVE_DEATH = 9;
     public static final int EDIT_DEATH = 10;
     public static final int REGISTRAR_MANAGEMENT = 11;
+    public static final int SERVICE_MASTER_DATA_MANAGEMENT = 12;
 
 
     //permission for pages
