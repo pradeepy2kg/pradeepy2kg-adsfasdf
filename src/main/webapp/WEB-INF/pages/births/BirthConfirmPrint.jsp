@@ -92,7 +92,7 @@
                                   cssStyle="float:left;  width:240px;"/></td>
                     <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
                     <td><s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                                  cssStyle=" width:240px;float:right;"/></td>  
+                       headerValue="%{getText('all.divisions.label')}" headerKey="0"   cssStyle=" width:240px;float:right;"/></td>  
                 </tr>
                 <tr>
                     <td colspan="4" class="button" align="right">
@@ -142,6 +142,7 @@
                                         <s:param name="pageNo" value="%{#request.pageNo}"/>
                                         <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                                         <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                                        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                                         <s:param name="printed" value="#request.printed"/>
                                         <s:param name="printStart" value="#request.printStart"/>
                                     </s:url>
@@ -167,6 +168,7 @@
                         <s:hidden name="printed" value="%{#request.printed}"/>
                         <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
                         <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
+                        <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                         <s:submit value="%{getText('print.label')}"/></s:label>
                 </div>
                 <div class="next-previous">
@@ -176,6 +178,7 @@
                         <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                         <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                         <s:param name="printed" value="#request.printed"/>
+                        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         <s:param name="printStart" value="#request.printStart"/>
                     </s:url>
                     <s:url id="nextUrl" action="eprPrintNext.do">
@@ -184,6 +187,7 @@
                         <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                         <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                         <s:param name="printed" value="#request.printed"/>
+                        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         <s:param name="printStart" value="#request.printStart"/>
                     </s:url>
                     <s:if test="printStart!=0 & printStart>0">
