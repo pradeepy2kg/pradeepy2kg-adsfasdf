@@ -5,7 +5,9 @@ import lk.rgd.Permission;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +24,18 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private static final Logger logger = LoggerFactory.getLogger(MasterDataManagementServiceImpl.class);
 
     private final BDDivisionDAO bdDivisionDAO;
+    private final MRDivisionDAO mrDivisionDAO;
 
-    public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO) {
+    public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
+        this.mrDivisionDAO = mrDivisionDAO;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void add(BDDivision bdDivision, User user) {
+    public void addBDDivision(BDDivision bdDivision, User user) {
 
         if (isEmptyString(bdDivision.getEnDivisionName()) ||
             isEmptyString(bdDivision.getEnDivisionName()) ||
@@ -49,17 +56,23 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivate(BDDivision bdDivision, User user) {
-        updateActivation(bdDivision.getBdDivisionUKey(), false, user);
+    public void inactivateBDDivision(BDDivision bdDivision, User user) {
+        updateBDActivation(bdDivision.getBdDivisionUKey(), false, user);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void activate(BDDivision bdDivision, User user) {
-        updateActivation(bdDivision.getBdDivisionUKey(), true, user);
+    public void activateBDDivision(BDDivision bdDivision, User user) {
+        updateBDActivation(bdDivision.getBdDivisionUKey(), true, user);
     }
 
-    private void updateActivation(int bdDivisionUKey, boolean activate, User user) {
+    private void updateBDActivation(int bdDivisionUKey, boolean activate, User user) {
 
         if (user.isAuthorized(Permission.ADD_EDIT_DIVISIONS)) {
             try {
@@ -75,6 +88,66 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         } else {
             logger.error("User : " + user.getUserId() +
                 " was not allowed to activate/inactivate BD Division with key : " + bdDivisionUKey);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addMRDivision(MRDivision mrDivision, User user) {
+
+        if (isEmptyString(mrDivision.getEnDivisionName()) ||
+            isEmptyString(mrDivision.getEnDivisionName()) ||
+            isEmptyString(mrDivision.getEnDivisionName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the MR Division is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+
+        if (user.isAuthorized(Permission.ADD_EDIT_DIVISIONS)) {
+            try {
+                mrDivisionDAO.add(mrDivision, user);
+            } catch (Exception e) {
+                logger.error("Attempt to add MR Division : " + mrDivision.getEnDivisionName() + " failed", e);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() +
+                " was not allowed to add a new MR Division : " + mrDivision.getEnDivisionName());
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void inactivateMRDivision(MRDivision mrDivision, User user) {
+        updateMRActivation(mrDivision.getMrDivisionUKey(), false, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateMRDivision(MRDivision mrDivision, User user) {
+        updateMRActivation(mrDivision.getMrDivisionUKey(), true, user);
+    }
+
+    private void updateMRActivation(int mrDivisionUKey, boolean activate, User user) {
+
+        if (user.isAuthorized(Permission.ADD_EDIT_DIVISIONS)) {
+            try {
+                MRDivision existing = mrDivisionDAO.getMRDivisionByPK(mrDivisionUKey);
+                if (existing != null) {
+                    existing.setActive(activate);
+                    mrDivisionDAO.update(existing, user);
+                    logger.info("MR Division : {} inactivated by : {}", existing.getEnDivisionName(), user.getUserId());
+                }
+            } catch (Exception e) {
+                logger.error("Attempt to inactivate MR Division with key : " + mrDivisionUKey + " failed", e);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() +
+                " was not allowed to activate/inactivate MR Division with key : " + mrDivisionUKey);
         }
     }
 
