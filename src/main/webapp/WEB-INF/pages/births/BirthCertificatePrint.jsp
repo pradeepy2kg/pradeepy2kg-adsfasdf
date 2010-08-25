@@ -66,66 +66,73 @@
 
         <s:form action="eprFilterBirthCetificateList.do" name="birth_register_approval_head" method="POST"
                 id="birth-certificate-print-form">
-        <table width="100%" cellpadding="5" cellspacing="0">
-            <col width="200px"/>
-            <col/>
-            <col width="200px"/>
-            <col width="100px"/>
-            <tbody>
-            <tr>
-                <td><s:label name="district" value="%{getText('district.label')}"/></td>
-                <td>
-                    <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                              value="birthDistrictId" cssStyle="width:240px;"/>
+        <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+            <legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>
+            <table width="100%" cellpadding="5" cellspacing="0">
+                <col width="200px"/>
+                <col/>
+                <col width="200px"/>
+                <col width="100px"/>
+                <tbody>
+                <tr>
+                    <td><s:label name="district" value="%{getText('district.label')}"/></td>
+                    <td>
+                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                  value="birthDistrictId" cssStyle="width:240px;"/>
 
-                </td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}"
-                                           name="printed"
-                                           value="false"/></td>
-                <td align="right"><s:radio list="#@java.util.HashMap@{'true':getText('printed.label')}"
-                                           name="printed"/></td>
-            </tr>
-            <tr>
-                <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-                <td>
-                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                              cssStyle="float:left;  width:240px;"/></td>
-                <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
-                <td>
-                    <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                              list="bdDivisionList" headerValue="%{getText('all.divisions.label')}" headerKey="0"
-                              cssStyle=" width:240px;float:right;"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4" class="button" align="right">
-                    <s:submit value="%{getText('view.label')}"></s:submit>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </td>
+                    <td align="right">
+                        <s:radio list="#@java.util.HashMap@{'false':getText('not_printed.label')}" name="printed"
+                                 value="false"/>
+                    </td>
+                    <td align="right">
+                        <s:radio list="#@java.util.HashMap@{'true':getText('printed.label')}" name="printed"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+                    <td>
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                                  cssStyle="float:left;  width:240px;"/></td>
+                    <td align="right">
+                        <s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/>
+                    </td>
+                    <td>
+                        <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                                  list="bdDivisionList" headerValue="%{getText('all.divisions.label')}" headerKey="0"
+                                  cssStyle=" width:240px;float:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="button" align="right">
+                        <s:submit value="%{getText('bdfSearch.button')}"></s:submit>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
     </div>
     </s:form>
     <s:form action="eprBirthCertificateBulkPrint" name="birth_confirm_print">
     <div id="birth-register-approval-body">
+        <s:actionmessage cssClass="alreadyPrinted"/>
         <s:actionerror/>
-        <s:actionmessage/>
-        <s:if test="printList.size==0 && printStart==0">
-            <p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>
-        </s:if>
-        <s:else>
+            <%--<s:if test="printList.size==0 && printStart==0">--%>
+            <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
+            <%--</s:if>--%>
+        <s:if test="printList.size > 0">
             <fieldset style="border:none">
                 <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                     <thead>
                     <tr>
-                            <%--<th></th>--%>
                         <th width="15px"></th>
+                        <th width="20px"><s:label value="%{getText('division.label')}"/></th>
                         <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                        <th width="110px"><s:label name="registered_date"
+                        <th width="100px"><s:label name="registered_date"
                                                    value="%{getText('registered_date.label')}"/></th>
-                        <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
-                        <th width="100px"><s:label value="%{getText('print.label')}"/></th>
+                        <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                        <th width="20px"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -136,6 +143,7 @@
                             <td><s:checkbox name="index"
                                             onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
                                             fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
+                            <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="child.childFullNameOfficialLang"/></td>
                             <td align="center"><s:property value="register.dateOfRegistration"/></td>
@@ -157,7 +165,7 @@
                                     <s:param name="printed" value="#request.printed"/>
                                     <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
-                                <s:a href="%{cetificatePrintUrl}">
+                                <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
                                     <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
                                          height="25"/>
                                 </s:a>
@@ -210,7 +218,7 @@
                     </s:a>
                 </s:if>
             </div>
-        </s:else>
+        </s:if>
         </s:form>
     </div>
 </div>

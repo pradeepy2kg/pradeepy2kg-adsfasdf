@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -127,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -169,18 +177,24 @@ function commanTags(check) {
     var domObject;
     //serial number
     domObject = document.getElementById('bdfSerialNo');
-    isEmpty(domObject, "", 'error1')
-    isNumeric(domObject.value, 'error13', 'error20')
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, "", 'error1');
+    else
+        isNumeric(domObject.value, 'error13', 'error20')
 
     //date of register
     domObject = document.getElementById('submitDatePicker');
-    isEmpty(domObject, "", 'error9')
-    isDate(domObject.value, "error13", "submitDate")
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, "", 'error9')
+    else
+        isDate(domObject.value, "error13", "submitDate")
 
     //date of birth
     domObject = document.getElementById('birthDatePicker');
-    isEmpty(domObject, "", 'error10')
-    isDate(domObject.value, "error13", "dob")
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, "", 'error10')
+    else
+        isDate(domObject.value, "error13", "dob")
 
     //place of birth
     domObject = document.getElementById('placeOfBirth');
@@ -200,13 +214,13 @@ function stillBirthCommanTags(check) {
     if (!check.checked) {
         isEmpty(domObject, "", 'error5')
     }
-    isNumeric(domObject.value,'error13', 'error24')
+    isNumeric(domObject.value, 'error13', 'error24')
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
-    if (!check.checked) {
-        isEmpty(domObject, "", 'error12')
-    }
+//    if (!check.checked) {
+//        isEmpty(domObject, "", 'error12')
+//    }
     isNumeric(domObject.value, 'error13', 'error25')
 }
 
@@ -237,9 +251,9 @@ function liveBirthCommanTags(check) {
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
-    if (!check.checked) {
-        isEmpty(domObject, "", 'error12')
-    }
+//    if (!check.checked) {
+//        isEmpty(domObject, "", 'error12')
+//    }
     isNumeric(domObject.value, 'error13', 'error25')
 }
 
@@ -259,7 +273,6 @@ function dateRange() {
         }
     }
     else {
-
         document.getElementById('belatedError').innerHTML = '';
     }
 }
