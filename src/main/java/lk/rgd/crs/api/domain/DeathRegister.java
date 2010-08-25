@@ -26,7 +26,14 @@ import java.util.Date;
 
     @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
         "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-        "ORDER BY deathRegister.death.dateOfRegistration desc")
+        "ORDER BY deathRegister.death.dateOfRegistration desc"),
+
+    @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision.dsDivision = :dsDivision " +
+        "ORDER BY deathRegister.death.dateOfRegistration desc"),
+
+    @NamedQuery(name = "get.all.deaths.by.dsDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.death.deathDivision.dsDivision = :dsDivision")
 })
 public class DeathRegister implements Serializable {
     public CRSLifeCycleInfo getLifeCycleInfo() {

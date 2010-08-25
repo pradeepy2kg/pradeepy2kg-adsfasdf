@@ -98,7 +98,6 @@ public class PrintAction extends ActionSupport implements SessionAware {
         if (!dsDivisionList.isEmpty()) {
             dsDivisionId = dsDivisionList.keySet().iterator().next();
         }
-
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         logger.debug("dsDivision {} selected isPrinted {}", dsDivisionId, printed);
         setPageNo(1);

@@ -194,6 +194,8 @@
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
             <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+            <s:hidden name="deathDivisionId" value="%{#request.deathDivisionId}"/>
             <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
         </div>
     </s:form>
@@ -202,6 +204,8 @@
         <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
         <s:hidden name="pageNo" value="%{#request.pageNo}"/>
         <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
+        <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+        <s:hidden name="deathDivisionId" value="%{#request.deathDivisionId}"/>
         <div class="form-submit">
             <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
         </div>

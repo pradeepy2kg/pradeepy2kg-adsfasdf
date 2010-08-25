@@ -4,6 +4,7 @@ import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 
 import java.util.List;
 import java.util.Date;
@@ -139,4 +140,29 @@ public interface DeathRegistrationService {
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+
+    /**
+     * Get the list of death registrations for a given state based on given DSDivision
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param status     state of the DeathRegister
+     * @param user       the user initiating the action
+     * @return list of DeathRegister objects which are in the given state
+     * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
+     */
+    public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status, User user);
+
+    /**
+     * Get the list of all the death registrations which are belonging to the given dsDivision
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required(start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param user       the user initiating the action
+     * @return list of DeathRegister objects
+     * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
+     */
+    public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
 }
