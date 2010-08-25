@@ -1,39 +1,48 @@
 package lk.rgd.crs.web.action;
 
-import org.junit.*;
+import junit.extensions.TestSetup;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import lk.rgd.common.CustomStrutsTestCase;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
-public class SampleTest {
+public class SampleTest extends CustomStrutsTestCase {
 
-    @BeforeClass
-    public static void oneTimeSetUp() {
-        System.out.println("show this once for class - setup");
+    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(SampleTest.class)) {
+            protected void setUp() throws Exception {
+                System.out.println("===============> show this once for class - setup");
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                System.out.println("===============> show this once for class - setup");
+                super.tearDown();
+            }
+        };
+        return setup;
     }
 
-    @AfterClass
-    public static void oneTimeTearDown() {
-        System.out.println("show this once for class - teardown");
+    @Override
+    protected void setUp() throws Exception {
+        System.out.println("setup");
+        super.setUp();
     }
 
-    @Before
-    public void setUp() {
-        System.out.println("show this once for each method - setup");
+    @Override
+    protected void tearDown() throws Exception {
+        System.out.println("tear");
+        super.tearDown();
     }
 
-    @After
-    public void tearDown() {
-        System.out.println("show this once for each method - teardown");
-    }
-
-    @Test
     public void testMethod1() {
         System.out.println("run test method 1");
     }
 
-    @Test
     public void testMethod2() {
         System.out.println("run test method 2");
     }
