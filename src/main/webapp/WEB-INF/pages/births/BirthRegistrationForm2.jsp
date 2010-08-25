@@ -135,6 +135,16 @@
             if (element.value == "") {
                 errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
             }
+            //father date of birth
+            domObject = document.getElementById('fatherDatePicker');
+            if (!isFieldEmpty(domObject))
+                isDate(domObject.value, "error2", "fatherDOB")
+            
+//            //mother date of birth
+//            domObject = document.getElementById('motherDatePicker');
+//            //hospital addmission date
+//            domObject = document.getElementById('admitDatePicker');
+//            isDate(domObject.value, "error2", "dateOfAddmission")
 
             // validate mother full name
             element = document.getElementById('motherFullName');
@@ -161,7 +171,7 @@
         if (!isFieldEmpty(domObject))
             validateEmail(domObject, 'error1')
 
-commanTags(check);
+//                commanTags(check);
 
         if (errormsg != "") {
             alert(errormsg);
@@ -188,14 +198,14 @@ commanTags(check);
     function commanTags(check) {
         var domObject;
         //father date of birth
-        domObject = document.getElementById('fatherDatePicker');
-        isDate(domObject.value, "error2", "fatherDOB")
+//        domObject = document.getElementById('fatherDatePicker');
+//        isDate(domObject.value, "error2", "fatherDOB")
         //mother date of birth
-        domObject = document.getElementById('motherDatePicker');
-        isDate(domObject.value, "error2", "motherDOB")
-        //hospital addmission date
-        domObject = document.getElementById('admitDatePicker');
-        isDate(domObject.value, "error2", "dateOfAddmission")
+//        domObject = document.getElementById('motherDatePicker');
+//        isDate(domObject.value, "error2", "motherDOB")
+//        //hospital addmission date
+//        domObject = document.getElementById('admitDatePicker');
+//        isDate(domObject.value, "error2", "dateOfAddmission")
     }
 
 </script>

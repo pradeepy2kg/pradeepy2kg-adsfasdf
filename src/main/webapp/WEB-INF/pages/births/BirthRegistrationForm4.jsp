@@ -44,7 +44,6 @@
 
     var errormsg = "";
     function validate() {
-         alert("called");
         var element;
         var returnval;
         var signdate = new Date(document.getElementById('modifiedDatePicker').value);

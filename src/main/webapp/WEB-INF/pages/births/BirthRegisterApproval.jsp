@@ -148,7 +148,7 @@
     function validate() {
         var domObject;
         var returnval = true;
-        domObject= document.getElementById('bdfSerialNoId');
+        domObject = document.getElementById('bdfSerialNoId');
         isNumeric(domObject.value, 'error20');
         if (errormsg != "") {
             alert(errormsg);
@@ -165,43 +165,50 @@
 <s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form"
         onsubmit="javascript:return validate()">
 <div id="birth-register-approval-header">
-<fieldset style="margin-bottom:10px;margin-top:20px; border:none">
-    <legend></legend>
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>
     <table width="100%" cellpadding="5" cellspacing="0">
-        <col width="200px"/>
+        <col width="300px"/>
         <col/>
+        <col width="100px"/>
         <col width="300px"/>
         <col/>
         <tbody>
         <tr>
             <td><s:label name="district" value="%{getText('district.label')}"/></td>
-            <td colspan="3">
-                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                          value="birthDistrictId" cssStyle="width:240px;"/>
+            <td>
+                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="birthDistrictId"
+                          cssStyle="width:240px;"/>
             </td>
-        </tr>
-        <tr>
+            <td></td>
             <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-            <td><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                          cssStyle="float:left;  width:240px;"/></td>
-            <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
-            <td colspan="1">
-                <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}" list="bdDivisionList"
-                          headerValue="%{getText('all.district.label')}" headerKey="0"
-                          cssStyle=" width:240px;float:right;" />
+            <td>
+                <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                          cssStyle="float:left;  width:240px;"/>
             </td>
         </tr>
         <tr>
+            <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+            <td>
+                <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}" list="bdDivisionList"
+                          headerValue="%{getText('all.divisions.label')}" headerKey="0"
+                          cssStyle=" width:240px;float:left;"/>
+            </td>
+            <td></td>
             <td><s:label value="%{getText('serial.label')}"/></td>
             <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;" id="bdfSerialNoId"/></td>
-            <td align="right"><s:label value="%{getText('date.from.label')}"
-                                       cssStyle=" margin-right:5px;"/><s:textfield id="searchStartDatePicker"
-                                                                                   name="searchStartDate"/></td>
-            <td align="right"><s:label value="%{getText('date.to.label')}"
-                                       cssStyle=" margin-right:5px;"/><s:textfield id="searchEndDatePicker"
-                                                                                   name="searchEndDate"/></td>
         </tr>
         <tr>
+            <td align="left">
+                <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
+                <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"/>
+            </td>
+            <td align="right">
+                <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
+                <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"/>
+            </td>
+            <td></td>
+            <td></td>
             <td colspan="4" class="button" align="right">
                 <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
                 <s:submit name="refresh" value="%{getText('refresh.label')}"/>
@@ -226,6 +233,9 @@
 </s:if>
 <div id="birth-register-approval-body">
     <%--todo permission handling--%>
+    <s:if test="approvalPendingList.size==0">
+        <p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>
+    </s:if>
     <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
         <s:if test="approvalPendingList.size>0">
             <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
@@ -233,27 +243,28 @@
             <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th></th>
-                <th></th>
+                <th width="15px"></th>
+                <th width="20px"><s:label value="%{getText('division.label')}"/></th>
                 <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
-                <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th width="100px"><s:label name="received" value="%{getText('received.label')}"/></th>
+                <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                <th width="20px"></th>
+                <th width="20px"></th>
+                <th width="20px"></th>
+                <th width="20px"></th>
             </tr>
             </thead>
         </s:if>
         <tbody>
         <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
             <tr>
-                <td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>
+                    <%--<td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
                 <td><s:checkbox name="index"
                                 onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                 title="%{getText('select.label')}" value="%{#index}"
                                 fieldValue="%{#approvalList.idUKey}"/></td>
+                <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
                 <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>

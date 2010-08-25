@@ -125,7 +125,7 @@
         <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
         <td>
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                      list="bdDivisionList" headerValue="%{getText('all.district.label')}" headerKey="0"
+                      list="bdDivisionList" headerValue="%{getText('all.divisions.label')}" headerKey="0"
                       cssStyle=" width:240px;float:right;"/>
         </td>
     </tr>
@@ -166,14 +166,14 @@
     <div id="birth-confirm-approval-body">
         <s:form action="eprApproveConfirmationBulk" name="birth_register_approval_body" method="post">
             <s:if test="approvalPendingList.size>0">
-                <table id="confirm-list-table" width="100%" cellpadding="0" cellspacing="0">
+                <table id="confirm-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                 <thead>
                 <tr class="table-title">
-                    <th></th>
-                    <th width="30px"></th>
+                    <%--<th></th>--%>
+                    <th width="15px"></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                    <th><s:label name="received" value="%{getText('received.label')}"/></th>
+                    <th width="110px"><s:label name="received" value="%{getText('received.label')}"/></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -183,14 +183,13 @@
             <tbody>
             <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
                 <tr class="<s:if test="#approvalStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                    <td class="table-row-index"><s:property
-                            value="%{#approvalStatus.count + recordCounter}"/></td>
-                    <td><s:if
-                            test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'"><s:checkbox
-                            name="index"
-                            onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
-                            title="%{getText('select.label')}" value="%{#index}"
-                            fieldValue="%{#approvalList.idUKey}"/></s:if></td>
+                    <%--<td class="table-row-index"><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
+                    <td>
+                        <s:if test="register.getStatus().toString() == 'CONFIRMATION_CHANGES_CAPTURED'">
+                            <s:checkbox name="index" onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
+                            title="%{getText('select.label')}" value="%{#index}" fieldValue="%{#approvalList.idUKey}"/>
+                        </s:if>
+                    </td>
                     <td><s:property value="idUKey"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                     <td><s:property value="confirmant.confirmationProcessedTimestamp"/></td>
