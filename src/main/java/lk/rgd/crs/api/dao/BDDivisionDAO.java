@@ -32,4 +32,10 @@ public interface BDDivisionDAO {
     public String getNameByPK(int bdDivisionUKey, String language);
 
     public BDDivision getBDDivisionByPK(int bdDivisionUKey);
+
+    public void activate(BDDivision bdDivision, User user);
+
+    public void inactivate(BDDivision bdDivision, User user);
+
+    public void add(BDDivision bdDivision, User user);
 }

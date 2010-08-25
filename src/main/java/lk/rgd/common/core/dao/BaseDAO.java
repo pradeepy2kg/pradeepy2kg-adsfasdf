@@ -39,4 +39,8 @@ public class BaseDAO {
         logger.error(msg, e);
         throw new RGDRuntimeException(msg, code, e);
     }
+
+    protected static final boolean isEmptyString(String s) {
+        return s == null || s.trim().length() == 0;
+    }
 }
