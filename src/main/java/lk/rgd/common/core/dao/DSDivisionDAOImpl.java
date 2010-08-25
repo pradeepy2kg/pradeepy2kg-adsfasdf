@@ -114,6 +114,24 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void update(DSDivision dsDivision, User user) {
+        em.merge(dsDivision);
+        updateCache(dsDivision);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void add(DSDivision dsDivision, User user) {
+        em.persist(dsDivision);
+        updateCache(dsDivision);
+    }
+
+    /**
      * Loads all values from the database table into a cache
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -125,34 +143,39 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         Map<Integer, String> subMap = null;
 
         for (DSDivision d : results) {
-            int districtUKey = d.getDistrict().getDistrictUKey();
-            int divisionId = d.getDivisionId();
-            int divisionUKey = d.getDsDivisionUKey();
-
-            dsDivisionsByPK.put(d.getDsDivisionUKey(), d);
-
-            subMap = siNames.get(districtUKey);
-            if (subMap == null) {
-                subMap = new HashMap<Integer, String>();
-                siNames.put(districtUKey, subMap);
-            }
-            subMap.put(divisionUKey, divisionId + SPACER + d.getSiDivisionName());
-
-            subMap = enNames.get(districtUKey);
-            if (subMap == null) {
-                subMap = new HashMap<Integer, String>();
-                enNames.put(districtUKey, subMap);
-            }
-            subMap.put(divisionUKey, divisionId + SPACER + d.getEnDivisionName());
-
-            subMap = taNames.get(districtUKey);
-            if (subMap == null) {
-                subMap = new HashMap<Integer, String>();
-                taNames.put(districtUKey, subMap);
-            }
-            subMap.put(divisionUKey, divisionId + SPACER + d.getTaDivisionName());
+            updateCache(d);
         }
 
         logger.debug("Loaded : {} DSDivisions from the database", results.size());
+    }
+
+    private void updateCache(DSDivision d) {
+        Map<Integer, String> subMap;
+        int districtUKey = d.getDistrict().getDistrictUKey();
+        int divisionId = d.getDivisionId();
+        int divisionUKey = d.getDsDivisionUKey();
+
+        dsDivisionsByPK.put(d.getDsDivisionUKey(), d);
+
+        subMap = siNames.get(districtUKey);
+        if (subMap == null) {
+            subMap = new HashMap<Integer, String>();
+            siNames.put(districtUKey, subMap);
+        }
+        subMap.put(divisionUKey, divisionId + SPACER + d.getSiDivisionName());
+
+        subMap = enNames.get(districtUKey);
+        if (subMap == null) {
+            subMap = new HashMap<Integer, String>();
+            enNames.put(districtUKey, subMap);
+        }
+        subMap.put(divisionUKey, divisionId + SPACER + d.getEnDivisionName());
+
+        subMap = taNames.get(districtUKey);
+        if (subMap == null) {
+            subMap = new HashMap<Integer, String>();
+            taNames.put(districtUKey, subMap);
+        }
+        subMap.put(divisionUKey, divisionId + SPACER + d.getTaDivisionName());
     }
 }

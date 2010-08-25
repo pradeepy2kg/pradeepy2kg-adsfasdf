@@ -1,5 +1,7 @@
 package lk.rgd.crs.api.service;
 
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -54,4 +56,46 @@ public interface MasterDataManagementService {
      * @param user the user invoking the action
      */
     void activateMRDivision(MRDivision mrDivision, User user);
+
+    /**
+     * Add a new DS Division
+     * @param dsDivision the DS Division to be added
+     * @param user the user invoking the action
+     */
+    void addDSDivision(DSDivision dsDivision, User user);
+
+    /**
+     * Mark a DS Division as inactive
+     * @param dsDivision the DS Division to be updated
+     * @param user the user invoking the action
+     */
+    void inactivateDSDivision(DSDivision dsDivision, User user);
+
+    /**
+     * Mark a DS Division as active
+     * @param dsDivision the DS Division to be updated
+     * @param user the user invoking the action
+     */
+    void activateDSDivision(DSDivision dsDivision, User user);
+
+    /**
+     * Add a new District
+     * @param district the District to be added
+     * @param user the user invoking the action
+     */
+    void addDistrict(District district, User user);
+
+    /**
+     * Mark a District as inactive
+     * @param district the District to be updated
+     * @param user the user invoking the action
+     */
+    void inactivateDistrict(District district, User user);
+
+    /**
+     * Mark a District as active
+     * @param district the District to be updated
+     * @param user the user invoking the action
+     */
+    void activateDistrict(District district, User user);
 }

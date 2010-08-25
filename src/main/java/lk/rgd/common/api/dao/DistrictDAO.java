@@ -43,4 +43,18 @@ public interface DistrictDAO {
      * @return the District
      */
     public District getDistrict(int id);
+
+    /**
+     * Update a district - ie only activate or inactivate
+     * @param district the district updated
+     * @param user user performing the action
+     */
+    public void update(District district, User user);
+
+    /**
+     * Add a district
+     * @param district the district added
+     * @param user user performing the action
+     */
+    public void add(District district, User user);
 }
