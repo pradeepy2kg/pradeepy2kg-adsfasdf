@@ -46,4 +46,18 @@ public interface DSDivisionDAO {
      * @return the DSDivision
      */
     public DSDivision getDSDivisionByPK(int dsDivisionUKey);
+
+    /**
+     * Update a DS Division
+     * @param dsDivision division to be updated
+     * @param user user executing the operation
+     */
+    public void update(DSDivision dsDivision, User user);
+
+    /**
+     * Add a new DS Division
+     * @param dsDivision division to be marked
+     * @param user user executing the operation
+     */
+    public void add(DSDivision dsDivision, User user);
 }

@@ -103,6 +103,24 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void update(District district, User user) {
+        em.merge(district);
+        updateCache(district);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void add(District district, User user) {
+        em.persist(district);
+        updateCache(district);
+    }
+
+    /**
      * Loads all values from the database table into a cache
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
@@ -112,15 +130,19 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
         List<District> results = query.getResultList();
 
         for (District d : results) {
-            final int districtId = d.
-                getDistrictId();
-            final int districtUKey = d.getDistrictUKey();
-            districtsByPK.put(districtUKey, d);
-            siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
-            enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
-            taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
+            updateCache(d);
         }
 
         logger.debug("Loaded : {} districts from the database", results.size());
+    }
+
+    private void updateCache(District d) {
+        final int districtId = d.
+            getDistrictId();
+        final int districtUKey = d.getDistrictUKey();
+        districtsByPK.put(districtUKey, d);
+        siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
+        enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
+        taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
     }
 }
