@@ -66,8 +66,6 @@
     });
 </script>
 
-
-<div id="death-declaration-form-1-outer">
 <s:if test="!(pageNo == 1 || pageNo==2 || pageNo == 3 || pageNo==4)">
     <table style="border:none;margin-top:15px;text-align:center;" align="center">
         <tr>
@@ -94,7 +92,6 @@
 
             </tbody>
         </table>
-        </div>
         <table style="border:none; width:70%; text-align:center;" align="center">
             <tr>
                 <td>
@@ -169,7 +166,7 @@
 </s:if>
 <s:if test="pageNo == 3 || pageNo==4">
     <s:form name="editDsDivisions" action="eprAddEditDsDivisions.do" method="POST">
-        <table border="1" style="width: 70%; border:1px solid #000; border-collapse:collapse;margin-top:20px;"
+        <table border="1" style="width: 70%; border-collapse:collapse;margin-top:20px;"
                class="font-9" align="center">
             <tr>
                 <s:if test="pageNo == 3">
@@ -298,5 +295,4 @@
         </s:if>
 
     </s:form>
-    </div>
 </s:if>

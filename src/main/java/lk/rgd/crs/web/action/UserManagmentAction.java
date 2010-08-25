@@ -84,10 +84,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             for (int i = 0; i < assignedDistricts.length; i++) {
                 assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
             }
-
             user.setAssignedBDDistricts(assDistrict);
             user.setAssignedMRDistricts(assDistrict);
-
             Set assDSDivision = new HashSet();
             for (int i = 0; i < assignedDivisions.length; i++) {
                 assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
@@ -131,6 +129,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String initAddEditDivisionsAndDsDivision() {
         populate();
+        populateDynamicLists("en");
         return "success";
     }
 
@@ -144,7 +143,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         }
         if (button.equals("DELETE")) {
             logger.info("page number 3");
-            return "delete"+SUCCESS;
+            return "delete" + SUCCESS;
         }
         return SUCCESS;
     }
@@ -162,7 +161,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             pageNo = 4;
         }
         if (button.equals("DELETE")) {
-            return "delete"+SUCCESS;
+            return "delete" + SUCCESS;
         }
         return "success";
     }
@@ -199,7 +198,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             districtList = districtDAO.getAllDistrictNames(language, user);
         if (roleList == null)
             roleList = roleDAO.getRoleList();
-        populateDynamicLists(language);
+
     }
 
     private void populateDynamicLists(String language) {
@@ -307,7 +306,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
-        user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        // user = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     public int getUserDistrictId() {
