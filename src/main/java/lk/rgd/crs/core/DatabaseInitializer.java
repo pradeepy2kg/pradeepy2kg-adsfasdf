@@ -308,7 +308,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
             bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED);
-            
+
             //Birth Registration
             bs.set(Permission.PAGE_BIRTH_REGISTRATON);
             bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
@@ -493,7 +493,13 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_USER_CREATION);
             bs.set(Permission.USER_MANAGEMENT);
             bs.set(Permission.PAGE_VIEW_USERS);
-
+            bs.set(Permission.VIEW_SELECTED_USERS);
+            bs.set(Permission.PAGE_DELETE_USER);
+            bs.set(Permission.INIT_ADD_EDIT_DS_DIVISION_DIVISIONS);
+            bs.set(Permission.INIT_ADD_EDIT_DIVISIONS);
+            bs.set(Permission.ADD_EDIT_DIVISIONS);
+            bs.set(Permission.INIT_ADD_EDIT_DS_DIVISIONS);
+            bs.set(Permission.ADD_EDIT_DS_DIVISIONS);
 
             //user preferance
             bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
@@ -501,12 +507,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.CHANGE_PASSWORD);
             bs.set(Permission.BACK_CHANGE_PASSWORD);
             bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
-            bs.set(Permission.PAGE_DELETE_USER);
-            bs.set(Permission.INIT_ADD_EDIT_DS_DIVISION_DIVISIONS);
-            bs.set(Permission.INIT_ADD_EDIT_DIVISIONS);
-            bs.set(Permission.ADD_EDIT_DIVISIONS);
-            bs.set(Permission.INIT_ADD_EDIT_DS_DIVISIONS);
-            bs.set(Permission.ADD_EDIT_DS_DIVISIONS);
 
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
