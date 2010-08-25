@@ -4,6 +4,7 @@ import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 
 import java.util.List;
 import java.util.Date;
@@ -16,7 +17,7 @@ public interface DeathRegisterDAO {
     /**
      * Add a death registration
      *
-     * @param dr the death register to be added
+     * @param dr   the death register to be added
      * @param user
      */
     public void addDeathRegistration(DeathRegister dr, User user);
@@ -24,7 +25,7 @@ public interface DeathRegisterDAO {
     /**
      * update death registration
      *
-     * @param dr the death registration to be updated
+     * @param dr   the death registration to be updated
      * @param user
      */
     public void updateDeathRegistration(DeathRegister dr, User user);
@@ -40,7 +41,7 @@ public interface DeathRegisterDAO {
     /**
      * remove a death registration
      *
-     * @param dr the entry to be removed
+     * @param dr   the entry to be removed
      * @param user
      */
     public void deleteDeathRegistration(DeathRegister dr, User user);
@@ -49,22 +50,22 @@ public interface DeathRegisterDAO {
      * Get the list of death registrations for a given state based on given death division
      *
      * @param deathDivision the death division
-     * @param pageNo   the page number for the results required (start from 1)
-     * @param noOfRows number of rows to return per page
-     * @param status   state of the DeathRegister
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @param status        state of the DeathRegister
      * @return list of DeathRegister objects which are in the given state
      */
-    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision,int pageNo, int noOfRows, DeathRegister.State status);
+    public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status);
 
     /**
      * Get the list of all the death registrations which are belonging to the given death division
      *
      * @param deathDivision the death division
-     * @param pageNo   the page number for the results required(start from 1)
-     * @param noOfRows number of rows to return per page
+     * @param pageNo        the page number for the results required(start from 1)
+     * @param noOfRows      number of rows to return per page
      * @return list of DeathRegister objects
      */
-    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision,int pageNo, int noOfRows);
+    public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows);
 
     /**
      * get a death registration based on requested serial number and BDDivision
@@ -88,4 +89,25 @@ public interface DeathRegisterDAO {
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
                                                                        Date startDate, Date endDate, int pageNo, int noOfRows);
+
+    /**
+     * Get the list of death registrations for a given state based on given dsDivision
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param status     state of the DeathRegister
+     * @return list of DeathRegister objects which are in the given state
+     */
+    public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status);
+
+    /**
+     * Get the list of all the death registrations which are belonging to the given dsDivision
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo        the page number for the results required(start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @return list of DeathRegister objects
+     */
+    public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows);
 }

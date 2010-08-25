@@ -102,7 +102,7 @@
             <td colspan="1"></td>
             <td colspan="1">
                 <s:select id="deathDivisionId" name="deathDivisionId" value="%{deathDivisionId}"
-                          list="bdDivisionList"
+                          list="bdDivisionList"  headerValue="%{getText('all.divisions.label')}" headerKey="0"
                           cssStyle=" width:240px;float:right;"/>
             </td>
         </tr>
@@ -205,6 +205,8 @@
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 </s:url>
 
@@ -213,6 +215,8 @@
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 </s:url>
 
@@ -220,6 +224,8 @@
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 </s:url>
@@ -228,6 +234,8 @@
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 </s:url>
@@ -280,6 +288,8 @@
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                    <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
                     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                     <s:param name="rePrint" value="false"/>
                 </s:url>
@@ -346,6 +356,8 @@
                         <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                         <s:param name="pageNo" value="%{#request.pageNo}"/>
                         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                        <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
                         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                     </s:url>
                     <s:a href="%{cetificatePrintUrl}"

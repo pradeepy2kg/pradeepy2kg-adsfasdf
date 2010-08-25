@@ -7,6 +7,7 @@ import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 
@@ -144,7 +145,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             if (state == DeathRegister.State.APPROVED) {
                 dr.getLifeCycleInfo().setCertificateGeneratedTimestamp(new Date());
                 dr.getLifeCycleInfo().setCertificateGeneratedUser(user);
-            }    
+            }
         } else {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
@@ -185,7 +186,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getByBDDivisionAndRegistrationDateRange(deathDivision, startDate, endDate, pageNo, noOfRows);
     }
@@ -242,5 +243,43 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
                 bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
                 bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
+    }
+
+    private void validateAccessToDSDivision(User user, DSDivision dsDivision) {
+        final String role = user.getRole().getRoleId();
+        if (!(User.State.ACTIVE == user.getStatus()
+            &&
+            (Role.ROLE_RG.equals(role)
+                || user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey())
+            )
+        )) {
+
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                dsDivision.getDistrict().getDistrictId(), ErrorCodes.PERMISSION_DENIED);
+        }
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get death registrations with the state : " + status
+                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToDSDivision(user, dsDivision);
+        return deathRegisterDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, status);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
+        logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
+        validateAccessToDSDivision(user, dsDivision);
+        return deathRegisterDAO.getPaginatedListForAllByDSDivision(dsDivision, pageNo, noOfRows);
     }
 }
