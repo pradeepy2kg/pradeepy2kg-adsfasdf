@@ -125,45 +125,34 @@
     var errormsg = "";
     function validate() {
         var domObject;
-        var element;
         var returnval;
         var check = document.getElementById('skipjs');
 
         if (!check.checked) {
             // validate father full name
-            element = document.getElementById('fatherFullName');
-            if (element.value == "") {
+            domObject = document.getElementById('fatherFullName');
+            if (isFieldEmpty(domObject)) {
                 errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
             }
-            //father date of birth
-            domObject = document.getElementById('fatherDatePicker');
-            if (!isFieldEmpty(domObject))
-                isDate(domObject.value, "error2", "fatherDOB")
-            
-//            //mother date of birth
-//            domObject = document.getElementById('motherDatePicker');
-//            //hospital addmission date
-//            domObject = document.getElementById('admitDatePicker');
-//            isDate(domObject.value, "error2", "dateOfAddmission")
 
             // validate mother full name
-            element = document.getElementById('motherFullName');
-            if (element.value == "") {
+            domObject = document.getElementById('motherFullName');
+            if (isFieldEmpty(domObject)) {
                 errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
             }
 
             // validate mother date of birth
-            element = document.getElementById('motherDatePicker');
-            if (element.value == "") {
+            domObject = document.getElementById('motherDatePicker');
+            if (isFieldEmpty(domObject)) {
                 errormsg = errormsg + "\n" + document.getElementById('mother_birth_day_empty').value;
             }
 
             // validate mother age at birth
-            element = document.getElementById('motherAgeAtBirth');
-            if (element.value == "") {
+            domObject = document.getElementById('motherAgeAtBirth');
+            if (isFieldEmpty(domObject)) {
                 errormsg = errormsg + "\n" + document.getElementById('mother_age').value;
             }
-            isNumeric(element.value, 'error2', 'mother_age');
+            isNumeric(domObject.value, 'error2', 'mother_age');
         }
 
         // validate mother email address
@@ -171,7 +160,7 @@
         if (!isFieldEmpty(domObject))
             validateEmail(domObject, 'error1')
 
-//                commanTags(check);
+        commanTags(check);
 
         if (errormsg != "") {
             alert(errormsg);
@@ -198,14 +187,17 @@
     function commanTags(check) {
         var domObject;
         //father date of birth
-//        domObject = document.getElementById('fatherDatePicker');
-//        isDate(domObject.value, "error2", "fatherDOB")
+        domObject = document.getElementById('fatherDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, "error2", "fatherDOB");
         //mother date of birth
-//        domObject = document.getElementById('motherDatePicker');
-//        isDate(domObject.value, "error2", "motherDOB")
-//        //hospital addmission date
-//        domObject = document.getElementById('admitDatePicker');
-//        isDate(domObject.value, "error2", "dateOfAddmission")
+        domObject = document.getElementById('motherDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, "error2", "motherDOB");
+        //hospital addmission date
+        domObject = document.getElementById('admitDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, "error2", "dateOfAddmission");
     }
 
 </script>

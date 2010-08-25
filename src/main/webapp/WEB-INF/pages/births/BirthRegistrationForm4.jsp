@@ -44,33 +44,33 @@
 
     var errormsg = "";
     function validate() {
-        var element;
+        var domObject;
         var returnval;
         var signdate = new Date(document.getElementById('modifiedDatePicker').value);
 
         // notifier PIN or NIC
-        element = document.getElementById('notifyingAuthorityPIN');
-        if (element.value == "") {
+        domObject = document.getElementById('notifyingAuthorityPIN');
+        if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
         }
-//        TODO
-//        validatePINorNIC(element, 'error1', 'p4error5');
+        //        TODO
+        //        validatePINorNIC(element, 'error1', 'p4error5');
 
         // notifier name
-        element = document.getElementById('notifyingAuthorityName');
-        if (element.value == "") {
+        domObject = document.getElementById('notifyingAuthorityName');
+        if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p4error2').value;
         }
 
         // notifier adderss
-        element = document.getElementById('notifyingAuthorityAddress');
-        if (element.value == "") {
+        domObject = document.getElementById('notifyingAuthorityAddress');
+        if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p4error4').value;
         }
 
         /*date related validations*/
-        element = document.getElementById('modifiedDatePicker');
-        if (element.value == "") {
+        domObject = document.getElementById('modifiedDatePicker');
+        if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
         }
 

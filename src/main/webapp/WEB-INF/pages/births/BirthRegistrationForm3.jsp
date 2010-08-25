@@ -20,59 +20,59 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script type="text/javascript">
-    $(function() {
-        $("#marriageDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+$(function() {
+    $("#marriageDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $("#informDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+});
+$(function() {
+    $("#informDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $('img#informant_lookup').bind('click', function(evt1) {
-            var id1 = $("input#informantNICorPIN").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
-                    function(data1) {
-                        $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#informantAddress").val(data1.lastAddress);
-                    });
-        });
+});
+$(function() {
+    $('img#informant_lookup').bind('click', function(evt1) {
+        var id1 = $("input#informantNICorPIN").attr("value");
+        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+                function(data1) {
+                    $("textarea#informantName").val(data1.fullNameInOfficialLanguage);
+                    $("textarea#informantAddress").val(data1.lastAddress);
+                });
     });
+});
 
-    var informPerson;
-    function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
-    {
+var informPerson;
+function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
+{
 
-        var informantName = document.getElementById("informantName");
-        var informantNICorPIN = document.getElementById("informantNICorPIN");
-        var informantAddress = document.getElementById("informantAddress");
-        var informantPhoneNo = document.getElementById("informantPhoneNo");
-        var informantEmail = document.getElementById("informantEmail");
+    var informantName = document.getElementById("informantName");
+    var informantNICorPIN = document.getElementById("informantNICorPIN");
+    var informantAddress = document.getElementById("informantAddress");
+    var informantPhoneNo = document.getElementById("informantPhoneNo");
+    var informantEmail = document.getElementById("informantEmail");
 
-        informantName.value = name;
-        informantNICorPIN.value = nICorPIN;
-        informantAddress.value = address;
-        informantPhoneNo.value = phonoNo;
-        informantEmail.value = email;
-    }
+    informantName.value = name;
+    informantNICorPIN.value = nICorPIN;
+    informantAddress.value = address;
+    informantPhoneNo.value = phonoNo;
+    informantEmail.value = email;
+}
 
-    var errormsg = "";
-    // validations for BDF page 3
-    function validate() {
-        // used to skip non trivial validation in the page
-        var check = document.getElementById('skipjs');
+var errormsg = "";
+// validations for BDF page 3
+function validate() {
+    // used to skip non trivial validation in the page
+    var check = document.getElementById('skipjs');
     var declarationType = document.getElementById('birthTypeId');
-        var returnval = true;
+    var returnval = true;
 
     if (declarationType.value == 0) {
         commanTags(check);
@@ -85,143 +85,141 @@
         commanTags(check);
     }
 
+    validateMarriage(check);
+    validateInformant();
 
-        validateMarriage(check);
-        validateInformant();
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
     }
+    errormsg = "";
+    return returnval;
+}
 
 function commanTags() {
     var domObject;
     //infomant date
     domObject = document.getElementById('informDatePicker');
-    isDate(domObject.value, "error11", "infomantDate")
-
+    if (!isFieldEmpty(domObject))
+        isDate(domObject.value, "error11", "infomantDate");
 }
 
-    // validation marriage related fields
-    function validateMarriage(check) {
-        var element;
-        var submit = new Date(document.getElementById('marriageDatePicker').value);
+// validation marriage related fields
+function validateMarriage(check) {
+    var domObject;
+    var submit = new Date(document.getElementById('marriageDatePicker').value);
 
-        // for parrents married - Yes
-        element = document.getElementsByName("marriage.parentsMarried")[0];
-        if (!check.checked) {
-            if (element.checked) {
-                // validate place of marriage
-                element = document.getElementById('placeOfMarriage');
-                if (element.value == "") {
-                    errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
-                }
-
-                // validate marriage date
-                if (!(submit.getTime())) {
-                    errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
-                }
-            }
-        }
-
-        // for parrents married - No
-        element = document.getElementsByName("marriage.parentsMarried")[1];
-        if (element.checked) {
-            element = document.getElementById('fatherName');
-            var element3 = document.getElementById('fatherSigned');
-
-            // validate father signed
-            if (!element3.checked && element.value.length > 0) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+    // for parrents married - Yes
+    domObject = document.getElementsByName("marriage.parentsMarried")[0];
+    if (!check.checked) {
+        if (domObject.checked) {
+            // validate place of marriage
+            domObject = document.getElementById('placeOfMarriage');
+            if (isFieldEmpty(domObject)) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
             }
 
-            // validate mother signed
-            var element4 = document.getElementById('motherSigned');
-            if (!element4.checked && element.value.length > 0) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
+            // validate marriage date
+            if (!(submit.getTime())) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
             }
         }
     }
 
-    // validate informant fields
-    function validateInformant() {
-        var element;
-        var domObject;
+    // for parrents married - No
+    domObject = document.getElementsByName("marriage.parentsMarried")[1];
+    if (domObject.checked) {
+        domObject = document.getElementById('fatherName');
+        var element3 = document.getElementById('fatherSigned');
 
-        checkInformantType();
-
-        // check informant PIN or NIC
-        element = document.getElementById('informantNICorPIN');
-//        TODO
-//        validatePINorNIC(element, 'error11', 'error12')
-
-        // check informant name
-        element = document.getElementById('informantName');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+        // validate father signed
+        if (!element3.checked && domObject.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
         }
 
-        // check informant address
-        element = document.getElementById('informantAddress');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
-        }
-
-        // validating informant email
-        domObject = document.getElementById('informantEmail');
-        if (!isFieldEmpty(domObject))
-            validateEmail(domObject, 'error11', 'error10')
-
-        // check informant sign date
-        var submit = new Date(document.getElementById('informDatePicker').value);
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+        // validate mother signed
+        var element4 = document.getElementById('motherSigned');
+        if (!element4.checked && domObject.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
         }
     }
+}
 
-    // check informant type selected
-    function checkInformantType() {
-        var declarationType = document.getElementById('birthTypeId');
+// validate informant fields
+function validateInformant() {
+    var domObject;
 
-        var mother = document.getElementById('informantTypeMOTHER').checked;
-        var father = document.getElementById('informantTypeFATHER').checked;
+    checkInformantType();
 
-        if (declarationType.value == 0) {
-            var relative = document.getElementById('informantTypeRELATIVE').checked;
-            informantAvailable(mother, father, relative);
-        } else {
-            var guardian = document.getElementById('informantTypeGUARDIAN').checked;
-            informantAvailable(mother, father, guardian);
+    // check informant PIN or NIC
+    domObject = document.getElementById('informantNICorPIN');
+    //        TODO
+    //        validatePINorNIC(element, 'error11', 'error12')
+
+    // check informant name
+    domObject = document.getElementById('informantName');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+    }
+
+    // check informant address
+    domObject = document.getElementById('informantAddress');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
+    }
+
+    // validating informant email
+    domObject = document.getElementById('informantEmail');
+    if (!isFieldEmpty(domObject))
+        validateEmail(domObject, 'error11', 'error10')
+
+    // check informant sign date
+    var submit = new Date(document.getElementById('informDatePicker').value);
+    if (!(submit.getTime())) {
+        errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
+    }
+}
+
+// check informant type selected
+function checkInformantType() {
+    var declarationType = document.getElementById('birthTypeId');
+
+    var mother = document.getElementById('informantTypeMOTHER').checked;
+    var father = document.getElementById('informantTypeFATHER').checked;
+
+    if (declarationType.value == 0) {
+        var relative = document.getElementById('informantTypeRELATIVE').checked;
+        informantAvailable(mother, father, relative);
+    } else {
+        var guardian = document.getElementById('informantTypeGUARDIAN').checked;
+        informantAvailable(mother, father, guardian);
+    }
+}
+
+function informantAvailable(inf1, inf2, inf3) {
+    if (!(inf1 || inf2 || inf3))
+        errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+}
+
+function disableMarriage(mode) {
+    document.getElementById('placeOfMarriage').disabled = mode;
+    document.getElementById('marriageDatePicker').disabled = mode;
+}
+
+function disableSigns(mode) {
+    if (!mode) {
+        var name = document.getElementById('fatherName');
+        if (name.value.length == 0) {
+            mode = true;
         }
     }
+    document.getElementById('motherSigned').disabled = mode;
+    document.getElementById('fatherSigned').disabled = mode;
+}
 
-    function informantAvailable(inf1, inf2, inf3) {
-        if (!(inf1 || inf2 || inf3))
-            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-    }
-
-    function disableMarriage(mode) {
-        document.getElementById('placeOfMarriage').disabled = mode;
-        document.getElementById('marriageDatePicker').disabled = mode;
-    }
-
-    function disableSigns(mode) {
-        if (!mode) {
-            var name = document.getElementById('fatherName');
-            if (name.value.length == 0) {
-                mode = true;
-            }
-        }
-        document.getElementById('motherSigned').disabled = mode;
-        document.getElementById('fatherSigned').disabled = mode;
-    }
-
-    function initPage() {
-        disableSigns(true);
-    }
+function initPage() {
+    disableSigns(true);
+}
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
