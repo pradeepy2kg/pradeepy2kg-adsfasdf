@@ -33,9 +33,17 @@ public interface BDDivisionDAO {
 
     public BDDivision getBDDivisionByPK(int bdDivisionUKey);
 
-    public void activate(BDDivision bdDivision, User user);
+    /**
+     * Update a BD Division
+     * @param bdDivision division to be updated
+     * @param user user executing the operation
+     */
+    public void update(BDDivision bdDivision, User user);
 
-    public void inactivate(BDDivision bdDivision, User user);
-
+    /**
+     * Add a new BD Division
+     * @param bdDivision division to be marked
+     * @param user user executing the operation
+     */
     public void add(BDDivision bdDivision, User user);
 }

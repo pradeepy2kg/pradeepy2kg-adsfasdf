@@ -69,75 +69,21 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     }
 
     /**
-     * Add a new BDDivision and cache
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void add(BDDivision bdDivision, User user) {
-
-        if (isEmptyString(bdDivision.getEnDivisionName()) ||
-            isEmptyString(bdDivision.getEnDivisionName()) ||
-            isEmptyString(bdDivision.getEnDivisionName())) {
-            throw new CRSRuntimeException("One or more names of the BD Division is invalid", ErrorCodes.INVALID_DATA);
-        }
-
-        if (user.isAuthorized(Permission.ADD_EDIT_DIVISIONS)) {
-            try {
-                em.persist(bdDivision);
-                updateCache(bdDivision);
-                logger.info("New BD Division added : {} by : {}", bdDivision.getEnDivisionName(), user.getUserId());
-            } catch (Exception e) {
-                logger.error("Attempt to add BD Division : " + bdDivision.getEnDivisionName() + " failed", e);
-            }
-        } else {
-            logger.error("User : " + user.getUserId() +
-                " was not allowed to add a new BD Division : " + bdDivision.getEnDivisionName());
-        }
+        em.persist(bdDivision);
+        updateCache(bdDivision);
     }
 
     /**
-     * Inactivate a BDDivision and update cache
+     * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivate(BDDivision bdDivision, User user) {
-        if (user.isAuthorized(Permission.ADD_EDIT_DIVISIONS)) {
-            try {
-                BDDivision existing = em.find(BDDivision.class, bdDivision.getBdDivisionUKey());
-                if (existing != null) {
-                    existing.setActive(false);
-                    em.merge(existing);
-                    updateCache(existing);
-                }
-                logger.info("BD Division : {} inactivated by : {}", bdDivision.getEnDivisionName(), user.getUserId());
-            } catch (Exception e) {
-                logger.error("Attempt to inactivate BD Division : " + bdDivision.getEnDivisionName() + " failed", e);
-            }
-        } else {
-            logger.error("User : " + user.getUserId() +
-                " was not allowed to inactivate BD Division : " + bdDivision.getEnDivisionName());
-        }
-    }
-
-    /**
-     * Activate a BDDivision and update cache
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void activate(BDDivision bdDivision, User user) {
-        if (user.isAuthorized(Permission.ADD_EDIT_DIVISIONS)) {
-            try {
-                BDDivision existing = em.find(BDDivision.class, bdDivision.getBdDivisionUKey());
-                if (existing != null) {
-                    existing.setActive(true);
-                    em.merge(existing);
-                    updateCache(existing);
-                }
-                logger.info("BD Division : {} activated by : {}", bdDivision.getEnDivisionName(), user.getUserId());
-            } catch (Exception e) {
-                logger.error("Attempt to activate BD Division : " + bdDivision.getEnDivisionName() + " failed", e);
-            }
-        } else {
-            logger.error("User : " + user.getUserId() +
-                " was not allowed to activate BD Division : " + bdDivision.getEnDivisionName());
-        }
+    public void update(BDDivision bdDivision, User user) {
+        em.merge(bdDivision);
+        updateCache(bdDivision);
     }
 
     /**
