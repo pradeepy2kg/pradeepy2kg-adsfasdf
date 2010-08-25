@@ -440,5 +440,28 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
+    /**
+     * Get the list of BDFs for which the Confirmation form should be printed
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @param printed       return already printed items if true, or items pending printing if false
+     * @param user          user initiating the action
+     * @return approved list for print
+     */
+    public List<BirthDeclaration> getConfirmationPrintListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean printed, User user);
+
+     /**
+     * Get the list of BDFs for which the Birth Certificate should be printed
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @param printed       return already printed items if true, or items pending printing if false
+     * @param user          user initiating the action
+     * @return approved list for print
+     */
+    public List<BirthDeclaration> getBirthCertificatePrintListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean printed, User user);
 }
 

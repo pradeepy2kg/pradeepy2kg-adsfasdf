@@ -93,7 +93,7 @@
                 <td align="right"><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
                 <td>
                     <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                              list="bdDivisionList"
+                              list="bdDivisionList" headerValue="%{getText('all.divisions.label')}" headerKey="0"
                               cssStyle=" width:240px;float:right;"/>
                 </td>
             </tr>
@@ -118,7 +118,7 @@
                 <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                     <thead>
                     <tr>
-                        <%--<th></th>--%>
+                            <%--<th></th>--%>
                         <th width="15px"></th>
                         <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
@@ -132,7 +132,7 @@
                         <%--following code used for pagination--%>
                     <s:iterator status="printStatus" value="printList" id="printListId">
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                            <%--<td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>--%>
+                                <%--<td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>--%>
                             <td><s:checkbox name="index"
                                             onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
                                             fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
@@ -153,6 +153,7 @@
                                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                                     <s:param name="printed" value="#request.printed"/>
                                     <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
@@ -175,6 +176,7 @@
                     <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
                     <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:hidden name="printed" value="%{#request.printed}"/>
+                    <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                     <s:submit value="%{getText('print.label')}"/></s:label>
             </div>
             <div class="next-previous">
@@ -182,12 +184,14 @@
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                     <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>
                 </s:url>
                 <s:url id="nextUrl" action="eprCertificatePrintNext.do">
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
                     <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                    <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                     <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                     <s:param name="printed" value="#request.printed"/>
                     <s:param name="printStart" value="#request.printStart"/>

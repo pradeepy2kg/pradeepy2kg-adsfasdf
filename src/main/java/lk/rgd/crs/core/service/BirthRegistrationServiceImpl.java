@@ -1444,17 +1444,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
-        if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                ||
-                (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
-            )
-        )
-            ) {
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
-        }
+        validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
             BirthDeclaration.State.DATA_ENTRY);
     }
@@ -1465,17 +1455,7 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision, Date startDate,
                                                                                         Date endDate, int pageNo, int noOfRows, User user) {
-        if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                ||
-                (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
-            )
-        )
-            ) {
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
-        }
+        validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
             startDate, endDate, pageNo, noOfRows);
     }
@@ -1489,6 +1469,12 @@ public class BirthRegistrationServiceImpl implements
             logger.debug("Get confirmations pending approval by DSDivision ID : " + dsDivision.getDsDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
+        validateAccessToDSDivison(dsDivision, user);
+        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(
+            dsDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
+    }
+
+    private void validateAccessToDSDivison(DSDivision dsDivision, User user) {
         if (!(User.State.ACTIVE == user.getStatus()
             &&
             (Role.ROLE_RG.equals(user.getRole().getRoleId())
@@ -1500,8 +1486,6 @@ public class BirthRegistrationServiceImpl implements
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
-        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(
-            dsDivision, pageNo, noOfRows, BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
     }
 
     /**
@@ -1515,21 +1499,39 @@ public class BirthRegistrationServiceImpl implements
                 dsDivision.getDsDivisionUKey() + " and date range : " + startDate + " to " + endDate +
                 " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
-        if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                ||
-                (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
-            )
-        )
-            ) {
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
-        }
+        validateAccessToDSDivison(dsDivision, user);
         //setting the time of the endDate to the current time
         Date d = new Date();
         endDate.setHours(d.getHours());
         endDate.setMinutes(d.getMinutes());
         return birthDeclarationDAO.getByDSDivisionStatusAndConfirmationReceiveDateRange(dsDivision, startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getConfirmationPrintListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean printed, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get records pending confirmation printing by DSDivision ID : " +
+                dsDivision.getDsDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToDSDivison(dsDivision, user);
+        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
+            printed ? BirthDeclaration.State.CONFIRMATION_PRINTED : BirthDeclaration.State.APPROVED);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getBirthCertificatePrintListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean printed, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth certificate list print by DSDivision ID : " +
+                dsDivision.getDsDivisionUKey() + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToDSDivison(dsDivision, user);
+        return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
+            printed ? BirthDeclaration.State.ARCHIVED_CERT_PRINTED : BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
     }
 }
