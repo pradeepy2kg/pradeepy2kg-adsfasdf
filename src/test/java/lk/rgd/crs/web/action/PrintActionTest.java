@@ -1,18 +1,23 @@
 package lk.rgd.crs.web.action;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.web.action.births.PrintAction;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.UnitTestManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,6 +32,104 @@ public class PrintActionTest extends CustomStrutsTestCase {
     private ActionProxy proxy;
     private PrintAction action;
     private LoginAction loginAction;
+
+    protected static BDDivision colomboBDDivision;
+    protected static BDDivision negamboBDDivision;
+
+    protected final static ApplicationContext ctx = UnitTestManager.ctx;
+    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+    protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+
+    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(PrintActionTest.class)) {
+            protected void setUp() throws Exception {
+                logger.info("setup called");
+                colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
+                negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+                birthRegistrationService.addLiveBirthDeclaration(sampleBirths(), false, loginSampleUser(), null, null);
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                logger.info("tear down called ");
+                super.tearDown();
+            }
+        };
+        return setup;
+    }
+
+    private static User loginSampleUser() {
+        User rg = null;
+        try {
+            rg = userManager.authenticateUser("rg", "password");
+        }
+        catch (AuthorizationException e) {
+            logger.debug("exception when autharizing a user :'rg' ");
+        }
+        return rg;
+    }
+
+    private static BirthDeclaration sampleBirths() {
+        // get Calendar with current date
+        java.util.GregorianCalendar gCal = new GregorianCalendar();
+
+        BirthDeclaration bd = new BirthDeclaration();
+        //child info
+        ChildInfo child = new ChildInfo();
+        //set birth date 20 days before today
+        gCal.add(Calendar.DATE, -20);
+        child.setDateOfBirth(gCal.getTime());
+        child.setChildGender(0);
+
+        //Birth Register info
+        BirthRegisterInfo register = new BirthRegisterInfo();
+        register.setPreferredLanguage("si");
+        register.setBdfSerialNo(new Long(1000));
+        //birth devision
+        register.setBirthDivision(colomboBDDivision);
+        register.setDateOfRegistration(gCal.getTime());
+        register.setBirthType(BirthDeclaration.BirthType.LIVE);
+
+        //parent info
+        ParentInfo parent = new ParentInfo();
+
+        //marrage info
+        MarriageInfo marrage = new MarriageInfo();
+
+        //grand father info
+        GrandFatherInfo granFather = new GrandFatherInfo();
+
+        //notification authority
+        NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
+        notification.setNotifyingAuthorityPIN("pin notification");
+        notification.setNotifyingAuthorityName("notification authority name");
+        notification.setNotifyingAuthorityAddress("notification authority address");
+        //set notification date tomorrow from today
+        gCal.add(Calendar.DATE, +1);
+        notification.setNotifyingAuthoritySignDate(gCal.getTime());
+
+        //informant info
+        InformantInfo informant = new InformantInfo();
+        informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
+        informant.setInformantName("informant name");
+        informant.setInformantAddress("informant address");
+        informant.setInformantSignDate(gCal.getTime());
+
+        //confermant info
+        ConfirmantInfo confermant = new ConfirmantInfo();
+
+        bd.setChild(child);
+        bd.setRegister(register);
+        bd.setParent(parent);
+        bd.setMarriage(marrage);
+        bd.setGrandFather(granFather);
+        bd.setNotifyingAuthority(notification);
+        bd.setInformant(informant);
+        bd.setConfirmant(confermant);
+
+        return bd;
+    }
 
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
@@ -104,7 +207,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
     public void testPrintBulkOfEntries() throws Exception {
         Map session = login("rg", "password");
         request.setParameter("printed", "false");
-        String[] index = new String[]{"164"};
+        String[] index = new String[]{"1"};
         request.setParameter("index", index);
         request.setParameter("birthDivisionId", "1");
         initAndExecute("/births/eprBirthCertificateBulkPrint.do", session);
