@@ -508,6 +508,9 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.BACK_CHANGE_PASSWORD);
             bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
 
+            //registrars managment
+            bs.set(Permission.PAGE_REGISTRARS_MANAGMENT_LIST);
+
             // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);
