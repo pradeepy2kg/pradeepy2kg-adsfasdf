@@ -2,6 +2,7 @@ package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,19 +18,40 @@ public interface MasterDataManagementService {
      * @param bdDivision the BD Division to be added
      * @param user the user invoking the action
      */
-    void add(BDDivision bdDivision, User user);
+    void addBDDivision(BDDivision bdDivision, User user);
 
     /**
      * Mark a BD Division as inactive
      * @param bdDivision the BD Division to be updated
      * @param user the user invoking the action
      */
-    void inactivate(BDDivision bdDivision, User user);
+    void inactivateBDDivision(BDDivision bdDivision, User user);
 
     /**
      * Mark a BD Division as active
      * @param bdDivision the BD Division to be updated
      * @param user the user invoking the action
      */
-    void activate(BDDivision bdDivision, User user);
+    void activateBDDivision(BDDivision bdDivision, User user);
+
+    /**
+     * Add a new MR Division
+     * @param mrDivision the MR Division to be added
+     * @param user the user invoking the action
+     */
+    void addMRDivision(MRDivision mrDivision, User user);
+
+    /**
+     * Mark a MR Division as inactive
+     * @param mrDivision the MR Division to be updated
+     * @param user the user invoking the action
+     */
+    void inactivateMRDivision(MRDivision mrDivision, User user);
+
+    /**
+     * Mark a MR Division as active
+     * @param mrDivision the MR Division to be updated
+     * @param user the user invoking the action
+     */
+    void activateMRDivision(MRDivision mrDivision, User user);
 }
