@@ -1,6 +1,7 @@
 package lk.rgd.common.api.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,25 +12,43 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "EVENT", schema = "COMMON")
-public class Event {
+public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
+
     @Column(updatable = false, nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date timestamp;
+
     @Column(updatable = false, nullable = false)
     private int eventType;
+
     @Column(updatable = false, nullable = false)
     private int eventCode;
+
     @ManyToOne
     @JoinColumn(name = "userId", nullable = true, updatable = false)
     private User user;
+
     @Column(updatable = false, nullable = true)
-    private long primaryRecordId;
+    private long recordId;
+
     @Column(updatable = false, nullable = true)
     private String eventData;
+
+    @Lob
+    @Column(nullable = true, length = 25 * 1024)
+    private String debug;
+
+    @Lob
+    @Column(nullable = true, length = 2048)
+    private String stackTrace;
+
+    public Event() {
+        timestamp = new Date();
+    }
 
     public long getIdUKey() {
         return idUKey;
@@ -67,12 +86,12 @@ public class Event {
         this.user = user;
     }
 
-    public long getPrimaryRecordId() {
-        return primaryRecordId;
+    public long getRecordId() {
+        return recordId;
     }
 
-    public void setPrimaryRecordId(long primaryRecordId) {
-        this.primaryRecordId = primaryRecordId;
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
     }
 
     public String getEventData() {
@@ -81,5 +100,21 @@ public class Event {
 
     public void setEventData(String eventData) {
         this.eventData = eventData;
+    }
+
+    public String getDebug() {
+        return debug;
+    }
+
+    public void setDebug(String debug) {
+        this.debug = debug;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
     }
 }
