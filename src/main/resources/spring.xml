@@ -68,6 +68,10 @@
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
         <constructor-arg ref="popRegService"/>
     </bean>
+    <bean id="serviceAuditor" class="lk.rgd.crs.core.service.ServiceAuditor">
+        <constructor-arg value="true"/>
+        <constructor-arg ref="eventDAOImpl"/>
+    </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
@@ -79,10 +83,6 @@
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
-    <bean id="birthServiceAuditor" class="lk.rgd.crs.core.service.BirthRegistrationServiceAuditor">
-        <constructor-arg value="true"/>
-        <constructor-arg ref="eventDAOImpl"/>
-    </bean>
     <bean id="manageBirthService" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target">
             <bean class="lk.rgd.crs.core.service.BirthRegistrationServiceImpl">
@@ -103,32 +103,69 @@
         </property>
         <property name="interceptorNames">
             <list>
-                <value>birthServiceAuditor</value>
+                <value>serviceAuditor</value>
             </list>
         </property>
     </bean>
 
-    <bean id="deathRegisterService" class="lk.rgd.crs.core.service.DeathRegistrationServiceImpl">
-        <constructor-arg ref="deathRegisterDAOImpl"/>
+    <bean id="deathRegisterService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="lk.rgd.crs.core.service.DeathRegistrationServiceImpl">
+                <constructor-arg ref="deathRegisterDAOImpl"/>
+            </bean>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>serviceAuditor</value>
+            </list>
+        </property>
     </bean>
 
-    <bean id="adoptionOrderService" class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
-        <constructor-arg ref="adoptionOrderDAOImpl"/>
+    <bean id="adoptionOrderService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
+                <constructor-arg ref="adoptionOrderDAOImpl"/>
+            </bean>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>serviceAuditor</value>
+            </list>
+        </property>
     </bean>
 
-    <bean id="masterDataManagementService" class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">
-        <constructor-arg ref="bdDivisionDAOImpl"/>
-        <constructor-arg ref="mrDivisionDAOImpl"/>
-        <constructor-arg ref="dsDivisionDAOImpl"/>
-        <constructor-arg ref="districtDAOImpl"/>
+    <bean id="masterDataManagementService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="lk.rgd.crs.core.service.MasterDataManagementServiceImpl">
+                <constructor-arg ref="bdDivisionDAOImpl"/>
+                <constructor-arg ref="mrDivisionDAOImpl"/>
+                <constructor-arg ref="dsDivisionDAOImpl"/>
+                <constructor-arg ref="districtDAOImpl"/>
+            </bean>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>serviceAuditor</value>
+            </list>
+        </property>
     </bean>
 
     <!--Service API beans - these allows access at a 'service' level, suitable for consumption by
     the web interface as well as a Web Services interface -->
-    <bean id="popRegService" class="lk.rgd.prs.core.service.PopulationRegistryImpl">
-        <constructor-arg ref="personDAOImpl"/>
-        <constructor-arg ref="pinGeneratorService"/>
+    <bean id="popRegService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="lk.rgd.prs.core.service.PopulationRegistryImpl">
+                <constructor-arg ref="personDAOImpl"/>
+                <constructor-arg ref="pinGeneratorService"/>
+            </bean>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>serviceAuditor</value>
+            </list>
+        </property>
     </bean>
+
     <bean id="pinGeneratorService" class="lk.rgd.prs.core.service.PINGeneratorImpl">
         <constructor-arg ref="pinNumberDAOImpl"/>
     </bean>

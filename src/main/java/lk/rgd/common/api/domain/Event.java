@@ -14,6 +14,10 @@ import java.util.Date;
 @Table(name = "EVENT", schema = "COMMON")
 public class Event implements Serializable {
 
+    public enum Type {
+        INFO, ERROR
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
@@ -23,7 +27,7 @@ public class Event implements Serializable {
     private Date timestamp;
 
     @Column(updatable = false, nullable = false)
-    private int eventType;
+    private Type eventType;
 
     @Column(updatable = false, nullable = false)
     private int eventCode;
@@ -34,6 +38,12 @@ public class Event implements Serializable {
 
     @Column(updatable = false, nullable = true)
     private long recordId;
+
+    @Column(updatable = false, nullable = true)
+    private String methodName;
+
+    @Column(updatable = false, nullable = true)
+    private String className;
 
     @Column(updatable = false, nullable = true)
     private String eventData;
@@ -48,6 +58,7 @@ public class Event implements Serializable {
 
     public Event() {
         timestamp = new Date();
+        eventType = Type.INFO;
     }
 
     public long getIdUKey() {
@@ -62,11 +73,11 @@ public class Event implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public int getEventType() {
+    public Type getEventType() {
         return eventType;
     }
 
-    public void setEventType(int eventType) {
+    public void setEventType(Type eventType) {
         this.eventType = eventType;
     }
 
@@ -116,5 +127,21 @@ public class Event implements Serializable {
 
     public void setStackTrace(String stackTrace) {
         this.stackTrace = stackTrace;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }
