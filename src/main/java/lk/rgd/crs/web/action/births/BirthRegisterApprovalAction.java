@@ -85,7 +85,7 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
     private boolean approved;
 
     public BirthRegisterApprovalAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                                       BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
+        BDDivisionDAO bdDivisionDAO, AppParametersDAO appParametersDAO, BirthRegistrationService service) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -147,6 +147,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
             approvalPendingList = service.getDeclarationApprovalPendingByDSDivision(
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
+        if (approvalPendingList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
+        }
         paginationHandler(approvalPendingList.size());
         setPreviousFlag(false);
     }
@@ -194,7 +197,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
                 catch (Exception e) {
                     logger.error("inside filter() : {} ", e);
-                    addActionError(getText("brapproval.filter.noResult"));
                 }
                 if (bdf != null && bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                     /**
@@ -230,7 +232,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                 }
                 catch (Exception e) {
                     logger.error("inside filter() : {} ", e);
-                    addActionError(getText("brapproval.filter.noResult"));
                 }
                 if (bdf != null) {
                     approvalPendingList.add(bdf);
@@ -255,6 +256,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                         pageNo, noOfRows, user);
                 }
             }
+        }
+        if (approvalPendingList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
         }
         paginationHandler(approvalPendingList.size());
         setRecordCounter(0);

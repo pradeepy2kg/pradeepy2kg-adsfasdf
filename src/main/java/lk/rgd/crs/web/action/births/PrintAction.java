@@ -58,7 +58,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -113,6 +113,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             logger.debug("Initializing certificate Print list with {} items ", printList.size());
         }
+        if (printList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
+        }
     }
 
     /**
@@ -149,6 +152,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
             }
 
             logger.debug("Certificate Print list {}  items  found ", printList.size());
+        }
+        if (printList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
         }
         // TODO remove this
         populate();
@@ -204,6 +210,9 @@ public class PrintAction extends ActionSupport implements SessionAware {
             }
 
             logger.debug("Certificate Print list {}  items  found ", printList.size());
+        }
+        if (printList.size() == 0) {
+            addActionMessage(getText("noitemMsg.label"));
         }
         populate();
         return SUCCESS;

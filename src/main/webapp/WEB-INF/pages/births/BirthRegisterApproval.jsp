@@ -211,15 +211,14 @@
             <td></td>
             <td colspan="4" class="button" align="right">
                 <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
-                <s:submit name="refresh" value="%{getText('refresh.label')}"/>
+                <s:submit name="refresh" value="%{getText('bdfSearch.button')}"/>
             </td>
         </tr>
         </tbody>
     </table>
 </fieldset>
 </s:form>
-<s:actionerror/>
-<s:actionmessage/>
+<s:actionmessage cssClass="alreadyPrinted"/>
 <s:if test="#request.warnings != null">
     <div id="birth-register-approval-message" class="font-9" align="center">
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -233,9 +232,9 @@
 </s:if>
 <div id="birth-register-approval-body">
     <%--todo permission handling--%>
-    <s:if test="approvalPendingList.size==0">
-        <p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>
-    </s:if>
+    <%--<s:if test="approvalPendingList.size==0">--%>
+        <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
+    <%--</s:if>--%>
     <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
         <s:if test="approvalPendingList.size>0">
             <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
