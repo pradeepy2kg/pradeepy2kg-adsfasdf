@@ -11,50 +11,53 @@
             <s:if test="%{value.size > 0}">
                 <s:if test="%{#session.context==key}">
                    <li class="exp">
-                </s:if><s:else><li></s:else>
-                <s:if test="%{key == '6management'}">
-                    <s:a href="#">
-                        <s:label value="%{getText('category_admin_task')}"/>
-                    </s:a>
                 </s:if>
-                <s:if test="%{key=='0births'}">
+                <s:else><li></s:else>
+                <s:if test="%{key == '0birth'}">
                     <s:a href="/popreg/births/eprBirthRegistrationHome.do">
                         <s:label value="%{getText('category_birth_registration')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '1deaths'}">
+                <s:if test="%{key == '1death'}">
                     <s:a href="/popreg/deaths/eprInitDeathHome.do">
                         <s:label value="%{getText('category_death_registraion')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '2marriages'}">
+                <s:if test="%{key == '2marriage'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_marrage_registraion')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '5reprots'}">
+                <s:if test="%{key == '3adoption'}">
+                    <s:a href="/popreg/adoption/eprAdoptionRegistrationHome.do">
+                        <s:label value="%{getText('category_adoption')}"/>
+                    </s:a>
+                </s:if>
+
+                <s:if test="%{key == '4preference'}">
+                    <s:a href="#">
+                        <s:label value="%{getText('category_user_preferance')}"/>
+                    </s:a>
+                </s:if>
+
+                <s:if test="%{key == '5reports'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_reports')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '4preferences'}">
+                <s:if test="%{key == '6admin'}">
                     <s:a href="#">
-                        <s:label value="%{getText('category_user_preferance')}"/>
+                        <s:label value="%{getText('category_admin_task')}"/>
                     </s:a>
                 </s:if>
 
                 <s:if test="%{key == '7prs'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_prs')}"/>
-                    </s:a>
-                </s:if>
-                <s:if test="%{key == '3adp'}">
-                    <s:a href="/popreg/adoption/eprAdoptionRegistrationHome.do">
-                        <s:label value="%{getText('category_adoption')}"/>
                     </s:a>
                 </s:if>
 
