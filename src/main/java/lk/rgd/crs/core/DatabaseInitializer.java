@@ -413,6 +413,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             //death realated
             bs.set(Permission.APPROVE_DEATH);
+            bs.set(Permission.PAGE_DEATH_DIRECT_APPROVE);
             bs.set(Permission.PAGE_DEATH_APPROVE);
             bs.set(Permission.PAGE_DEATH_REJECT);
             bs.set(Permission.PAGE_DEATH_DELETE);

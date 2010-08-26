@@ -460,7 +460,7 @@
         <!--todo-->
         <action name="eprDeathEditMode" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="deathDeclarationEditMode">
-            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+            <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
         <action name="eprApproveDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
@@ -488,6 +488,11 @@
         <action name="eprPrintDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="markDeathDeclarationAsPrinted">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
+        <action name="eprDirectApproveDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="directApproveDeath">
+            <result type="tiles" name="success">epr.deathDeclaration_details</result>
         </action>
 
     </package>
