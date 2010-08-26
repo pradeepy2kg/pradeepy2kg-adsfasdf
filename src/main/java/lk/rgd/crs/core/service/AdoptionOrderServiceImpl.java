@@ -83,7 +83,6 @@ public class AdoptionOrderServiceImpl implements AdoptionOrderService {
             handleException("Cannot update adoption order " + adoption.getIdUKey() +
                 " Illegal state at target : " + adopt.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-
         adoptionOrderDAO.updateAdoptionOrder(adoption, user);
     }
 
