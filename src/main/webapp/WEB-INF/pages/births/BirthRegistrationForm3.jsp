@@ -494,7 +494,7 @@ function initPage() {
                          cssStyle="width:95%;"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
         <td><s:textfield name="informant.informantEmail" id="informantEmail"
-                         cssStyle="width:95%;"/></td>
+                         cssStyle="width:95%;text-transform:none;"/></td>
 
     </tr>
     <tr>
