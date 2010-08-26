@@ -240,5 +240,6 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="roleDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
+        <constructor-arg ref="masterDataManagementService"/>
     </bean>
 </beans>
