@@ -5,10 +5,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Locale;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
@@ -58,7 +55,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private List<DeathRegister> deathApprovalAndPrintList;
     private Map<Integer, String> raceList;
-
+    private List<String> warnings;
 
     private int pageNo;
     private int noOfRows;
@@ -92,6 +89,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     private DeathRegister.State state;
     private DeathRegister.Type deathType;
+    private boolean ignoreWarning;
 
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
@@ -270,11 +268,9 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String approveDeath() {
         logger.debug("requested to approve Death Decalaration with idUKey : {}", idUKey);
-        try {
-            service.approveDeathRegistration(idUKey, user);
-        } catch (CRSRuntimeException e) {
-            addActionError(getText("death.error.no.permission"));
-        }
+        logger.debug("Current status : {}", currentStatus);
+        service.approveDeathRegistration(idUKey, user);
+        
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
@@ -288,26 +284,26 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String directApproveDeath() {
         logger.debug("requested to direct approve Death Decalaration with idUKey : {}", idUKey);
-        try {
-            deathRegister=service.getById(idUKey,user);
-            setLifeCycleInfo(deathRegister.getLifeCycleInfo());
-            service.approveDeathRegistration(idUKey, user);
-        } catch (CRSRuntimeException e) {
-            addActionError(getText("death.error.no.permission"));
-        }
+        service.approveDeathRegistration(idUKey, user);
         initPermissionForApprovalAndPrint();
         populate();
         pageNo=3;
         return SUCCESS;
     }
 
+    public String directApproveIgnoringWornings(){
+        if(ignoreWarning){
+            service.approveDeathRegistration(idUKey, user);
+            initPermissionForApprovalAndPrint();
+            populate();
+        }
+        pageNo=4;
+        return SUCCESS;
+    }
+
     public String rejectDeath() {
         logger.debug("requested to reject Death Decalaration with idUKey : {}", idUKey);
-        try {
-            service.rejectDeathRegistration(idUKey, user);
-        } catch (CRSRuntimeException e) {
-            addActionError(getText("death.error.no.permission.reject"));
-        }
+        service.rejectDeathRegistration(idUKey, user);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
@@ -316,18 +312,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
         initPermissionForApprovalAndPrint();
         populate();
-
         return SUCCESS;
     }
 
     public String deleteDeath() {
         logger.debug("requested to delete Death Decalaration with idUKey : {}", idUKey);
-        try {
-            service.deleteDeathRegistration(idUKey, user);
-        }
-        catch (CRSRuntimeException e) {
-            addActionError("death.error.no.permission.delete");
-        }
+        service.deleteDeathRegistration(idUKey, user);
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
@@ -914,5 +904,21 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
         this.lifeCycleInfo = lifeCycleInfo;
+    }
+
+    public List<String> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<String> warnings) {
+        this.warnings = warnings;
+    }
+
+    public boolean isApprove() {
+        return ignoreWarning;
+    }
+
+    public void setApprove(boolean approve) {
+        this.ignoreWarning = approve;
     }
 }

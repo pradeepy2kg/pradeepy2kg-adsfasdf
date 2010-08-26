@@ -149,6 +149,7 @@ public final class Permission {
     public static final int ADD_EDIT_DIVISIONS = 155;
     public static final int INIT_ADD_EDIT_DS_DIVISIONS = 156;
     public static final int ADD_EDIT_DS_DIVISIONS = 157;
+    public static final int PAGE_DEATH_APPROVAL_IGNOR_WORNINGS = 158;
 
     //permission for user preferance
 

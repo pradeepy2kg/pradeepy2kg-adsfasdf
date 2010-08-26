@@ -495,6 +495,12 @@
             <result type="tiles" name="success">epr.deathDeclaration_details</result>
         </action>
 
+        <action name="eprDirectApproveIgnoringWornings" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="directApproveIgnoringWornings">
+            <result type="tiles" name="success">epr.deathDeclaration_details</result>
+        </action>
+
+
     </package>
 
     <package name="preferences" namespace="/preferences" extends="NG">
