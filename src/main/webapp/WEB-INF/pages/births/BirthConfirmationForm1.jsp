@@ -344,9 +344,12 @@
     <tr>
         <td>7</td>
         <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
-        <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
-                                     disabled="true"/></td>
-        <td colspan="6"><s:select list="raceList" name="fatherRace"/></td>
+        <td colspan="6">
+            <s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable" disabled="true"/>
+        </td>
+        <td colspan="6">
+            <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
+        </td>
     </tr>
     <tr>
 
@@ -362,7 +365,9 @@
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="6"><s:select list="raceList" name="motherRace"/></td>
+        <td colspan="6">
+            <s:select list="raceList" name="motherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
+        </td>
     </tr>
     <tr>
         <td>10</td>
