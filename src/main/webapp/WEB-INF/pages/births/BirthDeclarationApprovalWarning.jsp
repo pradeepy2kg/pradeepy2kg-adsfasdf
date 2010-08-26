@@ -23,7 +23,8 @@
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-                <s:hidden value="%{#request.bdId}" name="bdId"/></tr>
+                <s:hidden value="%{#request.bdId}" name="bdId"/>
+            </tr>
             <tr>
                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWarning"/></td>
                 <td><s:checkbox name="ignoreWarning"/></td>
