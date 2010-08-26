@@ -15,50 +15,83 @@ import java.util.Date;
 public class Event implements Serializable {
 
     public enum Type {
-        INFO, ERROR
+        AUDIT, ERROR
     }
 
+    /**
+     * A unique ID assigned to each recorded Event
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
+    /**
+     * Timestamp of recording
+     */
     @Column(updatable = false, nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date timestamp;
 
+    /**
+     * Type - AUDIT or ERROR
+     */
     @Column(updatable = false, nullable = false)
     private Type eventType;
 
+    /**
+     * Is the error code encountered for an exception event, or 0 for an audit event
+     */
     @Column(updatable = false, nullable = false)
     private int eventCode;
 
+    /**
+     * User invoking action
+     */
     @ManyToOne
     @JoinColumn(name = "userId", nullable = true, updatable = false)
     private User user;
 
+    /**
+     * The primary key of the main object on the database
+     */
     @Column(updatable = false, nullable = true)
     private long recordId;
 
+    /**
+     * Invoked method of the service class
+     */
     @Column(updatable = false, nullable = true)
     private String methodName;
 
+    /**
+     * Invoked service class
+     */
     @Column(updatable = false, nullable = true)
     private String className;
 
-    @Column(updatable = false, nullable = true)
+    /**
+     * Some information (possibly trimmed) of primitive or base input parameters
+     */
+    @Column(updatable = false, nullable = true, length = 80)
     private String eventData;
 
+    /**
+     * Debug information - populated only if enabled by the configuration, or on error
+     */
     @Lob
     @Column(nullable = true, length = 25 * 1024)
     private String debug;
 
+    /**
+     * The stack trace encountered, if any, for an exception
+     */
     @Lob
     @Column(nullable = true, length = 2048)
     private String stackTrace;
 
     public Event() {
         timestamp = new Date();
-        eventType = Type.INFO;
+        eventType = Type.AUDIT;
     }
 
     public long getIdUKey() {
@@ -110,7 +143,11 @@ public class Event implements Serializable {
     }
 
     public void setEventData(String eventData) {
-        this.eventData = eventData;
+        if (eventData != null && eventData.length() > 80) {
+            this.eventData = eventData.substring(0, 80);
+        } else {
+            this.eventData = eventData;
+        }
     }
 
     public String getDebug() {
