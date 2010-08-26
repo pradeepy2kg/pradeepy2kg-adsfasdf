@@ -102,13 +102,8 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    ;
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    };
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -132,10 +127,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
@@ -313,12 +305,11 @@ function initPage() {
         <td>
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
-                    </td>
-                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/>
-                        <s:fielderror name="serialNumberError" cssStyle="color:red;"/>
-
-                    </td>
+                    <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
+                </tr>
+                <tr>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label></td>
+                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
                 </tr>
             </table>
 

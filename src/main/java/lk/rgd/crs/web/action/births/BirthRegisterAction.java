@@ -121,7 +121,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -158,7 +158,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 //checking serial number is taken already for addnew mode
                 BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(), register.getBdfSerialNo(), user);
                 if (bd != null) {
-                    addFieldError("serialNumberError", "p1.serial.already.taken");
+                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
                     pageNo = 0;
                 }
 
@@ -338,7 +338,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -448,7 +448,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -569,7 +569,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -617,7 +617,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 /* if (birthType == BirthDeclaration.BirthType.LIVE) {
