@@ -100,7 +100,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         if (idUKey > 0) {
+            AdoptionOrder existingOrder = service.getById(idUKey, user);
             adoption.setIdUKey(idUKey);
+            adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
             service.updateAdoptionOrder(adoption, user);
         } else {
             adoption.setBirthDivisionId(birthDivisionId);
@@ -149,29 +151,19 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        try {
+        if (birthDivisionId > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
-            dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
-        } catch (NullPointerException e) {
-            birthDivisionName = "";
-            dsDivisionName="";
-            logger.error("birthDivision not specified", e);
+            birthDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+            birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+                adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
         }
-        try {
+        if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
-        catch (NullPointerException e) {
-            applicantCountryName = "";
-            logger.error("applicantCountryName not specified", e);
-        }
-        try {
+        if (adoption.getWifeCountryId() > 0)
             wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
-        }
-        catch (NullPointerException e) {
-            wifeCountryName = "";
-            logger.error("wifeContryName not specified", e);
-        }
-        birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
+
         return SUCCESS;
     }
 
@@ -511,7 +503,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     addActionError(getText("er.label.notice.not.printed.cannot_capture_data"));
                 }
                 adoption = null;
-                addActionError(getText("er.label.cannot_capture_data"));
+                addActionError(getText("er.label.already.approved"));
             }
         } else {
             addActionError(getText("adoption_order_notfound.message"));

@@ -31,7 +31,7 @@
         </td>
     </tr>
     <tr>
-        <td><s:label value="%{adoption.birthCertificateNumber}"/></td>
+        <td><s:label value="%{adoption.idUKey}"/></td>
     </tr>
     <tr>
         <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>

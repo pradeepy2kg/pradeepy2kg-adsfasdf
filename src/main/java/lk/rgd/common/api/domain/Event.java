@@ -13,6 +13,9 @@ import java.util.Date;
 @Entity
 @Table(name = "EVENT", schema = "COMMON")
 public class Event implements Serializable {
+    private static final int STACK_TRACE_LEN = 2048;
+    private static final int EVENT_DATA_LEN = 80;
+    private static final int DEBUG_CLOB_LEN = 25 * 1024;
 
     public enum Type {
         AUDIT, ERROR
@@ -72,21 +75,21 @@ public class Event implements Serializable {
     /**
      * Some information (possibly trimmed) of primitive or base input parameters
      */
-    @Column(updatable = false, nullable = true, length = 80)
+    @Column(updatable = false, nullable = true, length = EVENT_DATA_LEN)
     private String eventData;
 
     /**
      * Debug information - populated only if enabled by the configuration, or on error
      */
     @Lob
-    @Column(nullable = true, length = 25 * 1024)
+    @Column(nullable = true, length = DEBUG_CLOB_LEN)
     private String debug;
 
     /**
      * The stack trace encountered, if any, for an exception
      */
     @Lob
-    @Column(nullable = true, length = 2048)
+    @Column(nullable = true, length = STACK_TRACE_LEN)
     private String stackTrace;
 
     public Event() {
@@ -143,8 +146,8 @@ public class Event implements Serializable {
     }
 
     public void setEventData(String eventData) {
-        if (eventData != null && eventData.length() > 80) {
-            this.eventData = eventData.substring(0, 80);
+        if (eventData != null && eventData.length() > EVENT_DATA_LEN) {
+            this.eventData = eventData.substring(0, EVENT_DATA_LEN);
         } else {
             this.eventData = eventData;
         }
@@ -163,7 +166,11 @@ public class Event implements Serializable {
     }
 
     public void setStackTrace(String stackTrace) {
-        this.stackTrace = stackTrace;
+        if (stackTrace != null && stackTrace.length() > STACK_TRACE_LEN) {
+            this.stackTrace = stackTrace.substring(0, STACK_TRACE_LEN);
+        } else {
+            this.stackTrace = stackTrace;
+        }
     }
 
     public String getMethodName() {
