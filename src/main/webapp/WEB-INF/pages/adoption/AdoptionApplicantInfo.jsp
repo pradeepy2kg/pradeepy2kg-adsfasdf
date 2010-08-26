@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript">
 
     $(function() {
@@ -23,7 +24,40 @@
         var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
     }
 
+    var errormsg = "";
+    function validate() {
 
+        var returnval = true;
+        var domObject;
+        domObject = document.getElementById("courtOrderNo");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error4');
+        }
+        domObject = document.getElementById("certifcateApplicantPin");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error0');
+        }
+        domObject = document.getElementById("certificateApplicantName");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error1');
+        }
+        domObject = document.getElementById("certificateApplicantAddress");
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", 'error2');
+        }
+        domObject = document.getElementsByName("certificateApplicantType")[0];
+        domObject1 = document.getElementsByName("certificateApplicantType")[1];
+        domObject2 = document.getElementsByName("certificateApplicantType")[2];
+        if (!(domObject.checked || domObject1.checked || domObject2.checked)) {
+            errormsg = errormsg + "\n" + document.getElementById("error3").value;
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
 </script>
 
 <div id="adoption-applicant-info-form-outer">
@@ -152,7 +186,7 @@
 <br>
 <br>
 
-<s:form action="eprCaptureAdoptionApplicantInfo.do">
+<s:form action="eprCaptureAdoptionApplicantInfo.do" onsubmit="javascript:return validate()">
     <s:hidden name="pageNo" value="1"/>
     <table border="1" class="adoption-applicant" cellspacing="0" cellpadding="0"
            style="border:1px solid #000; border-collapse:collapse;">
@@ -175,21 +209,23 @@
                 Father
             </td>
             <td>
-                <s:radio name="certificateApplicantType"
-                         list="#@java.util.HashMap@{'FATHER':''}" onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
+                <s:radio name="certificateApplicantType" id="certificateApplicantType"
+                         list="#@java.util.HashMap@{'FATHER':''}"
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
             </td>
             <td>මව <br/>
                 Mother
             </td>
             <td>
-                <s:radio name="certificateApplicantType"
-                         list="#@java.util.HashMap@{'MOTHER':''}" onchange="setApplicantInfo('%{#request.adoption.wifePINorNIC}','%{#request.adoption.wifeName}','');"/>
+                <s:radio name="certificateApplicantType" id="certificateApplicantType"
+                         list="#@java.util.HashMap@{'MOTHER':''}"
+                         onchange="setApplicantInfo('%{#request.adoption.wifePINorNIC}','%{#request.adoption.wifeName}','');"/>
             </td>
             <td>වෙනත් <br/>
                 Other
             </td>
             <td>
-                <s:radio name="certificateApplicantType"
+                <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'OTHER':''}"/>
             </td>
         </tr>
@@ -235,6 +271,10 @@
     <div class="button" align="right">
         <s:submit value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
     </div>
-
+    <s:hidden id="error0" value="%{getText('er.label.applicantPINorNIC')}"/>
+    <s:hidden id="error1" value="%{getText('er.label.applicantName')}"/>
+    <s:hidden id="error2" value="%{getText('er.label.applicantAddress')}"/>
+    <s:hidden id="error3" value="%{getText('er.label.applicantType')}"/>
+    <s:hidden id="error4" value="%{getText('er.label.courtOrderNumber')}"/>
 </s:form>
 </div>

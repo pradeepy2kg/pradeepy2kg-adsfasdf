@@ -149,10 +149,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-
-        birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
-        dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
-
+        try {
+            birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
+            dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+        } catch (NullPointerException e) {
+            birthDivisionName = "";
+            dsDivisionName="";
+            logger.error("birthDivision not specified", e);
+        }
         try {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
@@ -237,7 +241,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return SUCCESS;
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;

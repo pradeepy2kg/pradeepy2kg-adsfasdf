@@ -121,7 +121,7 @@ $(function() {
 //these inpute can not be null
 var errormsg = "";
 function validate() {
-    
+
     var returnval = true;
     var domObject;
     //order issued date
@@ -187,7 +187,9 @@ function validate() {
     domObject = document.getElementById("childNewName");
     existingName = document.getElementById("childExistingName");
     if (isFieldEmpty(domObject) && isFieldEmpty(existingName)) {
-        errormsg = errormsg + "\n" + document.getElementById("error17").value;
+        if ((domObject.value == null || domObject.value == "") || (existingName.value == null || existingName.value == "")) {
+            errormsg = errormsg + "\n" + document.getElementById("error17").value;
+        }
     }
     if (errormsg != "") {
         alert(errormsg);
@@ -196,6 +198,7 @@ function validate() {
     errormsg = "";
     return returnval;
 }
+
 function disable(mode) {
     document.getElementById('wifePINorNIC').disabled = mode;
     document.getElementById('wifeCountryId').disabled = mode;
