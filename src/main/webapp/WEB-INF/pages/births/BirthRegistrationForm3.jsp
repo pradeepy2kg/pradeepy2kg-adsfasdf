@@ -80,12 +80,13 @@ function validate() {
     //validation for live birth
     if (declarationType.value == 1) {
         commanTags(check);
+        validateMarriage(check);
     }
     if (declarationType.value == 2) {
         commanTags(check);
+        validateMarriage(check);
     }
 
-    validateMarriage(check);
     validateInformant();
 
     if (errormsg != "") {
@@ -218,7 +219,9 @@ function disableSigns(mode) {
 }
 
 function initPage() {
-    disableSigns(true);
+    var declarationType = document.getElementById('birthTypeId');
+    if (declarationType.value != 0)
+        disableSigns(true);
 }
 </script>
 
