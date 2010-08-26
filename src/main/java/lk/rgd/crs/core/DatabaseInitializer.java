@@ -51,7 +51,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(BDDivision.class);
         entityClasses.add(DSDivision.class);
         entityClasses.add(MRDivision.class);
-        entityClasses.add(GNDivision.class);
         entityClasses.add(Event.class);
         entityClasses.add(Race.class);
         entityClasses.add(Role.class);
