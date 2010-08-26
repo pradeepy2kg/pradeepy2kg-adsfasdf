@@ -14,7 +14,6 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.web.WebConstants;
@@ -36,6 +35,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathPersonInfo deathPerson;
     private DeclarantInfo declarant;
     private NotifyingAuthorityInfo notifyingAuthority;
+    private CRSLifeCycleInfo lifeCycleInfo;
 
     private int deathDistrictId;
     private int deathDivisionId;
@@ -156,6 +156,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 } else if (DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType) {
                     service.addLateDeathRegistration(ddf, user);
                 }
+                idUKey=ddf.getIdUKey();
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
         return "form" + pageNo;
@@ -256,16 +257,21 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String deathDeclarationEditMode() {
         logger.debug("death edit mode requested for idUkey : {} ", idUKey);
         deathRegister = service.getById(idUKey, user);
+        beanPopulate(deathRegister);
+
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
             addActionError("death.error.editNotAllowed");
+            return ERROR;
         }
+        session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, deathRegister);
+        populate();
         return SUCCESS;
     }
 
     public String approveDeath() {
         logger.debug("requested to approve Death Decalaration with idUKey : {}", idUKey);
         try {
-            service.approveDeathRegistration(getIdUKey(), user);
+            service.approveDeathRegistration(idUKey, user);
         } catch (CRSRuntimeException e) {
             addActionError(getText("death.error.no.permission"));
         }
@@ -277,6 +283,21 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         }
         initPermissionForApprovalAndPrint();
         populate();
+        return SUCCESS;
+    }
+
+    public String directApproveDeath() {
+        logger.debug("requested to direct approve Death Decalaration with idUKey : {}", idUKey);
+        try {
+            deathRegister=service.getById(idUKey,user);
+            setLifeCycleInfo(deathRegister.getLifeCycleInfo());
+            service.approveDeathRegistration(idUKey, user);
+        } catch (CRSRuntimeException e) {
+            addActionError(getText("death.error.no.permission"));
+        }
+        initPermissionForApprovalAndPrint();
+        populate();
+        pageNo=3;
         return SUCCESS;
     }
 
@@ -424,10 +445,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     private void beanPopulate(DeathRegister ddf) {
         //TODO is all needed
-        death = ddf.getDeath();
         deathPerson = ddf.getDeathPerson();
+        death = ddf.getDeath();
+        declarant = ddf.getDeclarant();
         notifyingAuthority = ddf.getNotifyingAuthority();
         declarant = ddf.getDeclarant();
+        setLifeCycleInfo(ddf.getLifeCycleInfo());
     }
 
     private void handleErrors(Exception e) {
@@ -883,5 +906,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
+    }
+
+    public CRSLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
+    }
+
+    public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
     }
 }
