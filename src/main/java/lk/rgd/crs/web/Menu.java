@@ -6,6 +6,9 @@ import lk.rgd.common.api.domain.Role;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Ashoka Ekanayaka
  * A utility class to contain all menu items for different user roles. Menus will be determined only once using a static block with final  variables
@@ -14,6 +17,7 @@ public class Menu {
     private static final Map<String, Map> adminLinks = new TreeMap<String, Map>();
     private static final Map<String, Map> deoLinks = new TreeMap<String, Map>();
     private static final Map<String, Map> adrLinks = new TreeMap<String, Map>();
+    private static final Logger logger = LoggerFactory.getLogger(Menu.class);
 
     // admin menu items
     private static final Map adminLink = new TreeMap();
@@ -189,26 +193,32 @@ public class Menu {
         adrAdoptionLink.put(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED, new Link(null, "/popreg/adoption/", "eprRejectAdoption.do"));
         adrAdoptionLink.put(Permission.PAGE_ADOPTION_DIRECT_APPROVAL, new Link(null, "/popreg/adoption/", "eprAdoptionDirectApproval.do"));
 
-        // assemble menu for admins
-        adminLinks.put("", adminLink);
-        adminLinks.put("", preferanceLink);
+        // assemble menu for admins : 1 - birth, 2 - death, 3 - marriage, 4 - adoptions, 5 - reports, 6 - management, 7 - prs
+        adminLinks.put("6admin", adminLink);
+        adminLinks.put("4preference", preferanceLink);
 
         // assemble menu for deo
-        deoLinks.put("", preferanceLink);
-        deoLinks.put("", deoBirthLink);
-        deoLinks.put("", deoDeathLink);
-        deoLinks.put("", deoAdoptionLink);
+        deoLinks.put("4preference", preferanceLink);
+        deoLinks.put("0birth", deoBirthLink);
+        deoLinks.put("1death", deoDeathLink);
+        deoLinks.put("3adoption", deoAdoptionLink);
 
         // assemble menu for adr
-        adrLinks.put("", preferanceLink);
-        adrLinks.put("", adrBirthLink);
-        adrLinks.put("", adrDeathLink);
-        adrLinks.put("", adrAdoptionLink);
-        adrLinks.put("", prsLink);
+        adrLinks.put("0birth", adrBirthLink);
+        adrLinks.put("1death", adrDeathLink);
+        adrLinks.put("3adoption", adrAdoptionLink);
+        adrLinks.put("4preference", preferanceLink);
+        adrLinks.put("7prs", prsLink);
+
+        logger.debug("adminLink : {}", adminLink.size());
+        logger.debug("preferanceLink : {}", preferanceLink.size());
+        logger.debug("birthLink : {}", adrBirthLink.size());
+        logger.debug("adrLinks : {}", adrLinks.size());
+        logger.debug("adminLinks : {}", adminLinks.size());
     }
 
     public static Map<String, Map> getAllowedLinks(Role role) {
-        String roleName = role.getName();
+        String roleName = role.getRoleId();
         if (roleName.equals(Role.ROLE_ADMIN)) {
             return adminLinks;
         } else if (roleName.equals(Role.ROLE_DEO)) {
