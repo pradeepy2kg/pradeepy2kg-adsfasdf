@@ -148,8 +148,21 @@
     function validate() {
         var domObject;
         var returnval = true;
+
+        // validate serial number
         domObject = document.getElementById('bdfSerialNoId');
-        isNumeric(domObject.value, 'error20');
+        if (!isFieldEmpty(domObject))
+            isNumeric(domObject.value, 'error1', 'error2');
+
+        // validate start and end date
+        domObject = document.getElementById('searchStartDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, 'error1', 'error3');
+
+        domObject = document.getElementById('searchEndDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, 'error1', 'error4');
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -233,7 +246,7 @@
 <div id="birth-register-approval-body">
     <%--todo permission handling--%>
     <%--<s:if test="approvalPendingList.size==0">--%>
-        <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
+    <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
     <%--</s:if>--%>
     <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
         <s:if test="approvalPendingList.size>0">
@@ -398,8 +411,10 @@
                                                     cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
                 <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
         </div>
-        <s:hidden id="error20" value="%{getText('p1.serial.text')}"/>
-        <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
+        <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+        <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
+        <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
+        <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
     </s:form>
 </div>
 </div>
