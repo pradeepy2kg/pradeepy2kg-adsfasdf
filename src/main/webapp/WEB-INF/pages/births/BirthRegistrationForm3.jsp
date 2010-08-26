@@ -70,21 +70,20 @@ var errormsg = "";
 // validations for BDF page 3
 function validate() {
     // used to skip non trivial validation in the page
-    var check = document.getElementById('skipjs');
     var declarationType = document.getElementById('birthTypeId');
     var returnval = true;
 
     if (declarationType.value == 0) {
-        commanTags(check);
+        commanTags();
     }
     //validation for live birth
     if (declarationType.value == 1) {
-        commanTags(check);
-        validateMarriage(check);
+        commanTags();
+        validateMarriage();
     }
     if (declarationType.value == 2) {
-        commanTags(check);
-        validateMarriage(check);
+        commanTags();
+        validateMarriage();
     }
 
     validateInformant();
@@ -106,13 +105,12 @@ function commanTags() {
 }
 
 // validation marriage related fields
-function validateMarriage(check) {
+function validateMarriage() {
     var domObject;
     var submit = new Date(document.getElementById('marriageDatePicker').value);
 
     // for parrents married - Yes
     domObject = document.getElementsByName("marriage.parentsMarried")[0];
-    if (!check.checked) {
         if (domObject.checked) {
             // validate place of marriage
             domObject = document.getElementById('placeOfMarriage');
@@ -124,7 +122,6 @@ function validateMarriage(check) {
             if (!(submit.getTime())) {
                 errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
             }
-        }
     }
 
     // for parrents married - No
@@ -261,14 +258,20 @@ function initPage() {
                     </tr>
                     <tr>
                         <td><label>නැත<br>*in tamil<br>No</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
                                      onclick="disableMarriage(true);disableSigns(false)"/>
                         </td>
                     </tr>
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"
                                      onclick="disableMarriage(false);disableSigns(true)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
+                                     onclick="disableMarriage(true);disableSigns(true)"/>
                         </td>
                     </tr>
                     </tbody>
@@ -390,7 +393,7 @@ function initPage() {
                 <label> ඔවි/*in tamil / Yes</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/>
+                <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/>
                 <label> නැත / *in tamil / No</label>
             </td>
         </tr>
@@ -525,13 +528,6 @@ function initPage() {
 <s:hidden id="error12" value="%{getText('informantNIC.text')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
 <s:hidden name="pageNo" value="3"/>
-
-
-<div class="skip-validation">
-    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-        <s:label value="%{getText('skipvalidation.label')}"/>
-    </s:checkbox>
-</div>
 
 <div class="form-submit">
     <s:submit value="%{getText('next.label')}"/>

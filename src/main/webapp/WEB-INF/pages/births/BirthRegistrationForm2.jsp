@@ -150,7 +150,7 @@
 
             // validate mother age at birth
             domObject = document.getElementById('motherAgeAtBirth');
-            if (isFieldEmpty(domObject)) {
+            if (isFieldEmpty(domObject) || domObject.value == '0') {
                 errormsg = errormsg + "\n" + document.getElementById('mother_age').value;
             }
             isNumeric(domObject.value, 'error2', 'mother_age');
@@ -451,7 +451,8 @@
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
         <td colspan="1"><s:textfield name="parent.motherPhoneNo"/></td>
         <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
-        <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail" cssStyle="text-transform:none;"/></td>
+        <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"
+                                                      cssStyle="text-transform:none;"/></td>
     </tr>
     </tbody>
 </table>
