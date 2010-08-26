@@ -8,10 +8,14 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.service.MasterDataManagementService;
 
 
 /**
@@ -22,8 +26,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(UserManagmentAction.class);
     private final UserManagerImpl service;
+    private final MasterDataManagementService dataManagementService;
     private Map session;
     private User user;
+    private User currentUser;
     private int pageNo;
     private String divisions = new String();
     private String button;
@@ -38,6 +44,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int divisionId;
 
+    private BDDivision bdDivision;
+    private DSDivision dsDivision;
+    private District district;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -60,12 +69,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> dsDivisionList;
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManagerImpl service,
-                               BDDivisionDAO bdDivisionDAO) {
+                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
         this.service = service;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.dataManagementService = dataManagementService;
     }
 
     public String creatUser() {
@@ -127,47 +137,70 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public String initAddEditDivisionsAndDsDivision() {
+    public String initAddDivisionsAndDsDivision() {
         populate();
         populateDynamicLists("en");
         return "success";
     }
 
-    public String initAddEditDivisions() {
+    public String initAddDistrict() {
         populate();
-        if (button.equals("EDIT")) {
+        if (button.equals("ADD")) {
             pageNo = 1;
         }
+        if (button.equals("INACTIVE")) {
+            return "delete" + SUCCESS;
+        }
+        return "success";
+    }
+
+    public String initAddDsDivisions() {
+        populate();
         if (button.equals("ADD")) {
             pageNo = 2;
         }
-        if (button.equals("DELETE")) {
-            logger.info("page number 3");
+        if (button.equals("INACTIVE")) {
+            dataManagementService.inactivateDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), currentUser);
             return "delete" + SUCCESS;
         }
-        return SUCCESS;
+        return "success";
     }
 
-    public String addEditDivisions() {
-        return SUCCESS;
-    }
-
-    public String initAddEditDsDivisions() {
+    public String initAddDivisions() {
         populate();
-        if (button.equals("EDIT")) {
+        if (button.equals("ADD")) {
+            district = districtDAO.getDistrict(UserDistrictId);
             pageNo = 3;
         }
-        if (button.equals("ADD")) {
-            pageNo = 4;
-        }
-        if (button.equals("DELETE")) {
+        if (button.equals("INACTIVE")) {
+            dataManagementService.inactivateBDDivision(bdDivisionDAO.getBDDivisionByPK(divisionId), currentUser);
             return "delete" + SUCCESS;
         }
-        return "success";
+        return SUCCESS;
     }
 
-    public String addEditDsDivisions() {
-        return "success";
+
+    public String AddDivisionsAndDsDivisions() {
+        switch (pageNo) {
+            case 1:
+                district.setActive(true);
+                dataManagementService.addDistrict(district, currentUser);
+                logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
+                break;
+            case 2:
+                dsDivision.setDistrict(districtDAO.getDistrict(UserDistrictId));
+                dsDivision.setActive(true);
+                dataManagementService.addDSDivision(dsDivision, currentUser);
+                logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                break;
+            case 3:
+                bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                bdDivision.setActive(true);
+                dataManagementService.addBDDivision(bdDivision, currentUser);
+                logger.debug("New Id of new Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                break;
+        }
+        return SUCCESS;
     }
 
     public String selectUsers() {
@@ -306,7 +339,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setSession(Map map) {
         this.session = map;
-        // user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
     }
 
     public int getUserDistrictId() {
@@ -384,4 +417,38 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     public void setButton(String button) {
         this.button = button;
     }
+
+    public BDDivision getBdDivision() {
+        return bdDivision;
+    }
+
+    public void setBdDivision(BDDivision bdDivision) {
+        this.bdDivision = bdDivision;
+    }
+
+    public DSDivision getDsDivision() {
+        return dsDivision;
+    }
+
+    public void setDsDivision(DSDivision dsDivision) {
+        this.dsDivision = dsDivision;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
 }

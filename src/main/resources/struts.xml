@@ -711,26 +711,27 @@
             <result type="tiles" name="success">epr.viewUsers</result>
         </action>
 
-        <action name="eprInitAddEditDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initAddEditDivisionsAndDsDivision">
+        <action name="eprInitAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddDivisionsAndDsDivision">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprInitAddEditDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initAddEditDivisions">
-            <result type="tiles" name="success">epr.addEditDivisions</result>
-            <result type="tiles" name="deletesuccess">epr.home</result>
-        </action>
-        <action name="eprAddEditDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="addEditDivisions">
-            <result type="tiles" name="success">epr.home</result>
-        </action>
-        <action name="eprInitAddEditDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initAddEditDsDivisions">
+        <action name="eprInitAddDistrict" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddDistrict">
             <result type="tiles" name="success">epr.addEditDivisions</result>
             <result type="tiles" name="deletesuccess">epr.home</result>
         </action>
-        <action name="eprAddEditDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="addEditDsDivisions">
+        <action name="eprInitAddDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddDsDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+            <result type="tiles" name="deletesuccess">epr.home</result>
+        </action>
+        <action name="eprInitAddDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAddDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
+            <result type="tiles" name="deletesuccess">epr.home</result>
+        </action>
+        <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="AddDivisionsAndDsDivisions">
             <result type="tiles" name="success">epr.home</result>
         </action>
     </package>

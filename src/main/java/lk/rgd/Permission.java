@@ -70,7 +70,7 @@ public final class Permission {
     public static final int PAGE_ADVANCE_SEARCH_BIRTHS = 92;
     public static final int PAGE_USER_CREATION = 93;
     public static final int PAGE_DELETE_USER = 94;
-    public static final int VIEW_SELECTED_USERS = 95;
+    public static final int PAGE_VIEW_SELECTED_USERS = 95;
     public static final int CHANGE_PASSWORD = 96;
     public static final int BACK_CHANGE_PASSWORD = 97;
     public static final int CHANGE_PASSWORD_PAGE_LOAD = 98;
@@ -142,14 +142,15 @@ public final class Permission {
     public static final int PAGE_DEATH_VEIW_MODE = 150;
     public static final int PAGE_DEATH_PRINT = 151;
     public static final int PAGE_DEATH_DIRECT_APPROVE=152;
+    public static final int PAGE_DEATH_APPROVAL_IGNOR_WORNINGS = 161;
 
     //Permision for add and edit division page
-    public static final int INIT_ADD_EDIT_DS_DIVISION_DIVISIONS = 153;
-    public static final int INIT_ADD_EDIT_DIVISIONS = 154;
-    public static final int ADD_EDIT_DIVISIONS = 155;
-    public static final int INIT_ADD_EDIT_DS_DIVISIONS = 156;
-    public static final int ADD_EDIT_DS_DIVISIONS = 157;
-    public static final int PAGE_DEATH_APPROVAL_IGNOR_WORNINGS = 158;
+    public static final int PAGE_INIT_ADD_DS_DIVISION_DIVISIONS = 152;
+    public static final int PAGE_INIT_ADD_DIVISIONS = 153;
+    public static final int PAGE_INIT_ADD_DISTRICT = 156;
+    public static final int PAGE_INIT_ADD_MR_DIVISIONS = 157;
+    public static final int PAGE_INIT_ADD_DS_DIVISIONS = 160;
+    public static final int PAGE_ADD_DS_DIVISION_DIVISIONS = 158;
 
     //permission for user preferance
 

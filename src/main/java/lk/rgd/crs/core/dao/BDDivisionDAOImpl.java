@@ -63,7 +63,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         return AppConstants.EMPTY_STRING;
     }
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public BDDivision getBDDivisionByPK(int bdDivision) {
         return em.find(BDDivision.class, bdDivision);
     }

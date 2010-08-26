@@ -44,12 +44,13 @@ public class Menu {
         adminLink.put(Permission.PAGE_VIEW_USERS, new Link("viewUsers.label", "/popreg/management/", "eprViewUsers.do"));
         adminLink.put(Permission.PAGE_USER_CREATION, new Link(null, "/popreg/management/", "eprUserCreation.do"));
         adminLink.put(Permission.PAGE_DELETE_USER, new Link(null, "/popreg/management/", "eprdeleteUsers.do"));
-        adminLink.put(Permission.VIEW_SELECTED_USERS, new Link(null, "/popreg/management/", "eprViewSelectedUsers.do"));
-        adminLink.put(Permission.INIT_ADD_EDIT_DS_DIVISION_DIVISIONS, new Link("addEditDivision.label", "/popreg/management/", "eprInitAddEditDivisionsAndDsDivisions.do"));
-        adminLink.put(Permission.INIT_ADD_EDIT_DIVISIONS, new Link(null, "/popreg/management/", "eprInitAddEditDivisions.do"));
-        adminLink.put(Permission.ADD_EDIT_DIVISIONS, new Link(null, "/popreg/management/", "eprAddEditDivisions.do"));
-        adminLink.put(Permission.INIT_ADD_EDIT_DS_DIVISIONS, new Link(null, "/popreg/management/", "eprInitAddEditDsDivisions.do"));
-        adminLink.put(Permission.ADD_EDIT_DS_DIVISIONS, new Link(null, "/popreg/management/", "eprAddEditDsDivisions.do"));
+        adminLink.put(Permission.PAGE_VIEW_SELECTED_USERS, new Link(null, "/popreg/management/", "eprViewSelectedUsers.do"));
+        adminLink.put(Permission.PAGE_INIT_ADD_DS_DIVISION_DIVISIONS, new Link("addEditDivision.label", "/popreg/management/", "eprInitAddDivisionsAndDsDivisions.do"));
+        adminLink.put(Permission.PAGE_INIT_ADD_DIVISIONS, new Link(null, "/popreg/management/", "eprInitAddDivisions.do"));
+        adminLink.put(Permission.PAGE_INIT_ADD_DS_DIVISIONS, new Link(null, "/popreg/management/", "eprInitAddDsDivisions.do"));
+        adminLink.put(Permission.PAGE_INIT_ADD_DISTRICT, new Link(null, "/popreg/management/", "eprInitAddDistrict.do"));
+        adminLink.put(Permission.PAGE_INIT_ADD_MR_DIVISIONS, new Link(null, "/popreg/management/", "eprInitAddMrDivisions.do"));
+        adminLink.put(Permission.PAGE_ADD_DS_DIVISION_DIVISIONS, new Link(null, "/popreg/management/", "eprAddDivisionsAndDsDivisions.do"));
 
         //User Preferance
         preferanceLink.put(Permission.PAGE_USER_PREFERANCE_SELECT, new Link("userPreference.label", "/popreg/preferences/", "eprUserPreferencesInit.do"));
