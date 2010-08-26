@@ -3,9 +3,10 @@ package lk.rgd.common;
 /**
  * @author asankha
  */
-public class RGDRuntimeException extends RuntimeException {
+public class RGDRuntimeException extends RuntimeException implements IdentifiableException{
 
     private int errorCode;
+    private long eventId;
 
     public RGDRuntimeException(String message, int errorCode) {
         super(message);
@@ -24,5 +25,12 @@ public class RGDRuntimeException extends RuntimeException {
     public int getErrorCode() {
         return errorCode;
     }
-   
+
+    public long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
+    }
 }

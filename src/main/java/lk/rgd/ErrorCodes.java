@@ -7,6 +7,8 @@ package lk.rgd;
  */
 public class ErrorCodes {
 
+    public static final int UNKNOWN_ERROR = 9999;
+
     // error codes from 1000 - 2000 indicate invalid data for a request
 
     /**

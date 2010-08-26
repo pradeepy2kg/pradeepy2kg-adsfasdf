@@ -2,6 +2,7 @@ package lk.rgd.prs.core.service;
 
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
+import lk.rgd.common.api.Auditable;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.PRSRuntimeException;
@@ -75,6 +76,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Auditable
     public Person getByUKey(long personUKey, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             return personDao.getByUKey(personUKey);
@@ -89,6 +91,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Auditable
     public Person findPersonByPIN(long pin, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             return personDao.findPersonByPIN(pin);
@@ -103,6 +106,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Auditable
     public List<Person> findPersonsByNIC(String nic, User user) {
         if (user.isAuthorized(Permission.PRS_LOOKUP_PERSON_BY_KEYS)) {
             return personDao.findPersonsByNIC(nic);
@@ -116,6 +120,7 @@ public class PopulationRegistryImpl implements PopulationRegistry {
     /**
      * @inheritDoc
      */
+    @Auditable
     @Transactional(propagation = Propagation.SUPPORTS)
     public Person findPersonByPINorNIC(String pinOrNic, User user) {
         try {
