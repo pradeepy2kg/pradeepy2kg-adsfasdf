@@ -78,7 +78,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-                                                     String caseFileNumber, String additionalDocumentsComment) {
+        String caseFileNumber, String additionalDocumentsComment) {
         logger.debug("Adding a new live birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
@@ -1061,7 +1061,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
@@ -1078,7 +1078,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision bdDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
 
         if (logger.isDebugEnabled()) {
             logger.debug("Get confirmation records pending approval by BDDivision ID : " +
@@ -1145,7 +1145,9 @@ public class BirthRegistrationServiceImpl implements
 
         MarriageInfo marriage = bdf.getMarriage();
         if (marriage != null) {
-            marriage.setParentsMarriedPrint(MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), prefLanguage));
+            if (!(parent.getFatherFullName() == null && parent.getMotherFullName() == null &&
+                marriage.getParentsMarried() == 2))
+                marriage.setParentsMarriedPrint(MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), prefLanguage));
         }
 
         return bdf;
@@ -1454,7 +1456,7 @@ public class BirthRegistrationServiceImpl implements
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision, Date startDate,
-                                                                                        Date endDate, int pageNo, int noOfRows, User user) {
+        Date endDate, int pageNo, int noOfRows, User user) {
         validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
             startDate, endDate, pageNo, noOfRows);

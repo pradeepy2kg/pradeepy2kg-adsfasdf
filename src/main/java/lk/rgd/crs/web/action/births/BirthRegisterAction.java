@@ -644,7 +644,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     motherRacePrintEn = raceDAO.getNameByPK(parent.getMotherRace().getRaceId(), AppConstants.ENGLISH);
                 }
                 marriedStatus = marriage.getParentsMarriedPrint();
-                marriedStatusEn = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
+                if (marriedStatus != null)
+                    marriedStatusEn = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
 
                 addActionMessage("message.print.success");
                 return "pageLoad";

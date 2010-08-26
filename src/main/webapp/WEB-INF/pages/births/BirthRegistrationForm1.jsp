@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -127,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -179,14 +187,21 @@ function commanTags(check) {
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'error9')
     else
-        isDate(domObject.value, "error13", "submitDate")
+        isDate(domObject.value, "error13", "submitDate");
 
     //date of birth
     domObject = document.getElementById('birthDatePicker');
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'error10')
     else
-        isDate(domObject.value, "error13", "dob")
+        isDate(domObject.value, "error13", "dob");
+
+    var submit = new Date(document.getElementById('submitDatePicker').value);
+    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+    // compare birth date and date of registration
+    if (birthdate.getTime() > submit.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error6').value;
+    }
 
     //place of birth
     domObject = document.getElementById('placeOfBirth');
@@ -210,9 +225,9 @@ function stillBirthCommanTags(check) {
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
-//    if (!check.checked) {
-//        isEmpty(domObject, "", 'error12')
-//    }
+    //    if (!check.checked) {
+    //        isEmpty(domObject, "", 'error12')
+    //    }
     isNumeric(domObject.value, 'error13', 'error25')
 }
 
@@ -243,9 +258,9 @@ function liveBirthCommanTags(check) {
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
-//    if (!check.checked) {
-//        isEmpty(domObject, "", 'error12')
-//    }
+    //    if (!check.checked) {
+    //        isEmpty(domObject, "", 'error12')
+    //    }
     isNumeric(domObject.value, 'error13', 'error25')
 }
 
@@ -308,7 +323,8 @@ function initPage() {
                     <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
                 </tr>
                 <tr>
-                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label></td>
+                    <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
+                    </td>
                     <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
                 </tr>
             </table>

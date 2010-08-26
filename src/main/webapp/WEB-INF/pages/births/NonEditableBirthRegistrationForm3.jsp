@@ -31,8 +31,19 @@
                     <col width="20px" align="right"/>
                     <tbody>
                     <tr>
-                        <td><s:if test="session.birthRegister.marriage.parentsMarried != null"> <s:label
-                                value="%{getText('yes.label')}"/> </s:if>
+                        <td>
+                            <s:if test="session.birthRegister.marriage.parentsMarried == 0">
+                                <s:label value="%{getText('radio_married_unknown.label')}"/>
+                            </s:if>
+                            <s:if test="session.birthRegister.marriage.parentsMarried == 1">
+                                <s:label value="%{getText('radio_married_yes.label')}"/>
+                            </s:if>
+                            <s:if test="session.birthRegister.marriage.parentsMarried == 2">
+                                <s:label value="%{getText('radio_married_no.label')}"/>
+                            </s:if>
+                            <s:if test="session.birthRegister.marriage.parentsMarried == 3">
+                                <s:label value="%{getText('radio_married_since.label')}"/>
+                            </s:if>
                         </td>
                     </tr>
 
@@ -145,13 +156,13 @@
                     Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:if test="session.birthRegister.marriage.parentsMarried== 1"> <s:label
-                        value="%{getText('yes.label')}"/> </s:if>
+                <s:if test="session.birthRegister.marriage.parentsMarried == 1"> <s:label
+                        value="%{getText('radio_married_yes.label')}"/> </s:if>
                 <label> ඔවි/*in tamil / Yes</label>
             </td>
             <td class="font-9" colspan="1">
-                <s:if test="session.birthRegister.marriage.parentsMarried==2"> <s:label
-                        value="%{getText('yes.label')}"/> </s:if>
+                <s:if test="session.birthRegister.marriage.parentsMarried == 2"> <s:label
+                        value="%{getText('radio_married_no.label')}"/> </s:if>
                 <label> නැත / *in tamil / No</label>
             </td>
         </tr>

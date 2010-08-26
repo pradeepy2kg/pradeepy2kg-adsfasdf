@@ -1,4 +1,5 @@
 <%@ page import="java.util.Date" %>
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%-- @author Duminda Dharmakeerthi. --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -231,7 +232,7 @@
         <td><s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
         </td>
-        <td><s:label name="" value="%{#request.register.originalBCDateOfIssueForPrint}"/></td>
+        <td><%= DateTimeUtils.getISO8601FormattedString(new Date()) %></td>
     </tr>
     <tr>
         <td colspan="2" height="120px">
@@ -239,13 +240,13 @@
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" style="font-size:10pt"><s:label name=""
-                                                        value="%{#request.register.confirmantFullName}"/></td>
+        <td colspan="2" style="font-size:10pt"><s:label value="%{#request.register.confirmantFullName}"/></td>
     </tr>
     <tr>
         <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
-        <td colspan="2"><s:label name=""/></td>
+        <%--TODO--%>
+        <td colspan="2"><s:label value="%{#request.register.originalBCPlaceOfIssuePrint}"/></td>
     </tr>
     </tbody>
 </table>
