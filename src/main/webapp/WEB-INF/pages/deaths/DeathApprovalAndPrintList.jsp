@@ -202,12 +202,6 @@
 
             <s:url id="editSelected" action="eprDeathEditMode.do">
                 <s:param name="idUKey" value="idUKey"/>
-                <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                <s:param name="pageNo" value="%{#request.pageNo}"/>
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
-                <s:param name="deathDivisionId" value="#request.deathDivisionId"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
             </s:url>
 
             <s:url id="approveSelected" action="eprApproveDeath.do">
