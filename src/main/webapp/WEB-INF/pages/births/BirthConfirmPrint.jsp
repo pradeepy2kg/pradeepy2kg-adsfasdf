@@ -141,7 +141,7 @@
                                                 onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
                                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                                 <td align="center"><s:property value="register.bdfSerialNo"/></td>
-                                <td><s:property value="child.childFullNameOfficialLang"/></td>
+                                <td><s:property value="child.getChildFullNameOfficialLangToLength(50)"/></td>
                                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                                 <td align="center">
                                     <s:url id="cetificatePrintUrl" action="eprBirthConfirmationPrintPage.do">

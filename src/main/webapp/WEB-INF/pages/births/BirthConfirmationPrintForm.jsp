@@ -266,7 +266,7 @@
 
 </div>
 <div class="birth-confirmation-print-form-outer" id="page2" style="page-break-after:always;">
-    <table border="0" style="width: 100%;float:left; ;">
+    <table border="0" style="width: 100%;float:left;">
         <caption></caption>
         <col/>
         <tbody>
@@ -291,9 +291,7 @@
                 <br>Childs name in the official languages (Sinhala / Tamil)</label>
 
                 <p></p></td>
-            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameOfficialLang">
-            </s:textarea></td>
-            </td>
+            <td><s:textarea cssClass="disable" disabled="true" name="child.childFullNameOfficialLang"/></td>
         </tr>
         <tr>
             <td rowspan="5" class="cell_012"></td>
@@ -334,9 +332,9 @@
                 </label>
 
                 <p></p></td>
-            <td><s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
-                            name="child.childFullNameEnglish">
-            </s:textarea></td>
+            <td>
+                <s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;" name="child.childFullNameEnglish"/>
+            </td>
         </tr>
         <tr>
             <td rowspan="5" class="cell_012"></td>
@@ -376,7 +374,7 @@
 
                 <p></p>
             </td>
-            <td><s:textarea cssClass="disable" disabled="true" name="parent.fatherFullName"></s:textarea></td>
+            <td><s:textarea cssClass="disable" disabled="true" name="parent.fatherFullName"/></td>
         </tr>
         <tr>
             <td rowspan="5" class="cell_012"></td>
@@ -416,8 +414,7 @@
 
                 <p></p>
             </td>
-            <td><s:textarea cssClass="disable" disabled="true" name="parent.motherFullName"></s:textarea></td>
-
+            <td><s:textarea cssClass="disable" disabled="true" name="parent.motherFullName"/></td>
         </tr>
         <tr>
             <td rowspan="5" class="cell_012"></td>
@@ -602,13 +599,13 @@
                     / *in Tamil * <br>
                     / On State Service<br>
                 </label></td>
-            <td rowspan="8"></td>
+            <td rowspan="8" width="200px"></td>
         </tr>
         <tr>
-            <td colspan="2"><s:textfield name="informant.informantName" cssClass="disable" disabled="true"/></td>
+            <td><s:textarea name="informant.informantName" cssStyle="width:600px;" cssClass="disable" disabled="true"/></td>
         </tr>
         <tr>
-            <td colspan="2"><s:textfield name="informant.informantAddress" cssClass="disable" disabled="true"/></td>
+            <td><s:textarea name="informant.informantAddress" cssStyle="width:600px;" cssClass="disable" disabled="true"/></td>
         </tr>
         <tr>
             <td colspan="2"><p></p></td>
