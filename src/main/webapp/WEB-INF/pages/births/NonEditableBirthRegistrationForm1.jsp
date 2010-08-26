@@ -1,5 +1,4 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:set value="1" name="row"/>
 
@@ -7,9 +6,7 @@
 
 <s:if test="#request.archivedEntryList.size>0">
 <fieldset style="border:2px inset red; width:400px;">
-    <legend style="color:red;">
-        <s:label value="%{getText('ArchivedData.label')}"/>
-    </legend>
+    <legend style="color:red;"><s:label value="%{getText('ArchivedData.label')}"/></legend>
     <table>
         <th></th>
         <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
@@ -27,8 +24,7 @@
                     <s:param name="bdId" value="idUKey"/>
                 </s:url>
                 <td><s:a href="%{viewSelected}" title="%{getText('view.label')}">
-                    <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25"
-                         border="none"/></s:a></td>
+                    <img src="<s:url value='/images/view_1.gif'/>" width="25" height="25" border="none"/></s:a></td>
             </tr>
         </s:iterator>
     </table>
@@ -121,223 +117,224 @@
 
 <table class="table_reg_page_01" cellspacing="0" cellpadding="0">
 
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td class="font-9" colspan="8" style="text-align:center;">
-            <s:if test="birthType.ordinal() == 0">
-                මළ උපත පිලිබඳ විස්තර
-                <br>* In Tamil
-                <br>Still-birth Information
-            </s:if>
-            <s:else>
-                ළම‌යාගේ විස්තර
-                <br>பிள்ளை பற்றிய தகவல்
-                <br>Child's Information
-            </s:else>
-        </td>
-    </tr>
-        <%--TODO style not added--%>
-    <s:if test="birthType.ordinal() == 2">
-        <tr style="border-left:1px solid #000000;">
-            <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial
-                Number of the Certificate of Adoption</label></td>
-            <td colspan="7">
-                <s:label value="%{#session.birthRegister.register.adoptionUKey}"/>
-            </td>
-        </tr>
-        <tr>
-            <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was
-                previously registered</label></td>
-            <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
-            <td colspan="6" class="table_reg_cell_01">
-                <s:label value="%{#session.oldBdfForAdoption.districtName}"/>
-            </td>
-        </tr>
-        <tr>
-            <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
-            <td colspan="6" class="table_reg_cell_01">
-                <s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/>
-            </td>
-        </tr>
-        <tr>
-            <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
-            <td colspan="6" class="table_reg_cell_01">
-                <s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/>
-            </td>
-        </tr>
-        <tr>
-            <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
-            <td colspan="6"><s:label value="%{#session.oldBdfForAdoption.serialNumber}"/></td>
-        </tr>
-    </s:if>
-    <tr></tr>
+<caption></caption>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<tbody>
+<tr>
+    <td class="font-9" colspan="8" style="text-align:center;">
+        <s:if test="birthType.ordinal() == 0">
+            මළ උපත පිලිබඳ විස්තර
+            <br>* In Tamil
+            <br>Still-birth Information
+        </s:if>
+        <s:else>
+            ළම‌යාගේ විස්තර
+            <br>பிள்ளை பற்றிய தகவல்
+            <br>Child's Information
+        </s:else>
+    </td>
+</tr>
+    <%--TODO style not added--%>
+<s:if test="birthType.ordinal() == 2">
     <tr style="border-left:1px solid #000000;">
-        <td width="150px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br> பிறந்த
-            திகதி <br>Date of Birth</label></td>
+        <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial
+            Number of the Certificate of Adoption</label></td>
         <td colspan="7">
-            <s:label value="%{#session.birthRegister.child.dateOfBirth}"/>
+            <s:label value="%{#session.birthRegister.register.adoptionUKey}"/>
         </td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br>
-            Place of Birth</label></td>
-        <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+        <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was
+            previously registered</label></td>
+        <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:if test="#userPreferedLang == 'si'">
-                <s:label
-                        value="%{#session.birthRegister.register.birthDivision.dsDivision.district.siDistrictName}"/></s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label
-                        value="%{#session.birthRegister.register.birthDivision.dsDivision.district.enDistrictName}"/>
-            </s:elseif>
-            <s:else>
-                <s:label
-                        value="%{#session.birthRegister.register.birthDivision.dsDivision.district.taDistrictName}"/>
-            </s:else></td>
-    </tr>
-    <tr>
-        <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-        <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><s:if
-                test="#userPreferedLang == 'si'">
-            <s:label
-                    value="%{#session.birthRegister.register.birthDivision.dsDivision.siDivisionName}"
-                    cssStyle="float:left;  width:240px;"/></s:if>
-            <s:elseif test="#userPreferedLang == 'en'">
-                <s:label
-                        value="%{#session.birthRegister.register.birthDivision.dsDivision.enDivisionName}"
-                        cssStyle="float:left;  width:240px;"/>
-            </s:elseif>
-            <s:else>
-                <s:label
-                        value="%{#session.birthRegister.register.birthDivision.dsDivision.taDivisionName}"
-                        cssStyle="float:left;  width:240px;"/>
-            </s:else>
+            <s:label value="%{#session.oldBdfForAdoption.districtName}"/>
         </td>
     </tr>
     <tr>
+        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
+        <td colspan="6" class="table_reg_cell_01">
+            <s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
+        <td colspan="6" class="table_reg_cell_01">
+            <s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>අනුක්‍රමික අංකය/ தொடர் இலக்கம்<br>Serial Number</label></td>
+        <td colspan="6"><s:label value="%{#session.oldBdfForAdoption.serialNumber}"/></td>
+    </tr>
+</s:if>
+<tr></tr>
+<tr style="border-left:1px solid #000000;">
+    <td width="150px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br> பிறந்த
+        திகதி <br>Date of Birth</label></td>
+    <td colspan="7">
+        <s:label value="%{#session.birthRegister.child.dateOfBirth}"/>
+    </td>
+</tr>
+<tr>
+    <td rowspan="5"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන් ස්ථානය<br>பிறந்த இடம்<br>
+        Place of Birth</label></td>
+    <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+    <td colspan="6" class="table_reg_cell_01">
+        <s:if test="#userPreferedLang == 'si'">
+            <s:label
+                    value="%{#session.birthRegister.register.birthDivision.dsDivision.district.siDistrictName}"/></s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label
+                    value="%{#session.birthRegister.register.birthDivision.dsDivision.district.enDistrictName}"/>
+        </s:elseif>
+        <s:else>
+            <s:label
+                    value="%{#session.birthRegister.register.birthDivision.dsDivision.district.taDistrictName}"/>
+        </s:else></td>
+</tr>
+<tr>
+    <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
+    <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01"><s:if
+            test="#userPreferedLang == 'si'">
+        <s:label
+                value="%{#session.birthRegister.register.birthDivision.dsDivision.siDivisionName}"
+                cssStyle="float:left;  width:240px;"/></s:if>
+        <s:elseif test="#userPreferedLang == 'en'">
+            <s:label
+                    value="%{#session.birthRegister.register.birthDivision.dsDivision.enDivisionName}"
+                    cssStyle="float:left;  width:240px;"/>
+        </s:elseif>
+        <s:else>
+            <s:label
+                    value="%{#session.birthRegister.register.birthDivision.dsDivision.taDivisionName}"
+                    cssStyle="float:left;  width:240px;"/>
+        </s:else>
+    </td>
+</tr>
+<tr>
     <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:if test="#userPreferedLang == 'si'">
             <s:label value="%{#session.birthRegister.register.birthDivision.siDivisionName}"/>
         </s:if>
         <s:elseif test="#userPreferedLang == 'en'">
-            <s:label  value="%{#session.birthRegister.register.birthDivision.enDivisionName}"/>
+            <s:label value="%{#session.birthRegister.register.birthDivision.enDivisionName}"/>
         </s:elseif>
         <s:else>
             <s:label value="%{#session.birthRegister.register.birthDivision.taDivisionName}"/>
         </s:else>
     </td>
-    </tr>
-    <tr>
-        <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
-        <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirth}" id="placeOfBirth"
-                                 cssStyle="width:97.6%;"/></td>
-    </tr>
-    <tr>
-        <td><label>*in sinhala/ *in tamil/ Place in English</label></td>
-        <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirthEnglish}"
-                                 id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
-    </tr>
-    <tr>
-        <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
+</tr>
+<tr>
+    <td><label>ස්ථානය பிறந்த இடம் Place</label></td>
+    <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirth}" id="placeOfBirth"
+                             cssStyle="width:97.6%;"/></td>
+</tr>
+<tr>
+    <td><label>*in sinhala/ *in tamil/ Place in English</label></td>
+    <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirthEnglish}"
+                             id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
+</tr>
+<tr>
+    <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
 
-        <td width="150px" colspan="4">
-            <s:if test="session.birthRegister.child.birthAtHospital ==true">
-            <s:label value="%{getText('yes.label')}"/></td>
-        </s:if>
-        <s:else>
-            <s:label value="%{getText('no.label')}"/>
-        </s:else>
-    </tr>
-    <s:if test="birthType.ordinal() != 0">
-        <tr>
-            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම රාජ්‍ය භාෂාවෙන්
-                (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
-                / தமிழ்) <br>Name in
-                any of the official languages (Sinhala / Tamil)</label></td>
-            <td colspan="7"><s:label value="%{#session.birthRegister.child.childFullNameOfficialLang}"
-                                     cssStyle="width:98.2%;"/></td>
-        </tr>
-
-        <tr>
-            <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම ඉංග්‍රීසි
-                භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
-            </label></td>
-            <td colspan="7">
-                <s:label value="%{#session.birthRegister.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
-        </tr>
+    <td width="150px" colspan="4">
+        <s:if test="session.birthRegister.child.birthAtHospital ==true">
+        <s:label value="%{getText('yes.label')}"/></td>
     </s:if>
+    <s:else>
+        <s:label value="%{getText('no.label')}"/>
+    </s:else>
+</tr>
+<s:if test="birthType.ordinal() != 0">
     <tr>
-        <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
-            සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
-            <br>Preferred
-            Language for
-            Birth Certificate </label></td>
-        <s:set name="lang" value="%{#session.birthRegister.register.preferredLanguage}"/>
-        <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම රාජ්‍ය භාෂාවෙන්
+            (සිංහල / දෙමළ)<br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம்
+            / தமிழ்) <br>Name in
+            any of the official languages (Sinhala / Tamil)</label></td>
+        <td colspan="7"><s:label value="%{#session.birthRegister.child.childFullNameOfficialLang}"
+                                 cssStyle="width:98.2%;"/></td>
     </tr>
-    </tbody>
-</table>
-<table class="table_reg_page_01" cellpadding="0" cellspacing="0">
-    <col width="270px">
-    <col width="250px">
-    <col width="250px">
-    <col width="200px">
+
     <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>
-            பால் <br>Gender of the child</label></td>
-        <td>
-            <s:if test="session.birthRegister.child.childGender == 0">
-                <s:label name="" value="%{getText('male.label')}"/>
-            </s:if>
-            <s:elseif test="session.birthRegister.child.childGender == 1">
-                <s:label name="" value="%{getText('female.label')}"/>
-            </s:elseif>
-            <s:elseif test="session.birthRegister.child.childGender == 2">
-                <s:label name="" value="%{getText('unknown.label')}"/>
-            </s:elseif>
-        </td>
-        <s:if test="birthType.ordinal() == 1">
-            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு நிறை<br>Birth
-                Weight (kg)</label></td>
-            <td><s:label value="%{#session.birthRegister.child.childBirthWeight}"
-                         cssStyle="width:95%;"/></td>
+        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම ඉංග්‍රීසි
+            භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
+        </label></td>
+        <td colspan="7">
+            <s:label value="%{#session.birthRegister.child.childFullNameEnglish}" cssStyle="width:98.2%;"/></td>
+    </tr>
+</s:if>
+<tr>
+    <td class="font-9" colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උප්පැන්න
+        සහතිකය නිකුත් කල යුතු භාෂාව <br>பிறப்பு அத்தாட்சி …..
+        <br>Preferred
+        Language for
+        Birth Certificate </label></td>
+    <s:set name="lang" value="%{#session.birthRegister.register.preferredLanguage}"/>
+    <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
+</tr>
+    <%--</tbody>--%>
+    <%--</table>--%>
+    <%--<table class="table_reg_page_01" cellpadding="0" cellspacing="0">--%>
+    <%--<col width="270px">--%>
+    <%--<col width="250px">--%>
+    <%--<col width="250px">--%>
+    <%--<col width="200px">--%>
+<tr>
+    <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>
+        பால் <br>Gender of the child</label></td>
+    <td>
+        <s:if test="session.birthRegister.child.childGender == 0">
+            <s:label name="" value="%{getText('male.label')}"/>
         </s:if>
-        <s:if test="birthType.ordinal() == 2">
-            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ නමි)<br>பிறப்பு
-                நிறை<br>Birth Weight, if known (kg)</label></td>
-            <td><s:label value="%{#session.birthRegister.child.childBirthWeight}"/></td>
-        </s:if>
-        <s:elseif test="birthType.ordinal() == 0">
-            <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට ගර්භයට සති
-                කීයක් වී තිබුනේද යන්න
-                <br>* In Tamil
-                <br>Number of weeks pregnant at the time of still-birth</label></td>
-            <td><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
+        <s:elseif test="session.birthRegister.child.childGender == 1">
+            <s:label name="" value="%{getText('female.label')}"/>
         </s:elseif>
-    </tr>
-    <tr>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල
-            අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
-            to Live Birth Order,
-            rank of the child?</label></td>
-        <td class="font-9"><s:label value="%{#session.birthRegister.child.childRank}"/></td>
-        <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු උපතක් නම්,
-            දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
-            எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
-            multiple births, number of children</label></td>
-        <td><s:label value="%{#session.birthRegister.child.numberOfChildrenBorn}"
+        <s:elseif test="session.birthRegister.child.childGender == 2">
+            <s:label name="" value="%{getText('unknown.label')}"/>
+        </s:elseif>
+    </td>
+    <s:if test="birthType.ordinal() == 1">
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு நிறை<br>Birth
+            Weight (kg)</label></td>
+        <td><s:label value="%{#session.birthRegister.child.childBirthWeight}"
                      cssStyle="width:95%;"/></td>
-    </tr>
+    </s:if>
+    <s:if test="birthType.ordinal() == 2">
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර (දන්නේ නමි)<br>பிறப்பு
+            நிறை<br>Birth Weight, if known (kg)</label></td>
+        <td><s:label value="%{#session.birthRegister.child.childBirthWeight}"/></td>
+    </s:if>
+    <s:elseif test="birthType.ordinal() == 0">
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට ගර්භයට සති
+            කීයක් වී තිබුනේද යන්න
+            <br>* In Tamil
+            <br>Number of weeks pregnant at the time of still-birth</label></td>
+        <td><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
+    </s:elseif>
+</tr>
+<tr>
+    <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි උපත් අනුපිළි‍‍වල
+        අනුව කීවෙනි ළමයා ද? <br>பிறப்பு ஒழுங்கு <br>According
+        to Live Birth Order,
+        rank of the child?</label></td>
+    <td class="font-9"><s:label value="%{#session.birthRegister.child.childRank}"/></td>
+    <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන් දරු උපතක් නම්,
+        දරුවන් ගනන<br>பல்வகைத்தன்மை (இரட்டையர்கள்
+        எனின்),<br> பிள்னளகளின் எண்ணிக்கை<br>If
+        multiple births, number of children</label></td>
+    <td><s:label value="%{#session.birthRegister.child.numberOfChildrenBorn}"
+                 cssStyle="width:95%;"/></td>
+</tr>
+</tbody>
 </table>
 
     <s:hidden name="pageNo" value="1"/>
