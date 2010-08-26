@@ -329,10 +329,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             addActionError("death.error.no.permission.delete");
         }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if(deathDivisionId!=0){
-        deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
-        }else{
-        deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);    
+        if (deathDivisionId != 0) {
+            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+        } else {
+            deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         initPermissionForApprovalAndPrint();
         populate();

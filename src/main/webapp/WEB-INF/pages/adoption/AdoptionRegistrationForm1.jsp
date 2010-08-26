@@ -8,58 +8,58 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script>
-    $(function() {
-        $("#receivedDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
+$(function() {
+    $("#receivedDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
 
-        });
     });
-    $(function() {
-        $("#bdayDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31',
-            onSelect: function() {
-                var bday = new Date(document.getElementById('bdayDatePicker').value);
-                var today = new Date();
-                var ageMonthBDay = bday.getMonth();
-                var ageYearBDay = bday.getYear();
-                var ageMonthTOday = today.getMonth();
-                var ageYearTOday = today.getYear();
-                var ageMonth,ageYear = 0;
-                if (ageMonthTOday >= ageMonthBDay) {
-                    ageMonth = ageMonthTOday - ageMonthBDay;
-                    ageYear = ageYearTOday - ageYearBDay;
-                }
-                else    if (ageYearTOday > ageYearBDay) {
-                    ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
-                    ageYear = (ageYearTOday - 1) - ageYearBDay;
-                }
-
-                if (confirm(document.getElementById("lable01").value + "   :" + ageYear
-                        + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
-                    document.getElementById("childAgeYears").value = ageYear;
-                    document.getElementById("childAgeMonths").value = ageMonth;
-                }
+});
+$(function() {
+    $("#bdayDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31',
+        onSelect: function() {
+            var bday = new Date(document.getElementById('bdayDatePicker').value);
+            var today = new Date();
+            var ageMonthBDay = bday.getMonth();
+            var ageYearBDay = bday.getYear();
+            var ageMonthTOday = today.getMonth();
+            var ageYearTOday = today.getYear();
+            var ageMonth,ageYear = 0;
+            if (ageMonthTOday >= ageMonthBDay) {
+                ageMonth = ageMonthTOday - ageMonthBDay;
+                ageYear = ageYearTOday - ageYearBDay;
             }
-        });
-    });
+            else    if (ageYearTOday > ageYearBDay) {
+                ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
+                ageYear = (ageYearTOday - 1) - ageYearBDay;
+            }
 
-    $(function() {
-        $("#orderIssuedDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+            if (confirm(document.getElementById("lable01").value + "   :" + ageYear
+                    + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
+                document.getElementById("childAgeYears").value = ageYear;
+                document.getElementById("childAgeMonths").value = ageMonth;
+            }
+        }
     });
-  
+});
 
-    $(function() {
+$(function() {
+    $("#orderIssuedDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+
+
+$(function() {
     $('select#birthDistrictId').bind('change', function(evt1) {
         var id = $("select#birthDistrictId").attr("value");
         $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
@@ -115,72 +115,94 @@
                     });
         });
     });
-        })
+})
 
 
-    //these inpute can not be null
-
-    function validate() {
-        var errormsgOut = "";
-        var element;
-        var returnval;
-        var flag = false;
-        var inputs = new Array(9);
-
-        //these inpute can not be null
-        inputs[0] = new Date(document.getElementById("receivedDatePicker").value)
-        inputs[1] = document.getElementById("court").value;
-        inputs[2] = new Date(document.getElementById("orderIssuedDatePicker").value);
-        inputs[3] = document.getElementById("courtOrderNumber").value;
-        inputs[4] = document.getElementById("judgeName").value;
-        inputs[5] = document.getElementById("applicantName").value;
-        inputs[6] = document.getElementById("applicantAddress").value;
-        inputs[7] = document.getElementById("childAgeYears").value;
-        inputs[8] = document.getElementById("childAgeMonths").value;
-        //these inputs may be null with conditions
-        var childExistingName = document.getElementById("childExistingName").value;
-        var childNewName = document.getElementById("childNewName").value;
-        //var adoptionApplicantFather=document.getElementById("adoptionApplicantFather").value;
-        //alert(adoptionApplicantFather);
-        //check elements which are can not be null
-        for (i = 0; i < inputs.length; i++)
-        {
-            if (inputs[i].length <= 0)
-            {
-                errormsgOut = errormsgOut + document.getElementById("error" + i).value + "\n";
-            }
-        }
-        if (childExistingName.length <= 0 && childNewName.length <= 0) {
-
-            errormsgOut = errormsgOut + document.getElementById("error9").value + "\n";
-        }
-        if (isNaN(inputs[7]) && inputs[7].length > 0)
-        {
-            errormsgOut = errormsgOut + document.getElementById("error10").value + "\n";
-        }
-        if ((isNaN(inputs[8]) && inputs[8].length > 0)) {
-
-            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
-        }
-        else if ((inputs[8] > 12 || inputs[8] < 0) && (inputs[8].length > 0)) {
-            errormsgOut = errormsgOut + document.getElementById("error11").value + "\n";
-        }
-        if (errormsgOut.length > 0) {
-            alert(errormsgOut);
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+//these inpute can not be null
+var errormsg = "";
+function validate() {
+    
+    var returnval = true;
+    var domObject;
+    //order issued date
+    domObject = document.getElementById("orderIssuedDatePicker");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error2');
+    } else {
+        isDate(domObject.value, 'error12', 'error2');
     }
-    function disable(mode) {
-        document.getElementById('wifePINorNIC').disabled = mode;
-        document.getElementById('wifeCountryId').disabled = mode;
-        document.getElementById('wifePassport').disabled = mode;
-        document.getElementById('wifeName').disabled = mode;
+    domObject = document.getElementById("receivedDatePicker");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error0');
+    } else {
+        isDate(domObject.value, 'error12', 'error0');
     }
-//todo fdjfkhsk
+    domObject = document.getElementById("courtOrderNumber");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error3');
+    }
+    domObject = document.getElementById("court");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error1');
+    }
+    domObject = document.getElementById("judgeName");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error4');
+    }
+    domObject = document.getElementById("applicantName");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error5');
+    }
+    domObject = document.getElementById("applicantAddress");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error6');
+    }
+    domObject = document.getElementById("applicantPin");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error13');
+    }
+    domObject = document.getElementById("childAgeYears");
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'error7');
+    }
+    else {
+        isNumeric(domObject.value, 'error12', 'error7');
+    }
+    domObject = document.getElementById("childAgeMonths");
+    if (!isFieldEmpty(domObject)) {
+        isNumeric(domObject.value, 'error12', 'error8');
+    }
+    domObject = document.getElementById("bdayDatePicker");
+    if (!isFieldEmpty(domObject)) {
+        isDate(domObject.value, 'error12', 'error14');
+    }
+    domObject = document.getElementById("birthRegistrationSrialNum");
+    if (!isFieldEmpty(domObject)) {
+        isNumeric(domObject.value, 'error12', 'error15');
+    }
+    domObject = document.getElementById("birthCertificateNumber");
+    if (!isFieldEmpty(domObject)) {
+        isNumeric(domObject.value, 'error12', 'error16');
+    }
+    domObject = document.getElementById("childNewName");
+    existingName = document.getElementById("childExistingName");
+    if (isFieldEmpty(domObject) && isFieldEmpty(existingName)) {
+        errormsg = errormsg + "\n" + document.getElementById("error17").value;
+    }
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+function disable(mode) {
+    document.getElementById('wifePINorNIC').disabled = mode;
+    document.getElementById('wifeCountryId').disabled = mode;
+    document.getElementById('wifePassport').disabled = mode;
+    document.getElementById('wifeName').disabled = mode;
+}
+//todo 
 function initPage() {
     document.getElementById('birthCertificateNumber').disabled = true;
     document.getElementById('birthDistrictId').disabled = true;
@@ -237,7 +259,7 @@ function enableSerialNumber(mode) {
             Received Date
         </td>
         <td style="text-align:center;" width="70"><s:textfield id="receivedDatePicker"
-                                                               name="adoption.orderReceivedDate"></s:textfield>
+                                                               name="adoption.orderReceivedDate"/>
         </td>
     </tr>
     <tr>
@@ -251,7 +273,7 @@ function enableSerialNumber(mode) {
             Issued Date
         </td>
         <td style="text-align:center;"><s:textfield id="orderIssuedDatePicker"
-                                                    name="adoption.orderIssuedDate"></s:textfield>
+                                                    name="adoption.orderIssuedDate"/>
         </td>
     </tr>
     <tr>
@@ -319,9 +341,10 @@ function enableSerialNumber(mode) {
             Applicant's PIN / NIC Number
         </td>
         <td colspan="2" align="center" class="find-person"><s:textfield name="adoption.applicantPINorNIC"
-                                                                                      id="applicantPin" cssStyle="float:left;width:250px;" />
+                                                                        id="applicantPin"
+                                                                        cssStyle="float:left;width:250px;"/>
             <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup" ></td>
+                 style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup"></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -371,7 +394,8 @@ function enableSerialNumber(mode) {
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC" cssStyle="float:left;width:250px;"/>
+        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
+                                                  cssStyle="float:left;width:250px;"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="mother_lookup"></td>
     </tr>
@@ -425,7 +449,7 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="2" style="text-align:center;"><s:textfield id="bdayDatePicker"
                                                                 name="adoption.childBirthDate"
-                                                                onchange="calYearAndMonth()"></s:textfield>
+                                                                onchange="calYearAndMonth()"/>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
             Gender
@@ -433,6 +457,7 @@ function enableSerialNumber(mode) {
         <td align="center"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="adoption.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                id="childGender"
                 cssStyle="width:190px; margin-left:5px;"/></td>
     </tr>
     <tr>
@@ -551,10 +576,10 @@ function enableSerialNumber(mode) {
         <td colspan="1">අනුක්‍රමික අංකය <br/>
             Serial Number
         </td>
-       
+
         <td colspan="1">
             <s:textfield name="adoption.birthRegistrationSerial" id="birthRegistrationSrialNum"
-                         cssStyle="width:280px;"> </s:textfield>
+                         cssStyle="width:280px;"/>
         </td>
     </tr>
     </tbody>
@@ -570,19 +595,24 @@ function enableSerialNumber(mode) {
     <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
-<s:hidden id="error0" value="%{getText(' er.lable.receivedDate')}"/>
-<s:hidden id="error1" value="%{getText('er.lable.court')}"/>
-<s:hidden id="error2" value="%{getText('er.lable.orderIssuedDate')}"/>
-<s:hidden id="error3" value="%{getText('er.lable.courtOrderNumber')}"/>
-<s:hidden id="error4" value="%{getText('er.lable.judgeName')}"/>
-<s:hidden id="error5" value="%{getText('er.lable.applicantName')}"/>
-<s:hidden id="error6" value="%{getText('er.lable.applicantAddress')}"/>
-<s:hidden id="error7" value="%{getText('er.lable.childAgeYears')}"/>
-<s:hidden id="error8" value="%{getText('er.lable.childAgeMonths')}"/>
-<s:hidden id="error9" value="%{getText('er.lablechildName')}"/>
-<s:hidden id="error10" value="%{getText('er.lable.childAgeYearsValid')}"/>
-<s:hidden id="error11" value="%{getText('er.lable.childAgeMonthsValid')}"/>
-<s:hidden id="lable01" value="%{getText('lable.childAgeYear')}"/>
-<s:hidden id="lable02" value="%{getText('lable.childAgeMonth')}"/>
-
+<s:hidden id="error0" value="%{getText('er.label.receivedDate')}"/>
+<s:hidden id="error1" value="%{getText('er.label.court')}"/>
+<s:hidden id="error2" value="%{getText('er.label.orderIssuedDate')}"/>
+<s:hidden id="error3" value="%{getText('er.label.courtOrderNumber')}"/>
+<s:hidden id="error4" value="%{getText('er.label.judgeName')}"/>
+<s:hidden id="error5" value="%{getText('er.label.applicantName')}"/>
+<s:hidden id="error6" value="%{getText('er.label.applicantAddress')}"/>
+<s:hidden id="error7" value="%{getText('er.label.childAgeYears')}"/>
+<s:hidden id="error8" value="%{getText('er.label.childAgeMonths')}"/>
+<s:hidden id="error9" value="%{getText('er.label.childName')}"/>
+<s:hidden id="error10" value="%{getText('er.label.childAgeYearsValid')}"/>
+<s:hidden id="error11" value="%{getText('er.label.childAgeMonthsValid')}"/>
+<s:hidden id="lable01" value="%{getText('label.childAgeYear')}"/>
+<s:hidden id="lable02" value="%{getText('label.childAgeMonth')}"/>
+<s:hidden id="error12" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error13" value="%{getText('er.label.applicantPINorNIC')}"/>
+<s:hidden id="error14" value="%{getText('er.label.childBirthDate')}"/>
+<s:hidden id="error15" value="%{getText('er.label.birthRegistrationSrialNum')}"/>
+<s:hidden id="error16" value="%{getText('er.label.birthCertificateNumber')}"/>
+<s:hidden id="error17" value="%{getText('er.label.child.newNameOrExistingName')}"/>
 </div>

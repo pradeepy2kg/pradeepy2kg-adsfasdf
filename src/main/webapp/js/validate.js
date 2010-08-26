@@ -8,7 +8,7 @@ function isEmpty(domElement, errorMessage, errorCode) {
 }
 
 //check given element is empty and return true if empty else false
-function isFieldEmpty(domElement) {
+function isFieldEmpty(domElement) {   
     with (domElement) {
         if (value == null || value == "") {
             return true;
