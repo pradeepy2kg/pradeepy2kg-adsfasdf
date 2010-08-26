@@ -18,7 +18,7 @@ public interface DeathRegisterDAO {
      * Add a death registration
      *
      * @param dr   the death register to be added
-     * @param user
+     * @param user the user who perform the action
      */
     public void addDeathRegistration(DeathRegister dr, User user);
 
@@ -26,7 +26,7 @@ public interface DeathRegisterDAO {
      * update death registration
      *
      * @param dr   the death registration to be updated
-     * @param user
+     * @param user the user who perform the action
      */
     public void updateDeathRegistration(DeathRegister dr, User user);
 
@@ -42,7 +42,7 @@ public interface DeathRegisterDAO {
      * remove a death registration
      *
      * @param dr   the entry to be removed
-     * @param user
+     * @param user the user who perform the action
      */
     public void deleteDeathRegistration(DeathRegister dr, User user);
 
@@ -105,8 +105,8 @@ public interface DeathRegisterDAO {
      * Get the list of all the death registrations which are belonging to the given dsDivision
      *
      * @param dsDivision the divisional Secretariat
-     * @param pageNo        the page number for the results required(start from 1)
-     * @param noOfRows      number of rows to return per page
+     * @param pageNo     the page number for the results required(start from 1)
+     * @param noOfRows   number of rows to return per page
      * @return list of DeathRegister objects
      */
     public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows);

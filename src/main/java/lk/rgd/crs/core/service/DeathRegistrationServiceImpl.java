@@ -127,7 +127,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         dr.setStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED);
-        deathRegisterDAO.updateDeathRegistration(dr, null);
+        deathRegisterDAO.updateDeathRegistration(dr, user);
     }
 
     private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
@@ -150,7 +150,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
                 " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
-        deathRegisterDAO.updateDeathRegistration(dr, null);
+        deathRegisterDAO.updateDeathRegistration(dr, user);
     }
 
     /**

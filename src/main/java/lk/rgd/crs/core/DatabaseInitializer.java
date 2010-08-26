@@ -417,6 +417,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PAGE_DEATH_REJECT);
             bs.set(Permission.PAGE_DEATH_DELETE);
             bs.set(Permission.PAGE_DEATH_PRINT);
+            bs.set(Permission.PAGE_DEATH_APPROVAL_IGNOR_WORNINGS);
 
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
