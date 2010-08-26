@@ -98,8 +98,9 @@
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             onsubmit="javascript:return validate()" method="post">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend><s:label name="registrationSerchLegend"
-                             value="%{getText('registrationSerchLegend.label')}"/></legend>
+            <legend>
+                <b><s:label name="registrationSerchLegend" value="%{getText('registrationSerchLegend.label')}"/></b>
+            </legend>
 
             <table class="search-option-table">
                 <caption></caption>
@@ -112,21 +113,23 @@
                 <tr>
                     <td><s:label name="declarationSearialNumber"
                                  value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td width="360px"><s:textfield name="serialNo" id="bdfSerialNoId"/></td>
-                    <td width="200x"><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
+                    <td><s:textfield name="serialNo" id="bdfSerialNoId"/></td>
+                    <td><s:label name="district" value="%{getText('district.label')}"/></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="birthDistrictId" cssStyle="width:240px;"/>
+                                  value="birthDistrictId" cssStyle="width:240px;float:right;"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label>D.S.කොට්ඨාශය பிரிவு D.S. Division</label></td>
-                    <td colspan="3">
+                    <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+                    <td>
                         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                                   cssStyle="float:left;  width:240px;"/>
+                    </td>
+                    <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+                    <td>
                         <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                  list="bdDivisionList"
-                                  cssStyle=" width:240px;float:right;"/>
+                                  list="bdDivisionList" cssStyle=" width:240px;float:right;"/>
                     </td>
                 </tr>
                 <tr>
@@ -142,11 +145,12 @@
     <br/>
     <s:form action="eprBDFSearchByIdUKey.do" method="post"  onsubmit="javascript:return validate2()">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend><s:label name="confirmatinSearchLegend"
-                             value="%{getText('confirmationSearchLegend.label')}"/></legend>
+            <legend>
+                <b><s:label name="confirmatinSearchLegend" value="%{getText('confirmationSearchLegend.label')}"/></b>
+            </legend>
             <table class="search-option-table">
                 <tr>
-                    <td width="300px"><s:label name="confirmationSearch"
+                    <td width="250px"><s:label name="confirmationSearch"
                                                value="%{getText('searchConfirmationSerial.label')}"/></td>
                     <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
                     <td>
@@ -169,24 +173,28 @@
                 <thead>
                 <tr>
                     <s:if test="searchResultList.size>0">
-                        <th></th>
+                        <%--<th></th>--%>
                     </s:if>
+                    <th width="20px"><s:label value="%{getText('division.label')}"/></th>
                     <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
                     <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
-                    <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                    <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
                     <th><s:label name="statuslbl" value="%{getText('status.label')}"/></th>
-                    <th></th>
-                    <th></th>
+                    <th width="20px"></th>
+                    <th width="20px"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <s:if test="%{#request.bdf != null}">
                     <tr>
+                        <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                         <td><s:property value="%{#request.bdf.register.bdfSerialNo}"/></td>
-                        <td align="center"><s:label name="childName"
-                                                    value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/></td>
-                        <td align="center"><s:if test="%{#request.bdf.child.childGender == 0}">
+                        <td align="center">
+                            <s:label name="childName" value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/>
+                        </td>
+                        <td align="center">
+                            <s:if test="%{#request.bdf.child.childGender == 0}">
                             <s:label value="%{getText('male.label')}"/>
                         </s:if>
                             <s:elseif test="%{#request.bdf.child.childGender == 1}">
@@ -231,7 +239,8 @@
                 <s:elseif test="searchResultList.size>0">
                     <s:iterator status="searchStatus" value="searchResultList" id="searchId">
                         <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                            <td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>
+                            <%--<td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>--%>
+                            <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                             <td><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
                             <td align="center">
