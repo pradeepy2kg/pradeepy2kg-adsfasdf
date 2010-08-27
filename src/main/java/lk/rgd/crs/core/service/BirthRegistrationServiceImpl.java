@@ -1161,7 +1161,6 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getByBirthDivision(BDDivision bdDivision, User user) {
         logger.debug("Get records birthDivision ID : {}", bdDivision.getBdDivisionUKey());
-        validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBirthDivision(bdDivision);
     }
 
@@ -1537,5 +1536,15 @@ public class BirthRegistrationServiceImpl implements
         validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows,
             printed ? BirthDeclaration.State.ARCHIVED_CERT_PRINTED : BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision, User user) {
+        logger.debug("Get records belonging to DSDivision ID : {}", dsDivision.getDsDivisionUKey());
+        validateAccessToDSDivison(dsDivision, user);
+        return birthDeclarationDAO.getByDSDivision(dsDivision);
     }
 }

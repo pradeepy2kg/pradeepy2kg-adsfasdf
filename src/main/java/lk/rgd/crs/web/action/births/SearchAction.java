@@ -50,7 +50,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO) {
+                        BDDivisionDAO bdDivisionDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -86,7 +86,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
                     bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, user);
                 setStatus(bdf.getRegister().getStatus().toString());
             } else {
-                searchResultList = service.getByBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), user);
+                if (birthDivisionId != 0) {
+                    searchResultList = service.getByBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId), user);
+                } else {
+                    searchResultList = service.getByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), user);
+                }
             }
         } catch (CRSRuntimeException e) {
             logger.error("inside searchBDFBySerialNumber() ", e);

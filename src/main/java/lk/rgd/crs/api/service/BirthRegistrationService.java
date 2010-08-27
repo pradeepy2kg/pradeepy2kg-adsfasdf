@@ -444,24 +444,33 @@ public interface BirthRegistrationService {
      * Get the list of BDFs for which the Confirmation form should be printed
      *
      * @param dsDivision the divisional Secretariat
-     * @param pageNo        the page number for the results required (start from 1)
-     * @param noOfRows      number of rows to return per page
-     * @param printed       return already printed items if true, or items pending printing if false
-     * @param user          user initiating the action
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param printed    return already printed items if true, or items pending printing if false
+     * @param user       user initiating the action
      * @return approved list for print
      */
     public List<BirthDeclaration> getConfirmationPrintListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean printed, User user);
 
-     /**
+    /**
      * Get the list of BDFs for which the Birth Certificate should be printed
      *
      * @param dsDivision the divisional Secretariat
-     * @param pageNo        the page number for the results required (start from 1)
-     * @param noOfRows      number of rows to return per page
-     * @param printed       return already printed items if true, or items pending printing if false
-     * @param user          user initiating the action
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param printed    return already printed items if true, or items pending printing if false
+     * @param user       user initiating the action
      * @return approved list for print
      */
     public List<BirthDeclaration> getBirthCertificatePrintListByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, boolean printed, User user);
+
+    /**
+     * Returns a list of BirthDeclaration objects for a given dsDivision
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param user       the user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision, User user);
 }
 

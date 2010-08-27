@@ -226,4 +226,14 @@ public class BirthDeclarationDAOImpl extends BaseDAO implements BirthDeclaration
         q.setParameter("endDate", endDate);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision) {
+        Query q = em.createNamedQuery("get.by.dsdivision");
+        q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
+    }
 }

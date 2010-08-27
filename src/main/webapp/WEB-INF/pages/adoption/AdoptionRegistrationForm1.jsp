@@ -205,7 +205,7 @@ function disable(mode) {
     document.getElementById('wifeName').disabled = mode;
 }
 //todo 
-function initPage() {
+function initPage() {       
     document.getElementById('birthCertificateNumber').disabled = true;
     document.getElementById('birthDistrictId').disabled = true;
     document.getElementById('dsDivisionId').disabled = true;
