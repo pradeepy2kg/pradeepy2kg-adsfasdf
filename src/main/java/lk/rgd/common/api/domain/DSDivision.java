@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Table(name = "DS_DIVISIONS", schema = "COMMON",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
+@NamedQuery(name = "findAllDSDivisions", query = "SELECT d FROM DSDivision d")
 public class DSDivision implements Serializable {
 
     /**

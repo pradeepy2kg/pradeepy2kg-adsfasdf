@@ -87,6 +87,15 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<BDDivision> findAll() {
+        Query q = em.createNamedQuery("findAllBDDivisions");
+        return q.getResultList();
+    }
+
+    /**
      * Loads all values from the database table into a cache
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)

@@ -3,6 +3,7 @@ package lk.rgd.common.api.dao;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.District;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,4 +58,10 @@ public interface DistrictDAO {
      * @param user user performing the action
      */
     public void add(District district, User user);
+
+    /**
+     * Return all Districts in the system
+     * @return all Districts
+     */
+    public List<District> findAll();
 }

@@ -85,6 +85,15 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MRDivision> findAll() {
+        Query q = em.createNamedQuery("findAllMRDivisions");
+        return q.getResultList();
+    }
+
+    /**
      * Loads all values from the database table into a cache
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)

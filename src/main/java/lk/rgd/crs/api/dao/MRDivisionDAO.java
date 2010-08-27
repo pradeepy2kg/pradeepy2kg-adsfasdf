@@ -3,6 +3,7 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.MRDivision;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,4 +47,10 @@ public interface MRDivisionDAO {
      * @param user user executing the operation
      */
     public void add(MRDivision mrDivision, User user);
+
+    /**
+     * Return all MR Divisions
+     * @return all MR Divisions
+     */
+    public List<MRDivision> findAll();
 }
