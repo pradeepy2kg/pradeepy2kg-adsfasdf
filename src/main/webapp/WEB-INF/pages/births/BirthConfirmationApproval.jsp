@@ -11,8 +11,10 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript" src="../js/validate.js"></script>
 
-<s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
-<s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
+<s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
+<s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 
 <script>
 
@@ -80,12 +82,26 @@
                     });
         })
     })
+
     var errormsg = "";
     function validate() {
         var domObject;
         var returnval = true;
+
+        // validate serial number
         domObject = document.getElementById('bdfSerialNoId');
-        isNumeric(domObject.value, 'error5');
+        if (!isFieldEmpty(domObject))
+            isNumeric(domObject.value, 'error1', 'error2');
+
+        // validate start and end date
+        domObject = document.getElementById('searchStartDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, 'error1', 'error3');
+
+        domObject = document.getElementById('searchEndDatePicker');
+        if (!isFieldEmpty(domObject))
+            isDate(domObject.value, 'error1', 'error4');
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
