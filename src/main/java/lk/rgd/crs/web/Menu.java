@@ -155,6 +155,7 @@ public class Menu {
         // Death Registration for ADR
         adrDeathLink.putAll(deoDeathLink);
         adrDeathLink.put(Permission.PAGE_DEATH_APPROVE, new Link(null, "/popreg/deaths/", "eprApproveDeath.do"));
+        adrDeathLink.put(Permission.PAGE_DEATH_DIRECT_APPROVE, new Link(null, "/popreg/deaths/", "eprDirectApproveDeath.do"));
         adrDeathLink.put(Permission.PAGE_DEATH_REJECT, new Link(null, "/popreg/deaths/", "eprRejectDeath.do"));
         adrDeathLink.put(Permission.PAGE_DEATH_APPROVAL_PRINT, new Link("death_approve_print_list.label", "/popreg/deaths/", "eprDeathApprovalAndPrint.do"));
 

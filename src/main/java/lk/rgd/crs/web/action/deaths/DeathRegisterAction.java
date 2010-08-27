@@ -140,6 +140,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 deathType = ddf.getDeathType();
+                beanPopulate(ddf);
                 logger.debug("Date of Registration  of {}  is : {} ", deathPerson.getDeathPersonNameOfficialLang(), death.getDateOfRegistration());
                 logger.debug("death type of {} person is : {} ", deathPerson.getDeathPersonNameOfficialLang(), deathType);
                 break;
@@ -151,7 +152,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
                 deathType = ddf.getDeathType();
                 idUKey = ddf.getIdUKey();
-
+                deathType.ordinal();
                 if (idUKey == 0) {
                     if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
                         service.addNormalDeathRegistration(ddf, user);
