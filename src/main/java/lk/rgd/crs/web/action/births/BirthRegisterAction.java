@@ -155,11 +155,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                //checking serial number is taken already for addnew mode
-                BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(), register.getBdfSerialNo(), user);
-                if (bd != null) {
-                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-                    pageNo = 0;
+                // checking serial number is already used and skip this in edit mode
+                if (bdf.getIdUKey() == 0) {
+                    BirthDeclaration bd = service.getActiveRecordByBDDivisionAndSerialNo(register.getBirthDivision(), register.getBdfSerialNo(), user);
+                    if (bd != null) {
+                        addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+                        pageNo = 0;
+                    }
                 }
 
                 birthType = bdf.getRegister().getBirthType();
@@ -353,7 +355,9 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     }
 
-    public String initBirthRegistration() {             http://localhost:8080/popreg/deaths/eprDeathDeclaration.do?idUKey=1
+    public String initBirthRegistration() {
+        http:
+//localhost:8080/popreg/deaths/eprDeathDeclaration.do?idUKey=1
         return SUCCESS;
     }
 
