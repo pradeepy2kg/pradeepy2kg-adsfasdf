@@ -419,18 +419,30 @@ $('img#deathName').bind('click', function(evt7) {
 <div id="death-declaration-form-1-outer">
 <s:form name="deathRegistrationForm1" id="death-registration-form-1" action="eprDeathDeclaration.do" method="POST"
         onsubmit="javascript:return validate()">
+<table>
+    <col style="width:60%"/>
+    <col style="width:40%"/>
+    <tr >
+        <td></td>
+        <td >
+            <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
+        </td>
+    </tr>
+</table>
 <table style="width: 100%; border:none; border-collapse:collapse;" class="font-9">
     <col width="180px"/>
     <col width="350px"/>
     <col width="120px"/>
     <col width="160px"/>
     <tbody>
+
     <tr>
         <td rowspan="3"></td>
         <td rowspan="2" align="center">
             <img src="<s:url value="/images/official-logo.png" />" style="display: block; text-align: center;"
                  width="80" height="100">
         </td>
+        
         <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
         <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo" id="deathSerialNo"/></td>
     </tr>

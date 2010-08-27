@@ -133,26 +133,23 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                logger.debug("Death Declaration Step {} of 2 ", pageNo);
+                //TODO checking serial number is taken already for addnew mode
+//                DeathRegister dd = service.
+//                if (dd != null) {
+//                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+//                    pageNo = 0;
+//                }
+                deathType = ddf.getDeathType();
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
                 ddf.setDeathType(deathType);
-                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
-                session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
-                deathType = ddf.getDeathType();
                 beanPopulate(ddf);
-                logger.debug("Date of Registration  of {}  is : {} ", deathPerson.getDeathPersonNameOfficialLang(), death.getDateOfRegistration());
-                logger.debug("death type of {} person is : {} ", deathPerson.getDeathPersonNameOfficialLang(), deathType);
                 break;
             case 2:
-                logger.debug("Death Declaration Step {} of 2 ", pageNo);
+                deathType = ddf.getDeathType();
                 ddf.setDeclarant(declarant);
                 ddf.setNotifyingAuthority(notifyingAuthority);
-                logger.debug("Death Declaration Step {} of 2  was completed", pageNo);
-                session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
-                deathType = ddf.getDeathType();
                 idUKey = ddf.getIdUKey();
-                deathType.ordinal();
                 if (idUKey == 0) {
                     if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType) {
                         service.addNormalDeathRegistration(ddf, user);
@@ -162,8 +159,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     idUKey = ddf.getIdUKey();
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
+                    if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType
+                            || DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType ) {
                     service.updateDeathRegistration(ddf, user);
                     addActionMessage(getText("editDataSaveSuccess.label"));
+                    }
                 }
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }

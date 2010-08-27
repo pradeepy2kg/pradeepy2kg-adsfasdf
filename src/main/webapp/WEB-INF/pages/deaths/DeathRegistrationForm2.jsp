@@ -96,7 +96,7 @@
             }
         }
         //validating declarant email
-        domObject = document.getElementById('declarantEMail');
+        domObject = document.getElementById('declarentEMail').value;
         if (!isEmpty(domObject))
             validateEmail(domObject, 'error2', 'error1')
         var declarant = new Date(elementArray[4]);
