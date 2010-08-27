@@ -156,6 +156,8 @@ function validate() {
     domObject = document.getElementById("applicantPin");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error13');
+    } else {
+        validatePINorNIC(domObject, 'error12', 'error13');
     }
     domObject = document.getElementById("childAgeYears");
     if (isFieldEmpty(domObject)) {
@@ -187,6 +189,7 @@ function validate() {
             errormsg = errormsg + "\n" + document.getElementById("error17").value;
         }
     }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -324,7 +327,7 @@ function enableSerialNumber(mode) {
             Father
         </td>
         <td>
-            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" 
+            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}"
                      id="adoptionApplicantFather"
                      onclick="disable(false)"/>
         </td>

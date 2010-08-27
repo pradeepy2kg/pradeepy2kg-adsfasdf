@@ -19,26 +19,6 @@
 
     function setApplicantInfo(pin, name, address)
     {
-        /*domObject0 = document.getElementsByName("certificateApplicantType")[0];
-         domObject1 = document.getElementsByName("certificateApplicantType")[1];
-         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
-         var applicantName = document.getElementById("certificateApplicantName").value = "";
-         var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
-
-
-         if (isApplicantMother==true) {
-         if (domObject1.checked==true) {
-         var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
-         var applicantName = document.getElementById("certificateApplicantName").value = name;
-         var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
-         }
-         } else if(isApplicantMother !=true) {
-         if (domObject0.checked==true) {
-         var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
-         var applicantName = document.getElementById("certificateApplicantName").value = name;
-         var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
-         }
-         }*/
 
         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
         var applicantName = document.getElementById("certificateApplicantName").value = "";
@@ -69,6 +49,9 @@
         domObject = document.getElementById("certifcateApplicantPin");
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'error0');
+        }
+        else {
+            validatePINorNIC(domObject, 'error5', 'error0');
         }
         domObject = document.getElementById("certificateApplicantName");
         if (isFieldEmpty(domObject)) {
@@ -261,7 +244,7 @@
                 <s:else>
                     <s:radio name="certificateApplicantType" id="certificateApplicantType"
                              list="#@java.util.HashMap@{'MOTHER':''}"
-                         onchange="setApplicantInfo('','','');"/>
+                             onchange="setApplicantInfo('','','');"/>
                 </s:else>
             </td>
             <td>වෙනත් <br/>
@@ -319,5 +302,6 @@
     <s:hidden id="error2" value="%{getText('er.label.applicantAddress')}"/>
     <s:hidden id="error3" value="%{getText('er.label.applicantType')}"/>
     <s:hidden id="error4" value="%{getText('er.label.courtOrderNumber')}"/>
+    <s:hidden id="error5" value="%{getText('p1.invalide.inputType')}"/>
 </s:form>
 </div>
