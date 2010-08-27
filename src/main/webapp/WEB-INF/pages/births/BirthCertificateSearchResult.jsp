@@ -28,7 +28,7 @@
 
 <div>
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend><s:label value="%{getText('searchResult.label')}"/></legend>
+        <legend><b><s:label value="%{getText('searchResult.label')}"/></b></legend>
         <table id="search-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>

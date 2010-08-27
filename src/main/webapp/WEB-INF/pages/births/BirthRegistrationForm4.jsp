@@ -144,12 +144,6 @@
 
         <s:hidden name="pageNo" value="4"/>
 
-        <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value')}"/>
-        <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
-        <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>
-        <s:hidden id="p4error4" value="%{getText('p4.notifierAddress.text')}"/>
-        <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
-
         <s:if test="birthType.ordinal() == 1">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
                 <table class="table_reg_page_04" width="100%" cellspacing="0" style="margin-top:20px;">
@@ -204,4 +198,12 @@
             <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
         </div>
     </s:form>
+
+
+    <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value')}"/>
+    <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
+    <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>
+    <s:hidden id="p4error4" value="%{getText('p4.notifierAddress.text')}"/>
+    <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
+
 </div>

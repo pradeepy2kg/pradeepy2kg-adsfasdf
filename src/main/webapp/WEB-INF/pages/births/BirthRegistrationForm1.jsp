@@ -599,8 +599,18 @@ function initPage() {
 <s:hidden name="pageNo" value="1"/>
 <s:hidden name="rowNumber" value="%{row}"/>
 <s:hidden name="counter" value="%{i}"/>
-<s:hidden id="birthTypeId" value="%{birthType.ordinal()}"/>
 
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
+<div class="form-submit">
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
+</s:form>
+
+<s:hidden id="birthTypeId" value="%{birthType.ordinal()}"/>
 <s:hidden id="error1" value="%{getText('p1.SerialNum.error.value')}"/>
 <s:hidden id="error2" value="%{getText('p1.childName.error.value')}"/>
 <s:hidden id="error3" value="%{getText('p1.NameEnglish.error.value')}"/>
@@ -628,13 +638,4 @@ function initPage() {
 <s:hidden id="dob" value="%{getText('p1.dob')}"/>
 <s:hidden id="submitDate" value="%{getText('p1.submit.date')}"/>
 
-<div class="skip-validation">
-    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
-        <s:label value="%{getText('skipvalidation.label')}"/>
-    </s:checkbox>
-</div>
-<div class="form-submit">
-    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-</div>
-</s:form>
 </div>

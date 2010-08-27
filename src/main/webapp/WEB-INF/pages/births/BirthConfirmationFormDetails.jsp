@@ -10,7 +10,7 @@
     <div id="bdaw-action">
         <s:form action="ConfirmationDirectApprovalIngoreWarning">
             <fieldset>
-                <legend><s:label value="%{getText('directApprovalWarning.label')}"/></legend>
+                <legend><b><s:label value="%{getText('directApprovalWarning.label')}"/></b></legend>
                 <table class="birth-registration-form-details-warning-table">
                     <s:iterator value="#request.warnings">
                         <tr>
