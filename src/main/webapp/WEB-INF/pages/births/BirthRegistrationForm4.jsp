@@ -52,9 +52,9 @@
         domObject = document.getElementById('notifyingAuthorityPIN');
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p4error1').value;
+        } else {
+            validatePINorNIC(domObject, 'error1', 'p4error5');
         }
-        //        TODO
-        //        validatePINorNIC(element, 'error1', 'p4error5');
 
         // notifier name
         domObject = document.getElementById('notifyingAuthorityName');
@@ -72,6 +72,8 @@
         domObject = document.getElementById('modifiedDatePicker');
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p4error3').value;
+        } else {
+            isDate(domObject.value, 'error1', 'error2');
         }
 
         if (errormsg != "") {
@@ -199,7 +201,8 @@
         </div>
     </s:form>
 
-
+    <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+    <s:hidden id="error2" value="%{getText('notifierDate.text')}"/>
     <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value')}"/>
     <s:hidden id="p4error2" value="%{getText('p4.Name.error.value')}"/>
     <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>

@@ -8,7 +8,7 @@ function isEmpty(domElement, errorMessage, errorCode) {
 }
 
 //check given element is empty and return true if empty else false
-function isFieldEmpty(domElement) {   
+function isFieldEmpty(domElement) {
     with (domElement) {
         if (value == null || value == "") {
             return true;
@@ -40,22 +40,22 @@ function validateEmail(domElement, errorText, errorCode) {
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
         if (reg.test(value) == false) {
             errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-            return false;
         }
     }
 }
 
-// validate PIN or NIC
-//function validatePINorNIC(message, errorText, errorCode) {
-//    with (message) {
-//        // TODO still implementing chathuranga
-//        if (value.length != 10) {
-//            alert(value.length + 'aaa')
-//            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-//            return false;
-//        }
-//    }
-//}
+function validatePINorNIC(domElement, errorText, errorCode) {
+    with (domElement) {
+        if (value.length != 10) {
+            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+        } else {
+            var reg = /^([0-9]{10})|([0-9]{9}[X|x|V|v])$/;
+            if (reg.test(value) == false) {
+                errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+            }
+        }
+    }
+}
 
 //todo amith
 //date format validations
@@ -91,6 +91,7 @@ function daysInFebruary(year) {
     // EXCEPT for centurial years which are not also divisible by 400.
     return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
 }
+
 function DaysArray(n) {
     for (var i = 1; i <= n; i++) {
         this[i] = 31

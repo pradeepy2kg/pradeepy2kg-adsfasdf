@@ -74,15 +74,15 @@ function validate() {
     var returnval = true;
 
     if (declarationType.value == 0) {
-        commanTags();
+        commonTags();
     }
     //validation for live birth
     if (declarationType.value == 1) {
-        commanTags();
+        commonTags();
         validateMarriage();
     }
     if (declarationType.value == 2) {
-        commanTags();
+        commonTags();
         validateMarriage();
     }
 
@@ -96,12 +96,33 @@ function validate() {
     return returnval;
 }
 
-function commanTags() {
+function commonTags() {
     var domObject;
-    //infomant date
-    domObject = document.getElementById('informDatePicker');
+
+    // validate date of marriage
+    domObject = document.getElementById('marriageDatePicker');
     if (!isFieldEmpty(domObject))
-        isDate(domObject.value, "error11", "infomantDate");
+        isDate(domObject.value, 'error11', 'error13');
+
+    // validate grandfather PIN or NIC
+    domObject = document.getElementById('grandFatherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error11', 'error14');
+
+    // validate grandfather birth year
+    domObject = document.getElementById('grandFatherBirthYear');
+    if (!isFieldEmpty(domObject))
+        isNumeric(domObject.value, 'error11', 'p3error9');
+
+    // validate great grandfather birth year
+    domObject = document.getElementById('greatGrandFatherBirthYear');
+    if (!isFieldEmpty(domObject))
+        isNumeric(domObject.value, 'error11', 'p3error10');
+
+    // validate great grandfather PIN or NIC
+    domObject = document.getElementById('greatGrandFatherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error11', 'error15');
 }
 
 // validation marriage related fields
@@ -151,8 +172,8 @@ function validateInformant() {
 
     // check informant PIN or NIC
     domObject = document.getElementById('informantNICorPIN');
-    //        TODO
-    //        validatePINorNIC(element, 'error11', 'error12')
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error11', 'error12')
 
     // check informant name
     domObject = document.getElementById('informantName');
@@ -166,16 +187,22 @@ function validateInformant() {
         errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
     }
 
+    domObject = document.getElementById('informantPhoneNo');
+    if (!isFieldEmpty(domObject))
+        isNumeric(domObject.value, 'error11', 'error16');
+
     // validating informant email
     domObject = document.getElementById('informantEmail');
     if (!isFieldEmpty(domObject))
         validateEmail(domObject, 'error11', 'error10')
 
     // check informant sign date
-    var submit = new Date(document.getElementById('informDatePicker').value);
-    if (!(submit.getTime())) {
+    // validate infomant date
+    domObject = document.getElementById('informDatePicker');
+    if (isFieldEmpty(domObject))
         errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
-    }
+    else
+        isDate(domObject.value, "error11", "infomantDate");
 }
 
 // check informant type selected
@@ -313,7 +340,7 @@ function initPage() {
         <col/>
         <tbody>
         <tr>
-            <td colspan="7" style="text-align:center;font-size:12pt">සීයාගේ / මී මුත්තා ගේ විස්තර
+            <td colspan="7" style="text-align:center;font-size:12pt">මුත්තා/ මී මුත්තා ගේ විස්තර
                 <br>தாத்தாவின் / பாட்டனின் விபரங்கள்
                 <br>Details of the Grand Father / Great Grand Father
             </td>
@@ -334,9 +361,9 @@ function initPage() {
                 அடையாள அட்டை
                 இலக்கம்<br>PIN / NIC Number
             </td>
-            <td><s:textfield name="grandFather.grandFatherNICorPIN"/></td>
+            <td><s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/></td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthYear"/></td>
+            <td><s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
         </tr>
@@ -358,7 +385,7 @@ function initPage() {
                 அடையாள அட்டை
                 இலக்கம்<br>PIN / NIC Number
             </td>
-            <td><s:textfield name="grandFather.greatGrandFatherNICorPIN"/></td>
+            <td><s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/></td>
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
@@ -491,10 +518,9 @@ function initPage() {
                                     cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)***සම්බන්ධ කල හැකි තොරතුරු
-            <br>தாயின்
-            தொடர்பு இலக்க தகவல் <br>Contact Details of the
-            Informant</label></td>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර
+            <br>* In Tamil<br>Contact Details</label>
+        </td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
         <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
                          cssStyle="width:95%;"/></td>
@@ -526,7 +552,6 @@ function initPage() {
 </s:form>
 
 <s:hidden id="birthTypeId" value="%{birthType.ordinal()}"/>
-
 <s:hidden id="p3error1" value="%{getText('p3.person.error.value')}"/>
 <s:hidden id="p3error2" value="%{getText('p3.Informent.Name.error.value')}"/>
 <s:hidden id="p3error3" value="%{getText('p3.Informent.Address.error.value')}"/>
@@ -537,9 +562,14 @@ function initPage() {
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="p3error9" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
+<s:hidden id="p3error10" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
 <s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
 <s:hidden id="error11" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error12" value="%{getText('informantNIC.text')}"/>
+<s:hidden id="error13" value="%{getText('marriageDate.text')}"/>
+<s:hidden id="error14" value="%{getText('grandFatherNICorPIN.text')}"/>
+<s:hidden id="error15" value="%{getText('greatGrandFatherNICorPIN.text')}"/>
+<s:hidden id="error16" value="%{getText('p3.Informant.telephone.error.value')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
 
 </div>
