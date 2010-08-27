@@ -38,15 +38,12 @@ public class SecurityInterceptor extends AbstractInterceptor {
         for (Map.Entry<String, Map> category : map.entrySet()) {
             cat = category.getKey();
             Map<Integer, Link> links = (Map<Integer, Link>) category.getValue();
-            for (Map.Entry<Integer, Link> entry : links.entrySet()) {
-                key = entry.getKey();
-                Link link = entry.getValue();
-                if (actionName.equals(link.getAction())) {
-                    found = true;
-                    break;
-                }
-            }
-            if (found) break;
+            Link link = links.get(actionName);
+            if (link != null) {
+                key = link.getPermissionKey();
+                found = true;
+                break;
+            }    
         }
 
         if (found && user.isAuthorized(key)) {

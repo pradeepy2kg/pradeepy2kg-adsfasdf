@@ -217,305 +217,69 @@ public class DatabaseInitializer implements ApplicationContextAware {
             // ---------------- populate permissions ---------------------
             RoleDAO roleDao = (RoleDAO) ctx.getBean("roleDAOImpl", RoleDAO.class);
 
+            // DEO
             Role deoRole = roleDao.getRole("DEO");
             BitSet bs = new BitSet();
-            // TODO add any DEO specific permissions
-            //Birth Confirmation
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_REPORT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_REFRESH);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_SELECTED_ENTRY);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_BULK_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_INIT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_FORM_DETAIL_DIRECT_PRINT_BIRTH_CERTIFICATE);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED);
-            bs.set(Permission.EDIT_BDF);
 
-            //Birth registration
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_INIT);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_HOME);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME);
-            bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_MARK_BIRTH_CERTIFICATE_AS_PRINTED);
-
-            //Death Registration
-            bs.set(Permission.PAGE_DEATH_REGISTRATION_INIT);
-            bs.set(Permission.PAGE_DEATH_REGISTRATION);
-            bs.set(Permission.PAGE_LATE_DEATH_REGISTRATION);
-            bs.set(Permission.PAGE_DEATH_CERTIFICATE);
-            bs.set(Permission.PAGE_LATE_DEATH_REGISTRATION_INIT);
-            bs.set(Permission.PAGE_LATE_DEATH_HOME);
-            bs.set(Permission.PAGE_DEATH_APPROVAL_PRINT_LIST_REFRESH);
-            bs.set(Permission.PAGE_DEATH_APPROVAL_PRINT);
-            bs.set(Permission.EDIT_DEATH);
-            bs.set(Permission.PAGE_DEATH_EDIT_MODE);
-            bs.set(Permission.PAGE_DEATH_VEIW_MODE);
-            bs.set(Permission.PAGE_DEATH_DELETE);
-            bs.set(Permission.PAGE_DEATH_PRINT);
-
-
-            //Search
-            bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);
-            bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
-
-            //User Preference
-            bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
-            bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
-            bs.set(Permission.CHANGE_PASSWORD);
-            bs.set(Permission.BACK_CHANGE_PASSWORD);
-            bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
-
-            //PRS related
-            bs.set(Permission.PRS_ADD_PERSON);
-
-            //Adoption related
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_HOME);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION);
             bs.set(Permission.EDIT_ADOPTION);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT);
-            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
-
+            bs.set(Permission.EDIT_BDF_CONFIRMATION);
+            bs.set(Permission.EDIT_BDF);
+            bs.set(Permission.PRINT_BDF);
+            bs.set(Permission.SEARCH_BDF);
+            bs.set(Permission.EDIT_DEATH);
+            bs.set(Permission.PRS_LOOKUP_PERSON_BY_KEYS);
+            bs.set(Permission.PRS_ADD_PERSON);
+            bs.set(Permission.PRS_EDIT_PERSON);
+            bs.set(Permission.SEARCH_PRS);
+            bs.set(Permission.USER_PREFERENCES);
 
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
 
+            // ADR
             Role adrRole = roleDao.getRole("ADR");
             bs = new BitSet();
             bs.or(deoRole.getPermBitSet());
 
-
-            //Birth Confirmation
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_REPORT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_REFRESH);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_SELECTED_ENTRY);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_BULK_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_INIT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_NEXT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_LIST_PREVIOUS);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_PRINT_MARK_BIRTH_CONFIRMATION_AS_PRINTED);
-
-            //Birth Registration
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON);
-            bs.set(Permission.PAGE_STILL_BIRTH_REGISTRATION);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_INIT);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REFRESH);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_PRINT);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_HOME);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_STILL_BIRTH_HOME);
-            bs.set(Permission.EDIT_BDF);
-
-            //Birth Certificate
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_REFRESH);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_BULK_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_SELECTED_ENTRY);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_DIRECT_PRINT_BIRTH_CERTIFICATE);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_NEXT);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_LIST_PREVIOUS);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_PRINT);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_STILL_BIRTH_CERTIFICATE_DIRECT_PRINT);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_PRINT_MARK_BIRTH_CERTIFICATE_AS_PRINTED);
-
-            //Approval
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_IGNORING_WARNING);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_NEXT);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_PREVIOUS);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_BULK);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REJECT_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_APPROVAL_REFRESH);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_NEXT);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVE_BULK);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_PREVIOUS);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_DELETE);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_IGNORING_WARNING);
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_APPROVAL);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVE);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_APPROVAL_IGNORING_WARNINGS);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_DIRECT_APPROVAL_IGNORING_WARNINGS);
+            bs.set(Permission.APPROVE_ADOPTION);
             bs.set(Permission.APPROVE_BDF);
             bs.set(Permission.APPROVE_BDF_CONFIRMATION);
-
-            //Search
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SEARCH);
-            bs.set(Permission.PAGE_ADVANCE_SEARCH_PRS);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_SERIALNO);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_BY_IDUKEY);
-            bs.set(Permission.PAGE_ADVANCE_SEARCH_BIRTHS);
-            bs.set(Permission.PAGE_BIRTH_CERTIFICATE_SEARCH);
-
-            //User preferance
-            bs.set(Permission.CHANGE_PASSWORD);
-            bs.set(Permission.BACK_CHANGE_PASSWORD);
-            bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
-            bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
-            bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
-
-            //Admin task
-            bs.set(Permission.PAGE_BIRTH_DECLARATION_APPROVAL_REJECT_SELECTED);
-            bs.set(Permission.PAGE_BIRTH_CONFIRMATION_SKIP_CONFIRMATIONCHANGES);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATON_DIRECT_HOME);
-            bs.set(Permission.PAGE_BIRTH_REGISTRATION_SEARCH_VIEW_NON_EDITABLE_MODE);
-            bs.set(Permission.PAGE_ADVANCE_SEARCH_PRS);
-
-            //PRS related
-            bs.set(Permission.PRS_ADD_PERSON);
-
-            //adoption Registration
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_HOME);
-            bs.set(Permission.PAGE_ADOPTION_INIT);
-            bs.set(Permission.PAGE_ADOPTION_APPLICANT_INFO);
-            bs.set(Permission.PAGE_ADOPTION_BDF_ENTRY);
-            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
-            bs.set(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER);
-            bs.set(Permission.EDIT_ADOPTION);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
-            //bs.set(Permission.PAGE_ADOPTION_BDF_HOME);
-            bs.set(Permission.PAGE_ADOPTION_PROCESS_APPLICANT_INFO);
-            bs.set(Permission.PAGE_ADOPTION_HOME);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
-
-            //death realated
             bs.set(Permission.APPROVE_DEATH);
-            bs.set(Permission.PAGE_DEATH_DIRECT_APPROVE);
-            bs.set(Permission.PAGE_DEATH_APPROVE);
-            bs.set(Permission.PAGE_DEATH_REJECT);
-            bs.set(Permission.PAGE_DEATH_DELETE);
-            bs.set(Permission.PAGE_DEATH_PRINT);
-            bs.set(Permission.PAGE_DEATH_APPROVAL_IGNOR_WORNINGS);
 
             adrRole.setPermBitSet(bs);
             roleDao.save(adrRole);
 
+            // DR
             Role drRole = roleDao.getRole("DR");
             bs = new BitSet();
             bs.or(adrRole.getPermBitSet());
-            // TODO add any DR specific permissions
             drRole.setPermBitSet(bs);
             roleDao.save(drRole);
 
+            // ARG
             Role argRole = roleDao.getRole("ARG");
             bs = new BitSet();
-            bs.set(Permission.APPROVE_ADOPTION);
-            bs.set(Permission.APPROVE_DEATH);
-            bs.set(Permission.PAGE_ADOPTION_DIRECT_APPROVAL);
-            bs.set(Permission.PAGE_ADOPTION_MARK_ADOPTION_NOTICE_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
-            bs.set(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER);
-            bs.set(Permission.PAGE_ADOPTION_CERTIFICATE_REQUEST);
-            bs.set(Permission.PAGE_ADOPTION_FIND_ADOPTION_CERTIFICATE_REQUEST);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
-            bs.set(Permission.PAGE_ADOPTION_CAPTURE_APPLICANT_INFO);
             bs.or(drRole.getPermBitSet());
             // TODO add any ARG specific permissions
             argRole.setPermBitSet(bs);
             roleDao.save(argRole);
 
+            // RG
             Role rgRole = roleDao.getRole("RG");
             bs = new BitSet();
-            bs.set(Permission.APPROVE_ADOPTION);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_APPROVE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_REJECT_SELECTED);
-            bs.set(Permission.APPROVE_DEATH);
-            bs.set(Permission.PAGE_ADOPTION_DIRECT_APPROVAL);
-            bs.set(Permission.PAGE_ADOPTION_MARK_ADOPTION_NOTICE_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_CANCEL_PRINT_NOTICE);
-            bs.set(Permission.PAGE_ADOPTION_DIRECT_PRINT_NOTICE_LETTER);
-            bs.set(Permission.PAGE_ADOPTION_CERTIFICATE_REQUEST);
-            bs.set(Permission.PAGE_ADOPTION_FIND_ADOPTION_CERTIFICATE_REQUEST);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_DELETE_SELECTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_EDIT_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_VIEW_MODE);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_NOTICE_LETTER);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_NOTICE_LETTER_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_PRINT_ADOPTION_CERTIFICATES);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_MARK_CERTIFICATES_AS_PRINTED);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_NEXT_RECORDS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_LOAD_PREVIOUS_RECORDS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_FILTER_BY_STATUS);
-            bs.set(Permission.PAGE_ADOPTION_REGISTRATION_APPROVAL_AND_PRINT_BACK_TO_PREVIOUS_STATE);
-            bs.set(Permission.PAGE_ADOPTION_CAPTURE_APPLICANT_INFO);
             bs.or(argRole.getPermBitSet());
             // TODO add any RG specific permissions
             rgRole.setPermBitSet(bs);
             roleDao.save(rgRole);
 
+            // ADMIN
             Role adminRole = roleDao.getRole("ADMIN");
             bs = new BitSet();
-            //        bs.or(rgRole.getPermBitSet());
-            bs.set(Permission.PAGE_CREATE_USER);
-            bs.set(Permission.PAGE_USER_CREATION);
             bs.set(Permission.USER_MANAGEMENT);
-            bs.set(Permission.PAGE_VIEW_USERS);
-            bs.set(Permission.PAGE_VIEW_SELECTED_USERS);
-            bs.set(Permission.PAGE_DELETE_USER);
-            bs.set(Permission.PAGE_INIT_ADD_DS_DIVISION_DIVISIONS);
-            bs.set(Permission.PAGE_INIT_ADD_DIVISIONS);
-            bs.set(Permission.PAGE_INIT_ADD_DS_DIVISIONS);
-            bs.set(Permission.PAGE_INIT_ADD_DISTRICT);
-            bs.set(Permission.PAGE_INIT_ADD_MR_DIVISIONS);
-            bs.set(Permission.PAGE_ADD_DS_DIVISION_DIVISIONS);
             bs.set(Permission.SERVICE_MASTER_DATA_MANAGEMENT);
+            bs.set(Permission.USER_PREFERENCES);
+            bs.set(Permission.REGISTRAR_MANAGEMENT);
 
-            //user preferance
-            bs.set(Permission.PAGE_USER_PREFERANCE_SELECT);
-            bs.set(Permission.PAGE_USER_PREFERENCE_INIT);
-            bs.set(Permission.CHANGE_PASSWORD);
-            bs.set(Permission.BACK_CHANGE_PASSWORD);
-            bs.set(Permission.CHANGE_PASSWORD_PAGE_LOAD);
-
-            //registrars managment
-            bs.set(Permission.PAGE_REGISTRARS_MANAGMENT_LIST);
-
-            // TODO add any ADMIN specific permissions
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);
 
