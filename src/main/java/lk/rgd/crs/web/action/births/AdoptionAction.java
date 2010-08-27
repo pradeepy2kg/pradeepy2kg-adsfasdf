@@ -161,7 +161,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
-            birthDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
+            dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
                 adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
             birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
                 adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);

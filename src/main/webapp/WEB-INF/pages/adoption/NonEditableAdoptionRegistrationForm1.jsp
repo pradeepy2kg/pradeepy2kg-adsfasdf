@@ -72,7 +72,7 @@
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td >අයදුම් කරුගේ විස්තර <br/>
+        <td>අයදුම් කරුගේ විස්තර <br/>
             Applicants Details
         </td>
     </tr>
@@ -87,19 +87,19 @@
     <col width="175px"/>
     <tbody>
     <tr>
-        <td colspan="2" >අයදුම් කරු <br/>
+        <td colspan="2">අයදුම් කරු <br/>
             Applicant
         </td>
         <s:if test="#request.adoption.applicantMother==0">
-        <td colspan="3">පියා<br/>
-            Father
-        </td>
+            <td colspan="3">පියා<br/>
+                Father
+            </td>
         </s:if>
         <s:else>
 
-        <td colspan="3">මව <br/>
-            Mother
-        </td>
+            <td colspan="3">මව <br/>
+                Mother
+            </td>
         </s:else>
     </tr>
     <tr>
@@ -263,7 +263,9 @@
         <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
             The serial number of the Birth Certificate
         </td>
-        <td width="30%"><s:label value="%{#request.adoption.birthCertificateNumber}" cssStyle="width:85%;"/></td>
+        <td width="30%">
+            <s:if test="#request.adoption.birthCertificateNumber!=0"><s:label
+                    value="%{#request.adoption.birthCertificateNumber}" cssStyle="width:85%;"/></s:if></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -310,7 +312,9 @@
             Serial Number
         </td>
         <td>
-            <s:label value="%{#request.adoption.birthRegistrationSerial}" cssStyle="width:200px"/>
+            <s:if test="#request.adoption.birthRegistrationSerial !=0">
+                <s:label value="%{#request.adoption.birthRegistrationSerial}" cssStyle="width:200px"/>
+            </s:if>
         </td>
     </tr>
     </tbody>
