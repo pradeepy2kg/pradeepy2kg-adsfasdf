@@ -74,7 +74,6 @@ function validate() {
     var returnval = true;
 
     if (declarationType.value == 0) {
-        commonTags();
     }
     //validation for live birth
     if (declarationType.value == 1) {
@@ -114,15 +113,15 @@ function commonTags() {
     if (!isFieldEmpty(domObject))
         isNumeric(domObject.value, 'error11', 'p3error9');
 
-    // validate great grandfather birth year
-    domObject = document.getElementById('greatGrandFatherBirthYear');
-    if (!isFieldEmpty(domObject))
-        isNumeric(domObject.value, 'error11', 'p3error10');
-
     // validate great grandfather PIN or NIC
     domObject = document.getElementById('greatGrandFatherNICorPIN');
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'error11', 'error15');
+
+    // validate great grandfather birth year
+    domObject = document.getElementById('greatGrandFatherBirthYear');
+    if (!isFieldEmpty(domObject))
+        isNumeric(domObject.value, 'error11', 'p3error10');
 }
 
 // validation marriage related fields
