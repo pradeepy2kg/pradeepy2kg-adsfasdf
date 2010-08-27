@@ -54,7 +54,9 @@
             </label>
         </td>
         <td>
-            <s:label value="%{adoption.birthCertificateSerial}"/>
+            <s:if test="#adoption.birthRegistrationSerial!=0">
+                <s:label value="%{adoption.birthRegistrationSerial}"/>
+            </s:if>
         </td>
     </tr>
 </table>
@@ -138,7 +140,9 @@
             </label>
         </td>
         <td width="250px">
-            <s:label value="%{adoption.birthCertificateSerial}"/>
+            <s:if test="#adoption.birthRegistrationSerial!=0">
+                <s:label value="%{adoption.birthRegistrationSerial}"/>
+            </s:if>
         </td>
     </tr>
 </table>
@@ -225,10 +229,10 @@
             Name
         </td>
         <s:if test="#request.adoption.childNewName != null">
-        <td height="40px" colspan="3"><s:label name="" value="%{adoption.childNewName}"/></td>
-            </s:if>
+            <td height="40px" colspan="3"><s:label name="" value="%{adoption.childNewName}"/></td>
+        </s:if>
         <s:else>
-          <td height="40px" colspan="3"><s:label name="" value="%{adoption.childExistingName}"/></td>  
+            <td height="40px" colspan="3"><s:label name="" value="%{adoption.childExistingName}"/></td>
         </s:else>
     </tr>
 
@@ -327,7 +331,8 @@
             <s:param name="currentStatus" value="%{#request.currentStatus}"/>
         </s:url>
     </s:else>
-</div>  </div>
+</div>
+</div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>

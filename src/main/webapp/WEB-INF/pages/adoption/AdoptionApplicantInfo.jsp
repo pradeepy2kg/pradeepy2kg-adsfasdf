@@ -17,22 +17,44 @@
         });
     });
 
-    function setApplicantInfo(pin, name, address, applicantMother)
+    function setApplicantInfo(pin, name, address)
     {
+        /*domObject0 = document.getElementsByName("certificateApplicantType")[0];
+         domObject1 = document.getElementsByName("certificateApplicantType")[1];
+         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
+         var applicantName = document.getElementById("certificateApplicantName").value = "";
+         var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
+
+
+         if (isApplicantMother==true) {
+         if (domObject1.checked==true) {
+         var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+         var applicantName = document.getElementById("certificateApplicantName").value = name;
+         var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+         }
+         } else if(isApplicantMother !=true) {
+         if (domObject0.checked==true) {
+         var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+         var applicantName = document.getElementById("certificateApplicantName").value = name;
+         var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+         }
+         }*/
+
         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
         var applicantName = document.getElementById("certificateApplicantName").value = "";
         var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
-        if (!applicantMother && document.getElementsByName("certificateApplicantType")[0].checked) {
+        domObject0 = document.getElementsByName("certificateApplicantType")[0];
+        if (domObject0.checked) {
             var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
             var applicantName = document.getElementById("certificateApplicantName").value = name;
             var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
         }
-        else if (applicantMother && document.getElementsByName("certificateApplicantType")[1].checked) {
+        domObject1 = document.getElementsByName("certificateApplicantType")[1];
+        if (domObject1.checked) {
             var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
             var applicantName = document.getElementById("certificateApplicantName").value = name;
             var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
         }
-
     }
 
     var errormsg = "";
@@ -219,26 +241,35 @@
             <td>පියා   </br>
                 Father
             </td>
-            <td>
+            <td><s:if test="#request.adoption.applicantMother==false">
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'FATHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','%{#request.adoption.applicantMother}');"/>
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
+            </s:if>
+                <s:else><s:radio name="certificateApplicantType" id="certificateApplicantType"
+                                 list="#@java.util.HashMap@{'FATHER':''}" onchange="setApplicantInfo('','','');"/>
+                </s:else>
             </td>
             <td>මව <br/>
                 Mother
             </td>
-            <td>
+            <td><s:if test="#request.adoption.applicantMother==true">
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'MOTHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','%{#request.adoption.applicantMother}');"/>
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
+            </s:if>
+                <s:else>
+                    <s:radio name="certificateApplicantType" id="certificateApplicantType"
+                             list="#@java.util.HashMap@{'MOTHER':''}"
+                         onchange="setApplicantInfo('','','');"/>
+                </s:else>
             </td>
             <td>වෙනත් <br/>
                 Other
             </td>
             <td>
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
-                         list="#@java.util.HashMap@{'OTHER':''}"
-                        onchange="setApplicantInfo('','','','');"/>
+                         list="#@java.util.HashMap@{'OTHER':''}" onchange="setApplicantInfo('','','');"/>
             </td>
         </tr>
         <tr>
