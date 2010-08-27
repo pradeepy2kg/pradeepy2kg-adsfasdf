@@ -54,9 +54,9 @@
             </label>
         </td>
         <td>
-            <s:if test="#adoption.birthRegistrationSerial!=0">
-                <s:label value="%{adoption.birthRegistrationSerial}"/>
-            </s:if>
+
+                <s:label value="%{adoption.idUKey}"/>
+
         </td>
     </tr>
 </table>
@@ -140,9 +140,9 @@
             </label>
         </td>
         <td width="250px">
-            <s:if test="#adoption.birthRegistrationSerial!=0">
-                <s:label value="%{adoption.birthRegistrationSerial}"/>
-            </s:if>
+
+                <s:label value="%{adoption.idUKey}"/>
+
         </td>
     </tr>
 </table>
