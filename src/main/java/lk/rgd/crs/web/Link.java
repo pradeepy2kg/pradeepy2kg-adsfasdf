@@ -9,11 +9,13 @@ public class Link implements Serializable {
     private String propertyKey;
     private String category;
     private String action;
+    private int permissionKey;
 
-    public Link(String propertyKey, String link, String action) {
+    public Link(String propertyKey, String link, String action, int permissionKey) {
         this.propertyKey = propertyKey;
         this.category = link;
         this.action = action;
+        this.permissionKey = permissionKey;
     }
 
     public String getAction() {
@@ -39,5 +41,13 @@ public class Link implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getPermissionKey() {
+        return permissionKey;
+    }
+
+    public void setPermissionKey(int permissionKey) {
+        this.permissionKey = permissionKey;
     }
 }
