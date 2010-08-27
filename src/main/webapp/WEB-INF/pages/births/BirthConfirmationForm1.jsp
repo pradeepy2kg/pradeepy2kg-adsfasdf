@@ -66,15 +66,12 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
         }
     })
+
     var errormsg = "";
-    function validate()
-    {
+    function validate() {
         var errormsg = "";
         var element;
         var returnval;
@@ -94,7 +91,6 @@
             errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
             flag = true;
         }
-
 
         if (errormsg != "") {
             alert(errormsg);
@@ -243,22 +239,20 @@
     <col/>
     <col/>
     <col/>
-    <col/>
-    <col>
     <tbody>
     <tr>
-        <td colspan="16" style="text-align:center;font-size:12pt"> සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
+        <td colspan="14" style="text-align:center;font-size:12pt"> සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
             <br>சிவில் பதிவு அமைப்பில் உள்ளடக்கப்பட்டுள்ள விபரம்
             <br>Information included in Civil Registration System
         </td>
     </tr>
     <tr>
         <td colspan="2"><label>විස්තර <br>விபரங்கள் <br>Particulars </label></td>
-        <td colspan="6" width="350px"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ දැනට අඩංගු විස්තර <br>சிவில் பதிவு
+        <td colspan="6" width="450px"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ දැනට අඩංගු විස්තර <br>சிவில் பதிவு
             அமைப்பில்
             உள்ளடக்கப்பட்டுள்ள
             விபரம<br>Information included in Civil Registration System </label></td>
-        <td class="cell_02" colspan="8"><label>
+        <td class="cell_02" colspan="6"><label>
             වෙනස් විය යුතු විස්තර අතුලත් කරන්න.
             <br>புதியசிவில் பதிவ..ண்டிய விப...
             <br>Insert new details or modify existing details</label></td>
@@ -278,7 +272,7 @@
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
-        <td colspan="8" width="350px"><s:textfield name="child.dateOfBirth" id="submitDatePicker"/>
+        <td colspan="6"><s:textfield name="child.dateOfBirth" id="submitDatePicker" cssStyle="width:200px;float:left;"/>
         </td>
     </tr>
     <tr>
@@ -293,47 +287,47 @@
             <s:elseif test="#session.birthConfirmation_db.child.childGender == 2">
                 <s:textfield value="%{getText('unknown.label')}" cssClass="disable" disabled="true"/>
             </s:elseif></td>
-        <td colspan="8"><s:select
+        <td colspan="6"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="child.childGender"/></td>
     </tr>
     <tr>
         <td>5</td>
-        <td colspan="16"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
+        <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
     </tr>
     <tr>
         <td rowspan="5"></td>
         <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
         <td colspan="6"><s:textfield value="%{getDistrictList().get(birthDistrictId)}" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="8"><s:select list="districtList" name="birthDistrictId"/></td>
+        <td colspan="6"><s:select list="districtList" name="birthDistrictId"/></td>
     </tr>
     <tr>
         <td><label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="8"><s:select list="dsDivisionList" name="dsDivisionId"/></td>
+        <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId"/></td>
     </tr>
     <tr>
         <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
         <td colspan="6"><s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="8"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
+        <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
     </tr>
     <tr>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
         <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
                                     disabled="true" cols="38"/></td>
-        <td colspan="8"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
         <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
         <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish"
                                     cssClass="disable"
                                     disabled="true" cols="38"/></td>
-        <td colspan="8">
-            <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"/>
-            <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="place">
+        <td colspan="6">
+            <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish" cssStyle="margin-top:10px;"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
         </td>
     </tr>
     <tr>
@@ -341,7 +335,7 @@
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="8"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
+        <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
     </tr>
     <tr>
         <td>7</td>
@@ -349,7 +343,7 @@
         <td colspan="6">
             <s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable" disabled="true"/>
         </td>
-        <td colspan="8">
+        <td colspan="6">
             <s:select list="raceList" name="fatherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
         </td>
     </tr>
@@ -360,14 +354,14 @@
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="8"><s:textfield name="parent.motherNICorPIN" size="35"/></td>
+        <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35"/></td>
     </tr>
     <tr>
         <td>9</td>
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="8">
+        <td colspan="6">
             <s:select list="raceList" name="motherRace" headerKey="0" headerValue="%{getText('select_race.label')}"/>
         </td>
     </tr>
@@ -377,20 +371,45 @@
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
                                      disabled="true"
                                      value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
-        <td><label id="yes" class="label">ඔව්<br>*in tamil<br>Yes</label></td>
-        <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
-                     value="1"/></td>
-        <td><label class="label">නැත<br>*in tamil<br>No</label></td>
-        <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'2':''}"/></td>
-        <td width="120px"><label class="label">නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
-        <td><s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'3':''}"/></td>
-        <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
-        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
+        <td style="border:none;">
+            <table style="border:none;" cellspacing="0">
+                <col width="200px"/>
+                <col/>
+                <col width="150px"/>
+                <col/>
+                <tr>
+                    <td><label id="yes" class="label">ඔව්<br>*in tamil<br>Yes</label></td>
+                    <td>
+                        <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
+                                 value="1"/>
+                    </td>
+                    <td><label class="label">නැත<br>*in tamil<br>No</label></td>
+                    <td>
+                        <s:radio name="marriage.parentsMarried" id="parentsMarried"
+                                 list="#@java.util.HashMap@{'2':''}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="label">නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
+                    <td>
+                        <s:radio name="marriage.parentsMarried" id="parentsMarried"
+                                 list="#@java.util.HashMap@{'3':''}"/>
+                    </td>
+                    <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
+                    <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
+                </tr>
+            </table>
+        </td>
     </tr>
     </tbody>
 </table>
 
 <s:hidden name="pageNo" value="1"/>
+
+<div class="form-submit">
+    <s:submit value="%{getText('next.label')}" id="next"/>
+</div>
+</s:form>
 
 <s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
 <s:hidden id="p1error2" value="%{getText('cp1.placeOfBirth.error.value')}"/>
@@ -399,9 +418,6 @@
 <s:hidden id="p1errorckbx" value="%{getText('cp1.skipChanges.checked.error.value')}"/>
 <s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
 <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
-<div class="form-submit">
-    <s:submit value="%{getText('next.label')}" id="next"/>
-</div>
-</s:form>
+
 </div>
 <%-- Styling Completed --%>
