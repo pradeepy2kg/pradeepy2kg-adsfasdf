@@ -149,18 +149,18 @@ function validate() {
     var submit = new Date(document.getElementById('submitDatePicker').value);
 
     if (declarationType.value == 0) {
-        commanTags(check);
-        stillBirthCommanTags(check);
+        commonTags();
+        stillBirthCommonTags(check);
         dateRange(submit, birthdate, 0);
     }
     if (declarationType.value == 1) {
-        commanTags(check);
-        liveBirthCommanTags(check)
+        commonTags();
+        liveBirthCommonTags(check)
         dateRange(submit, birthdate, 1);
     }
     if (declarationType.value == 2) {
-        commanTags(check);
-        adoptionCommanTags(check);
+        commonTags();
+        liveBirthCommonTags(check);
         dateRange(submit, birthdate, 2);
     }
 
@@ -173,7 +173,7 @@ function validate() {
 }
 
 //comment tags
-function commanTags(check) {
+function commonTags() {
     var domObject;
     //serial number
     domObject = document.getElementById('bdfSerialNo');
@@ -209,7 +209,7 @@ function commanTags(check) {
 }
 
 //still birth tags
-function stillBirthCommanTags(check) {
+function stillBirthCommonTags(check) {
     var domObject;
     //Number of weeks pregnant
     domObject = document.getElementById('weeksPregnant');
@@ -231,7 +231,7 @@ function stillBirthCommanTags(check) {
     isNumeric(domObject.value, 'error13', 'error25')
 }
 
-function liveBirthCommanTags(check) {
+function liveBirthCommonTags(check) {
     var domObject;
     // child name
     domObject = document.getElementById('childFullNameOfficialLang');
