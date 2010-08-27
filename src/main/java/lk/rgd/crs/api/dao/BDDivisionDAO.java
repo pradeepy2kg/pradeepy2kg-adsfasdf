@@ -3,6 +3,7 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,4 +47,10 @@ public interface BDDivisionDAO {
      * @param user user executing the operation
      */
     public void add(BDDivision bdDivision, User user);
+
+    /**
+     * Return all BD Divisions
+     * @return all BD Divisions
+     */
+    public List<BDDivision> findAll();
 }

@@ -121,6 +121,16 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     }
 
     /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<District> findAll() {
+        Query q = em.createNamedQuery("findAllDistricts");
+        return q.getResultList();
+    }
+
+
+    /**
      * Loads all values from the database table into a cache
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)

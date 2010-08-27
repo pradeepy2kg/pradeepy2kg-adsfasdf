@@ -18,6 +18,7 @@ import java.io.Serializable;
 @Table(name = "MR_DIVISIONS", schema = "CRS",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
+@NamedQuery(name = "findAllMRDivisions", query = "SELECT d FROM MRDivision d")
 public class MRDivision implements Serializable {
 
     /**

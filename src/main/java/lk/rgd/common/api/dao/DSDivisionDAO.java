@@ -3,6 +3,7 @@ package lk.rgd.common.api.dao;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,4 +61,10 @@ public interface DSDivisionDAO {
      * @param user user executing the operation
      */
     public void add(DSDivision dsDivision, User user);
+
+    /**
+     * Return all DS Divisions
+     * @return all DS Divisions
+     */
+    public List<DSDivision> findAll();
 }

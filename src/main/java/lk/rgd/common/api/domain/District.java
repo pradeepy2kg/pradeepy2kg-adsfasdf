@@ -16,6 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "DISTRICTS", schema = "COMMON")
+@NamedQuery(name = "findAllDistricts", query = "SELECT d FROM District d")
 public class District implements Serializable {
 
     /**
