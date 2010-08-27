@@ -36,8 +36,8 @@
             <div id="bdaw-action">
                 <s:form action="eprDirectApproveIgnoreWarning">
                     <fieldset>
-                        <legend><s:label value="%{getText('directApprovalWarning.label')}"/></legend>
-                        <table class="birth-registration-form-details-warning-table">
+                        <legend><b><s:label value="%{getText('directApprovalWarning.label')}"/></b></legend>
+                        <table class="birth-declaration-approval-warning-table">
                             <s:iterator value="#request.warnings">
                                 <tr>
                                     <td><s:property value="message"/></td>

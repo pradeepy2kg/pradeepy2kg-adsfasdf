@@ -457,13 +457,6 @@
     </tbody>
 </table>
 
-<s:hidden id="error1" value="%{getText('p1.invalid.emailMother.text')}"/>
-<s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
-<s:hidden id="error3" value="%{getText('p2.motherAgeAthBirthBelowZero.error')}"/>
-<s:hidden id="fatherDOB" value="%{getText('p2.father.dob')}"/>
-<s:hidden id="motherDOB" value="%{getText('p2.mother.dob')}"/>
-<s:hidden id="dateOfAddmission" value="%{getText('p2.hospital.addmission.date')}"/>
-
 <s:hidden name="pageNo" value="2"/>
 <s:hidden name="rowNumber" value="%{row}"/>
 <s:hidden name="counter" value="%{i}"/>
@@ -485,5 +478,13 @@
 </div>
 <s:set value="0" name="counter"/>
 </s:form>
+
+<s:hidden id="error1" value="%{getText('p1.invalid.emailMother.text')}"/>
+<s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error3" value="%{getText('p2.motherAgeAthBirthBelowZero.error')}"/>
+<s:hidden id="fatherDOB" value="%{getText('p2.father.dob')}"/>
+<s:hidden id="motherDOB" value="%{getText('p2.mother.dob')}"/>
+<s:hidden id="dateOfAddmission" value="%{getText('p2.hospital.addmission.date')}"/>
+
 </div>
 <%-- Styling Completed --%>

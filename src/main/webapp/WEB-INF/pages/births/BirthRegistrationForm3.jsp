@@ -111,17 +111,17 @@ function validateMarriage() {
 
     // for parrents married - Yes
     domObject = document.getElementsByName("marriage.parentsMarried")[0];
-        if (domObject.checked) {
-            // validate place of marriage
-            domObject = document.getElementById('placeOfMarriage');
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
-            }
+    if (domObject.checked) {
+        // validate place of marriage
+        domObject = document.getElementById('placeOfMarriage');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
+        }
 
-            // validate marriage date
-            if (!(submit.getTime())) {
-                errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
-            }
+        // validate marriage date
+        if (!(submit.getTime())) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
+        }
     }
 
     // for parrents married - No
@@ -511,6 +511,20 @@ function initPage() {
     </tbody>
 </table>
 <s:hidden name="rowNumber" value="%{row}"/>
+<s:hidden name="pageNo" value="3"/>
+
+<div class="form-submit">
+    <s:submit value="%{getText('next.label')}"/>
+</div>
+<div class="next-previous">
+    <s:url id="backUrl" action="eprBirthRegistration">
+        <s:param name="back" value="true"/>
+        <s:param name="pageNo" value="{pageNo - 1}"/>
+    </s:url>
+    <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
+</div>
+</s:form>
+
 <s:hidden id="birthTypeId" value="%{birthType.ordinal()}"/>
 
 <s:hidden id="p3error1" value="%{getText('p3.person.error.value')}"/>
@@ -527,18 +541,6 @@ function initPage() {
 <s:hidden id="error11" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error12" value="%{getText('informantNIC.text')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
-<s:hidden name="pageNo" value="3"/>
 
-<div class="form-submit">
-    <s:submit value="%{getText('next.label')}"/>
-</div>
-<div class="next-previous">
-    <s:url id="backUrl" action="eprBirthRegistration">
-        <s:param name="back" value="true"/>
-        <s:param name="pageNo" value="{pageNo - 1}"/>
-    </s:url>
-    <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
-</div>
-</s:form>
 </div>
 

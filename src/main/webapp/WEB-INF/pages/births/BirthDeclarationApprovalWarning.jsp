@@ -3,8 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="birth-declaration-approval-warning-outer">
     <fieldset>
-        <legend><s:label
-                value="%{getText('approvalIgnorWarning.label')}"/></legend>
+        <legend><b><s:label value="%{getText('approvalIgnorWarning.label')}"/></b></legend>
         <table class="birth-declaration-approval-warning-table">
             <s:iterator value="#request.warnings">
                 <tr>

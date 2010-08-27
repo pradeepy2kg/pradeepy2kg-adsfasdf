@@ -27,7 +27,7 @@
 
     <s:form action="eprRejectBirthDeclaration.do" method="post">
         <fieldset>
-            <legend><s:label value="%{getText('rejectLegend.label')}"/></legend>
+            <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
