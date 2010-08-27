@@ -37,6 +37,7 @@
 
         <global-exception-mappings>
             <exception-mapping exception="lk.rgd.common.RGDRuntimeException" result="RGDerror"></exception-mapping>
+            <exception-mapping exception="lk.rgd.common.RGDException" result="RGDerror"></exception-mapping>
             <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
         </global-exception-mappings>
     </package>
