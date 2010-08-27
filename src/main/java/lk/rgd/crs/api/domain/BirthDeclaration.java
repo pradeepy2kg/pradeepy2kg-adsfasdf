@@ -58,7 +58,11 @@ import java.io.Serializable;
         "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
         "ORDER BY bdf.confirmant.confirmationProcessedTimestamp desc"),
 
-    @NamedQuery(name = "findAll", query = "SELECT bdf FROM BirthDeclaration bdf")
+    @NamedQuery(name = "findAll", query = "SELECT bdf FROM BirthDeclaration bdf"),
+
+    @NamedQuery(name = "get.by.dsdivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision " +
+        "ORDER BY bdf.register.dateOfRegistration desc")
 })
 public class BirthDeclaration implements Serializable {
 

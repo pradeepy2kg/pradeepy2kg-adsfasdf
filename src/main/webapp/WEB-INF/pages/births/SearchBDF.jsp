@@ -129,7 +129,8 @@
                     <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
                     <td>
                         <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                  list="bdDivisionList" cssStyle=" width:240px;float:right;"/>
+                                  list="bdDivisionList" cssStyle=" width:240px;float:right;"
+                                headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
                     </td>
                 </tr>
                 <tr>
