@@ -72,7 +72,7 @@
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>අයදුම් කරුගේ විස්තර <br/>
+        <td >අයදුම් කරුගේ විස්තර <br/>
             Applicants Details
         </td>
     </tr>
@@ -87,30 +87,27 @@
     <col width="175px"/>
     <tbody>
     <tr>
-        <td>අයදුම් කරු <br/>
+        <td colspan="2" >අයදුම් කරු <br/>
             Applicant
         </td>
-        <td>පියා   </br>
+        <s:if test="#request.adoption.applicantMother==0">
+        <td colspan="3">පියා<br/>
             Father
         </td>
-        <td>
-            <s:if test="#request.adoption.certificateApplicantType.ordinal() == 0"><s:label
-                    value="%{getText('yes.label')}"/></s:if>
-        </td>
-        <td>මව <br/>
+        </s:if>
+        <s:else>
+
+        <td colspan="3">මව <br/>
             Mother
         </td>
-        <td>
-            <s:if test="#request.adoption.certificateApplicantType.ordinal() == 1"><s:label
-                    value="%{getText('yes.label')}"/></s:if>
-        </td>
+        </s:else>
     </tr>
     <tr>
-        <td colspan="3">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
+        <td colspan="2">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2"><s:label value="%{#request.adoption.applicantPINorNIC}"/></td>
+        <td colspan="3"><s:label value="%{#request.adoption.applicantPINorNIC}"/></td>
     </tr>
     <tr>
         <td>විදේශිකය‍කු නම් <br/>
@@ -207,7 +204,7 @@
         <td>උපන් දිනය<br/>
             Date of birth
         </td>
-        <td colspan="2" style="text-align:right;"><s:label value="%{#request.adoption.childBirthDate}"/></td>
+        <td colspan="2" style="text-align:left;"><s:label value="%{#request.adoption.childBirthDate}"/></td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
             Gender
         </td>
@@ -266,7 +263,7 @@
         <td width="70%">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
             The serial number of the Birth Certificate
         </td>
-        <td width="30%"><s:label value="%{#request.adoption.birthCertificateSerial}" cssStyle="width:85%;"/></td>
+        <td width="30%"><s:label value="%{#request.adoption.birthCertificateNumber}" cssStyle="width:85%;"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
@@ -313,7 +310,7 @@
             Serial Number
         </td>
         <td>
-            <s:label value="%{#request.adoption.birthCertificateSerial}" cssStyle="width:200px"/>
+            <s:label value="%{#request.adoption.birthRegistrationSerial}" cssStyle="width:200px"/>
         </td>
     </tr>
     </tbody>

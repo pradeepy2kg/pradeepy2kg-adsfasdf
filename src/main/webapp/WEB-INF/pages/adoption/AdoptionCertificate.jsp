@@ -105,21 +105,22 @@
         <td height="120px" width="250px">නම <br>பெயர் <br>Name
         </td>
         <td colspan="6" class="bc-name" style="font-size:12pt">
-            <s:label name="" value="%{adoption.childNewName}"/>
+            <s:if test="#request.adoption.childNewName != null">
+                <s:label name="" value="%{adoption.childNewName}"/>
+            </s:if>
+            <s:else>
+                <s:label name="" value="%{adoption.childExistingName}"/>
+            </s:else>
         </td>
     </tr>
-    <tr>
-        <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
-        </td>
-        <td colspan="6" class="bc-name" style="font-size:12pt">
-            <s:label name="" cssStyle="text-transform: uppercase;" value="%{adoption.childNewName}"/>
-        </td>
-    </tr>
+
     <tr>
         <td height="120px" width="250px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
         <td colspan="6" class="bc-name" style="font-size:12pt">
-            <s:label name="" value="%{adoption.applicantName}"/>
+            <s:if test="#request.adoption.applicantMother==0">
+                <s:label name="" value="%{adoption.applicantName}"/>
+            </s:if>
         </td>
     </tr>
     <tr>
@@ -128,13 +129,19 @@
             தந்தையின் அடையாள எண் <br>
             Father's PIN / NIC
         </td>
-        <td colspan="2" width="250px"><s:label name="" value="%{adoption.applicantPINorNIC}"/></td>
+        <td colspan="2" width="250px">
+            <s:if test="#request.adoption.applicantMother==0">
+                <s:label name="" value="%{adoption.applicantPINorNIC}"/>
+            </s:if></td>
 
         <td height="70px" width="300px">පියාගේ ජාතිය <br>
             தந்தையின் இனம் <br>
             Father's Race
         </td>
-        <td colspan="2"><s:label name="" value="%{adotion.}"/></td>
+        <td colspan="2">
+            <s:if test="#request.adoption.applicantMother==0">
+                <s:label name="" value="%{adotion.}"/>
+            </s:if></td>
     </tr>
     <tr>
         <td height="120px" width="250px"> මවගේ සම්පූර්ණ නම <br>
@@ -142,7 +149,12 @@
             Mother's Full Name
         </td>
         <td colspan="6" class="bc-name" style="font-size:12pt">
-            <s:label name="" value="%{adoption.wifeName}"/>
+            <s:if test="#request.adoption.applicantMother==1">
+                <s:label name="" value="%{adoption.applicantName}"/>
+            </s:if>
+            <s:else>
+                <s:label name="" value="%{adoption.wifeName}"/>
+            </s:else>
         </td>
     </tr>
     <tr>
@@ -150,12 +162,26 @@
             தந்தையின் அடையாள எண் <br>
             Mother's PIN / NIC
         </td>
-        <td colspan="2"><s:label name="" value="%{adoption.wifePINorNIC}"/></td>
+        <td colspan="2">
+            <s:if test="#request.adoption.applicantMother==1">
+                <s:label name="" value="%{adoption.applicantPINorNIC}"/>
+            </s:if>
+            <s:else>
+                <s:label name="" value="%{adoption.wifePINorNIC}"/>
+            </s:else>
+            </td>
         <td height="70px">ම‌වගේ ජාතිය <br>
             தந்தையின் இனம் <br>
             Mother's Race
         </td>
-        <td colspan="2" width="300px"><s:label name="" value="%{adotion.}"/></td>
+        <td colspan="2" width="300px">
+            <s:if test="#request.adoption.applicantMother==1">
+                <s:label name="" value="%{adotion.}"/>
+            </s:if>
+            <s:else>
+                <s:label name="" value="%{adotion.}"/>
+            </s:else>
+            </td>
     </tr>
     </tbody>
 </table>
@@ -178,7 +204,7 @@
     </td>
     <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
     </td>
-    <td width="150px"><s:label name="" value="%{}"/></td>
+    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
 </tr>
 <tr>
     <td width="250px" height="120px">
@@ -186,7 +212,9 @@
         சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
         Name, Signature and Designation of certifying officer
     </td>
-    <td colspan="3" style="font-size:10pt"><s:label name="" value="%{adotion.}"/></td>
+    <td colspan="3" style="font-size:10pt"><s:label name=""
+                                                    value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.name}"/><br/>
+        <s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.roleId}"/></td>
 </tr>
 <tr>
     <td width="250px" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
@@ -195,7 +223,7 @@
     </td>
     <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
     </td>
-    <td width="150px"><s:label name="" value="%{}"/>
+    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
     </td>
 </tr>
 </tbody>

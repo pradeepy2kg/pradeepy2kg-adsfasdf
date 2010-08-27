@@ -17,11 +17,22 @@
         });
     });
 
-    function setApplicantInfo(pin, name, address)
+    function setApplicantInfo(pin, name, address, applicantMother)
     {
-        var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
-        var applicantName = document.getElementById("certificateApplicantName").value = name;
-        var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+        var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
+        var applicantName = document.getElementById("certificateApplicantName").value = "";
+        var applicantAddress = document.getElementById("certificateApplicantAddress").value = "";
+        if (!applicantMother && document.getElementsByName("certificateApplicantType")[0].checked) {
+            var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+            var applicantName = document.getElementById("certificateApplicantName").value = name;
+            var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+        }
+        else if (applicantMother && document.getElementsByName("certificateApplicantType")[1].checked) {
+            var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+            var applicantName = document.getElementById("certificateApplicantName").value = name;
+            var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+        }
+
     }
 
     var errormsg = "";
@@ -211,7 +222,7 @@
             <td>
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'FATHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','%{#request.adoption.applicantMother}');"/>
             </td>
             <td>මව <br/>
                 Mother
@@ -219,14 +230,15 @@
             <td>
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'MOTHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.wifePINorNIC}','%{#request.adoption.wifeName}','');"/>
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','%{#request.adoption.applicantMother}');"/>
             </td>
             <td>වෙනත් <br/>
                 Other
             </td>
             <td>
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
-                         list="#@java.util.HashMap@{'OTHER':''}"/>
+                         list="#@java.util.HashMap@{'OTHER':''}"
+                        onchange="setApplicantInfo('','','','');"/>
             </td>
         </tr>
         <tr>
