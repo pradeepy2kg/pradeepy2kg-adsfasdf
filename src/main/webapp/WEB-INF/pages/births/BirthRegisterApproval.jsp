@@ -411,11 +411,11 @@
                                                     cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
                 <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
         </div>
-        <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
-        <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
-        <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
-        <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
     </s:form>
+    <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+    <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
+    <s:hidden id="error3" value="%{getText('searchStartDate.label')}"/>
+    <s:hidden id="error4" value="%{getText('searchEndDate.label')}"/>
 </div>
 </div>
 <%-- Styling Completed --%>
