@@ -180,7 +180,7 @@ function commonTags() {
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'error1');
     else
-        isNumeric(domObject.value, 'error13', 'error20')
+        validateSerialNo(domObject, 'error13', 'error20');
 
     //date of register
     domObject = document.getElementById('submitDatePicker');
@@ -628,7 +628,7 @@ function initPage() {
 <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error16" value="%{getText('p1.child.rank')}"/>
 
-<%--hidden fields for input fields--%>   .
+<%--hidden fields for input fields--%> .
 <s:hidden id="error20" value="%{getText('p1.serial.text')}"/>
 <s:hidden id="error21" value="%{getText('p1.dob.text')}"/>
 <s:hidden id="error22" value="%{getText('p1.dateOfRegistration.text')}"/>
