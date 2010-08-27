@@ -115,8 +115,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String adoptionDeclaration() {
-        logger.debug("Adoption declaration ok");
+        logger.info("initializing adoption registration");
+        if (idUKey == 0) {
+            adoption = new AdoptionOrder();
+        }
         populate();
+        return SUCCESS;
+    }
+
+    public String initApplicantInfo() {
+        logger.info("initializing applicant info");
         return SUCCESS;
     }
 
@@ -151,7 +159,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        if (birthDivisionId > 0) {
+        if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
             birthDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
                 adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
@@ -161,8 +169,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
-        if (adoption.getWifeCountryId() > 0)
+        if (adoption.getWifeCountryId() > 0){
             wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        }
 
         return SUCCESS;
     }
@@ -503,7 +512,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     addActionError(getText("er.label.notice.not.printed.cannot_capture_data"));
                 }
                 adoption = null;
-                addActionError(getText("er.label.already.approved"));
+                addActionError(getText("er.label.invalid.data"));
             }
         } else {
             addActionError(getText("adoption_order_notfound.message"));

@@ -147,8 +147,8 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = true)
     private String certificateApplicantPINorNIC;
 
-    @Column(length = 2, nullable = false)
-    private String languageToTransliterate;
+    @Column(columnDefinition = "char(2) default 'si'", nullable = false)
+    private String languageToTransliterate="si";
 
     @Column(nullable = false)
     private State status;

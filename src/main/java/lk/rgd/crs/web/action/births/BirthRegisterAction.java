@@ -121,7 +121,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -472,17 +472,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf.getParent().setMotherNICorPIN(ao.getApplicantPINorNIC());
             bdf.getParent().setMotherFullName(ao.getApplicantName());
             bdf.getParent().setMotherAddress(ao.getApplicantAddress());
-            bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getApplicantCountryId()));
+            if (ao.getApplicantCountryId() > 0) {
+                bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getApplicantCountryId()));
+            }
             bdf.getParent().setMotherPassportNo(ao.getApplicantPassport());
         } else {
             bdf.getParent().setFatherNICorPIN(ao.getApplicantPINorNIC());
             bdf.getParent().setFatherFullName(ao.getApplicantName());
-            bdf.getParent().setFatherCountry(countryDAO.getCountry(ao.getApplicantCountryId()));
+            if (ao.getApplicantCountryId() > 0) {
+                bdf.getParent().setFatherCountry(countryDAO.getCountry(ao.getApplicantCountryId()));
+            }
             bdf.getParent().setFatherPassportNo(ao.getApplicantPassport());
 
             bdf.getParent().setMotherNICorPIN(ao.getWifePINorNIC());
             bdf.getParent().setMotherFullName(ao.getWifeName());
-            bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getWifeCountryId()));
+            if (ao.getWifeCountryId() > 0) {
+                bdf.getParent().setMotherCountry(countryDAO.getCountry(ao.getWifeCountryId()));
+            }
             bdf.getParent().setMotherPassportNo(ao.getWifePassport());
         }
 

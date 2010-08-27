@@ -39,12 +39,8 @@ $(function() {
                 ageMonth = (ageMonthTOday + 12) - ageMonthBDay;
                 ageYear = (ageYearTOday - 1) - ageYearBDay;
             }
-
-            if (confirm(document.getElementById("lable01").value + "   :" + ageYear
-                    + "\n " + document.getElementById("lable02").value + "    :" + ageMonth)) {
-                document.getElementById("childAgeYears").value = ageYear;
-                document.getElementById("childAgeMonths").value = ageMonth;
-            }
+            document.getElementById("childAgeYears").value = ageYear;
+            document.getElementById("childAgeMonths").value = ageMonth;
         }
     });
 });
@@ -234,7 +230,8 @@ function enableSerialNumber(mode) {
 }
 </script>
 <div id="adoption-registration-form-outer">
-<s:form action="eprAdoptionAction.do" name="" id="" method="POST" onsubmit="javascript:return validate()">
+<s:form action="eprAdoptionAction.do" name="adoptionRegistrationForm" id="" method="POST"
+        onsubmit="javascript:return validate()">
 <table class="adoption-reg-form-header-table" cellspacing="1" cellpadding="1">
     <caption></caption>
     <col/>
@@ -327,7 +324,7 @@ function enableSerialNumber(mode) {
             Father
         </td>
         <td>
-            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" value="false"
+            <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}" 
                      id="adoptionApplicantFather"
                      onclick="disable(false)"/>
         </td>
@@ -359,7 +356,7 @@ function enableSerialNumber(mode) {
             Country
         </td>
         <td align="center">
-            <s:select name="adoption.applicantCountryId" list="countryList" headerKey="0"
+            <s:select name="adoption.applicantCountryId" list="countryList" headerKey="0" id="applicantCountryId"
                       headerValue="%{getText('adoption.select_country.label')}"/>
         </td>
         <td>ගමන් බලපත්‍ර අංකය <br/>
@@ -459,7 +456,7 @@ function enableSerialNumber(mode) {
         </td>
         <td align="center"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="adoption.childGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                name="adoption.childGender"
                 id="childGender"
                 cssStyle="width:190px; margin-left:5px;"/></td>
     </tr>

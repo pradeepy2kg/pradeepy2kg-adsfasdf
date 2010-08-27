@@ -38,7 +38,7 @@
         <td><s:label value="%{adoption.applicantAddress}"/></td>
     </tr>
     <tr>
-        <td>දරුකමට හදාගත් ළමයෙකුගේ උපත නෙවත ලියපදින්ච්චි කිරීම <br/>
+        <td>දරුකමට හදාගත් ළමයෙකුගේ උපත නැවත ලියාපදිංචි කිරීම<br/>
             Re-registration of the birth of an Adopted Child
         </td>
     </tr>
@@ -224,7 +224,12 @@
         <td height="100px">නම <br/>
             Name
         </td>
-        <td height="40px" colspan="3"><s:label name="" value="%{adoption.childExistingName}"/></td>
+        <s:if test="#request.adoption.childNewName != null">
+        <td height="40px" colspan="3"><s:label name="" value="%{adoption.childNewName}"/></td>
+            </s:if>
+        <s:else>
+          <td height="40px" colspan="3"><s:label name="" value="%{adoption.childExistingName}"/></td>  
+        </s:else>
     </tr>
 
     <tr>

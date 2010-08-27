@@ -576,7 +576,7 @@
         </action>
 
         <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
-                method="adoptionDeclaration">
+                method="initApplicantInfo">
             <result type="tiles" name="success">epr.adoptionApplicantInfo</result>
         </action>
 
