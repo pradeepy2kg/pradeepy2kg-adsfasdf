@@ -44,6 +44,31 @@ function validateEmail(domElement, errorText, errorCode) {
     }
 }
 
+function validateSerialNo(domElement, errorText, errorCode) {
+    with (domElement) {
+        if (value.length != 10) {
+            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+        } else {
+            var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
+            if (reg.test(value) == false) {
+                errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+            }
+        }
+    }
+}
+
+//TODO by chathuranga
+// validate telephone number
+function validatePhoneNo(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^\b[0-9][0-9]{6,14}\b$/;
+        if (reg.test(value) == false) {
+            alert('phone number error')
+        }
+    }
+}
+
+// validate PIN or NIC
 function validatePINorNIC(domElement, errorText, errorCode) {
     with (domElement) {
         if (value.length != 10) {
