@@ -7,6 +7,10 @@
     <s:property value="%{getText('RGDerror.'+ exception.getErrorCode())}"/>
     <p></p>
     <hr/>
+    <h3>RGD Error Event</h3>
+    <s:property value="%{exception.eventId}"/>
+    <p></p>
+    <hr/>
     <h3>Technical Details</h3>
 
     <p>
