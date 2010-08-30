@@ -72,54 +72,73 @@
         var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
         var informantNICorPIN = document.getElementById("declarantFullName").value = name;
     }
-
-
+    var errormsg = "";
     function validate() {
-        var errormsg = "";
         var domObject;
-        var element;
         var returnval;
-        var flag = false;
-        var lateOrbelate = false;
-        var check = document.getElementById('skipjs');
-        var elementArray = new Array(5);
-        elementArray[0] = document.getElementById("notifying_authority_NICorPIN").value;
-        elementArray[1] = document.getElementById("notifyingAuthorityName").value;
-        elementArray[2] = document.getElementById("notifyingAuthorityAddress").value;
-        elementArray[3] = document.getElementById("submitDatePicker").value;
-        elementArray[4] = document.getElementById("declarantDatePicker").value;
-        var err = new Array("notifying_authority_NICorPIN", "notifyingAuthorityName", "notifyingAuthorityAddress", "submitDatePicker");
-        var i;
-        for (i = 0; i < elementArray.length; i++) {
-            if (elementArray[i] == "") {
-                errormsg = errormsg + err[i] + "\n";
-            }
+        var signdate = new Date(document.getElementById('submitDatePicker').value);
+
+        // notifier PIN or NIC
+        domObject = document.getElementById('notifying_authority_NICorPIN');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
+        } else {
+            validatePINorNIC(domObject, 'error1', 'p2error5');
         }
-        //validating declarant email
-        domObject = document.getElementById('declarentEMail').value;
-        if (!isEmpty(domObject))
-            validateEmail(domObject, 'error2', 'error1')
-        var declarant = new Date(elementArray[4]);
-        var notify = new Date(elementArray[3]);
+
+        // notifier name
+        domObject = document.getElementById('notifyingAuthorityName');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
+        }
+
+        // notifier adderss
+        domObject = document.getElementById('notifyingAuthorityAddress');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error4').value;
+        }
+
+        /*date related validations*/
+        domObject = document.getElementById('submitDatePicker');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error3').value;
+        } else {
+            isDate(domObject.value, 'error1', 'p2error6');
+        }
+
+        // validate declarant phone number
+        domObject = document.getElementById('declarantPhone');
+        if (!isFieldEmpty(domObject))
+            isNumeric(domObject.value, 'error1', 'error3');
+
+        // validate declarant email address
+        domObject = document.getElementById('declarantEMail');
+        if (!isFieldEmpty(domObject))
+            validateEmail(domObject, 'error1', 'error2')
+
+        //validate declarent NIC/PIN
+        domObject = document.getElementById('declarant_pinOrNic');
+        if (!isFieldEmpty(domObject))
+            validatePINorNIC(domObject, 'error1', 'error4');
+
+        //validate declarent sign date
+        var declarant = document.getElementById("declarantDatePicker").value;
+        var notify = document.getElementById("submitDatePicker").value;
+        domObject = document.getElementById('declarantDatePicker');
+        if (!isFieldEmpty(domObject))
+                    isDate(domObject.value, 'error1', 'p2error7');
+
         if (notify < declarant) {
-            errormsg = errormsg + document.getElementById("error3").value + "\n";
+            errormsg = errormsg + "\n" +document.getElementById("error5").value;
         }
 
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
-        return returnval;
-    }
 
-    function isEmpty(domElement) {
-        with (domElement) {
-            if (value == null || value == "") {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        errormsg = "";
+        return returnval;
     }
 
 </script>
@@ -204,7 +223,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="1">*in sinhala<br> *in tamil<br>Declaranat Signed Date</td>
+                <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br> *in tamil<br>Declaranat Signed Date</td>
                 <td colspan="5">
                     <s:textfield id="declarantDatePicker" name=""/>
                 </td>
@@ -265,9 +284,19 @@
             </tbody>
         </table>
 
-        <s:hidden id="error1" value="%{getText('declarant_email.text')}"/>
-        <s:hidden id="error2" value="%{getText('p1.invalide.inputType')}"/>
-        <s:hidden id="error3" value="%{getText('declarantAndNotifyDate.text')}"/>
+        <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+        <s:hidden id="error2" value="%{getText('declarant_email.text')}"/>
+        <s:hidden id="error3" value="%{getText('declarant_phone_no.text')}"/>
+        <s:hidden id="error4" value="%{getText('declarant_pinOrNic.text')}"/>
+        <s:hidden id="error5" value="%{getText('declarantAndNotifyDate.text')}"/>
+
+        <s:hidden id="p2error1" value="%{getText('p2.NIC.error.value')}"/>
+        <s:hidden id="p2error2" value="%{getText('p2.Name.error.value')}"/>
+        <s:hidden id="p2error3" value="%{getText('p2.submitDate.error.value')}"/>
+        <s:hidden id="p2error4" value="%{getText('p2.notifierAddress.text')}"/>
+        <s:hidden id="p2error5" value="%{getText('notifierNIC.text')}"/>
+        <s:hidden id="p2error6" value="%{getText('notifierDate.text')}"/>
+        <s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
 
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 

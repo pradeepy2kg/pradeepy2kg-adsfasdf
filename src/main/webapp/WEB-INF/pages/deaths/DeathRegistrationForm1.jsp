@@ -5,6 +5,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 
@@ -320,41 +321,95 @@ $(function() {
 
 
 });
+var errormsg = "";
 function validate() {
-    var errormsg = "";
-    var element;
+    var domObject;
     var returnval;
-    var flag = false;
-    var lateOrbelate = false;
     var check = document.getElementById('skipjs');
-    var elementArray = new Array(6);
 
-    //these fields can not be null
-    elementArray [0] = document.getElementById("deathSerialNo").value;
-    elementArray [1] = document.getElementById("dateOfRegistrationDatePicker").value;
-    elementArray [2] = document.getElementById("deathDatePicker").value;
-    elementArray [3] = document.getElementById("placeOfDeath").value;
-    elementArray [4] = document.getElementById("placeOfBurial").value;
-    elementArray [5] = document.getElementById("deathPersonGender").value;
-    var i = 0;
-    for (i = 0; i < 6; i++) {
-        if (elementArray[i] == '') {
-            errormsg = errormsg + document.getElementById("error" + i).value + "\n";
+    // validations that can skip
+    if (!check.checked) {
+        domObject = document.getElementById('deathPerson_PINorNIC');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error8').value;
         }
+        domObject = document.getElementById('deathPersonNameOfficialLang');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error9').value;
+        }
+        domObject = document.getElementById('deathPersonNameInEnglish');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error10').value;
+        }
+        domObject = document.getElementById('deathPersonPermanentAddress');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error11').value;
+        }
+
     }
-    if (isNaN(elementArray[0])) {
-        errormsg = errormsg + document.getElementById("error6").value + "\n";
+
+
+    /*date related validations*/
+    domObject = document.getElementById('dateOfRegistrationDatePicker');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error1').value;
+    } else {
+        isDate(domObject.value, 'p1error1', 'p1errordate1');
     }
-    var dateOfReg = new Date(elementArray[1]);
-    var dateOfDeath = new Date(elementArray[2]);
+
+    domObject = document.getElementById('deathDatePicker');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isDate(domObject.value, 'p1error1', 'p1errordate2');
+    }
+
+    //validate death person NIC/PIN
+    domObject = document.getElementById('deathPerson_PINorNIC');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'p1error1', 'p1errorPIN1');
+    //validate Father NIC/PIN
+    domObject = document.getElementById('deathPersonFather_PINorNIC');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'p1error1', 'p1errorPIN2');
+    //validate mother NIC/PIN
+    domObject = document.getElementById('deathPersonMother_PINorNIC');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'p1error1', 'p1errorPIN3');
+
+    //validation for emptry fields
+    domObject = document.getElementById('deathSerialNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error0').value;
+    } else {
+        validateSerialNo(domObject, 'p1error1', 'p1errorSerial');
+
+    }
+    domObject = document.getElementById('placeOfDeath');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error3').value;
+    }
+    domObject = document.getElementById('placeOfBurial');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error4').value;
+    }
+    domObject = document.getElementById('deathPersonGender');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error5').value;
+    }
+
+    var dateOfReg = new Date(document.getElementById("dateOfRegistrationDatePicker").value);
+    var dateOfDeath = new Date(document.getElementById("deathDatePicker").value);
     if (dateOfReg < dateOfDeath) {
-        errormsg = errormsg + document.getElementById("error7").value + "\n";
+        errormsg = errormsg + "\n" + document.getElementById("error7").value;
     }
 
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
     }
+
+    errormsg = "";
     return returnval;
 }
 
@@ -384,35 +439,37 @@ function processResponse1(respObj) {
     return[0].Text
 )
     ;
-};
+}
+;
 
 $('img#deathName').bind('click', function(evt7) {
-        var id = $("textarea#deathPersonNameOfficialLang").attr("value");
-        var wsMethod = "transliterate";
-        var soapNs = "http://translitwebservice.transliteration.icta.com/";
+    var id = $("textarea#deathPersonNameOfficialLang").attr("value");
+    var wsMethod = "transliterate";
+    var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-        soapBody.attr("xmlns:trans", soapNs);
-        soapBody.appendChild(new SOAPObject('InputName')).val(id);
-        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-        soapBody.appendChild(new SOAPObject('Gender')).val('U');
+    var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+    soapBody.attr("xmlns:trans", soapNs);
+    soapBody.appendChild(new SOAPObject('InputName')).val(id);
+    soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+    soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+    soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-        //Create a new SOAP Request
-        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+    //Create a new SOAP Request
+    var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-        //Lets send it
-        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-    });
+    //Lets send it
+    SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+    SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+});
 
-    function processResponse2(respObj) {
-        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    };
+function processResponse2(respObj) {
+    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+    $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
+    return[0].Text
+)
+    ;
+}
+;
 </script>
 
 
@@ -422,9 +479,9 @@ $('img#deathName').bind('click', function(evt7) {
 <table>
     <col style="width:60%"/>
     <col style="width:40%"/>
-    <tr >
+    <tr>
         <td></td>
-        <td >
+        <td>
             <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
         </td>
     </tr>
@@ -442,7 +499,7 @@ $('img#deathName').bind('click', function(evt7) {
             <img src="<s:url value="/images/official-logo.png" />" style="display: block; text-align: center;"
                  width="80" height="100">
         </td>
-        
+
         <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
         <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo" id="deathSerialNo"/></td>
     </tr>
@@ -601,7 +658,8 @@ $('img#deathName').bind('click', function(evt7) {
         <td colspan="2">ඉංග්‍රීසි භාෂාවෙන්<br>*in tamil<br>In English</td>
         <td colspan="5">
             <s:textfield name="death.placeOfDeathInEnglish" id="placeOfDeathInEnglish" cssStyle="width:555px;"/>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;" id="place">
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+                 id="place">
         </td>
     </tr>
     <tr>
@@ -735,7 +793,8 @@ $('img#deathName').bind('click', function(evt7) {
         <td colspan="6">
             <s:textarea name="deathPerson.deathPersonNameInEnglish" id="deathPersonNameInEnglish"
                         cssStyle="width:880px;"/>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;" id="deathName">
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+                 id="deathName">
         </td>
     </tr>
     <tr>
@@ -795,6 +854,25 @@ $('img#deathName').bind('click', function(evt7) {
 <s:hidden id="error5" value="%{getText('p1.errorlable.gerder')}"/>
 <s:hidden id="error6" value="%{getText('p1.errorlable.serialNumberIsNum')}"/>
 <s:hidden id="error7" value="%{getText('p1.errorlable.dateofRegAndDateofDeath')}"/>
+<s:hidden id="error8" value="%{getText('p1.errorlable.deathPerson.PINorNIC')}"/>
+<s:hidden id="error9" value="%{getText('p1.errorlable.deathPerson.NameOfficialLang')}"/>
+<s:hidden id="error10" value="%{getText('p1.errorlable.deathPerson.NameInEnglish')}"/>
+<s:hidden id="error11" value="%{getText('p1.errorlable.deathPerson.PermanentAddress')}"/>
+
+<s:hidden id="p1error1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="p1errorPIN1" value="%{getText('p1.deathPerson_PIN')}"/>
+<s:hidden id="p1errorPIN2" value="%{getText('p1.father_PIN')}"/>
+<s:hidden id="p1errorPIN3" value="%{getText('p1.mother_PIN')}"/>
+<s:hidden id="p1errordate1" value="%{getText('p1.dateOfRegistrationDate')}"/>
+<s:hidden id="p1errordate2" value="%{getText('p1.deathDate')}"/>
+<s:hidden id="p1errorSerial" value="%{getText('p1.serialNumber.format')}"/>
+
+
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
 <div class="form-submit">
     <s:hidden name="pageNo" value="1"/>
     <s:hidden name="rowNumber" value="%{row}"/>
