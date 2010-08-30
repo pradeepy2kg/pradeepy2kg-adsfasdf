@@ -144,6 +144,13 @@
         errormsg = "";
         return returnval;
     }
+
+    function initPage() {
+        var domObject = document.getElementById('SerialNo');
+        if (domObject.value.trim() == 0) {
+            domObject.value = null;
+        }
+    }
 </script>
 
 <div id="birth-confirmation-form-outer">
