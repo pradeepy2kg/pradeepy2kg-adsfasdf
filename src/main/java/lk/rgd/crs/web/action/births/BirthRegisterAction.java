@@ -94,6 +94,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean back;
     private boolean allowApproveBDF;
     private boolean allowPrintCertificate;
+    private boolean editMode;
 
     private BirthDeclaration.BirthType birthType;
     private boolean directPrint;
@@ -122,7 +123,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -398,6 +399,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf = new BirthDeclaration();
             bdf.getRegister().setBirthType(birthType);
         } else {
+            editMode = true;
             bdf = service.getById(bdId, user);
             if (bdf.getRegister().getStatus() != BirthDeclaration.State.DATA_ENTRY) {  // edit not allowed
                 addActionError(getText("p1.editNotAllowed"));
@@ -698,6 +700,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         birthType = bdf.getRegister().getBirthType();
+        
+        if (bdf.getIdUKey() != 0) {
+            editMode = true;
+        }
         /**
          *  under "Add another mode", few special values need to be3 preserved from last entry .
          *  Pre setting serial, dateOfRegistrtion, district, division and notifyAuthority in batch mode data entry.
@@ -1378,5 +1384,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setAllowPrintCertificate(boolean allowPrintCertificate) {
         this.allowPrintCertificate = allowPrintCertificate;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }

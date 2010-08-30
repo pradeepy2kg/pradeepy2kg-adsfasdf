@@ -178,9 +178,5 @@ function isDate(dtStr, errorText, errorCode) {
 function isFutureDate(selectDate) {
     var selected = new Date(selectDate);
     var today = new Date();
-    if (selected.getTime() > today.getTime()) {
-        return true;
-    } else {
-        return false;
-    }
+    return (selected.getTime() > today.getTime()) ? true : false;
 }
