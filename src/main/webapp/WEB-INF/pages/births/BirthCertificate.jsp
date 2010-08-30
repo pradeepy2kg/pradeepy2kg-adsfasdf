@@ -17,11 +17,14 @@
             font-size: 8pt;
         }
     }
-    #birth-certificate-outer .form-submit {margin:5px 0 15px 0;}
+
+    #birth-certificate-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
-<div id="birth-certificate-outer" >
+<div id="birth-certificate-outer">
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
@@ -96,14 +99,14 @@
     </s:if>
     <s:else>
         <tr>
-            <td height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය                       
+            <td height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
                 <br>பிரிவு
                 <br>Registration Division
             </td>
             <td colspan="3">
                 <s:label name="" value="%{#request.register.bdDivisionPrint}"/><br>
                 <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
-            </td>            
+            </td>
         </tr>
     </s:else>
     </tbody>
@@ -162,7 +165,7 @@
         <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா? <br>Were Parents Married?
         </td>
         <td><s:label name="" value="%{marriedStatus}"/><br>
-        <s:label name="" value="%{marriedStatusEn}"/></td>
+            <s:label name="" value="%{marriedStatusEn}"/></td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
@@ -232,7 +235,8 @@
         <td><s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
         </td>
-        <td><%= DateTimeUtils.getISO8601FormattedString(new Date()) %></td>
+        <td><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+        </td>
     </tr>
     <tr>
         <td colspan="2" height="120px">
@@ -256,15 +260,18 @@
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
 
+
 <s:if test="directPrint">
     <s:url id="print" action="eprDirectPrintStillBirthCertificate.do">
         <s:param name="bdId" value="#request.bdId"/>
     </s:url>
+    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
 <s:elseif test="directPrintBirthCertificate">
     <s:url id="print" action="eprDirectPrintBirthCertificate.do">
         <s:param name="bdId" value="#request.bdId"/>
     </s:url>
+    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:elseif>
 <s:else>
     <%--TODO remove unused parameters--%>
@@ -277,13 +284,25 @@
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
+    <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="printed" value="#request.printed"/>
+        <s:param name="printStart" value="#request.printStart"/></s:url>
 </s:else>
-<div class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
-</div>
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+<s:if test="#request.allowPrintCertificate">
+    <div class="form-submit" style="margin:15px 0 0 10px; ">
+        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    </div>
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+    </div>
+</s:if>
+<div class="form-submit" style="margin-top:15px;">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
 </div>
 <%--</s:form>--%>
 </div>

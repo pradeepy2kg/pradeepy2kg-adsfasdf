@@ -165,20 +165,23 @@
                                     <s:param name="printed" value="#request.printed"/>
                                     <s:param name="printStart" value="#request.printStart"/>
                                 </s:url>
-                                <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
-                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                                         height="25"/>
-                                </s:a>
+                                <s:if test="#request.allowPrintCertificate">
+                                    <s:a href="%{cetificatePrintUrl}" title="%{getText('print.label')}">
+                                        <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
+                                             height="25"/>
+                                    </s:a>
+                                </s:if>
                             </td>
                         </tr>
                     </s:iterator>
                     </tbody>
                 </table>
             </fieldset>
-            <div class="form-submit">
+            <div class="form-submit"><s:if test="#request.allowPrintCertificate">
                 <s:label><s:checkbox name="allCheck"
                                      onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
-                    <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span><s:label name="select_all"
+                                   value="%{getText('select_all.label')}"/></span></s:label> &nbsp;&nbsp;&nbsp;&nbsp;
                 <s:label><span><s:label name="print_selected" value="%{getText('print_selected.label')}"/></span>
                     <s:hidden name="pageNo" value="%{#request.pageNo}"/>
                     <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
@@ -186,6 +189,7 @@
                     <s:hidden name="printed" value="%{#request.printed}"/>
                     <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                     <s:submit value="%{getText('print.label')}"/></s:label>
+            </s:if>
             </div>
             <div class="next-previous">
                 <s:url id="previousUrl" action="eprCertificatePrintPrevious.do">

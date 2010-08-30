@@ -347,6 +347,11 @@
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
         </action>
 
+        <action name="eprBirthCancelCertificatePrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="backToPreviousState">
+            <result type="tiles" name="success">epr.BirthCertificatePrint</result>
+        </action>
+
         <!--birthconfirmation print related-->
         <action name="eprBirthConfirmationPrintList" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="loadConfirmationPrintList">

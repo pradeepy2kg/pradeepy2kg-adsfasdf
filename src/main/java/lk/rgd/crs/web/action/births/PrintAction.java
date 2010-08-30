@@ -17,6 +17,7 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.Permission;
 
 /**
  * Printing actions
@@ -43,6 +44,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     private boolean printed;
     private boolean confirmListFlag;
+    private boolean allowPrintCertificate;
     String language;
 
     private User user;
@@ -58,7 +60,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -111,6 +113,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
             printList = service.getBirthCertificatePrintListByDSDivision(
                 dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
                 appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+            initPermissionForBirthCertificatePrint();
             logger.debug("Initializing certificate Print list with {} items ", printList.size());
         }
         if (printList.size() == 0) {
@@ -150,7 +153,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
                     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             }
-
+            initPermissionForBirthCertificatePrint();
             logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
         if (printList.size() == 0) {
@@ -213,7 +216,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
                     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             }
-
+            initPermissionForBirthCertificatePrint();
             logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
         if (printList.size() == 0) {
@@ -263,6 +266,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 printList = service.getBirthCertificatePrintListByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
                     appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
             }
+            initPermissionForBirthCertificatePrint();
 
         }
         return SUCCESS;
@@ -297,6 +301,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 printList = service.getBirthCertificatePrintListByDSDivision
                     (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, printed, user);
             }
+            initPermissionForBirthCertificatePrint();
             logger.debug("next {}  items  loaded to birthCertificate print list ", printList.size());
         }
         printStart += noOfRows;
@@ -333,9 +338,27 @@ public class PrintAction extends ActionSupport implements SessionAware {
                 printList = service.getBirthCertificatePrintListByDSDivision
                     (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, printed, user);
             }
+            initPermissionForBirthCertificatePrint();
             logger.debug("previous {}  items  loaded to birthCertificate print list ", printList.size());
         }
         printStart -= noOfRows;
+        populate();
+        return SUCCESS;
+    }
+
+    public String backToPreviousState() {
+        logger.info("setting prevous state of the birth certificate print list");
+        if (birthDivisionId != 0) {
+            printList = service.getBirthCertificatePrintList(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+        } else {
+            printList = service.getBirthCertificatePrintListByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
+                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+        }
+        initPermissionForBirthCertificatePrint();
+        logger.debug("Certificate Print list {}  items  found ", printList.size());
         populate();
         return SUCCESS;
     }
@@ -390,6 +413,10 @@ public class PrintAction extends ActionSupport implements SessionAware {
             else
                 birthDivisionId = bdDivisionList.keySet().iterator().next();*/
 
+    }
+
+    private void initPermissionForBirthCertificatePrint() {
+        allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
     }
 
     public List<BirthDeclaration> getPrintList() {
@@ -524,5 +551,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public void setBdId(long bdId) {
         this.bdId = bdId;
+    }
+
+    public boolean isAllowPrintCertificate() {
+        return allowPrintCertificate;
+    }
+
+    public void setAllowPrintCertificate(boolean allowPrintCertificate) {
+        this.allowPrintCertificate = allowPrintCertificate;
     }
 }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Ashoka Ekanayaka
- * A utility class to contain all menu items for different user roles. Menus will be determined only once using a static block with final  variables
+ *         A utility class to contain all menu items for different user roles. Menus will be determined only once using a static block with final  variables
  */
 public class Menu {
     private static final Map<String, Map> adminLinks = new TreeMap<String, Map>();
@@ -73,6 +73,7 @@ public class Menu {
         adrBirthLink.put("eprViewBDFInNonEditableMode.do", new Link(null, "/popreg/births/", "eprViewBDFInNonEditableMode.do", Permission.EDIT_BDF));
 
         deoBirthLink.put("eprBirthConfirmationPrintList.do", new Link("birth_confirmation_print.label", "/popreg/births/", "eprBirthConfirmationPrintList.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthConfirmation.do", new Link(null, "/popreg/births/", "eprBirthConfirmation.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprBirthConfirmationInit.do", new Link("birth_confirmation.label", "/popreg/births/", "eprBirthConfirmationInit.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/popreg/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprStillBirthRegistrationInit.do", new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do", Permission.EDIT_BDF));
@@ -95,6 +96,7 @@ public class Menu {
         deoBirthLink.put("eprBirthCertificateList.do", new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprFilterBirthCetificateList.do", new Link(null, "/popreg/births/", "eprFilterBirthCetificateList.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthCertificate.do", new Link(null, "/popreg/births/", "eprBirthCertificate.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprBirthCancelCertificatePrint.do", new Link(null, "/popreg/births/", "eprBirthCancelCertificatePrint.do", Permission.PRINT_BDF));
         deoBirthLink.put("eprBirthCertificateBulkPrint.do", new Link(null, "/popreg/births/", "eprBirthCertificateBulkPrint.do", Permission.PRINT_BDF));
         deoBirthLink.put("eprCertificatePrintNext.do", new Link(null, "/popreg/births/", "eprCertificatePrintNext.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprCertificatePrintPrevious.do", new Link(null, "/popreg/births/", "eprCertificatePrintPrevious.do", Permission.SEARCH_BDF));

@@ -93,6 +93,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean addNewMode;
     private boolean back;
     private boolean allowApproveBDF;
+    private boolean allowPrintCertificate;
 
     private BirthDeclaration.BirthType birthType;
     private boolean directPrint;
@@ -661,6 +662,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     marriedStatusEn = MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), AppConstants.ENGLISH);
 
                 addActionMessage("message.print.success");
+                allowPrintCertificate = user.isAuthorized(Permission.PRINT_BIRTH_CERTIFICATE);
                 return "pageLoad";
             }
         } catch (Exception e) {
@@ -1368,5 +1370,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setCounter(int counter) {
         this.counter = counter;
+    }
+
+    public boolean isAllowPrintCertificate() {
+        return allowPrintCertificate;
+    }
+
+    public void setAllowPrintCertificate(boolean allowPrintCertificate) {
+        this.allowPrintCertificate = allowPrintCertificate;
     }
 }

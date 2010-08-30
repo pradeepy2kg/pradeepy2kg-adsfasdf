@@ -241,8 +241,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs = new BitSet();
             bs.or(deoRole.getPermBitSet());
 
-            bs.set(Permission.APPROVE_ADOPTION);
             bs.set(Permission.APPROVE_BDF);
+            bs.set(Permission.PRINT_BIRTH_CERTIFICATE);
             bs.set(Permission.APPROVE_BDF_CONFIRMATION);
             bs.set(Permission.APPROVE_DEATH);
 
@@ -261,6 +261,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs = new BitSet();
             bs.or(drRole.getPermBitSet());
             // TODO add any ARG specific permissions
+
+            bs.set(Permission.APPROVE_ADOPTION);
             argRole.setPermBitSet(bs);
             roleDao.save(argRole);
 
