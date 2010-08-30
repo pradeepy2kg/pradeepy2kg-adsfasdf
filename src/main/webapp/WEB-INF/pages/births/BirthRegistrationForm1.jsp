@@ -205,7 +205,7 @@ function stillBirthCommonTags(check) {
     domObject = document.getElementById('weeksPregnant');
     if (!check.checked)
         isEmpty(domObject, "", 'error14');
-    isNumeric(domObject.value,'error13','error26')
+    isNumeric(domObject.value, 'error13', 'error26')
 
     // child rank
     domObject = document.getElementById('childRank');
@@ -235,7 +235,8 @@ function liveBirthCommonTags(check) {
     if (!check.checked) {
         isEmpty(domObject, "", 'error4');
     }
-    validateNumber(domObject.value, 'error13', 'error23');
+    if (!isFieldEmpty(domObject))
+        validateNumber(domObject.value, 'error13', 'error23');
 
     // child rank
     domObject = document.getElementById('childRank');
@@ -270,7 +271,7 @@ function dateRange() {
 }
 
 function initPage() {
-    
+
 }
 </script>
 
@@ -540,24 +541,42 @@ function initPage() {
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
     </td>
-    <s:if test="birthType.ordinal() == 1">
-        <td colspan="2">
-            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                බර<br>பிறப்பு நிறை<br>Birth
-                Weight (kg)</label>
-        </td>
+    <s:if test="birthType.ordinal() != 0">
+        <s:if test="birthType.ordinal() == 1">
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
+                    බර<br>பிறப்பு நிறை<br>Birth
+                    Weight (kg)</label>
+            </td>
+        </s:if>
+        <s:if test="birthType.ordinal() == 2">
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
+                    බර (දන්නේ නමි)<br>பிறப்பு
+                    நிறை<br>Birth Weight, if known (kg)</label>
+            </td>
+        </s:if>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
                                      cssStyle="width:95%;"/></td>
     </s:if>
-    <s:if test="birthType.ordinal() == 2">
-        <td colspan="2">
-            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                බර (දන්නේ නමි)<br>பிறப்பு
-                நிறை<br>Birth Weight, if known (kg)</label>
-        </td>
-        <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                     cssStyle="width:95%;"/></td>
-    </s:if>
+        <%--<s:if test="birthType.ordinal() == 1">
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
+                    බර<br>பிறப்பு நிறை<br>Birth
+                    Weight (kg)</label>
+            </td>
+            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
+                                         cssStyle="width:95%;"/></td>
+        </s:if>
+        <s:if test="birthType.ordinal() == 2">
+            <td colspan="2">
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
+                    බර (දන්නේ නමි)<br>பிறப்பு
+                    நிறை<br>Birth Weight, if known (kg)</label>
+            </td>
+            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
+                                         cssStyle="width:95%;"/></td>
+        </s:if>--%>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
             <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
