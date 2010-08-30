@@ -112,7 +112,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(2010012340+i));
+            register.setBdfSerialNo(new Long(2010012340 + i));
             register.setPreferredLanguage("si");
             //birth devision
             register.setBirthDivision(colomboBDDivision);
@@ -210,9 +210,9 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
 
     public void testApprove() throws Exception {
         //to approve must be in DATA_ENTRY mode
-        //bd id 1 is in DATA_ENTRY mode
+        BirthDeclaration bd = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012340, loginSampleUser());
         Map session = login("rg", "password");
-        request.setParameter("bdId", "1");
+        request.setParameter("bdId", "" + bd.getIdUKey());
         initAndExecute("/births/eprApproveBirthDeclaration.do", session);
         assertEquals("No Action errors", 0, action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
@@ -254,12 +254,12 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     public void testReject() throws Exception {
         //set bd id 4 to State APPROVEd
         User user = loginSampleUser();
-        long idUKey = 4;
-        BirthDeclaration bdf = birthRegistrationService.getById(idUKey, user);
+
+        BirthDeclaration bdf = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012341, user);
         birthRegistrationService.approveLiveBirthDeclaration(bdf, true, user);
         //now bdId 4 approved so cannot reject this recode so there must be action errors
         Map session = login("rg", "password");
-        request.setParameter("bdId", "" + idUKey);
+        request.setParameter("bdId", "" + bdf.getIdUKey());
         request.setParameter("comments", "test reject comment");
         initAndExecute("/births/eprRejectBirthDeclaration.do", session);
         assertNotNull("Action errors", action.getActionErrors().size());
@@ -269,14 +269,13 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     public void testDelete() throws Exception {
-        //set bd id 5 to State APPROVEd
+        //set bd id to State APPROVEd
         User user = loginSampleUser();
-        long idUKey = 5;
-        BirthDeclaration bdf = birthRegistrationService.getById(idUKey, user);
+        BirthDeclaration bdf = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012342, user);
         birthRegistrationService.approveLiveBirthDeclaration(bdf, true, user);
         //now bdId 5 approved so cannot delete this recode so there must be action errors
         Map session = login("rg", "password");
-        request.setParameter("bdId", "" + idUKey);
+        request.setParameter("bdId", "" + bdf.getIdUKey());
         initAndExecute("/births/eprDeleteApprovalPending.do", session);
         assertNotNull("Action errors", action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
@@ -301,8 +300,12 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     public void testApproveListOfEntries() throws Exception {
+        User user = loginSampleUser();
         Map session = login("rg", "password");
-        request.setParameter("index", new String[]{"6", "7", "8"});
+        String index1 = "" + birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012344, user).getIdUKey();
+        String index2 = "" + birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012345, user).getIdUKey();
+        String index3 = "" + birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012346, user).getIdUKey();
+        request.setParameter("index", new String[]{index1, index2, index3});
         initAndExecute("/births/eprApproveBulk.do", session);
         assertEquals("No Action errors ", 0, action.getActionErrors().size());
         assertEquals("Request index", 3, action.getIndex().length);
