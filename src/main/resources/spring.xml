@@ -238,6 +238,7 @@
         <constructor-arg ref="districtDAOImpl"/>
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="mrDivisionDAOImpl"/>
         <constructor-arg ref="roleDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="masterDataManagementService"/>
