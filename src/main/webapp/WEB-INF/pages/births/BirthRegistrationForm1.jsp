@@ -143,7 +143,6 @@ function validate() {
     if (declarationType.value == 0) {
         commonTags();
         stillBirthCommonTags(check);
-        dateRange();
     }
     if (declarationType.value == 1) {
         commonTags();
@@ -153,7 +152,6 @@ function validate() {
     if (declarationType.value == 2) {
         commonTags();
         liveBirthCommonTags(check);
-        dateRange();
     }
 
     if (errormsg != "") {
@@ -207,6 +205,7 @@ function stillBirthCommonTags(check) {
     domObject = document.getElementById('weeksPregnant');
     if (!check.checked)
         isEmpty(domObject, "", 'error14');
+    isNumeric(domObject.value,'error13','error26')
 
     // child rank
     domObject = document.getElementById('childRank');
@@ -313,7 +312,7 @@ function initPage() {
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
-                        <s:if test="register.bdfSerialNo!= null">
+                        <s:if test="editMode">
                             <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
                         </s:if>
                         <s:else>
@@ -562,8 +561,7 @@ function initPage() {
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
             <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-                දරැවා මැරී උපදින විට ගර්භයට සති
-                කීයක් වී තිබුනේද යන්න
+                දරුවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label>
         </td>
@@ -630,6 +628,7 @@ function initPage() {
 <s:hidden id="error23" value="%{getText('p1.birthWeight.text')}"/>
 <s:hidden id="error24" value="%{getText('p1.child.rank.text')}"/>
 <s:hidden id="error25" value="%{getText('p1.numOfChildren.text')}"/>
+<s:hidden id="error26" value="%{getText('p1.weeksPregnant.text')}"/>
 <s:hidden id="dob" value="%{getText('p1.dob')}"/>
 <s:hidden id="submitDate" value="%{getText('p1.submit.date')}"/>
 
