@@ -574,6 +574,7 @@
         <action name="eprAdoptionNoticeDirectPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>
+            <result type="tiles" name="skip">epr.error</result>
         </action>
 
         <action name="eprAdoptionApplicantInfo" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -630,11 +631,13 @@
         <action name="eprAdoptionViewMode" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionDeclarationViewMode">
             <result type="tiles" name="success">epr.non_editable_adoptionCertificate</result>
+            <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
         </action>
 
         <action name="eprPrintAdoptionNotice" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionNotice">
             <result type="tiles" name="success">epr.AdoptionReReg</result>
+            <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
         </action>
 
         <action name="eprMarkAdoptionNoticeAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -645,6 +648,7 @@
         <action name="eprPrintAdoptionCertificate" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="loadAdoptionCertificate">
             <result type="tiles" name="success">epr.adoptionCertificate</result>
+            <result type="tiles" name="skip">epr.adoptionApprovalAndPrint</result>
         </action>
 
         <action name="eprMarkAdoptionCertificateAsPrinted" class="lk.rgd.crs.web.action.births.AdoptionAction"

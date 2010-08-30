@@ -426,7 +426,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return ERROR;
         }
         ao = adoptionService.getById(adoptionId, user);
-
+        if (ao == null) {
+            addActionError(getText("adoption_order_id_invalid.label"));
+            return ERROR;
+        }
         if (ao.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED) {
             addActionError(getText("adoption_invalid_state.label"));
             return ERROR;
