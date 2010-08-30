@@ -123,6 +123,18 @@
         </label></td>
         <td><s:textfield cssClass="disable" disabled="true" name="register.lastDayForConfirmation"/></td>
     </tr>
+    <tr>
+        <td style="text-align:center">3</td>
+        <td>
+           ආපසු එවිය යුතු ලිපිනය  <br>
+            மாற்றங்கள்..          <br>
+            Address to post any changes
+        </td>
+        <td >
+            
+        </td>
+        
+    </tr>
     </tbody>
 </table>
 
@@ -158,12 +170,12 @@
             உள்ளடக்கப்பட்டுள்ள
             விபரம<br>Information included in Civil Registration System </label></td>
         <td class="cell_02" colspan="11"><label>
-            වෙනස් විය යුතු විස්තර අතුලත් කරන්න.
+            ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම්  .
             <br>புதியசிவில் பதிவ..ண்டிய விப...
-            <br>Insert new details or modify existing details</label></td>
+            <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
-        <td class="cell_011">3</td>
+        <td class="cell_011">4</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
         <td><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
@@ -183,7 +195,7 @@
 
     </tr>
     <tr>
-        <td class="cell_011">4</td>
+        <td class="cell_011">5</td>
         <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
         <td colspan="6"><s:if test="child.childGender == 0">
             <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
@@ -196,12 +208,9 @@
             </s:elseif></td>
         <td colspan="11"></td>
     </tr>
+
     <tr>
-        <td style="text-align:center;margin-left:auto;margin-right:auto;">5</td>
-        <td colspan="18" height="25px"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
-    </tr>
-    <tr>
-        <td rowspan="4"></td>
+        <td rowspan="4" style="text-align:center;"> 6 </td>
         <td height="40px"><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -225,13 +234,13 @@
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td class="cell_011">6</td>
+        <td class="cell_011">7</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td class="cell_011">7</td>
+        <td class="cell_011">8</td>
         <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -240,20 +249,20 @@
     <tr>
 
     <tr>
-        <td class="cell_011">8</td>
+        <td class="cell_011">9</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td class="cell_011">9</td>
+        <td class="cell_011">10</td>
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td class="cell_011">10</td>
+        <td class="cell_011">11</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6"><s:textfield cssClass="disable" disabled="true" name="marriage.parentsMarried"
                                      value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
@@ -285,7 +294,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_001">11</td>
+            <td class="cell_001">12</td>
             <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் /
                 தமிழ்)
                 <br>Childs name in the official languages (Sinhala / Tamil)</label>
@@ -324,7 +333,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_001">12</td>
+            <td class="cell_001">13</td>
             <td width="200px"><p></p>
                 <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
                     <br>பிறப்பு ...
@@ -367,7 +376,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_001">13</td>
+            <td class="cell_001">14</td>
             <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම
                 <br>தந்நையின் முழுப் பெயர
                 ்<br>Father's Full Name</label>
@@ -407,7 +416,7 @@
         <col/>
         <tbody>
         <tr>
-            <td class="cell_001">14</td>
+            <td class="cell_001">15</td>
             <td width="200px"><p></p><label>මවගේ සම්පූර්ණ නම
                 <br>தாயின் முழுப் பெயர
                 ்<br>Mother's Full Name</label>
@@ -472,7 +481,7 @@
         <tbody>
 
         <tr>
-            <td height="80px" style="text-align:center">15</td>
+            <td height="80px" style="text-align:center">16</td>
             <td colspan="3">
                 <p></p>
                 <label>
@@ -487,7 +496,7 @@
         </tr>
 
         <tr>
-            <td rowspan="5" class="cell_012">16</td>
+            <td rowspan="5" class="cell_012">17</td>
             <td rowspan="5">
                 <p></p>
                 <label>
@@ -515,7 +524,7 @@
         </tr>
 
         <tr>
-            <td rowspan="2" class="cell_001">17</td>
+            <td rowspan="2" class="cell_001">18</td>
             <td rowspan="2">
                 <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
@@ -560,7 +569,7 @@
         <tbody>
 
         <tr>
-            <td rowspan="2" class="cell_001">18</td>
+            <td rowspan="2" class="cell_001">19</td>
             <td rowspan="2"><p></p><label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
                 (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
                 மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
