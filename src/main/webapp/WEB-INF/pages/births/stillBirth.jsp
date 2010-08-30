@@ -22,6 +22,18 @@
         margin: 50px 0px 0px 150px;
     }
 
+    .link1 {
+        text-align: center;
+        background: url('<s:url value="/images/button_bg_hover_2.png"/> ') no-repeat;
+        position: absolute;
+        width: 112px;
+        height: 30px;
+        margin: 0px 0px 0px 830px;
+        font-size: 11pt;
+        color: black;
+
+    }
+
     .stillBirthLink1 {
         font-size: 10pt;
         color: black;
@@ -136,6 +148,9 @@
     </s:a><s:a href="eprBirthRegisterApproval.do">
     <div class="stillBirthLink2"><s:label value="%{getText('sb.approve.ADR')}"/></div>
 </s:a>
+    <s:a href="eprBirthRegistrationHome.do">
+        <div class="link1"><s:label value="%{getText('lb.live.birth')}" cssStyle="cursor:pointer"/></div>
+    </s:a>
     <s:a href="eprBirthCertificateList.do">
         <div class="stillBirthLink3"><s:label value="%{getText('sb.print.certificate')}"/></div>
     </s:a>
