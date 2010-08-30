@@ -3,18 +3,29 @@ package lk.rgd.crs.web.action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.UnitTestManager;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.extensions.TestSetup;
 
 /**
  * @author amith jayasekara
@@ -24,6 +35,138 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     private ActionProxy proxy;
     private BirthRegisterApprovalAction action;
     private LoginAction loginAction;
+
+    protected static BDDivision colomboBDDivision;
+    protected static BDDivision negamboBDDivision;
+    protected static Country sriLanka;
+    protected static Race sinhalese;
+
+    protected final static ApplicationContext ctx = UnitTestManager.ctx;
+    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+    protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+    protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
+
+    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(BirthRegisterApprovalActionTest.class)) {
+            protected void setUp() throws Exception {
+                logger.info("setup called");
+                colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
+                negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+                sriLanka = countryDAO.getCountry(1);
+                sinhalese = raceDOA.getRace(1);
+
+                List birth = sampleBirths();
+                User sampleUser = loginSampleUser();
+                for (int i = 0; i < birth.size(); i++) {
+                    birthRegistrationService.addLiveBirthDeclaration((BirthDeclaration) birth.get(i), false, sampleUser, null, null);
+                }
+
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                logger.info("tear down called ");
+                super.tearDown();
+            }
+        };
+        return setup;
+    }
+
+    private static User loginSampleUser() {
+        User rg = null;
+        try {
+            rg = userManager.authenticateUser("rg", "password");
+        }
+        catch (AuthorizationException e) {
+            logger.debug("exception when autharizing a user :'rg' ");
+        }
+        return rg;
+    }
+
+    private static List sampleBirths() {
+        List list = new LinkedList();
+
+        for (int i = 0; i < 10; i++) {
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+
+            BirthDeclaration bd = new BirthDeclaration();
+            //child info
+            ChildInfo child = new ChildInfo();
+            //set birth date 20 days before today
+            gCal.add(Calendar.DATE, -20);
+            child.setDateOfBirth(gCal.getTime());
+            child.setChildGender(0);
+            child.setPlaceOfBirth("මාතර");
+            child.setPlaceOfBirthEnglish("Matara");
+            child.setBirthAtHospital(true);
+            child.setChildFullNameEnglish("KAMAL SILVA");
+            child.setChildFullNameOfficialLang("kamal silva");
+            child.setChildRank(1 + i);
+            child.setChildBirthWeight(new Float(1 + i));
+            //todo warning
+            child.setNumberOfChildrenBorn(0);
+
+            //Birth Register info
+            BirthRegisterInfo register = new BirthRegisterInfo();
+            register.setPreferredLanguage("si");
+            register.setBdfSerialNo(new Long(1000 + i));
+            register.setPreferredLanguage("si");
+            //birth devision
+            register.setBirthDivision(colomboBDDivision);
+            register.setDateOfRegistration(gCal.getTime());
+            register.setBirthType(BirthDeclaration.BirthType.LIVE);
+            //todo
+            //parent info
+            ParentInfo parent = new ParentInfo();
+            parent.setFatherCountry(sriLanka);
+            parent.setFatherRace(sinhalese);
+            parent.setMotherCountry(sriLanka);
+            parent.setMotherRace(sinhalese);
+            parent.setMotherAgeAtBirth(42 + i);
+            parent.setFatherNICorPIN("530232026V");
+            parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
+
+            //marrage info
+            MarriageInfo marrage = new MarriageInfo();
+
+            //grand father info
+            GrandFatherInfo granFather = new GrandFatherInfo();
+
+            //notification authority
+            NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
+            notification.setNotifyingAuthorityPIN("pin notification" + i);
+            notification.setNotifyingAuthorityName("notification authority name" + i);
+            notification.setNotifyingAuthorityAddress("notification authority address" + i);
+            //set notification date tomorrow from today
+            gCal.add(Calendar.DATE, +1);
+            notification.setNotifyingAuthoritySignDate(gCal.getTime());
+
+            //informant info
+            InformantInfo informant = new InformantInfo();
+            informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
+            informant.setInformantName("informant name" + i);
+            informant.setInformantAddress("informant address" + i);
+            informant.setInformantSignDate(gCal.getTime());
+
+            ConfirmantInfo confermant = new ConfirmantInfo();
+
+            bd.setChild(child);
+            bd.setRegister(register);
+            bd.setParent(parent);
+            bd.setMarriage(marrage);
+            bd.setGrandFather(granFather);
+            bd.setNotifyingAuthority(notification);
+            bd.setInformant(informant);
+            bd.setConfirmant(confermant);
+
+            list.add(bd);
+
+        }
+        return list;
+    }
 
 
     private String initAndExecute(String mapping, Map session) throws Exception {
@@ -66,8 +209,10 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
      */
 
     public void testApprove() throws Exception {
+        //to approve must be in DATA_ENTRY mode
+        //bd id 1 is in DATA_ENTRY mode
         Map session = login("rg", "password");
-        request.setParameter("bdId", "168");
+        request.setParameter("bdId", "1");
         initAndExecute("/births/eprApproveBirthDeclaration.do", session);
         assertEquals("No Action errors", 0, action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
@@ -83,8 +228,9 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     public void testApproveIgnoringWarning() throws Exception {
+        //to approve with out waring must be in DATA_ENTRY ,mode bdid 2 is in DATA_ENTRY mode
         Map session = login("rg", "password");
-        request.setParameter("bdId", "167");
+        request.setParameter("bdId", "2");
         request.setParameter("ignoreWarning", "true");
         request.setParameter("confirmationApprovalFlag", "false");
         initAndExecute("/births/eprIgnoreWarning.do", session);
@@ -94,8 +240,9 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
 
     public void testApproveIgnoreWarningsDirect() throws Exception {
         //cannot approve it already aproved
+        //to approve with out waring must be in DATA_ENTRY ,mode bdid 3 is in DATA_ENTRY mode
         Map session = login("rg", "password");
-        request.setParameter("bdId", "167");
+        request.setParameter("bdId", "3");
         request.setParameter("ignoreWarning", "true");
         request.setParameter("confirmationApprovalFlag", "false");
         request.setParameter("directApprovalFlag", "true");
@@ -105,9 +252,14 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     public void testReject() throws Exception {
-        //cannot reject 167 is APROVED
+        //set bd id 4 to State APPROVEd
+        User user = loginSampleUser();
+        long idUKey = 4;
+        BirthDeclaration bdf = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdf, true, user);
+        //now bdId 4 approved so cannot reject this recode so there must be action errors
         Map session = login("rg", "password");
-        request.setParameter("bdId", "167");
+        request.setParameter("bdId", "" + idUKey);
         request.setParameter("comments", "test reject comment");
         initAndExecute("/births/eprRejectBirthDeclaration.do", session);
         assertNotNull("Action errors", action.getActionErrors().size());
@@ -117,9 +269,14 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     public void testDelete() throws Exception {
-        //cannot delete recode 167 so there should be error
+        //set bd id 5 to State APPROVEd
+        User user = loginSampleUser();
+        long idUKey = 5;
+        BirthDeclaration bdf = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdf, true, user);
+        //now bdId 5 approved so cannot delete this recode so there must be action errors
         Map session = login("rg", "password");
-        request.setParameter("bdId", "167");
+        request.setParameter("bdId", "" + idUKey);
         initAndExecute("/births/eprDeleteApprovalPending.do", session);
         assertNotNull("Action errors", action.getActionErrors().size());
         assertNotNull("BDF object ", action.getBdf());
@@ -145,9 +302,9 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
 
     public void testApproveListOfEntries() throws Exception {
         Map session = login("rg", "password");
-        request.setParameter("index", new String[]{"167", "168", "169"});
+        request.setParameter("index", new String[]{"6", "7", "8"});
         initAndExecute("/births/eprApproveBulk.do", session);
-        assertEquals("Action errors ", 1, action.getActionErrors().size());
+        assertEquals("No Action errors ", 0, action.getActionErrors().size());
         assertEquals("Request index", 3, action.getIndex().length);
     }
 
