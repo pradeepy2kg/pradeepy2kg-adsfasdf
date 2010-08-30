@@ -71,11 +71,11 @@ public class BirthRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // test colombo deo adding for colombo
-        BirthDeclaration bdf1 = getMinimalBDF(2010101, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf1 = getMinimalBDF(2010101010, dob.getTime(), colomboBDDivision);
         birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
 
         // try adding a duplicate
-        BirthDeclaration bdf2 = getMinimalBDF(2010101, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf2 = getMinimalBDF(2010101010, dob.getTime(), colomboBDDivision);
         try {
             birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
             fail("Should not allow addition of duplicate records");
@@ -123,13 +123,13 @@ public class BirthRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // add another record for the same mother, and check if the duplication warning was issued
-        BirthDeclaration bdf1 = getMinimalBDF(2010102, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf1 = getMinimalBDF(2010102010, dob.getTime(), colomboBDDivision);
         dob.add(Calendar.DATE, -7 * 27);
-        BirthDeclaration bdf2 = getMinimalBDF(2010103, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf2 = getMinimalBDF(2010103010, dob.getTime(), colomboBDDivision);
         dob.add(Calendar.DATE, 2 * 7 * 27);
-        BirthDeclaration bdf3 = getMinimalBDF(2010104, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf3 = getMinimalBDF(2010104010, dob.getTime(), colomboBDDivision);
         dob.add(Calendar.DATE, 30 * 12);
-        BirthDeclaration bdf4 = getMinimalBDF(2010105, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf4 = getMinimalBDF(2010105010, dob.getTime(), colomboBDDivision);
 
         bdf1.getParent().setMotherNICorPIN("755010001V");
         bdf2.getParent().setMotherNICorPIN("755010001V");
@@ -196,7 +196,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // add a record for testing
-        BirthDeclaration bdf1 = getMinimalBDF(2010106, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf1 = getMinimalBDF(2010106010, dob.getTime(), colomboBDDivision);
         birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
 
         // reload again to fill all fields as we still only have IDUkey of new record
@@ -317,7 +317,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         dob.add(Calendar.DATE, -3);
 
         // add a record for testing
-        BirthDeclaration bdf1 = getMinimalBDF(2010107, dob.getTime(), colomboBDDivision);
+        BirthDeclaration bdf1 = getMinimalBDF(2010107010, dob.getTime(), colomboBDDivision);
         birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
 
         // reload again to fill all fields as we still only have IDUkey of new record

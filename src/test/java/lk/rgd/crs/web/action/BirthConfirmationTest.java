@@ -112,12 +112,13 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(2010012340 + i));
+            register.setBdfSerialNo(new Long(2010012350 + i));
             register.setPreferredLanguage("si");
             //birth devision
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
+            //todo
             //parent info
             ParentInfo parent = new ParentInfo();
             parent.setFatherCountry(sriLanka);
@@ -196,17 +197,18 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
 
     public void testBirthConfirmationInitMappingProxy() throws Exception {
 
-        //idUkey 1 has serial number 2010012340
+        //idUkey 1 has serial number 2010012350
         User user = loginSampleUser();
         long idUKey = 1;
 
-        BirthDeclaration bd = birthRegistrationService.getById(idUKey, user);
+        BirthDeclaration bd = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012350, user);
         //change state to APPROVE
+        idUKey = bd.getIdUKey();
         birthRegistrationService.approveLiveBirthDeclaration(bd, true, user);
         bd = birthRegistrationService.getById(idUKey, user);
         birthRegistrationService.markLiveBirthConfirmationAsPrinted(bd, user);
-        bd = birthRegistrationService.getById(idUKey, user);
-        birthRegistrationService.captureLiveBirthConfirmationChanges(bd, user);
+/*        bd = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.captureLiveBirthConfirmationChanges(bd, user);*/
 
 
         Map session = UserLogin("ashoka", "ashoka");
@@ -226,7 +228,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         //request.setAttribute("",bdf);
         assertNotNull("Session bdf presence", bdf);
         assertNotNull("Session bcf presence", bcf);
-        assertEquals("confirmation changes has been captured", 5, bdf.getRegister().getStatus().ordinal());
+        assertEquals("confirmation changes has been captured", 2, bdf.getRegister().getStatus().ordinal());
 
         assertNotNull("dsDivisionList {} ", registerAction.getDsDivisionList());
         assertNotNull("dsDivisionList {} ", registerAction.getBdDivisionList());
@@ -243,7 +245,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         assertNotNull("Mother Dsdivision Id presence ", registerAction.getMotherDSDivisionId());
         assertNotNull("Mother District Id presence ", registerAction.getMotherDistrictId());
 
-        assertEquals("Serial no ",2010012340, bdf.getRegister().getBdfSerialNo());
+        assertEquals("Serial no ", 2010012350, bdf.getRegister().getBdfSerialNo());
 
         assertNotNull("Child date of birth ", bdf.getChild().getDateOfBirth());
         assertEquals("Child place of birth ", "මාතර", bdf.getChild().getPlaceOfBirth());
@@ -272,7 +274,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         logger.debug("child date of birth : {}", registerAction.getChild().getDateOfBirth());
 
         assertNotNull("Session bdf presence", bdf);
-        assertEquals("confirmation changes captured", 5, bdf.getRegister().getStatus().ordinal());
+        assertEquals("confirmation changes captured", 2, bdf.getRegister().getStatus().ordinal());
 
         request.setParameter("pageNo", "2");
         request.setParameter("child.childFullNameOfficialLang", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක");

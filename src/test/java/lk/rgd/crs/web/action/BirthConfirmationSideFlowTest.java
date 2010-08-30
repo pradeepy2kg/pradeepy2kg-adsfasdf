@@ -118,12 +118,13 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(2010012340 + i));
+            register.setBdfSerialNo(new Long(2010012330 + i));
             register.setPreferredLanguage("si");
             //birth devision
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
+            //todo
             //parent info
             ParentInfo parent = new ParentInfo();
             parent.setFatherCountry(sriLanka);
@@ -173,7 +174,6 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         return list;
     }
 
-
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
         action = (BirthRegisterAction) proxy.getAction();
@@ -221,7 +221,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChangesForConfirmationChangesCapturedEntry() throws Exception {
-        //idUkey 1 has serial number 2010012340
+        //idUkey 1 has serial number 2010012330
         User user = loginSampleUser();
         long idUKey = 1;
         Object obj;
@@ -232,7 +232,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
         //change state to CONFERMATION_CHANGES_CAPTURED state
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("2010012340"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("2010012330"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //change state to APPROVE
         birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
         bdTemp = birthRegistrationService.getById(idUKey, user);
@@ -299,7 +299,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
     public void testCaptureConfirmationChanges() throws Exception {
         Long bdId;
-        //idUkey 2 has serial number 2010012341
+        //idUkey 2 has serial number 2010012331
         User user = loginSampleUser();
         long idUKey = 2;
         Map session = login("rg", "password");
@@ -307,7 +307,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("2010012341"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("2010012331"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
         //change state to APPROVE
         birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
@@ -422,7 +422,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChangesForConfirmationPrintedEntry() throws Exception {
-        //idUkey  has serial number 2010012342
+        //idUkey  has serial number 2010012332
         User user = loginSampleUser();
         long idUKey = 3;
         Object obj;
@@ -431,7 +431,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId wich is not having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("2010012342"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("2010012332"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry for which confirmation changes to be skipped
 
         //change state to APPROVE
