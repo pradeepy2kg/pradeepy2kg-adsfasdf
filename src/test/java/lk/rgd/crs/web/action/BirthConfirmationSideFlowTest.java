@@ -1,18 +1,31 @@
 package lk.rgd.crs.web.action;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.UnitTestManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.extensions.TestSetup;
 
 
 /**
@@ -27,6 +40,139 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     private LoginAction loginAction;
     private BirthRegisterApprovalAction approvalAction;
     private BirthDeclaration bd;
+
+    protected static BDDivision colomboBDDivision;
+    protected static BDDivision negamboBDDivision;
+    protected static Country sriLanka;
+    protected static Race sinhalese;
+
+    protected final static ApplicationContext ctx = UnitTestManager.ctx;
+    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+    protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+    protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
+
+    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(BirthRegisterApprovalActionTest.class)) {
+            protected void setUp() throws Exception {
+                logger.info("setup called");
+                colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
+                negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+                sriLanka = countryDAO.getCountry(1);
+                sinhalese = raceDOA.getRace(1);
+
+                List birth = sampleBirths();
+                User sampleUser = loginSampleUser();
+                for (int i = 0; i < birth.size(); i++) {
+                    birthRegistrationService.addLiveBirthDeclaration((BirthDeclaration) birth.get(i), false, sampleUser, null, null);
+                }
+
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                logger.info("tear down called ");
+                super.tearDown();
+            }
+        };
+        return setup;
+    }
+
+    private static User loginSampleUser() {
+        User rg = null;
+        try {
+            rg = userManager.authenticateUser("rg", "password");
+        }
+        catch (AuthorizationException e) {
+            logger.debug("exception when autharizing a user :'rg' ");
+        }
+        return rg;
+    }
+
+    private static List sampleBirths() {
+        List list = new LinkedList();
+
+        for (int i = 0; i < 10; i++) {
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+
+            BirthDeclaration bd = new BirthDeclaration();
+            //child info
+            ChildInfo child = new ChildInfo();
+            //set birth date 20 days before today
+            gCal.add(Calendar.DATE, -20);
+            child.setDateOfBirth(gCal.getTime());
+            child.setChildGender(0);
+            child.setPlaceOfBirth("මාතර");
+            child.setPlaceOfBirthEnglish("Matara");
+            child.setBirthAtHospital(true);
+            child.setChildFullNameEnglish("KAMAL SILVA");
+            child.setChildFullNameOfficialLang("kamal silva");
+            child.setChildRank(1 + i);
+            child.setChildBirthWeight(new Float(1 + i));
+            //todo warning
+            child.setNumberOfChildrenBorn(0);
+
+            //Birth Register info
+            BirthRegisterInfo register = new BirthRegisterInfo();
+            register.setPreferredLanguage("si");
+            register.setBdfSerialNo(new Long(1000 + i));
+            register.setPreferredLanguage("si");
+            //birth devision
+            register.setBirthDivision(colomboBDDivision);
+            register.setDateOfRegistration(gCal.getTime());
+            register.setBirthType(BirthDeclaration.BirthType.LIVE);
+            //todo
+            //parent info
+            ParentInfo parent = new ParentInfo();
+            parent.setFatherCountry(sriLanka);
+            parent.setFatherRace(sinhalese);
+            parent.setMotherCountry(sriLanka);
+            parent.setMotherRace(sinhalese);
+            parent.setMotherAgeAtBirth(42 + i);
+            parent.setFatherNICorPIN("530232026V");
+            parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
+
+            //marrage info
+            MarriageInfo marrage = new MarriageInfo();
+
+            //grand father info
+            GrandFatherInfo granFather = new GrandFatherInfo();
+
+            //notification authority
+            NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
+            notification.setNotifyingAuthorityPIN("pin notification" + i);
+            notification.setNotifyingAuthorityName("notification authority name" + i);
+            notification.setNotifyingAuthorityAddress("notification authority address" + i);
+            //set notification date tomorrow from today
+            gCal.add(Calendar.DATE, +1);
+            notification.setNotifyingAuthoritySignDate(gCal.getTime());
+
+            //informant info
+            InformantInfo informant = new InformantInfo();
+            informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
+            informant.setInformantName("informant name" + i);
+            informant.setInformantAddress("informant address" + i);
+            informant.setInformantSignDate(gCal.getTime());
+
+            ConfirmantInfo confermant = new ConfirmantInfo();
+
+            bd.setChild(child);
+            bd.setRegister(register);
+            bd.setParent(parent);
+            bd.setMarriage(marrage);
+            bd.setGrandFather(granFather);
+            bd.setNotifyingAuthority(notification);
+            bd.setInformant(informant);
+            bd.setConfirmant(confermant);
+
+            list.add(bd);
+
+        }
+        return list;
+    }
+
 
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
@@ -81,7 +227,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-            new Long("07000804"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("07000804"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry
         Long bdId = bdTemp.getIdUKey();
         logger.debug("Got bdId {}", bdId);
@@ -95,7 +241,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
-            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
 
         obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
@@ -129,7 +275,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         session = approvalAction.getSession();
 
         logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificate print after direct approval
         request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
@@ -137,7 +283,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
         session = action.getSession();
         logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 
     public void testCaptureConfirmationChanges() throws Exception {
@@ -147,7 +293,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-            new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
         session = action.getSession();
         bdId = bdTemp.getIdUKey();
@@ -163,7 +309,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
-            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
         //loading the 2 of 3BCFs
         request.setParameter("pageNo", "1");
         request.setParameter("register.bdfSerialNo", "07000805");
@@ -237,7 +383,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         bdId = action.getBdId();
         logger.debug("bdId for the new entry {}", bdId);
         logger.debug("current state after capturing confirmation changes : {}", (action.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //dirct approval of confirmation changes
         request.setParameter("bdId", Long.toString(bdId));
@@ -246,7 +392,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         session = approvalAction.getSession();
 
         logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificate print after direct approval
         request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
@@ -254,7 +400,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
         session = action.getSession();
         logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 
     public void testSkipConfirmationChangesForConfirmationPrintedEntry() throws Exception {
@@ -264,7 +410,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId wich is not having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-            new Long("07000810"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("07000810"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry for which confirmation changes to be skipped
         Long bdId = bdTemp.getIdUKey();
         logger.debug("Got confirmation printed Entry with bdId : {}", bdId);
@@ -278,7 +424,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
-            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
 
         obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
@@ -306,7 +452,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         logger.debug("SkipConfirmationChanges : {} ", action.isSkipConfirmationChages());
 
         logger.debug("current state after skipping confirmation changes : {}", (action.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificate print after skipping confirmation changes
         request.setParameter("bdId", Long.toString(action.getBdId()));
@@ -314,6 +460,6 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
         session = action.getSession();
         logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
-            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 }

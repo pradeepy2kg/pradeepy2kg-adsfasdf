@@ -112,7 +112,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(1000 + i));
+            register.setBdfSerialNo(new Long(2010012340+i));
             register.setPreferredLanguage("si");
             //birth devision
             register.setBirthDivision(colomboBDDivision);
