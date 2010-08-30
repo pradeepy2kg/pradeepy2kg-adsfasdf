@@ -35,6 +35,7 @@ public class BirthDeclarationValidator {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthDeclarationValidator.class);
     private static final int WEEKS_FOR_FOETUS_TO_SURVIVE = 28;
+    private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
 
     private final PopulationRegistry popreg;
 
@@ -51,8 +52,7 @@ public class BirthDeclarationValidator {
      */
     public void validateMinimalRequirements(BirthDeclaration bdf) {
 
-        if (bdf.getRegister().getBdfSerialNo() == 0 ||
-            bdf.getRegister().getDateOfRegistration() == null ||
+        if (bdf.getRegister().getDateOfRegistration() == null ||
             bdf.getRegister().getBirthDivision() == null ||
             bdf.getChild().getDateOfBirth() == null ||
             isEmptyString(bdf.getChild().getPlaceOfBirth()) ||
@@ -77,6 +77,20 @@ public class BirthDeclarationValidator {
                 handleException("Birth declaration record being processed is incomplete " +
                     "Check required field values", ErrorCodes.INVALID_DATA);
             }
+        }
+
+        // validate registrtion serial number
+        final long serialNo = bdf.getRegister().getBdfSerialNo();
+        if (serialNo >= 2010000001L && serialNo <= 2099199999L) {
+
+            String s = Long.toString(serialNo);
+            if (!s.matches(SERIAL_NUMBER_PATTERN)) {
+                handleException("Birth declaration record being processed is invalid " +
+                    "Check serial number : " + s, ErrorCodes.INVALID_DATA);
+            }
+        } else {
+            handleException("Birth declaration record being processed is invalid " +
+                "Check serial number : " + serialNo, ErrorCodes.INVALID_DATA);
         }
     }
 
