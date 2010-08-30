@@ -30,7 +30,8 @@ import junit.extensions.TestSetup;
 
 /**
  * @author Indunil Moremada
- *         unit test for testing the birth confirmation side flows
+ * @authar amith jayasekara
+ * unit test for testing the birth confirmation side flows
  */
 public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
@@ -54,7 +55,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
 
     public static Test suite() {
-        TestSetup setup = new TestSetup(new TestSuite(BirthRegisterApprovalActionTest.class)) {
+        TestSetup setup = new TestSetup(new TestSuite(BirthConfirmationSideFlowTest.class)) {
             protected void setUp() throws Exception {
                 logger.info("setup called");
                 colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
@@ -117,13 +118,12 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(1000 + i));
+            register.setBdfSerialNo(new Long(2010012340 + i));
             register.setPreferredLanguage("si");
             //birth devision
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
-            //todo
             //parent info
             ParentInfo parent = new ParentInfo();
             parent.setFatherCountry(sriLanka);
@@ -221,13 +221,24 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChangesForConfirmationChangesCapturedEntry() throws Exception {
+        //idUkey 1 has serial number 2010012340
+        User user = loginSampleUser();
+        long idUKey = 1;
         Object obj;
         Map session = login("rg", "password");
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
+
+        //change state to CONFERMATION_CHANGES_CAPTURED state
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("07000804"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("2010012340"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+        //change state to APPROVE
+        birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
+        bdTemp = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.markLiveBirthConfirmationAsPrinted(bdTemp, user);
+        bdTemp = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.captureLiveBirthConfirmationChanges(bdTemp, user);
         //searching the required entry
         Long bdId = bdTemp.getIdUKey();
         logger.debug("Got bdId {}", bdId);
@@ -288,13 +299,20 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
     public void testCaptureConfirmationChanges() throws Exception {
         Long bdId;
+        //idUkey 2 has serial number 2010012341
+        User user = loginSampleUser();
+        long idUKey = 2;
         Map session = login("rg", "password");
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("07000805"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("2010012341"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
+        //change state to APPROVE
+        birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
+        bdTemp = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.markLiveBirthConfirmationAsPrinted(bdTemp, user);
         session = action.getSession();
         bdId = bdTemp.getIdUKey();
 
@@ -404,14 +422,23 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChangesForConfirmationPrintedEntry() throws Exception {
+        //idUkey  has serial number 2010012342
+        User user = loginSampleUser();
+        long idUKey = 3;
         Object obj;
         Map session = login("rg", "password");
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId wich is not having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("07000810"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+                new Long("2010012342"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry for which confirmation changes to be skipped
+
+        //change state to APPROVE
+        birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
+        bdTemp = birthRegistrationService.getById(idUKey, user);
+        birthRegistrationService.markLiveBirthConfirmationAsPrinted(bdTemp, user);
+
         Long bdId = bdTemp.getIdUKey();
         logger.debug("Got confirmation printed Entry with bdId : {}", bdId);
         request.setParameter("bdId", bdId.toString());
@@ -423,8 +450,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
-        assertNotNull("failed to populate Confirmation Database bean",
-                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+        assertNotNull("failed to populate Confirmation Database bean", session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
 
         obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
