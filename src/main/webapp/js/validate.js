@@ -24,8 +24,9 @@ function isNumeric(text, errorText, message) {
 
 // check given text is a number(interger or floating point) 
 function validateNumber(text, errorText, errorCode) {
-    if (isNaN(text)) {
-        printMessage(errorText, message)
+    var reg = /^([0-9]+\.?[0-9]+|[1-9])$/;
+    if (reg.test(text.trim()) == false) {
+        printMessage(errorText, errorCode);
     }
 }
 
