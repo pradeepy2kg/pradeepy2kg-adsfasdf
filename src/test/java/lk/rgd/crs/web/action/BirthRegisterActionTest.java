@@ -3,7 +3,11 @@ package lk.rgd.crs.web.action;
 import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.util.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,11 +42,15 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
     protected static BDDivision colomboBDDivision;
     protected static BDDivision negamboBDDivision;
+    protected static Country sriLanka;
+    protected static Race sinhalese;
 
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
     protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
     protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+    protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
 
 
     public static Test suite() {
@@ -51,6 +59,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
                 logger.info("setup called");
                 colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
                 negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+                sriLanka = countryDAO.getCountry(1);
+                sinhalese = raceDOA.getRace(1);
 
                 List birth = sampleBirths();
                 User sampleUser = loginSampleUser();
@@ -100,7 +110,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(1000+i));
+            register.setBdfSerialNo(new Long(1000 + i));
             //birth devision
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
@@ -108,6 +118,10 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
             //parent info
             ParentInfo parent = new ParentInfo();
+            parent.setFatherCountry(sriLanka);
+            parent.setFatherRace(sinhalese);
+            parent.setMotherCountry(sriLanka);
+            parent.setMotherRace(sinhalese);
 
             //marrage info
             MarriageInfo marrage = new MarriageInfo();
@@ -117,9 +131,9 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
             //notification authority
             NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
-            notification.setNotifyingAuthorityPIN("pin notification"+i);
-            notification.setNotifyingAuthorityName("notification authority name"+i);
-            notification.setNotifyingAuthorityAddress("notification authority address"+i);
+            notification.setNotifyingAuthorityPIN("pin notification" + i);
+            notification.setNotifyingAuthorityName("notification authority name" + i);
+            notification.setNotifyingAuthorityAddress("notification authority address" + i);
             //set notification date tomorrow from today
             gCal.add(Calendar.DATE, +1);
             notification.setNotifyingAuthoritySignDate(gCal.getTime());
@@ -127,11 +141,10 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
             //informant info
             InformantInfo informant = new InformantInfo();
             informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
-            informant.setInformantName("informant name"+i);
-            informant.setInformantAddress("informant address"+i);
+            informant.setInformantName("informant name" + i);
+            informant.setInformantAddress("informant address" + i);
             informant.setInformantSignDate(gCal.getTime());
 
-            //confermant info
             ConfirmantInfo confermant = new ConfirmantInfo();
 
             bd.setChild(child);
@@ -402,7 +415,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Action erros for 2 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertEquals("bdId matches with the previous faild", 166, bd.getIdUKey());
+        assertEquals("bdId matches with the previous faild", 9, bd.getIdUKey());
         obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence Faild", obj);
         assertNotNull("Request Country List Presence Faild", action.getCountryList());
