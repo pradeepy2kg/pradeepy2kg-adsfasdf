@@ -67,22 +67,15 @@
     function validate() {
         var domObject;
         var returnval = true;
-        domObject = document.getElementById('bdfSerialNoId');
-        isNumeric(domObject.value, "error5");
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
-    }
 
+        domObject = document.getElementById('bdfSerialNoId1');
+        if (!isFieldEmpty(domObject))
+            isNumeric(domObject.value, 'error1', 'error2');
 
-    function validate2() {
-        var domObject;
-        var returnval = true;
         domObject = document.getElementById('bdfSerialNoId2');
-        isNumeric(domObject.value, "error5");
+        if (!isFieldEmpty(domObject))
+            isNumeric(domObject.value, 'error1', 'error2');
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -90,11 +83,9 @@
         errormsg = "";
         return returnval;
     }
-
 </script>
 <div id="birth-confirmation-search">
-    <s:actionerror/>
-    <br/>
+    <s:actionerror cssClass="alreadyPrinted"/>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             onsubmit="javascript:return validate()" method="post">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
@@ -113,7 +104,7 @@
                 <tr>
                     <td><s:label name="declarationSearialNumber"
                                  value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td><s:textfield name="serialNo" id="bdfSerialNoId"/></td>
+                    <td><s:textfield name="serialNo" id="bdfSerialNoId1"/></td>
                     <td><s:label name="district" value="%{getText('district.label')}"/></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
@@ -144,7 +135,7 @@
         </fieldset>
     </s:form>
     <br/>
-    <s:form action="eprBDFSearchByIdUKey.do" method="post"  onsubmit="javascript:return validate2()">
+    <s:form action="eprBDFSearchByIdUKey.do" method="post" onsubmit="javascript:return validate()">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <legend>
                 <b><s:label name="confirmatinSearchLegend" value="%{getText('confirmationSearchLegend.label')}"/></b>
@@ -192,12 +183,13 @@
                         <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                         <td><s:property value="%{#request.bdf.register.bdfSerialNo}"/></td>
                         <td align="center">
-                            <s:label name="childName" value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/>
+                            <s:label name="childName"
+                                     value="%{#request.bdf.child.getChildFullNameOfficialLangToLength(50)}"/>
                         </td>
                         <td align="center">
                             <s:if test="%{#request.bdf.child.childGender == 0}">
-                            <s:label value="%{getText('male.label')}"/>
-                        </s:if>
+                                <s:label value="%{getText('male.label')}"/>
+                            </s:if>
                             <s:elseif test="%{#request.bdf.child.childGender == 1}">
                                 <s:label value="%{getText('female.label')}"/>
                             </s:elseif>
@@ -240,7 +232,7 @@
                 <s:elseif test="searchResultList.size>0">
                     <s:iterator status="searchStatus" value="searchResultList" id="searchId">
                         <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                            <%--<td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>--%>
+                                <%--<td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>--%>
                             <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                             <td><s:property value="register.bdfSerialNo"/></td>
                             <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
@@ -303,4 +295,8 @@
             </table>
         </fieldset>
     </s:if>
+
+    <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+    <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
+
 </div>
