@@ -158,6 +158,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String adoptionDeclarationViewMode() {
         logger.debug("initializing view mode for idUKey : {}", idUKey);
         adoption = service.getById(idUKey, user);
+        if (adoption == null) {
+            addActionError(getText("er.invalid.Entry"));
+            populateApprovalAndPrintList();
+            return "skip";
+        }
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
@@ -169,7 +174,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
-        if (adoption.getWifeCountryId() > 0){
+        if (adoption.getWifeCountryId() > 0) {
             wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
         }
 
@@ -183,6 +188,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String loadAdoptionNotice() {
         adoption = service.getById(idUKey, user);
+        if (adoption == null) {
+            addActionError(getText("er.invalid.Entry"));
+            populateApprovalAndPrintList();
+            return "skip";
+        }
         if (adoption.getStatus() != AdoptionOrder.State.APPROVED) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
@@ -237,9 +247,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String loadAdoptionCertificate() {
         adoption = service.getById(idUKey, user);
         if (adoption == null) {
-            //todo   add to property files handle the redirect as well 
-            addActionMessage(getText("invalid.idUKey"));
-            return SUCCESS;
+            addActionError(getText("er.invalid.Entry"));
+            populateApprovalAndPrintList();
+            return "skip";
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
             (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
