@@ -37,7 +37,8 @@ $(function() {
         yearRange: '1960:2020',
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
-        endDate:'2020-12-31'
+        endDate:'2020-12-31',
+        defaultDate:-365*18
     });
 });
 
@@ -56,7 +57,8 @@ $(function() {
                 var mother_age = child_bday.getYear() - motherbday.getYear();
                 $("input#motherAgeAtBirth").val(mother_age);
             }
-        }
+        },
+        defaultDate:-365*18
     });
     var child_bday = new Date(document.getElementById('childDateOfBirth').value);
     var mother_bday = document.getElementById('motherDatePicker').value;
