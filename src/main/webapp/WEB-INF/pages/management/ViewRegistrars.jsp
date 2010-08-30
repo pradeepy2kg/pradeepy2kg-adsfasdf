@@ -1,0 +1,1 @@
+veiw registras info
