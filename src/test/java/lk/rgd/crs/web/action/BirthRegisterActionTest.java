@@ -1,19 +1,28 @@
 package lk.rgd.crs.web.action;
 
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.UnitTestManager;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.extensions.TestSetup;
 
 /**
  * @author Indunil Moremada
@@ -26,6 +35,119 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
     private BirthRegisterAction action;
     private LoginAction loginAction;
     private BirthDeclaration bd;
+
+    protected static BDDivision colomboBDDivision;
+    protected static BDDivision negamboBDDivision;
+
+    protected final static ApplicationContext ctx = UnitTestManager.ctx;
+    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+    protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+
+
+    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(BirthRegisterActionTest.class)) {
+            protected void setUp() throws Exception {
+                logger.info("setup called");
+                colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
+                negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+
+                List birth = sampleBirths();
+                User sampleUser = loginSampleUser();
+                for (int i = 0; i < birth.size(); i++) {
+                    birthRegistrationService.addLiveBirthDeclaration((BirthDeclaration) birth.get(i), false, sampleUser, null, null);
+                }
+
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                logger.info("tear down called ");
+                super.tearDown();
+            }
+        };
+        return setup;
+    }
+
+    private static User loginSampleUser() {
+        User rg = null;
+        try {
+            rg = userManager.authenticateUser("rg", "password");
+        }
+        catch (AuthorizationException e) {
+            logger.debug("exception when autharizing a user :'rg' ");
+        }
+        return rg;
+    }
+
+    private static List sampleBirths() {
+        List list = new LinkedList();
+
+        for (int i = 0; i < 10; i++) {
+
+
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+
+            BirthDeclaration bd = new BirthDeclaration();
+            //child info
+            ChildInfo child = new ChildInfo();
+            //set birth date 20 days before today
+            gCal.add(Calendar.DATE, -20);
+            child.setDateOfBirth(gCal.getTime());
+            child.setChildGender(0);
+
+            //Birth Register info
+            BirthRegisterInfo register = new BirthRegisterInfo();
+            register.setPreferredLanguage("si");
+            register.setBdfSerialNo(new Long(1000+i));
+            //birth devision
+            register.setBirthDivision(colomboBDDivision);
+            register.setDateOfRegistration(gCal.getTime());
+            register.setBirthType(BirthDeclaration.BirthType.LIVE);
+
+            //parent info
+            ParentInfo parent = new ParentInfo();
+
+            //marrage info
+            MarriageInfo marrage = new MarriageInfo();
+
+            //grand father info
+            GrandFatherInfo granFather = new GrandFatherInfo();
+
+            //notification authority
+            NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
+            notification.setNotifyingAuthorityPIN("pin notification"+i);
+            notification.setNotifyingAuthorityName("notification authority name"+i);
+            notification.setNotifyingAuthorityAddress("notification authority address"+i);
+            //set notification date tomorrow from today
+            gCal.add(Calendar.DATE, +1);
+            notification.setNotifyingAuthoritySignDate(gCal.getTime());
+
+            //informant info
+            InformantInfo informant = new InformantInfo();
+            informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
+            informant.setInformantName("informant name"+i);
+            informant.setInformantAddress("informant address"+i);
+            informant.setInformantSignDate(gCal.getTime());
+
+            //confermant info
+            ConfirmantInfo confermant = new ConfirmantInfo();
+
+            bd.setChild(child);
+            bd.setRegister(register);
+            bd.setParent(parent);
+            bd.setMarriage(marrage);
+            bd.setGrandFather(granFather);
+            bd.setNotifyingAuthority(notification);
+            bd.setInformant(informant);
+            bd.setConfirmant(confermant);
+
+            list.add(bd);
+
+        }
+        return list;
+    }
 
     private String initAndExecute(String mapping, Map session) throws Exception {
         proxy = getActionProxy(mapping);
@@ -229,7 +351,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
     public void testBirthDeclarationEditMode() throws Exception {
         Map session = login("rg", "password");
-        request.setParameter("bdId", "166");
+        request.setParameter("bdId", "9");
         initAndExecute("/births/eprBirthRegistrationInit.do", session);
         session = action.getSession();
         assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
@@ -248,11 +370,11 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Request register Bean is Populated", bd.getRegister(), action.getRegister());
 
         assertEquals("Request birthDistrictId is set to existing district", action.getRegister().getBirthDistrict().getDistrictUKey(),
-            action.getBirthDistrictId());
+                action.getBirthDistrictId());
         assertEquals("Request birthDivisionId is set to existing birthDivision", action.getRegister().getBirthDivision().getBdDivisionUKey(),
-            action.getBirthDivisionId());
+                action.getBirthDivisionId());
         assertEquals("Request dsDivisionId is set to existing dsDivision", action.getRegister().getDsDivision().getDsDivisionUKey(),
-            action.getDsDivisionId());
+                action.getDsDivisionId());
         assertEquals("Request father Country", action.getFatherCountry(), bd.getParent().getFatherCountry().getCountryId());
         assertEquals("Request father Race", action.getFatherRace(), bd.getParent().getFatherRace().getRaceId());
         assertEquals("Request Mother Country", action.getMotherCountry(), bd.getParent().getMotherCountry().getCountryId());
@@ -391,35 +513,33 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
      */
     //todo create a sample data that can be print
 
- /*public void testBirthCetificatePrint() throws Exception {
-     //loggin as rg
-     Map session = login("rg", "password");
+    /*public void testBirthCetificatePrint() throws Exception {
+        //loggin as rg
+        Map session = login("rg", "password");
 
-     //setting buid to find BD for live biirth
-     request.setParameter("bdId", "165");
-     initAndExecute("/births/eprBirthCertificate.do",session);
-     session = action.getSession();
-     //assertEquals("No Action Errors", 0, action.getActionErrors());
-     //check BDF data
-     assertNotNull("Child object", action.getChild());
-     assertNotNull("Parent object", action.getParent());
-     assertNotNull("GrandFather object", action.getGrandFather());
-     assertNotNull("Marrage object", action.getMarriage());
-     assertNotNull("Informant object", action.getInformant());
-     assertNotNull("Confirmant object", action.getConfirmant());
-     assertNotNull("Register object", action.getRegister());
-     assertNotNull("Notify Authority", action.getNotifyingAuthority());
+        //setting buid to find BD for live biirth
+        request.setParameter("bdId", "165");
+        initAndExecute("/births/eprBirthCertificate.do",session);
+        session = action.getSession();
+        //assertEquals("No Action Errors", 0, action.getActionErrors());
+        //check BDF data
+        assertNotNull("Child object", action.getChild());
+        assertNotNull("Parent object", action.getParent());
+        assertNotNull("GrandFather object", action.getGrandFather());
+        assertNotNull("Marrage object", action.getMarriage());
+        assertNotNull("Informant object", action.getInformant());
+        assertNotNull("Confirmant object", action.getConfirmant());
+        assertNotNull("Register object", action.getRegister());
+        assertNotNull("Notify Authority", action.getNotifyingAuthority());
 
-     testing bdid =0
-     request.setParameter("bdId", "0");
-     initAndExecute("/births/eprBirthCertificate.do");
+        testing bdid =0
+        request.setParameter("bdId", "0");
+        initAndExecute("/births/eprBirthCertificate.do");
 
-     assertNotNull("Action Errors", action.getActionErrors());
-     assertNull("BirthDeclaration ", action.getChild());
+        assertNotNull("Action Errors", action.getActionErrors());
+        assertNull("BirthDeclaration ", action.getChild());
 
- }*/
-
-
+    }*/
     public void testStillBirthDeclarationInit() throws Exception {
         Map session = login("duminda", "duminda");
 
@@ -447,7 +567,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("rowNumber", "8");
         request.setParameter("register.preferredLanguage", "si");
 
-        
+
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
@@ -482,7 +602,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());        
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
         assertEquals("Father NIC", "11111111V", bd.getParent().getFatherNICorPIN());
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("No action errors", 0, action.getActionErrors().size());
@@ -500,7 +620,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());     
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
         assertEquals("Father NIC", "11111111V", bd.getParent().getFatherNICorPIN());
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("Informant NIC: ", "33333333V", bd.getInformant().getInformantNICorPIN());
@@ -515,7 +635,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         result = initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());       
+        assertEquals("Not a still birth failed ", BirthDeclaration.BirthType.STILL, bd.getRegister().getBirthType());
         assertEquals("Father NIC", "11111111V", bd.getParent().getFatherNICorPIN());
         assertNull("Father passport no:", bd.getParent().getFatherPassportNo());
         assertEquals("Informant NIC: ", "33333333V", bd.getInformant().getInformantNICorPIN());

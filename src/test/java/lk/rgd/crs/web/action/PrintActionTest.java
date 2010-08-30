@@ -42,12 +42,20 @@ public class PrintActionTest extends CustomStrutsTestCase {
     protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
 
     public static Test suite() {
+
         TestSetup setup = new TestSetup(new TestSuite(PrintActionTest.class)) {
+
             protected void setUp() throws Exception {
                 logger.info("setup called");
                 colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
                 negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
-                birthRegistrationService.addLiveBirthDeclaration(sampleBirths(), false, loginSampleUser(), null, null);
+
+                List birth = sampleBirths();
+                User sampleUser = loginSampleUser();
+                for (int i = 0; i < birth.size(); i++) {
+                    birthRegistrationService.addLiveBirthDeclaration((BirthDeclaration) birth.get(i), false, sampleUser, null, null);
+                }
+
                 super.setUp();
             }
 
@@ -70,65 +78,73 @@ public class PrintActionTest extends CustomStrutsTestCase {
         return rg;
     }
 
-    private static BirthDeclaration sampleBirths() {
-        // get Calendar with current date
-        java.util.GregorianCalendar gCal = new GregorianCalendar();
+    private static List sampleBirths() {
+        List list = new LinkedList();
 
-        BirthDeclaration bd = new BirthDeclaration();
-        //child info
-        ChildInfo child = new ChildInfo();
-        //set birth date 20 days before today
-        gCal.add(Calendar.DATE, -20);
-        child.setDateOfBirth(gCal.getTime());
-        child.setChildGender(0);
+        for (int i = 0; i < 10; i++) {
 
-        //Birth Register info
-        BirthRegisterInfo register = new BirthRegisterInfo();
-        register.setPreferredLanguage("si");
-        register.setBdfSerialNo(new Long(1000));
-        //birth devision
-        register.setBirthDivision(colomboBDDivision);
-        register.setDateOfRegistration(gCal.getTime());
-        register.setBirthType(BirthDeclaration.BirthType.LIVE);
 
-        //parent info
-        ParentInfo parent = new ParentInfo();
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
 
-        //marrage info
-        MarriageInfo marrage = new MarriageInfo();
+            BirthDeclaration bd = new BirthDeclaration();
+            //child info
+            ChildInfo child = new ChildInfo();
+            //set birth date 20 days before today
+            gCal.add(Calendar.DATE, -20);
+            child.setDateOfBirth(gCal.getTime());
+            child.setChildGender(0);
 
-        //grand father info
-        GrandFatherInfo granFather = new GrandFatherInfo();
+            //Birth Register info
+            BirthRegisterInfo register = new BirthRegisterInfo();
+            register.setPreferredLanguage("si");
+            register.setBdfSerialNo(new Long(1000 + i));
+            //birth devision
+            register.setBirthDivision(colomboBDDivision);
+            register.setDateOfRegistration(gCal.getTime());
+            register.setBirthType(BirthDeclaration.BirthType.LIVE);
 
-        //notification authority
-        NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
-        notification.setNotifyingAuthorityPIN("pin notification");
-        notification.setNotifyingAuthorityName("notification authority name");
-        notification.setNotifyingAuthorityAddress("notification authority address");
-        //set notification date tomorrow from today
-        gCal.add(Calendar.DATE, +1);
-        notification.setNotifyingAuthoritySignDate(gCal.getTime());
+            //parent info
+            ParentInfo parent = new ParentInfo();
 
-        //informant info
-        InformantInfo informant = new InformantInfo();
-        informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
-        informant.setInformantName("informant name");
-        informant.setInformantAddress("informant address");
-        informant.setInformantSignDate(gCal.getTime());
+            //marrage info
+            MarriageInfo marrage = new MarriageInfo();
 
-        //confermant info
-        ConfirmantInfo confermant = new ConfirmantInfo();
+            //grand father info
+            GrandFatherInfo granFather = new GrandFatherInfo();
 
-        bd.setChild(child);
-        bd.setRegister(register);
-        bd.setParent(parent);
-        bd.setMarriage(marrage);
-        bd.setGrandFather(granFather);
-        bd.setNotifyingAuthority(notification);
-        bd.setInformant(informant);
-        bd.setConfirmant(confermant);
+            //notification authority
+            NotifyingAuthorityInfo notification = new NotifyingAuthorityInfo();
+            notification.setNotifyingAuthorityPIN("pin notification" + i);
+            notification.setNotifyingAuthorityName("notification authority name" + i);
+            notification.setNotifyingAuthorityAddress("notification authority address" + i);
+            //set notification date tomorrow from today
+            gCal.add(Calendar.DATE, +1);
+            notification.setNotifyingAuthoritySignDate(gCal.getTime());
 
-        return bd;
+            //informant info
+            InformantInfo informant = new InformantInfo();
+            informant.setInformantType(InformantInfo.InformantType.GUARDIAN);
+            informant.setInformantName("informant name" + i);
+            informant.setInformantAddress("informant address" + i);
+            informant.setInformantSignDate(gCal.getTime());
+
+            //confermant info
+            ConfirmantInfo confermant = new ConfirmantInfo();
+
+            bd.setChild(child);
+            bd.setRegister(register);
+            bd.setParent(parent);
+            bd.setMarriage(marrage);
+            bd.setGrandFather(granFather);
+            bd.setNotifyingAuthority(notification);
+            bd.setInformant(informant);
+            bd.setConfirmant(confermant);
+
+            list.add(bd);
+
+        }
+        return list;
     }
 
     private String initAndExecute(String mapping, Map session) throws Exception {
@@ -206,7 +222,9 @@ public class PrintActionTest extends CustomStrutsTestCase {
 
     public void testPrintBulkOfEntries() throws Exception {
         Map session = login("rg", "password");
+        System.out.println("aaaa");
         request.setParameter("printed", "false");
+        request.setParameter("pageNo", "1");
         String[] index = new String[]{"1"};
         request.setParameter("index", index);
         request.setParameter("birthDivisionId", "1");
