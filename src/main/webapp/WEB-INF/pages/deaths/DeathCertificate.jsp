@@ -187,16 +187,18 @@
             பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
             Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
         </s:label>
-        <div class="form-submit">
-            <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-            <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
-            <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-            <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-            <s:hidden name="deathDivisionId" value="%{#request.deathDivisionId}"/>
-            <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
-        </div>
+        <s:if test="#request.allowPrintCertificate">
+            <div class="form-submit">
+                <s:hidden name="idUKey" value="%{#request.idUKey}"/>
+                <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
+                <s:hidden name="pageNo" value="%{#request.pageNo}"/>
+                <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
+                <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
+                <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+                <s:hidden name="deathDivisionId" value="%{#request.deathDivisionId}"/>
+                <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
+            </div>
+        </s:if>
     </s:form>
     <s:form action="eprDeathBackToPreviousState.do">
         <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -209,9 +211,11 @@
             <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
         </div>
     </s:form>
-    <div class="form-submit">
-        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    </div>
+    <s:if test="#request.allowPrintCertificate">
+        <div class="form-submit">
+            <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+        </div>
+    </s:if>
 </div>
 
 <%--idUKey=5&currentStatus=0&pageNo=1&nextFlag=false&previousFlag=false&rePrint=false--%>
