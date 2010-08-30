@@ -24,14 +24,20 @@
 
     .link1 {
         text-align: center;
-        background: url('<s:url value="/images/button_bg_hover_2.png"/> ') no-repeat;
+        background: url('<s:url value="/images/back.png"/> ') no-repeat;
         position: absolute;
-        width: 112px;
-        height: 30px;
+        width: 100px;
+        height: 75px;
         margin: 0px 0px 0px 830px;
         font-size: 11pt;
         color: black;
 
+    }
+
+    .text-margin {
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 23px;
     }
 
     .stillBirthLink1 {
@@ -137,7 +143,7 @@
 <div class="birth-registration-outer">
     <div class="lable-edit1"><s:label value="%{getText('sb.edit.lable')}"/></div>
     <div class="lable-edit2"><s:label value="%{getText('sb.edit.lable')}"/></div>
-    <div class="lable-MR"><s:label value="%{getText('sb.medical.registrar')}"/></div>
+    <div class="lable-MR"><s:label value="%{getText('lb.medical.registrar')}"/></div>
     <div class="lable-send-confirmation"><s:label value="%{getText('sb.send..birth.certificate')}"/></div>
     <div class="lable-fill-birth-declaration"><s:label value="%{getText('sb.fill.birth.declaration')}"/></div>
     <div class="lable-submit-bundle "><s:label value="%{getText('sb.submit.bundle')}"/></div>
@@ -149,7 +155,10 @@
     <div class="stillBirthLink2"><s:label value="%{getText('sb.approve.ADR')}"/></div>
 </s:a>
     <s:a href="eprBirthRegistrationHome.do">
-        <div class="link1"><s:label value="%{getText('lb.live.birth')}" cssStyle="cursor:pointer"/></div>
+        <div class="link1">
+            <div class="text-margin"><s:label value="%{getText('lb.live.birth')}" cssStyle="cursor:pointer"/>
+            </div>
+        </div>
     </s:a>
     <s:a href="eprBirthCertificateList.do">
         <div class="stillBirthLink3"><s:label value="%{getText('sb.print.certificate')}"/></div>

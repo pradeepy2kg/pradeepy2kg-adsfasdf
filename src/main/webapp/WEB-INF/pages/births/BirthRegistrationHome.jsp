@@ -94,16 +94,20 @@
 
 .link7 {
     text-align:center;
-    background: url('<s:url value="/images/button_bg_hover_2.png"/> ') no-repeat;
+    background: url('<s:url value="/images/for.png"/> ') no-repeat;
     position: absolute;
-    width: 112px;
-    height: 30px;
-    margin: 0px 0px 0px 830px;
+    width: 100px;
+    height: 76px;
+    margin: 0px 0px 0px 840px;
     font-size: 11pt;
     color: black;
 
 }
-
+.text-margin {
+        text-align: center;
+        margin-left:2px;
+        margin-top: 24px;
+    }
 .lable01 {
     font-size: 9pt;
     text-align: center;
@@ -272,7 +276,9 @@
      <div class="lable-nochanges"><s:label value="%{getText('lb.nochanges')}"/></div>
     <div class="lable-DSoffice"><s:label value="%{getText('sb.office')}"/></div>
     <s:a href="eprStillBirth.do">
-        <div class="link7"><s:label value="%{getText('lb.still.birth')}" cssStyle="cursor:pointer"/></div>
+        <div class="link7">
+           <div class="text-margin "><s:label value="%{getText('lb.still.birth')}" cssStyle="cursor:pointer"/></div>
+        </div>
     </s:a>
     <s:a href="eprBirthRegistrationInit.do">
         <div class="link1"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer"/></div>
