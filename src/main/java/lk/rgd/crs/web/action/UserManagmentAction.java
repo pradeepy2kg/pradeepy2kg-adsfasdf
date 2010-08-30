@@ -14,7 +14,9 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 
 
@@ -36,6 +38,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int[] assignedDistricts;
     private int[] assignedDivisions;
     private List<User> usersList;
+    private List<District> districtNameList;
+    private List<DSDivision> dsDivisionNameList;
+    private List<BDDivision> bdDivisionNameList;
+    private List<MRDivision> mrDivisionNameList;
     private String nameOfUser;
     private String userId;
     private String userName;
@@ -43,10 +49,16 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int UserDistrictId;
     private int dsDivisionId;
     private int divisionId;
+    private int mrdivisionId;
+
+    private String districtEn;
+    private String dsDivisionEn;
+    private String msg;
 
     private BDDivision bdDivision;
     private DSDivision dsDivision;
     private District district;
+    private MRDivision mrDivision;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -62,6 +74,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final RoleDAO roleDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final MRDivisionDAO mrDivisionDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -69,13 +82,14 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> dsDivisionList;
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManagerImpl service,
-                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService) {
+                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
         this.service = service;
         this.bdDivisionDAO = bdDivisionDAO;
         this.dataManagementService = dataManagementService;
+        this.mrDivisionDAO = mrDivisionDAO;
     }
 
     public String creatUser() {
@@ -143,63 +157,126 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return "success";
     }
 
-    public String initAddDistrict() {
+    public String initDivisionList() {
         populate();
-        if (button.equals("ADD")) {
-            pageNo = 1;
-        }
-        if (button.equals("INACTIVE")) {
-            return "delete" + SUCCESS;
-        }
-        return "success";
+        setDivisionList();
+        return SUCCESS;
     }
 
-    public String initAddDsDivisions() {
-        populate();
-        if (button.equals("ADD")) {
-            pageNo = 2;
+    public void setDivisionList() {
+        switch (pageNo) {
+            case 1:
+                districtNameList = districtDAO.findAll();
+                district = null;
+                break;
+            case 2:
+                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                dsDivisionNameList = dsDivisionDAO.findAll();
+                dsDivision = null;
+                break;
+            case 3:
+                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
+                bdDivisionNameList = bdDivisionDAO.findAll();
+                bdDivision = null;
+                break;
+            case 4:
+                districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
+                dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
+                mrDivisionNameList = mrDivisionDAO.findAll();
+                mrDivision=null;
+                break;
         }
-        if (button.equals("INACTIVE")) {
-            dataManagementService.inactivateDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), currentUser);
-            return "delete" + SUCCESS;
-        }
-        return "success";
     }
 
-    public String initAddDivisions() {
-        populate();
-        if (button.equals("ADD")) {
-            district = districtDAO.getDistrict(UserDistrictId);
-            pageNo = 3;
+    public String initActive() {
+        switch (pageNo) {
+            case 1:
+                district = districtDAO.getDistrict(UserDistrictId);
+                dataManagementService.activateDistrict(district, currentUser);
+                logger.debug("Id of Active District ({}) is    :{}", district.getEnDistrictName(), district.getDistrictId());
+                break;
+            case 2:
+                dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
+                dataManagementService.activateDSDivision(dsDivision, currentUser);
+                logger.debug("Id of Active Ds Division ({}) is    :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                break;
+            case 3:
+                bdDivision = bdDivisionDAO.getBDDivisionByPK(divisionId);
+                dataManagementService.activateBDDivision(bdDivision, currentUser);
+                logger.debug("Id of Active Division ({}) is    :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                break;
+            case 4:
+                mrDivision = mrDivisionDAO.getMRDivisionByPK(getMrdivisionId());
+                dataManagementService.activateMRDivision(mrDivision, currentUser);
+                logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+
         }
-        if (button.equals("INACTIVE")) {
-            dataManagementService.inactivateBDDivision(bdDivisionDAO.getBDDivisionByPK(divisionId), currentUser);
-            return "delete" + SUCCESS;
+        setDivisionList();
+        return SUCCESS;
+    }
+
+    public String initInactive() {
+        switch (pageNo) {
+            case 1:
+                district = districtDAO.getDistrict(UserDistrictId);
+                dataManagementService.inactivateDistrict(district, currentUser);
+                logger.debug("Id of Inactive District ({}) is    :{}", district.getEnDistrictName(), district.getDistrictId());
+                break;
+            case 2:
+                dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
+                dataManagementService.inactivateDSDivision(dsDivision, currentUser);
+                logger.debug("Id of Inactive Ds Division ({}) is    :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                break;
+            case 3:
+                bdDivision = bdDivisionDAO.getBDDivisionByPK(divisionId);
+                dataManagementService.inactivateBDDivision(bdDivision, currentUser);
+                logger.debug("Id of Inactive Division ({}) is    :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                break;
+            case 4:
+                mrDivision = mrDivisionDAO.getMRDivisionByPK(getMrdivisionId());
+                dataManagementService.inactivateMRDivision(mrDivision, currentUser);
+                logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+                break;
+
         }
+        setDivisionList();
         return SUCCESS;
     }
 
 
-    public String AddDivisionsAndDsDivisions() {
+    public String addDivisionsAndDsDivisions() {
         switch (pageNo) {
             case 1:
                 district.setActive(true);
                 dataManagementService.addDistrict(district, currentUser);
                 logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
+                msg = " New District Was Added  :" + district.getEnDistrictName();
                 break;
             case 2:
                 dsDivision.setDistrict(districtDAO.getDistrict(UserDistrictId));
                 dsDivision.setActive(true);
                 dataManagementService.addDSDivision(dsDivision, currentUser);
                 logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                msg = "New DSDivision Was Added :" + dsDivision.getEnDivisionName();
                 break;
             case 3:
                 bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                 bdDivision.setActive(true);
                 dataManagementService.addBDDivision(bdDivision, currentUser);
-                logger.debug("New Id of new Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                msg = "New BDDivision Was Added  :" + bdDivision.getEnDivisionName();
+            case 4:
+                mrDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                mrDivision.setActive(true);
+                dataManagementService.addMRDivision(mrDivision, currentUser);
+                logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+                msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
                 break;
+
+
         }
+        setDivisionList();
         return SUCCESS;
     }
 
@@ -231,7 +308,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             districtList = districtDAO.getAllDistrictNames(language, user);
         if (roleList == null)
             roleList = roleDAO.getRoleList();
-
     }
 
     private void populateDynamicLists(String language) {
@@ -451,4 +527,79 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.currentUser = currentUser;
     }
 
+    public String getDistrictEn() {
+        return districtEn;
+    }
+
+    public void setDistrictEn(String districtEn) {
+        this.districtEn = districtEn;
+    }
+
+    public String getDsDivisionEn() {
+        return dsDivisionEn;
+    }
+
+    public void setDsDivisionEn(String dsDivisionEn) {
+        this.dsDivisionEn = dsDivisionEn;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public MRDivisionDAO getMrDivisionDAO() {
+        return mrDivisionDAO;
+    }
+
+    public MRDivision getMrDivision() {
+        return mrDivision;
+    }
+
+    public void setMrDivision(MRDivision mrDivision) {
+        this.mrDivision = mrDivision;
+    }
+
+    public List<District> getDistrictNameList() {
+        return districtNameList;
+    }
+
+    public void setDistrictNameList(List<District> districtNameList) {
+        this.districtNameList = districtNameList;
+    }
+
+    public List<DSDivision> getDsDivisionNameList() {
+        return dsDivisionNameList;
+    }
+
+    public void setDsDivisionNameList(List<DSDivision> dsDivisionNameList) {
+        this.dsDivisionNameList = dsDivisionNameList;
+    }
+
+    public List<BDDivision> getBdDivisionNameList() {
+        return bdDivisionNameList;
+    }
+
+    public void setBdDivisionNameList(List<BDDivision> bdDivisionNameList) {
+        this.bdDivisionNameList = bdDivisionNameList;
+    }
+
+    public List<MRDivision> getMrDivisionNameList() {
+        return mrDivisionNameList;
+    }
+
+    public void setMrDivisionNameList(List<MRDivision> mrDivisionNameList) {
+        this.mrDivisionNameList = mrDivisionNameList;
+    }
+
+    public int getMrdivisionId() {
+        return mrdivisionId;
+    }
+
+    public void setMrdivisionId(int mrdivisionId) {
+        this.mrdivisionId = mrdivisionId;
+    }
 }

@@ -720,24 +720,21 @@
                 method="initAddDivisionsAndDsDivision">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
-        <action name="eprInitAddDistrict" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initAddDistrict">
+        <action name="eprInitDivisionList" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initDivisionList">
             <result type="tiles" name="success">epr.addEditDivisions</result>
-            <result type="tiles" name="deletesuccess">epr.home</result>
         </action>
-        <action name="eprInitAddDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initAddDsDivisions">
+        <action name="eprActiveDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initActive">
             <result type="tiles" name="success">epr.addEditDivisions</result>
-            <result type="tiles" name="deletesuccess">epr.home</result>
         </action>
-        <action name="eprInitAddDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="initAddDivisions">
+        <action name="eprInactiveDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initInactive">
             <result type="tiles" name="success">epr.addEditDivisions</result>
-            <result type="tiles" name="deletesuccess">epr.home</result>
         </action>
         <action name="eprAddDivisionsAndDsDivisions" class="lk.rgd.crs.web.action.UserManagmentAction"
-                method="AddDivisionsAndDsDivisions">
-            <result type="tiles" name="success">epr.home</result>
+                method="addDivisionsAndDsDivisions">
+            <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
     </package>
 </struts>

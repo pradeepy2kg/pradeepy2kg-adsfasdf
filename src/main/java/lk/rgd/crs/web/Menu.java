@@ -46,11 +46,10 @@ public class Menu {
         adminLink.put("eprdeleteUsers.do", new Link(null, "/popreg/management/", "eprdeleteUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprViewSelectedUsers.do", new Link(null, "/popreg/management/", "eprViewSelectedUsers.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addEditDivision.label", "/popreg/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprInitAddDivisions.do", new Link(null, "/popreg/management/", "eprInitAddDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprInitAddDsDivisions.do", new Link(null, "/popreg/management/", "eprInitAddDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprInitAddDistrict.do", new Link(null, "/popreg/management/", "eprInitAddDistrict.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprInitAddMrDivisions.do", new Link(null, "/popreg/management/", "eprInitAddMrDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprActiveDivisionsAndDsDivisions.do", new Link(null, "/popreg/management/", "eprActiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInactiveDivisionsAndDsDivisions.do", new Link(null, "/popreg/management/", "eprInactiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
         adminLink.put("eprAddDivisionsAndDsDivisions.do", new Link(null, "/popreg/management/", "eprAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInitDivisionList.do", new Link(null, "/popreg/management/", "eprInitDivisionList.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
 
         //User Preferance
         preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/popreg/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
@@ -126,7 +125,7 @@ public class Menu {
         adrBirthLink.put("eprDirectApprove.do", new Link(null, "/popreg/births/", "eprDirectApprove.do", Permission.APPROVE_BDF));
         adrBirthLink.put("eprDirectApproveIgnoreWarning.do", new Link(null, "/popreg/births/", "eprDirectApproveIgnoreWarning.do", Permission.APPROVE_BDF));
         adrBirthLink.put("ConfirmationDirectApprovalIngoreWarning.do", new Link(null, "/popreg/births/", "ConfirmationDirectApprovalIngoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
-        
+
         //Death Registration for DEO
         deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/popreg/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprDeathDeclaration.do", new Link(null, "/popreg/deaths/", "eprDeathDeclaration.do", Permission.EDIT_DEATH));
