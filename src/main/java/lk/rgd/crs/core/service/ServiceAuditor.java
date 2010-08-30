@@ -160,7 +160,7 @@ public class ServiceAuditor implements MethodInterceptor {
 
                 // if an exception was encountered, cross insert the event id into it
                 if (identifiableException != null) {
-                    identifiableException.setEventId(event.getRecordId());
+                    identifiableException.setEventId(event.getIdUKey());
                     logger.debug("Captured event log for exception as ID : {}", event.getIdUKey());
                 }
             }
