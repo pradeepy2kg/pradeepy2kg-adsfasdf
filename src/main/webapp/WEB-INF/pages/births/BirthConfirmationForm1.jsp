@@ -14,14 +14,29 @@
 
     function initPage() {
         disableOk(true);
+        /*var element = document.getElementById('searchOk').style;
+         element.display = 'none';*/
     }
 
     function disableNext(mode) {
-        document.getElementById('next').disabled = mode;
+        if (mode) {
+
+            document.getElementById('next').style.display = 'none';
+        }
+        else {
+            document.getElementById('next').style.display = 'block';
+        }
     }
 
     function disableOk(mode) {
-        document.getElementById('searchOk').disabled = mode;
+
+        if (mode) {
+
+            document.getElementById('searchOk').style.display = 'none';
+        }
+        else {
+            document.getElementById('searchOk').style.display = 'block';
+        }
     }
 
     function okCheck() {
@@ -80,18 +95,18 @@
         var returnval;
 
         /*date related validations*/
-//        var submit = new Date(document.getElementById("submitDatePicker").value);
-//        if (!(submit.getTime())) {
-//            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
-//        }
-//        element = document.getElementById('SerialNo');
-//        if (element.value == "") {
-//            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
-//        }
-//        element = document.getElementById('placeOfBirth');
-//        if (element.value == "") {
-//            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
-//        }
+        //        var submit = new Date(document.getElementById("submitDatePicker").value);
+        //        if (!(submit.getTime())) {
+        //            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
+        //        }
+        //        element = document.getElementById('SerialNo');
+        //        if (element.value == "") {
+        //            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
+        //        }
+        //        element = document.getElementById('placeOfBirth');
+        //        if (element.value == "") {
+        //            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
+        //        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -177,9 +192,15 @@
                     <tr><s:hidden name="pageNo" value="2"/>
                         <s:hidden name="bdId" value="%{#request.bdId}"/>
                         <td width="170px"></td>
-                        <td align="left" class="button"><s:submit id="searchOk" name="searchOk"
-                                                                  value="%{getText('skip.label')}"
-                                                                  cssStyle="margin-right:8px;"/></td>
+                        <td align="left" class="button">
+                            <table id="searchOkTable">
+                                <tr>
+                                    <td><s:submit id="searchOk" name="searchOk"
+                                                  value="%{getText('skip.label')}"
+                                                  cssStyle="margin-right:8px;"/></td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
                 </table>
             </form>
