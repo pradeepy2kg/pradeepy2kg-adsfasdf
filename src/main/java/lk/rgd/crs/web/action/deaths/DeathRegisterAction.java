@@ -377,7 +377,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
         logger.debug("requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
         deathRegister = service.getById(idUKey, user);
-        if (deathRegister != null && deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED) {
+        if (deathRegister != null && deathRegister.getStatus() == DeathRegister.State.APPROVED) {
             try {
                 service.markDeathCertificateAsPrinted(idUKey, user);
             }
