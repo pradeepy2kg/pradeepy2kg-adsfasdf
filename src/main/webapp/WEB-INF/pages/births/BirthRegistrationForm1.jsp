@@ -143,17 +143,17 @@ function validate() {
     if (declarationType.value == 0) {
         commonTags();
         stillBirthCommonTags(check);
-        dateRange(submit, birthdate, 0);
+        dateRange();
     }
     if (declarationType.value == 1) {
         commonTags();
         liveBirthCommonTags(check)
-        dateRange(submit, birthdate, 1);
+        dateRange();
     }
     if (declarationType.value == 2) {
         commonTags();
         liveBirthCommonTags(check);
-        dateRange(submit, birthdate, 2);
+        dateRange();
     }
 
     if (errormsg != "") {
@@ -236,7 +236,7 @@ function liveBirthCommonTags(check) {
     if (!check.checked) {
         isEmpty(domObject, "", 'error4');
     }
-    isNumeric(domObject.value, 'error13', 'error23')
+    validateNumber(domObject.value, 'error13', 'error23');
 
     // child rank
     domObject = document.getElementById('childRank');
@@ -271,6 +271,7 @@ function dateRange() {
 }
 
 function initPage() {
+    
 }
 </script>
 
@@ -311,7 +312,14 @@ function initPage() {
                 <tr>
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
-                    <td><s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/></td>
+                    <td>
+                        <s:if test="register.bdfSerialNo!= null">
+                            <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
+                        </s:if>
+                        <s:else>
+                            <s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/>
+                        </s:else>
+                    </td>
                 </tr>
             </table>
 
@@ -328,7 +336,8 @@ function initPage() {
                             <label><span class="font-8">භාරගත්  දිනය<br>in Tamil<br>Submitted Date</span></label>
                         </s:if>
                         <s:else>
-                            <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Date of Registration</span></label>
+                            <label><span
+                                    class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Date of Registration</span></label>
                         </s:else>
                     </td>
                     <td><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>

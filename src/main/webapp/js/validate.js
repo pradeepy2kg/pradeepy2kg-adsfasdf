@@ -14,18 +14,17 @@ function isFieldEmpty(domElement) {
     }
 }
 
-// check given text is a numeric value
+// check given text is an integer value
 function isNumeric(text, errorText, message) {
-    var validChars = "0123456789.";
-    var isNumber = true;
-    var characters;
-    for (i = 0; i < text.length && isNumber == true; i++) {
-        characters = text.charAt(i);
-        if (validChars.indexOf(characters) == -1) {
-            isNumber = false;
-        }
+    var reg = /^([0-9]*)$/;
+    if (reg.test(text.trim()) == false) {
+        printMessage(errorText, message);
     }
-    if (!isNumber) {
+}
+
+// check given text is a number(interger or floating point) 
+function validateNumber(text, errorText, errorCode) {
+    if (isNaN(text)) {
         printMessage(errorText, message)
     }
 }
