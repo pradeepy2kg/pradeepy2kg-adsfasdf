@@ -94,8 +94,6 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         List list = new LinkedList();
 
         for (int i = 0; i < 10; i++) {
-
-
             // get Calendar with current date
             java.util.GregorianCalendar gCal = new GregorianCalendar();
 
@@ -106,22 +104,35 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
             gCal.add(Calendar.DATE, -20);
             child.setDateOfBirth(gCal.getTime());
             child.setChildGender(0);
+            child.setPlaceOfBirth("මාතර");
+            child.setPlaceOfBirthEnglish("Matara");
+            child.setBirthAtHospital(true);
+            child.setChildFullNameEnglish("KAMAL SILVA");
+            child.setChildFullNameOfficialLang("kamal silva");
+            child.setChildRank(1 + i);
+            child.setChildBirthWeight(new Float(1 + i));
+            //todo warning
+            child.setNumberOfChildrenBorn(0);
 
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
             register.setBdfSerialNo(new Long(1000 + i));
+            register.setPreferredLanguage("si");
             //birth devision
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
-
+            //todo
             //parent info
             ParentInfo parent = new ParentInfo();
             parent.setFatherCountry(sriLanka);
             parent.setFatherRace(sinhalese);
             parent.setMotherCountry(sriLanka);
             parent.setMotherRace(sinhalese);
+            parent.setMotherAgeAtBirth(42 + i);
+            parent.setFatherNICorPIN("530232026V");
+            parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
 
             //marrage info
             MarriageInfo marrage = new MarriageInfo();
@@ -254,6 +265,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Failed to update the birth declaration session with preffered language", "si", bd.getRegister().getPreferredLanguage());
         assertEquals("Failed to update the birth declaration session with birth place", "මාතර", bd.getChild().getPlaceOfBirth());
 
+        //todo
         //for 3 of 4BDF
         request.setParameter("pageNo", "2");
         //father's information

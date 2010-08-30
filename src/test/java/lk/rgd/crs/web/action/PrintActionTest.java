@@ -224,7 +224,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
         Map session = login("rg", "password");
         System.out.println("aaaa");
         request.setParameter("printed", "false");
-        request.setParameter("pageNo", "1");
+        request.setParameter("pageNo", "2");
         String[] index = new String[]{"1"};
         request.setParameter("index", index);
         request.setParameter("birthDivisionId", "1");
@@ -262,8 +262,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
         assertNotNull("Request BirthDivisionID", action.getBirthDivisionId());
         assertNotNull("Request Printed", action.isPrinted());
         assertNotNull("Request Print Start", action.getPrintStart());
-        logger.info("page number : {}", action.getPageNo());
-    }
+          }
 
     private void comman(Map session) {
         //check no action errors
