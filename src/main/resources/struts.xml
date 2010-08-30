@@ -469,6 +469,11 @@
             <result type="tiles" name="success">epr.deathDeclaration_form1</result>
         </action>
 
+        <action name="eprDeathBackToPreviousState" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="backToPreviousState">
+            <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+        </action>
+
         <action name="eprApproveDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="approveDeath">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>

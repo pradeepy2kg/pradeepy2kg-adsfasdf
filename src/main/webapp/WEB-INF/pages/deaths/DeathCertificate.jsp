@@ -188,8 +188,7 @@
             Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
         </s:label>
         <div class="form-submit">
-            <s:hidden name="rePrint" value="true"/>
-            <s:hidden name="idUKey" value="idUKey"/>
+            <s:hidden name="idUKey" value="%{#request.idUKey}"/>
             <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
             <s:hidden name="pageNo" value="%{#request.pageNo}"/>
             <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
@@ -199,7 +198,7 @@
             <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
         </div>
     </s:form>
-    <s:form action="eprAdoptionBackToPreviousState.do">
+    <s:form action="eprDeathBackToPreviousState.do">
         <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
         <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
         <s:hidden name="pageNo" value="%{#request.pageNo}"/>
