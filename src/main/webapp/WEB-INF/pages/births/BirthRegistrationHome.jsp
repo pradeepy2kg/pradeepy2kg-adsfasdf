@@ -17,6 +17,7 @@
 }
 
 .stillBirthButton {
+    background: url('<s:url value="/images/for.png"/> ') no-repeat;
     width: 135px;
     height: 45px;
     margin: 5px 0px 0px 800px;
