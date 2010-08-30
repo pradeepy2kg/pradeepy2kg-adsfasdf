@@ -111,7 +111,7 @@ function commonTags() {
     // validate grandfather birth year
     domObject = document.getElementById('grandFatherBirthYear');
     if (!isFieldEmpty(domObject))
-        isNumeric(domObject.value, 'error11', 'p3error9');
+        validateBirthYear(domObject, 'error11', 'p3error9');
 
     // validate great grandfather PIN or NIC
     domObject = document.getElementById('greatGrandFatherNICorPIN');
@@ -121,13 +121,13 @@ function commonTags() {
     // validate great grandfather birth year
     domObject = document.getElementById('greatGrandFatherBirthYear');
     if (!isFieldEmpty(domObject))
-        isNumeric(domObject.value, 'error11', 'p3error10');
+        validateBirthYear(domObject, 'error11', 'p3error10');
 }
 
 // validation marriage related fields
 function validateMarriage() {
     var domObject;
-    var submit = new Date(document.getElementById('marriageDatePicker').value);
+    //    var submit = new Date(document.getElementById('marriageDatePicker').value);
 
     // for parrents married - Yes
     domObject = document.getElementsByName("marriage.parentsMarried")[0];
@@ -138,8 +138,8 @@ function validateMarriage() {
             errormsg = errormsg + "\n" + document.getElementById('p3error6').value;
         }
 
-        // validate marriage date
-        if (!(submit.getTime())) {
+        domObject = document.getElementById('marriageDatePicker');
+        if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('p3error5').value;
         }
     }
@@ -188,7 +188,7 @@ function validateInformant() {
 
     domObject = document.getElementById('informantPhoneNo');
     if (!isFieldEmpty(domObject))
-        isNumeric(domObject.value, 'error11', 'error16');
+        validatePhoneNo(domObject, 'error11', 'error16');
 
     // validating informant email
     domObject = document.getElementById('informantEmail');
@@ -220,12 +220,25 @@ function checkInformantType() {
     }
 }
 
+function validateBirthYear(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^([1-9][0-9]{3})$/;
+        if (reg.test(value) == false) {
+            printMessage(errorText, errorCode);
+        }
+    }
+}
+
 function informantAvailable(inf1, inf2, inf3) {
     if (!(inf1 || inf2 || inf3))
         errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
 }
 
 function disableMarriage(mode) {
+    if (mode) {
+        document.getElementById('placeOfMarriage').value = null;
+        document.getElementById('marriageDatePicker').value = null;
+    }
     document.getElementById('placeOfMarriage').disabled = mode;
     document.getElementById('marriageDatePicker').disabled = mode;
 }

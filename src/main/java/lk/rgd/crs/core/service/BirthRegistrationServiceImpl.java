@@ -1147,8 +1147,6 @@ public class BirthRegistrationServiceImpl implements
 
         MarriageInfo marriage = bdf.getMarriage();
         if (marriage != null) {
-            if (!(parent.getFatherFullName() == null && parent.getMotherFullName() == null &&
-                marriage.getParentsMarried() == 2))
                 marriage.setParentsMarriedPrint(MarriedStatusUtil.getMarriedStatus(marriage.getParentsMarried(), prefLanguage));
         }
 

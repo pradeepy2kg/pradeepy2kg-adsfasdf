@@ -8,7 +8,7 @@
 <script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../js/validate.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script>
 
@@ -66,7 +66,10 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
         }
     })
 
@@ -77,20 +80,18 @@
         var returnval;
 
         /*date related validations*/
-        var submit = new Date(document.getElementById("submitDatePicker").value);
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
-            flag = true;
-        }
-        element = document.getElementById('SerialNo');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
-        }
-        element = document.getElementById('placeOfBirth');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
-            flag = true;
-        }
+//        var submit = new Date(document.getElementById("submitDatePicker").value);
+//        if (!(submit.getTime())) {
+//            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
+//        }
+//        element = document.getElementById('SerialNo');
+//        if (element.value == "") {
+//            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
+//        }
+//        element = document.getElementById('placeOfBirth');
+//        if (element.value == "") {
+//            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
+//        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -117,9 +118,10 @@
     function validateSerialNum() {
         var domObject;
         var returnval = true;
-        var serial = document.getElementById('SerialNo');
-        isNumeric(serial.value, 'error5');
-        isEmpty(serial, "p1error1");
+        domObject = document.getElementById('SerialNo');
+        if (isFieldEmpty(domObject))
+            isNumeric(domObject.value, 'error13', 'error5');
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -326,7 +328,8 @@
                                     cssClass="disable"
                                     disabled="true" cols="38"/></td>
         <td colspan="6">
-            <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish" cssStyle="margin-top:10px;"/>
+            <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"
+                         cssStyle="margin-top:10px;"/>
             <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px;" id="place">
         </td>
     </tr>

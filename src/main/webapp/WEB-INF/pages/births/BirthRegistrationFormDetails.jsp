@@ -2,7 +2,6 @@
   @author Chathuranga Withana
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="birth-register-approval">
@@ -44,14 +43,15 @@
                                 </tr>
                             </s:iterator>
                         </table>
-                        <table class="birth-registration-form-details-button-table">
+                        <table align="center">
                             <tr>
                                 <td><s:label value="%{getText('ignoreWorning.label')}" name="ignoreWorning"/></td>
                                 <td><s:checkbox name="ignoreWarning"/></td>
                                 <s:hidden value="%{#request.bdId}" name="bdId"/>
                                 <s:hidden value="true" name="directApprovalFlag"/>
-                                <td class="button" align="left"><s:submit name="approve"
-                                                                          value="%{getText('approve.label')}"/></td>
+                                <td class="button" align="left">
+                                    <s:submit name="approve" value="%{getText('approve.label')}"/>
+                                </td>
                             </tr>
                         </table>
                     </fieldset>

@@ -1,7 +1,7 @@
 //check given element is empty
 function isEmpty(domElement, errorMessage, errorCode) {
     with (domElement) {
-        if (value == null || value == "") {
+        if (value == null || value.trim() == "") {
             errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
         }
     }
@@ -10,11 +10,7 @@ function isEmpty(domElement, errorMessage, errorCode) {
 //check given element is empty and return true if empty else false
 function isFieldEmpty(domElement) {
     with (domElement) {
-        if (value == null || value == "") {
-            return true;
-        } else {
-            return false;
-        }
+        return (value == null || value.trim() == "") ? true : false;
     }
 }
 
@@ -30,7 +26,7 @@ function isNumeric(text, errorText, message) {
         }
     }
     if (!isNumber) {
-        errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(message).value;
+        printMessage(errorText, message)
     }
 }
 
@@ -38,32 +34,27 @@ function isNumeric(text, errorText, message) {
 function validateEmail(domElement, errorText, errorCode) {
     with (domElement) {
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-        if (reg.test(value) == false) {
-            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
         }
     }
 }
 
 function validateSerialNo(domElement, errorText, errorCode) {
     with (domElement) {
-        if (value.length != 10) {
-            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-        } else {
-            var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
-            if (reg.test(value) == false) {
-                errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-            }
+        var reg = /^20([1-9][0-9])[0|1]([0-9]{5})$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
         }
     }
 }
 
-//TODO by chathuranga
 // validate telephone number
 function validatePhoneNo(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^\b[0-9][0-9]{6,14}\b$/;
-        if (reg.test(value) == false) {
-            alert('phone number error')
+        var reg = /^[0-9]{7,15}$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
         }
     }
 }
@@ -71,15 +62,16 @@ function validatePhoneNo(domElement, errorText, errorCode) {
 // validate PIN or NIC
 function validatePINorNIC(domElement, errorText, errorCode) {
     with (domElement) {
-        if (value.length != 10) {
-            errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-        } else {
-            var reg = /^([0-9]{10})|([0-9]{9}[X|x|V|v])$/;
-            if (reg.test(value) == false) {
-                errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
-            }
+        var reg = /^([0-9]{10})|([0-9]{9}[X|x|V|v])$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
         }
     }
+}
+
+// print error message
+function printMessage(errorText, errorCode) {
+    errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
 }
 
 //todo amith
@@ -132,49 +124,64 @@ function DaysArray(n) {
 
 function isDate(dtStr, errorText, errorCode) {
 
-    var isValideDate = true;
-    var daysInMonth = DaysArray(12)
-    var pos1 = dtStr.indexOf(dtCh)
-    var pos2 = dtStr.indexOf(dtCh, pos1 + 1)
-    var strYear = dtStr.substring(0, pos1)
-    var strMonth = dtStr.substring(pos1 + 1, pos2)
-    var strDay = dtStr.substring(pos2 + 1)
+    if (isFutureDate(dtStr)) {
+        printMessage(errorText, errorCode);
 
-    strYr = strYear
-    if (strDay.charAt(0) == "0" && strDay.length > 1) strDay = strDay.substring(1)
-    if (strMonth.charAt(0) == "0" && strMonth.length > 1) strMonth = strMonth.substring(1)
-    for (var i = 1; i <= 3; i++) {
-        if (strYr.charAt(0) == "0" && strYr.length > 1) strYr = strYr.substring(1)
-    }
+    } else {
 
-    month = parseInt(strMonth)
-    day = parseInt(strDay)
-    year = parseInt(strYr)
+        var isValideDate = true;
+        var daysInMonth = DaysArray(12)
+        var pos1 = dtStr.indexOf(dtCh)
+        var pos2 = dtStr.indexOf(dtCh, pos1 + 1)
+        var strYear = dtStr.substring(0, pos1)
+        var strMonth = dtStr.substring(pos1 + 1, pos2)
+        var strDay = dtStr.substring(pos2 + 1)
 
-    // date format should be : yyyy-mm-dd
-    if (pos1 == -1 || pos2 == -1) {
-        isValideDate = false;
-    }
-    //enter a valid month
-    if (strMonth.length < 1 || month < 1 || month > 12) {
-        isValideDate = false;
-    }
-    //enter a valid day
-    if (strDay.length < 1 || day < 1 || day > 31 || (month == 2 && day > daysInFebruary(year)) || day > daysInMonth[month]) {
-        isValideDate = false;
-    }
-    //enter a valid 4 digit year between " + minYear + " and " + maxYear
-    if (strYear.length != 4 || year == 0 || year < minYear || year > maxYear) {
-        isValideDate = false;
-    }
-    //Please enter a valid date
-    if (dtStr.indexOf(dtCh, pos2 + 1) != -1 || isInteger(stripCharsInBag(dtStr, dtCh)) == false) {
-        isValideDate = false;
-    }
-    if (!isValideDate) {
-        //todo erro massage
-        errormsg = errormsg + "\n" + document.getElementById(errorText).value + " : " + document.getElementById(errorCode).value;
+        strYr = strYear
+        if (strDay.charAt(0) == "0" && strDay.length > 1) strDay = strDay.substring(1)
+        if (strMonth.charAt(0) == "0" && strMonth.length > 1) strMonth = strMonth.substring(1)
+        for (var i = 1; i <= 3; i++) {
+            if (strYr.charAt(0) == "0" && strYr.length > 1) strYr = strYr.substring(1)
+        }
 
+        month = parseInt(strMonth)
+        day = parseInt(strDay)
+        year = parseInt(strYr)
+
+        // date format should be : yyyy-mm-dd
+        if (pos1 == -1 || pos2 == -1) {
+            isValideDate = false;
+        }
+        //enter a valid month
+        if (strMonth.length < 1 || month < 1 || month > 12) {
+            isValideDate = false;
+        }
+        //enter a valid day
+        if (strDay.length < 1 || day < 1 || day > 31 || (month == 2 && day > daysInFebruary(year)) || day > daysInMonth[month]) {
+            isValideDate = false;
+        }
+        //enter a valid 4 digit year between " + minYear + " and " + maxYear
+        if (strYear.length != 4 || year == 0 || year < minYear || year > maxYear) {
+            isValideDate = false;
+        }
+        //Please enter a valid date
+        if (dtStr.indexOf(dtCh, pos2 + 1) != -1 || isInteger(stripCharsInBag(dtStr, dtCh)) == false) {
+            isValideDate = false;
+        }
+        if (!isValideDate) {
+            //todo erro massage
+            printMessage(errorText, errorCode);
+        }
     }
     return true
+}
+
+function isFutureDate(selectDate) {
+    var selected = new Date(selectDate);
+    var today = new Date();
+    if (selected.getTime() > today.getTime()) {
+        return true;
+    } else {
+        return false;
+    }
 }

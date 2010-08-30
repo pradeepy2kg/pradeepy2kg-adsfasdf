@@ -160,7 +160,7 @@ function validate() {
     // validate mother phone number
     domObject = document.getElementById('motherPhoneNo');
     if (!isFieldEmpty(domObject))
-        isNumeric(domObject.value, 'error2', 'error6');
+        validatePhoneNo(domObject, 'error2', 'error6')
 
     // validate mother email address
     domObject = document.getElementById('motherEmail');
@@ -175,16 +175,20 @@ function validate() {
     return returnval;
 }
 
-function checkMotherAge(domElement) {
+// check parent age is between 10 to 89
+function checkParentAge(domValue, errorText, errorCode) {
+    var reg = /^[1-8][0-9]$/;
+    if (reg.test(domValue) == false) {
+        printMessage(errorText, errorCode);
+    }
+}
+
+function checkFatherAge(domElement, errorText, errorCode) {
     with (domElement) {
-        if (value == 0) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value + " : " + document.getElementById('mother_age').value;
-        } else {
-            var reg = /^[1-8][0-9]$/;
-            if (reg.test(value) == false) {
-                errormsg = errormsg + "\n" + document.getElementById('error2').value + " : " + document.getElementById('mother_age').value;
-            }
-        }
+        var father_bday = new Date(value);
+        var today = new Date();
+        var father_age = today.getYear() - father_bday.getYear();
+        checkParentAge(father_age, errorText, errorCode);
     }
 }
 
@@ -213,7 +217,7 @@ function commonTags() {
     // validate father date of birth
     domObject = document.getElementById('fatherDatePicker');
     if (!isFieldEmpty(domObject))
-        isDate(domObject.value, "error2", "fatherDOB");
+        checkFatherAge(domObject, 'error2', 'fatherDOB');
 
     // validate mother PIN or NIC
     domObject = document.getElementById('mother_pinOrNic');
@@ -226,9 +230,10 @@ function commonTags() {
         isDate(domObject.value, "error2", "motherDOB");
     }
 
+    // validate mother age at birth
     domObject = document.getElementById('motherAgeAtBirth');
     if (!isFieldEmpty(domObject))
-        checkMotherAge(domObject);
+        checkParentAge(domObject.value, 'error2', 'mother_age');
 
     // validate hospital addmission date
     domObject = document.getElementById('admitDatePicker');
