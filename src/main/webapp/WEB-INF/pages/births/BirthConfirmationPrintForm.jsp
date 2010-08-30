@@ -102,21 +102,22 @@
     <caption></caption>
     <col/>
     <col/>
-    <col/>
+    <col width="350px"/>
+    <col width="250px"/>
     <tbody>
     <tr>
         <td class="cell_011">1</td>
-        <td>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
+        <td colspan="2">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
             හා දිනය
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
-        <td width="200px"><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
+        <td width="200px" ><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
             <s:textfield cssClass="disable" disabled="true" name="register.dateOfRegistration"/></td>
     </tr>
     <tr>
         <td style="text-align:center">2</td>
-        <td><label>
+        <td colspan="2"><label>
             යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත දැනුම් දිය යුතු අවසන් දිනය <br>
             மாற்றங்கள் பதிவாளர் அதிகாரியின் அலுவலகத்தை அடைய வேண்டிய இறுதித் திகதி <br>
             Last date by which changes should be received by the registrar generals office
@@ -125,14 +126,15 @@
     </tr>
     <tr>
         <td style="text-align:center">3</td>
-        <td>
+        <td >
            ආපසු එවිය යුතු ලිපිනය  <br>
             மாற்றங்கள்..          <br>
             Address to post any changes
         </td>
-        <td >
+        <td colspan="2">
             
         </td>
+        
         
     </tr>
     </tbody>
@@ -281,7 +283,7 @@
         <tbody>
         <tr>
             <td colspan="3" style="text-align:center;font-size:12pt;">
-                <label><br>නම් වල වෙනස් වීම් / பெயரிலுள்ள மாற்றங்கள்/ Changes in Names</label>
+                <label><br>නම්වල අක්ෂර දෝශ වෙනස් වීම් ඇතුලත් කිරීම/ பெயரிலுள்ள மாற்றங்கள்/ Changes in Names</label>
             </td>
         </tr>
         </tbody>
@@ -474,15 +476,30 @@
     <table class="table_con_page_03" cellspacing="0" style="float:left; margin-bottom:30px;">
         <caption></caption>
         <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col width="250px"/>
+        <col style="width:12.5%"/>
+        <col style="width:12.5%"/>
+        <col style="width:12.5%"/>
+        <col style="width:12.5%"/>
+        <col style="width:12.5%"/>
+        <col style="width:12.5%"/>
         <tbody>
 
         <tr>
             <td height="80px" style="text-align:center">16</td>
-            <td colspan="3">
+            <td> උපත තහවුරු කරන්නේ කවුරුන් විසින්ද?<br>
+                *in tamil*     <br>
+                Person confirming the details</td>
+            <td>මව<br>*in tamin <br>  Mother</td>
+            <td></td>
+            <td>පියා     <br>*in tamil<br>Father</td>
+            <td></td>
+            <td>භාරකරු  <br>*in tamil<br>Guardian</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td height="80px" style="text-align:center">17</td>
+            <td colspan="4">
                 <p></p>
                 <label>
                     උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
@@ -492,11 +509,11 @@
 
                 <p></p>
             </td>
-            <td width="350px"></td>
+            <td colspan="3" width="350px"></td>
         </tr>
 
         <tr>
-            <td rowspan="5" class="cell_012">17</td>
+            <td rowspan="5" class="cell_012">18</td>
             <td rowspan="5">
                 <p></p>
                 <label>
@@ -508,37 +525,37 @@
                 <p></p>
             </td>
 
-            <td colspan="3"><p></p></td>
+            <td colspan="6"><p></p></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td colspan="6"><p></p></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td colspan="6"><p></p></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td colspan="6"><p></p></td>
         </tr>
         <tr>
-            <td colspan="3"><p></p></td>
+            <td colspan="6"><p></p></td>
         </tr>
 
         <tr>
-            <td rowspan="2" class="cell_001">18</td>
+            <td rowspan="2" class="cell_001">19</td>
             <td rowspan="2">
                 <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
                     <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
                     <br>I hereby certify that the above information are correct
                 </label>
             </td>
-            <td width="350px"><p></p><label>දිනය <br>திகதி <br>Date </label>
+            <td colspan="3" width="350px"><p></p><label>දිනය <br>திகதி <br>Date </label>
 
                 <p></p></td>
-            <td colspan="2"></td>
+            <td colspan="4"></td>
         </tr>
         <tr>
-            <td colspan="2" style="height:75px">අත්සන<br>கையொப்பம்<br>Signature</td>
-            <td colspan="2" style="height:75px"></td>
+            <td colspan="3" style="height:75px">අත්සන<br>கையொப்பம்<br>Signature</td>
+            <td colspan="4" style="height:75px"></td>
         </tr>
         </tbody>
     </table>
@@ -569,7 +586,7 @@
         <tbody>
 
         <tr>
-            <td rowspan="2" class="cell_001">19</td>
+            <td rowspan="2" class="cell_001">20</td>
             <td rowspan="2"><p></p><label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
                 (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
                 மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
