@@ -11,7 +11,6 @@
     .bith_data_Entry {
         width: 200px;
         height: 200px;
-        background-color: aqua;
         padding: 6px 5px;
     }
 
@@ -70,6 +69,7 @@
         width: 145px;
         height: 45px;
         margin: 375px 0px 0px 572px;
+        cursor:pointer;
 
     }
 
@@ -150,9 +150,9 @@
     <div class="lable-issue-receipt "><s:label value="%{getText('sb.issue.receipt')}"/></div>
     <div class="lable-DSoffice "><s:label value="%{getText('sb.office')}"/></div>
     <s:a href="eprStillBirthRegistrationInit.do">
-        <div class="stillBirthLink1"><s:label value="%{getText('sb.data.entry')}"/></div>
+        <div class="stillBirthLink1"><s:label value="%{getText('sb.data.entry')}" cssStyle="cursor:pointer;"/></div>
     </s:a><s:a href="eprBirthRegisterApproval.do">
-    <div class="stillBirthLink2"><s:label value="%{getText('sb.approve.ADR')}"/></div>
+    <div class="stillBirthLink2"><s:label value="%{getText('sb.approve.ADR')}" cssStyle="cursor:pointer;"/></div>
 </s:a>
     <s:a href="eprBirthRegistrationHome.do">
         <div class="link1">
@@ -161,7 +161,7 @@
         </div>
     </s:a>
     <s:a href="eprBirthCertificateList.do">
-        <div class="stillBirthLink3"><s:label value="%{getText('sb.print.certificate')}"/></div>
+        <div class="stillBirthLink3"><s:label value="%{getText('sb.print.certificate')}" cssStyle="cursor:pointer;"/></div>
     </s:a>
     <div class="bg1"></div>
 </div>
