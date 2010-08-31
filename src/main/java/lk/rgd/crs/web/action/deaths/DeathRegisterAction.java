@@ -13,6 +13,7 @@ import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.DeathRegistrationService;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.AppConstants;
 import lk.rgd.crs.CRSRuntimeException;
@@ -55,7 +56,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> countryList;
     private List<DeathRegister> deathApprovalAndPrintList;
     private Map<Integer, String> raceList;
-    private List<String> warnings;
+    private List<UserWarning> warnings;
 
     private int pageNo;
     private int noOfRows;
@@ -162,7 +163,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
                     if (DeathRegister.Type.NORMAL == deathType || DeathRegister.Type.SUDDEN == deathType
-                        || DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType) {
+                            || DeathRegister.Type.LATE == deathType || DeathRegister.Type.MISSING == deathType) {
                         service.updateDeathRegistration(ddf, user);
                         addActionMessage(getText("editDataSaveSuccess.label"));
                     }
@@ -176,7 +177,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String deathCertificate() {
         deathRegister = service.getById(idUKey, user);
         if ((deathRegister.getStatus() != DeathRegister.State.DEATH_CERTIFICATE_PRINTED) &&
-            (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
+                (deathRegister.getStatus() != DeathRegister.State.APPROVED)) {
             addActionError(getText("death.error.no.permission.print"));
             logger.debug("Current state of adoption certificate : {}", deathRegister.getStatus());
             return ERROR;
@@ -211,10 +212,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         initPermissionForApprovalAndPrint();
         if (state != null) {
             deathApprovalAndPrintList = service.getPaginatedListForStateByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                pageNo, noOfRows, state, user);
+                    pageNo, noOfRows, state, user);
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                pageNo, noOfRows, user);
+                    pageNo, noOfRows, user);
         }
         paginationHandler(deathApprovalAndPrintList.size());
         previousFlag = false;
@@ -234,25 +235,25 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         if (searchByDate) {
             //search by date in given divission deathDivisions and all the status
             deathApprovalAndPrintList = service.getByBDDivisionAndRegistrationDateRange(
-                bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(deathDivisionId), fromDate, endDate, pageNo, noOfRows, user);
         } else {
             if (currentStatus == 0) {
                 if (deathDivisionId != 0) {
                     //search by state with all state with in a deathDivision
                     deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                        pageNo, noOfRows, user);
+                            pageNo, noOfRows, user);
                 } else {
                     deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                        pageNo, noOfRows, user);
+                            pageNo, noOfRows, user);
                 }
             } else {
                 if (deathDivisionId != 0) {
                     //search by state with a state with in a deathDivision
                     deathApprovalAndPrintList = service.getPaginatedListForState(bdDivisionDAO.getBDDivisionByPK(deathDivisionId),
-                        pageNo, noOfRows, state, user);
+                            pageNo, noOfRows, state, user);
                 } else {
                     deathApprovalAndPrintList = service.getPaginatedListForStateByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId),
-                        pageNo, noOfRows, state, user);
+                            pageNo, noOfRows, state, user);
                 }
             }
         }
@@ -281,7 +282,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String approveDeath() {
         logger.debug("requested to approve Death Decalaration with idUKey : {}", idUKey);
         logger.debug("Current status : {}", currentStatus);
-        service.approveDeathRegistration(idUKey, user);
+        warnings = service.approveDeathRegistration(idUKey, user);
+        if (warnings.size() > 0) {
+            return "warning";
+        }
 
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
@@ -289,18 +293,20 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         } else {
             deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
+
         initPermissionForApprovalAndPrint();
         populate();
         return SUCCESS;
     }
 
     public String directApproveDeath() {
+        //todo include validater
         logger.debug("requested to direct approve Death Decalaration with idUKey : {}", idUKey);
-        service.approveDeathRegistration(idUKey, user);
+        warnings = service.approveDeathRegistration(idUKey, user);
         initPermissionForApprovalAndPrint();
         populate();
         pageNo = 3;
-        directApprove=true;
+        directApprove = true;
         return SUCCESS;
     }
 
@@ -945,14 +951,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         this.lifeCycleInfo = lifeCycleInfo;
     }
 
-    public List<String> getWarnings() {
-        return warnings;
-    }
-
-    public void setWarnings(List<String> warnings) {
-        this.warnings = warnings;
-    }
-
     public boolean isApprove() {
         return ignoreWarning;
     }
@@ -967,6 +965,14 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setAllowPrintCertificate(boolean allowPrintCertificate) {
         this.allowPrintCertificate = allowPrintCertificate;
+    }
+
+    public List<UserWarning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<UserWarning> warnings) {
+        this.warnings = warnings;
     }
 
     public boolean isDirectApprove() {

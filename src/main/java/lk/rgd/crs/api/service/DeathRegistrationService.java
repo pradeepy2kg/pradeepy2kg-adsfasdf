@@ -3,6 +3,7 @@ package lk.rgd.crs.api.service;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 
@@ -100,12 +101,13 @@ public interface DeathRegistrationService {
 
     /**
      * Approve a death registration already captured by the DEO by an ADR or higher authority
+     * <p/>
+     * //@param deathRegisterIdUKey the unique id of the death registration which is to be approved
      *
-     * @param deathRegisterIdUKey the unique id of the death registration which is to be approved
-     * @param user                the user initiating the action
+     * @param user the user initiating the action
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
-    public void approveDeathRegistration(long deathRegisterIdUKey, User user);
+    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user);
 
     /**
      * Reject a death registration already captured by the DEO by an ADR or higher authority

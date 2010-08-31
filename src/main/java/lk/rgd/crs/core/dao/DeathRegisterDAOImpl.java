@@ -63,9 +63,9 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForState(
-        BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status) {
+            BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status) {
         Query q = em.createNamedQuery("death.register.filter.by.and.deathDivision.status.paginated").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("deathDivision", deathDivision);
         q.setParameter("status", status);
         return q.getResultList();
@@ -77,7 +77,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAll(BDDivision deathDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.all.deaths.by.deathDivision").setFirstResult((pageNo - 1)
-            * noOfRows).setMaxResults(noOfRows);
+                * noOfRows).setMaxResults(noOfRows);
         q.setParameter("deathDivision", deathDivision);
         return q.getResultList();
     }
@@ -104,10 +104,10 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(
-        BDDivision deathDivision, Date startDate, Date endDate, int pageNo, int noOfRows) {
+            BDDivision deathDivision, Date startDate, Date endDate, int pageNo, int noOfRows) {
 
         Query q = em.createNamedQuery("get.by.division.register.date").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("deathDivision", deathDivision);
         q.setParameter("startDate", startDate);
         q.setParameter("endDate", endDate);
@@ -120,7 +120,7 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status) {
         Query q = em.createNamedQuery("death.register.filter.by.and.dsDivision.status.paginated").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
         q.setParameter("status", status);
         return q.getResultList();
@@ -132,8 +132,18 @@ public class DeathRegisterDAOImpl extends BaseDAO implements DeathRegisterDAO {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("get.all.deaths.by.dsDivision").setFirstResult((pageNo - 1)
-            * noOfRows).setMaxResults(noOfRows);
+                * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
+        return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public List<DeathRegister> getDeathRegisterByDeathPersenPINorNIC(String pinOrNIC) {
+        Query q = em.createNamedQuery("get.all.deaths.by.deathPersonPIN");
+        q.setParameter("pinOrNIC", pinOrNIC);
         return q.getResultList();
     }
 }

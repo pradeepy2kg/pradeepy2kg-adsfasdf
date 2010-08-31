@@ -4,6 +4,7 @@ import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
@@ -26,9 +27,13 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationService.class);
     private final DeathRegisterDAO deathRegisterDAO;
+    private final DeathDeclarationValidator deathDeclarationValidator;
 
-    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO) {
+
+    DeathRegistrationServiceImpl(DeathRegisterDAO deathRegisterDAO, DeathDeclarationValidator deathDeclarationValidator) {
         this.deathRegisterDAO = deathRegisterDAO;
+        this.deathDeclarationValidator = deathDeclarationValidator;
+
     }
 
     /**
@@ -61,10 +66,10 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
-            deathRegistration.getDeath().getDeathSerialNo());
+                deathRegistration.getDeath().getDeathSerialNo());
         if (existing != null) {
             handleException("can not add death registration " + existing.getIdUKey() +
-                " deathRegistration number already exists : " + existing.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
+                    " deathRegistration number already exists : " + existing.getStatus(), ErrorCodes.ENTITY_ALREADY_EXIST);
         }
         deathRegistration.setStatus(DeathRegister.State.DATA_ENTRY);
         deathRegisterDAO.addDeathRegistration(deathRegistration, user);
@@ -79,7 +84,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         DeathRegister dr = deathRegisterDAO.getById(deathRegistration.getIdUKey());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot update death registration " + deathRegistration.getIdUKey() +
-                " Illegal state at target : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state at target : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         deathRegisterDAO.updateDeathRegistration(deathRegistration, user);
     }
@@ -100,9 +105,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveDeathRegistration(long deathRegisterIdUKey, User user) {
-        logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
+    //todo do validation warnings
+    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user) {
+        //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
+        List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
         setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
+        return warnings;
     }
 
     /**
@@ -124,7 +132,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         if (DeathRegister.State.APPROVED != dr.getStatus()) {
             handleException("Cannot change status , " + dr.getIdUKey() +
-                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         dr.setStatus(DeathRegister.State.DEATH_CERTIFICATE_PRINTED);
         deathRegisterDAO.updateDeathRegistration(dr, user);
@@ -134,7 +142,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_DEATH)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject death declarations",
-                ErrorCodes.PERMISSION_DENIED);
+                    ErrorCodes.PERMISSION_DENIED);
         }
         DeathRegister dr = deathRegisterDAO.getById(idUKey);
         if (DeathRegister.State.DATA_ENTRY == dr.getStatus()) {
@@ -148,7 +156,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             }
         } else {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
-                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         deathRegisterDAO.updateDeathRegistration(dr, user);
     }
@@ -163,7 +171,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         if (DeathRegister.State.DATA_ENTRY != dr.getStatus()) {
             handleException("Cannot delete death registraion " + deathRegiserIdUKey +
-                " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
         deathRegisterDAO.deleteDeathRegistration(deathRegisterDAO.getById(deathRegiserIdUKey), user);
     }
@@ -175,7 +183,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public List<DeathRegister> getPaginatedListForState(BDDivision deathDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get death registrations with the state : " + status
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, deathDivision);
         return deathRegisterDAO.getPaginatedListForState(deathDivision, pageNo, noOfRows, status);
@@ -221,7 +229,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
         if (deathRegister.getStatus() != DeathRegister.State.DATA_ENTRY) {
             handleException("can not update death registration " + deathRegister.getIdUKey() +
-                " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
+                    " Illegal State : " + deathRegister.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
 
     }
@@ -229,33 +237,33 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         final String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(role)
-                ||
-                (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
-                    &&
-                    user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                &&
+                (Role.ROLE_RG.equals(role)
+                        ||
+                        (user.isAllowedAccessToBDDistrict(bdDivision.getDistrict().getDistrictUKey())
+                                &&
+                                user.isAllowedAccessToBDDSDivision(bdDivision.getDsDivision().getDsDivisionUKey())
+                        )
                 )
-            )
         )) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
-                bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+                    bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
+                    bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 
     private void validateAccessToDSDivision(User user, DSDivision dsDivision) {
         final String role = user.getRole().getRoleId();
         if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(role)
-                || user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey())
-            )
+                &&
+                (Role.ROLE_RG.equals(role)
+                        || user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey())
+                )
         )) {
 
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                dsDivision.getDistrict().getDistrictId(), ErrorCodes.PERMISSION_DENIED);
+                    dsDivision.getDistrict().getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
 
     }
@@ -267,7 +275,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public List<DeathRegister> getPaginatedListForStateByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, DeathRegister.State status, User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get death registrations with the state : " + status
-                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToDSDivision(user, dsDivision);
         return deathRegisterDAO.getPaginatedListForStateByDSDivision(dsDivision, pageNo, noOfRows, status);

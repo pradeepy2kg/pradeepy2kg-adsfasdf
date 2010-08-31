@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * @author Indunil Moremada
+ * @author amith jayasekara
  */
 public interface DeathRegisterDAO {
 
@@ -110,4 +111,14 @@ public interface DeathRegisterDAO {
      * @return list of DeathRegister objects
      */
     public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows);
+
+    /**
+     * get all Death records witch have given death persons PIN or NIC number
+     *
+     * @param pinOrNIC PIN number or NIC number
+     * @return list of DeathRegister entries witch include given pin
+     */
+    public List<DeathRegister> getDeathRegisterByDeathPersenPINorNIC(String pinOrNIC);
 }
+
+

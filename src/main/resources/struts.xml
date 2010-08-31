@@ -481,6 +481,7 @@
         <action name="eprApproveDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="approveDeath">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
+            <result type="tiles" name="warning">epr.deathDeclaration_details</result>
         </action>
 
         <action name="eprRejectDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
