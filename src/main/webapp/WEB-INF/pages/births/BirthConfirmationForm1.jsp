@@ -192,22 +192,16 @@
             <form action="eprBirthConfirmationSkipChanges.do" onsubmit="javascript:return validateSkipChanges()">
                 <table style=" border:1px solid #000000; width:300px">
                     <tr>
-                        <td><s:label value="%{getText('noConfirmationChanges.label')}"/></td>
+                        <td style="width:55%"><s:label value="%{getText('noConfirmationChanges.label')}"/></td>
                         <td><s:checkbox name="skipConfirmationChages" id="skipChangesCBox"
                                         onclick="okCheck()"/></td>
-                    </tr>
-                    <tr><s:hidden name="pageNo" value="2"/>
+
+                    <s:hidden name="pageNo" value="2"/>
                         <s:hidden name="bdId" value="%{#request.bdId}"/>
-                        <td width="170px"></td>
-                        <td align="left" class="button">
-                            <table id="searchOkTable">
-                                <tr>
-                                    <td><s:submit id="searchOk" name="searchOk"
+                        <td align="left" class="button"><s:submit id="searchOk" name="searchOk"
                                                   value="%{getText('skip.label')}"
                                                   cssStyle="margin-right:8px;"/></td>
-                                </tr>
-                            </table>
-                        </td>
+                        
                     </tr>
                 </table>
             </form>
