@@ -1476,14 +1476,12 @@ public class BirthRegistrationServiceImpl implements
     }
 
     private void validateAccessToDSDivison(DSDivision dsDivision, User user) {
-        if (!(User.State.ACTIVE == user.getStatus()
-            &&
-            (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                ||
-                (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
-            )
-        )
-            ) {
+        if (!(User.State.ACTIVE == user.getStatus() &&
+                (Role.ROLE_RG.equals(user.getRole().getRoleId())
+                    || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrictId()))
+                    || (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
+                )
+            )) {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
