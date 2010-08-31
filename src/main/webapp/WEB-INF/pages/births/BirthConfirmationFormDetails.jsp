@@ -50,7 +50,7 @@
 
         <s:url id="printBirthCertificate" action="eprBirthCertificatDirectPrint.do">
             <s:param name="bdId" value="#request.bdId"/>
-            <s:param name="directPrintBirthCertificate" value="true"/>
+            <s:param name="directPrint" value="true"/>
         </s:url>
         <s:url id="mainUrl" action="eprHome.do"/>
         <table align="center">
@@ -69,10 +69,12 @@
                         </s:else>
                     </s:if>
                     <s:if test="skipConfirmationChages">
+                        <%--<s:if test="#request.allowPrintCertificate">--%>
                             <s:a href="%{printBirthCertificate}">
                                 <s:label
                                         value="%{getText('printBirthCertificate_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
                         </s:if>
+                    <%--</s:if>--%>
                 </td>
             </tr>
         </table>

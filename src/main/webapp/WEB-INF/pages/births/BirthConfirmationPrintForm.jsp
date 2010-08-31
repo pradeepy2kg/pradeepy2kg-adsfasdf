@@ -655,6 +655,7 @@
 <s:if test="directPrint">
     <s:url id="print" action="eprDirectPrintBirthConfirmation.do">
         <s:param name="bdId" value="#request.bdId"/>
+        <s:param name="confirmListFlag" value="true"/>
     </s:url>
 </s:if>
 <s:else>

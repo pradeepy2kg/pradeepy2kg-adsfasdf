@@ -700,7 +700,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         birthType = bdf.getRegister().getBirthType();
-        
+
         if (bdf.getIdUKey() != 0) {
             editMode = true;
         }

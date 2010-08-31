@@ -45,6 +45,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private boolean printed;
     private boolean confirmListFlag;
     private boolean allowPrintCertificate;
+    private boolean directPrint;
     String language;
 
     private User user;
@@ -60,7 +61,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -181,14 +182,16 @@ public class PrintAction extends ActionSupport implements SessionAware {
             } else {
                 service.markLiveBirthConfirmationAsPrinted(bdf, user);
             }
-            if (birthDivisionId != 0) {
-                printList = service.getConfirmationPrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    noOfRows, printed, user);
-            } else {
-                printList = service.getConfirmationPrintListByDSDivision(
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
-                    noOfRows, printed, user);
+            if (!directPrint) {
+                if (birthDivisionId != 0) {
+                    printList = service.getConfirmationPrintList(
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                        noOfRows, printed, user);
+                } else {
+                    printList = service.getConfirmationPrintListByDSDivision(
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
+                        noOfRows, printed, user);
+                }
             }
         } else {
             birthType = bdf.getRegister().getBirthType();
@@ -207,22 +210,26 @@ public class PrintAction extends ActionSupport implements SessionAware {
                     }
                 }
             }
-            if (birthDivisionId != 0) {
-                printList = service.getBirthCertificatePrintList(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
-            } else {
-                printList = service.getBirthCertificatePrintListByDSDivision(
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
-                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+            if (!directPrint) {
+                if (birthDivisionId != 0) {
+                    printList = service.getBirthCertificatePrintList(
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                        appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+                } else {
+                    printList = service.getBirthCertificatePrintListByDSDivision(
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
+                        appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+                }
+                logger.debug("Certificate Print list {}  items  found ", printList.size());
             }
             initPermissionForBirthCertificatePrint();
-            logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
-        if (printList.size() == 0) {
-            addActionMessage(getText("noitemMsg.label"));
+        if (!directPrint) {
+            if (printList.size() == 0) {
+                addActionMessage(getText("noitemMsg.label"));
+            }
+            populate();
         }
-        populate();
         return SUCCESS;
     }
 
@@ -559,5 +566,13 @@ public class PrintAction extends ActionSupport implements SessionAware {
 
     public void setAllowPrintCertificate(boolean allowPrintCertificate) {
         this.allowPrintCertificate = allowPrintCertificate;
+    }
+
+    public boolean isDirectPrint() {
+        return directPrint;
+    }
+
+    public void setDirectPrint(boolean directPrint) {
+        this.directPrint = directPrint;
     }
 }

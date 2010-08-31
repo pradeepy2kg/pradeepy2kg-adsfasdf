@@ -72,7 +72,10 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
         }
     })
 
@@ -85,6 +88,8 @@
         domObject = document.getElementById('SerialNo');
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error2').value;
+        } else {
+          
         }
 
         // validate date of birth
@@ -96,7 +101,7 @@
 
         domObject = document.getElementById('placeOfBirth');
         if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", "p1error2");
+            isEmpty(domObject, "", "error3");
         }
 
 
@@ -136,6 +141,26 @@
         //    //place of birth
         //    domObject = document.getElementById('placeOfBirth');
         //    isEmpty(domObject, "", 'error11')
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
+
+    function validateSearch() {
+        var domObject;
+        var returnval = true;
+
+        // validate serial number
+        domObject = document.getElementById('SerialNo');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error2').value;
+        } else {
+            isNumeric(domObject.value, 'error1', 'error2');
+        }
 
         if (errormsg != "") {
             alert(errormsg);
@@ -202,7 +227,7 @@
             <br>Confirmation of Birth by Parents / Guardian
         </label></td>
         <td>
-            <form action="eprBirthConfirmationInit.do" method="post" onsubmit="javascript:return validate()">
+            <form action="eprBirthConfirmationInit.do" method="post" onsubmit="javascript:return validateSearch()">
                 <table style=" border:1px solid #000000; width:300px">
                     <tr><s:actionerror/></tr>
                     <tr>
@@ -222,19 +247,19 @@
                     </tr>
                 </table>
             </form>
-            <form action="eprBirthConfirmationSkipChanges.do" onsubmit="javascript:return validateSkipChanges()">
+            <form action="eprBirthConfirmationSkipChanges.do" onsubmit="javascript:return validate()">
                 <table style=" border:1px solid #000000; width:300px">
                     <tr>
                         <td style="width:55%"><s:label value="%{getText('noConfirmationChanges.label')}"/></td>
                         <td><s:checkbox name="skipConfirmationChages" id="skipChangesCBox"
                                         onclick="okCheck()"/></td>
 
-                    <s:hidden name="pageNo" value="2"/>
+                        <s:hidden name="pageNo" value="2"/>
                         <s:hidden name="bdId" value="%{#request.bdId}"/>
                         <td align="left" class="button"><s:submit id="searchOk" name="searchOk"
-                                                  value="%{getText('skip.label')}"
-                                                  cssStyle="margin-right:8px;"/></td>
-                        
+                                                                  value="%{getText('skip.label')}"
+                                                                  cssStyle="margin-right:8px;"/></td>
+
                     </tr>
                 </table>
             </form>
@@ -335,15 +360,19 @@
     <tr>
         <td>4</td>
         <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
-        <td colspan="6"><s:if test="#session.birthConfirmation_db.child.childGender == 0">
-            <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
-        </s:if>
-            <s:elseif test="#session.birthConfirmation_db.child.childGender == 1">
-                <s:textfield value="%{getText('female.label')}" cssClass="disable" disabled="true"/>
-            </s:elseif>
-            <s:elseif test="#session.birthConfirmation_db.child.childGender == 2">
-                <s:textfield value="%{getText('unknown.label')}" cssClass="disable" disabled="true"/>
-            </s:elseif></td>
+        <td colspan="6">
+            <s:if test="bdId != 0">
+                <s:if test="#session.birthConfirmation_db.child.childGender == 0">
+                    <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
+                </s:if>
+                <s:elseif test="#session.birthConfirmation_db.child.childGender == 1">
+                    <s:textfield value="%{getText('female.label')}" cssClass="disable" disabled="true"/>
+                </s:elseif>
+                <s:elseif test="#session.birthConfirmation_db.child.childGender == 2">
+                    <s:textfield value="%{getText('unknown.label')}" cssClass="disable" disabled="true"/>
+                </s:elseif>
+            </s:if>
+        </td>
         <td colspan="6"><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="child.childGender"/></td>
@@ -355,33 +384,41 @@
     <tr>
         <td rowspan="5"></td>
         <td><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
-        <td colspan="6"><s:textfield value="%{getDistrictList().get(birthDistrictId)}" cssClass="disable"
-                                     disabled="true"/></td>
+        <td colspan="6">
+            <s:if test="bdId != 0">
+                <s:textfield value="%{getDistrictList().get(birthDistrictId)}" cssClass="disable" disabled="true"/>
+            </s:if>
+        </td>
         <td colspan="6"><s:select list="districtList" name="birthDistrictId"/></td>
     </tr>
     <tr>
         <td><label>D.S.කොට්ඨාශය<br>பிரிவு <br>D.S. Division</label></td>
-        <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
-                                     disabled="true"/></td>
+        <td colspan="6">
+            <s:if test="bdId != 0">
+                <s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable" disabled="true"/>
+            </s:if>
+        </td>
         <td colspan="6"><s:select list="dsDivisionList" name="dsDivisionId"/></td>
     </tr>
     <tr>
         <td><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
-        <td colspan="6"><s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable"
-                                     disabled="true"/></td>
+        <td colspan="6">
+            <s:if test="bdId != 0">
+                <s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable" disabled="true"/>
+            </s:if>
+        </td>
         <td colspan="6"><s:select name="birthDivisionId" list="bdDivisionList"/></td>
     </tr>
     <tr>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
-                                    disabled="true" size="45"/></td>
+                                     disabled="true" size="45"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
         <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
-        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirthEnglish"
-                                    cssClass="disable"
-                                    disabled="true" size="45"/></td>
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirthEnglish" cssClass="disable"
+                                     disabled="true" size="45"/></td>
         <td colspan="6">
             <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"
                          cssStyle="margin-top:10px;"/>
@@ -426,9 +463,12 @@
     <tr>
         <td>10</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
-        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
-                                     disabled="true"
-                                     value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
+        <td colspan="6">
+            <s:if test="bdId != 0">
+                <s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
+                             disabled="true" value="%{getText('married.status.'+marriage.parentsMarried)}"/>
+            </s:if>
+        </td>
         <td style="border:none;">
             <table style="border:none;" cellspacing="0">
                 <col width="200px"/>
