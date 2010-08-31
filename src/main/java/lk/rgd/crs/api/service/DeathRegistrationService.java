@@ -105,9 +105,10 @@ public interface DeathRegistrationService {
      * //@param deathRegisterIdUKey the unique id of the death registration which is to be approved
      *
      * @param user the user initiating the action
+     * @param ignoreWarnings
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
-    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user);
+    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings);
 
     /**
      * Reject a death registration already captured by the DEO by an ADR or higher authority

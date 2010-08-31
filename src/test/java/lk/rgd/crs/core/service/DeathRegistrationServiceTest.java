@@ -12,12 +12,10 @@ import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeclarantInfo;
-import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.Date;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * @author Chathuranga Withana
@@ -94,19 +92,19 @@ public class DeathRegistrationServiceTest extends TestCase {
 
         // colombo deo cannot approve
         try {
-            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoColomboColombo);
+            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoColomboColombo, false);
             fail("DEO cannot approve DDFs");
         } catch (CRSRuntimeException expected) {
         }
         // negambo deo cannot approve either
         try {
-            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoGampahaNegambo);
+            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), deoGampahaNegambo, false);
             fail("Negambo DEO cannot approve DDFs of Colombo BD division");
         } catch (CRSRuntimeException expected) {
         }
         // negambo adr cannot approve either
         try {
-            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrGampahaNegambo);
+            deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrGampahaNegambo, false);
             fail("Negambo ADR cannot approve DDFs of Colombo BD division");
         } catch (CRSRuntimeException expected) {
         }

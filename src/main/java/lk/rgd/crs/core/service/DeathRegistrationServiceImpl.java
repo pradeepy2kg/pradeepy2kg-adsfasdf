@@ -106,10 +106,12 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     //todo do validation warnings
-    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user) {
+    public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
         //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
         List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
+           if (warnings.isEmpty() || ignoreWarnings) {
         setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
+           }
         return warnings;
     }
 

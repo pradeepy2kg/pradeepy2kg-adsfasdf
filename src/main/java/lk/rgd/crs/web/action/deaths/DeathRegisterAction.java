@@ -282,7 +282,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String approveDeath() {
         logger.debug("requested to approve Death Decalaration with idUKey : {}", idUKey);
         logger.debug("Current status : {}", currentStatus);
-        warnings = service.approveDeathRegistration(idUKey, user);
+        warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
         if (warnings.size() > 0) {
             return "warning";
         }
@@ -302,7 +302,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String directApproveDeath() {
         //todo include validater
         logger.debug("requested to direct approve Death Decalaration with idUKey : {}", idUKey);
-        warnings = service.approveDeathRegistration(idUKey, user);
+        warnings = service.approveDeathRegistration(idUKey, user, ignoreWarning);
         initPermissionForApprovalAndPrint();
         populate();
         pageNo = 3;
@@ -312,7 +312,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String directApproveIgnoringWornings() {
         if (ignoreWarning) {
-            service.approveDeathRegistration(idUKey, user);
+            service.approveDeathRegistration(idUKey, user, ignoreWarning);
             initPermissionForApprovalAndPrint();
             populate();
         }
