@@ -95,7 +95,6 @@ $(function() {
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#applicantName").val(data1.fullNameInOfficialLanguage);
-                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
                         $("textarea#applicantAddress").val(data1.lastAddress);
                     });
         });
@@ -106,8 +105,6 @@ $(function() {
             $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#wifeName").val(data1.fullNameInOfficialLanguage);
-                        //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
-                        $("textarea#applicantAddress").val(data1.lastAddress);
                     });
         });
     });
