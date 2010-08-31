@@ -72,6 +72,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean searchByDate;
     private boolean rePrint;
     private boolean lateDeath;
+    private boolean directApprove;
 
     private String genderEn;
     private String genderSi;
@@ -299,6 +300,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         initPermissionForApprovalAndPrint();
         populate();
         pageNo = 3;
+        directApprove=true;
         return SUCCESS;
     }
 
@@ -965,5 +967,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setAllowPrintCertificate(boolean allowPrintCertificate) {
         this.allowPrintCertificate = allowPrintCertificate;
+    }
+
+    public boolean isDirectApprove() {
+        return directApprove;
+    }
+
+    public void setDirectApprove(boolean directApprove) {
+        this.directApprove = directApprove;
     }
 }

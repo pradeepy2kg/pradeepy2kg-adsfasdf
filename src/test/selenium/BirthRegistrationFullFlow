@@ -12,9 +12,14 @@
 <tr><td rowspan="1" colspan="3">BirthRegistrationFullFlow</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/popreg/eprLogout.do</td>
-	<td></td>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -23,7 +28,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='xmain-menu']/ul/li[4]/a/label</td>
+	<td>link=උපත් ලියාපදිංචිය</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,7 +39,7 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>201007272</td>
+	<td>2010000003</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -43,7 +48,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=9</td>
+	<td>link=24</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,37 +58,42 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=11</td>
+	<td>link=17</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>placeOfBirth</td>
-	<td>In Hospital</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>placeOfBirthEnglish</td>
 	<td>රෝහලේදී</td>
 </tr>
 <tr>
 	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>In hospital</td>
+</tr>
+<tr>
+	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>කැලුම් කොඩිප්පිලි</td>
+	<td>Idunil moremada</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childFullNameEnglish</td>
-	<td>kalum kodippili</td>
+	<td>idunil moremada</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childBirthWeight</td>
-	<td>5</td>
+	<td>3</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childRank</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>numberOfChildrenBorn</td>
 	<td>2</td>
 </tr>
 <tr>
@@ -94,37 +104,27 @@
 <tr>
 	<td>type</td>
 	<td>father_pinOrNic</td>
-	<td>844545055v</td>
+	<td>795246625v</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>fatherFullName</td>
-	<td>සෝමතිලක R.</td>
+	<td>Father Name</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>dojo.parent.fatherDOB</td>
-	<td>1980-10-02</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
+	<td>fatherDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
+	<td>link=15</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>fatherPlaceOfBirth</td>
-	<td>බණ්ඩාරවෙල</td>
+	<td>Place of birth</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -134,37 +134,27 @@
 <tr>
 	<td>type</td>
 	<td>mother_pinOrNic</td>
-	<td>852012444V</td>
+	<td>814527525v</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherFullName</td>
-	<td>වාසනා කටුකුබුර</td>
+	<td>mother name</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[@id='motherDatePicker']/img</td>
+	<td>motherDatePicker</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>dojo.parent.motherDOB</td>
-	<td>1984-12-03</td>
-</tr>
-<tr>
 	<td>click</td>
-	<td>motherAgeAtBirth</td>
+	<td>link=16</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherAddress</td>
-	<td>no 54,දොව ,</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>motherAddress</td>
-	<td>no 54,දොව ,බණ්ඩාරවෙල.</td>
+	<td>mother address</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -174,7 +164,7 @@
 <tr>
 	<td>select</td>
 	<td>motherDSDivisionId</td>
-	<td>label=21 : මහරගම</td>
+	<td>label=6 : කොළොන්නාව</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -184,32 +174,22 @@
 <tr>
 	<td>type</td>
 	<td>motherPlaceOfBirth</td>
-	<td>බණ්ඩාරවෙල</td>
+	<td>place of birth</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-2_parent_motherAdmissionNo</td>
-	<td>11111</td>
+	<td>500</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[@id='admitDatePicker']/img</td>
+	<td>admitDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[3]/div/table/tbody/tr/td/table/tbody/tr[3]/td[1]</td>
+	<td>link=15</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherPhoneNo</td>
-	<td>0715516145</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-2_parent_motherEmail</td>
-	<td>hasha@gmail.com</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -219,76 +199,36 @@
 <tr>
 	<td>type</td>
 	<td>placeOfMarriage</td>
-	<td>බණ්ඩාරවෙල</td>
+	<td>place of marriage</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
+	<td>marriageDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tfoot/tr/td/table/tbody/tr/td[2]/h3/span[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//body/span/div/table/tbody/tr/td/table/tbody/tr[4]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>motherSigned</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>fatherSigned</td>
+	<td>link=5</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-3_grandFather_grandFatherFullName</td>
-	<td>රන්ජිත් බණ්ඩාර </td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_grandFatherNICorPIN</td>
-	<td>544455122v</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_grandFatherBirthYear</td>
-	<td>1954</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birth-registration-form-3_grandFather_grandFatherBirthPlace</td>
-	<td>කොළඹ</td>
+	<td>grand father name</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-registration-form-3_informant_informantTypeMOTHER</td>
+	<td>informantTypeMOTHER</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[@id='informDatePicker']/img</td>
+	<td>informDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[2]/div/table/tbody/tr/td/table/tbody/tr[5]/td[3]</td>
+	<td>link=25</td>
 	<td></td>
 </tr>
 <tr>
@@ -299,46 +239,26 @@
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityPIN</td>
-	<td>855012132V</td>
+	<td>725552255v</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityName</td>
-	<td>අබේරත්න K.</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//label[@id='birth-registration-form-4_']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-3_0</td>
-	<td></td>
+	<td>notifying autority name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityAddress</td>
-	<td>කොළඹ</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>notifyingAuthorityPIN</td>
-	<td>858528523v</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>notifyingAuthorityName</td>
-	<td>අබේරත්න L.</td>
+	<td>N.a. Address</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//img[@alt='Select a date']</td>
+	<td>modifiedDatePicker</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[5]/td[4]</td>
+	<td>link=26</td>
 	<td></td>
 </tr>
 <tr>
@@ -348,47 +268,97 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>//div[@id='birth-register-approval-footer']/a[3]/label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='xmain-menu']/ul/li[4]/a/label</td>
+	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='body-content-data']/div/a[3]/div/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birthDivisionId</td>
-	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-register-approval-form_refresh</td>
+	<td>//a[@id='eprApproveBulk_']/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//td[7]/a/img</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprDirectApproveIgnoreWarning_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birthRegistration-page']/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු අනුමත කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>SerialNo</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=උපත් තහවුරු කිරීම් මුද්‍රණය</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birthDivisionId</td>
-	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-confirmation-print-form_0</td>
 	<td></td>
 </tr>
 <tr>
@@ -402,6 +372,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>birth-confirmation-print-form_printedtrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-print-form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු අනුමත කිරීම</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>link=උපත් තහවුරු කිරීම</td>
 	<td></td>
@@ -409,7 +394,7 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>170</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -423,12 +408,22 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@id='search' and @name='search' and @value='මගහරින්න']</td>
+	<td>searchOk</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>birth-confirmation-form3_confirmantRadioMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>datePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=26</td>
 	<td></td>
 </tr>
 <tr>
@@ -438,27 +433,17 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>birthDivisionId</td>
-	<td>label=2: කොම්පන්න වීදීය (Medical)</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-certificate-print-form_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprBirthCertificateBulkPrint_index</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>eprBirthCertificateBulkPrint_0</td>
+	<td>link=මුද්‍රණය අවසානයි</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
 	<td></td>
 </tr>
 

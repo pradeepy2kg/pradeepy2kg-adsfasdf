@@ -36,7 +36,7 @@
                 <td class="font-9" style="border:1px solid #000;" height="60px">සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate
                     Number
                 </td>
-                <td style="border:1px solid #000;"><s:label name="" value="%{death.deathCertificateNo}"/></td>
+                <td style="border:1px solid #000;"><s:label name="" value="%{idUKey}"/></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
