@@ -191,8 +191,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 4:
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setNotifyingAuthority(notifyingAuthority);
-                bdf.getRegister().setComments(register.getComments());
-                bdf.getRegister().setCaseFileNumber(register.getCaseFileNumber());
+                if (BirthDeclaration.BirthType.ADOPTION != birthType) {
+                    bdfLateOrBelated = checkDateLateOrBelated(bdf);
+                    if (bdfLateOrBelated == 1) {
+                        bdf.getRegister().setComments(register.getComments());
+                        bdf.getRegister().setCaseFileNumber(register.getCaseFileNumber());
+                    }
+                }
                 /*register = bdf.getRegister();
                 register.setCaseFileNumber(caseFileNumber);
                 register.setComments(newComment);
