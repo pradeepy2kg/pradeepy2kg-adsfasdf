@@ -76,7 +76,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             if (language.equals("en")) {
                 country = "US";
             }
-            TreeMap map = (TreeMap) Menu.getAllowedLinks(user.getRole());
+            Map map = Menu.getAllowedLinks(user.getRole());
             logger.debug("size of allowed links map : {}", map.size());
 
             if (map != null) {
