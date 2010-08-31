@@ -20,11 +20,11 @@ public class PinAndNicUtils {
      * NIC - <year> <day> <number-4-digits> <letter-V-X> e.g. 75 211 1111 V
      *
      * @param pinOrNic the PIN or NIC as a String
-     * @param popreg Population Registry
+     * @param ecivil Population Registry
      * @param user user invoking action
      * @return true if null, or valid
      */
-    public static boolean isValidPINorNIC(String pinOrNic, PopulationRegistry popreg, User user) {
+    public static boolean isValidPINorNIC(String pinOrNic, PopulationRegistry ecivil, User user) {
 
         if (pinOrNic == null) return true;
 
@@ -32,7 +32,7 @@ public class PinAndNicUtils {
         if (pinOrNic.length() == 10) {
             try {
                 long pin = Long.parseLong(pinOrNic);
-                return popreg.findPersonByPIN(pin, user) != null;
+                return ecivil.findPersonByPIN(pin, user) != null;
             } catch (NumberFormatException e) {
                 return isValidNIC(pinOrNic);
             }
@@ -45,12 +45,12 @@ public class PinAndNicUtils {
     /**
      * Check if a valid PIN - <century> <year> <day> <number-4-digits> e.g. 1 10 208 0001
      * @param pin the PIN to validate (Must have been issued by the PRS system and record on file)
-     * @param popreg Population Registry
+     * @param ecivil Population Registry
      * @param user user invoking action
      * @return true if pin is valid
      */
-    public static boolean isValidPIN(long pin, PopulationRegistry popreg, User user) {
-        return popreg.findPersonByPIN(pin, user) != null;
+    public static boolean isValidPIN(long pin, PopulationRegistry ecivil, User user) {
+        return ecivil.findPersonByPIN(pin, user) != null;
     }
 
     /**
