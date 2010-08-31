@@ -361,16 +361,7 @@
 	<td>link=උපත් තහවුරු කිරීම් මුද්‍රණය</td>
 	<td></td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>eprBirthConfirmationBulkPrint_index</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprBirthConfirmationBulkPrint_0</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>click</td>
 	<td>birth-confirmation-print-form_printedtrue</td>
@@ -382,10 +373,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=උපත් තහවුරු අනුමත කිරීම</td>
+	<td>click</td>
+	<td>eprBirthConfirmationBulkPrint_allCheck</td>
 	<td></td>
 </tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthConfirmationBulkPrint_0</td>
+	<td></td>
+</tr>
+
+
+
 <tr>
 	<td>clickAndWait</td>
 	<td>link=උපත් තහවුරු කිරීම</td>

@@ -12,11 +12,6 @@
 <tr><td rowspan="1" colspan="3">AdoptionFullFlow</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/popreg/eprLogout.do</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
 	<td>ashoka</td>
@@ -481,11 +476,7 @@
 	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Mark as Print</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>link=birth confirmation print</td>

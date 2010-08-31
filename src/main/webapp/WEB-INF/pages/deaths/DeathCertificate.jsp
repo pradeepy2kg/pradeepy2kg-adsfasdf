@@ -190,6 +190,7 @@
             பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
             Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
         </s:label>
+        
         <s:if test="#request.allowPrintCertificate">
             <div class="form-submit">
                 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
