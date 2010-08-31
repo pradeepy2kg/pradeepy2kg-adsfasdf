@@ -92,6 +92,7 @@ public class Menu {
         deoBirthLink.put("eprFilterBirthConfirmationPrint.do", new Link(null, "/popreg/births/", "eprFilterBirthConfirmationPrint.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthConfirmationPrintPage.do", new Link(null, "/popreg/births/", "eprBirthConfirmationPrintPage.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprBirthConfirmationBulkPrint.do", new Link(null, "/popreg/births/", "eprBirthConfirmationBulkPrint.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthCancelConfirmationPrint.do", new Link(null, "/popreg/births/", "eprBirthCancelConfirmationPrint.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprPrintNext.do", new Link(null, "/popreg/births/", "eprPrintNext.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprPrintPrevious.do", new Link(null, "/popreg/births/", "eprPrintPrevious.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprBirthConfirmationSkipChanges.do", new Link(null, "/popreg/births/", "eprBirthConfirmationSkipChanges.do", Permission.EDIT_BDF_CONFIRMATION));

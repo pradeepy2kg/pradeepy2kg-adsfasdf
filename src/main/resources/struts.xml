@@ -363,6 +363,11 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprBirthCancelConfirmationPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="backToPreviousState">
+            <result type="tiles" name="success">epr.birthConfirmationPrint</result>
+        </action>
+
         <action name="eprFilterBirthConfirmationPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="filterPrintList">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>

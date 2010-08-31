@@ -61,7 +61,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -353,19 +353,37 @@ public class PrintAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    /**
+     * this method is responsible for loading the previous state of
+     * birth certificate and birth confirmation print list pages if
+     * it cancels the printing process
+     *
+     * @return
+     */
     public String backToPreviousState() {
-        logger.info("setting prevous state of the birth certificate print list");
-        if (birthDivisionId != 0) {
-            printList = service.getBirthCertificatePrintList(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
-                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+        int noOfRows = appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE);
+        if (confirmListFlag) {
+            if (birthDivisionId != 0) {
+                printList = service.getConfirmationPrintList
+                    (bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, printed, user);
+            } else {
+                printList = service.getConfirmationPrintListByDSDivision
+                    (dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, printed, user);
+            }
+            logger.debug("previous {}  items  loaded to birthConfirmation print list ", printList.size());
         } else {
-            printList = service.getBirthCertificatePrintListByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
-                appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+            if (birthDivisionId != 0) {
+                printList = service.getBirthCertificatePrintList(
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo,
+                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+            } else {
+                printList = service.getBirthCertificatePrintListByDSDivision(
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo,
+                    appParametersDAO.getIntParameter(BC_PRINT_ROWS_PER_PAGE), printed, user);
+            }
+            initPermissionForBirthCertificatePrint();
+            logger.debug("Certificate Print list {}  items  found ", printList.size());
         }
-        initPermissionForBirthCertificatePrint();
-        logger.debug("Certificate Print list {}  items  found ", printList.size());
         populate();
         return SUCCESS;
     }
