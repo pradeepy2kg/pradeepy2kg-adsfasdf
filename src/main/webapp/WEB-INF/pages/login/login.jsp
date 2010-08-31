@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>EPR Login</title>
-    <link rel="stylesheet" type="text/css" href="/popreg/css/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="/ecivil/css/layout.css"/>
     <style type="text/css">
         html {
-            background: /popreg/images/body-bg1.png repeat;
+            background: /ecivil/images/body-bg1.png repeat;
         }
 
         body {
@@ -24,11 +24,11 @@
 <div id="wrapper">
     <%
         if (session.getAttribute("user_bean") != null) {
-            response.sendRedirect("/popreg/eprHome.do");
+            response.sendRedirect("/ecivil/eprHome.do");
         }
     %>
 
-    <img src="/popreg/images/epr-header.png" align="center" width="1250px"/>
+    <img src="/ecivil/images/epr-header.png" align="center" width="1250px"/>
 
     <div id="login-error" style="text-align:center;">
         <s:actionerror cssStyle="color:red; line-height:30px; font-size:11pt; margin:150px auto -170px auto;"/>

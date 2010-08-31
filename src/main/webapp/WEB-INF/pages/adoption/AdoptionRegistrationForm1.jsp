@@ -1,9 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
@@ -58,7 +58,7 @@ $(function() {
 $(function() {
     $('select#birthDistrictId').bind('change', function(evt1) {
         var id = $("select#birthDistrictId").attr("value");
-        $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
@@ -78,7 +78,7 @@ $(function() {
 
     $('select#dsDivisionId').bind('change', function(evt2) {
         var id = $("select#dsDivisionId").attr("value");
-        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                 function(data) {
                     var options = '';
                     var bd = data.bdDivisionList;
@@ -92,7 +92,7 @@ $(function() {
     $(function() {
         $('img#adoption_applicant_lookup').bind('click', function(evt3) {
             var id1 = $("input#applicantPin").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#applicantName").val(data1.fullNameInOfficialLanguage);
                         $("textarea#applicantAddress").val(data1.lastAddress);
@@ -102,7 +102,7 @@ $(function() {
     $(function() {
         $('img#mother_lookup').bind('click', function(evt3) {
             var id1 = $("input#wifePINorNIC").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#wifeName").val(data1.fullNameInOfficialLanguage);
                     });
