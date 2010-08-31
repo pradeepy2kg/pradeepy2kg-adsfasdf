@@ -26,7 +26,7 @@
     $(function() {
         $('select#birthDistrictId').bind('change', function(evt1) {
             var id = $("select#birthDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -46,7 +46,7 @@
 
         $('select#dsDivisionId').bind('change', function(evt2) {
             var id = $("select#dsDivisionId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;
