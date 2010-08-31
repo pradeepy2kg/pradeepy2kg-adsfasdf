@@ -202,6 +202,11 @@ function validateInformant() {
         errormsg = errormsg + "\n" + document.getElementById('p3error4').value;
     else
         isDate(domObject.value, "error11", "infomantDate");
+    var submit = new Date(document.getElementById('submitDatePicker').value);
+    domObject = new Date(domObject.value);
+    if (domObject.getTime() >submit.getTime()) {
+        errormsg = errormsg + "\n" + document.getElementById('error17').value;
+    }
 }
 
 // check informant type selected
@@ -573,6 +578,7 @@ function initPage() {
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
+<s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
 <s:hidden id="p3error9" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
 <s:hidden id="p3error10" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
 <s:hidden id="error10" value="%{getText('p1.invalid.emailInformant.text')}"/>
@@ -582,6 +588,7 @@ function initPage() {
 <s:hidden id="error14" value="%{getText('grandFatherNICorPIN.text')}"/>
 <s:hidden id="error15" value="%{getText('greatGrandFatherNICorPIN.text')}"/>
 <s:hidden id="error16" value="%{getText('p3.Informant.telephone.error.value')}"/>
+<s:hidden id="error17" value="%{getText('p3.informdate.with.reg.date')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
 
 </div>

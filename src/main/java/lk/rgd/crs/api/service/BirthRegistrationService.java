@@ -22,14 +22,10 @@ public interface BirthRegistrationService {
      * @param bdf                        the BDF to be added
      * @param ignoreWarnings             an explicit switch to disable optional validations
      * @param user                       the user initiating the action
-     * @param caseFileNumber             the case file number for a late or belated registration
-     * @param additionalDocumentsComment a comment specifying the list of additional document supplied
-     *                                   (for a late registration)
      * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
      *         Warnings maybe if a mother specified is known to be dead etc
      */
-    public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-                                                     String caseFileNumber, String additionalDocumentsComment);
+    public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Add a Still Birth declaration to the system.

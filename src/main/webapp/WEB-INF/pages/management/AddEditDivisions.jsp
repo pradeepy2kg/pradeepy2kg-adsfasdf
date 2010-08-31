@@ -77,6 +77,7 @@
                     });
         });
     });
+
 </script>
 
 <div id="add-inactive-divisions-outer">

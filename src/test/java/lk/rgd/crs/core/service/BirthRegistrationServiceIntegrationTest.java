@@ -18,7 +18,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf1.getChild().setChildFullNameEnglish("aaaa bbbb cccc zzzz");
         bdf1.getChild().setChildGender(0);
         bdf1.getParent().setMotherFullName("hhhh iiii zzzz");
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
         birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
@@ -28,7 +28,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf2.getChild().setChildFullNameEnglish("eeee ffff gggg zzzz");
         bdf2.getChild().setChildGender(0);
         bdf2.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
-        birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo);
         birthRegSvc.approveLiveBirthDeclaration(bdf2, true, adrColomboColombo);
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf2, deoColomboColombo);
         bdf2 = birthRegSvc.getById(bdf2.getIdUKey(), deoColomboColombo);
@@ -38,7 +38,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf3.getChild().setChildFullNameEnglish("hhhh iiii zzzz");
         bdf3.getChild().setChildGender(0);
         bdf3.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
-        birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo);
         birthRegSvc.approveLiveBirthDeclaration(bdf3, true, adrColomboColombo);
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf3, deoColomboColombo);
         bdf3 = birthRegSvc.getById(bdf3.getIdUKey(), deoColomboColombo);

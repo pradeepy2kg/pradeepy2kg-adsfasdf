@@ -77,16 +77,15 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user,
-                                                     String caseFileNumber, String additionalDocumentsComment) {
+    public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new live birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
         // if this is a late registration, and a case file number is specified, record that along with comments
-        if (!isEmptyString(caseFileNumber) || !isEmptyString(additionalDocumentsComment)) {
+        /*if (!isEmptyString(caseFileNumber) || !isEmptyString(additionalDocumentsComment)) {
             bdf.getRegister().setCaseFileNumber(caseFileNumber);
             bdf.getRegister().setComments(additionalDocumentsComment);
-        }
+        }*/
 
         // TODO add case file number and additional document list as comments
         addBirthDeclaration(bdf, ignoreWarnings, user);
