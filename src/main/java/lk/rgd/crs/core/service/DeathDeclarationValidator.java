@@ -58,7 +58,7 @@ public class DeathDeclarationValidator {
         //check is there any duplications in PIN
         String deathPersonPinOrNIC = deathRegister.getDeathPerson().getDeathPersonPINorNIC();
         List deathsWithSamePin = deathRegisterDAO.getDeathRegisterByDeathPersenPINorNIC(deathPersonPinOrNIC);
-        if (deathsWithSamePin.size() > 0) {
+        if (deathsWithSamePin.size() > 1) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("same_death_person_pin_found_in_previous_recode"), deathPersonPinOrNIC));
             w.setSeverity(UserWarning.Severity.WARN);
             warnings.add(w);
