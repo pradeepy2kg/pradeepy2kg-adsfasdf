@@ -12,9 +12,14 @@
 <tr><td rowspan="1" colspan="3">StillBirthFullFlow</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/popreg/eprLogout.do</td>
-	<td></td>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -221,16 +226,7 @@
 	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>link=උපත් තහවුරු කිරීම් මුද්‍රණය</td>
@@ -248,22 +244,17 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
 	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//tr[3]/td[7]/a/img</td>
+	<td>click</td>
+	<td>eprBirthCertificateBulkPrint_index</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
+	<td>eprBirthCertificateBulkPrint_0</td>
 	<td></td>
 </tr>
 <tr>
@@ -274,6 +265,16 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-certificate-print-form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
 	<td></td>
 </tr>
 
