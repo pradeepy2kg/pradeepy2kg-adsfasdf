@@ -303,7 +303,7 @@
     </div>
 </s:if>
 <div class="form-submit" style="margin-top:15px;">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 <%--</s:form>--%>
 </div>

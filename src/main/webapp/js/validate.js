@@ -62,7 +62,7 @@ function validatePhoneNo(domElement, errorText, errorCode) {
 // validate PIN or NIC
 function validatePINorNIC(domElement, errorText, errorCode) {
     with (domElement) {
-        var reg = /^([0-9]{10})|([0-9]{9}[X|x|V|v])$/;
+        var reg = /^(([0-9]{10})|([0-9]{9}[X|x|V|v]))$/;
         if (reg.test(value.trim()) == false) {
             printMessage(errorText, errorCode);
         }

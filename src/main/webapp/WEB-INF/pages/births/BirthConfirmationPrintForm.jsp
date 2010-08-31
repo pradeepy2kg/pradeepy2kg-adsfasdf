@@ -651,7 +651,7 @@
         </tr>
         </tbody>
     </table>
-</div>
+
 <s:if test="directPrint">
     <s:url id="print" action="eprDirectPrintBirthConfirmation.do">
         <s:param name="bdId" value="#request.bdId"/>
@@ -670,10 +670,12 @@
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
 </s:else>
-<div class="form-submit">
+
+<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:25px;">
+    <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>
+<div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
-<div id="birthRegistration-page">
-    <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
