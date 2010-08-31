@@ -686,8 +686,6 @@
 </s:url>
 </s:else>
 
-
-
 <div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:25px;">
     <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
