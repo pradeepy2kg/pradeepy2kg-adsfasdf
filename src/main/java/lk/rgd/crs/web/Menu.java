@@ -164,8 +164,8 @@ public class Menu {
 
         // Adoption Registration for DEO
         deoAdoptionLink.put("eprAdoptionRegistrationAction.do", new Link("adoption_registration.label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionApplicantInfo.do", new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/popreg/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionApplicantInfo.do", new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
 
         deoAdoptionLink.put("eprAdoptionAction.do", new Link(null, "/popreg/adoption/", "eprAdoptionAction.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionRegistrationHome.do", new Link(null, "/popreg/adoption/", "eprAdoptionRegistrationHome.do", Permission.EDIT_ADOPTION));
@@ -234,7 +234,9 @@ public class Menu {
             return deoLinks;
         } else if (roleName.equals(Role.ROLE_ARG)) {
             return argLinks;
-        } else {  // for now dr, arg and rg also gets the same menu as ADR.
+        } else if (roleName.equals(Role.ROLE_RG)) {  //for now arg gets the same menu as ARG
+            return argLinks;
+        } else {  // for now dr also gets the same menu as ADR.
             return adrLinks;
         }
     }

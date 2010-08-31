@@ -190,7 +190,7 @@ function validate() {
     var issueDate = new Date(document.getElementById('orderIssuedDatePicker').value);
     var receivedDate = new Date(document.getElementById('receivedDatePicker').value);
     if (issueDate.getTime() > receivedDate.getTime()) {
-        printMessage("error12","error18");
+        printMessage("error12", "error18");
     }
 
     if (errormsg != "") {
@@ -209,6 +209,22 @@ function disable(mode) {
 }
 //todo 
 function initPage() {
+    var domObject = document.getElementById('birthCertificateNumber');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
+    domObject = document.getElementById('birthRegistrationSrialNum');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
+    domObject = document.getElementById('childAgeMonths');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
+    domObject = document.getElementById('childAgeYears');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
     document.getElementById('birthCertificateNumber').disabled = true;
     document.getElementById('birthDistrictId').disabled = true;
     document.getElementById('dsDivisionId').disabled = true;
