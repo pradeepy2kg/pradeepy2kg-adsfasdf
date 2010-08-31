@@ -66,10 +66,10 @@ public class Menu {
         deoBirthLink.put("eprStillBirthRegistrationInit.do", new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do", Permission.EDIT_BDF));
         deoBirthLink.put("eprBirthConfirmationPrintList.do", new Link("birth_confirmation_print.label", "/popreg/births/", "eprBirthConfirmationPrintList.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprBirthConfirmationInit.do", new Link("birth_confirmation.label", "/popreg/births/", "eprBirthConfirmationInit.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthCertificateList.do", new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/popreg/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/popreg/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthCertificateList.do", new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do", Permission.SEARCH_BDF));
 
         deoBirthLink.put("eprHome.do", new Link(null, "/popreg/births/", "eprHome.do", Permission.USER_PREFERENCES));
         deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/popreg/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
