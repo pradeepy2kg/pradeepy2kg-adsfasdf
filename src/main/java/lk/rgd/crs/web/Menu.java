@@ -17,6 +17,7 @@ public class Menu {
     private static final Map<String, Map> adminLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> deoLinks = new LinkedHashMap<String, Map>();
     private static final Map<String, Map> adrLinks = new LinkedHashMap<String, Map>();
+    private static final Map<String, Map> argLinks = new LinkedHashMap<String, Map>();
     private static final Logger logger = LoggerFactory.getLogger(Menu.class);
 
     // admin menu items
@@ -35,6 +36,11 @@ public class Menu {
     private static final Map adrBirthLink = new LinkedHashMap();
     private static final Map adrAdoptionLink = new LinkedHashMap();
     private static final Map adrDeathLink = new LinkedHashMap();
+
+    //arg menu items
+    private static final Map argBirthLink = new LinkedHashMap();
+    private static final Map argDeathLink = new LinkedHashMap();
+    private static final Map argAdoptionLink = new LinkedHashMap();
 
     static {
         //Admin
@@ -128,6 +134,9 @@ public class Menu {
         adrBirthLink.put("eprDirectApproveIgnoreWarning.do", new Link(null, "/popreg/births/", "eprDirectApproveIgnoreWarning.do", Permission.APPROVE_BDF));
         adrBirthLink.put("ConfirmationDirectApprovalIngoreWarning.do", new Link(null, "/popreg/births/", "ConfirmationDirectApprovalIngoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
 
+        //Birth for ARG
+        argBirthLink.putAll(adrBirthLink);
+
         //Death Registration for DEO
         deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/popreg/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprInitLateDeathDeclaration.do", new Link("late_death_registration.label", "/popreg/deaths/", "eprInitLateDeathDeclaration.do", Permission.EDIT_DEATH));
@@ -150,10 +159,13 @@ public class Menu {
         adrDeathLink.put("eprDirectApproveDeath.do", new Link(null, "/popreg/deaths/", "eprDirectApproveDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprRejectDeath.do", new Link(null, "/popreg/deaths/", "eprRejectDeath.do", Permission.APPROVE_DEATH));
 
+        // Death Registration for ARG
+        argDeathLink.putAll(adrDeathLink);
+
         // Adoption Registration for DEO
+        deoAdoptionLink.put("eprAdoptionRegistrationAction.do", new Link("adoption_registration.label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionApplicantInfo.do", new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/popreg/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionRegistrationAction.do", new Link("adoption_registration.label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do", Permission.EDIT_ADOPTION));
 
         deoAdoptionLink.put("eprAdoptionAction.do", new Link(null, "/popreg/adoption/", "eprAdoptionAction.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionRegistrationHome.do", new Link(null, "/popreg/adoption/", "eprAdoptionRegistrationHome.do", Permission.EDIT_ADOPTION));
@@ -182,9 +194,12 @@ public class Menu {
 
         // Adoption Registration for ADR
         adrAdoptionLink.putAll(deoAdoptionLink);
-        adrAdoptionLink.put("eprApproveAdoption.do", new Link(null, "/popreg/adoption/", "eprApproveAdoption.do", Permission.APPROVE_ADOPTION));
-        adrAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/popreg/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
-        adrAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/popreg/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));
+
+        //Adoption Registration for ARG
+        argAdoptionLink.putAll(adrAdoptionLink);
+        argAdoptionLink.put("eprApproveAdoption.do", new Link(null, "/popreg/adoption/", "eprApproveAdoption.do", Permission.APPROVE_ADOPTION));
+        argAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/popreg/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
+        argAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/popreg/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));
 
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
@@ -202,6 +217,13 @@ public class Menu {
         adrLinks.put("adoption", adrAdoptionLink);
         adrLinks.put("preference", preferanceLink);
         adrLinks.put("prs", prsLink);
+
+        //assemble menu for arg
+        argLinks.put("birth", argBirthLink);
+        argLinks.put("death", argDeathLink);
+        argLinks.put("adoption", argAdoptionLink);
+        argLinks.put("preference", preferanceLink);
+        argLinks.put("prs", prsLink);
     }
 
     public static Map<String, Map> getAllowedLinks(Role role) {
@@ -210,7 +232,9 @@ public class Menu {
             return adminLinks;
         } else if (roleName.equals(Role.ROLE_DEO)) {
             return deoLinks;
-        } else {  // for now dr, arg and rg also gets the same menu as ADR. todo : change for adotion approaval
+        } else if (roleName.equals(Role.ROLE_ARG)) {
+            return argLinks;
+        } else {  // for now dr, arg and rg also gets the same menu as ADR.
             return adrLinks;
         }
     }
