@@ -1,3 +1,5 @@
+<%@ page import="java.util.Date" %>
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%-- @author Duminda Dharmakeerthi --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -159,16 +161,17 @@
                 <td>ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration</td>
                 <td><s:label name="" value="%{death.dateOfRegistration}"/></td>
                 <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue</td>
-                <td><s:label name="" value="%{death.dateOfIssue}"/></td>
+                <td><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+                </td>
             </tr>
             <tr>
                 <td colspan="2">සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
                     சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
                     Name, Signature and Designation of certifying officer
                 </td>
-                <td colspan="2" height="120px"><s:label name="" value="%{notifyingAuthority.notifyingAuthorityName}"/>,
+                <td colspan="2" height="120px"><s:label name="nameOfOfficer" value="%{}"/>,
                     <br>
-                    <s:label name="" value="%{notifyingAuthority.notifyingAuthorityAddress}"/>
+                    <s:label name="designationOfCertifyingOfficer " value="%{}"/>
                 </td>
             </tr>
             <tr>
