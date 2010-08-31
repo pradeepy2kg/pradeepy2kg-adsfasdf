@@ -4,14 +4,12 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.opensymphony.xwork2.*;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.Link;
 import lk.rgd.common.api.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.struts2.interceptor.SessionAware;
 
 /**
  * This Struts Interceptor will be executed before all action calls to ensure the user has logged in and has priviledges to where he is going

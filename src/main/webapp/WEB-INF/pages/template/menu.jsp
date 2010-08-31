@@ -13,49 +13,49 @@
                    <li class="exp">
                 </s:if>
                 <s:else><li></s:else>
-                <s:if test="%{key == '0birth'}">
+                <s:if test="%{key == 'birth'}">
                     <s:a href="/popreg/births/eprBirthRegistrationHome.do">
                         <s:label value="%{getText('category_birth_registration')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '1death'}">
+                <s:if test="%{key == 'death'}">
                     <s:a href="/popreg/deaths/eprInitDeathHome.do">
                         <s:label value="%{getText('category_death_registraion')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '2marriage'}">
+                <s:if test="%{key == 'marriage'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_marrage_registraion')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '3adoption'}">
+                <s:if test="%{key == 'adoption'}">
                     <s:a href="/popreg/adoption/eprAdoptionRegistrationHome.do">
                         <s:label value="%{getText('category_adoption')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '4preference'}">
+                <s:if test="%{key == 'preference'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_user_preferance')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '5reports'}">
+                <s:if test="%{key == 'reports'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_reports')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '6admin'}">
+                <s:if test="%{key == 'admin'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_admin_task')}"/>
                     </s:a>
                 </s:if>
 
-                <s:if test="%{key == '7prs'}">
+                <s:if test="%{key == 'prs'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_prs')}"/>
                     </s:a>
