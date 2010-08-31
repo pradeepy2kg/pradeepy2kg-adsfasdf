@@ -107,12 +107,13 @@
     <tbody>
     <tr>
         <td class="cell_011">1</td>
-        <td colspan="2">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය
+        <td colspan="2">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ
+            අනුක්‍රමික අංකය
             හා දිනය
             <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
-        <td width="200px" ><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
+        <td width="200px"><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
             <s:textfield cssClass="disable" disabled="true" name="register.dateOfRegistration"/></td>
     </tr>
     <tr>
@@ -126,13 +127,13 @@
     </tr>
     <tr>
         <td style="text-align:center">3</td>
-        <td >
-           ආපසු එවිය යුතු ලිපිනය  <br>
-            மாற்றங்கள்..          <br>
+        <td>
+            ආපසු එවිය යුතු ලිපිනය <br>
+            மாற்றங்கள்.. <br>
             Address to post any changes
         </td>
         <td colspan="2">
-            
+
         </td>
     </tr>
     </tbody>
@@ -170,7 +171,7 @@
             உள்ளடக்கப்பட்டுள்ள
             விபரம<br>Information included in Civil Registration System </label></td>
         <td class="cell_02" colspan="11"><label>
-            ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම්  .
+            ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් .
             <br>புதியசிவில் பதிவ..ண்டிய விப...
             <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
@@ -210,7 +211,7 @@
     </tr>
 
     <tr>
-        <td rowspan="4" style="text-align:center;"> 6 </td>
+        <td rowspan="4" style="text-align:center;"> 6</td>
         <td height="40px"><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -229,8 +230,9 @@
         <td colspan="11"></td>
     </tr>
     <tr>
-        <td><label>ඉංග්‍රීසි භාෂාවෙන්     <br>இங்கிலீஷ்    <br>In English</label></td>
-        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" cssClass="disable" disabled="true" size="30"/></td>
+        <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" cssClass="disable" disabled="true"
+                                     size="30"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>
@@ -342,7 +344,8 @@
 
                 <p></p></td>
             <td>
-                <s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;" name="child.childFullNameEnglish"/>
+                <s:textarea cssClass="disable" disabled="true" cssStyle="text-transform: uppercase;"
+                            name="child.childFullNameEnglish"/>
             </td>
         </tr>
         <tr>
@@ -453,223 +456,237 @@
 
 <div class="birth-confirmation-print-form-outer" id="page3" class="page_break">
 
-    <table border="0" style="width: 100% ;float:left;">
-        <caption></caption>
-        <col/>
-        <tbody>
-        <tr>
-            <td colspan="3" style="text-align:center;font-size:12pt">
-                <p></p>
-                <label>
-                    උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil
-                    <br>Person confirming the birth details
-                </label>
+<table border="0" style="width: 100% ;float:left;">
+    <caption></caption>
+    <col/>
+    <tbody>
+    <tr>
+        <td colspan="3" style="text-align:center;font-size:12pt">
+            <p></p>
+            <label>
+                උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil
+                <br>Person confirming the birth details
+            </label>
 
-                <p></p>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            <p></p>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <table class="table_con_page_03" cellspacing="0" style="float:left; margin-bottom:30px;">
-        <caption></caption>
-        <col/>
-        <col width="250px"/>
-        <col style="width:12.5%"/>
-        <col style="width:12.5%"/>
-        <col style="width:12.5%"/>
-        <col style="width:12.5%"/>
-        <col style="width:12.5%"/>
-        <col style="width:12.5%"/>
-        <tbody>
+<table class="table_con_page_03" cellspacing="0" style="float:left; margin-bottom:30px;">
+    <caption></caption>
+    <col/>
+    <col width="250px"/>
+    <col style="width:12.5%"/>
+    <col style="width:12.5%"/>
+    <col style="width:12.5%"/>
+    <col style="width:12.5%"/>
+    <col style="width:12.5%"/>
+    <col style="width:12.5%"/>
+    <tbody>
 
-        <tr>
-            <td height="80px" style="text-align:center">16</td>
-            <td> උපත තහවුරු කරන්නේ කවුරුන් විසින්ද?<br>
-                *in tamil*     <br>
-                Person confirming the details</td>
-            <td>මව<br>*in tamin <br>  Mother</td>
-            <td></td>
-            <td>පියා     <br>*in tamil<br>Father</td>
-            <td></td>
-            <td>භාරකරු  <br>*in tamil<br>Guardian</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td height="80px" style="text-align:center">17</td>
-            <td colspan="4">
-                <p></p>
-                <label>
-                    උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
-                    <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
-                    <br>PIN / NIC of person confirming the birth details
-                </label>
+    <tr>
+        <td height="80px" style="text-align:center">16</td>
+        <td> උපත තහවුරු කරන්නේ කවුරුන් විසින්ද?<br>
+            *in tamil* <br>
+            Person confirming the details
+        </td>
+        <td>මව<br>*in tamin <br> Mother</td>
+        <td></td>
+        <td>පියා <br>*in tamil<br>Father</td>
+        <td></td>
+        <td>භාරකරු <br>*in tamil<br>Guardian</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td height="80px" style="text-align:center">17</td>
+        <td colspan="4">
+            <p></p>
+            <label>
+                උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
+                <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
+                <br>PIN / NIC of person confirming the birth details
+            </label>
 
-                <p></p>
-            </td>
-            <td colspan="3" width="350px"></td>
-        </tr>
+            <p></p>
+        </td>
+        <td colspan="3" width="350px"></td>
+    </tr>
 
-        <tr>
-            <td rowspan="5" class="cell_012">18</td>
-            <td rowspan="5">
-                <p></p>
-                <label>
-                    උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
-                    <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
-                    <br>Full Name of the person confirming the birth details
-                </label>
+    <tr>
+        <td rowspan="5" class="cell_012">18</td>
+        <td rowspan="5">
+            <p></p>
+            <label>
+                උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
+                <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
+                <br>Full Name of the person confirming the birth details
+            </label>
 
-                <p></p>
-            </td>
+            <p></p>
+        </td>
 
-            <td colspan="6"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="6"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="6"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="6"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="6"><p></p></td>
-        </tr>
+        <td colspan="6"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="6"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="6"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="6"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="6"><p></p></td>
+    </tr>
 
-        <tr>
-            <td rowspan="2" class="cell_001">19</td>
-            <td rowspan="2">
-                <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
-                    <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
-                    <br>I hereby certify that the above information are correct
-                </label>
-            </td>
-            <td colspan="3" width="350px"><p></p><label>දිනය <br>திகதி <br>Date </label>
+    <tr>
+        <td rowspan="2" class="cell_001">19</td>
+        <td rowspan="2">
+            <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
+                <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
+                <br>I hereby certify that the above information are correct
+            </label>
+        </td>
+        <td colspan="3" width="350px"><p></p><label>දිනය <br>திகதி <br>Date </label>
 
-                <p></p></td>
-            <td colspan="4"></td>
-        </tr>
-        <tr>
-            <td colspan="3" style="height:75px">අත්සන<br>கையொப்பம்<br>Signature</td>
-            <td colspan="4" style="height:75px"></td>
-        </tr>
-        </tbody>
-    </table>
+            <p></p></td>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td colspan="3" style="height:75px">අත්සන<br>கையொப்பம்<br>Signature</td>
+        <td colspan="4" style="height:75px"></td>
+    </tr>
+    </tbody>
+</table>
 
-    <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
-    <table border="0" style="width: 100%;">
-        <caption></caption>
-        <col/>
-        <tbody>
-        <tr>
-            <td colspan="3" style="text-align:center;font-size:12pt;">
-                <label>කාර්යාලයේ ප්‍රයෝජනය සඳහා පමණි <br>
-                    அலுவலக பாவனைக்காக மட்டும் <br>
-                    Only for office use
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+<table border="0" style="width: 100%;">
+    <caption></caption>
+    <col/>
+    <tbody>
+    <tr>
+        <td colspan="3" style="text-align:center;font-size:12pt;">
+            <label>කාර්යාලයේ ප්‍රයෝජනය සඳහා පමණි <br>
+                அலுவலக பாவனைக்காக மட்டும் <br>
+                Only for office use
 
-                </label>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            </label>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <table class="table_con_page_03" cellspacing="0" style="margin-top:20px ; margin-bottom:30px;">
-        <caption></caption>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <tbody>
+<table class="table_con_page_03" cellspacing="0" style="margin-top:20px ; margin-bottom:30px;">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
 
-        <tr>
-            <td rowspan="2" class="cell_001">20</td>
-            <td rowspan="2"><p></p><label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
-                (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
-                மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
-                பதிவாளர்)<br>
-                Above information has been entered into the Civil Registration System.
-                (District Registrar / Additional District Registrar)</label>
+    <tr>
+        <td rowspan="2" class="cell_001">20</td>
+        <td rowspan="2"><p></p><label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
+            (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
+            மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
+            பதிவாளர்)<br>
+            Above information has been entered into the Civil Registration System.
+            (District Registrar / Additional District Registrar)</label>
 
-                <p></p>
-            </td>
-            <td width="350px"><label>දිනය<br> திகதி <br>Date</label>
-            </td>
-            <td width="350px"></td>
-        </tr>
-        <tr>
-            <td><label>අත්සන<br>
-                கையொப்பம்<br>
-                Signature</label>
-            </td>
-            <td width="350px"></td>
-        </tr>
-        </tbody>
-    </table>
+            <p></p>
+        </td>
+        <td width="350px"><label>දිනය<br> திகதி <br>Date</label>
+        </td>
+        <td width="350px"></td>
+    </tr>
+    <tr>
+        <td><label>අත්සන<br>
+            கையொப்பம்<br>
+            Signature</label>
+        </td>
+        <td width="350px"></td>
+    </tr>
+    </tbody>
+</table>
 
-    <table border="0" cellspacing="0">
-        <caption></caption>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <tbody>
-        <tr>
-            <td rowspan="8" width="200px" height="350px"></td>
-            <td colspan="2" width="600px" height="100px"
-                style="text-align:center;margin-left:auto;margin-right:auto;font-size:12pt">
-                <label>රාජ්‍ය සේවය පිණිසයි<br>
-                    / *in Tamil * <br>
-                    / On State Service<br>
-                </label></td>
-            <td rowspan="8" width="200px"></td>
-        </tr>
-        <tr>
-            <td><s:textarea name="informant.informantName" cssStyle="width:600px;" cssClass="disable" disabled="true"/></td>
-        </tr>
-        <tr>
-            <td><s:textarea name="informant.informantAddress" cssStyle="width:600px;" cssClass="disable" disabled="true"/></td>
-        </tr>
-        <tr>
-            <td colspan="2"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="2"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="2"><p></p></td>
-        </tr>
-        <tr>
-            <td colspan="2"><p></p></td>
-        </tr>
-        <tr>
-            <td>Printed On</td>
+<table border="0" cellspacing="0">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td rowspan="8" width="200px" height="350px"></td>
+        <td colspan="2" width="600px" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:12pt">
+            <label>රාජ්‍ය සේවය පිණිසයි<br>
+                / *in Tamil * <br>
+                / On State Service<br>
+            </label></td>
+        <td rowspan="8" width="200px"></td>
+    </tr>
+    <tr>
+        <td><s:textarea name="informant.informantName" cssStyle="width:600px;" cssClass="disable"
+                        disabled="true"/></td>
+    </tr>
+    <tr>
+        <td><s:textarea name="informant.informantAddress" cssStyle="width:600px;" cssClass="disable"
+                        disabled="true"/></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td>Printed On</td>
 
-            <td style="text-align:right;margin-left:auto;margin-right:0;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <td style="text-align:right;margin-left:auto;margin-right:0;"><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <s:if test="directPrint">
-    <s:url id="print" action="eprDirectPrintBirthConfirmation.do">
-        <s:param name="bdId" value="#request.bdId"/>
-        <s:param name="confirmListFlag" value="true"/>
-    </s:url>
+<s:url id="print" action="eprDirectPrintBirthConfirmation.do">
+    <s:param name="bdId" value="#request.bdId"/>
+    <s:param name="confirmListFlag" value="true"/>
+</s:url>
+    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
 <s:else>
     <%--TODO remove unused parameters--%>
-    <s:url id="print" action="eprMarkBirthConfirmationAsPrint.do">
-        <s:param name="bdId" value="#request.bdId"/>
-        <s:param name="confirmListFlag" value="true"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-        <s:param name="printed" value="#request.printed"/>
-        <s:param name="printStart" value="#request.printStart"/>
-    </s:url>
+<s:url id="print" action="eprMarkBirthConfirmationAsPrint.do">
+    <s:param name="bdId" value="#request.bdId"/>
+    <s:param name="confirmListFlag" value="true"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+    <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+    <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+    <s:param name="printed" value="#request.printed"/>
+    <s:param name="printStart" value="#request.printStart"/>
+</s:url>
+<s:url id="cancel" action="eprBirthCancelConfirmationPrint.do">
+    <s:param name="confirmListFlag" value="true"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+    <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+    <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+    <s:param name="printed" value="#request.printed"/>
+    <s:param name="printStart" value="#request.printStart"/>
+</s:url>
 </s:else>
+
+
 
 <div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:25px;">
     <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
@@ -678,4 +695,7 @@
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
+</div>
+<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:14px;">
+    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
