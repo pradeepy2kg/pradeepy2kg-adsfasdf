@@ -280,7 +280,8 @@
         </action>
 
         <action name="eprDirectPrintBirthCertificate" class="lk.rgd.crs.web.action.births.PrintAction"
-                method="directPrintBirthCertificate">
+                method="markAsPrinted">
+            <param name="directPrint">true</param>
             <result type="tiles" name="success">epr.birthConfirmation_details</result>
         </action>
 
@@ -295,15 +296,18 @@
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
+        <!--TODO-->
         <!--Action for Print Button in direct printing birth confirmation in batch mode -->
-        <action name="eprDirectPrintBirthConfirmation" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="pageLoad">
+        <action name="eprDirectPrintBirthConfirmation" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="markAsPrinted">
+            <param name="directPrint">true</param>
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 
         <!--Action for Print Button in direct printing still birth certificate in batch mode -->
-        <action name="eprDirectPrintStillBirthCertificate" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
-                method="pageLoad">
+        <action name="eprDirectPrintStillBirthCertificate" class="lk.rgd.crs.web.action.births.PrintAction"
+                method="markAsPrinted">
+            <param name="directPrint">true</param>
             <result type="tiles" name="success">epr.birthRegistration_details</result>
         </action>
 

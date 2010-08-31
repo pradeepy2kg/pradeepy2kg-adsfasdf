@@ -262,17 +262,18 @@
 
 
 <s:if test="directPrint">
-    <s:url id="print" action="eprDirectPrintStillBirthCertificate.do">
+    <s:url id="print" action="eprDirectPrintBirthCertificate.do">
         <s:param name="bdId" value="#request.bdId"/>
+        <%--<s:param name="directPrint" value="true"/>--%>
     </s:url>
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
-<s:elseif test="directPrintBirthCertificate">
+<%--<s:elseif test="directPrintBirthCertificate">
     <s:url id="print" action="eprDirectPrintBirthCertificate.do">
         <s:param name="bdId" value="#request.bdId"/>
     </s:url>
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
-</s:elseif>
+</s:elseif>--%>
 <s:else>
     <%--TODO remove unused parameters--%>
     <s:url id="print" action="eprMarkCertificateAsPrinted.do">
