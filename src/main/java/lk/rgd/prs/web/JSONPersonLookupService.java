@@ -29,14 +29,14 @@ public class JSONPersonLookupService extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(JSONPersonLookupService.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private PopulationRegistry popReg;
+    private PopulationRegistry ecivil;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         WebApplicationContext context =
             WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-        popReg = (PopulationRegistry) context.getBean("popRegService");
+        ecivil = (PopulationRegistry) context.getBean("ecivilService");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,7 +61,7 @@ public class JSONPersonLookupService extends HttpServlet {
             }
         }
 
-        Person person = popReg.findPersonByPINorNIC(pinOrNic, user);
+        Person person = ecivil.findPersonByPINorNIC(pinOrNic, user);
         logger.debug("Loaded person : " + person.getFullNameInOfficialLanguage());
 
         response.setContentType("application/json; charset=utf-8");

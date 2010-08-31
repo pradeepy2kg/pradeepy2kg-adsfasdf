@@ -44,7 +44,7 @@ public class BirthRegistrationServiceImpl implements
     private final BDDivisionDAO bdDivisionDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
-    private final PopulationRegistry popreg;
+    private final PopulationRegistry ecivil;
     private final AppParametersDAO appParametersDAO;
     private final UserManager userManager;
     private final BirthRecordsIndexer birthRecordsIndexer;
@@ -55,7 +55,7 @@ public class BirthRegistrationServiceImpl implements
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
         BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
-        PopulationRegistry popreg, AppParametersDAO appParametersDAO, UserManager userManager,
+        PopulationRegistry ecivil, AppParametersDAO appParametersDAO, UserManager userManager,
         BirthRecordsIndexer birthRecordsIndexer, BCSearchDAO bcSearchDAO, AdoptionOrderDAO adoptionOrderDAO,
         BirthDeclarationValidator birthDeclarationValidator) {
         this.birthDeclarationDAO = birthDeclarationDAO;
@@ -64,7 +64,7 @@ public class BirthRegistrationServiceImpl implements
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
         this.raceDAO = raceDAO;
-        this.popreg = popreg;
+        this.ecivil = ecivil;
         this.appParametersDAO = appParametersDAO;
         this.userManager = userManager;
         this.birthRecordsIndexer = birthRecordsIndexer;
@@ -1216,7 +1216,7 @@ public class BirthRegistrationServiceImpl implements
         }
 
         // generate a PIN number
-        long pin = popreg.addPerson(child, user);
+        long pin = ecivil.addPerson(child, user);
         childInfo.setPin(pin);
         bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
 
@@ -1240,14 +1240,14 @@ public class BirthRegistrationServiceImpl implements
             Person mother = null;
             try {
                 long pin = Long.parseLong(motherNICorPIN);
-                mother = popreg.findPersonByPIN(pin, user);
+                mother = ecivil.findPersonByPIN(pin, user);
                 if (mother != null) {
                     logger.debug("Found mother by PIN : {}", pin);
                     person.setMother(mother);
                 }
             } catch (NumberFormatException ignore) {
                 // this could be an NIC
-                List<Person> records = popreg.findPersonsByNIC(motherNICorPIN, user);
+                List<Person> records = ecivil.findPersonsByNIC(motherNICorPIN, user);
                 if (records != null && records.size() == 1) {
                     logger.debug("Found mother by INC : {}", records.get(0).getNic());
                     mother = records.get(0);
@@ -1273,7 +1273,7 @@ public class BirthRegistrationServiceImpl implements
                 }
                 mother.setStatus(Person.Status.UNVERIFIED);
                 mother.setLifeStatus(Person.LifeStatus.ALIVE);
-                popreg.addPerson(mother, user);
+                ecivil.addPerson(mother, user);
 
                 logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
             }
@@ -1287,14 +1287,14 @@ public class BirthRegistrationServiceImpl implements
             Person father = null;
             try {
                 long pin = Long.parseLong(fatherNICorPIN);
-                father = popreg.findPersonByPIN(pin, user);
+                father = ecivil.findPersonByPIN(pin, user);
                 if (father != null) {
                     logger.debug("Found father by PIN : {}", pin);
                     person.setFather(father);
                 }
             } catch (NumberFormatException ignore) {
                 // this could be an NIC
-                List<Person> records = popreg.findPersonsByNIC(fatherNICorPIN, user);
+                List<Person> records = ecivil.findPersonsByNIC(fatherNICorPIN, user);
                 if (records != null && records.size() == 1) {
                     logger.debug("Found father by INC : {}", records.get(0).getNic());
                     father = records.get(0);
@@ -1313,7 +1313,7 @@ public class BirthRegistrationServiceImpl implements
                 father.setPreferredLanguage(prefLanguage);
                 father.setStatus(Person.Status.UNVERIFIED);
                 father.setLifeStatus(Person.LifeStatus.ALIVE);
-                popreg.addPerson(father, user);
+                ecivil.addPerson(father, user);
 
                 logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
             }

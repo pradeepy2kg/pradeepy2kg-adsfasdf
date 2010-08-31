@@ -44,164 +44,163 @@ public class Menu {
 
     static {
         //Admin
-        adminLink.put("eprInitUserCreation.do", new Link("creat_user.label", "/popreg/management/", "eprInitUserCreation.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprViewUsers.do", new Link("viewUsers.label", "/popreg/management/", "eprViewUsers.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addEditDivision.label", "/popreg/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInitUserCreation.do", new Link("creat_user.label", "/ecivil/management/", "eprInitUserCreation.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprViewUsers.do", new Link("viewUsers.label", "/ecivil/management/", "eprViewUsers.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addEditDivision.label", "/ecivil/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
 
-        adminLink.put("eprUserCreation.do", new Link(null, "/popreg/management/", "eprUserCreation.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprdeleteUsers.do", new Link(null, "/popreg/management/", "eprdeleteUsers.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprViewSelectedUsers.do", new Link(null, "/popreg/management/", "eprViewSelectedUsers.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprActiveDivisionsAndDsDivisions.do", new Link(null, "/popreg/management/", "eprActiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprInactiveDivisionsAndDsDivisions.do", new Link(null, "/popreg/management/", "eprInactiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprAddDivisionsAndDsDivisions.do", new Link(null, "/popreg/management/", "eprAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
-        adminLink.put("eprInitDivisionList.do", new Link(null, "/popreg/management/", "eprInitDivisionList.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprUserCreation.do", new Link(null, "/ecivil/management/", "eprUserCreation.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprdeleteUsers.do", new Link(null, "/ecivil/management/", "eprdeleteUsers.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprViewSelectedUsers.do", new Link(null, "/ecivil/management/", "eprViewSelectedUsers.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprActiveDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprActiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInactiveDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprInactiveDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprAddDivisionsAndDsDivisions.do", new Link(null, "/ecivil/management/", "eprAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInitDivisionList.do", new Link(null, "/ecivil/management/", "eprInitDivisionList.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
 
         //User Preferance
-        preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/popreg/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
+        preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/ecivil/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
 
-        preferanceLink.put("eprChangePass.do", new Link(null, "/popreg/preferences/", "eprChangePass.do", Permission.USER_PREFERENCES));
-        preferanceLink.put("eprBackChangePass.do", new Link(null, "/popreg/preferences/", "eprBackChangePass.do", Permission.USER_PREFERENCES));
-        preferanceLink.put("passChangePageLoad.do", new Link(null, "/popreg/preferences/", "passChangePageLoad.do", Permission.USER_PREFERENCES));
-        preferanceLink.put("eprUserPreferencesAction.do", new Link(null, "/popreg/preferences/", "eprUserPreferencesAction.do", Permission.USER_PREFERENCES));
+        preferanceLink.put("eprChangePass.do", new Link(null, "/ecivil/preferences/", "eprChangePass.do", Permission.USER_PREFERENCES));
+        preferanceLink.put("eprBackChangePass.do", new Link(null, "/ecivil/preferences/", "eprBackChangePass.do", Permission.USER_PREFERENCES));
+        preferanceLink.put("passChangePageLoad.do", new Link(null, "/ecivil/preferences/", "passChangePageLoad.do", Permission.USER_PREFERENCES));
+        preferanceLink.put("eprUserPreferencesAction.do", new Link(null, "/ecivil/preferences/", "eprUserPreferencesAction.do", Permission.USER_PREFERENCES));
 
         // PRS
-        prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/popreg/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
+        prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
 
         // Birth Registration for DEO
-        deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/popreg/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));
-        deoBirthLink.put("eprStillBirthRegistrationInit.do", new Link("still_birth_registration.label", "/popreg/births/", "eprStillBirthRegistrationInit.do", Permission.EDIT_BDF));
-        deoBirthLink.put("eprBirthConfirmationPrintList.do", new Link("birth_confirmation_print.label", "/popreg/births/", "eprBirthConfirmationPrintList.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprBirthConfirmationInit.do", new Link("birth_confirmation.label", "/popreg/births/", "eprBirthConfirmationInit.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprBirthCertificateList.do", new Link("print_birthcertificate.label", "/popreg/births/", "eprBirthCertificateList.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/popreg/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/popreg/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/popreg/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBirthRegistrationInit.do", new Link("birth_registration.label", "/ecivil/births/", "eprBirthRegistrationInit.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprStillBirthRegistrationInit.do", new Link("still_birth_registration.label", "/ecivil/births/", "eprStillBirthRegistrationInit.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprBirthConfirmationPrintList.do", new Link("birth_confirmation_print.label", "/ecivil/births/", "eprBirthConfirmationPrintList.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthConfirmationInit.do", new Link("birth_confirmation.label", "/ecivil/births/", "eprBirthConfirmationInit.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthCertificateList.do", new Link("print_birthcertificate.label", "/ecivil/births/", "eprBirthCertificateList.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
 
-        deoBirthLink.put("eprHome.do", new Link(null, "/popreg/births/", "eprHome.do", Permission.USER_PREFERENCES));
-        deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/popreg/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
-        deoBirthLink.put("eprBirthRegistrationHome.do", new Link(null, "/popreg/births/", "eprBirthRegistrationHome.do", Permission.EDIT_BDF));
-        deoBirthLink.put("eprStillBirth.do", new Link(null, "/popreg/births/", "eprStillBirth.do", Permission.EDIT_BDF));
-        deoBirthLink.put("eprDirectPrintBirthConfirmation.do", new Link(null, "/popreg/births/", "eprDirectPrintBirthConfirmation.do", Permission.EDIT_BDF));
-        deoBirthLink.put("eprMarkCertificateAsPrinted.do", new Link(null, "/popreg/births/", "eprMarkCertificateAsPrinted.do", Permission.PRINT_BDF));
-        adrBirthLink.put("eprViewBDFInNonEditableMode.do", new Link(null, "/popreg/births/", "eprViewBDFInNonEditableMode.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));
+        deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/ecivil/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprBirthRegistrationHome.do", new Link(null, "/ecivil/births/", "eprBirthRegistrationHome.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprStillBirth.do", new Link(null, "/ecivil/births/", "eprStillBirth.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprDirectPrintBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprDirectPrintBirthConfirmation.do", Permission.EDIT_BDF));
+        deoBirthLink.put("eprMarkCertificateAsPrinted.do", new Link(null, "/ecivil/births/", "eprMarkCertificateAsPrinted.do", Permission.PRINT_BDF));
+        adrBirthLink.put("eprViewBDFInNonEditableMode.do", new Link(null, "/ecivil/births/", "eprViewBDFInNonEditableMode.do", Permission.EDIT_BDF));
 
-        deoBirthLink.put("eprBirthConfirmation.do", new Link(null, "/popreg/births/", "eprBirthConfirmation.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprDirectPrintBirthCertificate.do", new Link(null, "/popreg/births/", "eprDirectPrintBirthCertificate.do", Permission.PRINT_BDF));
-        deoBirthLink.put("eprMarkBirthConfirmationAsPrint.do", new Link(null, "/popreg/births/", "eprMarkBirthConfirmationAsPrint.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprBirthConfirmation.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprDirectPrintBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintBirthCertificate.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprMarkBirthConfirmationAsPrint.do", new Link(null, "/ecivil/births/", "eprMarkBirthConfirmationAsPrint.do", Permission.EDIT_BDF_CONFIRMATION));
 
-        deoBirthLink.put("eprFilterBirthConfirmationPrint.do", new Link(null, "/popreg/births/", "eprFilterBirthConfirmationPrint.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthConfirmationPrintPage.do", new Link(null, "/popreg/births/", "eprBirthConfirmationPrintPage.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprBirthConfirmationBulkPrint.do", new Link(null, "/popreg/births/", "eprBirthConfirmationBulkPrint.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprBirthCancelConfirmationPrint.do", new Link(null, "/popreg/births/", "eprBirthCancelConfirmationPrint.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprPrintNext.do", new Link(null, "/popreg/births/", "eprPrintNext.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprPrintPrevious.do", new Link(null, "/popreg/births/", "eprPrintPrevious.do", Permission.EDIT_BDF_CONFIRMATION));
-        deoBirthLink.put("eprBirthConfirmationSkipChanges.do", new Link(null, "/popreg/births/", "eprBirthConfirmationSkipChanges.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprFilterBirthConfirmationPrint.do", new Link(null, "/ecivil/births/", "eprFilterBirthConfirmationPrint.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBirthConfirmationPrintPage.do", new Link(null, "/ecivil/births/", "eprBirthConfirmationPrintPage.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthConfirmationBulkPrint.do", new Link(null, "/ecivil/births/", "eprBirthConfirmationBulkPrint.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprPrintNext.do", new Link(null, "/ecivil/births/", "eprPrintNext.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprPrintPrevious.do", new Link(null, "/ecivil/births/", "eprPrintPrevious.do", Permission.EDIT_BDF_CONFIRMATION));
+        deoBirthLink.put("eprBirthConfirmationSkipChanges.do", new Link(null, "/ecivil/births/", "eprBirthConfirmationSkipChanges.do", Permission.EDIT_BDF_CONFIRMATION));
 
-        deoBirthLink.put("eprBDFSearchBySerialNo.do", new Link(null, "/popreg/births/", "eprBDFSearchBySerialNo.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBDFSearchByIdUKey.do", new Link(null, "/popreg/births/", "eprBDFSearchByIdUKey.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBDFSearchBySerialNo.do", new Link(null, "/ecivil/births/", "eprBDFSearchBySerialNo.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBDFSearchByIdUKey.do", new Link(null, "/ecivil/births/", "eprBDFSearchByIdUKey.do", Permission.SEARCH_BDF));
 
-        deoBirthLink.put("eprFilterBirthCetificateList.do", new Link(null, "/popreg/births/", "eprFilterBirthCetificateList.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthCertificate.do", new Link(null, "/popreg/births/", "eprBirthCertificate.do", Permission.PRINT_BDF));
-        deoBirthLink.put("eprBirthCancelCertificatePrint.do", new Link(null, "/popreg/births/", "eprBirthCancelCertificatePrint.do", Permission.PRINT_BDF));
-        deoBirthLink.put("eprBirthCertificateBulkPrint.do", new Link(null, "/popreg/births/", "eprBirthCertificateBulkPrint.do", Permission.PRINT_BDF));
-        deoBirthLink.put("eprCertificatePrintNext.do", new Link(null, "/popreg/births/", "eprCertificatePrintNext.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprCertificatePrintPrevious.do", new Link(null, "/popreg/births/", "eprCertificatePrintPrevious.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprStillBirthCertificatePrint.do", new Link(null, "/popreg/births/", "eprStillBirthCertificatePrint.do", Permission.PRINT_BDF));
-        deoBirthLink.put("eprDirectPrintStillBirthCertificate.do", new Link(null, "/popreg/births/", "eprDirectPrintStillBirthCertificate.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprFilterBirthCetificateList.do", new Link(null, "/ecivil/births/", "eprFilterBirthCetificateList.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBirthCertificate.do", new Link(null, "/ecivil/births/", "eprBirthCertificate.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprBirthCancelCertificatePrint.do", new Link(null, "/ecivil/births/", "eprBirthCancelCertificatePrint.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprBirthCertificateBulkPrint.do", new Link(null, "/ecivil/births/", "eprBirthCertificateBulkPrint.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprCertificatePrintNext.do", new Link(null, "/ecivil/births/", "eprCertificatePrintNext.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprCertificatePrintPrevious.do", new Link(null, "/ecivil/births/", "eprCertificatePrintPrevious.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprStillBirthCertificatePrint.do", new Link(null, "/ecivil/births/", "eprStillBirthCertificatePrint.do", Permission.PRINT_BDF));
+        deoBirthLink.put("eprDirectPrintStillBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintStillBirthCertificate.do", Permission.PRINT_BDF));
 
         // Birth for ADR
         adrBirthLink.putAll(deoBirthLink);
-        adrBirthLink.put("eprBirthRegisterApproval.do", new Link("birth_register_approval.label", "/popreg/births/", "eprBirthRegisterApproval.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprBirthConfirmationApproval.do", new Link("birth_confirmation_approval.label", "/popreg/births/", "eprBirthConfirmationApproval.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprBirthRegisterApproval.do", new Link("birth_register_approval.label", "/ecivil/births/", "eprBirthRegisterApproval.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprBirthConfirmationApproval.do", new Link("birth_confirmation_approval.label", "/ecivil/births/", "eprBirthConfirmationApproval.do", Permission.APPROVE_BDF_CONFIRMATION));
 
-        adrBirthLink.put("eprApprovalRefresh.do", new Link(null, "/popreg/births/", "eprApprovalRefresh.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprConfirmationApprovalRefresh.do", new Link(null, "/popreg/births/", "eprConfirmationApprovalRefresh.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprConfirmationApprovalNext.do", new Link(null, "/popreg/births/", "eprConfirmationApprovalNext.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprConfirmationApprovalPrevious.do", new Link(null, "/popreg/births/", "eprConfirmationApprovalPrevious.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprApproveConfirmationBulk.do", new Link(null, "/popreg/births/", "eprApproveConfirmationBulk.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprConfrimationChangesDirectApproval.do", new Link(null, "/popreg/births/", "eprConfrimationChangesDirectApproval.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprBirthCertificatDirectPrint.do", new Link(null, "/popreg/births/", "eprBirthCertificatDirectPrint.do", Permission.PRINT_BDF));
-        adrBirthLink.put("eprApproveBulk.do", new Link(null, "/popreg/births/", "eprApproveBulk.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprApproveBirthDeclaration.do", new Link(null, "/popreg/births/", "eprApproveBirthDeclaration.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprApprovalNext.do", new Link(null, "/popreg/births/", "eprApprovalNext.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprApprovalPrevious.do", new Link(null, "/popreg/births/", "eprApprovalPrevious.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprDeleteApprovalPending.do", new Link(null, "/popreg/births/", "eprDeleteApprovalPending.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprIgnoreWarning.do", new Link(null, "/popreg/births/", "eprIgnoreWarning.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprRejectBirthDeclaration.do", new Link(null, "/popreg/births/", "eprRejectBirthDeclaration.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprApproveBirthConfirmation.do", new Link(null, "/popreg/births/", "eprApproveBirthConfirmation.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprConfirmationIgnoreWarning.do", new Link(null, "/popreg/births/", "eprConfirmationIgnoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprRejectBirthConfirmation.do", new Link(null, "/popreg/births/", "eprRejectBirthConfirmation.do", Permission.APPROVE_BDF_CONFIRMATION));
-        adrBirthLink.put("eprDirectApprove.do", new Link(null, "/popreg/births/", "eprDirectApprove.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("eprDirectApproveIgnoreWarning.do", new Link(null, "/popreg/births/", "eprDirectApproveIgnoreWarning.do", Permission.APPROVE_BDF));
-        adrBirthLink.put("ConfirmationDirectApprovalIngoreWarning.do", new Link(null, "/popreg/births/", "ConfirmationDirectApprovalIngoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprApprovalRefresh.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprConfirmationApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprConfirmationApprovalRefresh.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprConfirmationApprovalNext.do", new Link(null, "/ecivil/births/", "eprConfirmationApprovalNext.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprConfirmationApprovalPrevious.do", new Link(null, "/ecivil/births/", "eprConfirmationApprovalPrevious.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprApproveConfirmationBulk.do", new Link(null, "/ecivil/births/", "eprApproveConfirmationBulk.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprConfrimationChangesDirectApproval.do", new Link(null, "/ecivil/births/", "eprConfrimationChangesDirectApproval.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprBirthCertificatDirectPrint.do", new Link(null, "/ecivil/births/", "eprBirthCertificatDirectPrint.do", Permission.PRINT_BDF));
+        adrBirthLink.put("eprApproveBulk.do", new Link(null, "/ecivil/births/", "eprApproveBulk.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprApproveBirthDeclaration.do", new Link(null, "/ecivil/births/", "eprApproveBirthDeclaration.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprApprovalNext.do", new Link(null, "/ecivil/births/", "eprApprovalNext.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprApprovalPrevious.do", new Link(null, "/ecivil/births/", "eprApprovalPrevious.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprDeleteApprovalPending.do", new Link(null, "/ecivil/births/", "eprDeleteApprovalPending.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprIgnoreWarning.do", new Link(null, "/ecivil/births/", "eprIgnoreWarning.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprRejectBirthDeclaration.do", new Link(null, "/ecivil/births/", "eprRejectBirthDeclaration.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprApproveBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprApproveBirthConfirmation.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprConfirmationIgnoreWarning.do", new Link(null, "/ecivil/births/", "eprConfirmationIgnoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprRejectBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprRejectBirthConfirmation.do", Permission.APPROVE_BDF_CONFIRMATION));
+        adrBirthLink.put("eprDirectApprove.do", new Link(null, "/ecivil/births/", "eprDirectApprove.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprDirectApproveIgnoreWarning.do", new Link(null, "/ecivil/births/", "eprDirectApproveIgnoreWarning.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("ConfirmationDirectApprovalIngoreWarning.do", new Link(null, "/ecivil/births/", "ConfirmationDirectApprovalIngoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
 
         //Birth for ARG
         argBirthLink.putAll(adrBirthLink);
 
         //Death Registration for DEO
-        deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/popreg/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprInitLateDeathDeclaration.do", new Link("late_death_registration.label", "/popreg/deaths/", "eprInitLateDeathDeclaration.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprDeathApprovalAndPrint.do", new Link("death_approve_print_list.label", "/popreg/deaths/", "eprDeathApprovalAndPrint.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/ecivil/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprInitLateDeathDeclaration.do", new Link("late_death_registration.label", "/ecivil/deaths/", "eprInitLateDeathDeclaration.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathApprovalAndPrint.do", new Link("death_approve_print_list.label", "/ecivil/deaths/", "eprDeathApprovalAndPrint.do", Permission.EDIT_DEATH));
 
-        deoDeathLink.put("eprDeathFilterByStatus.do", new Link(null, "/popreg/deaths/", "eprDeathFilterByStatus.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprInitDeathHome.do", new Link(null, "/popreg/deaths/", "eprInitDeathHome.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprDeathDeclaration.do", new Link(null, "/popreg/deaths/", "eprDeathDeclaration.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprDeathCertificate.do", new Link(null, "/popreg/deaths/", "eprDeathCertificate.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathFilterByStatus.do", new Link(null, "/ecivil/deaths/", "eprDeathFilterByStatus.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprInitDeathHome.do", new Link(null, "/ecivil/deaths/", "eprInitDeathHome.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathDeclaration.do", new Link(null, "/ecivil/deaths/", "eprDeathDeclaration.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathCertificate.do", new Link(null, "/ecivil/deaths/", "eprDeathCertificate.do", Permission.EDIT_DEATH));
 
-        deoDeathLink.put("eprDeleteDeath.do", new Link(null, "/popreg/deaths/", "eprDeleteDeath.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprDeathViewMode.do", new Link(null, "/popreg/deaths/", "eprDeathViewMode.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprPrintDeath.do", new Link(null, "/popreg/deaths/", "eprPrintDeath.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprDeathEditMode.do", new Link(null, "/popreg/deaths/", "eprDeathEditMode.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprDeathBackToPreviousState.do", new Link(null, "/popreg/deaths/", "eprDeathBackToPreviousState.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeleteDeath.do", new Link(null, "/ecivil/deaths/", "eprDeleteDeath.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathViewMode.do", new Link(null, "/ecivil/deaths/", "eprDeathViewMode.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprPrintDeath.do", new Link(null, "/ecivil/deaths/", "eprPrintDeath.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathEditMode.do", new Link(null, "/ecivil/deaths/", "eprDeathEditMode.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprDeathBackToPreviousState.do", new Link(null, "/ecivil/deaths/", "eprDeathBackToPreviousState.do", Permission.EDIT_DEATH));
 
         // Death Registration for ADR
         adrDeathLink.putAll(deoDeathLink);
-        adrDeathLink.put("eprApproveDeath.do", new Link(null, "/popreg/deaths/", "eprApproveDeath.do", Permission.APPROVE_DEATH));
-        adrDeathLink.put("eprDirectApproveDeath.do", new Link(null, "/popreg/deaths/", "eprDirectApproveDeath.do", Permission.APPROVE_DEATH));
-        adrDeathLink.put("eprRejectDeath.do", new Link(null, "/popreg/deaths/", "eprRejectDeath.do", Permission.APPROVE_DEATH));
-        adrDeathLink.put("eprDirectApproveIgnoringWornings.do", new Link(null, "/popreg/deaths/", "eprDirectApproveIgnoringWornings.do", Permission.APPROVE_DEATH));
+        adrDeathLink.put("eprApproveDeath.do", new Link(null, "/ecivil/deaths/", "eprApproveDeath.do", Permission.APPROVE_DEATH));
+        adrDeathLink.put("eprDirectApproveDeath.do", new Link(null, "/ecivil/deaths/", "eprDirectApproveDeath.do", Permission.APPROVE_DEATH));
+        adrDeathLink.put("eprRejectDeath.do", new Link(null, "/ecivil/deaths/", "eprRejectDeath.do", Permission.APPROVE_DEATH));
+        adrDeathLink.put("eprDirectApproveIgnoringWornings.do", new Link(null, "/ecivil/deaths/", "eprDirectApproveIgnoringWornings.do", Permission.APPROVE_DEATH));
 
         // Death Registration for ARG
         argDeathLink.putAll(adrDeathLink);
 
         // Adoption Registration for DEO
-        deoAdoptionLink.put("eprAdoptionRegistrationAction.do", new Link("adoption_registration.label", "/popreg/adoption/", "eprAdoptionRegistrationAction.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/popreg/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionApplicantInfo.do", new Link("adoption_applicant.label", "/popreg/adoption/", "eprAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionRegistrationAction.do", new Link("adoption_registration.label", "/ecivil/adoption/", "eprAdoptionRegistrationAction.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/ecivil/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionApplicantInfo.do", new Link("adoption_applicant.label", "/ecivil/adoption/", "eprAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
 
-        deoAdoptionLink.put("eprAdoptionAction.do", new Link(null, "/popreg/adoption/", "eprAdoptionAction.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionRegistrationHome.do", new Link(null, "/popreg/adoption/", "eprAdoptionRegistrationHome.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionProcessApplicantInfo.do", new Link(null, "/popreg/adoption/", "eprAdoptionProcessApplicantInfo.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprBirthRegistrationHome.do", new Link(null, "/popreg/adoption/", "eprBirthRegistrationHome.do", Permission.EDIT_ADOPTION));
-        //    deoAdoptionLink.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/popreg/adoption/", "eprAdoptionCertificate.do"));
-        deoAdoptionLink.put("eprAdoptionBirthRegistrationInit.do", new Link(null, "/popreg/births/", "eprAdoptionBirthRegistrationInit.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionViewMode.do", new Link(null, "/popreg/adoption/", "eprAdoptionViewMode.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprMarkDirectlyAdoptionNoticeAsPrinted.do", new Link(null, "/popreg/adoption/", "eprMarkDirectlyAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("cancelPrintAdoptionNotice.do", new Link(null, "/popreg/adoption/", "cancelPrintAdoptionNotice.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionNoticeDirectPrint.do", new Link(null, "/popreg/adoption/", "eprAdoptionNoticeDirectPrint.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionCertificateRequest.do", new Link(null, "/popreg/adoption/", "eprAdoptionCertificateRequest.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionFind.do", new Link(null, "/popreg/adoption/", "eprAdoptionFind.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprDeleteAdoption.do", new Link(null, "/popreg/adoption/", "eprDeleteAdoption.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionEditMode.do", new Link(null, "/popreg/adoption/", "eprAdoptionEditMode.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprPrintAdoptionNotice.do", new Link(null, "/popreg/adoption/", "eprPrintAdoptionNotice.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprMarkAdoptionNoticeAsPrinted.do", new Link(null, "/popreg/adoption/", "eprMarkAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprPrintAdoptionCertificate.do", new Link(null, "/popreg/adoption/", "eprPrintAdoptionCertificate.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprMarkAdoptionCertificateAsPrinted.do", new Link(null, "/popreg/adoption/", "eprMarkAdoptionCertificateAsPrinted.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionNext.do", new Link(null, "/popreg/adoption/", "eprAdoptionNext.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionPrevious.do", new Link(null, "/popreg/adoption/", "eprAdoptionPrevious.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionFilterByStatus.do", new Link(null, "/popreg/adoption/", "eprAdoptionFilterByStatus.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprAdoptionBackToPreviousState.do", new Link(null, "/popreg/adoption/", "eprAdoptionBackToPreviousState.do", Permission.EDIT_ADOPTION));
-        deoAdoptionLink.put("eprCaptureAdoptionApplicantInfo.do", new Link(null, "/popreg/adoption/", "eprCaptureAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
-        //deoAdoptionLink.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/popreg/births/", "eprAdoptionRegistrationHome.do"));
+        deoAdoptionLink.put("eprAdoptionAction.do", new Link(null, "/ecivil/adoption/", "eprAdoptionAction.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionRegistrationHome.do", new Link(null, "/ecivil/adoption/", "eprAdoptionRegistrationHome.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionProcessApplicantInfo.do", new Link(null, "/ecivil/adoption/", "eprAdoptionProcessApplicantInfo.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprBirthRegistrationHome.do", new Link(null, "/ecivil/adoption/", "eprBirthRegistrationHome.do", Permission.EDIT_ADOPTION));
+        //    deoAdoptionLink.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/ecivil/adoption/", "eprAdoptionCertificate.do"));
+        deoAdoptionLink.put("eprAdoptionBirthRegistrationInit.do", new Link(null, "/ecivil/births/", "eprAdoptionBirthRegistrationInit.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionViewMode.do", new Link(null, "/ecivil/adoption/", "eprAdoptionViewMode.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprMarkDirectlyAdoptionNoticeAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkDirectlyAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("cancelPrintAdoptionNotice.do", new Link(null, "/ecivil/adoption/", "cancelPrintAdoptionNotice.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionNoticeDirectPrint.do", new Link(null, "/ecivil/adoption/", "eprAdoptionNoticeDirectPrint.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionCertificateRequest.do", new Link(null, "/ecivil/adoption/", "eprAdoptionCertificateRequest.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionFind.do", new Link(null, "/ecivil/adoption/", "eprAdoptionFind.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprDeleteAdoption.do", new Link(null, "/ecivil/adoption/", "eprDeleteAdoption.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionEditMode.do", new Link(null, "/ecivil/adoption/", "eprAdoptionEditMode.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprPrintAdoptionNotice.do", new Link(null, "/ecivil/adoption/", "eprPrintAdoptionNotice.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprMarkAdoptionNoticeAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprPrintAdoptionCertificate.do", new Link(null, "/ecivil/adoption/", "eprPrintAdoptionCertificate.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprMarkAdoptionCertificateAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkAdoptionCertificateAsPrinted.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionNext.do", new Link(null, "/ecivil/adoption/", "eprAdoptionNext.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionPrevious.do", new Link(null, "/ecivil/adoption/", "eprAdoptionPrevious.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionFilterByStatus.do", new Link(null, "/ecivil/adoption/", "eprAdoptionFilterByStatus.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionBackToPreviousState.do", new Link(null, "/ecivil/adoption/", "eprAdoptionBackToPreviousState.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprCaptureAdoptionApplicantInfo.do", new Link(null, "/ecivil/adoption/", "eprCaptureAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
+        //deoAdoptionLink.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/ecivil/births/", "eprAdoptionRegistrationHome.do"));
 
         // Adoption Registration for ADR
         adrAdoptionLink.putAll(deoAdoptionLink);
 
         //Adoption Registration for ARG
         argAdoptionLink.putAll(adrAdoptionLink);
-        argAdoptionLink.put("eprApproveAdoption.do", new Link(null, "/popreg/adoption/", "eprApproveAdoption.do", Permission.APPROVE_ADOPTION));
-        argAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/popreg/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
-        argAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/popreg/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));
+        argAdoptionLink.put("eprApproveAdoption.do", new Link(null, "/ecivil/adoption/", "eprApproveAdoption.do", Permission.APPROVE_ADOPTION));
+        argAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/ecivil/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
+        argAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/ecivil/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));
 
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
