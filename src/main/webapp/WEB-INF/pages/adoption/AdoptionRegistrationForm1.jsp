@@ -192,6 +192,10 @@ function validate() {
     if (issueDate.getTime() > receivedDate.getTime()) {
         printMessage("error12", "error18");
     }
+    domObject = document.getElementById('wifePINorNIC');
+    if (domObject.disabled == false && !isFieldEmpty(domObject)) {
+        printMessage("error12","error19");
+    }
 
     if (errormsg != "") {
         alert(errormsg);
@@ -231,7 +235,6 @@ function initPage() {
     document.getElementById('birthDivisionId').disabled = true;
     document.getElementById('birthRegistrationSrialNum').disabled = true;
     document.getElementById('availabeSerial').disabled = true;
-
 }
 
 function enableCertificateNumber(mode) {
@@ -638,4 +641,5 @@ function enableSerialNumber(mode) {
 <s:hidden id="error16" value="%{getText('er.label.birthCertificateNumber')}"/>
 <s:hidden id="error17" value="%{getText('er.label.child.newNameOrExistingName')}"/>
 <s:hidden id="error18" value="%{getText('er.label.orderIssuedDate.orderRecievedDate')}"/>
+<s:hidden id="error19" value="%{getText('er.label.wifePINorNIC')}"/>
 </div>
