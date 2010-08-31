@@ -175,11 +175,11 @@ public class Menu {
         deoAdoptionLink.put("eprAdoptionFilterByStatus.do", new Link(null, "/popreg/adoption/", "eprAdoptionFilterByStatus.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionBackToPreviousState.do", new Link(null, "/popreg/adoption/", "eprAdoptionBackToPreviousState.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprCaptureAdoptionApplicantInfo.do", new Link(null, "/popreg/adoption/", "eprCaptureAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/popreg/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.EDIT_ADOPTION));
         //deoAdoptionLink.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/popreg/births/", "eprAdoptionRegistrationHome.do"));
 
         // Adoption Registration for ADR
         adrAdoptionLink.putAll(deoAdoptionLink);
-        adrAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/popreg/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.APPROVE_ADOPTION));
         adrAdoptionLink.put("eprApproveAdoption.do", new Link(null, "/popreg/adoption/", "eprApproveAdoption.do", Permission.APPROVE_ADOPTION));
         adrAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/popreg/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
         adrAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/popreg/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));

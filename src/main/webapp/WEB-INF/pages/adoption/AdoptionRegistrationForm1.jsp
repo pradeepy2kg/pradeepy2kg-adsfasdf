@@ -190,6 +190,12 @@ function validate() {
         }
     }
 
+    var issueDate = new Date(document.getElementById('orderIssuedDatePicker').value);
+    var receivedDate = new Date(document.getElementById('receivedDatePicker').value);
+    if (issueDate.getTime() > receivedDate.getTime()) {
+        printMessage("error12","error18");
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -205,7 +211,7 @@ function disable(mode) {
     document.getElementById('wifeName').disabled = mode;
 }
 //todo 
-function initPage() {       
+function initPage() {
     document.getElementById('birthCertificateNumber').disabled = true;
     document.getElementById('birthDistrictId').disabled = true;
     document.getElementById('dsDivisionId').disabled = true;
@@ -618,4 +624,5 @@ function enableSerialNumber(mode) {
 <s:hidden id="error15" value="%{getText('er.label.birthRegistrationSrialNum')}"/>
 <s:hidden id="error16" value="%{getText('er.label.birthCertificateNumber')}"/>
 <s:hidden id="error17" value="%{getText('er.label.child.newNameOrExistingName')}"/>
+<s:hidden id="error18" value="%{getText('er.label.orderIssuedDate.orderRecievedDate')}"/>
 </div>
