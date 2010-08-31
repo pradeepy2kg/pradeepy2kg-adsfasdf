@@ -2,12 +2,10 @@ package lk.rgd.crs.web.action;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.common.CustomStrutsTestCase;
-import lk.rgd.common.util.DateTimeUtils;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 

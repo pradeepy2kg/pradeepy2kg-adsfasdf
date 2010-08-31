@@ -67,6 +67,8 @@
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
         <constructor-arg ref="popRegService"/>
     </bean>
+    <bean id="deathDeclarationValidator" class="lk.rgd.crs.core.service.DeathDeclarationValidator">
+    </bean>
     <bean id="serviceAuditor" class="lk.rgd.crs.core.service.ServiceAuditor">
         <constructor-arg value="true"/>
         <constructor-arg ref="eventDAOImpl"/>
@@ -111,6 +113,7 @@
         <property name="target">
             <bean class="lk.rgd.crs.core.service.DeathRegistrationServiceImpl">
                 <constructor-arg ref="deathRegisterDAOImpl"/>
+                <constructor-arg ref="deathDeclarationValidator"/>
             </bean>
         </property>
         <property name="interceptorNames">

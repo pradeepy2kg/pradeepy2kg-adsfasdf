@@ -1,11 +1,13 @@
-<%-- @author Duminda Dharmakeerthi --%>
+<%-- @author Duminda Dharmakeerthi 
+     @author amith jayasekara
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <script type="text/javascript">
-    function Ignorwornings(){
-        if(!document.getElementById("ignoreWarning").checked){
-            alert(document.getElementById("error1").value) ;
+    function Ignorwornings() {
+        if (!document.getElementById("ignoreWarning").checked) {
+            alert(document.getElementById("error1").value);
             return false;
         }
     }
@@ -16,6 +18,7 @@
         <s:actionmessage/>
         <s:actionerror/>
     </div>
+
     <div id="death-registration-details-body">
         <s:if test="#request.warnings.size>0">
             <s:form action="eprDirectApproveIgnoringWornings" onsubmit="javascript:return Ignorwornings()">
@@ -33,7 +36,7 @@
                             <td><s:label value="%{getText('ignoreWorning.label')}"/></td>
                             <td><s:checkbox name="ignoreWarning" id="ignoreWarning"/></td>
                             <td class="button" align="left">
-                                <s:submit name="approve" value="%{getText('approve.label')}" /></td>
+                                <s:submit name="approve" value="%{getText('approve.label')}"/></td>
                         </tr>
                     </table>
                     <s:hidden id="error1" value="%{getText('ignor.worning.error')}"/>
@@ -44,8 +47,8 @@
     <div id="death-registration-details-footer">
         <div class="form-submit">
             <s:if test="pageNo==2">
-            <s:url id="newDR" action="eprInitDeathDeclaration.do"></s:url>
-            <s:a href="%{newDR}"><s:label value="%{getText('newDR.label')}"/></s:a>
+                <s:url id="newDR" action="eprInitDeathDeclaration.do"></s:url>
+                <s:a href="%{newDR}"><s:label value="%{getText('newDR.label')}"/></s:a>
                 <s:url id="approveDR" action="eprDirectApproveDeath.do">
                     <s:param name="idUKey" value="#request.idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
@@ -57,7 +60,7 @@
                     <s:param name="idUKey" value="#request.idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
                 </s:url>
-            <s:a href="%{printDC}"><s:label value="%{getText('printDC.label')}"/></s:a>
+                <s:a href="%{printDC}"><s:label value="%{getText('printDC.label')}"/></s:a>
             </s:if>
 
             <s:url id="home" action="eprInitDeathHome.do"></s:url>

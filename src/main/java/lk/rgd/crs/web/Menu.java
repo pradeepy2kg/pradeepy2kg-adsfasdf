@@ -158,6 +158,7 @@ public class Menu {
         adrDeathLink.put("eprApproveDeath.do", new Link(null, "/popreg/deaths/", "eprApproveDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprDirectApproveDeath.do", new Link(null, "/popreg/deaths/", "eprDirectApproveDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprRejectDeath.do", new Link(null, "/popreg/deaths/", "eprRejectDeath.do", Permission.APPROVE_DEATH));
+        adrDeathLink.put("eprDirectApproveIgnoringWornings.do", new Link(null, "/popreg/deaths/", "eprDirectApproveIgnoringWornings.do", Permission.APPROVE_DEATH));
 
         // Death Registration for ARG
         argDeathLink.putAll(adrDeathLink);
