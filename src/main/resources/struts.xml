@@ -506,10 +506,17 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprPrintDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+        <action name="eprPrintDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="markDeathDeclarationAsPrinted">
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
+
+        <action name="eprDierctPrintDeathCertificate" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
+                method="markDeathDeclarationAsPrinted">
+            <param name="directPrint">true</param>
+            <result type="tiles" name="success">epr.deathDeclaration_details</result>
+        </action>
+
 
         <action name="eprDirectApproveDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="directApproveDeath">

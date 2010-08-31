@@ -150,7 +150,7 @@ public class Menu {
 
         deoDeathLink.put("eprDeleteDeath.do", new Link(null, "/popreg/deaths/", "eprDeleteDeath.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprDeathViewMode.do", new Link(null, "/popreg/deaths/", "eprDeathViewMode.do", Permission.EDIT_DEATH));
-        deoDeathLink.put("eprPrintDeath.do", new Link(null, "/popreg/deaths/", "eprPrintDeath.do", Permission.EDIT_DEATH));
+        deoDeathLink.put("eprPrintDeathCertificate.do", new Link(null, "/popreg/deaths/", "eprPrintDeathCertificate.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprDeathEditMode.do", new Link(null, "/popreg/deaths/", "eprDeathEditMode.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprDeathBackToPreviousState.do", new Link(null, "/popreg/deaths/", "eprDeathBackToPreviousState.do", Permission.EDIT_DEATH));
 
@@ -159,9 +159,10 @@ public class Menu {
         adrDeathLink.put("eprApproveDeath.do", new Link(null, "/popreg/deaths/", "eprApproveDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprDirectApproveDeath.do", new Link(null, "/popreg/deaths/", "eprDirectApproveDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprRejectDeath.do", new Link(null, "/popreg/deaths/", "eprRejectDeath.do", Permission.APPROVE_DEATH));
+        adrDeathLink.put("eprDierctPrintDeathCertificate.do", new Link(null, "/popreg/deaths/", "eprDierctPrintDeathCertificate.do", Permission.PRINT_DEATH_CERTIFICATE));
         adrDeathLink.put("eprDirectApproveIgnoringWornings.do", new Link(null, "/popreg/deaths/", "eprDirectApproveIgnoringWornings.do", Permission.APPROVE_DEATH));
-
-        // Death Registration for ARG
+        
+		// Death Registration for ARG
         argDeathLink.putAll(adrDeathLink);
 
         // Adoption Registration for DEO

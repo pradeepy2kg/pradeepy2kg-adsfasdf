@@ -93,6 +93,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private DeathRegister.Type deathType;
     private boolean ignoreWarning;
     private boolean allowPrintCertificate;
+    private boolean directPrint;
 
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
@@ -384,20 +385,26 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     public String markDeathDeclarationAsPrinted() {
 
         logger.debug("requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
-        deathRegister = service.getById(idUKey, user);
-        if (deathRegister != null && deathRegister.getStatus() == DeathRegister.State.APPROVED) {
-            try {
-                service.markDeathCertificateAsPrinted(idUKey, user);
-            }
-            catch (CRSRuntimeException e) {
-                addActionError("death.error.no.permission.print");
-            }
-        }
-        noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
-        if (deathDivisionId != 0) {
-            deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+        if (directPrint) {
+            logger.debug("direct requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
+            service.markDeathCertificateAsPrinted(idUKey, user);
         } else {
-            deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+            logger.debug("not direct requested to mark Death Declaration as printed for idUKey : {} ", idUKey);
+            deathRegister = service.getById(idUKey, user);
+            if (deathRegister != null && deathRegister.getStatus() == DeathRegister.State.APPROVED) {
+                try {
+                    service.markDeathCertificateAsPrinted(idUKey, user);
+                }
+                catch (CRSRuntimeException e) {
+                    addActionError("death.error.no.permission.print");
+                }
+            }
+            noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
+            if (deathDivisionId != 0) {
+                deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+            } else {
+                deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+            }
         }
         initPermissionForApprovalAndPrint();
         populate();
@@ -981,5 +988,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDirectApprove(boolean directApprove) {
         this.directApprove = directApprove;
+    }
+
+    public boolean isDirectPrint() {
+        return directPrint;
+    }
+
+    public void setDirectPrint(boolean directPrint) {
+        this.directPrint = directPrint;
     }
 }
