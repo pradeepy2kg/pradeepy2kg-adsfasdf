@@ -372,13 +372,13 @@
 <s:if test="!#request.allowEditAdoption">
     <script type="text/javascript">
         document.getElementById('editImage').style.display = 'none';
+        document.getElementById('deleteImage').style.display = 'none';
     </script>
 </s:if>
 <s:if test="!#request.allowApproveAdoption">
     <script type="text/javascript">
         document.getElementById('approveImage').style.display = 'none';
         document.getElementById('rejectImage').style.display = 'none';
-        document.getElementById('deleteImage').style.display = 'none';
     </script>
 </s:if>
 
