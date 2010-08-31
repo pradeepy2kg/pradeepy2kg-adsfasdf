@@ -530,10 +530,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    /*public String initAdoptionHome() {
-        return SUCCESS;
-    }*/
-
     private void populateBasicLists(String language) {
         countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getAllDistrictNames(language, user);
