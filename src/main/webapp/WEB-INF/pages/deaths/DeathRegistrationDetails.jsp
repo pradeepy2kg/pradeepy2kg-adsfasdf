@@ -55,13 +55,6 @@
                 </s:url>
                 <s:a href="%{approveDR}"><s:label value="%{getText('approveDR.label')}"/></s:a>
             </s:if>
-            <s:if test="pageNo==3 || pageNo==4">
-                <s:url id="printDC" action="eprDeathCertificate">
-                    <s:param name="idUKey" value="#request.idUKey"/>
-                    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-                </s:url>
-                <s:a href="%{printDC}"><s:label value="%{getText('printDC.label')}"/></s:a>
-            </s:if>
 
             <s:url id="home" action="eprInitDeathHome.do"></s:url>
             <s:a href="%{home}"><s:label value="%{getText('goToMain_link.label')}"/></s:a>
