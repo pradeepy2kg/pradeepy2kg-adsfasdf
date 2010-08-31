@@ -7,21 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript">
-    $(function() {
-        $('select#districtId').bind('change', function(evt1) {
-            var id = $("select#districtId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#dsDivisionId").html(options1);
-                    });
-        });
-    });
+/*    function validate() {
+        var domObject;
+        domObject = domObject.getElementById("userId");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The User Id";
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+
+            return false;
+        }
+        return true;
+    }*/
+
 </script>
 <div id="user-create-outer">
     <fieldset style="border:3px solid #c3dcee;margin-left:12em;margin-right:20.5em;margin-top:2.5em;">
@@ -32,7 +33,7 @@
                 <td style="width:15em;">
                     <s:label value="%{getText('user_id.label')}"/></td>
                 <td>
-                    <s:textfield name="user.userId"/></td>
+                    <s:textfield name="user.userId" id="userId"/></td>
                 </s:if>
             </tr>
             <tr>
@@ -65,7 +66,8 @@
             <tr>
                 <s:label>
                     <td><s:label value="%{getText('assigned_ds_divisions.label')}"/></td>
-                    <td><s:select list="divisionList" name="assignedDivisions" multiple="true" size="10" id="dsDivisionId"/></td>
+                    <td><s:select list="divisionList" name="assignedDivisions" multiple="true" size="10"
+                                  id="dsDivisionId"/></td>
                 </s:label>
             </tr>
             </s:if>

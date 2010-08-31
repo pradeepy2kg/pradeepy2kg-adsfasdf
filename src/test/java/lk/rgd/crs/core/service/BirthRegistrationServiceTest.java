@@ -72,12 +72,12 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // test colombo deo adding for colombo
         BirthDeclaration bdf1 = getMinimalBDF(2010101010, dob.getTime(), colomboBDDivision);
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
 
         // try adding a duplicate
         BirthDeclaration bdf2 = getMinimalBDF(2010101010, dob.getTime(), colomboBDDivision);
         try {
-            birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
+            birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo);
             fail("Should not allow addition of duplicate records");
         } catch (Exception expected) {
         }
@@ -136,10 +136,10 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf3.getParent().setMotherNICorPIN("755010001V");
         bdf4.getParent().setMotherNICorPIN("755010001V");
 
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
-        birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo, null, null);
-        birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo, null, null);
-        birthRegSvc.addLiveBirthDeclaration(bdf4, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
+        birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo);
+        birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo);
+        birthRegSvc.addLiveBirthDeclaration(bdf4, false, deoColomboColombo);
 
         // reload again to fill all fields as we still only have IDUkey of new record
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
@@ -197,7 +197,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // add a record for testing
         BirthDeclaration bdf1 = getMinimalBDF(2010106010, dob.getTime(), colomboBDDivision);
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
 
         // reload again to fill all fields as we still only have IDUkey of new record
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
@@ -318,7 +318,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // add a record for testing
         BirthDeclaration bdf1 = getMinimalBDF(2010107010, dob.getTime(), colomboBDDivision);
-        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo, null, null);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
 
         // reload again to fill all fields as we still only have IDUkey of new record
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);

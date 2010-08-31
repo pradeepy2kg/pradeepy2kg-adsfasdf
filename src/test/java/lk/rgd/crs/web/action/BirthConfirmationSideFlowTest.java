@@ -66,7 +66,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
                 List birth = sampleBirths();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < birth.size(); i++) {
-                    birthRegistrationService.addLiveBirthDeclaration((BirthDeclaration) birth.get(i), false, sampleUser, null, null);
+                    birthRegistrationService.addLiveBirthDeclaration((BirthDeclaration) birth.get(i), false, sampleUser);
                 }
 
                 super.setUp();

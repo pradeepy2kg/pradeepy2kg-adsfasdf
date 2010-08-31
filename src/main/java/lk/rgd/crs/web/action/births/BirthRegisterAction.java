@@ -123,7 +123,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -165,10 +165,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         pageNo = 0;
                     }
                 }
-
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setChild(child);
                 register.setStatus(bdf.getRegister().getStatus());
+                register.setCaseFileNumber(bdf.getRegister().getCaseFileNumber());
                 register.setComments(bdf.getRegister().getComments());
                 register.setAdoptionUKey(bdf.getRegister().getAdoptionUKey());
                 bdf.setRegister(register);
@@ -183,6 +183,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
+                logger.debug("comment of the late registration is  :{}", bdf.getRegister().getComments());
                 if (BirthDeclaration.BirthType.ADOPTION != birthType) {
                     bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 }
@@ -190,7 +191,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             case 4:
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setNotifyingAuthority(notifyingAuthority);
-                logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
+                bdf.getRegister().setComments(register.getComments());
+                bdf.getRegister().setCaseFileNumber(register.getCaseFileNumber());
+                /*register = bdf.getRegister();
+                register.setCaseFileNumber(caseFileNumber);
+                register.setComments(newComment);
+                bdf.setRegister(register);*/
+                //logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
                 // all pages captured, proceed to persist after validations
                 // todo data validations, exception handling and error reporting
@@ -198,7 +205,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
                 if (bdId == 0) {
                     if (birthType == BirthDeclaration.BirthType.LIVE) {
-                        service.addLiveBirthDeclaration(bdf, true, user, caseFileNumber, newComment);
+                        service.addLiveBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.STILL) {
                         service.addStillBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
@@ -342,7 +349,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -458,7 +465,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -585,7 +592,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -633,7 +640,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 /* if (birthType == BirthDeclaration.BirthType.LIVE) {

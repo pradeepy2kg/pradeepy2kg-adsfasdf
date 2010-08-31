@@ -75,7 +75,11 @@
         } else {
             isDate(domObject.value, 'error1', 'error2');
         }
-
+        var submit = new Date(document.getElementById('submitDatePicker').value);
+        domObject = new Date(domObject.value);
+        if (domObject.getTime() < submit.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('p4error6').value;
+        }
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
@@ -138,7 +142,7 @@
             <tr>
                 <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
                 <td colspan="4"><s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
-                                             id="modifiedDatePicker"></s:textfield>
+                                             id="modifiedDatePicker"/>
                 </td>
             </tr>
             </tbody>
@@ -174,19 +178,20 @@
                         <td width="200px"><label>ලිපිගොනු අංකය<br>*in tamil<br>Case File Number</label></td>
                         <td colspan="2"><s:textfield name="register.caseFileNumber" id="caseFileNumber"/></td>
                     </tr>
-                    <tr>
-                        <td><label>දැනට පවතින අදහස්<br>* in tamil<br>Prevoius Comments </label></td>
-                        <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
-                    </tr>
+                   <%-- <s:if test="register.comments != null">
+                        <tr>
+                            <td><label>දැනට පවතින අදහස්<br>* in tamil<br>Prevoius Comments </label></td>
+                            <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
+                        </tr>
+                    </s:if>--%>
                     <tr>
                         <td><label>නව අදහස්<br>* in tamil<br>New Comments </label></td>
-                        <td><s:textarea name="newComment" cssStyle="width:98%;"/></td>
+                        <td><s:textarea name="register.comments" cssStyle="width:98%;"/></td>
                     </tr>
                     </tbody>
                 </table>
             </s:if>
         </s:if>
-
         <div class="form-submit">
             <s:submit value="%{getText('next.label')}"/>
         </div>
@@ -208,5 +213,7 @@
     <s:hidden id="p4error3" value="%{getText('p4.submitDate.error.value')}"/>
     <s:hidden id="p4error4" value="%{getText('p4.notifierAddress.text')}"/>
     <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
+    <s:hidden id="p4error6" value="%{getText('p4.notifydate.with.reg.date')}"/>
+    <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
 
 </div>
