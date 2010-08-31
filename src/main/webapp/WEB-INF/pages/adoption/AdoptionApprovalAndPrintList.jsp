@@ -72,7 +72,7 @@
         '4':getText('rejected.label'),'5':getText('certificate.issual.request.captured.label'),'6':getText('adoption.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                           headerValue="%{getText('select.status.label')}"
-                          cssStyle="width:200px; margin-left:5px;"></s:select></td>
+                          cssStyle="width:250px; margin-left:5px;"></s:select></td>
             <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
         </tr>
         </tbody>
@@ -85,7 +85,7 @@
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
 <thead>
 <tr>
-    <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
+    <th><s:label name="serial" value="%{getText('courtOrderNumber.label')}"/></th>
     <th><s:label name="name" value="%{getText('name.label')}"/></th>
     <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
     <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
@@ -329,7 +329,7 @@
         <s:url id="reRegisterBirthUrl" action="../births/eprAdoptionBirthRegistrationInit.do">
             <s:param name="adoptionId" value="idUKey"/>
         </s:url>
-        <s:a href="%{reRegisterBirthUrl}">
+        <s:a href="%{reRegisterBirthUrl}" title="%{getText('AdoptionReRegistrationTooltip.label')}">
             <img src="<s:url value='/images/add_page.png'/>" border="none" width="25" height="25"/>
         </s:a>
     </td>
