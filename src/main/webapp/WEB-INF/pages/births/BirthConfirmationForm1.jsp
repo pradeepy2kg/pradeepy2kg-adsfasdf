@@ -12,15 +12,8 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script>
 
-    function initPage() {
-        disableOk(true);
-        /*var element = document.getElementById('searchOk').style;
-         element.display = 'none';*/
-    }
-
     function disableNext(mode) {
         if (mode) {
-
             document.getElementById('next').style.display = 'none';
         }
         else {
@@ -29,9 +22,7 @@
     }
 
     function disableOk(mode) {
-
         if (mode) {
-
             document.getElementById('searchOk').style.display = 'none';
         }
         else {
@@ -81,61 +72,70 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
         }
     })
 
     var errormsg = "";
     function validate() {
-        var errormsg = "";
-        var element;
-        var returnval;
+        var domObject;
+        var returnval = true;
+
+        // validate serial number
+        domObject = document.getElementById('SerialNo');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error2').value;
+        }
+
+        // validate date of birth
+        domObject = document.getElementById('submitDatePicker');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, "", 'p1error3')
+        else
+            isDate(domObject.value, "error1", "error4");
+
+        domObject = document.getElementById('placeOfBirth');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, "", "p1error2");
+        }
+
 
         /*date related validations*/
         //        var submit = new Date(document.getElementById("submitDatePicker").value);
         //        if (!(submit.getTime())) {
         //            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
         //        }
-        //        element = document.getElementById('SerialNo');
-        //        if (element.value == "") {
-        //            errormsg = errormsg + "\n" + document.getElementById('p1error1').value;
-        //        }
+        //
         //        element = document.getElementById('placeOfBirth');
         //        if (element.value == "") {
         //            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
         //        }
 
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        return returnval;
-    }
 
-    function validateSkipChanges() {
-        var noSerialEntered = document.getElementById('p1error1').value;
-        var notChecked = document.getElementById('p1errorckbx').value;
-        var serial = document.getElementById('SerialNo');
-        var skipChanges = document.getElementById('skipChangesCBox');
-        if (serial.value == 0) {
-            alert(noSerialEntered);
-            return false;
-        }
-        if (!skipChanges.checked) {
-            alert(notChecked);
-            return false;
-        }
-    }
-
-    function validateSerialNum() {
-        var domObject;
-        var returnval = true;
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject))
-            isNumeric(domObject.value, 'error13', 'error5');
+        //        //date of register
+        //    domObject = document.getElementById('submitDatePicker');
+        //    if (isFieldEmpty(domObject))
+        //        isEmpty(domObject, "", 'error9')
+        //    else
+        //        isDate(domObject.value, "error13", "submitDate");
+        //
+        //    //date of birth
+        //    domObject = document.getElementById('birthDatePicker');
+        //    if (isFieldEmpty(domObject))
+        //        isEmpty(domObject, "", 'error10')
+        //    else
+        //        isDate(domObject.value, "error13", "dob");
+        //
+        //    var submit = new Date(document.getElementById('submitDatePicker').value);
+        //    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+        //    // compare birth date and date of registration
+        //    if (birthdate.getTime() > submit.getTime()) {
+        //        errormsg = errormsg + "\n" + document.getElementById('error6').value;
+        //    }
+        //
+        //    //place of birth
+        //    domObject = document.getElementById('placeOfBirth');
+        //    isEmpty(domObject, "", 'error11')
 
         if (errormsg != "") {
             alert(errormsg);
@@ -145,7 +145,40 @@
         return returnval;
     }
 
+    //    function validateSkipChanges() {
+    //        var noSerialEntered = document.getElementById('p1error1').value;
+    //        var notChecked = document.getElementById('p1errorckbx').value;
+    //        var serial = document.getElementById('SerialNo');
+    //        var skipChanges = document.getElementById('skipChangesCBox');
+    //        if (serial.value == 0) {
+    //            alert(noSerialEntered);
+    //            return false;
+    //        }
+    //        if (!skipChanges.checked) {
+    //            alert(notChecked);
+    //            return false;
+    //        }
+    //    }
+
+    //    function validateSerialNum() {
+    //        var domObject;
+    //        var returnval = true;
+    //        domObject = document.getElementById('SerialNo');
+    //        if (isFieldEmpty(domObject))
+    //            isNumeric(domObject.value, 'error13', 'error5');
+    //
+    //        if (errormsg != "") {
+    //            alert(errormsg);
+    //            returnval = false;
+    //        }
+    //        errormsg = "";
+    //        return returnval;
+    //    }
+
     function initPage() {
+        disableOk(true);
+        /*var element = document.getElementById('searchOk').style;
+         element.display = 'none';*/
         var domObject = document.getElementById('SerialNo');
         if (domObject.value.trim() == 0) {
             domObject.value = null;
@@ -169,7 +202,7 @@
             <br>Confirmation of Birth by Parents / Guardian
         </label></td>
         <td>
-            <form action="eprBirthConfirmationInit.do" method="post" onsubmit="javascript:return validateSerialNum()">
+            <form action="eprBirthConfirmationInit.do" method="post" onsubmit="javascript:return validate()">
                 <table style=" border:1px solid #000000; width:300px">
                     <tr><s:actionerror/></tr>
                     <tr>
@@ -340,15 +373,15 @@
     </tr>
     <tr>
         <td><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
-        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
-                                    disabled="true" cols="38"/></td>
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirth" cssClass="disable"
+                                    disabled="true" size="45"/></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" size="35" id="placeOfBirth"/></td>
     </tr>
     <tr>
         <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
-        <td colspan="6"><s:textarea name="#session.birthConfirmation_db.child.placeOfBirthEnglish"
+        <td colspan="6"><s:textfield name="#session.birthConfirmation_db.child.placeOfBirthEnglish"
                                     cssClass="disable"
-                                    disabled="true" cols="38"/></td>
+                                    disabled="true" size="45"/></td>
         <td colspan="6">
             <s:textfield name="child.placeOfBirthEnglish" size="35" id="placeOfBirthEnglish"
                          cssStyle="margin-top:10px;"/>
@@ -436,13 +469,14 @@
 </div>
 </s:form>
 
-<s:hidden id="p1error1" value="%{getText('cp1.error.serialNum.value')}"/>
-<s:hidden id="p1error2" value="%{getText('cp1.placeOfBirth.error.value')}"/>
+<s:hidden id="error2" value="%{getText('cp1.error.serialNum.value')}"/>
+<s:hidden id="error3" value="%{getText('cp1.placeOfBirth.error.value')}"/>
 <s:hidden id="p1error3" value="%{getText('cp1.date.error.value')}"/>
 <s:hidden id="p1error4" value="%{getText('cp1.parents.marriage.error.value')}"/>
 <s:hidden id="p1errorckbx" value="%{getText('cp1.skipChanges.checked.error.value')}"/>
 <s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
-<s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error4" value="%{getText('p1.dob')}"/>
 
 </div>
 <%-- Styling Completed --%>

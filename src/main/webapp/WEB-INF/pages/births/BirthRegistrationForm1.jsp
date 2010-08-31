@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -127,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -252,26 +260,29 @@ function liveBirthCommonTags(check) {
 
 //check live birth is a belated birth gives warnings
 function dateRange() {
-    var birthdate = new Date(document.getElementById('birthDatePicker').value);
-    var submit = new Date(document.getElementById('submitDatePicker').value);
-    //comparing 90 days delay
-    var one_day = 1000 * 60 * 60 * 24 ;
-    var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
-    if (numDays >= 90) {
-        if (numDays >= 365) {
-            document.getElementById('belatedError').innerHTML = document.getElementById('error8').value;
-        } else {
+    var declarationType = document.getElementById('birthTypeId');
+    if (declarationType.value != 0) {
+        var birthdate = new Date(document.getElementById('birthDatePicker').value);
+        var submit = new Date(document.getElementById('submitDatePicker').value);
+        //comparing 90 days delay
+        var one_day = 1000 * 60 * 60 * 24 ;
+        var numDays = Math.ceil((submit.getTime() - birthdate.getTime()) / (one_day));
+        if (numDays >= 90) {
+            if (numDays >= 365) {
+                document.getElementById('belatedError').innerHTML = document.getElementById('error8').value;
+            } else {
 
-            document.getElementById('belatedError').innerHTML = document.getElementById('error7').value;
+                document.getElementById('belatedError').innerHTML = document.getElementById('error7').value;
+            }
         }
-    }
-    else {
-        document.getElementById('belatedError').innerHTML = '';
+        else {
+            document.getElementById('belatedError').innerHTML = '';
+        }
     }
 }
 
 function initPage() {
-
+    dateRange();
 }
 </script>
 

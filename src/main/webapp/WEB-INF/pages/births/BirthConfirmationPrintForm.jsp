@@ -230,7 +230,7 @@
     </tr>
     <tr>
         <td><label>ඉංග්‍රීසි භාෂාවෙන්     <br>இங்கிலீஷ்    <br>In English</label></td>
-        <td colspan="6"><s:textarea name="child.placeOfBirthEnglish" cssClass="disable" disabled="true" cols="38"/></td>
+        <td colspan="6"><s:textfield name="child.placeOfBirthEnglish" cssClass="disable" disabled="true" size="30"/></td>
         <td colspan="11"></td>
     </tr>
     <tr>

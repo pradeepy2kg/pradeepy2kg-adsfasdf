@@ -159,27 +159,27 @@
                     <tr>
                         <td colspan="5" style="text-align:center;font-size:12pt">
                             <s:if test="bdfLateOrBelated==1">
-                                *Sinhala
+                                පමා වූ උපත් ලියාපදිංචිය
                                 <br>* Tamil
-                                <br>Late Registration
+                                <br>Late Birth Registration
                             </s:if>
                             <s:else>
-                                *Sinhala
+                                කල් පසු වූ උපත් ලියාපදිංචිය
                                 <br>*Tamil
-                                <br>Belated Registration
+                                <br>Belated Birth Registration
                             </s:else>
                         </td>
                     </tr>
                     <tr>
-                        <td width="200px"><label>*in sinhala<br>*in tamil<br>Case File Number</label></td>
-                        <td colspan="2"><s:textfield name="caseFileNumber"/></td>
+                        <td width="200px"><label>ලිපිගොනු අංකය<br>*in tamil<br>Case File Number</label></td>
+                        <td colspan="2"><s:textfield name="register.caseFileNumber" id="caseFileNumber"/></td>
                     </tr>
                     <tr>
-                        <td><label>*in sinhala<br>* in tamil<br>Prevoius Comments </label></td>
+                        <td><label>දැනට පවතින අදහස්<br>* in tamil<br>Prevoius Comments </label></td>
                         <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
                     </tr>
                     <tr>
-                        <td><label>*in sinhala<br>* in tamil<br>New Comments </label></td>
+                        <td><label>නව අදහස්<br>* in tamil<br>New Comments </label></td>
                         <td><s:textarea name="newComment" cssStyle="width:98%;"/></td>
                     </tr>
                     </tbody>
