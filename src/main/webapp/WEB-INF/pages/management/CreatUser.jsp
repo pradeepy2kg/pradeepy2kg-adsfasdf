@@ -7,34 +7,61 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+
 <script type="text/javascript">
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var options1 = '';
+            var oSelect = document.getElementById('districtId');
+            for (var iCount = 0; oSelect.options[iCount]; iCount++) {
+                if (oSelect.options[iCount].selected == true) {
+                    var id = oSelect.options[iCount].value;
+                    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
+                            function(data) {
+                                var ds = data.dsDivisionList;
+                                for (var i = 0; i < ds.length; i++) {
+                                    options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option> \n';
+                                }
+                                $("select#divisionId").html(options1);
+                            });
+                }
+            }
+
+        });
+
+    });
     function validate() {
         var errormsg = "";
         var domObject;
-        domObject = document.getElementsByName("divisionList");
-        if (domObject != null) {
-            domObject = document.getElementById("checkUserId");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + "Plese Enter The User Id  \n";
+        domObject = document.getElementById("checkUserId");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The User Id  \n";
+        }
+        domObject = document.getElementById("userName");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The User Name \n";
+        }
+        domObject = document.getElementById("userPin");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The User Pin \n";
+        }
+        else {
+            var reg = /^([0-9]*)$/;
+            if (reg.test(domObject.value.trim()) == false) {
+                errormsg = errormsg + "User Pin is Invalid \n";
             }
-            domObject = document.getElementById("userName");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + "Plese Enter The User Name \n";
-            }
-            domObject = document.getElementById("userPin");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + "Plese Enter The User Pin \n";
-            }
-            domObject = document.getElementById("districtId");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + "Plese Select Assigned Districts\n";
-            }
-            domObject = document.getElementById("divisionId");
-            if (isFieldEmpty(domObject)) {
-                errormsg = errormsg + "Plese Select Assigned D.S. Divisions \n";
-            }
-
+        }
+        domObject = document.getElementById("districtId");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Select Assigned Districts\n";
+        }
+        domObject = document.getElementById("divisionId");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Select Assigned D.S. Divisions \n";
         }
 
         if (errormsg != "") {
@@ -77,50 +104,41 @@
                                   name="user.prefLanguage" id="prefferedLanguage"/>
             </tr>
             <tr>
-
                 <td><s:label value="%{getText('assigned_districts.label')}"/></td>
                 <td><s:select list="districtList" name="assignedDistricts" multiple="true" size="10" id="districtId"/>
-                    <div class="form-submit">
-                        <s:submit value="%{getText('get_ds_divisions.label')}" name="divisions" cssClass="font-8"
-                                  id="submit"/>
-                    </div>
                 </td>
-                <s:if test="divisionList != null">
             <tr>
                 <s:label>
                     <td><s:label value="%{getText('assigned_ds_divisions.label')}"/></td>
-                    <td><s:select list="divisionList" name="assignedDivisions" multiple="true" size="10"
+                    <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true" size="10"
                                   id="divisionId"/></td>
                 </s:label>
             </tr>
-            </s:if>
             <tr>
                 <td style="border-bottom:none;">
                     <s:label>
                         <s:label value="%{getText('user_role.label')}"/>
-                <td style="border-bottom:none;"><s:select list="roleList" name="roleId"/>
+                <td style="border-bottom:none;"><s:select list="roleList" name="roleId" id="role"/>
                     </s:label>
                 </td>
 
             </tr>
-            <s:if test="divisionList != null">
-                <tr>
-                    <td></td>
-                    <td>
-                        <s:if test="userId != null">
-                            <s:hidden name="userId" value="%{userId}"/>
-                            <div class="form-submit">
-                                <s:submit value="%{getText('edit_user.label')}"/>
-                            </div>
-                        </s:if>
-                        <s:if test="userId == null">
-                            <div class="form-submit">
-                                <s:submit value="%{getText('create_user.label')}" cssStyle="margin-top:10px;"/>
-                            </div>
-                        </s:if>
-                    </td>
-                </tr>
-            </s:if>
+            <tr>
+                <td></td>
+                <td>
+                    <s:if test="userId != null">
+                        <s:hidden name="userId" value="%{userId}"/>
+                        <div class="form-submit">
+                            <s:submit value="%{getText('edit_user.label')}"/>
+                        </div>
+                    </s:if>
+                    <s:if test="userId == null">
+                        <div class="form-submit">
+                            <s:submit value="%{getText('create_user.label')}" cssStyle="margin-top:10px;"/>
+                        </div>
+                    </s:if>
+                </td>
+            </tr>
         </table>
     </fieldset>
     <s:hidden id="buttonName" value="%{getText('assigned_ds_divisions.label')}"/>

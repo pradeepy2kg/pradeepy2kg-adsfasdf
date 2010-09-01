@@ -93,38 +93,38 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String creatUser() {
-        logger.debug("creat user called");
+        /*logger.debug("creat user called");
         if (divisions.equals(getText("get_ds_divisions.label"))) {
             generateDSDivisions();
             populate();
             return "pageLoad";
-        } else {
-            // todo...
-            User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
-            user.setRole(roleDAO.getRole(roleId));
-            user.setStatus(User.State.ACTIVE);
-            // creating assigned Districts
-            Set assDistrict = new HashSet();
-            for (int i = 0; i < assignedDistricts.length; i++) {
-                assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
-            }
-            user.setAssignedBDDistricts(assDistrict);
-            user.setAssignedMRDistricts(assDistrict);
-            Set assDSDivision = new HashSet();
-            for (int i = 0; i < assignedDivisions.length; i++) {
-                assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
-            }
-            user.setAssignedBDDSDivisions(assDSDivision);
-            if (userId == null) {
-                service.createUser(user, currentUser);
-            } else if (userId.length() > 0) {
-                user.setUserId(userId);
-                service.updateUser(user, currentUser);
-                session.put("viewUsers", null);
-            }
-            return "success";
+        } else {*/
+        // todo...
+        User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        user.setRole(roleDAO.getRole(roleId));
+        user.setStatus(User.State.ACTIVE);
+        // creating assigned Districts
+        Set assDistrict = new HashSet();
+        for (int i = 0; i < assignedDistricts.length; i++) {
+            assDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
         }
+        user.setAssignedBDDistricts(assDistrict);
+        user.setAssignedMRDistricts(assDistrict);
+        Set assDSDivision = new HashSet();
+        for (int i = 0; i < assignedDivisions.length; i++) {
+            assDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
+        }
+        user.setAssignedBDDSDivisions(assDSDivision);
+        if (userId == null) {
+            service.createUser(user, currentUser);
+        } else if (userId.length() > 0) {
+            user.setUserId(userId);
+            service.updateUser(user, currentUser);
+            session.put("viewUsers", null);
+        }
+        return "success";
     }
+
 
     public String deleteUser() {
         populate();
@@ -139,6 +139,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String initUser() {
         populate();
+        populateDynamicLists("en");
         if (userId != null) {
             user = service.getUsersByIDMatch(getUserId()).get(0);
         }
@@ -184,7 +185,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 mrDivisionNameList = mrDivisionDAO.findAll();
-                mrDivision=null;
+                mrDivision = null;
                 break;
         }
     }
