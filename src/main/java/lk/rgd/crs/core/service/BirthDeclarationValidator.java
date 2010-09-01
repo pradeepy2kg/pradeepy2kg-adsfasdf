@@ -37,10 +37,10 @@ public class BirthDeclarationValidator {
     private static final int WEEKS_FOR_FOETUS_TO_SURVIVE = 28;
     private static final String SERIAL_NUMBER_PATTERN = "20([1-9][0-9])[0|1]([0-9]{5})";
 
-    private final PopulationRegistry popreg;
+    private final PopulationRegistry ecivil;
 
-    public BirthDeclarationValidator(PopulationRegistry popreg) {
-        this.popreg = popreg;
+    public BirthDeclarationValidator(PopulationRegistry ecivil) {
+        this.ecivil = ecivil;
     }
 
     /**
@@ -164,7 +164,7 @@ public class BirthDeclarationValidator {
         }
 
         // validate notifying authority - initially we will need to allow a PIC or NIC for the NA
-        if (!PinAndNicUtils.isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), popreg, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN(), ecivil, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_na_pin"),
                 bdf.getNotifyingAuthority().getNotifyingAuthorityPIN()));
             w.setSeverity(UserWarning.Severity.ERROR);
@@ -176,7 +176,7 @@ public class BirthDeclarationValidator {
 
         // mother pin or nic
         String pinOrNic = bdf.getParent().getMotherNICorPIN();
-        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, ecivil, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_mother_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -186,7 +186,7 @@ public class BirthDeclarationValidator {
 
         // father pin or nic
         pinOrNic = bdf.getParent().getFatherNICorPIN();
-        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, ecivil, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_father_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -194,7 +194,7 @@ public class BirthDeclarationValidator {
 
         // informant pin or nic
         pinOrNic = bdf.getInformant().getInformantNICorPIN();
-        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, ecivil, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
@@ -204,7 +204,7 @@ public class BirthDeclarationValidator {
 
         // confirmant pin or nic
         pinOrNic = bdf.getConfirmant().getConfirmantNICorPIN();
-        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, popreg, user)) {
+        if (!PinAndNicUtils.isValidPINorNIC(pinOrNic, ecivil, user)) {
             UserWarning w = new UserWarning(MessageFormat.format(rb.getString("invalid_informant_pin"), pinOrNic));
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);

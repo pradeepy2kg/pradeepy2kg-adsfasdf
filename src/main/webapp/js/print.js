@@ -10,10 +10,10 @@ function printPage() {
         var uniqueName = new Date();
         var windowName = 'Print' + uniqueName.getTime();
         var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=200px,height=200px');
-        printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/popreg/css/webform.css\"/>");
-        printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/popreg/css/style.css\"/>");
-        printWindow.document.write("<script language=\"JavaScript\" src=\"/popreg/js/print.js\"><\/script>");
-        printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"/popreg/css/print.css\"/></head>");
+        printWindow.document.write("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/webform.css\"/>");
+        printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"/ecivil/css/style.css\"/>");
+        printWindow.document.write("<script language=\"JavaScript\" src=\"/ecivil/js/print.js\"><\/script>");
+        printWindow.document.write("<link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"/ecivil/css/print.css\"/></head>");
         printWindow.document.write(printContentWrapper.html());
         printWindow.document.close();
         printWindow.focus();
