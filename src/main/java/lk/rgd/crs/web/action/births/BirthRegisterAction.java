@@ -370,8 +370,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String initBirthRegistration() {
-        http:
-//localhost:8080/popreg/deaths/eprDeathDeclaration.do?idUKey=1
         return SUCCESS;
     }
 

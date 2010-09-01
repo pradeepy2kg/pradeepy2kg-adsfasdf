@@ -32,13 +32,13 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
     private RegistrarDAO registrarDao;
     private AssignmentDAO assignmentDao;
-    private PopulationRegistry popreg;
+    private PopulationRegistry ecivil;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-        PopulationRegistry popreg) {
+        PopulationRegistry ecivil) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
-        this.popreg = popreg;
+        this.ecivil = ecivil;
     }
 
     /**

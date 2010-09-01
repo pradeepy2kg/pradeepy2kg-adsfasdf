@@ -16,9 +16,9 @@
     <s:set name="row" value="12"/>
 </s:elseif>
 
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
@@ -81,7 +81,7 @@ $(function() {
 $(function() {
     $('img#father_lookup').bind('click', function(evt1) {
         var id1 = $("input#father_pinOrNic").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
@@ -91,7 +91,7 @@ $(function() {
 
     $('img#mother_lookup').bind('click', function(evt2) {
         var id2 = $("input#mother_pinOrNic").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
@@ -111,7 +111,7 @@ $(function() {
     $('select#motherDistrictId').bind('change', function(evt3) {
         var id = $("select#motherDistrictId").attr("value");
         var label = $("input#dsDivisionLabel").attr("value");
-        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:3},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:3},
                 function(data) {
                     var options = '';
                     var ds = data.dsDivisionList;

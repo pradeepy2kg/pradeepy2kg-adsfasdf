@@ -1,14 +1,14 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script type="text/javascript">
 
     $(function() {
         $('img#adoption_applicant_lookup').bind('click', function(evt3) {
             var id1 = $("input#certifcateApplicantPin").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#certificateApplicantName").val(data1.fullNameInOfficialLanguage);
                         //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);

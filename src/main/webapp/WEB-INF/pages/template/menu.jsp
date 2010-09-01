@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<link rel="stylesheet" type="text/css" href='/popreg/css/menu.css'/>
-<script src="/popreg/lib/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="/popreg/js/menu.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href='/ecivil/css/menu.css'/>
+<script src="/ecivil/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/ecivil/js/menu.js" type="text/javascript"></script>
 
 <div id="xmain-menu">
     <ul class="menu">
@@ -14,13 +14,13 @@
                 </s:if>
                 <s:else><li></s:else>
                 <s:if test="%{key == 'birth'}">
-                    <s:a href="/popreg/births/eprBirthRegistrationHome.do">
+                    <s:a href="/ecivil/births/eprBirthRegistrationHome.do">
                         <s:label value="%{getText('category_birth_registration')}"/>
                     </s:a>
                 </s:if>
 
                 <s:if test="%{key == 'death'}">
-                    <s:a href="/popreg/deaths/eprInitDeathHome.do">
+                    <s:a href="/ecivil/deaths/eprInitDeathHome.do">
                         <s:label value="%{getText('category_death_registraion')}"/>
                     </s:a>
                 </s:if>
@@ -32,7 +32,7 @@
                 </s:if>
 
                 <s:if test="%{key == 'adoption'}">
-                    <s:a href="/popreg/adoption/eprAdoptionRegistrationHome.do">
+                    <s:a href="/ecivil/adoption/eprAdoptionRegistrationHome.do">
                         <s:label value="%{getText('category_adoption')}"/>
                     </s:a>
                 </s:if>
