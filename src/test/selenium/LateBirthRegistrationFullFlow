@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>LateBirthRegistrationFullFlow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LateBirthRegistrationFullFlow</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprLogout.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>ashoka</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//label[@id='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=සජීවී උපතක් ලියාපදිංචි කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2010000022</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>submitDatePicker</td>
+	<td>2010-08-24</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birthDatePicker</td>
+	<td>2010-03-12</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirth</td>
+	<td>රෝහලේදී</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>placeOfBirthEnglish</td>
+	<td>In hospital</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameOfficialLang</td>
+	<td>late baby name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childFullNameEnglish</td>
+	<td>late baby name in english</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthWeight</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childRank</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-1_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>795246625v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherFullName</td>
+	<td>father name</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>birth-registration-form-2_fatherRace</td>
+	<td>label=1 : සිංහල</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>mother_pinOrNic</td>
+	<td>814527525v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>motherFullName</td>
+	<td>mother name</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>motherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='ui-datepicker-div']/table/tbody/tr[3]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-registration-form-3_marriage_parentsMarried0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeMOTHER</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>informantAddress</td>
+	<td>mother address</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informDatePicker</td>
+	<td>2010-08-10</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityPIN</td>
+	<td>725552255v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityName</td>
+	<td>N.A. Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notifyingAuthorityAddress</td>
+	<td>N.A. address</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2010-09-01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>caseFileNumber</td>
+	<td>4545454555</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>birth-registration-form-4_register_comments</td>
+	<td>no resons</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-4_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprDirectApproveIgnoreWarning_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birthRegistration-page']/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් තහවුරු කිරීම</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>SerialNo</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>skipChangesCBox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>searchOk</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-confirmation-form3_confirmantRadioMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>datePicker</td>
+	<td>2010-09-01</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-confirmation-form3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>UserManagementTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">UserManagementTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprLogout.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=ADMIN TASK</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=creat user</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprUserCreation_user_userId</td>
+	<td>Malith</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprUserCreation_user_userName</td>
+	<td>Malith</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprUserCreation_user_pin</td>
+	<td>300</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprUserCreation_user_prefLanguage</td>
+	<td>label=සිංහල</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>districtId</td>
+	<td>label=11 : Colombo</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprUserCreation_divisions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>dsDivisionId</td>
+	<td>label=3 : Colombo</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprUserCreation_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>Malith</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprChangePass_newPassword</td>
+	<td>malith</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprChangePass_retypeNewPassword</td>
+	<td>malith</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprChangePass_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් ලියාපදිංචිය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='xmain-menu']/ul/li[2]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=search Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>view_usrs_form_roleId</td>
+	<td>label=Additional District Registrar</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>view_usrs_form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprUserCreation_user_pin</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprUserCreation_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
