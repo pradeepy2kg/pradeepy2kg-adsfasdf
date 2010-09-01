@@ -98,6 +98,12 @@
             errormsg = errormsg + "\n" + document.getElementById('p2error4').value;
         }
 
+//        //Validate Declarant Type
+//        domObject = document.getElementById('declarantType');
+//        if (isFieldEmpty(domObject.value)) {
+//            errormsg = errormsg + "\n" + document.getElementById('p2error8').value;
+//        }
+
         /*date related validations*/
         domObject = document.getElementById('submitDatePicker');
         if (isFieldEmpty(domObject)) {
@@ -297,6 +303,7 @@
         <s:hidden id="p2error5" value="%{getText('notifierNIC.text')}"/>
         <s:hidden id="p2error6" value="%{getText('notifierDate.text')}"/>
         <s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
+        <s:hidden id="p2error8" value="%{getText('declarenttype.text')}"/>
 
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 
