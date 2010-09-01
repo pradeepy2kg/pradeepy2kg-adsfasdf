@@ -1,21 +1,29 @@
 package lk.rgd.crs.core.service;
 
 import lk.rgd.AppConstants;
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
+import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 import java.text.MessageFormat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * a class to do validations in death declarations
  */
 
 public class DeathDeclarationValidator {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeathDeclarationValidator.class);
+
 
     private static final ResourceBundle rb_si =
             ResourceBundle.getBundle("messages/death_validation_messages", AppConstants.LK_SI);
@@ -30,6 +38,19 @@ public class DeathDeclarationValidator {
      * @param deathRegister the death declaration form
      */
     public void validateMinimalRequirments(DeathRegister deathRegister) {
+        boolean primaryCondition = false;
+        if (primaryCondition) {
+            if (deathRegister.getIdUKey() > 0) {
+                handleException("Birth declaration record ID : " + deathRegister.getIdUKey() + " is not complete. " +
+                        "Check required field values", ErrorCodes.INVALID_DATA);
+            } else if (deathRegister.getDeath().getDeathSerialNo() > 0) {
+                handleException("Birth declaration record with serial number : " + deathRegister.getDeath().getDeathSerialNo() +
+                        " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
+            } else {
+                handleException("Birth declaration record being processed is incomplete " +
+                        "Check required field values", ErrorCodes.INVALID_DATA);
+            }
+        }
 
     }
 
@@ -65,6 +86,11 @@ public class DeathDeclarationValidator {
         }
 
         return warnings;
+    }
+
+    private static void handleException(String msg, int errorCode) {
+        logger.error(msg);
+        throw new CRSRuntimeException(msg, errorCode);
     }
 
 }

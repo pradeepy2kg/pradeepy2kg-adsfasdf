@@ -64,6 +64,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
     private void addDeathRegistration(DeathRegister deathRegistration, User user) {
         validateAccessToBDDivision(user, deathRegistration.getDeath().getDeathDivision());
+        //validate minimul requirments
+        deathDeclarationValidator.validateMinimalRequirments(deathRegistration);
         // has this serial number been used already?
         DeathRegister existing = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(deathRegistration.getDeath().getDeathDivision(),
                 deathRegistration.getDeath().getDeathSerialNo());
@@ -109,9 +111,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public List<UserWarning> approveDeathRegistration(long deathRegisterIdUKey, User user, boolean ignoreWarnings) {
         //  logger.debug("attempt to approve death registration record : {} ", deathRegisterIdUKey);
         List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
-           if (warnings.isEmpty() || ignoreWarnings) {
-        setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
-           }
+        if (warnings.isEmpty() || ignoreWarnings) {
+            setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
+        }
         return warnings;
     }
 
