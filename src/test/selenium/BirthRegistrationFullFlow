@@ -42,24 +42,14 @@
 	<td>2010000003</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>submitDatePicker</td>
-	<td></td>
+	<td>2010-08-24</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=24</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
+	<td>type</td>
 	<td>birthDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=17</td>
-	<td></td>
+	<td>2010-08-17</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -112,14 +102,9 @@
 	<td>Father Name</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>fatherDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=15</td>
-	<td></td>
+	<td>1990-09-15</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -142,14 +127,14 @@
 	<td>mother name</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>motherDatePicker</td>
-	<td></td>
+	<td>1992-09-15</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=16</td>
-	<td></td>
+	<td>type</td>
+	<td>motherAgeAtBirth</td>
+	<td>18</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -182,14 +167,9 @@
 	<td>500</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>admitDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=15</td>
-	<td></td>
+	<td>2010-08-15</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -202,15 +182,11 @@
 	<td>place of marriage</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>marriageDatePicker</td>
-	<td></td>
+	<td>2009-12-20</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=5</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>birth-registration-form-3_grandFather_grandFatherFullName</td>
@@ -222,14 +198,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>informDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=25</td>
-	<td></td>
+	<td>2010-08-15</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -252,14 +223,9 @@
 	<td>N.a. Address</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>modifiedDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=26</td>
-	<td></td>
+	<td>2010-08-25</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -416,14 +382,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>datePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=26</td>
-	<td></td>
+	<td>2010-08-27</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

@@ -194,7 +194,7 @@ function validate() {
     }
     domObject = document.getElementById('wifePINorNIC');
     if (domObject.disabled == false && !isFieldEmpty(domObject)) {
-        printMessage("error12","error19");
+        validatePINorNIC(domObject,"error12","error19")
     }
 
     if (errormsg != "") {

@@ -12,6 +12,11 @@
 <tr><td rowspan="1" colspan="3">UserManagementTest</td></tr>
 </thead><tbody>
 <tr>
+	<td>open</td>
+	<td>/ecivil/eprLogout.do</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
 	<td>admin</td>
