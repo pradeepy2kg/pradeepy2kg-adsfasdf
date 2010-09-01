@@ -187,18 +187,22 @@
                                                         onchange="setInformPerson('%{deathPerson.deathPersonFatherPINorNIC}','%{deathPerson.deathPersonFatherFullName}');"/></td>
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"/></td>
+                                                        list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
+                        onchange="setInformPerson('','');"/></td>
             </tr>
             <tr>
                 <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"/></td>
+                                                        list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
+                        onchange="setInformPerson('','');"/></td>
                 <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'RELATIVE':''}"/></td>
+                                                        list="#@java.util.HashMap@{'RELATIVE':''}"
+                        onchange="setInformPerson('','');"/></td>
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'OTHER':''}"/></td>
+                                                        list="#@java.util.HashMap@{'OTHER':''}"
+                        onchange="setInformPerson('','');"/></td>
             </tr>
             <tr>
                 <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය /
