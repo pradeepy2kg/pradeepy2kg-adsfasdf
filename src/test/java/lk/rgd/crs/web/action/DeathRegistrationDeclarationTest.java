@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import junit.extensions.TestSetup;
 
 
-//todo test case for delete/veiw /next /previous/json page load/
+//todo test case for /veiw /next /previous/
 
 public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationDeclarationTest.class);
@@ -64,6 +64,8 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
                 for (int i = 0; i < deaths.size(); i++) {
                     deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
                 }
+
+                //setting serial number 2010012349 colombo to APPROVED
                 super.setUp();
             }
 
@@ -260,6 +262,17 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
 
     }
 
+/*
+    public void testDeleteDeath() throws Exception {
+//to delete must be in DATA_ENTRY state
+        //idukey 1 is in DATA_ENTRY
+        Map session = userLogin("rg", "password");
+        request.setParameter("idUKey", "1");
+        initAndExucute("/deaths/eprDeleteDeath.do", session);
+    }
+*/
+
+
     public void testFilterByStatus() throws Exception {
         Map session = userLogin("rg", "password");
         //testing search by status
@@ -301,61 +314,81 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     }
 
     public void testDeathDeclarationEditMode() throws Exception {
+
+        User sampleUser = loginSampleUser();
+        DeathRegister death = null;
+        //DATA_ENTRY mode
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012347, sampleUser);
+
         Map session = userLogin("rg", "password");
         //this is a DATA_ENTRY state recode
-        request.setParameter("idUKey", "1");
+        request.setParameter("idUKey", "" + death.getIdUKey());
         initAndExucute("/deaths/eprDeathEditMode.do", session);
         assertEquals("No Action Errors", 0, deathAction.getActionErrors().size());
         //check user object is retrieved properly
         assertNotNull("User object ", deathAction.getUser());
-        //check Death declaration is populated
-        //assertNotNull("Death declaration object", deathAction.getDeathRegister());
-        //assertEquals("Death Declaration is in DATA_ENTRY", DeathRegister.State.DATA_ENTRY, deathAction.getDeathRegister().getStatus());
 
         //try to edit non editable recode
         //this recode in APPROVE state
-        request.setParameter("idUKey", "5");
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012351, sampleUser);
+        deathRegistrationService.approveDeathRegistration(death.getIdUKey(), sampleUser, true);
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012351, sampleUser);
+
+        request.setParameter("idUKey", "" + death.getIdUKey());
         initAndExucute("/deaths/eprDeathEditMode.do", session);
         //check user object is retrieved properly
         assertNotNull("User object ", deathAction.getUser());
-        //check Death declaration is populated
-        //assertNotNull("Death declaration object", deathAction.getDeathRegister());
-        //assertNotSame("Death Declaration is not DATA_ENTRY", DeathRegister.State.DATA_ENTRY, deathAction.getDeathRegister().getStatus());
         //there shoud be an action error
-        //assertEquals("Action Error", 1, deathAction.getActionErrors().size());
+        assertEquals("Action Error", 1, deathAction.getActionErrors().size());
         logger.info("testing death edit mode  completed");
     }
 
     public void testDeathReject() throws Exception {
-        // in this test use idUKey 1 to reject a DATA_ENTRY mode and try to reject a data which is alredy approved (idUKey 5)
         Map session = userLogin("rg", "password");
-        //approveRejectComman("/deaths/eprRejectDeath.do", session, 1, 5);
+        User sampleUser = loginSampleUser();
+        DeathRegister death = null;
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012349, sampleUser);
+        approveRejectComman("/deaths/eprRejectDeath.do", session, death.getIdUKey());
         logger.info("testing death reject completed");
     }
 
     public void testDeathApprove() throws Exception {
-        // in this test use idUKey 1 to approve a DATA_ENTRY mode and try to reject a data which is alredy approved (idUKey 5)
+        User sampleUser = loginSampleUser();
+        DeathRegister death = null;
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012350, sampleUser);
         Map session = userLogin("rg", "password");
-        //approveRejectComman("/deaths/eprApproveDeath.do", session, 2, 5);
+        approveRejectComman("/deaths/eprApproveDeath.do", session, death.getIdUKey());
         logger.info("testing death approve completed");
     }
 
-    private void approveRejectComman(String action, Map session, int correctData, int incorrectData) throws Exception {
+    public void testDeathDelete() throws Exception {
+        User sampleUser = loginSampleUser();
+        DeathRegister death = null;
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012351, sampleUser);
+        Map session = userLogin("rg", "password");
+        approveRejectComman("/deaths/eprDeleteDeath.do", session, death.getIdUKey());
+        logger.info("testing death delete completed");
+    }
+
+    public void testDeathVeiwMode() throws Exception {
+        User sampleUser = loginSampleUser();
+        DeathRegister death = null;
+        death = deathRegistrationService.getByBDDivisionAndDeathSerialNo(colomboBDDivision, 2010012348, sampleUser);
+        Map session = userLogin("rg", "password");
+        request.setParameter("idUKey", "" + death.getIdUKey());
+        initAndExucute("/deaths/eprDeathViewMode.do", session);
+        assertEquals("No Action errors", 0, deathAction.getActionErrors().size());
+        assertNotNull("Death Register", deathAction.getDeathType());
+
+    }
+
+    private void approveRejectComman(String action, Map session, long correctData) throws Exception {
         // this recode in DATA_ENTRY
-        settingApproveAndReject(Integer.toString(correctData));
+        settingApproveAndReject(Long.toString(correctData));
         initAndExucute(action, session);
         //check request is populated
         compareApproveAndReject(correctData);
         assertEquals("No Action Errors", 0, deathAction.getActionErrors().size());
-        populate();
-        permissionToEditAndApprove();
-        //idUKey 5 is APPROVED data
-        settingApproveAndReject(Integer.toString(incorrectData));
-        initAndExucute(action, session);
-        //check idUkey is populated
-        compareApproveAndReject(incorrectData);
-        //there must be an action error
-        assertEquals("Action Error", 1, deathAction.getActionErrors().size());
         populate();
         permissionToEditAndApprove();
     }
@@ -366,7 +399,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("pageNo", "1");
     }
 
-    private void compareApproveAndReject(int idUKey) {
+    private void compareApproveAndReject(long idUKey) {
         assertEquals("IDUKEY ", idUKey, deathAction.getIdUKey());
         assertEquals("deathDivisionId ", 1, deathAction.getDeathDivisionId());
         assertEquals("pageNo ", 1, deathAction.getPageNo());

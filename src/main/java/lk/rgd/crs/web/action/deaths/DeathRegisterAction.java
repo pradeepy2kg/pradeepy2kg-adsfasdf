@@ -337,7 +337,10 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String deleteDeath() {
         logger.debug("requested to delete Death Decalaration with idUKey : {}", idUKey);
-        service.deleteDeathRegistration(idUKey, user);
+        DeathRegister death = service.getById(idUKey, user);
+        if (death.getStatus().equals(DeathRegister.State.DATA_ENTRY)) {
+            service.deleteDeathRegistration(idUKey, user);
+        }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
