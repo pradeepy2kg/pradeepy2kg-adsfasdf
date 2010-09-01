@@ -12,6 +12,11 @@
 <tr><td rowspan="1" colspan="3">AdoptionFullFlow</td></tr>
 </thead><tbody>
 <tr>
+	<td>open</td>
+	<td>/ecivil/eprLogout.do</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>eprLogin_userName</td>
 	<td>ashoka</td>
@@ -37,15 +42,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>receivedDatePicker</td>
-	<td></td>
+	<td>2010-08-17</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=17</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>court</td>
@@ -57,15 +58,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>orderIssuedDatePicker</td>
-	<td></td>
+	<td>2010-08-17</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=17</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>courtOrderNumber</td>
@@ -93,23 +90,23 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>wifePINorNIC</td>
-	<td>725542521v</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>wifeName</td>
 	<td>Mother name</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>bdayDatePicker</td>
-	<td></td>
+	<td>2010-07-11</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=11</td>
-	<td></td>
+	<td>type</td>
+	<td>childAgeYears</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childAgeMonths</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -144,16 +141,6 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>link=අයදුම්කරුගේ විස්තර</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>courtOrderNo</td>
-	<td>11111</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>search</td>
 	<td></td>
 </tr>
 <tr>
@@ -297,15 +284,11 @@
 	<td>2010000004</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>submitDatePicker</td>
-	<td></td>
+	<td>2010-08-19</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=19</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>placeOfBirth</td>
@@ -372,19 +355,9 @@
 	<td>place of marriage</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>marriageDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>marriageDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=16</td>
-	<td></td>
+	<td>2009-04-25</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -402,14 +375,9 @@
 	<td>Mother address</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>informDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=24</td>
-	<td></td>
+	<td>2010-08-17</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -432,24 +400,9 @@
 	<td>Notifying Authority address</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>modifiedDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=19</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>modifiedDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=25</td>
-	<td></td>
+	<td>2010-08-25</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -523,14 +476,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>datePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=18</td>
-	<td></td>
+	<td>2010-08-25</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
