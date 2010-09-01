@@ -1,9 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript" src="../js/validate.js"></script>
 
@@ -41,7 +41,7 @@
         $(function() {
             $('select#districtId').bind('change', function(evt1) {
                 var id = $("select#districtId").attr("value");
-                $.getJSON('/popreg/crs/DivisionLookupService', {id:id,mode:1},
+                $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:1},
                         function(data) {
                             var options1 = '';
                             var ds = data.dsDivisionList;

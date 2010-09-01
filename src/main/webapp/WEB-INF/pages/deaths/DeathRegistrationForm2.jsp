@@ -2,9 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
@@ -31,7 +31,7 @@
     $(function() {
         $('img#declarant_lookup').bind('click', function(evt1) {
             var id1 = $("input#declarant_pinOrNic").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                     function(data1) {
                         $("textarea#declarantFullName").val(data1.fullNameInOfficialLanguage);
                         $("textarea#declarantAddress").val(data1.lastAddress);
@@ -40,7 +40,7 @@
 
         $('img#first_witness_lookup').bind('click', function(evt2) {
             var id2 = $("input#first_witness_NICorPIN").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                     function(data2) {
                         $("textarea#firstWitnessFullName").val(data2.fullNameInOfficialLanguage);
                         $("textarea#firstWitnessAddress").val(data2.lastAddress);
@@ -49,7 +49,7 @@
 
         $('img#second_witness_lookup').bind('click', function(evt3) {
             var id3 = $("input#second_witness_NICorPIN").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id3},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                     function(data3) {
                         $("textarea#secondWitnessFullName").val(data3.fullNameInOfficialLanguage);
                         $("textarea#secondWitnessAddress").val(data3.lastAddress);
@@ -58,7 +58,7 @@
 
         $('img#notifying_authority_lookup').bind('click', function(evt4) {
             var id4 = $("input#notifying_authority_NICorPIN").attr("value");
-            $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id4},
+            $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id4},
                     function(data4) {
                         $("textarea#notifyingAuthorityName").val(data4.fullNameInOfficialLanguage);
                         $("textarea#notifyingAuthorityAddress").val(data4.lastAddress);

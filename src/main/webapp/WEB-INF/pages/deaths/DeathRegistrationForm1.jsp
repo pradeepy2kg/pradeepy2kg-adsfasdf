@@ -2,9 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
@@ -264,7 +264,7 @@ $(function() {
 $(function() {
     $('select#deathDistrictId').bind('change', function(evt1) {
         var id = $("select#deathDistrictId").attr("value");
-        $.getJSON('/popreg/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
@@ -284,7 +284,7 @@ $(function() {
 
     $('select#deathDsDivisionId').bind('change', function(evt2) {
         var id = $("select#deathDsDivisionId").attr("value");
-        $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                 function(data) {
                     var options = '';
                     var bd = data.bdDivisionList;
@@ -297,7 +297,7 @@ $(function() {
 
     $('img#death_person_lookup').bind('click', function(evt3) {
         var id1 = $("input#deathPerson_PINorNIC").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id1},
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#deathPersonNameOfficialLang").val(data1.fullNameInOfficialLanguage);
                     //$("textarea#deathPersonNameInEnglish").val(data1.fullNameInOfficialLanguage);
@@ -306,14 +306,14 @@ $(function() {
     });
     $('img#death_person_father_lookup').bind('click', function(evt4) {
         var id2 = $("input#deathPersonFather_PINorNIC").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id2},
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#deathPersonFatherFullName").val(data2.fullNameInOfficialLanguage);
                 });
     });
     $('img#death_person_mother_lookup').bind('click', function(evt5) {
         var id3 = $("input#deathPersonMother_PINorNIC").attr("value");
-        $.getJSON('/popreg/prs/PersonLookupService', {pinOrNic:id3},
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                 function(data3) {
                     $("textarea#deathPersonMotherFullName").val(data3.fullNameInOfficialLanguage);
                 });
