@@ -1,7 +1,13 @@
 package lk.rgd.crs.core.service;
 
 import junit.framework.TestCase;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.framework.Assert;
+import junit.extensions.TestSetup;
 import org.springframework.context.ApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.common.core.AuthorizationException;
@@ -12,15 +18,20 @@ import lk.rgd.crs.api.service.DeathRegistrationService;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeclarantInfo;
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.CRSRuntimeException;
 
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author Chathuranga Withana
+ * @authar amith jayasekara
  */
 public class DeathRegistrationServiceTest extends TestCase {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationServiceTest.class);
 
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final DeathRegistrationService deathRegService;
@@ -33,6 +44,22 @@ public class DeathRegistrationServiceTest extends TestCase {
     protected User deoGampahaNegambo;
     protected User adrColomboColombo;
     protected User adrGampahaNegambo;
+
+
+/*    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(DeathRegistrationServiceTest.class)) {
+            protected void setUp() throws Exception {
+                logger.debug("=> show this once for class - setup");
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                logger.debug("=> show this once for class - tear");
+                super.tearDown();
+            }
+        };
+        return setup;
+    }*/
 
     @Override
     protected void setUp() throws Exception {
@@ -109,9 +136,13 @@ public class DeathRegistrationServiceTest extends TestCase {
         } catch (CRSRuntimeException expected) {
         }
 
-        // TODO still implementing
-        // colombo ADR approves - should raise warnings
-//        deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo);
+        // TODO still implementing Death validater doesnt give much warnings uncomment this section after completing DeathValidater
+        /*   // colombo ADR approves - should raise warnings
+List<UserWarning> warnings = deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo, false);
+Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete", !warnings.isEmpty());*/
+
+        // ignore warnings should allow approval
+        deathRegService.approveDeathRegistration(ddf1.getIdUKey(), adrColomboColombo, true);
 
     }
 
