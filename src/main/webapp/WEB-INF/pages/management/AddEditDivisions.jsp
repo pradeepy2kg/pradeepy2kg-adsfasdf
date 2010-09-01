@@ -10,6 +10,7 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <script>
     $(document).ready(function() {
         $('#users-list-table').dataTable({
@@ -77,7 +78,46 @@
                     });
         });
     });
+    function validate() {
+        var errormsg = "";
+        var domObject;
+        var pageNo ;
+        var pageName;
+        pageNo = document.getElementById("checkPage").value;
+        if (pageNo == 1)  pageName = "District";
+        if (pageNo == 2)  pageName = "Ds Division";
+        if (pageNo == 3)  pageName = "Division";
+        if (pageNo == 4)  pageName = "MR Division";
+        domObject = document.getElementById("id");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The  Id of " + pageName + " \n";
+        }
+        else
+        {
+            var reg = /^([0-9]*)$/;
+            if (reg.test(domObject.value.trim()) == false) {
+                errormsg = errormsg + pageName + " Id Is Invalid \n";
+            }
+        }
+        domObject = document.getElementById("enName");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The English Name of " + pageName + " \n";
+        }
+        domObject = document.getElementById("siName");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The Sinhala Name of " + pageName + " \n";
+        }
+        domObject = document.getElementById("taName");
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "Plese Enter The Tamil Name of " + pageName + " \n";
+        }
 
+        if (errormsg != "") {
+            alert(errormsg);
+            return false;
+        }
+        return true;
+    }
 </script>
 
 <div id="add-inactive-divisions-outer">
@@ -258,7 +298,8 @@
                 <td><s:label name="msg"/></td>
             </tr>
         </table>
-        <s:form name="editDivisions" action="eprAddDivisionsAndDsDivisions.do" method="POST">
+        <s:form name="editDivisions" action="eprAddDivisionsAndDsDivisions.do" method="POST"
+                onsubmit="javascript:return validate()">
             <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:15px">
                 <s:if test="!(pageNo==1)">
                     <tr>
@@ -275,12 +316,12 @@
                     </tr>
                 </s:if>
                 <tr>
-                    <td colspan="2">Number</td>
+                    <td colspan="2">Id</td>
                     <td>
-                        <s:if test="pageNo==1"><s:textfield name="district.districtId"/></s:if>
-                        <s:if test="pageNo==2"><s:textfield name="dsDivision.divisionId"/> </s:if>
-                        <s:if test="pageNo==3"><s:textfield name="bdDivision.divisionId"/></s:if>
-                        <s:if test="pageNo==4"><s:textfield name="mrDivision.divisionId"/></s:if>
+                        <s:if test="pageNo==1"><s:textfield name="district.districtId" id="id"/></s:if>
+                        <s:if test="pageNo==2"><s:textfield name="dsDivision.divisionId" id="id"/> </s:if>
+                        <s:if test="pageNo==3"><s:textfield name="bdDivision.divisionId" id="id"/></s:if>
+                        <s:if test="pageNo==4"><s:textfield name="mrDivision.divisionId" id="id"/></s:if>
                     </td>
                 </tr>
                 <tr>
@@ -292,35 +333,37 @@
                     </td>
                     <td>Name in English</td>
                     <td>
-                        <s:if test="pageNo==1"><s:textfield name="district.enDistrictName"/></s:if>
-                        <s:if test="pageNo==2"><s:textfield name="dsDivision.enDivisionName"/></s:if>
-                        <s:if test="pageNo==3"><s:textfield name="bdDivision.enDivisionName"/></s:if>
-                        <s:if test="pageNo==4"><s:textfield name="mrDivision.enDivisionName"/></s:if>
+                        <s:if test="pageNo==1"><s:textfield name="district.enDistrictName" id="enName"/></s:if>
+                        <s:if test="pageNo==2"><s:textfield name="dsDivision.enDivisionName" id="enName"/></s:if>
+                        <s:if test="pageNo==3"><s:textfield name="bdDivision.enDivisionName" id="enName"/></s:if>
+                        <s:if test="pageNo==4"><s:textfield name="mrDivision.enDivisionName" id="enName"/></s:if>
                     </td>
                 </tr>
                 <tr>
                     <td>Name in Sinhala</td>
                     <td>
-                        <s:if test="pageNo==1"><s:textfield name="district.siDistrictName"/></s:if>
-                        <s:if test="pageNo==2"><s:textfield name="dsDivision.siDivisionName"/></s:if>
-                        <s:if test="pageNo==3"><s:textfield name="bdDivision.siDivisionName"/></s:if>
-                        <s:if test="pageNo==4"><s:textfield name="mrDivision.siDivisionName"/></s:if>
+                        <s:if test="pageNo==1"><s:textfield name="district.siDistrictName" id="siName"/></s:if>
+                        <s:if test="pageNo==2"><s:textfield name="dsDivision.siDivisionName" id="siName"/></s:if>
+                        <s:if test="pageNo==3"><s:textfield name="bdDivision.siDivisionName" id="siName"/></s:if>
+                        <s:if test="pageNo==4"><s:textfield name="mrDivision.siDivisionName" id="siName"/></s:if>
                     </td>
                 </tr>
                 <tr>
                     <td>Name in Tamil</td>
                     <td>
-                        <s:if test="pageNo==1"><s:textfield name="district.taDistrictName"/></s:if>
-                        <s:if test="pageNo==2"><s:textfield name="dsDivision.taDivisionName"/></s:if>
-                        <s:if test="pageNo==3"><s:textfield name="bdDivision.taDivisionName"/></s:if>
-                        <s:if test="pageNo==4"><s:textfield name="mrDivision.taDivisionName"/></s:if>
+                        <s:if test="pageNo==1"><s:textfield name="district.taDistrictName" id="taName"/></s:if>
+                        <s:if test="pageNo==2"><s:textfield name="dsDivision.taDivisionName" id="taName"/></s:if>
+                        <s:if test="pageNo==3"><s:textfield name="bdDivision.taDivisionName" id="taName"/></s:if>
+                        <s:if test="pageNo==4"><s:textfield name="mrDivision.taDivisionName" id="taName"/></s:if>
                     </td>
                 </tr>
             </table>
-            <s:if test="pageNo==1"><s:hidden name="pageNo" value="1"/></s:if>
-            <s:if test="pageNo==2"><s:hidden name="pageNo" value="2"/></s:if>
-            <s:if test="pageNo==3"><s:hidden name="pageNo" value="3"/></s:if>
-            <s:if test="pageNo==4"><s:hidden name="pageNo" value="4"/></s:if>
+            <%--* pageNo is used to load jsp page
+                * checkPage is used to get value of page number in javascript--%>
+            <s:if test="pageNo==1"><s:hidden name="pageNo" value="1"/><s:hidden id="checkPage" value="1"/></s:if>
+            <s:if test="pageNo==2"><s:hidden name="pageNo" value="2"/><s:hidden id="checkPage" value="2"/></s:if>
+            <s:if test="pageNo==3"><s:hidden name="pageNo" value="3"/><s:hidden id="checkPage" value="3"/></s:if>
+            <s:if test="pageNo==4"><s:hidden name="pageNo" value="4"/><s:hidden id="checkPage" value="4"/></s:if>
             <div class="form-submit">
                 <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
             </div>
