@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>lk.rgd</groupId>
-    <artifactId>popreg</artifactId>
+    <artifactId>ecivil</artifactId>
     <version>0.1</version>
     <packaging>war</packaging>
-    <name>popreg</name>
+    <name>ecivil</name>
 
     <dependencies>
         <!--Spring-->
@@ -209,7 +209,7 @@
     </dependencies>
 
     <build>
-        <finalName>popreg</finalName>
+        <finalName>ecivil</finalName>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

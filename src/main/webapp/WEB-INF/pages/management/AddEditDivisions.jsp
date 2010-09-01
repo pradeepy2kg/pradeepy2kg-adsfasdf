@@ -6,9 +6,9 @@
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/popreg/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
@@ -34,7 +34,7 @@
     $(function() {
         $('select#addDsDivisionDistrictId').bind('change', function(evt1) {
             var id = $("select#addDsDivisionDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id,mode:3},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -46,7 +46,7 @@
         });
         $('select#adddivisionDistrictId').bind('change', function(evt1) {
             var id = $("select#adddivisionDistrictId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id,mode:3},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -66,7 +66,7 @@
 
         $('select#adddivisionDsDivisionId').bind('change', function(evt2) {
             var id = $("select#adddivisionDsDivisionId").attr("value");
-            $.getJSON('/popreg/crs/DivisionLookupService', {id:id, mode:2},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                     function(data) {
                         var options = '';
                         var bd = data.bdDivisionList;

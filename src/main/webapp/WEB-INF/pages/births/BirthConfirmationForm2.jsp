@@ -3,8 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<script src="/popreg/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/popreg/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <s:set value="rowNumber" name="row"/>
 
 <script>
