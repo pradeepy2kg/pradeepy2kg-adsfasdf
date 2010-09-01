@@ -138,11 +138,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         switch (pageNo) {
             case 1:
                 //TODO checking serial number is taken already for addnew mode
-//                DeathRegister dd = service.
-//                if (dd != null) {
-//                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-//                    pageNo = 0;
-//                }
+                DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
+                if (dd != null) {
+                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+                    pageNo = 0;
+                }
                 deathType = ddf.getDeathType();
                 ddf.setDeath(death);
                 ddf.setDeathPerson(deathPerson);
