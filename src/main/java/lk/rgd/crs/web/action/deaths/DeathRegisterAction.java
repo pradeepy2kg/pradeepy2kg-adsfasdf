@@ -137,7 +137,6 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                //TODO checking serial number is taken already for addnew mode
                 DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
                 if (dd != null) {
                     addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
