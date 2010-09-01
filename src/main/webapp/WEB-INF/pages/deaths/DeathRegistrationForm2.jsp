@@ -98,11 +98,18 @@
             errormsg = errormsg + "\n" + document.getElementById('p2error4').value;
         }
 
-//        //Validate Declarant Type
-//        domObject = document.getElementById('declarantType');
-//        if (isFieldEmpty(domObject.value)) {
-//            errormsg = errormsg + "\n" + document.getElementById('p2error8').value;
-//        }
+        //Validate Declarant Type
+        var i,error=false;
+        for (i=0;i<6;i++) {
+            domObject = document.getElementsByName('declarant.declarantType')[i];
+            if (domObject.checked) {
+                error=true;
+                //break;
+            }
+        }
+        if(!error){
+                errormsg = errormsg + "\n" + document.getElementById('p2error8').value;
+        }
 
         /*date related validations*/
         domObject = document.getElementById('submitDatePicker');
@@ -132,10 +139,10 @@
         var notify = document.getElementById("submitDatePicker").value;
         domObject = document.getElementById('declarantDatePicker');
         if (!isFieldEmpty(domObject))
-                    isDate(domObject.value, 'error1', 'p2error7');
+            isDate(domObject.value, 'error1', 'p2error7');
 
         if (notify < declarant) {
-            errormsg = errormsg + "\n" +document.getElementById("error5").value;
+            errormsg = errormsg + "\n" + document.getElementById("error5").value;
         }
 
         if (errormsg != "") {
@@ -303,7 +310,7 @@
         <s:hidden id="p2error5" value="%{getText('notifierNIC.text')}"/>
         <s:hidden id="p2error6" value="%{getText('notifierDate.text')}"/>
         <s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
-        <s:hidden id="p2error8" value="%{getText('declarenttype.text')}"/>
+        <s:hidden id="p2error8" value="%{getText('declarentType.text')}"/>
 
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 
