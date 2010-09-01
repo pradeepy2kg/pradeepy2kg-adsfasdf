@@ -196,16 +196,13 @@
             <s:submit value="%{getText('next.label')}"/>
         </div>
         <div class="next-previous">
-
             <s:url id="backUrl" action="eprBirthRegistration">
                 <s:param name="back" value="true"/>
                 <s:param name="pageNo" value="{pageNo - 1}"/>
             </s:url>
-
             <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
         </div>
     </s:form>
-
     <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
     <s:hidden id="error2" value="%{getText('notifierDate.text')}"/>
     <s:hidden id="p4error1" value="%{getText('p4.NIC.error.value')}"/>
@@ -215,5 +212,4 @@
     <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
     <s:hidden id="p4error6" value="%{getText('p4.notifydate.with.reg.date')}"/>
     <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
-
 </div>
