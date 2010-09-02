@@ -110,6 +110,14 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             DeathPersonInfo person = new DeathPersonInfo();
             person.setDeathPersonGender(0);
             person.setDeathPersonNameOfficialLang("name in offocial lang" + i);
+            person.setDeathPersonAge(25);
+            person.setDeathPersonCountry(sriLanka);
+            person.setDeathPersonFatherFullName("father full name " + i);
+            person.setDeathPersonFatherPINorNIC("1234567890");
+            person.setDeathPersonMotherFullName("mother full name " + i);
+            person.setDeathPersonMotherPINorNIC("1234567890");
+            person.setDeathPersonNameInEnglish("name in english" + i);
+            person.setDeathPersonPermanentAddress("address" + i);
 
             //notifu authority info
             NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
@@ -122,6 +130,10 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
             //declarant info
             DeclarantInfo declarant = new DeclarantInfo();
             declarant.setDeclarantType(DeclarantInfo.DeclarantType.MOTHER);
+            declarant.setDeclarantAddress("declarant address " + i);
+            declarant.setDeclarantEMail("declarant email" + i);
+            declarant.setDeclarantFullName("declarant full name " + i);
+            declarant.setDeclarantNICorPIN("" + (123456789 + i));
 
             DeathRegister deathRegister = new DeathRegister();
             deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);

@@ -234,7 +234,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
                 new Long("2010012330"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //change state to APPROVE
-        birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdTemp.getIdUKey(), true, user);
         bdTemp = birthRegistrationService.getById(idUKey, user);
         birthRegistrationService.markLiveBirthConfirmationAsPrinted(bdTemp, user);
         bdTemp = birthRegistrationService.getById(idUKey, user);
@@ -310,7 +310,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
                 new Long("2010012331"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
         //change state to APPROVE
-        birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdTemp.getIdUKey(), true, user);
         bdTemp = birthRegistrationService.getById(idUKey, user);
         birthRegistrationService.markLiveBirthConfirmationAsPrinted(bdTemp, user);
         session = action.getSession();
@@ -435,7 +435,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         //searching the required entry for which confirmation changes to be skipped
 
         //change state to APPROVE
-        birthRegistrationService.approveLiveBirthDeclaration(bdTemp, true, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdTemp.getIdUKey(), true, user);
         bdTemp = birthRegistrationService.getById(idUKey, user);
         birthRegistrationService.markLiveBirthConfirmationAsPrinted(bdTemp, user);
 

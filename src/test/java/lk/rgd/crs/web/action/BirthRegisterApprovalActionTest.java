@@ -256,7 +256,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         User user = loginSampleUser();
 
         BirthDeclaration bdf = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012341, user);
-        birthRegistrationService.approveLiveBirthDeclaration(bdf, true, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdf.getIdUKey(), true, user);
         //now bdId 4 approved so cannot reject this recode so there must be action errors
         Map session = login("rg", "password");
         request.setParameter("bdId", "" + bdf.getIdUKey());
@@ -272,7 +272,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         //set bd id to State APPROVEd
         User user = loginSampleUser();
         BirthDeclaration bdf = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012342, user);
-        birthRegistrationService.approveLiveBirthDeclaration(bdf, true, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bdf.getIdUKey(), true, user);
         //now bdId 5 approved so cannot delete this recode so there must be action errors
         Map session = login("rg", "password");
         request.setParameter("bdId", "" + bdf.getIdUKey());

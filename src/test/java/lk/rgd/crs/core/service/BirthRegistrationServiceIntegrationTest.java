@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf1.getChild().setChildGender(0);
         bdf1.getParent().setMotherFullName("hhhh iiii zzzz");
         birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
-        birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+        birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
@@ -29,7 +30,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf2.getChild().setChildGender(0);
         bdf2.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
         birthRegSvc.addLiveBirthDeclaration(bdf2, false, deoColomboColombo);
-        birthRegSvc.approveLiveBirthDeclaration(bdf2, true, adrColomboColombo);
+        birthRegSvc.approveLiveBirthDeclaration(bdf2.getIdUKey(), true, adrColomboColombo);
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf2, deoColomboColombo);
         bdf2 = birthRegSvc.getById(bdf2.getIdUKey(), deoColomboColombo);
         birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf2, deoColomboColombo);
@@ -39,7 +40,7 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf3.getChild().setChildGender(0);
         bdf3.getParent().setMotherFullName("anothermothernameone anothermothernametwo");
         birthRegSvc.addLiveBirthDeclaration(bdf3, false, deoColomboColombo);
-        birthRegSvc.approveLiveBirthDeclaration(bdf3, true, adrColomboColombo);
+        birthRegSvc.approveLiveBirthDeclaration(bdf3.getIdUKey(), true, adrColomboColombo);
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf3, deoColomboColombo);
         bdf3 = birthRegSvc.getById(bdf3.getIdUKey(), deoColomboColombo);
         birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf3, deoColomboColombo);
