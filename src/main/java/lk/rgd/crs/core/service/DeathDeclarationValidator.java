@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * a class to do validations in death declarations
+ *
+ * @author amith jayasekara
  */
 
 public class DeathDeclarationValidator {
@@ -38,7 +40,15 @@ public class DeathDeclarationValidator {
      * @param deathRegister the death declaration form
      */
     public void validateMinimalRequirments(DeathRegister deathRegister) {
-        boolean primaryCondition = false;
+
+        boolean primaryCondition = deathRegister.getDeath().getDateOfRegistration() == null || deathRegister.getDeath().getDeathDivision() == null ||
+                deathRegister.getDeath().getDateOfDeath() == null || isEmptyString(deathRegister.getDeath().getPlaceOfDeath()) ||
+                isEmptyString(deathRegister.getDeclarant().getDeclarantFullName()) || isEmptyString(deathRegister.getDeclarant().getDeclarantAddress()) ||
+                deathRegister.getNotifyingAuthority().getNotifyingAuthoritySignDate() == null ||
+                isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityName()) ||
+                isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
+                isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
+
         if (primaryCondition) {
             if (deathRegister.getIdUKey() > 0) {
                 handleException("Birth declaration record ID : " + deathRegister.getIdUKey() + " is not complete. " +
@@ -91,6 +101,10 @@ public class DeathDeclarationValidator {
     private static void handleException(String msg, int errorCode) {
         logger.error(msg);
         throw new CRSRuntimeException(msg, errorCode);
+    }
+
+    private static final boolean isEmptyString(String s) {
+        return s == null || s.trim().length() == 0;
     }
 
 }
