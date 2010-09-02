@@ -197,6 +197,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/births/stillBirth.jsp"/>
         <put-attribute name="title" value="still_birth_registration.label"/>
     </definition>
+    <definition name="epr.birthAlteration" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlteration.jsp"/>
+        <put-attribute name="title" value="birth_alteration.title"/>
+    </definition>
 
     <!-- Death Registration Tiles -->
 
@@ -249,17 +253,17 @@
     <!--  User Management Tiles -->
     <definition name="epr.creatUser" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/CreatUser.jsp"/>
-        <put-attribute name="title" value="CreatUser.title"/>
+        <put-attribute name="title" value="CREATE USER"/>
     </definition>
 
     <definition name="epr.viewUsers" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/viewUsers.jsp"/>
-        <put-attribute name="title" value="search Users"/>
+        <put-attribute name="title" value="SEARCH USERS"/>
     </definition>
 
     <definition name="epr.addEditDivisions" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/AddEditDivisions.jsp"/>
-        <put-attribute name="title" value="search Users"/>
+        <put-attribute name="title" value="ADD DIVISIONS"/>
     </definition>
 
     <!--registrars managment tiles-->

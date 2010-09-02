@@ -46,7 +46,7 @@ public class Menu {
         //Admin
         adminLink.put("eprInitUserCreation.do", new Link("creat_user.label", "/ecivil/management/", "eprInitUserCreation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprViewUsers.do", new Link("viewUsers.label", "/ecivil/management/", "eprViewUsers.do", Permission.USER_MANAGEMENT));
-        adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addEditDivision.label", "/ecivil/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
+        adminLink.put("eprInitAddDivisionsAndDsDivisions.do", new Link("addDivision.label", "/ecivil/management/", "eprInitAddDivisionsAndDsDivisions.do", Permission.SERVICE_MASTER_DATA_MANAGEMENT));
 
         adminLink.put("eprUserCreation.do", new Link(null, "/ecivil/management/", "eprUserCreation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprdeleteUsers.do", new Link(null, "/ecivil/management/", "eprdeleteUsers.do", Permission.USER_MANAGEMENT));
@@ -76,6 +76,7 @@ public class Menu {
         deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
+        deoBirthLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/births/", "eprBirthAlterationInit.do", Permission.EDIT_BDF));
 
         deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));
         deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/ecivil/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
