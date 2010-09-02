@@ -287,10 +287,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     warnings = service.approveLiveBirthDeclaration(bdf.getIdUKey(), false, user);
                     logger.debug("inside approve() : requested to approve live birth declaration bdId {} ", bdId);
                 } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                    warnings = service.approveStillBirthDeclaration(bdf, false, user);
+                    warnings = service.approveStillBirthDeclaration(bdf.getIdUKey(), false, user);
                     logger.debug("inside approve() : requested to approve still birth declaration bdId {} ", bdId);
                 } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                    warnings = service.approveAdoptionBirthDeclaration(bdf, false, user);
+                    warnings = service.approveAdoptionBirthDeclaration(bdf.getIdUKey(), false, user);
                 }
             }
             addActionMessage(getText("message.approval.Success"));
@@ -356,10 +356,10 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     warnings = service.approveLiveBirthDeclaration(bdf.getIdUKey(), false, user);
                     logger.debug("inside directApprove() : direct approve live birth declaration with bdId : {} ", bdId);
                 } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                    warnings = service.approveStillBirthDeclaration(bdf, false, user);
+                    warnings = service.approveStillBirthDeclaration(bdf.getIdUKey(), false, user);
                     logger.debug("inside directApprove() : direct approve still birth declaration with bdId : {} ", bdId);
                 } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                    warnings = service.approveAdoptionBirthDeclaration(bdf, false, user);
+                    warnings = service.approveAdoptionBirthDeclaration(bdf.getIdUKey(), false, user);
                     logger.debug("inside directApprove() : direct approve adoption birth declaration with bdId : {} ", bdId);
                 }
             }
@@ -412,9 +412,9 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
                     if (birthType == BirthDeclaration.BirthType.LIVE) {
                         service.approveLiveBirthDeclaration(bdf.getIdUKey(), true, user);
                     } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                        service.approveStillBirthDeclaration(bdf, true, user);
+                        service.approveStillBirthDeclaration(bdf.getIdUKey(), true, user);
                     } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                        service.approveAdoptionBirthDeclaration(bdf, true, user);
+                        service.approveAdoptionBirthDeclaration(bdf.getIdUKey(), true, user);
                     }
                     //checks whether the request is from immediately after entering a birth declaration
                     if (directApprovalFlag) {
