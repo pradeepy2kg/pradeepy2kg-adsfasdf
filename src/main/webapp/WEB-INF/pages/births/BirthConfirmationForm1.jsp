@@ -12,203 +12,208 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script>
 
-    function disableNext(mode) {
-        if (mode) {
-            document.getElementById('next').style.display = 'none';
-        }
-        else {
-            document.getElementById('next').style.display = 'block';
-        }
+function disableNext(mode) {
+    if (mode) {
+        document.getElementById('next').style.display = 'none';
     }
-
-    function disableOk(mode) {
-        if (mode) {
-            document.getElementById('searchOk').style.display = 'none';
-        }
-        else {
-            document.getElementById('searchOk').style.display = 'block';
-        }
+    else {
+        document.getElementById('next').style.display = 'block';
     }
+}
 
-    function okCheck() {
-        var ok = document.getElementById('skipChangesCBox');
-        if (ok.checked) {
-            disableNext(true)
-            disableOk(false)
-        } else {
-            disableOk(true)
-            disableNext(false)
-        }
+function disableOk(mode) {
+    if (mode) {
+        document.getElementById('searchOk').style.display = 'none';
     }
+    else {
+        document.getElementById('searchOk').style.display = 'block';
+    }
+}
 
-    $(function() {
-        $("#submitDatePicker").datepicker({
-            changeYear: true,
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
+function okCheck() {
+    var ok = document.getElementById('skipChangesCBox');
+    if (ok.checked) {
+        disableNext(true)
+        disableOk(false)
+    } else {
+        disableOk(true)
+        disableNext(false)
+    }
+}
+
+$(function() {
+    $("#submitDatePicker").datepicker({
+        changeYear: true,
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
     });
-    $(function() {
-        $('img#place').bind('click', function(evt) {
-            var id = $("input#placeOfBirth").attr("value");
-            var wsMethod = "transliterate";
-            var soapNs = "http://translitwebservice.transliteration.icta.com/";
+});
+$(function() {
+    $('img#place').bind('click', function(evt) {
+        var id = $("input#placeOfBirth").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-            var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-            soapBody.attr("xmlns:trans", soapNs);
-            soapBody.appendChild(new SOAPObject('InputName')).val(id);
-            soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-            soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-            soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-            //Create a new SOAP Request
-            var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-            //Lets send it
-            SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-            SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
-        });
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse); //Send request to server and assign a callback
+    });
 
-        function processResponse(respObj) {
-            //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
-        }
-    })
+    function processResponse(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
+})
 
-    var errormsg = "";
-    function validate() {
-        var domObject;
-        var returnval = true;
+var errormsg = "";
+function validate() {
+    var domObject;
+    var returnval = true;
 
-        // validate serial number
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-        } else {
-          
-        }
-
-        // validate date of birth
-        domObject = document.getElementById('submitDatePicker');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, "", 'p1error3')
-        else
-            isDate(domObject.value, "error1", "error4");
-
-        domObject = document.getElementById('placeOfBirth');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", "error3");
-        }
-
-
-        /*date related validations*/
-        //        var submit = new Date(document.getElementById("submitDatePicker").value);
-        //        if (!(submit.getTime())) {
-        //            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
-        //        }
-        //
-        //        element = document.getElementById('placeOfBirth');
-        //        if (element.value == "") {
-        //            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
-        //        }
-
-
-        //        //date of register
-        //    domObject = document.getElementById('submitDatePicker');
-        //    if (isFieldEmpty(domObject))
-        //        isEmpty(domObject, "", 'error9')
-        //    else
-        //        isDate(domObject.value, "error13", "submitDate");
-        //
-        //    //date of birth
-        //    domObject = document.getElementById('birthDatePicker');
-        //    if (isFieldEmpty(domObject))
-        //        isEmpty(domObject, "", 'error10')
-        //    else
-        //        isDate(domObject.value, "error13", "dob");
-        //
-        //    var submit = new Date(document.getElementById('submitDatePicker').value);
-        //    var birthdate = new Date(document.getElementById('birthDatePicker').value);
-        //    // compare birth date and date of registration
-        //    if (birthdate.getTime() > submit.getTime()) {
-        //        errormsg = errormsg + "\n" + document.getElementById('error6').value;
-        //    }
-        //
-        //    //place of birth
-        //    domObject = document.getElementById('placeOfBirth');
-        //    isEmpty(domObject, "", 'error11')
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    // validate serial number
+    domObject = document.getElementById('SerialNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isNumeric(domObject.value, 'error1', 'error2');
     }
 
-    function validateSearch() {
-        var domObject;
-        var returnval = true;
+    // validate date of birth
+    domObject = document.getElementById('submitDatePicker');
+    if (isFieldEmpty(domObject))
+        isEmpty(domObject, "", 'p1error3')
+    else
+        isDate(domObject.value, "error1", "error4");
 
-        // validate serial number
-        domObject = document.getElementById('SerialNo');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error2').value;
-        } else {
-            isNumeric(domObject.value, 'error1', 'error2');
-        }
-
-        if (errormsg != "") {
-            alert(errormsg);
-            returnval = false;
-        }
-        errormsg = "";
-        return returnval;
+    domObject = document.getElementById('placeOfBirth');
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", "error3");
     }
 
-    //    function validateSkipChanges() {
-    //        var noSerialEntered = document.getElementById('p1error1').value;
-    //        var notChecked = document.getElementById('p1errorckbx').value;
-    //        var serial = document.getElementById('SerialNo');
-    //        var skipChanges = document.getElementById('skipChangesCBox');
-    //        if (serial.value == 0) {
-    //            alert(noSerialEntered);
-    //            return false;
-    //        }
-    //        if (!skipChanges.checked) {
-    //            alert(notChecked);
-    //            return false;
-    //        }
-    //    }
+    domObject = document.getElementById('fatherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error1', 'error6');
 
-    //    function validateSerialNum() {
-    //        var domObject;
-    //        var returnval = true;
-    //        domObject = document.getElementById('SerialNo');
-    //        if (isFieldEmpty(domObject))
-    //            isNumeric(domObject.value, 'error13', 'error5');
+    domObject = document.getElementById('motherNICorPIN');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'error1', 'error6');
+
+
+    /*date related validations*/
+    //        var submit = new Date(document.getElementById("submitDatePicker").value);
+    //        if (!(submit.getTime())) {
+    //            errormsg = errormsg + "\n" + document.getElementById('p1error3').value;
+    //        }
     //
-    //        if (errormsg != "") {
-    //            alert(errormsg);
-    //            returnval = false;
+    //        element = document.getElementById('placeOfBirth');
+    //        if (element.value == "") {
+    //            errormsg = errormsg + "\n" + document.getElementById('p1error2').value;
     //        }
-    //        errormsg = "";
-    //        return returnval;
-    //    }
 
-    function initPage() {
-        disableOk(true);
-        /*var element = document.getElementById('searchOk').style;
-         element.display = 'none';*/
-        var domObject = document.getElementById('SerialNo');
-        if (domObject.value.trim() == 0) {
-            domObject.value = null;
-        }
+
+    //        //date of register
+    //    domObject = document.getElementById('submitDatePicker');
+    //    if (isFieldEmpty(domObject))
+    //        isEmpty(domObject, "", 'error9')
+    //    else
+    //        isDate(domObject.value, "error13", "submitDate");
+    //
+    //    //date of birth
+    //    domObject = document.getElementById('birthDatePicker');
+    //    if (isFieldEmpty(domObject))
+    //        isEmpty(domObject, "", 'error10')
+    //    else
+    //        isDate(domObject.value, "error13", "dob");
+    //
+    //    var submit = new Date(document.getElementById('submitDatePicker').value);
+    //    var birthdate = new Date(document.getElementById('birthDatePicker').value);
+    //    // compare birth date and date of registration
+    //    if (birthdate.getTime() > submit.getTime()) {
+    //        errormsg = errormsg + "\n" + document.getElementById('error6').value;
+    //    }
+    //
+    //    //place of birth
+    //    domObject = document.getElementById('placeOfBirth');
+    //    isEmpty(domObject, "", 'error11')
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
     }
+    errormsg = "";
+    return returnval;
+}
+
+function validateSearch() {
+    var domObject;
+    var returnval = true;
+
+    // validate serial number
+    domObject = document.getElementById('SerialNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error2').value;
+    } else {
+        isNumeric(domObject.value, 'error1', 'error2');
+    }
+
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+
+//    function validateSkipChanges() {
+//        var noSerialEntered = document.getElementById('p1error1').value;
+//        var notChecked = document.getElementById('p1errorckbx').value;
+//        var serial = document.getElementById('SerialNo');
+//        var skipChanges = document.getElementById('skipChangesCBox');
+//        if (serial.value == 0) {
+//            alert(noSerialEntered);
+//            return false;
+//        }
+//        if (!skipChanges.checked) {
+//            alert(notChecked);
+//            return false;
+//        }
+//    }
+
+//    function validateSerialNum() {
+//        var domObject;
+//        var returnval = true;
+//        domObject = document.getElementById('SerialNo');
+//        if (isFieldEmpty(domObject))
+//            isNumeric(domObject.value, 'error13', 'error5');
+//
+//        if (errormsg != "") {
+//            alert(errormsg);
+//            returnval = false;
+//        }
+//        errormsg = "";
+//        return returnval;
+//    }
+
+function initPage() {
+    disableOk(true);
+    /*var element = document.getElementById('searchOk').style;
+     element.display = 'none';*/
+    var domObject = document.getElementById('SerialNo');
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
+    }
+}
 </script>
 
 <div id="birth-confirmation-form-outer">
@@ -430,7 +435,7 @@
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35"/></td>
+        <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN"/></td>
     </tr>
     <tr>
         <td>7</td>
@@ -449,7 +454,7 @@
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
-        <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35"/></td>
+        <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN"/></td>
     </tr>
     <tr>
         <td>9</td>
@@ -517,6 +522,8 @@
 <s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
 <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error4" value="%{getText('p1.dob')}"/>
+<s:hidden id="error6" value="%{getText('fatherPINorNIC.label')}"/>
+<s:hidden id="error7" value="%{getText('motherPINorNIC.label')}"/>
 
 </div>
 <%-- Styling Completed --%>

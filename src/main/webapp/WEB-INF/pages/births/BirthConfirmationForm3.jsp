@@ -35,33 +35,30 @@
         confirmantNICorPIN.value = nICorPIN;
     }
 
-    function validate()
-    {
-        var errormsg = "";
-        var element;
-        var returnval;
+    var errormsg = "";
+    function validate() {
+        var domObject;
+        var returnval = true;
 
         /*date related validations*/
-        var submit = new Date(document.getElementById('atePicker').value);
-        if (!(submit.getTime())) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error3').value;
-            flag = true;
-        }
-        else if(submit.is){
-            
-        }
-        element = document.getElementById('confirmantNICorPIN');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
-        }
-        element = document.getElementById('confirmantFullName');
-        if (element.value == "") {
-            errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
-        }
+        domObject = document.getElementById('datePicker');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, 'error1', 'p3error3');
+
+        /*
+         element = document.getElementById('confirmantNICorPIN');
+         if (element.value == "") {
+         errormsg = errormsg + "\n" + document.getElementById('p3error1').value;
+         }
+         element = document.getElementById('confirmantFullName');
+         if (element.value == "") {
+         errormsg = errormsg + "\n" + document.getElementById('p3error2').value;
+         }*/
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
+        errormsg = "";
         return returnval;
     }
 </script>
@@ -84,13 +81,12 @@
             <tr>
                 <td colspan="9" style="text-align:center;font-size:12pt"> උපත තහවුරු කරන්නාගේ විස්තර
                     <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவர்
-                    <br>Person confirming the birth details
+                    <br>Person Confirming Birth Details
                 </td>
             </tr>
             <tr>
                 <td colspan="3"><label>(29)තහවුරු කරන්නේ කවුරුන් විසින් ද? <br>*in tamil<br>Person
-                    confirming
-                    Information</label></td>
+                    Confirming Information</label></td>
 
                 <td width="100px"><label>මව <br>மாதா <br>Mother</label></td>
                 <td align="center" width="150px"><s:radio name="confirmantRadio" list="#{'MOTHER':''}"
@@ -145,10 +141,6 @@
             </tbody>
         </table>
         <s:hidden name="pageNo" value="3"/>
-        <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
-        <s:hidden id="p3error1" value="%{getText('cp3.error.NIC.value')}"/>
-        <s:hidden id="p3error2" value="%{getText('cp3.error.FullName.value')}"/>
-        <s:hidden id="p3error3" value="%{getText('cp3.error.confirm.date.value')}"/>
 
         <div class="skip-validation">
             <s:checkbox name="skipjavaScript" id="skipjs" value="false">
@@ -171,4 +163,11 @@
 
         </div>
     </s:form>
+
+    <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
+    <s:hidden id="p3error1" value="%{getText('cp3.error.NIC.value')}"/>
+    <s:hidden id="p3error2" value="%{getText('cp3.error.FullName.value')}"/>
+    <s:hidden id="p3error3" value="%{getText('cp3.error.confirm.date.value')}"/>
+    <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+
 </div>
