@@ -418,6 +418,10 @@
                 method="initStillBirth">
             <result type="tiles" name="success">epr.stillBirth</result>
         </action>
+        <action name="eprBirthAlterationInit" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="initBirthAlteration">
+            <result type="tiles" name="success">epr.birthAlteration</result>
+        </action>
 
         <!--Birth Certificate Search-->
         <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"

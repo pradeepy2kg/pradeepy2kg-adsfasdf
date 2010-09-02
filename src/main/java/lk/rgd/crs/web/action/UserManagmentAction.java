@@ -267,6 +267,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 dataManagementService.addBDDivision(bdDivision, currentUser);
                 logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
                 msg = "New BDDivision Was Added  :" + bdDivision.getEnDivisionName();
+                break;
             case 4:
                 mrDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                 mrDivision.setActive(true);
@@ -274,8 +275,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
                 msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
                 break;
-
-
         }
         setDivisionList();
         return SUCCESS;

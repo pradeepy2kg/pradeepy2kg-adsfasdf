@@ -829,6 +829,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return DateState.ERROR.getStateId();
         }
     }
+    public String initBirthAlteration(){
+        populateBasicLists(user.getPrefLanguage());
+        populateDynamicLists(user.getPrefLanguage());
+        return SUCCESS;
+    }
 
     private void populateDynamicLists(String language) {
         if (birthDistrictId == 0) {
