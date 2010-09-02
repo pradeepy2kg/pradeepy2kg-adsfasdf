@@ -220,7 +220,8 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public DeathRegister getByBDDivisionAndDeathSerialNo(BDDivision bdDivision, long deathSerialNo, User user) {
         DeathRegister dr = null;
         dr = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(bdDivision, deathSerialNo);
-        validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
+        if (dr != null)
+            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
         return dr;
     }
 

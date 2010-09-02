@@ -3,24 +3,138 @@ package lk.rgd.crs.web.action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.springframework.context.ApplicationContext;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.web.action.deaths.DeathRegisterAction;
 import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.UnitTestManager;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import java.text.DateFormat;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.extensions.TestSetup;
 
 public class LateDeathRegistrationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     private ActionProxy proxy;
     private User user;
     private DeathRegisterAction deathAction;
+
+    protected static BDDivision colomboBDDivision;
+    protected static BDDivision negamboBDDivision;
+    protected static Country sriLanka;
+    protected static Race sinhalese;
+
+    protected final static ApplicationContext ctx = UnitTestManager.ctx;
+    protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+    protected final static BirthRegistrationService birthRegistrationService = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+    protected final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    protected final static CountryDAO countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+    protected final static RaceDAO raceDOA = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
+    protected final static DeathRegistrationService deathRegistrationService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
+
+
+    public static Test suite() {
+        TestSetup setup = new TestSetup(new TestSuite(LateDeathRegistrationTest.class)) {
+            protected void setUp() throws Exception {
+                logger.info("setup called");
+                colomboBDDivision = bdDivisionDAO.getBDDivisionByPK(1);
+                negamboBDDivision = bdDivisionDAO.getBDDivisionByPK(9);
+                sriLanka = countryDAO.getCountry(1);
+                sinhalese = raceDOA.getRace(1);
+
+                List deaths = sampleDeaths();
+                User sampleUser = loginSampleUser();
+                for (int i = 0; i < deaths.size(); i++) {
+                    deathRegistrationService.addNormalDeathRegistration((DeathRegister) deaths.get(i), sampleUser);
+                }
+
+                //setting serial number 2010012349 colombo to APPROVED
+                super.setUp();
+            }
+
+            protected void tearDown() throws Exception {
+                logger.info("tear down called ");
+                super.tearDown();
+            }
+        };
+        return setup;
+    }
+
+    private static User loginSampleUser() {
+        User rg = null;
+        try {
+            rg = userManager.authenticateUser("rg", "password");
+        }
+        catch (AuthorizationException e) {
+            logger.debug("exception when autharizing a user :'rg' ");
+        }
+        return rg;
+    }
+
+    private static List sampleDeaths() {
+        List list = new LinkedList();
+
+        for (int i = 0; i < 10; i++) {
+            // get Calendar with current date
+            java.util.GregorianCalendar gCal = new GregorianCalendar();
+            //Death info
+            DeathInfo death = new DeathInfo();
+            death.setDeathSerialNo(2010012245 + i);
+            death.setPlaceOfDeath("place of death :" + i);
+            gCal.add(Calendar.DATE, -20);
+            death.setDateOfDeath(gCal.getTime());
+            gCal.add(Calendar.DATE, -2);
+            death.setDateOfRegistration(gCal.getTime());
+            death.setPreferredLanguage("si");
+            death.setDeathDivision(colomboBDDivision);
+            death.setPlaceOfBurial("place of burial : " + i);
+
+            //death person info
+            DeathPersonInfo person = new DeathPersonInfo();
+            person.setDeathPersonGender(0);
+            person.setDeathPersonNameOfficialLang("name in offocial lang" + i);
+
+            //notifu authority info
+            NotifyingAuthorityInfo notify = new NotifyingAuthorityInfo();
+            notify.setNotifyingAuthorityName("notify name :" + i);
+            notify.setNotifyingAuthorityAddress("notifi address :" + i);
+            notify.setNotifyingAuthorityPIN("" + 123456789 + i);
+            gCal.add(Calendar.DATE, -1);
+            notify.setNotifyingAuthoritySignDate(gCal.getTime());
+
+            //declarant info
+            DeclarantInfo declarant = new DeclarantInfo();
+            declarant.setDeclarantType(DeclarantInfo.DeclarantType.MOTHER);
+
+            DeathRegister deathRegister = new DeathRegister();
+            deathRegister.setStatus(DeathRegister.State.DATA_ENTRY);
+            deathRegister.setDeathType(DeathRegister.Type.NORMAL);
+            deathRegister.setDeath(death);
+            deathRegister.setDeathPerson(person);
+            deathRegister.setDeclarant(declarant);
+            deathRegister.setNotifyingAuthority(notify);
+
+            list.add(deathRegister);
+        }
+        return list;
+    }
 
     private Map UserLogin(String username, String passwd) throws Exception {
         request.setParameter("userName", username);
@@ -45,7 +159,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         }
     }
 
-     @Override
+    @Override
     public String getContextLocations() {
         return "unitTest_applicationContext.xml";
     }
@@ -73,7 +187,7 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         assertNotNull("Dsdivision list", deathAction.getDsDivisionList());
         assertNotNull("District list", deathAction.getDistrictList());
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
-        
+
         request.setParameter("death.causeOfDeath", "Bus accident");
         request.setParameter("death.causeOfDeathEstablished", "false");
         request.setParameter("death.dateOfDeath", "2010-08-01");
@@ -109,22 +223,22 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         session = deathAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
-        assertEquals("Caurse of Death","BUS ACCIDENT",ddf.getDeath().getCauseOfDeath());
-        assertEquals("Date of Death","2010-08-01", DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfDeath()));
-        assertEquals("date of Registration","2010-08-17",DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfRegistration()));
-        assertEquals("Cause Of Death Established",false,ddf.getDeath().isCauseOfDeathEstablished());
-        assertEquals("Infant Less Than 30 Days",false,ddf.getDeath().isInfantLessThan30Days());
-        assertEquals("Icd Code Of Cause","33EE",ddf.getDeath().getIcdCodeOfCause());
-        assertEquals("Place of Death","මහරගම මහරෝහල",ddf.getDeath().getPlaceOfDeath());
-        assertEquals("Place of Burial","මහරගම",ddf.getDeath().getPlaceOfBurial());
-        assertEquals("Time of daath","12:30",ddf.getDeath().getTimeOfDeath());
-        assertEquals("deathDistrictId",11,ddf.getDeath().getDeathDivision().getDistrict().getDistrictId());
-        assertEquals("deathDivisionId",1,ddf.getDeath().getDeathDivision().getDivisionId());
-        assertEquals("deathPersonFatherFullName","SAMARAKONE P.",ddf.getDeathPerson().getDeathPersonFatherFullName());
-        assertEquals("deathPersonMotherFullName","SILAWATHI S.",ddf.getDeathPerson().getDeathPersonMotherFullName());
-        assertEquals("deathPersonNameOfficialLang","සෝමතිලක ජයසූරිය",ddf.getDeathPerson().getDeathPersonNameOfficialLang());
-        assertEquals("deathPersonNameInEnglish","SOMATHILAKA JAYASOORIYA",ddf.getDeathPerson().getDeathPersonNameInEnglish());
-        assertEquals("deathPersonPermanentAddress","WIJAYARAMA RD,EGODAWATHTHA.",ddf.getDeathPerson().getDeathPersonPermanentAddress());
+        assertEquals("Caurse of Death", "BUS ACCIDENT", ddf.getDeath().getCauseOfDeath());
+        assertEquals("Date of Death", "2010-08-01", DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfDeath()));
+        assertEquals("date of Registration", "2010-08-17", DateTimeUtils.getISO8601FormattedString(ddf.getDeath().getDateOfRegistration()));
+        assertEquals("Cause Of Death Established", false, ddf.getDeath().isCauseOfDeathEstablished());
+        assertEquals("Infant Less Than 30 Days", false, ddf.getDeath().isInfantLessThan30Days());
+        assertEquals("Icd Code Of Cause", "33EE", ddf.getDeath().getIcdCodeOfCause());
+        assertEquals("Place of Death", "මහරගම මහරෝහල", ddf.getDeath().getPlaceOfDeath());
+        assertEquals("Place of Burial", "මහරගම", ddf.getDeath().getPlaceOfBurial());
+        assertEquals("Time of daath", "12:30", ddf.getDeath().getTimeOfDeath());
+        assertEquals("deathDistrictId", 11, ddf.getDeath().getDeathDivision().getDistrict().getDistrictId());
+        assertEquals("deathDivisionId", 1, ddf.getDeath().getDeathDivision().getDivisionId());
+        assertEquals("deathPersonFatherFullName", "SAMARAKONE P.", ddf.getDeathPerson().getDeathPersonFatherFullName());
+        assertEquals("deathPersonMotherFullName", "SILAWATHI S.", ddf.getDeathPerson().getDeathPersonMotherFullName());
+        assertEquals("deathPersonNameOfficialLang", "සෝමතිලක ජයසූරිය", ddf.getDeathPerson().getDeathPersonNameOfficialLang());
+        assertEquals("deathPersonNameInEnglish", "SOMATHILAKA JAYASOORIYA", ddf.getDeathPerson().getDeathPersonNameInEnglish());
+        assertEquals("deathPersonPermanentAddress", "WIJAYARAMA RD,EGODAWATHTHA.", ddf.getDeathPerson().getDeathPersonPermanentAddress());
 
         request.setParameter("declarant.declarantAddress", "Egodawaththa,Maharagama.");
         request.setParameter("declarant.declarantEMail", "wwwww@gmail.com");
@@ -142,12 +256,12 @@ public class LateDeathRegistrationTest extends CustomStrutsTestCase {
         session = deathAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, deathAction.getActionErrors().size());
 
-        assertEquals("Declarent Address","EGODAWATHTHA,MAHARAGAMA.",ddf.getDeclarant().getDeclarantAddress());
-        assertEquals("Declarent E-Mail Address","wwwww@gmail.com",ddf.getDeclarant().getDeclarantEMail());
-        assertEquals("Declarent Name","RANGITH KUMARA",ddf.getDeclarant().getDeclarantFullName());
-        assertEquals("NotifyingAuthority Name","RAJAPAKSHA M.",ddf.getNotifyingAuthority().getNotifyingAuthorityName());
-        assertEquals("NotifyingAuthority Address","GANGODAVILA,EGODAWATHTHA",ddf.getNotifyingAuthority().getNotifyingAuthorityAddress());
-        logger.debug("New late death declaration successfuly persist S idUKey : {}",ddf.getIdUKey());
+        assertEquals("Declarent Address", "EGODAWATHTHA,MAHARAGAMA.", ddf.getDeclarant().getDeclarantAddress());
+        assertEquals("Declarent E-Mail Address", "wwwww@gmail.com", ddf.getDeclarant().getDeclarantEMail());
+        assertEquals("Declarent Name", "RANGITH KUMARA", ddf.getDeclarant().getDeclarantFullName());
+        assertEquals("NotifyingAuthority Name", "RAJAPAKSHA M.", ddf.getNotifyingAuthority().getNotifyingAuthorityName());
+        assertEquals("NotifyingAuthority Address", "GANGODAVILA,EGODAWATHTHA", ddf.getNotifyingAuthority().getNotifyingAuthorityAddress());
+        logger.debug("New late death declaration successfuly persist S idUKey : {}", ddf.getIdUKey());
     }
 
 
