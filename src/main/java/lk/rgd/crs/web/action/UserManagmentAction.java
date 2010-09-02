@@ -211,6 +211,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 mrDivision = mrDivisionDAO.getMRDivisionByPK(getMrdivisionId());
                 dataManagementService.activateMRDivision(mrDivision, currentUser);
                 logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+                break;
 
         }
         setDivisionList();
@@ -601,5 +602,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setMrdivisionId(int mrdivisionId) {
         this.mrdivisionId = mrdivisionId;
+    }
+
+    public Map getSession() {
+        return session;
     }
 }
