@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import junit.extensions.TestSetup;
 
 
-//todo test case for /veiw /next /previous/
+//todo test case for /next /previous/
 
 public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(DeathRegistrationDeclarationTest.class);
