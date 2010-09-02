@@ -186,9 +186,9 @@ public class BirthRegistrationServiceImpl implements
             if (BirthDeclaration.BirthType.LIVE == current) {
                 w = approveLiveBirthDeclaration(bdf.getIdUKey(), false, user);
             } else if (BirthDeclaration.BirthType.STILL == current) {
-                w = approveStillBirthDeclaration(bdf, false, user);
+                w = approveStillBirthDeclaration(bdf.getIdUKey(), false, user);
             } else if (BirthDeclaration.BirthType.ADOPTION == current) {
-                w = approveAdoptionBirthDeclaration(bdf, false, user);
+                w = approveAdoptionBirthDeclaration(bdf.getIdUKey(), false, user);
             }
             if (!w.isEmpty()) {
                 warnings.add(new UserWarning("Birth Declaration ID : " + id +
@@ -391,16 +391,8 @@ public class BirthRegistrationServiceImpl implements
         BirthDeclaration birth = getById(idUKey, user);
         validateBirthType(birth, BirthDeclaration.BirthType.LIVE);
         logger.debug("Attempt to approve live birth declaration : {} Ignore warnings : {}", idUKey, ignoreWarnings);
-
-        // load the existing record
-        BirthDeclaration existing = birthDeclarationDAO.getById(idUKey);
-        validateBirthType(existing, BirthDeclaration.BirthType.LIVE);
-
         // does the user have access to the BDF being added (i.e. check district and DS division)
         validateAccessOfUser(user, birth);
-        // does the user have access to the existing BDF (if district and division is changed somehow)
-        validateAccessOfUser(user, existing);
-
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth declarations",
@@ -408,7 +400,7 @@ public class BirthRegistrationServiceImpl implements
         }
 
         // is the BDF currently existing in a state for approval
-        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        final BirthDeclaration.State currentState = birth.getRegister().getStatus();
         if (BirthDeclaration.State.DATA_ENTRY != currentState) {
             handleException("Cannot approve confirmation : " + idUKey + " Illegal state : " + currentState,
                     ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
@@ -423,8 +415,8 @@ public class BirthRegistrationServiceImpl implements
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
-            if (existing.getRegister().getComments() != null) {
-                sb.append(existing.getRegister().getComments()).append("\n");
+            if (birth.getRegister().getComments() != null) {
+                sb.append(birth.getRegister().getComments()).append("\n");
             }
 
             sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
@@ -454,19 +446,13 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<UserWarning> approveStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
-
-        validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
-        logger.debug("Attempt to approve still birth declaration : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
-
-        // load the existing record
-        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(existing, BirthDeclaration.BirthType.STILL);
+    public List<UserWarning> approveStillBirthDeclaration(long idUkey, boolean ignoreWarnings, User user) {
+        BirthDeclaration stillBirth = getById(idUkey, user);
+        validateBirthType(stillBirth, BirthDeclaration.BirthType.STILL);
+        logger.debug("Attempt to approve still birth declaration : {} Ignore warnings : {}", stillBirth.getIdUKey(), ignoreWarnings);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
-        validateAccessOfUser(user, bdf);
-        // does the user have access to the existing BDF (if district and division is changed somehow)
-        validateAccessOfUser(user, existing);
+        validateAccessOfUser(user, stillBirth);
 
         // TODO check approve permission for still births
         // check approve permission
@@ -476,23 +462,23 @@ public class BirthRegistrationServiceImpl implements
         }
 
         // is the BDF currently existing in a state for approval
-        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        final BirthDeclaration.State currentState = stillBirth.getRegister().getStatus();
         if (BirthDeclaration.State.DATA_ENTRY != currentState) {
-            handleException("Cannot approve still birth declaration : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+            handleException("Cannot approve still birth declaration : " + stillBirth.getIdUKey() + " Illegal state : " + currentState,
                     ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
         }
 
         // validate if the minimum required fields are adequately filled
-        birthDeclarationValidator.validateMinimalRequirements(bdf);
+        birthDeclarationValidator.validateMinimalRequirements(stillBirth);
 
         // validate standard validations anyway, since even if validations are rejected a note of it will be made
         // against the approval for audit requirements
-        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, stillBirth, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
-            if (existing.getRegister().getComments() != null) {
-                sb.append(existing.getRegister().getComments()).append("\n");
+            if (stillBirth.getRegister().getComments() != null) {
+                sb.append(stillBirth.getRegister().getComments()).append("\n");
             }
 
             sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved still birth declaration ignoring warnings. User : ").
@@ -503,17 +489,17 @@ public class BirthRegistrationServiceImpl implements
                 sb.append("-");
                 sb.append(w.getMessage());
             }
-            bdf.getRegister().setComments(sb.toString());
+            stillBirth.getRegister().setComments(sb.toString());
         }
 
         if (warnings.isEmpty() || ignoreWarnings) {
-            bdf.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
-            bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
-            bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
-            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
-            logger.debug("Approved still birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
+            stillBirth.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_GENERATED);
+            stillBirth.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            stillBirth.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(stillBirth, user);
+            logger.debug("Approved still birth declaration record : {} Ignore warnings : {}", stillBirth.getIdUKey(), ignoreWarnings);
         } else {
-            logger.debug("Approval of still birth declaration record : {} stopped due to warnings", bdf.getIdUKey());
+            logger.debug("Approval of still birth declaration record : {} stopped due to warnings", stillBirth.getIdUKey());
         }
         return warnings;
     }
@@ -522,19 +508,13 @@ public class BirthRegistrationServiceImpl implements
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<UserWarning> approveAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
-
-        validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
-        logger.debug("Attempt to approve adoption birth declaration : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
-
-        // load the existing record
-        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
-        validateBirthType(existing, BirthDeclaration.BirthType.ADOPTION);
+    public List<UserWarning> approveAdoptionBirthDeclaration(long idUKey, boolean ignoreWarnings, User user) {
+        BirthDeclaration adoption = getById(idUKey, user);
+        validateBirthType(adoption, BirthDeclaration.BirthType.ADOPTION);
+        logger.debug("Attempt to approve adoption birth declaration : {} Ignore warnings : {}", adoption.getIdUKey(), ignoreWarnings);
 
         // does the user have access to the BDF being added (i.e. check district and DS division)
-        validateAccessOfUser(user, bdf);
-        // does the user have access to the existing BDF (if district and division is changed somehow)
-        validateAccessOfUser(user, existing);
+        validateAccessOfUser(user, adoption);
 
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_BDF)) {
@@ -543,23 +523,23 @@ public class BirthRegistrationServiceImpl implements
         }
 
         // is the BDF currently existing in a state for approval
-        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        final BirthDeclaration.State currentState = adoption.getRegister().getStatus();
         if (BirthDeclaration.State.DATA_ENTRY != currentState) {
-            handleException("Cannot approve confirmation : " + bdf.getIdUKey() + " Illegal state : " + currentState,
+            handleException("Cannot approve confirmation : " + adoption.getIdUKey() + " Illegal state : " + currentState,
                     ErrorCodes.INVALID_STATE_FOR_BDF_APPROVAL);
         }
 
         // validate if the minimum required fields are adequately filled
-        birthDeclarationValidator.validateMinimalRequirements(bdf);
+        birthDeclarationValidator.validateMinimalRequirements(adoption);
 
         // validate standard validations anyway, since even if validations are rejected a note of it will be made
         // against the approval for audit requirements
-        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, bdf, user);
+        List<UserWarning> warnings = birthDeclarationValidator.validateStandardRequirements(birthDeclarationDAO, adoption, user);
 
         if (!warnings.isEmpty() && ignoreWarnings) {
             StringBuilder sb = new StringBuilder();
-            if (existing.getRegister().getComments() != null) {
-                sb.append(existing.getRegister().getComments()).append("\n");
+            if (adoption.getRegister().getComments() != null) {
+                sb.append(adoption.getRegister().getComments()).append("\n");
             }
 
             sb.append(DateTimeUtils.getISO8601FormattedString(new Date())).append(" - Approved birth declaration ignoring warnings. User : ").
@@ -570,17 +550,17 @@ public class BirthRegistrationServiceImpl implements
                 sb.append("-");
                 sb.append(w.getMessage());
             }
-            bdf.getRegister().setComments(sb.toString());
+            adoption.getRegister().setComments(sb.toString());
         }
 
         if (warnings.isEmpty() || ignoreWarnings) {
-            bdf.getRegister().setStatus(BirthDeclaration.State.APPROVED);
-            bdf.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
-            bdf.getLifeCycleInfo().setApprovalOrRejectUser(user);
-            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
-            logger.debug("Approved adoption birth declaration record : {} Ignore warnings : {}", bdf.getIdUKey(), ignoreWarnings);
+            adoption.getRegister().setStatus(BirthDeclaration.State.APPROVED);
+            adoption.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            adoption.getLifeCycleInfo().setApprovalOrRejectUser(user);
+            birthDeclarationDAO.updateBirthDeclaration(adoption, user);
+            logger.debug("Approved adoption birth declaration record : {} Ignore warnings : {}", adoption.getIdUKey(), ignoreWarnings);
         } else {
-            logger.debug("Approval of adoption birth declaration record : {} stopped due to warnings", bdf.getIdUKey());
+            logger.debug("Approval of adoption birth declaration record : {} stopped due to warnings", adoption.getIdUKey());
         }
         return warnings;
     }
