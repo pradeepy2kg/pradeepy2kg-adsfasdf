@@ -159,6 +159,10 @@ Assert.assertTrue("A minimal DDF must trigger warnings that data is incomplete",
 
         ddf.getDeathPerson().setDeathPersonGender(0);
         ddf.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.RELATIVE);
+        ddf.getDeclarant().setDeclarantAddress("declarant address ");
+        ddf.getDeclarant().setDeclarantEMail("declarant email");
+        ddf.getDeclarant().setDeclarantFullName("declarant full name ");
+        ddf.getDeclarant().setDeclarantNICorPIN("" + 123456789);
 
         ddf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
         ddf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");

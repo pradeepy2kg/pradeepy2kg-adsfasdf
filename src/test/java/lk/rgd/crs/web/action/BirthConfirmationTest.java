@@ -204,7 +204,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         BirthDeclaration bd = birthRegistrationService.getActiveRecordByBDDivisionAndSerialNo(colomboBDDivision, 2010012350, user);
         //change state to APPROVE
         idUKey = bd.getIdUKey();
-        birthRegistrationService.approveLiveBirthDeclaration(bd, true, user);
+        birthRegistrationService.approveLiveBirthDeclaration(bd.getIdUKey(), true, user);
         bd = birthRegistrationService.getById(idUKey, user);
         birthRegistrationService.markLiveBirthConfirmationAsPrinted(bd, user);
 /*        bd = birthRegistrationService.getById(idUKey, user);

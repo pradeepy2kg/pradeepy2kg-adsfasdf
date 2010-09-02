@@ -116,12 +116,11 @@ public interface BirthRegistrationService {
     /**
      * Approve a single BDF for a Live birth by an ADR or higher authority
      *
-     * @param bdf            the BDF to be approved
-     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
-     * @param user           the user initiating the action
-     * @return a list of warnings, if ignoreWarnings is false
+     * @param idUKey
+     *@param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
      */
-    public List<UserWarning> approveLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+    public List<UserWarning> approveLiveBirthDeclaration(long idUKey, boolean ignoreWarnings, User user);
 
     /**
      * Approve a single BDF for a Still birth by an ADR or higher authority

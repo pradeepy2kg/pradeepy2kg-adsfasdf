@@ -43,7 +43,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         super.setUp();
 
         birthDeclarationDAO = (BirthDeclarationDAO)
-            ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+                ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
     }
 
     public BirthRegistrationServiceTest() {
@@ -88,29 +88,29 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         // colombo deo cannot approve
         try {
-            birthRegSvc.approveLiveBirthDeclaration(bdf1, false, deoColomboColombo);
+            birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), false, deoColomboColombo);
             fail("DEO cannot approve BDFs");
         } catch (Exception expected) {
         }
         // negambo deo cannot approve either
         try {
-            birthRegSvc.approveLiveBirthDeclaration(bdf1, false, deoGampahaNegambo);
+            birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), false, deoGampahaNegambo);
             fail("Negambo DEO cannot approve BDFs of Colombo BD division");
         } catch (Exception expected) {
         }
         // negambo adr cannot approve either
         try {
-            birthRegSvc.approveLiveBirthDeclaration(bdf1, false, adrGampahaNegambo);
+            birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), false, adrGampahaNegambo);
             fail("Negambo ADR cannot approve BDFs of Colombo BD division");
         } catch (Exception expected) {
         }
 
         // colombo ADR approves - should raise warnings
-        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, false, adrColomboColombo);
+        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), false, adrColomboColombo);
         Assert.assertTrue("A minimal BDF must trigger warnings that data is incomplete", !warnings.isEmpty());
 
         // ignore warnings should allow approval
-        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
 
         // check for existence of warning comment
         BirthDeclaration bdfSaved = birthRegSvc.getById(bdf1.getIdUKey(), adrColomboColombo);
@@ -148,10 +148,10 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf4 = birthRegSvc.getById(bdf4.getIdUKey(), deoColomboColombo);
 
         // ignore warnings and approve first
-        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+        List<UserWarning> warnings = birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
 
         // check warnings issued for second
-        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf2, false, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf2.getIdUKey(), false, adrColomboColombo);
         boolean found = false;
         for (UserWarning w : warnings) {
             if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
@@ -164,7 +164,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
 
         // check warnings issued for third
-        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf3, false, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf3.getIdUKey(), false, adrColomboColombo);
         found = false;
         for (UserWarning w : warnings) {
             if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
@@ -177,7 +177,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         }
 
         // check warnings issued for fourth
-        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf4, false, adrColomboColombo);
+        warnings = birthRegSvc.approveLiveBirthDeclaration(bdf4.getIdUKey(), false, adrColomboColombo);
         found = false;
         for (UserWarning w : warnings) {
             if (w.getMessage().contains(Long.toString(bdf1.getIdUKey()))) {
@@ -208,7 +208,8 @@ public class BirthRegistrationServiceTest extends TestCase {
         birthRegSvc.editLiveBirthDeclaration(bdf1, true, deoColomboColombo);
 
         // now approve as ADR
-        birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+        birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
 
         // an edit attempt now should not be allowed
@@ -324,14 +325,15 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.DATA_ENTRY, bdf1.getRegister().getStatus());
 
-        // now approve as ADR making changes to name
-        bdf1.getChild().setChildFullNameEnglish("New name 1 of child");
-        birthRegSvc.approveLiveBirthDeclaration(bdf1, true, adrColomboColombo);
+        //todo remove cannot approve and change BDF in same time 
+        // now approve as ADR
+        //  bdf1.getChild().setChildFullNameEnglish("New name 1 of child");
+        birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
 
         // reload again and check for updated name
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
-        Assert.assertEquals("NEW NAME 1 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
+        //  Assert.assertEquals("NEW NAME 1 OF CHILD", bdf1.getChild().getChildFullNameEnglish());
 
         // DEO prints confirmation - mark confirmation as printed
         birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
@@ -348,7 +350,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         // reload again and check for update of old record which should now be archived
         BirthDeclaration bdfOld = birthRegSvc.getById(idUKeyToArchive, deoColomboColombo);
         Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CORRECTED, bdfOld.getRegister().getStatus());
-        Assert.assertEquals("NEW NAME 1 OF CHILD", bdfOld.getChild().getChildFullNameEnglish());
+        Assert.assertEquals("No Name for Archived data", null, bdfOld.getChild().getChildFullNameEnglish());
 
         // reload new record with confirmation changes
         bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
