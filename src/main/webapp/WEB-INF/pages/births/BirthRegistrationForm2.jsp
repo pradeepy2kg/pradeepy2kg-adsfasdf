@@ -38,7 +38,7 @@ $(function() {
         dateFormat:'yy-mm-dd',
         startDate:'2000-01-01',
         endDate:'2020-12-31',
-        defaultDate:-365*18
+        defaultDate:-365 * 18
     });
 });
 
@@ -58,7 +58,7 @@ $(function() {
                 $("input#motherAgeAtBirth").val(mother_age);
             }
         },
-        defaultDate:-365*18
+        defaultDate:-365 * 18
     });
     var child_bday = new Date(document.getElementById('childDateOfBirth').value);
     var mother_bday = document.getElementById('motherDatePicker').value;
@@ -137,25 +137,25 @@ function validate() {
         // validate father full name
         domObject = document.getElementById('fatherFullName');
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('p2error1').value;
+            isEmpty(domObject, "", 'p2error1');
         }
 
         // validate mother full name
         domObject = document.getElementById('motherFullName');
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('p2error2').value;
+            isEmpty(domObject, "", 'p2error2');
         }
 
         // validate mother date of birth
         domObject = document.getElementById('motherDatePicker');
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('mother_birth_day_empty').value;
+            isEmpty(domObject, "", 'mother_birth_day_empty');
         }
 
         // validate mother age at birth
         domObject = document.getElementById('motherAgeAtBirth');
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('mother_age').value;
+            isEmpty(domObject, "", 'mother_age');
         }
     }
 
