@@ -11,14 +11,12 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.InformantInfo;
-import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
@@ -83,7 +81,6 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
             }
 
             protected void tearDown() throws Exception {
-                logger.info("tear down called ");
                 super.tearDown();
             }
         };
