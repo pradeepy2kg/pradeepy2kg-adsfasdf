@@ -283,8 +283,9 @@ function enableSerialNumber(mode) {
         <td width="330px">නියෝගය ලැබුණු දිනය <br/>
             Received Date
         </td>
-        <td style="text-align:center;" width="70"><s:textfield id="receivedDatePicker"
-                                                               name="adoption.orderReceivedDate"/>
+        <td width="70">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+            <s:textfield id="receivedDatePicker" name="adoption.orderReceivedDate"cssStyle="margin-left:20px;"/>
         </td>
     </tr>
     <tr>
@@ -297,8 +298,9 @@ function enableSerialNumber(mode) {
         <td>නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
-        <td style="text-align:center;"><s:textfield id="orderIssuedDatePicker"
-                                                    name="adoption.orderIssuedDate"/>
+        <td>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+            <s:textfield id="orderIssuedDatePicker" name="adoption.orderIssuedDate" cssStyle="margin-left:20px;"/>
         </td>
     </tr>
     <tr>
@@ -472,9 +474,10 @@ function enableSerialNumber(mode) {
         <td>උපන් දිනය<br/>
             Date of birth
         </td>
-        <td colspan="2" style="text-align:center;"><s:textfield id="bdayDatePicker"
-                                                                name="adoption.childBirthDate"
-                                                                onchange="calYearAndMonth()"/>
+        <td colspan="2" >
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+            <s:textfield id="bdayDatePicker" name="adoption.childBirthDate"
+                         cssStyle="margin-left:20px" onchange="calYearAndMonth()"/>
         </td>
         <td>ස්ත්‍රී පුරුෂ භාවය<br/>
             Gender

@@ -525,6 +525,7 @@ function processResponse2(respObj) {
         <td style="border:1px solid #000;">ලියාපදිංචි කල දිනය<br>பிறப்பைப் பதிவு திகதி <br>Date of Registration
         </td>
         <td style="border:1px solid #000;">
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
             <s:textfield id="dateOfRegistrationDatePicker" name="death.dateOfRegistration"/>
         </td>
     </tr>
@@ -625,6 +626,7 @@ function processResponse2(respObj) {
             death
         </td>
         <td colspan="4">
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
             <s:textfield id="deathDatePicker" name="death.dateOfDeath"/>
         </td>
         <td>වෙලාව<br>*in tamil<br>Time</td>

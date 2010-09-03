@@ -97,7 +97,9 @@
                         <tr>
                             <td><label><span class="font-8">යොමුකළ දිනය<br>*Tamil<br>Submitted Date</span></label>
                             </td>
-                            <td><s:textfield id="dateOfSubmission" name="bcSearch.dateOfSubmission"></s:textfield>
+                            <td>
+                                <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
+                                <s:textfield id="dateOfSubmission" name="bcSearch.dateOfSubmission"></s:textfield>
                             </td>
                         </tr>
                     </table>
@@ -169,7 +171,9 @@
             </tr>
             <tr style="border-left:1px solid #000000;">
                 <td class="font-9" width="150px"><label>(5) උපන් දිනය<br> பிறந்த திகதி <br>Date of Birth</label></td>
-                <td><s:textfield id="bcSearchDatePicker" name="bcSearch.dateOfBirth"></s:textfield>
+                <td>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
+                    <s:textfield id="bcSearchDatePicker" name="bcSearch.dateOfBirth"></s:textfield>
                 </td>
                 <td class="font-9"><label> උපන් ස්ථානය<br>பிறந்த இடம்<br> Place of Birth</label></td>
                 <td><s:textfield name="bcSearch.placeOfBirth" id="placeOfBirth"
@@ -196,8 +200,11 @@
                     (7) උප්පැන්න සහතිකයේ අංකය<br>*Tamil<br>Birth Certificate Number</label>
                 </td>
                 <td><s:textfield name="bcSearch.certificateNo" id="certificateNo"/></td>
-                <td class="font-9" width="150px"><label>නිකුත් කළ දිනය<br>* Tamil<br>Date of Issue</label></td>
-                <td><s:textfield id="datePicker" name="bcSearch.certificateIssueDate"></s:textfield>
+                <td class="font-9" width="150px">
+                    <label>නිකුත් කළ දිනය<br>* Tamil<br>Date of Issue</label></td>
+                <td>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:80px;font-size:10px"/><br>
+                    <s:textfield id="datePicker" name="bcSearch.certificateIssueDate"></s:textfield>
                 </td>
             </tr>
             </tbody>

@@ -242,6 +242,7 @@
             <tr>
                 <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br> *in tamil<br>Declaranat Signed Date</td>
                 <td colspan="5">
+                    <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
                     <s:textfield id="declarantDatePicker" name=""/>
                 </td>
             </tr>
@@ -295,7 +296,9 @@
                 </td>
                 <td colspan="1"></td>
                 <td colspan="1">දිනය<br>திகதி<br>Date</td>
-                <td colspan="1"><s:textfield id="submitDatePicker"
+                <td colspan="1">
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:50%;font-size:10px"/><br>
+                    <s:textfield id="submitDatePicker"
                                              name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
             </tr>
             </tbody>

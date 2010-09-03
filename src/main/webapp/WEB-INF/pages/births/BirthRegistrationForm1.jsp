@@ -343,7 +343,7 @@ function initPage() {
                                     class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Date of Registration</span></label>
                         </s:else>
                     </td>
-                    <td><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>
+                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>
                 </tr>
             </table>
         </td>
@@ -446,6 +446,7 @@ function initPage() {
     <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br>
         பிறந்த திகதி <br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
+        <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
         <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
     </td>
     <td colspan="4" style="border-left:none;">

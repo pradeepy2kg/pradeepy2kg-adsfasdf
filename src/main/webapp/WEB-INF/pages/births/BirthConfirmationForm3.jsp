@@ -177,6 +177,7 @@
                     <br>I hereby certify that the above information are correct </label></td>
                 <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
                 <td colspan="4">
+                        <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
                         <s:textfield id="datePicker" name="confirmant.confirmantSignDate" cssStyle="float:left;"/>
             </tr>
             </tbody>
