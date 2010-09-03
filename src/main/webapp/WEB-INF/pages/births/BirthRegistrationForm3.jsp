@@ -87,6 +87,12 @@ function validate() {
 
     validateInformant();
 
+//    var check = document.getElementById('skipjs');
+//    if (!check.checked) {
+//        validateBirthYearWithNIC("grandFatherNICorPIN","grandFatherBirthYear","error9") ;
+//        validateBirthYearWithNIC("greatGrandFatherNICorPIN","greatGrandFatherBirthYear","error10") ;
+//    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -97,6 +103,7 @@ function validate() {
 
 function commonTags() {
     var domObject;
+
 
     // validate date of marriage
     domObject = document.getElementById('marriageDatePicker');
@@ -556,6 +563,12 @@ function initPage() {
 <s:hidden name="rowNumber" value="%{row}"/>
 <s:hidden name="pageNo" value="3"/>
 
+<div class="skip-validation">
+    <s:checkbox name="skipjavaScript" id="skipjs" value="false">
+        <s:label value="%{getText('skipvalidation.label')}"/>
+    </s:checkbox>
+</div>
+
 <div class="form-submit">
     <s:submit value="%{getText('next.label')}"/>
 </div>
@@ -577,6 +590,9 @@ function initPage() {
 <s:hidden id="p3error6" value="%{getText('p3.Marriage.place.value')}"/>
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
+<s:hidden id="p3error9" value="%{getText('p3.GrandFather.birthYear.mismatch')}"/>
+<s:hidden id="p3error10" value="%{getText('p3.GreatGrandFather.birthYear.mismatch')}"/>
+
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
 <s:hidden id="p3error9" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
@@ -590,6 +606,7 @@ function initPage() {
 <s:hidden id="error16" value="%{getText('p3.Informant.telephone.error.value')}"/>
 <s:hidden id="error17" value="%{getText('p3.informdate.with.reg.date')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
+
 
 </div>
 

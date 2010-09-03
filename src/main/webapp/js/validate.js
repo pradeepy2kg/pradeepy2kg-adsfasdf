@@ -68,6 +68,12 @@ function validatePINorNIC(domElement, errorText, errorCode) {
         }
     }
 }
+//validate birth dates with NIC numbert
+function validateBirthYearWithNIC(yearNIC,yearDatePicker,errorText) {
+        if (document.getElementById(yearDatePicker).value.substring(2,3) != document.getElementById(yearNIC).value.substring(0,1)){
+            errormsg = errormsg + "\n" + document.getElementById(errorText).value;
+        }
+    }
 
 // print error message
 function printMessage(errorText, errorCode) {

@@ -157,6 +157,9 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'mother_age');
         }
+
+        validateBirthYearWithNIC("father_pinOrNic","fatherDatePicker","error7") ;
+        validateBirthYearWithNIC("mother_pinOrNic","motherDatePicker","error8") ;
     }
 
     // validate mother phone number
@@ -527,6 +530,8 @@ function commonTags() {
 <s:hidden id="error4" value="%{getText('fatherPINorNIC.label')}"/>
 <s:hidden id="error5" value="%{getText('motherPINorNIC.label')}"/>
 <s:hidden id="error6" value="%{getText('motherPhoneNo.label')}"/>
+<s:hidden id="error7" value="%{getText('p2.father.NIC.DOB.notMatch')}"/>
+<s:hidden id="error8" value="%{getText('p2.mother.NIC.DOB.notMatch')}"/>
 <s:hidden id="fatherDOB" value="%{getText('p2.father.dob')}"/>
 <s:hidden id="motherDOB" value="%{getText('p2.mother.dob')}"/>
 <s:hidden id="dateOfAddmission" value="%{getText('p2.hospital.addmission.date')}"/>
