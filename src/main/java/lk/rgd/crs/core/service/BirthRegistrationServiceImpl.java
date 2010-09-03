@@ -79,7 +79,7 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new live birth declaration");
-        
+
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
         // if this is a late registration, and a case file number is specified, record that along with comments
