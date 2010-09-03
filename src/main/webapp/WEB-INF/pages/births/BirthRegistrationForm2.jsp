@@ -310,7 +310,8 @@ function commonTags() {
             දිනය <br>பிறந்த
             திகதி <br>Date of Birth</label></td>
         <td colspan="2">
-            <s:textfield name="parent.fatherDOB" id="fatherDatePicker"/>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:180px;font-size:10px"/><br>
+            <s:textfield name="parent.fatherDOB" id="fatherDatePicker" />
         </td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                    value="#i+1"/>)උපන්
@@ -395,6 +396,7 @@ function commonTags() {
             திகதி <br>Date of Birth</label></td>
         <td colspan="3">
                 <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:140px;font-size:10px"/><br>
                 <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
@@ -485,7 +487,9 @@ function commonTags() {
                                                                                                    value="#i+1"/>
             )රෝහලට ඇතුලත් කිරිමේ
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
-        <td colspan="3"><s:textfield name="parent.motherAdmissionDate" id="admitDatePicker"/></td>
+        <td colspan="3">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:45px;font-size:10px"/><br>
+            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker"/></td>
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)ම‌ව

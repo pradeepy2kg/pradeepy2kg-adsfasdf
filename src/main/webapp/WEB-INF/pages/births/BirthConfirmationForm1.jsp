@@ -72,7 +72,10 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+            return[0].Text
+        )
+            ;
         }
     })
 
@@ -84,7 +87,7 @@
         // validate serial number
         domObject = document.getElementById('SerialNo');
         if (isFieldEmpty(domObject)) {
-//            errormsg = errormsg + "\n" + document.getElementById('error2').value;
+            //            errormsg = errormsg + "\n" + document.getElementById('error2').value;
         } else {
             isNumeric(domObject.value, 'error1', 'error2');
         }
@@ -291,7 +294,8 @@
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.date}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
-        <td colspan="6"><s:textfield name="child.dateOfBirth" id="submitDatePicker" cssStyle="width:200px;float:left;"/>
+        <td colspan="6"><s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
+            <s:textfield name="child.dateOfBirth" id="submitDatePicker" cssStyle="width:200px;float:left;"/>
         </td>
     </tr>
     <tr>

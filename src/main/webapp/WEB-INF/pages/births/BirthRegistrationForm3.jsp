@@ -89,8 +89,8 @@ function validate() {
 
 //    var check = document.getElementById('skipjs');
 //    if (!check.checked) {
-//        validateBirthYearWithNIC("grandFatherNICorPIN","grandFatherBirthYear","error9") ;
-//        validateBirthYearWithNIC("greatGrandFatherNICorPIN","greatGrandFatherBirthYear","error10") ;
+//        validateBirthYearWithNIC('grandFatherNICorPIN','grandFatherBirthYear','error9') ;
+//        validateBirthYearWithNIC('greatGrandFatherNICorPIN','greatGrandFatherBirthYear','error10') ;
 //    }
 
     if (errormsg != "") {
@@ -255,6 +255,8 @@ function disableMarriage(mode) {
     document.getElementById('marriageDatePicker').disabled = mode;
 }
 
+
+
 function disableSigns(mode) {
     if (!mode) {
         var name = document.getElementById('fatherName');
@@ -275,6 +277,7 @@ function initPage() {
     if (declarationType.value != 0)
         disableSigns(true);
 }
+
 </script>
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
@@ -339,6 +342,7 @@ function initPage() {
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
             <td colspan="2">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
             <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"/></tr>
         <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
@@ -391,7 +395,7 @@ function initPage() {
             </td>
             <td><s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/></td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/></td>
+            <td><s:label value="*YYYY" /><br><s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
         </tr>
@@ -416,7 +420,7 @@ function initPage() {
             <td><s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/></td>
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
+            <td><s:label value="*YYYY" /><br><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
                              cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:95%;"/></td>
@@ -560,6 +564,7 @@ function initPage() {
     <tr>
         <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
         <td colspan="4">
+                <s:label value="YYYY-MM-DD" cssStyle="margin-left:76%;font-size:10px"/><br>
                 <s:textfield name="informant.informantSignDate" id="informDatePicker"/>
     </tr>
     </tbody>

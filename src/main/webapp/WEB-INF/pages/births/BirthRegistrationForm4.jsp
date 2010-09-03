@@ -141,7 +141,9 @@
             </tr>
             <tr>
                 <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
-                <td colspan="4"><s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
+                <td colspan="4">
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:77%;font-size:10px"/><br>
+                    <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
                                              id="modifiedDatePicker"/>
                 </td>
             </tr>
