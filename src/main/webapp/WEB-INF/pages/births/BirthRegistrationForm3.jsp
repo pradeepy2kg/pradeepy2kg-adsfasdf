@@ -264,6 +264,10 @@ function disableSigns(mode) {
     }
     document.getElementById('motherSigned').disabled = mode;
     document.getElementById('fatherSigned').disabled = mode;
+    if(mode){
+        document.getElementById('fatherSigned').checked = false;
+        document.getElementById('motherSigned').checked = false;
+    }
 }
 
 function initPage() {
