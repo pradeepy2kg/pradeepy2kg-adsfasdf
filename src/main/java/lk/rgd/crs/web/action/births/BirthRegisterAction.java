@@ -88,6 +88,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int bdfLateOrBelated;
     private String caseFileNumber;
     private String newComment;
+    private int sectionOfAct;
 
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
@@ -829,9 +830,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             return DateState.ERROR.getStateId();
         }
     }
-    public String initBirthAlteration(){
+
+    public String initBirthAlteration() {
         populateBasicLists(user.getPrefLanguage());
         populateDynamicLists(user.getPrefLanguage());
+        pageNo = 0;
+        return SUCCESS;
+    }
+
+    public String loadBirthAlteration() {
+        populateBasicLists(user.getPrefLanguage());
+        populateDynamicLists(user.getPrefLanguage());
+        pageNo = sectionOfAct;
         return SUCCESS;
     }
 
@@ -1407,5 +1417,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public int getSectionOfAct() {
+        return sectionOfAct;
+    }
+
+    public void setSectionOfAct(int sectionOfAct) {
+        this.sectionOfAct = sectionOfAct;
     }
 }
