@@ -345,7 +345,7 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
-
+       
     }
 
 
@@ -764,7 +764,7 @@ function processResponse2(respObj) {
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)වයස හෝ අනුමාන වයස<br>பிறப்ப<br>Age
             or probable Age
         </td>
-        <td colspan="1"><s:textfield name="deathPerson.deathPersonAge"/></td>
+        <td colspan="1"><s:textfield name="deathPerson.deathPersonAge" id="deathPersonAge"/></td>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
         </td>
         <td colspan="1"><s:select
@@ -863,6 +863,7 @@ function processResponse2(respObj) {
 <s:hidden id="p1errorPIN1" value="%{getText('p1.deathPerson_PIN')}"/>
 <s:hidden id="p1errorPIN2" value="%{getText('p1.father_PIN')}"/>
 <s:hidden id="p1errorPIN3" value="%{getText('p1.mother_PIN')}"/>
+<s:hidden id="p1errorAge" value="%{getText('p1.deathAge')}"/>
 <s:hidden id="p1errordate1" value="%{getText('p1.dateOfRegistrationDate')}"/>
 <s:hidden id="p1errordate2" value="%{getText('p1.deathDate')}"/>
 <s:hidden id="p1errorSerial" value="%{getText('p1.serialNumber.format')}"/>

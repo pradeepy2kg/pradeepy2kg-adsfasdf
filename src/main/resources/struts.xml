@@ -723,6 +723,18 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprRegistrarsView" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="registrarsVeiwInit">
+            <result type="tiles" name="success">epr.registrarsView</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprRegistrarsFilter" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="filter">
+            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
 
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initUser">

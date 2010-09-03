@@ -14,6 +14,8 @@ import java.util.Set;
  *
  * @author asankha
  */
+@Entity
+@Table(name = "REGISTRAR", schema = "CRS")
 public class Registrar implements Serializable {
 
     @Id
