@@ -3,7 +3,10 @@ package lk.rgd.crs.web.action;
 import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.UnitTestManager;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -31,7 +34,11 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
-    private DistrictDAO districtDAO;
+    private final static BDDivisionDAO bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
+    private final static DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
+    private final static DistrictDAO districtDAO =(DistrictDAO) ctx.getBean("districtDAOImpl",DistrictDAO.class);
+    private final static MRDivisionDAO mrDivisionDAO =(MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
+    //private final static User userDAO =(User) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(SampleTest.class)) {
@@ -95,7 +102,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         assertNotNull("Dsdivision list", userManagementAction.getDsDivisionList());
 
         request.setParameter("button", "ADD");
-        request.setParameter("district.districtId", "110");
+        request.setParameter("district.districtId", "11");
         request.setParameter("district.enDistrictName", "New district En");
         request.setParameter("district.siDistrictName", "New district Si");
         request.setParameter("district.taDistrictName", "New district ta");
@@ -103,7 +110,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprInitDivisionList.do", session);
         session = userManagementAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        //assertEquals("added district",110,userManagementAction.getDistrict().);
+        assertNotNull("Added new District",districtDAO.getDistrict(11));
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
@@ -125,6 +132,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprInitDivisionList.do", session);
         session = userManagementAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("Added new dsDivision",dsDivisionDAO.getDSDivisionByPK(10)); 
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
@@ -138,18 +146,18 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId", "26");
-        request.setParameter("bdDivision.divisionId", "150");
+        request.setParameter("UserDistrictId", "1");
+        request.setParameter("bdDivision.divisionId", "10");
         request.setParameter("bdDivision.enDivisionName", "new rggistration division EN");
         request.setParameter("bdDivision.siDivisionName", "new rggistration division si");
         request.setParameter("bdDivision.taDivisionName", "new rggistration division ta");
         request.setParameter("button", "ADD");
-        request.setParameter("dsDivisionId", "41");
+        request.setParameter("dsDivisionId", "1");
         request.setParameter("pageNo", "3");
         initAndExucute("/management/eprInitDivisionList.do", session);
         session = userManagementAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-
+        assertNotNull("Added new bdDivisions",bdDivisionDAO.getBDDivisionByPK(10)); 
 
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
@@ -163,19 +171,20 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprInitAddDivisionsAndDsDivisions.do", session);
         session = userManagementAction.getSession();
 
-        request.setParameter("UserDistrictId","26");
-        request.setParameter("button","ADD");
-        request.setParameter("dsDivisionId","41");
-        request.setParameter("mrDivision.divisionId","445");
-        request.setParameter("mrDivision.enDivisionName","new MD en");
-        request.setParameter("mrDivision.siDivisionName","new MD si");
-        request.setParameter("mrDivision.taDivisionName","new MD TA");
-        request.setParameter("pageNo","4");
+        request.setParameter("UserDistrictId", "1");
+        request.setParameter("button", "ADD");
+        request.setParameter("dsDivisionId", "1");
+        request.setParameter("mrDivision.divisionId", "5");
+        request.setParameter("mrDivision.enDivisionName", "new MD en");
+        request.setParameter("mrDivision.siDivisionName", "new MD si");
+        request.setParameter("mrDivision.taDivisionName", "new MD TA");
+        request.setParameter("pageNo", "4");
 
         initAndExucute("/management/eprInitDivisionList.do", session);
         session = userManagementAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        
+        //assertNotNull("Added new mr division",mrDivisionDAO.getMRDivisionByPK(5));
+
         request.setParameter("button", "BACK");
         request.setParameter("pageNo", "0");
         initAndExucute("/management/eprAddDivisionsAndDsDivisions.do", session);
@@ -184,4 +193,21 @@ public class AdminTaskTest extends CustomStrutsTestCase {
 
     }
 
+    public void testCreateUserTest() throws Exception {
+        Map session = UserLogin("admin", "password");
+
+        request.setParameter("assignedDistricts", "1");
+        request.setParameter("assignedDivisions", "1");
+        request.setParameter("roleId", "ADR");
+        request.setParameter("user.pin", "300");
+        request.setParameter("user.prefLanguage", "si");
+        request.setParameter("user.userId", "Malith");
+        request.setParameter("user.userName", "Malith");
+        initAndExucute("/management/eprInitUserCreation.do", session);
+        session = userManagementAction.getSession();
+        assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
+        assertNotNull("Added new user",userManager.getUsersByIDMatch("Malith"));
+        assertNotNull("Added new user",userManager.getUsersByNameMatch("Malith"));
+
+    }
 }
