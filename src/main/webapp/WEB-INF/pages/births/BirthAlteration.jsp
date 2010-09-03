@@ -40,7 +40,22 @@
         $('#errors-info-max').click(function() {
             maximize("errors-info");
         });
+        $('select#sectionOfAct').change(function() {
+            var id = $("select#sectionOfAct").attr("value");
+            document.getElementById("1").style.display = 'none';
+            document.getElementById("2").style.display = 'none';
+            document.getElementById("3").style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+
+        });
     });
+
+    /* $('select#sectionOfAct').bind('change', function(evt1) {
+     alert("xsdx");
+     var id = $("select#sectionOfAct").attr("value");
+     document.getElementsByName("pageNo").value=id;
+
+     });*/
     function minimize(id) {
         document.getElementById(id).style.display = 'none';
         document.getElementById(id + "-min").style.display = 'none';
@@ -53,12 +68,20 @@
         document.getElementById(id + "-min").style.display = 'block';
     }
     function initPage() {
-        document.getElementById("errors-info-max").style.display = 'none';
-        document.getElementById("mother-info-max").style.display = 'none';
-        document.getElementById("informant-info-max").style.display = 'none';
-        document.getElementById("father-info-max").style.display = 'none';
-        document.getElementById("marriage-info-max").style.display = 'none';
-        document.getElementById("grandFather-info-max").style.display = 'none';
+        document.getElementById("errors-info-min").style.display = 'none';
+        document.getElementById("mother-info-min").style.display = 'none';
+        document.getElementById("informant-info-min").style.display = 'none';
+        document.getElementById("father-info-min").style.display = 'none';
+        document.getElementById("marriage-info-min").style.display = 'none';
+        document.getElementById("grandFather-info-min").style.display = 'none';
+
+
+        document.getElementById("errors-info").style.display = 'none';
+        document.getElementById("mother-info").style.display = 'none';
+        document.getElementById("informant-info").style.display = 'none';
+        document.getElementById("father-info").style.display = 'none';
+        document.getElementById("marriage-info").style.display = 'none';
+        document.getElementById("grandFather-info").style.display = 'none';
 
     }
 
@@ -66,68 +89,64 @@
 
 
 <div id="birth-alteration-outer">
-<form action="eprLoadBirthAlteration.do" onsubmit="javascript:return validate()">
-<table class="birth-alteration-table-style01" style="width:1030px;">
-    <tr>
-        <td width="30%"></td>
-        <td width="35%" style="text-align:center;"><img src="<s:url value="/images/official-logo.png"/>"
-                                                        alt=""/></td>
-        <td width="35%">
-            <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
-                <tr>
-                    <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි / <br>
-                        அலுவலக பாவனைக்காக மட்டும் / <br>
-                        For office use only
-                    </td>
-                </tr>
-                <tr>
-                    <td width="40%">අනුක්‍රමික අංකය <br>
-                        தொடர் இலக்கம் <br>
-                        Serial Number
-                    </td>
-                    <td width="60%"><s:textfield/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><s:textfield/></td>
-                </tr>
-                <tr>
-                    <td>පනතේ වගන්තිය <br>
-                        பிறப்பைப் <br>
-                        Section of the Act
-                    </td>
-                    <td><s:textfield name="sectionOfAct"/></td>
-                </tr>
-            </table>
-            <div class="form-submit">
-                <s:submit value="%{getText('submit.label')}"/>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" style="font-size:14pt;text-align:center;">උප්පැන්න ලියාපදිංචි කිරීමේ සටහනක විස්තර වෙනස්
-            කිරීම / ඇතුලත් කිරීම හෝ අතහැරීම <br>
-            ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br>
-            Alteration / insertion / omission of particulars from a Birth Registration entry
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" style="font-size:12pt;text-align:center;">උප්පැන්න හා මරණ ලියාපදිංචි කිරීමේ පනත යටතේ
-            උප්පැන්න ලියාපදිංචි කිරීමේ සටහනක විස්තර වෙනස්
-            කිරීම / ඇතුලත් කිරීම හෝ අතහැරීම සඳහා කරනු ලබන ප්‍රකාශය <br>
-            in tamil <br>
-            Declaration for the alteration / insertion / omission of particulars of a birth registration entry under
-            the Births and Deaths Registration Act.
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" style="font-size:13pt;text-align:center;">වෙනස් කලයුතු උප්පැන්න සහතිකය පිලිබඳ විස්තර <br>
-            பிள்ளை பற்றிய தகவல் <br>
-            Particulars of the Birth Certificate to amend
-        </td>
-    </tr>
-</table>
-
+<s:form action="eprLoadBirthAlteration.do">
+    <table class="birth-alteration-table-style01" style="width:1030px;">
+        <tr>
+            <td width="30%"></td>
+            <td width="35%" style="text-align:center;"><img src="<s:url value="/images/official-logo.png"/>"
+                                                            alt=""/></td>
+            <td width="35%">
+                <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
+                    <tr>
+                        <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි / <br>
+                            அலுவலக பாவனைக்காக மட்டும் / <br>
+                            For office use only
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%">අනුක්‍රමික අංකය <br>
+                            தொடர் இலக்கம் <br>
+                            Serial Number
+                        </td>
+                        <td width="60%"><s:textfield/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><s:textfield/></td>
+                    </tr>
+                    <tr>
+                        <td>පනතේ වගන්තිය <br>
+                            பிறப்பைப் <br>
+                            Section of the Act
+                        </td>
+                        <td><s:select
+                                list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
+                                name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" id="sectionOfAct"/></td>
+                    </tr>
+                </table>
+                <div class="form-submit">
+                    <s:submit value="%{getText('submit.label')}"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="font-size:14pt;text-align:center;">උප්පැන්න ලියාපදිංචි කිරීමේ සටහනක විස්තර වෙනස්
+                කිරීම / ඇතුලත් කිරීම හෝ අතහැරීම <br>
+                ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br>
+                Alteration / insertion / omission of particulars from a Birth Registration entry
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align:center;">උප්පැන්න හා මරණ ලියාපදිංචි කිරීමේ පනත යටතේ
+                උප්පැන්න ලියාපදිංචි කිරීමේ සටහනක විස්තර වෙනස්
+                කිරීම / ඇතුලත් කිරීම හෝ අතහැරීම සඳහා කරනු ලබන ප්‍රකාශය <br>
+                in tamil <br>
+                Declaration for the alteration / insertion / omission of particulars of a birth registration entry under
+                the Births and Deaths Registration Act.
+            </td>
+        </tr>
+    </table>
+</s:form>
 <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
     <caption></caption>
     <col width="15%"/>
@@ -136,6 +155,12 @@
     <col width="20%"/>
     <col width="20%"/>
     <tbody>
+    <tr>
+        <td colspan="5" style="font-size:13pt;text-align:center;">වෙනස් කලයුතු උප්පැන්න සහතිකය පිලිබඳ විස්තර <br>
+            பிள்ளை பற்றிய தகவல் <br>
+            Particulars of the Birth Certificate to amend
+        </td>
+    </tr>
     <tr>
         <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
             தனிநபர்அடையாள எண் <br>
@@ -178,7 +203,6 @@
     </tr>
     </tbody>
 </table>
-<s:if test="pageNo == 1 || pageNo == 0">
 <table class="birth-alteration-table-style01" style="width:100%;">
     <tr>
         <td style="text-align:center;font-size:13pt;">
@@ -196,47 +220,51 @@
             the relavent cage.
         </td>
     </tr>
-    <tr>
-        <td style="text-align:center;font-size:13pt;">නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම (27 වගන්තිය) <br>
-            தந்தை பற்றிய தகவல் <br>
-            Insertion or Alteration of the Name (Section 27)
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align:center;font-size:11pt;">මෙම වගන්තිය යටතේ මව්පියන් හෝ භාරකරු හට අවුරුදු 21 කට අඩු
-            දරුවකුගේ නම වෙනස් කිරීමට ඉල්ලීම් කල හැක. අවු
-            රුදු 21 කට වැඩි පුද්ගලයෙකුගේ නම වෙනස් කිරීමට ඔහු විසින් ඉල්ලුම් පත්‍රයක් ඉදිරිපත් කල හැක. <br>
-            தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை
-            பற்றிய தகவல் தந்தை பற்றிய தகவல் <br>
-            Under this section the name change of a child under 21 years could be requested by his parents or the
-            guardian. A person over 21 years in age could request for a name change on his own.
-        </td>
-    </tr>
 </table>
-<table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
-    <caption></caption>
-    <col width="250px"/>
-    <col width="760px"/>
-    <tbody>
-    <tr>
-        <td>නම රාජ්‍ය භාෂාවෙන්
-            (සිංහල / දෙමළ) <br>
-            பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
-            Name in any of the official languages (Sinhala / Tamil)
-        </td>
-        <td><s:textarea/></td>
-    </tr>
-    <tr>
-        <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பிறப்பு அத்தாட்சி ….. <br>
-            Name in English
-        </td>
-        <td><s:textarea/></td>
-    </tr>
-    </tbody>
-</table>
-</s:if>
-<s:if test="pageNo == 2 || pageNo == 0">
+<div id="1">
+    <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
+        <caption></caption>
+        <col width="250px"/>
+        <col width="760px"/>
+        <tbody>
+
+        <tr>
+            <td colspan="2" style="text-align:center;font-size:13pt;border-bottom:none;">නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම
+                (27
+                වගන්තිය) <br>
+                தந்தை பற்றிய தகவல் <br>
+                Insertion or Alteration of the Name (Section 27)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">මෙම වගන්තිය යටතේ මව්පියන් හෝ භාරකරු හට අවුරුදු 21 කට අඩු
+                දරුවකුගේ නම වෙනස් කිරීමට ඉල්ලීම් කල හැක. අවු
+                රුදු 21 කට වැඩි පුද්ගලයෙකුගේ නම වෙනස් කිරීමට ඔහු විසින් ඉල්ලුම් පත්‍රයක් ඉදිරිපත් කල හැක. <br>
+                தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை
+                பற்றிய தகவல் தந்தை பற்றிய தகவல் <br>
+                Under this section the name change of a child under 21 years could be requested by his parents or the
+                guardian. A person over 21 years in age could request for a name change on his own.
+            </td>
+        </tr>
+        <tr>
+            <td>නම රාජ්‍ය භාෂාවෙන්
+                (සිංහල / දෙමළ) <br>
+                பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
+                Name in any of the official languages (Sinhala / Tamil)
+            </td>
+            <td><s:textarea/></td>
+        </tr>
+        <tr>
+            <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>
+                பிறப்பு அத்தாட்சி ….. <br>
+                Name in English
+            </td>
+            <td><s:textarea/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="2">
 
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -264,21 +292,7 @@
                 பிறந்த திகதி <br>
                 Date of Birth
             </td>
-            <td>වර්ෂය<br>
-                வருடம்<br>
-                Year
-            </td>
-            <td></td>
-            <td>මාසය<br>
-                மாதம்<br>
-                Month
-            </td>
-            <td></td>
-            <td>දිනය<br>
-                கிழமை<br>
-                Day
-            </td>
-            <td></td>
+            <td colspan="5"><s:textfield cssStyle="width:150px;"/></td>
         </tr>
         <tr>
             <td rowspan="5">උපන් ස්ථානය<br>
@@ -329,7 +343,9 @@
                 பால் <br>
                 Gender of the child
             </td>
-            <td colspan="6"></td>
+            <td colspan="6"><s:select
+                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                    name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
         </tr>
         </tbody>
     </table>
@@ -365,7 +381,7 @@
                 இலக்கம்<br>PIN / NIC Number
             </td>
             <td colspan="2" rowspan="2" class="find-person">
-                <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" />
+                <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" cssStyle="width:80%;"/>
                 <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
             </td>
             <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
@@ -376,7 +392,7 @@
         </tr>
         <tr>
             <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
-            <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo" /></td>
+            <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo"/></td>
         </tr>
         <tr>
             <td>උපන් දිනය<br>
@@ -393,7 +409,9 @@
                 இனம்<br>
                 Race
             </td>
-            <td colspan="2"></td>
+            <td colspan="2"><s:select list="raceList" name="fatherRace" headerKey="0"
+                                      headerValue="%{getText('select_race.label')}"
+                                      cssStyle="width:80%;"/></td>
         </tr>
         <tr>
             <td>උපන් ස්ථානය<br>
@@ -443,14 +461,37 @@
                 தகவல் வழங்குபவா் <br>
                 Person Giving Information
             </td>
-            <td>මව <br>மாதா<br>
-                Mother
+            <td>
+                <table style="border:none;width:100%">
+                    <tr>
+                        <td style="width:75%;border:none">මව <br>மாதா<br>
+                            Mother
+                        </td>
+                        <td style="width:25%;border:none;">
+                            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                     cssStyle="float:right;"/></td>
+                </table>
             </td>
-            <td>පියා<br> பிதா<br>
-                Father
+            <td>
+                <table style="border:none;width:100%">
+                    <tr>
+                        <td style="width:75%;border:none"> පියා<br> பிதா<br> Father
+                        </td>
+                        <td style="width:25%;border:none;">
+                            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                     cssStyle="float:right;"/></td>
+                </table>
+
             </td>
-            <td>භාරකරු<br> பாதுகாவலர் <br>
-                Guardian
+            <td>
+                <table style="border:none;width:100%">
+                    <tr>
+                        <td style="width:75%;border:none"> භාරකරු<br> பாதுகாவலர் <br> Guardian
+                        </td>
+                        <td style="width:25%;border:none;">
+                            <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                     cssStyle="float:right;"/></td>
+                </table>
             </td>
         </tr>
         <tr>
@@ -477,8 +518,8 @@
         </tbody>
     </table>
 </div>
-</s:if>
-<s:if test="pageNo == 3 || pageNo == 0">
+</div>
+<div id="3">
 <table class="birth-alteration-table-style01" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="text-align:center;font-size:12pt"> උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)<br>
@@ -522,14 +563,15 @@
                 நாடு<br>
                 Country
             </td>
-            <td></td>
+            <td><s:select name="motherCountry" list="countryList" headerKey="0"
+                          headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
             <td>ගමන් බලපත්‍ර අංකය<br>
                 கடவுச் சீட்டு<br>
                 Passport No.
             </td>
-            <td></td>
+            <td><s:textfield/></td>
         </tr>
         <tr>
             <td>සම්පුර්ණ නම<br>
@@ -555,7 +597,7 @@
                 பிறந்த இடம்<br>
                 Place of Birth
             </td>
-            <td colspan="4"></td>
+            <td colspan="4"><s:textfield/></td>
         </tr>
         </tbody>
     </table>
@@ -708,8 +750,149 @@
         </tbody>
     </table>
 </div>
+</div>
+<s:if test="!(pageNo==1)">
+    <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
+        <tr>
+            <td colspan="8" style="text-align:center;font-size:12pt">
+                දෝෂය හා එය සිදුවූ අන්දම පිලිබඳ ලුහුඬු විස්තර<br>
+                தாத்தாவின் / பாட்டனின் விபரங்கள்<br>
+                Nature of the error and a brief explanation of how the error occurred
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <s:textarea cssStyle="height:150px;"/>
+            </td>
+        </tr>
+    </table>
 </s:if>
+
+
+<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
+    <caption></caption>
+    <col style="width:250px;"/>
+    <col style="width:190px;"/>
+    <col style="width:190px;"/>
+    <col style="width:190px;"/>
+    <col style="width:190px;"/>
+    <tbody>
+    <tr>
+        <td colspan="5" style="text-align:center;font-size:12pt">ප්‍රකාශය කරන්නාගේ විස්තර<br>
+            அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>
+            Details of the Declarant
+        </td>
+    </tr>
+    <tr>
+        <td>ප්‍රකාශය කරන්නේ කවුරුන් විසින් ද?<br>
+            தகவல் வழங்குபவா் <br>
+            Person Giving declaration
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none">මව <br>மாதா<br>
+                        Mother
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                 cssStyle="float:right;"/></td>
+            </table>
+        </td>
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none"> පියා<br> பிதா<br> Father
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                 cssStyle="float:right;"/></td>
+            </table>
+
+        </td>
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none"> භාරකරු<br> பாதுகாவலர் <br> Guardian
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                 cssStyle="float:right;"/></td>
+            </table>
+        </td>
+        <td>
+            <table style="border:none;width:100%">
+                <tr>
+                    <td style="width:75%;border:none"> තමුන්<br> மாதா<br> Self
+                    </td>
+                    <td style="width:25%;border:none;">
+                        <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                                 cssStyle="float:right;"/></td>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">ප්‍රකාශය දෙන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>
+            தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள அட்டை இல. <br>
+            PIN / NIC of the declarant
+        </td>
+        <td colspan="2"><s:textfield/>
+        </td>
+    </tr>
+    <tr>
+        <td>නම<br>
+            கொடுப்பவரின் பெயர்<br>
+            Name<br></td>
+        <td colspan="4"><s:textarea/></td>
+    </tr>
+    <tr>
+        <td>තැපැල් ලිපිනය<br>
+            தபால் முகவரி<br>
+            Postal Address
+        </td>
+        <td colspan="4"><s:textarea/></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
+    <caption></caption>
+    <col width="330px;"/>
+    <col width="330px;"/>
+    <col width="330px;"/>
+    <tbody>
+    <tr>
+        <td colspan="3" style="text-align:center;font-size:12pt;border-bottom:none;">ආඥාව <br>
+            அதிகாரியிடம் தெரிவித்தல்<br>
+            Order
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            මෙම ප්‍රකාශ පත්‍රයේ සඳහන් වන උප්පැන්නය ලියාපදිංචි සටහන වෙනස් කිරීමට මෙයින් බලය දෙනු / නොදෙනු ලැබේ
+            * in Tamil * මෙම ප්‍රකාශ පත්‍රයේ සඳහන් වන උප්පැන්නය ලියාපදිංචි සටහන වෙනස් කිරීමට මෙයින් බලය දෙනු / නොදෙනු
+            ලැබේ
+            I hereby order* / refuse* to update the register of the birth of which particulars are given in the
+            declaration
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
+            தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
+            PIN / NIC of the Authority
+        </td>
+        <td><s:textfield/></td>
+    </tr>
+    <tr>
+        <td>ආඥාව කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
+            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
+            Name, Signature and Designation of officer making the order
+        </td>
+        <td colspan="2"><s:textarea/></td>
+    </tr>
+    </tbody>
+</table>
 </div>
 <div class="form-submit">
     <s:submit value="%{getText('submit.label')}"/>
-</div>
+</div>    
