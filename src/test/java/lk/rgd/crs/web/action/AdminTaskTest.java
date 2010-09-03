@@ -38,7 +38,6 @@ public class AdminTaskTest extends CustomStrutsTestCase {
     private final static DSDivisionDAO dsDivisionDAO = (DSDivisionDAO) ctx.getBean("dsDivisionDAOImpl", DSDivisionDAO.class);
     private final static DistrictDAO districtDAO =(DistrictDAO) ctx.getBean("districtDAOImpl",DistrictDAO.class);
     private final static MRDivisionDAO mrDivisionDAO =(MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
-    //private final static User userDAO =(User) ctx.getBean("mrDivisionDAOImpl",MRDivisionDAO.class);
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(SampleTest.class)) {
