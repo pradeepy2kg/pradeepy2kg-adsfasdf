@@ -85,6 +85,7 @@ public class Menu {
         deoBirthLink.put("eprDirectPrintBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprDirectPrintBirthConfirmation.do", Permission.EDIT_BDF));
         deoBirthLink.put("eprMarkCertificateAsPrinted.do", new Link(null, "/ecivil/births/", "eprMarkCertificateAsPrinted.do", Permission.PRINT_BDF));
         adrBirthLink.put("eprViewBDFInNonEditableMode.do", new Link(null, "/ecivil/births/", "eprViewBDFInNonEditableMode.do", Permission.EDIT_BDF));
+        adrBirthLink.put("eprLoadBirthAlteration.do", new Link(null, "/ecivil/births/", "eprLoadBirthAlteration.do", Permission.EDIT_BDF));
 
         deoBirthLink.put("eprBirthConfirmation.do", new Link(null, "/ecivil/births/", "eprBirthConfirmation.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprDirectPrintBirthCertificate.do", new Link(null, "/ecivil/births/", "eprDirectPrintBirthCertificate.do", Permission.PRINT_BDF));

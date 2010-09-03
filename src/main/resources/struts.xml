@@ -422,6 +422,10 @@
                 method="initBirthAlteration">
             <result type="tiles" name="success">epr.birthAlteration</result>
         </action>
+        <action name="eprLoadBirthAlteration" class="lk.rgd.crs.web.action.births.BirthRegisterAction"
+                method="loadBirthAlteration">
+            <result type="tiles" name="success">epr.birthAlteration</result>
+        </action>
 
         <!--Birth Certificate Search-->
         <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
