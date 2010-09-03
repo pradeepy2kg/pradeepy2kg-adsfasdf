@@ -272,6 +272,11 @@
         <put-attribute name="title" value="registrars.managment.title"/>
     </definition>
 
+       <definition name="epr.registrarsView" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/ViewRegistrars.jsp"/>
+        <put-attribute name="title" value="registrars.veiw.title"/>
+    </definition>
+
     <!--  User Preferences Tiles -->
     <definition name="epr.UserPreferences" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/preferences/UserPreferences.jsp"/>

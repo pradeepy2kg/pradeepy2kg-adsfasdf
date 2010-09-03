@@ -11,6 +11,8 @@ import java.util.Date;
  *
  * @author asankha
  */
+@Entity
+@Table(name = "ASSIGNMENT", schema = "CRS")
 public class Assignment implements Serializable {
 
     /**

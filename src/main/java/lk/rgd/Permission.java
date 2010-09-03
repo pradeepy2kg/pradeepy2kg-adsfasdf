@@ -17,7 +17,7 @@ public final class Permission {
     public static final int PRINT_DEATH_CERTIFICATE = 12;
     public static final int REGISTRAR_MANAGEMENT = 13;
     public static final int SERVICE_MASTER_DATA_MANAGEMENT = 14;
-    public static final int USER_PREFERENCES = 15;                      
+    public static final int USER_PREFERENCES = 15;
     public static final int SEARCH_PRS = 16;
     public static final int SEARCH_BDF = 17;
     public static final int EDIT_BDF_CONFIRMATION = 18;
