@@ -28,6 +28,7 @@ import java.util.Date;
 })
 
 public class AdoptionOrder implements Serializable {
+
     public enum State {
         DATA_ENTRY, // 0 - A newly entered Adoption - can be edited by DEO, ADR
 
@@ -105,6 +106,9 @@ public class AdoptionOrder implements Serializable {
     private String wifePassport;
 
     @Column(nullable = true)
+    private String childPIN;
+
+    @Column(nullable = true)
     private String childExistingName; // this can not be null if given name is also null
 
     @Column(nullable = true)
@@ -148,7 +152,7 @@ public class AdoptionOrder implements Serializable {
     private String certificateApplicantPINorNIC;
 
     @Column(columnDefinition = "char(2) default 'si'", nullable = false)
-    private String languageToTransliterate="si";
+    private String languageToTransliterate = "si";
 
     @Column(nullable = false)
     private State status;
@@ -415,5 +419,13 @@ public class AdoptionOrder implements Serializable {
 
     public void setLifeCycleInfo(CRSLifeCycleInfo lifeCycleInfo) {
         this.lifeCycleInfo = lifeCycleInfo;
+    }
+
+    public String getChildPIN() {
+        return childPIN;
+    }
+
+    public void setChildPIN(String childPIN) {
+        this.childPIN = childPIN;
     }
 }
