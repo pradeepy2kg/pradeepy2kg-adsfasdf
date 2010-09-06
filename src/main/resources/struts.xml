@@ -743,6 +743,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprRegistrarsAdd" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="registrarsAdd">
+            <result type="tiles" name="success">epr.addRegistrar</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
 
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initUser">

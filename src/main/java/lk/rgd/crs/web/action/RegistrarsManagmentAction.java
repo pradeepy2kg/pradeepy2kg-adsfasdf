@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.CountryDAO;
@@ -40,11 +41,15 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private Map<Integer, String> dsDivisionList;
 
     private List<Registrar> registrarList;
+    private List<Assignment> assignmentList;
+
 
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final RegistrarManagementService service;
+
+    private Registrar registrar;
 
     private Assignment.Type type;
     private boolean state;
@@ -53,6 +58,8 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private int dsDivisionId;
     private int districtId;
     private int assignmentType;
+
+    private long registrarUkey;
 
     /*support variable*/
     private boolean onloadPage;
@@ -76,21 +83,32 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String registrarsVeiwInit() {
         logger.info("register veiw init called ");
+        //todo remove this
+        this.districtId = 1;
+        this.dsDivisionId = 1;
+        populateLists(districtId, dsDivisionId);
+/*        Registrar registrar = service.getRegistrarById(registrarUkey);
+        assignmentList = service.getAssignments(registrar, user);*/
         return SUCCESS;
     }
 
     public String filter() {
         logger.info("filter called");
-        //todo this service method not yet implemented
-        //registrarList = service.getRegistrarsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), type, state, user);
+        //todo this service method not yet implemented  and find assignment also
+        //    registrarList = service.getRegistrarsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), type, state, user);
         populateLists(districtId, dsDivisionId);
         return SUCCESS;
     }
 
+    public String registrarsAdd() {
+        logger.info("adding a new registrar");
+        return SUCCESS;
+    }
+
     private void populateLists(int distirictId, int dsDivisionId) {
-        String language = "en";//((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         districtList = districtDAO.getAllDistrictNames(language, user);
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(1, language, user);
+        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(distirictId, language, user);
     }
 
     public void setSession(Map map) {
@@ -215,5 +233,37 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setOnloadPage(boolean onloadPage) {
         this.onloadPage = onloadPage;
+    }
+
+    public List<Registrar> getRegistrarList() {
+        return registrarList;
+    }
+
+    public void setRegistrarList(List<Registrar> registrarList) {
+        this.registrarList = registrarList;
+    }
+
+    public List<Assignment> getAssignmentList() {
+        return assignmentList;
+    }
+
+    public void setAssignmentList(List<Assignment> assignmentList) {
+        this.assignmentList = assignmentList;
+    }
+
+    public Registrar getRegistrar() {
+        return registrar;
+    }
+
+    public void setRegistrar(Registrar registrar) {
+        this.registrar = registrar;
+    }
+
+    public long getRegistrarUkey() {
+        return registrarUkey;
+    }
+
+    public void setRegistrarUkey(long registrarUkey) {
+        this.registrarUkey = registrarUkey;
     }
 }

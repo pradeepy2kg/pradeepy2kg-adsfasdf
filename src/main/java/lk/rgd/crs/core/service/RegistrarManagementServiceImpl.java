@@ -22,9 +22,9 @@ import java.util.List;
 
 /**
  * Manage Registrars and Registration Assignments
- * 
+ *
  * @author asankha
- * TODO Work still in progress by Asankha
+ *         TODO Work still in progress by Asankha
  */
 public class RegistrarManagementServiceImpl implements RegistrarManagementService {
 
@@ -35,7 +35,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private PopulationRegistry ecivil;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-        PopulationRegistry ecivil) {
+                                          PopulationRegistry ecivil) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
@@ -49,7 +49,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         final String shortName = registrar.getShortName();
@@ -67,7 +67,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         final String shortName = registrar.getShortName();
@@ -85,11 +85,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to add new Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+                assignment.getRegistrar().getShortName());
 
         assignmentDao.addAssignment(assignment, user);
     }
@@ -102,11 +102,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to update Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+                assignment.getRegistrar().getShortName());
 
         assignmentDao.updateAssignment(assignment, user);
     }
@@ -119,11 +119,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to inactivate Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+                assignment.getRegistrar().getShortName());
 
         assignment.getLifeCycleInfo().setActive(false);
         assignmentDao.updateAssignment(assignment, user);
@@ -137,7 +137,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to inactivate Registrar : {}", registrar.getShortName());
@@ -154,7 +154,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to get assignments of Registrar: {}", registrar.getShortName());
@@ -166,15 +166,24 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    public Registrar getRegistrarById(long idUKey) {
+        logger.info("requesting registrar id : {}", idUKey);
+        return registrarDao.getById(idUKey);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<Registrar> getRegistrarsByDSDivision(DSDivision dsDivision, Assignment.Type type, boolean active, User user) {
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
-        logger.debug("Request to get type : " + type.ordinal() + (active ? " ":" in-" ) +
-            "active Registrars of DS Division : {}", dsDivision.getDsDivisionUKey());
+        logger.debug("Request to get type : " + type.ordinal() + (active ? " " : " in-") +
+                "active Registrars of DS Division : {}", dsDivision.getDsDivisionUKey());
 
         return registrarDao.getRegistrarsByTypeAndDSDivision(dsDivision, type, active);
     }
