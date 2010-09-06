@@ -67,6 +67,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(PINNumber.class);
 
         entityClasses.add(DeathRegister.class);
+
+        entityClasses.add(BirthAlteration.class);
     }
 
     public void setDataSource(DataSource dataSource) {
