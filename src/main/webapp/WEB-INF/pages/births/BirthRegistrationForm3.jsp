@@ -87,11 +87,11 @@ function validate() {
 
     validateInformant();
 
-//    var check = document.getElementById('skipjs');
-//    if (!check.checked) {
-//        validateBirthYearWithNIC('grandFatherNICorPIN','grandFatherBirthYear','error9') ;
-//        validateBirthYearWithNIC('greatGrandFatherNICorPIN','greatGrandFatherBirthYear','error10') ;
-//    }
+    var check = document.getElementById('skipjs');
+    if (!check.checked) {
+        validateBirthYearWithNIC('grandFatherNICorPIN','grandFatherBirthYear','p3error18') ;
+        validateBirthYearWithNIC('greatGrandFatherNICorPIN','greatGrandFatherBirthYear','p3error19') ;
+   }
 
     if (errormsg != "") {
         alert(errormsg);
@@ -395,7 +395,7 @@ function initPage() {
             </td>
             <td><s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/></td>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:label value="*YYYY" /><br><s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/></td>
+            <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
         </tr>
@@ -420,7 +420,7 @@ function initPage() {
             <td><s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/></td>
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:label value="*YYYY" /><br><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
+            <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
                              cssStyle="width:95%;"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:95%;"/></td>
@@ -599,8 +599,8 @@ function initPage() {
 <s:hidden id="p3error6" value="%{getText('p3.Marriage.place.value')}"/>
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
-<s:hidden id="p3error9" value="%{getText('p3.GrandFather.birthYear.mismatch')}"/>
-<s:hidden id="p3error10" value="%{getText('p3.GreatGrandFather.birthYear.mismatch')}"/>
+<s:hidden id="p3error18" value="%{getText('p3.GrandFather.birthYear.mismatch')}"/>
+<s:hidden id="p3error19" value="%{getText('p3.GreatGrandFather.birthYear.mismatch')}"/>
 
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
