@@ -152,7 +152,7 @@
         // validate serial number
         domObject = document.getElementById('bdfSerialNoId');
         if (!isFieldEmpty(domObject))
-            isNumeric(domObject.value, 'error1', 'error2');
+            validateSerialNo(domObject,'error1', 'error2');
 
         // validate start and end date
         domObject = document.getElementById('searchStartDatePicker');
@@ -308,10 +308,11 @@
                         <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
                         <s:param name="recordCounter" value="#request.recordCounter"/>
                     </s:url>
-                    <td align="center"><s:a href="%{approveSelected}"
-                                            title="%{getText('approveTooltip.label')}">
-                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                             border="none"/></s:a>
+                    <td align="center">
+                        <s:if test="register.birthType.ordinal() != 3">
+                        <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
+                        </s:if>
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">
@@ -326,10 +327,12 @@
                         <s:param name="recordCounter" value="#request.recordCounter"/>
                         <s:param name="reject" value="true"/>
                     </s:url>
-                    <td align="center"><s:a href="%{rejectSelected}"
-                                            title="%{getText('rejectTooltip.label')}"><img
-                            src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                            border="none"/></s:a>
+                    <td align="center">
+                        <s:if test="register.birthType.ordinal() != 3">
+                        <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
+                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
+                        </s:a>
+                        </s:if>
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">
@@ -360,10 +363,11 @@
 
         <div class="form-submit">
             <s:if test="#request.counter>1">
-                <s:label><s:checkbox
-                        name="allCheck"
+                <s:label><s:checkbox name="allCheck"
                         onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
                     <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                    <s:label><span><s:label name="print_selected" value="%{getText('selected_all.label')}"/></span></s:label>
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
@@ -371,7 +375,7 @@
                 <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                 <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                 <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
+                <s:submit name="approveSelected" value="%{getText('approve.label')}"/>
             </s:if>
         </div>
         <div class="next-previous">

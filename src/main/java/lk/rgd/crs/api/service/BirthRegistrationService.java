@@ -19,9 +19,9 @@ public interface BirthRegistrationService {
      * are entered using this same method, and will ask for the case file number and additional comments - which should
      * specify the additional documents submitted to assist in the registration
      *
-     * @param bdf                        the BDF to be added
-     * @param ignoreWarnings             an explicit switch to disable optional validations
-     * @param user                       the user initiating the action
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
      * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
      *         Warnings maybe if a mother specified is known to be dead etc
      */
@@ -37,6 +37,17 @@ public interface BirthRegistrationService {
      *         Warnings maybe if a mother specified is known to be dead etc
      */
     public List<UserWarning> addStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Add a bBelated Birth declaration to the system.
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     * @return a list of warnings if applicable for the record - unless the ignoreWarnings option is selected
+     */
+    public List<UserWarning> addBelatedBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
 
     /**
      * Add a Adoption Birth declaration to the system.
@@ -66,6 +77,15 @@ public interface BirthRegistrationService {
      * @param user           the user initiating the action
      */
     public void editStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
+     * Update an existing BDF for a Belated birth by a ADR <b>before</b> approval
+     *
+     * @param bdf            the BDF to be updated
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     */
+    public void editBelatedBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
      * Update an existing BDF for a adoption birth by a ADR <b>before</b> approval
@@ -117,7 +137,7 @@ public interface BirthRegistrationService {
      * Approve a single BDF for a Live birth by an ADR or higher authority
      *
      * @param idUKey
-     *@param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
      * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
      */
     public List<UserWarning> approveLiveBirthDeclaration(long idUKey, boolean ignoreWarnings, User user);
@@ -126,7 +146,7 @@ public interface BirthRegistrationService {
      * Approve a single BDF for a Still birth by an ADR or higher authority
      *
      * @param idUkey
-     *@param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
      * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
      */
     public List<UserWarning> approveStillBirthDeclaration(long idUkey, boolean ignoreWarnings, User user);
@@ -135,7 +155,7 @@ public interface BirthRegistrationService {
      * Approve a single BDF for a child adoption by an ADR or higher authority
      *
      * @param idUKey
-     *@param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
      * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
      */
     public List<UserWarning> approveAdoptionBirthDeclaration(long idUKey, boolean ignoreWarnings, User user);
@@ -325,7 +345,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -341,7 +361,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -403,7 +423,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -431,7 +451,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Get the list of BDFs for which the Confirmation form should be printed

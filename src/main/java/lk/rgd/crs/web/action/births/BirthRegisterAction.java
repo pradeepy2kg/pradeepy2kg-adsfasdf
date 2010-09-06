@@ -184,26 +184,25 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf.setMarriage(marriage);
                 bdf.setGrandFather(grandFather);
                 bdf.setInformant(informant);
-                logger.debug("comment of the late registration is  :{}", bdf.getRegister().getComments());
-                if (BirthDeclaration.BirthType.ADOPTION != birthType) {
+                if (BirthDeclaration.BirthType.STILL != birthType && BirthDeclaration.BirthType.ADOPTION != birthType) {
                     bdfLateOrBelated = checkDateLateOrBelated(bdf);
                 }
                 break;
             case 4:
                 birthType = bdf.getRegister().getBirthType();
                 bdf.setNotifyingAuthority(notifyingAuthority);
-                if (BirthDeclaration.BirthType.ADOPTION != birthType) {
+
+                if (BirthDeclaration.BirthType.STILL != birthType && BirthDeclaration.BirthType.ADOPTION != birthType) {
                     bdfLateOrBelated = checkDateLateOrBelated(bdf);
-                    if (bdfLateOrBelated == 1) {
+                    if (bdfLateOrBelated == 1 || bdfLateOrBelated == 2) {
                         bdf.getRegister().setComments(register.getComments());
                         bdf.getRegister().setCaseFileNumber(register.getCaseFileNumber());
                     }
+                    if (bdfLateOrBelated == 2) {
+                        birthType = BirthDeclaration.BirthType.BELATED;
+                        bdf.getRegister().setBirthType(birthType);
+                    }
                 }
-                /*register = bdf.getRegister();
-                register.setCaseFileNumber(caseFileNumber);
-                register.setComments(newComment);
-                bdf.setRegister(register);*/
-                //logger.debug("caseFileNum: {}, newComment: {}", caseFileNumber, newComment);
 
                 // all pages captured, proceed to persist after validations
                 // todo data validations, exception handling and error reporting
@@ -216,6 +215,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.addStillBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
                         service.addAdoptionBirthDeclaration(bdf, true, user);
+                    } else if (birthType == BirthDeclaration.BirthType.BELATED) {
+                        service.addBelatedBirthDeclaration(bdf, true, user);
                     }
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                     addActionMessage(getText("saveSuccess.label"));
@@ -226,12 +227,18 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                         service.editStillBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
                         service.editAdoptionBirthDeclaration(bdf, true, user);
+                    } else if (birthType == BirthDeclaration.BirthType.BELATED) {
+                        service.editBelatedBirthDeclaration(bdf, true, user);
                     }
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
                 // used to check user have aproval authority and passed to BirthRegistationFormDetails jsp
-                allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+                if (BirthDeclaration.BirthType.BELATED != birthType) {
+                    allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF);
+                } else {
+                    allowApproveBDF = user.isAuthorized(Permission.APPROVE_BDF_BELATED);
+                }
         }
         if (!addNewMode && (pageNo != 4)) {
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
