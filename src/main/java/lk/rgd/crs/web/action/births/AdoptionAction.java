@@ -17,7 +17,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.Permission;
@@ -40,6 +42,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
     private final AppParametersDAO appParametersDAO;
+    private final BirthRegistrationService birthRegistrationService;
 
     private int birthDistrictId;
     private int birthDivisionId;
@@ -83,13 +86,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private boolean printed;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
+                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO, BirthRegistrationService birthRegistrationService) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.countryDAO = countryDAO;
         this.appParametersDAO = appParametersDAO;
+        this.birthRegistrationService = birthRegistrationService;
     }
 
     public String initAdoptionRegistrationOrCancelPrintAdoptionNotice() {
@@ -99,13 +103,34 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String addOrEditAdoption() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
+        long birthCertificateNo = 0;
         if (idUKey > 0) {
             AdoptionOrder existingOrder = service.getById(idUKey, user);
             adoption.setIdUKey(idUKey);
             adoption.setLifeCycleInfo(existingOrder.getLifeCycleInfo());
-            service.updateAdoptionOrder(adoption, user);
+            birthCertificateNo = adoption.getBirthCertificateNumber();
+            if (birthCertificateNo > 0) {
+                logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
+                BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
+                if (bdf == null) {
+                    addActionError(getText("er.invalid.birth.certificate.number"));
+                    populate();
+                    return "invalidBirthCertificateNumber";
+                }
+                service.updateAdoptionOrder(adoption, user);
+            }
         } else {
             adoption.setBirthDivisionId(birthDivisionId);
+            birthCertificateNo = adoption.getBirthCertificateNumber();
+            if (birthCertificateNo > 0) {
+                logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
+                BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
+                if (bdf == null) {
+                    addActionError(getText("er.invalid.birth.certificate.number"));
+                    populate();
+                    return "invalidBirthCertificateNumber";
+                }
+            }
             service.addAdoptionOrder(adoption, user);
             logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
             setIdUKey(adoption.getIdUKey());
@@ -260,6 +285,17 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
+            if (bdf != null) {
+                String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+                birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
+                birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();
+                dsDivisionId = bdf.getRegister().getDsDivision().getDsDivisionUKey();
+                birthDistrictName = districtDAO.getNameByPK(birthDistrictId, language);
+                birthDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
+                dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
+            }
+
             return SUCCESS;
         }
     }

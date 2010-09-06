@@ -259,6 +259,7 @@ function enableSerialNumber(mode) {
 }
 </script>
 <div id="adoption-registration-form-outer">
+<s:actionerror/>
 <s:form action="eprAdoptionAction.do" name="adoptionRegistrationForm" id="" method="POST"
         onsubmit="javascript:return validate()">
 <table class="adoption-reg-form-header-table" cellspacing="1" cellpadding="1">
