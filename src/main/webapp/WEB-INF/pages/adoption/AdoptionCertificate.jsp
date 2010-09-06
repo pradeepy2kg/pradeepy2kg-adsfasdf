@@ -129,18 +129,9 @@
             தந்தையின் அடையாள எண் <br>
             Father's PIN / NIC
         </td>
-        <td colspan="2" width="250px">
+        <td colspan="5" width="250px">
             <s:if test="#request.adoption.applicantMother==0">
                 <s:label name="" value="%{adoption.applicantPINorNIC}"/>
-            </s:if></td>
-
-        <td height="70px" width="300px">පියාගේ ජාතිය <br>
-            தந்தையின் இனம் <br>
-            Father's Race
-        </td>
-        <td colspan="2">
-            <s:if test="#request.adoption.applicantMother==0">
-                <s:label name="" value="%{adotion.}"/>
             </s:if></td>
     </tr>
     <tr>
@@ -162,24 +153,12 @@
             தந்தையின் அடையாள எண் <br>
             Mother's PIN / NIC
         </td>
-        <td colspan="2">
+        <td colspan="5">
             <s:if test="#request.adoption.applicantMother==1">
                 <s:label name="" value="%{adoption.applicantPINorNIC}"/>
             </s:if>
             <s:else>
                 <s:label name="" value="%{adoption.wifePINorNIC}"/>
-            </s:else>
-            </td>
-        <td height="70px">ම‌වගේ ජාතිය <br>
-            தந்தையின் இனம் <br>
-            Mother's Race
-        </td>
-        <td colspan="2" width="300px">
-            <s:if test="#request.adoption.applicantMother==1">
-                <s:label name="" value="%{adotion.}"/>
-            </s:if>
-            <s:else>
-                <s:label name="" value="%{adotion.}"/>
             </s:else>
             </td>
     </tr>
