@@ -345,7 +345,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -361,7 +361,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -423,7 +423,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -451,7 +451,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Get the list of BDFs for which the Confirmation form should be printed
@@ -485,5 +485,15 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision, User user);
+
+    /**
+     * Returns the Birth Declaration object for a given Id for Adoption registration
+     * purposes here it doesn't consider the user's allowed district or division
+     *
+     * @param bdId Birth Declarion Id for the given declaration
+     * @param user the user making the request
+     * @return the BDF if found, and the user has access to the record
+     */
+    public BirthDeclaration getByIdForAdoptionLookup(long bdId, User user);
 }
 

@@ -1563,4 +1563,13 @@ public class BirthRegistrationServiceImpl implements
         validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivision(dsDivision);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public BirthDeclaration getByIdForAdoptionLookup(long bdId, User user) {
+        //todo if need validations has to be done
+        logger.debug("getting BirthDeclaration for the idUKey : {}",bdId);
+        return birthDeclarationDAO.getById(bdId);
+    }
 }
