@@ -272,9 +272,13 @@ function dateRange() {
         }
     }
 }
+function initSerialNumber(){
+    document.getElementById('bdfSerialNo').value= new Date().getFullYear()+"0";
+}
 
 function initPage() {
     dateRange();
+    initSerialNumber();
 }
 </script>
 
