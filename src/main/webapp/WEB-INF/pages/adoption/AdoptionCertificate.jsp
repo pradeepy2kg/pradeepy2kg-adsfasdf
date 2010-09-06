@@ -207,6 +207,40 @@
 </tr>
 </tbody>
 </table>
+<table style="font-size:12pt;text-align:center;width:100%">
+    <tr></tr>
+    <tr>
+        <td>දැනට උප්පැන්න සහතිකයක් ඇත්නම් එහි විස්තර <br/>
+            Birth Certificate information (if available)
+        </td>
+    </tr>
+</table>
+
+<table class="adoption-certificate-existing-certificate-info" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+        <td width="25%">දිස්ත්‍රික්ක <br/>
+            மாவட்டம்  <br/>
+             District
+            </td>
+        <td width="25%"><%--<s:label name="" value="%{adoption.}"/>--%></td>
+        <td width="25%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+            பிரிவு <br/>
+            Divisional Secretariat
+            </td>
+        <td width="25%"><%--<s:label name="" value="%{adoption.}"/>--%></td>
+    </tr>
+    <tr>
+        <td width="25%">ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
+            பிரிவு <br/>
+            Registration Division
+            </td>
+        <td width="25%"><%--<s:label name="" value="%{adoption.}"/>--%></td>
+        <td>දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය<br/>
+            ** in Tamil **<br/>
+            The serial number of the existing Birth Certificate </td>
+        <td width="25%"><%--<s:label name="" value="%{adoption.}"/>--%></td>
+    </tr>
+</table>
 
 <table style="width:100%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
     <tr>

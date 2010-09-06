@@ -1666,11 +1666,11 @@
 
 #death-declaration-form-2-outer table tr td{padding:2px 5px;}
 #death-declaration-form-2-outer table tr td textarea{width:98%;}
-#add-inactive-divisions-outer {width:1030px;}
-.add-inactive-divisions-outer-table{width: 95%; border-top:1px solid #000;border-left:1px solid #000;}
-.add-inactive-divisions-outer-table td {border-right:1px solid #000;border-bottom:1px solid #000;}
-.add-inactive-divisions-outer-table select{width:80%;margin:5px;}
-.add-inactive-divisions-outer-table input{width:80%;margin:5px;margin-left:10px}
+#add-inactive-divisions-outer,#adoption-certificate-existing-certificate-info {width:1030px;}
+.add-inactive-divisions-outer-table,.adoption-certificate-existing-certificate-info{width: 95%; border-top:1px solid #000;border-left:1px solid #000;}
+.add-inactive-divisions-outer-table,.adoption-certificate-existing-certificate-info td {border-right:1px solid #000;border-bottom:1px solid #000;}
+.add-inactive-divisions-outer-table,.adoption-certificate-existing-certificate-info select{width:80%;margin:5px;}
+.add-inactive-divisions-outer-table,.adoption-certificate-existing-certificate-info input{width:80%;margin:5px;margin-left:10px}
 
 #birth-alteration-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
 .birth-alteration-table-style01{border:none;}
