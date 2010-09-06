@@ -188,6 +188,16 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         return registrarDao.getRegistrarsByTypeAndDSDivision(dsDivision, type, active);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Registrar> getRegistrarByPin(long pin, User user) {
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
+            handleException("User : " + user.getUserId() +
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+        logger.debug("requeting List of registrars by pin number : {} ", pin);
+        return registrarDao.getRegistrarByPin(pin);
+    }
+
     private static final boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }

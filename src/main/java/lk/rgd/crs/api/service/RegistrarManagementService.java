@@ -86,5 +86,20 @@ public interface RegistrarManagementService {
      */
     public List<Registrar> getRegistrarsByDSDivision(DSDivision dsDivision, Assignment.Type type, boolean active, User user);
 
+    /**
+     * get registrar by idUKey
+     *
+     * @param idUKey
+     * @return registrar
+     */
     public Registrar getRegistrarById(long idUKey);
+
+    /**
+     * retrun registrars by given pin number
+     *
+     * @param pin  registrars unique pin number
+     * @param user user who is requesting registrars
+     * @return list of registrars
+     */
+    public List<Registrar> getRegistrarByPin(long pin, User user);
 }

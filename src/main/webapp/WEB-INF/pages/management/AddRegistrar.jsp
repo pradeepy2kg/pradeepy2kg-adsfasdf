@@ -11,11 +11,22 @@
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
+<script type="text/javascript">
 
+    $(function() {
+        $("#dateOfBirthDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+</script>
 <style type="text/css">
- .add-registrar-body{
-     background:#ffffff;
- }
+    .add-registrar-body {
+        background: #ffffff;
+    }
 
 </style>
 
@@ -93,5 +104,6 @@
         </tr>
         </tbody>
     </table>
+    <s:hidden name="page" value="1"/>
     </s:form>
 </div>

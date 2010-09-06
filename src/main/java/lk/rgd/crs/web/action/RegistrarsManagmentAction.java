@@ -58,6 +58,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private int dsDivisionId;
     private int districtId;
     private int assignmentType;
+    private int page;
 
     private long registrarUkey;
 
@@ -101,7 +102,19 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String registrarsAdd() {
-        logger.info("adding a new registrar");
+        logger.info("attemp to add new registrar");
+        //todo add action errors here
+        if (page > 0) {
+            //check is there a registrar for that pin already exsists
+            List<Registrar> exsistingregistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
+            if (exsistingregistrarsList.size() > 1) { //there is a lready one before
+                addActionError(getText("error.registrar.already.exsists"));
+            } else {
+                service.addRegistrar(registrar, user);
+                registrar = null;
+            }
+            //otherwise it still in requestscope so data in that object populate in new registrar add  
+        }
         return SUCCESS;
     }
 
@@ -265,5 +278,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setRegistrarUkey(long registrarUkey) {
         this.registrarUkey = registrarUkey;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

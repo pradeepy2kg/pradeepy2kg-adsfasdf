@@ -14,6 +14,9 @@ import java.util.Set;
  *
  * @author asankha
  */
+@NamedQueries({
+        @NamedQuery(name = "get.registrars.by.pin", query = "SELECT registrar FROM Registrar registrar WHERE registrar.pin = :pin ")
+})
 @Entity
 @Table(name = "REGISTRAR", schema = "CRS")
 public class Registrar implements Serializable {
@@ -24,7 +27,7 @@ public class Registrar implements Serializable {
 
     @Embedded
     private BaseLifeCycleInfo lifeCycleInfo = new BaseLifeCycleInfo();
-    
+
     /**
      * The unique Personal Identification Number
      */
