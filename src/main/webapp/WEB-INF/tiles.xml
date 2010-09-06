@@ -138,6 +138,11 @@
         <put-attribute name="title" value="BirthRegisterApproval.title"/>
     </definition>
 
+    <definition name="epr.birthRegisterBelatedApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthRegisterBelatedApproval.jsp"/>
+        <put-attribute name="title" value="BirthRegisterBelatedApproval.title"/>
+    </definition>
+
     <definition name="epr.approvalWorning" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationApprovalWarning.jsp"/>
         <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
