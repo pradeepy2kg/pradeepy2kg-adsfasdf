@@ -120,7 +120,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 service.updateAdoptionOrder(adoption, user);
             }
         } else {
-            adoption.setBirthDivisionId(birthDivisionId);
             birthCertificateNo = adoption.getBirthCertificateNumber();
             if (birthCertificateNo > 0) {
                 logger.info("checking the given birth Certificate for birth certificate number : {}", birthCertificateNo);
@@ -283,17 +282,22 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return ERROR;
         } else {
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
+            birthDivisionId = adoption.getBirthDivisionId();
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
+            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             if (bdf != null) {
-                String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
                 birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
                 birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();
                 dsDivisionId = bdf.getRegister().getDsDivision().getDsDivisionUKey();
                 birthDistrictName = districtDAO.getNameByPK(birthDistrictId, language);
                 birthDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
                 dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
+            } else if (birthDivisionId > 0) {
+                birthDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
+                birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(birthDivisionId).getDistrict().getDistrictUKey(), language);
+                dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(birthDivisionId).getDsDivision().getDsDivisionUKey(), language);
             }
 
             return SUCCESS;
@@ -600,6 +604,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
+        if (adoption != null && birthDivisionId > 0) {
+            logger.debug("setting the birth Division for the birthDivisionId : {}", birthDivisionId);
+            adoption.setBirthDivisionId(bdDivisionDAO.getBDDivisionByPK(birthDivisionId).getBdDivisionUKey());
+        }
     }
 
     public void setDsDivisionId(int dsDivisionId) {

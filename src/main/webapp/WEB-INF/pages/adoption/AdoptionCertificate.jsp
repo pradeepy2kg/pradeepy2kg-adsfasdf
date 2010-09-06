@@ -160,14 +160,15 @@
             <s:else>
                 <s:label name="" value="%{adoption.wifePINorNIC}"/>
             </s:else>
-            </td>
+        </td>
     </tr>
     </tbody>
 </table>
 
 <table class="table_con_page_01" width="100%" cellspacing="0" style="margin-top:10px;float:left;>
     <caption></caption>
-<col width="150px">
+<col width="
+150px">
 <col width="215px">
 <col width="120px">
 <col>
@@ -219,27 +220,34 @@
 <table class="adoption-certificate-existing-certificate-info" cellpadding="0" cellspacing="0" style="width:100%">
     <tr>
         <td width="25%">දිස්ත්‍රික්ක <br/>
-            மாவட்டம்  <br/>
-             District
-            </td>
+            மாவட்டம் <br/>
+            District
+        </td>
         <td width="25%"><s:label name="" value="%{birthDistrictName}"/></td>
         <td width="25%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
             பிரிவு <br/>
             Divisional Secretariat
-            </td>
+        </td>
         <td width="25%"><s:label name="" value="%{dsDivisionName}"/></td>
     </tr>
     <tr>
         <td width="25%">ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
             பிரிவு <br/>
             Registration Division
-            </td>
+        </td>
         <td width="25%"><s:label name="" value="%{birthDivisionName}"/></td>
         <td>දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය<br/>
             ** in Tamil **<br/>
-            The serial number of the existing Birth Certificate </td>
+            The serial number of the existing Birth Certificate
+        </td>
         <td width="25%">
-            <s:if test="#request.adoption.birthCertificateNumber>0"><s:label name="" value="%{adoption.birthCertificateNumber}"/></s:if></td>
+            <s:if test="#request.adoption.birthCertificateNumber>0">
+                <s:label name="" value="%{adoption.birthCertificateNumber}"/>
+            </s:if>
+            <s:elseif test="#request.adoption.birthRegistrationSerial>0">
+                <s:label name="" value="%{adoption.birthRegistrationSerial}"/>
+            </s:elseif>
+        </td>
     </tr>
 </table>
 
