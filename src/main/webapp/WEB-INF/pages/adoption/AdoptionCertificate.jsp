@@ -174,16 +174,20 @@
 <col>
 <tbody>
 <tr>
-    <td width="250px">ලියාපදිංචි කල ස්ථානය<br>
+    <%--<td width="250px">ලියාපදිංචි කල ස්ථානය<br>
         *in tamil <br>
         Place if Registration
     </td>
     <td>
         <s:label value=""/>
-    </td>
+    </td>--%>
     <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
     </td>
     <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
+    <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
+    </td>
+    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
+    </td>
 </tr>
 <tr>
     <td width="250px" height="120px">
@@ -198,11 +202,7 @@
 <tr>
     <td width="250px" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
     </td>
-    <td><s:label value=""/>
-    </td>
-    <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
-    </td>
-    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
+    <td colspan="3"><s:label value=""/>
     </td>
 </tr>
 </tbody>
