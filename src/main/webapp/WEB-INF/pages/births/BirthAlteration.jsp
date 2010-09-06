@@ -9,123 +9,242 @@
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript">
-    $(function() {
-        $('#mother-info-min').click(function() {
-            minimize("mother-info");
-        });
-        $('#mother-info-max').click(function() {
-            maximize("mother-info");
-        });
-        $('#informant-info-min').click(function() {
-            minimize("informant-info");
-        });
-        $('#informant-info-max').click(function() {
-            maximize("informant-info");
-        });
-        $('#father-info-min').click(function() {
-            minimize("father-info");
-        });
-        $('#father-info-max').click(function() {
-            maximize("father-info");
-        });
-        $('#marriage-info-min').click(function() {
-            minimize("marriage-info");
-        });
-        $('#marriage-info-max').click(function() {
-            maximize("marriage-info");
-        });
-        $('#grandFather-info-min').click(function() {
-            minimize("grandFather-info");
-        });
-        $('#grandFather-info-max').click(function() {
-            maximize("grandFather-info");
-        });
-        $('#errors-info-min').click(function() {
-            minimize("errors-info");
-        });
-        $('#errors-info-max').click(function() {
-            maximize("errors-info");
-        });
-        $('#error-explanation-info-min').click(function() {
-            minimize("error-explanation-info");
-        });
-        $('#error-explanation-info-max').click(function() {
-            maximize("error-explanation-info");
-        });
-        $('#mother-after-marriage-info-min').click(function() {
-            minimize("mother-after-marriage-info");
-        });
-        $('#mother-after-marriage-info-max').click(function() {
-            maximize("mother-after-marriage-info");
-        });
-        $('select#sectionOfAct').change(function() {
-            var id = $("select#sectionOfAct").attr("value");
-            document.getElementById("actNumber1").style.display = 'none';
-            document.getElementById("actNumber2").style.display = 'none';
-            document.getElementById("actNumber3").style.display = 'none';
-            document.getElementById("actNumber" + id).style.display = 'block';
-
-        });
+$(function() {
+    $('#mother-info-min').click(function() {
+        minimize("mother-info");
     });
-    function minimize(id) {
-        document.getElementById(id).style.display = 'none';
-        document.getElementById(id + "-min").style.display = 'none';
-        document.getElementById(id + "-max").style.display = 'block';
+    $('#mother-info-max').click(function() {
+        maximize("mother-info");
+    });
+    $('#informant-info-min').click(function() {
+        minimize("informant-info");
+    });
+    $('#informant-info-max').click(function() {
+        maximize("informant-info");
+    });
+    $('#father-info-min').click(function() {
+        minimize("father-info");
+    });
+    $('#father-info-max').click(function() {
+        maximize("father-info");
+    });
+    $('#marriage-info-min').click(function() {
+        minimize("marriage-info");
+    });
+    $('#marriage-info-max').click(function() {
+        maximize("marriage-info");
+    });
+    $('#grandFather-info-min').click(function() {
+        minimize("grandFather-info");
+    });
+    $('#grandFather-info-max').click(function() {
+        maximize("grandFather-info");
+    });
+    $('#errors-info-min').click(function() {
+        minimize("errors-info");
+    });
+    $('#errors-info-max').click(function() {
+        maximize("errors-info");
+    });
+    $('#error-explanation-info-min').click(function() {
+        minimize("error-explanation-info");
+    });
+    $('#error-explanation-info-max').click(function() {
+        maximize("error-explanation-info");
+    });
+    $('#mother-after-marriage-info-min').click(function() {
+        minimize("mother-after-marriage-info");
+    });
+    $('#mother-after-marriage-info-max').click(function() {
+        maximize("mother-after-marriage-info");
+    });
+    $('select#sectionOfAct').change(function() {
+        var id = $("select#sectionOfAct").attr("value");
+        document.getElementById("actNumber1").style.display = 'none';
+        document.getElementById("actNumber2").style.display = 'none';
+        document.getElementById("actNumber3").style.display = 'none';
+        document.getElementById("actNumber" + id).style.display = 'block';
 
+    });
+});
+function minimize(id) {
+    document.getElementById(id).style.display = 'none';
+    document.getElementById(id + "-min").style.display = 'none';
+    document.getElementById(id + "-max").style.display = 'block';
+
+}
+function maximize(id, click) {
+    document.getElementById(id).style.display = 'block';
+    document.getElementById(id + "-max").style.display = 'none';
+    document.getElementById(id + "-min").style.display = 'block';
+}
+function initPage() {
+    var idNames = new Array('errors-info', 'mother-info', 'informant-info', 'father-info',
+            'marriage-info', 'grandFather-info', 'error-explanation-info', 'mother-after-marriage-info');
+    for (var i = 0; i < idNames.length; i++) {
+        document.getElementById(idNames[i]).style.display = 'none';
+        document.getElementById(idNames[i] + "-min").style.display = 'none';
     }
-    function maximize(id, click) {
-        document.getElementById(id).style.display = 'block';
-        document.getElementById(id + "-max").style.display = 'none';
-        document.getElementById(id + "-min").style.display = 'block';
+}
+$(function() {
+    $("#fatherDadeOfbirth").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+$(function() {
+    $("#dateOfMarriage").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+$(function() {
+    $("#motherDateOfBirth").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+$(function() {
+    $("#childBirthDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+$(function() {
+    $("#acceptanceDate").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2020-12-31'
+    });
+});
+var errormsg = "";
+function validate() {
+    var domObject;
+    var returnval = true;
+    /*validation of common fields*/
+    domObject = document.getElementById('bdfSerialNo');
+     if (isFieldEmpty(domObject))
+     isEmpty(domObject, "", 'comError3');
+     else
+     validateSerialNo(domObject, "comError1", 'comError2');
+     domObject = document.getElementById('acceptanceDate');
+     if (isFieldEmpty(domObject))
+     isEmpty(domObject, "", 'childError3')
+     else
+     isDate(domObject.value, "comError1", "comError4");
+     domObject = document.getElementById('placeOfBirth');
+
+    /*validation for child's information */
+    domObject = document.getElementById('nameInOfficialLanguages');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'childError1');
+     }
+     domObject = document.getElementById('nameInEnglish');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'childError2');
+     }
+     domObject = document.getElementById('childBirthDatePicker');
+     if (isFieldEmpty(domObject))
+     isEmpty(domObject, "", 'childError3')
+     else
+     isDate(domObject.value, "comError1", "childError4");
+     domObject = document.getElementById('placeOfBirth');
+     isEmpty(domObject, "", 'childError5');
+
+    /*validation for informent's information */
+    domObject = document.getElementById('informentName');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'informentError1');
+     }
+     domObject = document.getElementById('informentAddress');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'informentError2');
+     }
+     domObject = document.getElementById('informent_pinOrNic');
+     if (!isFieldEmpty(domObject))
+     validatePINorNIC(domObject, 'comError1', 'informentError3');
+
+    /* validation of father's information */
+    domObject = document.getElementById('father_pinOrNic');
+     if (!isFieldEmpty(domObject))
+     validatePINorNIC(domObject, 'comError1', 'fatherError1');
+     domObject = document.getElementById('fatherName');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'fatherError2');
+     }
+     domObject = document.getElementById('fatherDadeOfbirth');
+     if (!isFieldEmpty(domObject))
+     isDate(domObject.value, "comError1", "fatherError3");
+
+
+    /*validation of mother's information*/
+    domObject = document.getElementById('mother_pinOrNic');
+    if (!isFieldEmpty(domObject))
+        validatePINorNIC(domObject, 'comError1', 'motherError1');
+    if (!isFieldEmpty(domObject)) {
+        isDate(domObject.value, "comError1", "motherError2");
     }
-    function initPage() {
-        var idNames = new Array('errors-info', 'mother-info', 'informant-info', 'father-info',
-                'marriage-info', 'grandFather-info', 'error-explanation-info', 'mother-after-marriage-info');
-        for (var i = 0; i < idNames.length; i++) {
-            document.getElementById(idNames[i]).style.display = 'none';
-            document.getElementById(idNames[i] + "-min").style.display = 'none';
+    /*domObject = document.getElementById('Declarant_pinOrNic');
+     if (!isFieldEmpty(domObject)) {
+     validatePINorNIC(domObject.value, "comError1", "error12");
+     }*/
+    domObject = document.getElementById('motherAgeAtBirth');
+    if (isFieldEmpty(domObject)) {
+        isEmpty(domObject, "", 'motherError3');
+    }
+
+
+    /*validation of Grand Father's validation*/
+    domObject = document.getElementById('grandFather_pinOrNic');
+    if (!isFieldEmpty(domObject)) {
+        validatePINorNIC(domObject, "comError1", "grandFatherError1");
+    }
+    domObject = document.getElementById('grandFatherBirthYear');
+    if (!isFieldEmpty(domObject))
+        validateBirthYear(domObject, 'comError1', 'grandFatherError2');
+
+
+    /*validation of Grand Grand Father's validation*/
+    domObject = document.getElementById('grandGrandFather_pinOrNic');
+    if (!isFieldEmpty(domObject)) {
+        validatePINorNIC(domObject, "comError1", "grandGrandFatherError1");
+    }
+    domObject = document.getElementById('grandGrandFatherBirthYear');
+    if (!isFieldEmpty(domObject))
+        validateBirthYear(domObject, 'comError1', 'grandGrandFatherError2');
+    if (errormsg != "") {
+        alert(errormsg);
+        returnval = false;
+    }
+    errormsg = "";
+    return returnval;
+}
+function validateBirthYear(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^([1-9][0-9]{3})$/;
+        if (reg.test(value) == false) {
+            printMessage(errorText, errorCode);
         }
     }
-    $(function() {
-        $("#fatherDadeOfbirth").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
-    });
-    $(function() {
-        $("#dateOfMarriage").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
-    });
-    $(function() {
-        $("#motherDateOfBirth").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
-    });
-    $(function() {
-        $("#childBirthDatePicker").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2020-12-31'
-        });
-    });
+}
 </script>
 
 <div id="birth-alteration-outer">
-<s:form action="eprLoadBirthAlteration.do">
+<s:form action="eprLoadBirthAlteration.do" onsubmit="javascript:return validate()">
     <table class="birth-alteration-table-style01" style="width:1030px;">
         <tr>
             <td width="30%"></td>
@@ -144,11 +263,14 @@
                             தொடர் இலக்கம் <br>
                             Serial Number
                         </td>
-                        <td width="60%"><s:textfield/></td>
+                        <td width="60%"><s:textfield id="bdfSerialNo"/></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td><s:textfield/></td>
+                        <td>භාරගත් දිනය <br>
+                            பிறப்பைப் பதிவு திகதி <br>
+                            Date of Acceptance
+                        </td>
+                        <td><s:textfield id="acceptanceDate"/></td>
                     </tr>
                     <tr>
                         <td>පනතේ වගන්තිය <br>
@@ -183,6 +305,7 @@
         </tr>
     </table>
 </s:form>
+<s:form action="eprLoadBirthAlteration.do" onsubmit="javascript:return validate()">
 <%--<table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
     <caption></caption>
     <col width="15%"/>
@@ -290,14 +413,14 @@
                 பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
                 Name in any of the official languages (Sinhala / Tamil)
             </td>
-            <td><s:textarea/></td>
+            <td><s:textarea id="nameInOfficialLanguages"/></td>
         </tr>
         <tr>
             <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>
                 பிறப்பு அத்தாட்சி ….. <br>
                 Name in English
             </td>
-            <td><s:textarea/></td>
+            <td><s:textarea id="nameInEnglish"/></td>
         </tr>
         </tbody>
     </table>
@@ -364,8 +487,9 @@
                 பிரிவு / <br>
                 Registration Division
             </td>
-            <td colspan="4"><s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}" list="bdDivisionList"
-                      cssStyle="float:left;  width:95%; "/></td>
+            <td colspan="4"><s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                                      list="bdDivisionList"
+                                      cssStyle="float:left;  width:95%; "/></td>
         </tr>
         <tr>
             <td rowspan="2">ස්ථානය <br>
@@ -376,7 +500,7 @@
                 சிங்களம் தமிழ்<br>
                 In Sinhala or Tamil
             </td>
-            <td colspan="4"><s:textfield cssStyle="width:95%"/></td>
+            <td colspan="4"><s:textfield cssStyle="width:95%" id="placeOfBirth"/></td>
         </tr>
         <tr>
             <td>ඉංග්‍රීසි භාෂාවෙන්<br>
@@ -452,7 +576,7 @@
                 பிள்ளை பிறந்த திகதியில் மாதாவின் வயது <br>
                 Age as at the date of birth of child
             </td>
-            <td colspan="2"><s:textfield cssStyle="margin-right:10px;width:80%" id=""/></td>
+            <td colspan="2"><s:textfield cssStyle="margin-right:10px;width:80%" id="motherAgeAtBirth"/></td>
             <td colspan="2">ජාතිය<br>
                 இனம்<br>
                 Race
@@ -547,21 +671,21 @@
                 தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள அட்டை இல. <br>
                 PIN / NIC of the Informant
             </td>
-            <td colspan="2"><s:textfield/></td>
+            <td colspan="2"><s:textfield id="informent_pinOrNic"/></td>
         </tr>
         <tr>
             <td>නම<br>
                 கொடுப்பவரின் பெயர்<br>
                 Name
             </td>
-            <td colspan="3"><s:textarea/></td>
+            <td colspan="3"><s:textarea id="informentName"/></td>
         </tr>
         <tr>
             <td>තැපැල් ලිපිනය<br>
                 தபால் முகவரி<br>
                 Postal Address
             </td>
-            <td colspan="3"><s:textarea/></td>
+            <td colspan="3"><s:textarea id="informentAddress"/></td>
         </tr>
         </tbody>
     </table>
@@ -602,7 +726,7 @@
                 து தனிநபர் அடையாள எண் /தேசிய அடையாள அட்டை இலக்கம்<br>
                 PIN / NIC Number
             </td>
-            <td rowspan="2"><s:textfield/></td>
+            <td rowspan="2"><s:textfield id="father_pinOrNic"/></td>
             <td rowspan="2">විදේශිකය‍කු නම්<br>
                 வெளிநாட்டவர் எனின் <br>
                 If a foreigner
@@ -626,7 +750,7 @@
                 தந்தையின் முழு பெயர்<br>
                 Full Name
             </td>
-            <td colspan="4"><s:textarea/></td>
+            <td colspan="4"><s:textarea id="fatherName"/></td>
         </tr>
         <tr>
             <td>උපන් දිනය<br>
@@ -638,7 +762,9 @@
                 இனம்<br>
                 Race
             </td>
-            <td><s:textfield/></td>
+            <td><s:select list="raceList" name="fatherRace" headerKey="0"
+                          headerValue="%{getText('select_race.label')}"
+                          cssStyle="width:80%;"/></td>
         </tr>
         <tr>
             <td>උපන් ස්ථානය<br>
@@ -666,16 +792,42 @@
         <tr>
             <td rowspan="2">මව්පියන් විවාහකද?</td>
             <td rowspan="2">
-                பெற்றோர்கள் மணம் முடித்தவர்களா? <br>
-                Were Parent's Married?
-                ඔව්<br>
-                Yes<br>
-
-                නැත<br>
-                No
-
-                නැත, නමුත් පසුව විවාහවී ඇත<br>
-                No, but since married<br></td>
+                <table style="width:100%; border:none;">
+                    <col width="60px"/>
+                    <col width="20px" align="right"/>
+                    <tbody>
+                    <tr>
+                        <td style="border:none"><label>ඔව්<br>*in tamil<br>Yes</label></td>
+                        <td style="border:none"><s:radio name="marriage.parentsMarried"
+                                                         list="#@java.util.HashMap@{'1':''}" value="1"
+                                                         onclick="disableMarriage(false);disableSigns(true)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border:none"><label>නැත<br>*in tamil<br>No</label></td>
+                        <td style="border:none"><s:radio name="marriage.parentsMarried"
+                                                         list="#@java.util.HashMap@{'2':''}"
+                                                         onclick="disableMarriage(true);disableSigns(false)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border:none"><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since
+                            married</label></td>
+                        <td style="border:none"><s:radio name="marriage.parentsMarried"
+                                                         list="#@java.util.HashMap@{'3':''}"
+                                                         onclick="disableMarriage(false);disableSigns(true)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border:none"><label>නොදනී<br>*in tamil<br>Unknown</label></td>
+                        <td style="border:none"><s:radio name="marriage.parentsMarried"
+                                                         list="#@java.util.HashMap@{'0':''}"
+                                                         onclick="disableMarriage(true);disableSigns(true)"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
             <td>විවාහ වු ස්ථානය<br>
                 விவாகம் இடம்பெற்ற இடம்<br>
                 Place of Marriage
@@ -704,7 +856,8 @@
     </tr>
 </table>
 <div id="mother-after-marriage-info">
-    <table class="birth-alteration-table-style02" style=" border-top:none;margin-top:0px;width:100%" cellpadding="0" cellspacing="0" >
+    <table class="birth-alteration-table-style02" style=" border-top:none;margin-top:0px;width:100%" cellpadding="0"
+           cellspacing="0">
         <tr>
             <td style="width:250px;">විවාහයට පසුව මවගේ සම්පුර්ණ නම<br>
                 முழுப் பெயர்<br>
@@ -756,12 +909,12 @@
                 தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்<br>
                 PIN / NIC Number (if available)
             </td>
-            <td><s:textfield/></td>
+            <td><s:textfield id="grandFather_pinOrNic"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield/></td>
+            <td><s:textfield id="grandFatherBirthYear"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
@@ -788,12 +941,12 @@
                 தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்<br>
                 PIN / NIC Number (if available)
             </td>
-            <td><s:textfield/></td>
+            <td><s:textfield id="grandGrandFather_pinOrNic"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield/></td>
+            <td><s:textfield id="grandGrandFatherBirthYear"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
@@ -893,21 +1046,21 @@
             தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள அட்டை இல. <br>
             PIN / NIC of the declarant
         </td>
-        <td colspan="2"><s:textfield/>
+        <td colspan="2"><s:textfield id="Declarant_pinOrNic"/>
         </td>
     </tr>
     <tr>
         <td>නම<br>
             கொடுப்பவரின் பெயர்<br>
             Name<br></td>
-        <td colspan="4"><s:textarea/></td>
+        <td colspan="4"><s:textarea id="declarantName"/></td>
     </tr>
     <tr>
         <td>තැපැල් ලිපිනය<br>
             தபால் முகவரி<br>
             Postal Address
         </td>
-        <td colspan="4"><s:textarea/></td>
+        <td colspan="4"><s:textarea id=""/></td>
     </tr>
     </tbody>
 </table>
@@ -951,6 +1104,37 @@
     </tbody>
 </table>
 </div>
+<%--common errors--%>
+<s:hidden id="comError1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="comError2" value="%{getText('p1.serial.text')}"/>
+<s:hidden id="comError3" value="%{getText('p1.SerialNum.error.value')}"/>
+<s:hidden id="comError4" value="%{getText('p1.submitDate.error.value')}"/>
+<%--child error--%>
+<s:hidden id="childError1" value="%{getText('p1.childName.error.value')}"/>
+<s:hidden id="childError2" value="%{getText('p1.NameEnglish.error.value')}"/>
+<s:hidden id="childError3" value="%{getText('p1.dob.error.value')}"/>
+<s:hidden id="childError4" value="%{getText('p1.dob')}"/>
+<s:hidden id="childError5" value="%{getText('p1.placeOfBirth.error.value')}"/>
+<%--informent errors--%>
+<s:hidden id="informentError1" value="%{getText('p3.Informent.Name.error.value')}"/>
+<s:hidden id="informentError2" value="%{getText('p3.Informent.Address.error.value')}"/>
+<s:hidden id="informentError3" value="%{getText('informantNIC.text')}"/>
+<%--mother errors--%>
+<s:hidden id="motherError1" value="%{getText('motherPINorNIC.label')}"/>
+<s:hidden id="motherError2" value="%{getText('p2.mother.dob')}"/>
+<s:hidden id="motherError3" value="%{getText('p2.motherAge.error.value')}"/>
+<%--father errors--%>
+<s:hidden id="fatherError1" value="%{getText('fatherPINorNIC.label')}"/>
+<s:hidden id="fatherError2" value="%{getText('p2.fatherName.error.value')}"/>
+<s:hidden id="fatherError3" value="%{getText('p2.father.dob')}"/>
+
+
+<s:hidden id="grandFatherError1" value="%{getText('grandFatherNICorPIN.text')}"/>
+<s:hidden id="grandFatherError2" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
+
+<s:hidden id="grandGrandFatherError1" value="%{getText('greatGrandFatherNICorPIN.text')}"/>
+<s:hidden id="grandGrandFatherError2" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
 <div class="form-submit">
-    <s:submit value="%{getText('submit.label')}"/>
+<s:submit value="%{getText('submit.label')}"/>
+</s:form>
 </div>

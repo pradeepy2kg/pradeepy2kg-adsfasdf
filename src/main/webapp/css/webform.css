@@ -1673,7 +1673,8 @@
 .add-inactive-divisions-outer-table,.adoption-certificate-existing-certificate-info input{width:80%;margin:5px;margin-left:10px}
 
 #birth-alteration-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
-.birth-alteration-table-style01{border:none;}
+.birth-alteration-table-style01{border:none;}.
+birth-alteration-table-style01 td{border:none;}
 .birth-alteration-table-style02{;border-top:1px solid #000;border-left:1px solid #000;margin-top:10px;}
 .birth-alteration-table-style02 td{border-right:1px solid #000;border-bottom:1px solid #000}
 .birth-alteration-table-style02 textarea{width:95%; margin:10px;}
