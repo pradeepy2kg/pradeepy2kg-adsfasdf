@@ -523,8 +523,8 @@ function enableSerialNumber(mode) {
                                                     id="childExistingName"></s:textarea></td>
     </tr>
     <tr>
-        <td>ලබා දෙන නම <br/>
-            New name given
+        <td>ලබා දෙන නම රාජ්‍ය භාෂාවෙන්<br/>
+            New name given in Official Language
         </td>
         <td colspan="4" align="center"><s:textarea name="adoption.childNewName" id="childNewName"></s:textarea></td>
     </tr>

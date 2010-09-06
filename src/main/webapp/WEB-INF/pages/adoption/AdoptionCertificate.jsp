@@ -88,7 +88,7 @@
         <td height="80px" width="250px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number
             (PIN)
         </td>
-        <td width="250px"><s:label name="" value="%{}"/></td>
+        <td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>
         <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
         </td>
         <td><s:label name="" value="%{adoption.childBirthDate}"/></td>
@@ -167,27 +167,22 @@
 
 <table class="table_con_page_01" width="100%" cellspacing="0" style="margin-top:10px;float:left;>
     <caption></caption>
-    <col width="
-150px">
+<col width="150px">
 <col width="215px">
 <col width="120px">
 <col>
 <tbody>
 <tr>
-    <%--<td width="250px">ලියාපදිංචි කල ස්ථානය<br>
+    <td width="250px">ලියාපදිංචි කල ස්ථානය<br>
         *in tamil <br>
         Place if Registration
     </td>
-    <td>
+    <td colspan="3">
         <s:label value=""/>
-    </td>--%>
+    </td>
     <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
     </td>
     <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
-    <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
-    </td>
-    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
-    </td>
 </tr>
 <tr>
     <td width="250px" height="120px">
@@ -195,7 +190,7 @@
         சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
         Name, Signature and Designation of certifying officer
     </td>
-    <td colspan="3" style="font-size:10pt"><s:label name=""
+    <td colspan="5" style="font-size:10pt"><s:label name=""
                                                     value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.name}"/><br/>
         <s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.roleId}"/></td>
 </tr>
@@ -203,6 +198,11 @@
     <td width="250px" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
     </td>
     <td colspan="3"><s:label value=""/>
+    </td>
+
+    <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
+    </td>
+    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
     </td>
 </tr>
 </tbody>
