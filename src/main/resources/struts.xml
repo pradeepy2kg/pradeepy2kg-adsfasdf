@@ -219,6 +219,13 @@
             <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
+        <!--Approve Belated Birth Declarations-->
+        <!--TODO-->
+        <action name="eprBirthRegisterBelatedApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="initBirthDeclarationApproval">
+            <result type="tiles" name="pageLoad">epr.birthRegisterBelatedApproval</result>
+        </action>
+
         <!--Birth Confirmation Approval related actions-->
         <action name="eprBirthConfirmationApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="initBirthConfirmationApproval">

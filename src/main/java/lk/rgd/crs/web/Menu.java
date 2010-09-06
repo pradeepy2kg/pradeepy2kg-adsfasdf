@@ -142,6 +142,7 @@ public class Menu {
 
         //Birth for ARG
         argBirthLink.putAll(adrBirthLink);
+        argBirthLink.put("eprBirthRegisterBelatedApproval.do", new Link("birth_register_belated_approval.label", "/ecivil/births/", "eprBirthRegisterBelatedApproval.do", Permission.APPROVE_BDF_BELATED));
 
         //Death Registration for DEO
         deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/ecivil/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));
