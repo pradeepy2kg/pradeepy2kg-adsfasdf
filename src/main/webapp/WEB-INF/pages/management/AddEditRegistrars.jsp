@@ -204,100 +204,104 @@
     }
 
 </style>
-
-<table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
-    <caption></caption>
-    <col width="400px"/>
-    <col width="1000px"/>
-    <tbody>
-    <tr>
-        <td align="left">name in official language</td>
-        <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
-                                      name="registrar.fullNameInOfficialLanguage"/></td>
-    </tr>
-    <tr>
-        <td align="left">name in English</td>
-        <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
-                                      name="registrar.fullNameInEnglishLanguage"/></td>
-    </tr>
-    <tr>
-        <td align="left">pin/NIC</td>
-        <td align="left"><s:textfield id="registrarPin" name="registrar.pin"/></td>
-    </tr>
-    <tr>
-        <td align="left">NIC</td>
-        <td align="left"><s:textfield id="registrarNIC" name="registrar.nic"/></td>
-    </tr>
-    <tr>
-        <td align="left">gender</td>
-        <td align="left"><s:select
-                list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                name="registrar.gender" cssStyle="width:190px; margin-left:5px;" id="registrarGender"/></td>
-    </tr>
-    <tr>
-        <td align="left">date of birth</td>
-        <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
-    </tr>
-    <tr>
-        <td align="left">address</td>
-        <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
-                                     name="registrar.currentAddress"/></td>
-    </tr>
-    <tr>
-        <td align="left">phone</td>
-        <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
-    </tr>
-    <tr>
-        <td align="left">email</td>
-        <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
-    </tr>
-    <tr>
-        <td align="left">prefered language</td>
-        <td align="left"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
-                                   name="registrar.preferredLanguage"
-                                   cssStyle="width:190px; margin-left:5px;"/></td>
-    </tr>
-    </tbody>
-</table>
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <legend align="right">Basic info</legend>
+    <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
+        <caption></caption>
+        <col width="400px"/>
+        <col width="1000px"/>
+        <tbody>
+        <tr>
+            <td align="left">name in official language</td>
+            <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
+                                          name="registrar.fullNameInOfficialLanguage"/></td>
+        </tr>
+        <tr>
+            <td align="left">name in English</td>
+            <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
+                                          name="registrar.fullNameInEnglishLanguage"/></td>
+        </tr>
+        <tr>
+            <td align="left">pin/NIC</td>
+            <td align="left"><s:textfield id="registrarPin" name="registrar.pin"/></td>
+        </tr>
+        <tr>
+            <td align="left">NIC</td>
+            <td align="left"><s:textfield id="registrarNIC" name="registrar.nic"/></td>
+        </tr>
+        <tr>
+            <td align="left">gender</td>
+            <td align="left"><s:select
+                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                    name="registrar.gender" cssStyle="width:190px; margin-left:5px;" id="registrarGender"/></td>
+        </tr>
+        <tr>
+            <td align="left">date of birth</td>
+            <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
+        </tr>
+        <tr>
+            <td align="left">address</td>
+            <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
+                                         name="registrar.currentAddress"/></td>
+        </tr>
+        <tr>
+            <td align="left">phone</td>
+            <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
+        </tr>
+        <tr>
+            <td align="left">email</td>
+            <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
+        </tr>
+        <tr>
+            <td align="left">prefered language</td>
+            <td align="left"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
+                                       name="registrar.preferredLanguage"
+                                       cssStyle="width:190px; margin-left:5px;"/></td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
 
 <%--current assignments--%>
-<table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-    <thead>
-    <tr class="table-title">
-        <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
-        <th width="20px"><s:label value="%{getText('label.state')}"/></th>
-        <th width="20px"><s:label value="%{getText('label.type')}"/></th>
-        <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
-        <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
-    </tr>
-    </thead>
-    <%--        <s:if test="registrarList.size>0">
-        <s:iterator status="registrarStatus" value="registrarList" id="registrarList">
-            <tbody>
-            <tr>
-                <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                <td><s:property value="fullNameInOfficialLanguage"/> </td>
-            </tr>
-            </tbody>
-        </s:iterator>
-    </s:if>--%>
-    <tbody>
-    <s:url action="eprRegistrarsView.do" id="registrar"/>
-    <tr>
-        <td><s:label value="bdDivision"/></td>
-        <td><s:label value="state"/></td>
-        <td><s:label value="type"/></td>
-        <td><s:label value="start date"/></td>
-        <td><s:label value="end date"/></td>
-    </tr>
-    </tbody>
-</table>
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <legend align="right">Current Assignment</legend>
+    <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+        <thead>
+        <tr class="table-title">
+            <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
+            <th width="20px"><s:label value="%{getText('label.state')}"/></th>
+            <th width="20px"><s:label value="%{getText('label.type')}"/></th>
+            <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
+            <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
+        </tr>
+        </thead>
+        <%--        <s:if test="registrarList.size>0">
+            <s:iterator status="registrarStatus" value="registrarList" id="registrarList">
+                <tbody>
+                <tr>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                </tr>
+                </tbody>
+            </s:iterator>
+        </s:if>--%>
+        <tbody>
+        <s:url action="eprRegistrarsView.do" id="registrar"/>
+        <tr>
+            <td><s:label value="bdDivision"/></td>
+            <td><s:label value="state"/></td>
+            <td><s:label value="type"/></td>
+            <td><s:label value="start date"/></td>
+            <td><s:label value="end date"/></td>
+        </tr>
+        </tbody>
+    </table>
 
-
+</fieldset>
 <%--add a new assignment--%>
 <s:form action="#" method="post">
     <s:include value="AddAssignment.jsp"/>
