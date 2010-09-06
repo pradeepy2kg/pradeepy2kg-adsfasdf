@@ -56,7 +56,7 @@
                 <s:a href="%{approveDR}"><s:label value="%{getText('approveDR.label')}"/></s:a>
             </s:if>
             <s:if test="pageNo==3 || pageNo==4">
-                <s:url id="printDC" action="eprDeathCertificate">
+                <s:url id="printDC" action="eprDeathCertificate.do">
                     <s:param name="idUKey" value="#request.idUKey"/>
                     <s:param name="directPrint" value="true"/>
                 </s:url>
