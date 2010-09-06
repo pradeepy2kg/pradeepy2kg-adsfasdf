@@ -101,7 +101,7 @@
 <table>
     <tr>
         <td height="100px">
-            Body of the letter
+            <%--Body of the letter--%>
         </td>
     </tr>
     <tr>
@@ -114,7 +114,7 @@
     </tr>
     <tr>
         <td height="100px">
-            Trailer of the letter
+            <%--Trailer of the letter--%>
         </td>
     </tr>
 </table>

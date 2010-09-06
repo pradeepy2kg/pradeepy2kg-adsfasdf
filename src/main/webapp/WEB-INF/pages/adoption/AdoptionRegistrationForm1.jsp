@@ -167,6 +167,10 @@ function validate() {
     if (!isFieldEmpty(domObject)) {
         isNumeric(domObject.value, 'error12', 'error8');
     }
+    domObject = document.getElementById("childPIN");
+    if (!isFieldEmpty(domObject)) {
+        validatePINorNIC(domObject, 'error12', 'error20');
+    }
     domObject = document.getElementById("bdayDatePicker");
     if (!isFieldEmpty(domObject)) {
         isDate(domObject.value, 'error12', 'error14');
@@ -194,7 +198,7 @@ function validate() {
     }
     domObject = document.getElementById('wifePINorNIC');
     if (domObject.disabled == false && !isFieldEmpty(domObject)) {
-        validatePINorNIC(domObject,"error12","error19")
+        validatePINorNIC(domObject, "error12", "error19")
     }
 
     if (errormsg != "") {
@@ -285,7 +289,7 @@ function enableSerialNumber(mode) {
         </td>
         <td width="70">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
-            <s:textfield id="receivedDatePicker" name="adoption.orderReceivedDate"cssStyle="margin-left:20px;"/>
+            <s:textfield id="receivedDatePicker" name="adoption.orderReceivedDate" cssStyle="margin-left:20px;"/>
         </td>
     </tr>
     <tr>
@@ -471,10 +475,16 @@ function enableSerialNumber(mode) {
     <col style="width:190px;"/>
     <tbody>
     <tr>
+        <td>පුද්ගල අනන්‍යතා අංකය (තිබේ නම්)<br/>
+            Personal Identification Number (if available)
+        </td>
+        <td colspan="4" align="left"><s:textfield name="adoption.childPIN" id="childPIN"/></td>
+    </tr>
+    <tr>
         <td>උපන් දිනය<br/>
             Date of birth
         </td>
-        <td colspan="2" >
+        <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
             <s:textfield id="bdayDatePicker" name="adoption.childBirthDate"
                          cssStyle="margin-left:20px" onchange="calYearAndMonth()"/>
@@ -645,4 +655,5 @@ function enableSerialNumber(mode) {
 <s:hidden id="error17" value="%{getText('er.label.child.newNameOrExistingName')}"/>
 <s:hidden id="error18" value="%{getText('er.label.orderIssuedDate.orderRecievedDate')}"/>
 <s:hidden id="error19" value="%{getText('er.label.wifePINorNIC')}"/>
+<s:hidden id="error20" value="%{getText('er.label.childPIN')}"/>
 </div>
