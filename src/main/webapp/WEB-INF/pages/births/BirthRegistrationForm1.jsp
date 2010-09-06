@@ -339,13 +339,7 @@ function initPage() {
                 </tr>
                 <tr>
                     <td>
-                        <s:if test="birthType.ordinal() == 1">
-                            <label><span class="font-8">භාරගත්  දිනය<br>in Tamil<br>Submitted Date</span></label>
-                        </s:if>
-                        <s:else>
-                            <label><span
-                                    class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Date of Registration</span></label>
-                        </s:else>
+                        <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>
                 </tr>

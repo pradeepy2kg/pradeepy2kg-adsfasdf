@@ -284,8 +284,9 @@
                     <s:label><s:checkbox
                             name="allCheck"
                             onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
-                                <span><s:label name="select_all"
-                                               value="%{getText('select_all.label')}"/></span></s:label>
+                                <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <s:label><span><s:label name="print_selected" value="%{getText('selected_all.label')}"/></span></s:label>
                     <s:hidden name="confirmationApprovalFlag" value="true"/>
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
@@ -294,7 +295,7 @@
                     <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                     <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                     <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                    <s:submit name="approveSelected" value="%{getText('approveSelected.label')}"/>
+                    <s:submit name="approveSelected" value="%{getText('approve.label')}"/>
                 </s:if>
             </div>
             <div class="next-previous">

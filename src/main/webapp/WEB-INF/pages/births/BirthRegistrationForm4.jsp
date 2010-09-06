@@ -80,12 +80,27 @@
         if (domObject.getTime() < submit.getTime()) {
             errormsg = errormsg + "\n" + document.getElementById('p4error6').value;
         }
+
+        domObject = document.getElementById('bdfLateBelate');
+        if (domObject.value == 1 || domObject.value == 2)
+            checkLateOrBelated();
+
         if (errormsg != "") {
             alert(errormsg);
             returnval = false;
         }
         errormsg = "";
         return returnval;
+    }
+
+    function checkLateOrBelated() {
+        var domObject;
+
+        domObject = document.getElementById('caseFileNumber');
+        isEmpty(domObject, '', 'error3');
+
+        domObject = document.getElementById('comments');
+        isEmpty(domObject, '', 'error4');
     }
 
     function initPage() {
@@ -180,15 +195,15 @@
                         <td width="200px"><label>ලිපිගොනු අංකය<br>*in tamil<br>Case File Number</label></td>
                         <td colspan="2"><s:textfield name="register.caseFileNumber" id="caseFileNumber"/></td>
                     </tr>
-                   <%-- <s:if test="register.comments != null">
-                        <tr>
-                            <td><label>දැනට පවතින අදහස්<br>* in tamil<br>Prevoius Comments </label></td>
-                            <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
-                        </tr>
-                    </s:if>--%>
+                        <%-- <s:if test="register.comments != null">
+                            <tr>
+                                <td><label>දැනට පවතින අදහස්<br>* in tamil<br>Prevoius Comments </label></td>
+                                <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
+                            </tr>
+                        </s:if>--%>
                     <tr>
-                        <td><label>නව අදහස්<br>* in tamil<br>New Comments </label></td>
-                        <td><s:textarea name="register.comments" cssStyle="width:98%;"/></td>
+                        <td><label>අදහස් දක්වන්න<br>* in tamil<br>Add Comments </label></td>
+                        <td><s:textarea name="register.comments" id="comments" cssStyle="width:98%;"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -214,4 +229,8 @@
     <s:hidden id="p4error5" value="%{getText('notifierNIC.text')}"/>
     <s:hidden id="p4error6" value="%{getText('p4.notifydate.with.reg.date')}"/>
     <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>
+    <s:hidden id="bdfLateBelate" name="bdfLateOrBelated"/>
+    <s:hidden id="error3" value="%{getText('late.caseFileNo.text')}"/>
+    <s:hidden id="error4" value="%{getText('late.comments.text')}"/>
+
 </div>

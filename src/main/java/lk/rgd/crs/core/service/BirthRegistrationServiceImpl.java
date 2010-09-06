@@ -82,15 +82,23 @@ public class BirthRegistrationServiceImpl implements
 
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
 
-        // if this is a late registration, and a case file number is specified, record that along with comments
-        /*if (!isEmptyString(caseFileNumber) || !isEmptyString(additionalDocumentsComment)) {
-            bdf.getRegister().setCaseFileNumber(caseFileNumber);
-            bdf.getRegister().setComments(additionalDocumentsComment);
-        }*/
-
         // TODO add case file number and additional document list as comments
         addBirthDeclaration(bdf, ignoreWarnings, user);
         logger.debug("Added a new live birth declaration. IDUKey : {}", bdf.getIdUKey());
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<UserWarning> addBelatedBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+        logger.debug("Adding a new belated birth declaration");
+
+        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
+
+        addBirthDeclaration(bdf, ignoreWarnings, user);
+        logger.debug("Added a new belated birth declaration. IDUKey : {}", bdf.getIdUKey());
         return null;
     }
 
@@ -233,6 +241,36 @@ public class BirthRegistrationServiceImpl implements
 
         } else {
             handleException("Cannot modify live birth declaration : " + existing.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void editBelatedBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
+
+        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
+        logger.debug("Attempt to edit belated birth declaration record : {}", bdf.getIdUKey());
+
+        // does the user have access to the BDF being updated
+        validateAccessOfUser(user, bdf);
+        // does the user have access to the existing BDF (if district and division is changed somehow)
+        BirthDeclaration existing = birthDeclarationDAO.getById(bdf.getIdUKey());
+        validateBirthType(existing, BirthDeclaration.BirthType.BELATED);
+        validateAccessOfUser(user, existing);
+
+        // TODO check validations as per addBelatedBirthDeclaration
+
+        // a BDF can be edited by a DEO or ADR only before being approved
+        final BirthDeclaration.State currentState = existing.getRegister().getStatus();
+        if (currentState == BirthDeclaration.State.DATA_ENTRY) {
+            birthDeclarationDAO.updateBirthDeclaration(bdf, user);
+            logger.debug("Saved edit changes to belated birth declaration record : {}  in data entry state", bdf.getIdUKey());
+
+        } else {
+            handleException("Cannot modify belated birth declaration : " + existing.getIdUKey() +
                 " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
         }
     }

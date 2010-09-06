@@ -136,7 +136,11 @@ public class BirthDeclaration implements Serializable {
         /**
          * 2 - child adoption
          */
-        ADOPTION
+        ADOPTION,
+        /**
+         * 3 - belated birth 
+         */
+        BELATED
     }
 
     /**
