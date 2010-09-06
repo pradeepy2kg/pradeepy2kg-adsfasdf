@@ -111,11 +111,11 @@
         <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
     </div>
 </s:form>
+
 <div id="manage_registrars_body">
     <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
         <tr class="table-title">
-            <th width="200px"><s:label value="%{getText('label.name')}"/></th>
             <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
             <th width="20px"><s:label value="%{getText('label.state')}"/></th>
             <th width="20px"><s:label value="%{getText('label.type')}"/></th>
@@ -123,18 +123,30 @@
             <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
         </tr>
         </thead>
-        <s:if test="registrarList.size>0">
-            <tbody>
-            <tr>
-                <td>ලොකුබාලසූරිය අරච්චිලාගේ දුලිප් චන්දන</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </s:if>
+        <%--        <s:if test="registrarList.size>0">
+            <s:iterator status="registrarStatus" value="registrarList" id="registrarList">
+                <tbody>
+                <tr>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                </tr>
+                </tbody>
+            </s:iterator>
+        </s:if>--%>
+        <tbody>
+        <s:url action="eprRegistrarsView.do" id="registrar"/>
+        <tr>
+            <td><s:a href="%{registrar}"> <s:label value="bdDivision"/></s:a></td>
+            <td><s:label value="state"/></td>
+            <td><s:label value="type"/></td>
+            <td><s:label value="start date"/></td>
+            <td><s:label value="end date"/></td>
+        </tr>
+        </tbody>
     </table>
-
 </div>
+
