@@ -71,10 +71,11 @@ function validatePINorNIC(domElement, errorText, errorCode) {
 //validate birth dates with NIC numbert
 function validateBirthYearWithNIC(yearNIC, yearDatePicker, errorText) {
     var reg = /^([0-9]{9}[X|x|V|v])$/;
-    //if (reg.test((document.getElementById(yearNIC).value.trim()) == true)){
-    if (document.getElementById(yearNIC).value.search(reg)==0){
-        if (document.getElementById(yearDatePicker).value.substring(2, 4) != document.getElementById(yearNIC).value.substring(0, 2)) {
-            errormsg = errormsg + "\n" + document.getElementById(errorText).value;
+    if (!(isFieldEmpty(document.getElementById(yearNIC))) && !(isFieldEmpty(document.getElementById(yearDatePicker)))) {
+        if (document.getElementById(yearNIC).value.search(reg) == 0) {
+            if (document.getElementById(yearDatePicker).value.substring(2, 4) != document.getElementById(yearNIC).value.substring(0, 2)) {
+                errormsg = errormsg + "\n" + document.getElementById(errorText).value;
+            }
         }
     }
 }
