@@ -94,11 +94,12 @@ public class PrintActionTest extends CustomStrutsTestCase {
             gCal.add(Calendar.DATE, -20);
             child.setDateOfBirth(gCal.getTime());
             child.setChildGender(0);
+            child.setPlaceOfBirth("Place of birth " + i);
 
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(1000 + i));
+            register.setBdfSerialNo(new Long(2010012380 + i));
             //birth devision
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
@@ -262,7 +263,7 @@ public class PrintActionTest extends CustomStrutsTestCase {
         assertNotNull("Request BirthDivisionID", action.getBirthDivisionId());
         assertNotNull("Request Printed", action.isPrinted());
         assertNotNull("Request Print Start", action.getPrintStart());
-          }
+    }
 
     private void comman(Map session) {
         //check no action errors

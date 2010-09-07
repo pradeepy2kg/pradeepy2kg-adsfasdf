@@ -67,19 +67,16 @@ public class BirthDeclarationValidator {
             isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityName()) ||
             isEmptyString(bdf.getNotifyingAuthority().getNotifyingAuthorityPIN())) {
 
-            //todo clarify (and add comments to explain) this section and uncomment
-//            if (bdf.getIdUKey() > 0) {
-//                handleException("Birth declaration record ID : " + bdf.getIdUKey() + " is not complete. " +
-//                    "Check required field values", ErrorCodes.INVALID_DATA);
-//            } else if (bdf.getRegister().getBdfSerialNo() > 0) {
-//                handleException("Birth declaration record with serial number : " + bdf.getRegister().getBdfSerialNo() +
-//                    " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
-//            } else {
-//                handleException("Birth declaration record being processed is incomplete " +
-//                    "Check required field values", ErrorCodes.INVALID_DATA);
-//            }
+            if (bdf.getIdUKey() > 0) {
+                handleException("Birth declaration record ID : " + bdf.getIdUKey() + " is not complete. " +
+                    "Check required field values", ErrorCodes.INVALID_DATA);
+            } else if (bdf.getRegister().getBdfSerialNo() > 0) {
+                handleException("Birth declaration record with serial number : " + bdf.getRegister().getBdfSerialNo() +
+                    " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
+            } else {
                 handleException("Birth declaration record being processed is incomplete " +
                     "Check required field values", ErrorCodes.INVALID_DATA);
+            }
         }
 
         // validate registrtion serial number
@@ -155,8 +152,8 @@ public class BirthDeclarationValidator {
             for (BirthDeclaration b : existingRecords) {
                 if (!
                     (b.getRegister().getBirthDivision().getBdDivisionUKey() ==
-                     bdf.getRegister().getBirthDivision().getBdDivisionUKey() &&
-                     b.getRegister().getBdfSerialNo() == bdf.getRegister().getBdfSerialNo())
+                        bdf.getRegister().getBirthDivision().getBdDivisionUKey() &&
+                        b.getRegister().getBdfSerialNo() == bdf.getRegister().getBdfSerialNo())
                     ) {
                     warnings.add(
                         new UserWarning(MessageFormat.format(rb.getString("possible_duplicate"),
@@ -173,7 +170,7 @@ public class BirthDeclarationValidator {
             w.setSeverity(UserWarning.Severity.ERROR);
             warnings.add(w);
         }
-        
+
         // TODO cross check if this person is a valid registrar on the date of registration
         // for the selected BD division
 

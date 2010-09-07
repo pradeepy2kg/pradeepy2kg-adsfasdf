@@ -79,8 +79,10 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addLiveBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new live birth declaration");
-
         validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // TODO add case file number and additional document list as comments
         addBirthDeclaration(bdf, ignoreWarnings, user);
@@ -94,8 +96,10 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserWarning> addBelatedBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new belated birth declaration");
-
         validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         addBirthDeclaration(bdf, ignoreWarnings, user);
         logger.debug("Added a new belated birth declaration. IDUKey : {}", bdf.getIdUKey());
@@ -110,6 +114,9 @@ public class BirthRegistrationServiceImpl implements
         logger.debug("Adding a new still birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.STILL);
 
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
+
         // TODO still birth specific validations
         addBirthDeclaration(bdf, ignoreWarnings, user);
         logger.debug("Added a new still birth declaration. IDUKey : {}", bdf.getIdUKey());
@@ -123,6 +130,9 @@ public class BirthRegistrationServiceImpl implements
     public List<UserWarning> addAdoptionBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user) {
         logger.debug("Adding a new adoption birth declaration");
         validateBirthType(bdf, BirthDeclaration.BirthType.ADOPTION);
+
+        // validate if the minimum required fields are adequately filled
+        birthDeclarationValidator.validateMinimalRequirements(bdf);
 
         // TODO adoption specific validations
 
@@ -1569,7 +1579,7 @@ public class BirthRegistrationServiceImpl implements
      */
     public BirthDeclaration getByIdForAdoptionLookup(long bdId, User user) {
         //todo if need validations has to be done
-        logger.debug("getting BirthDeclaration for the idUKey : {}",bdId);
+        logger.debug("getting BirthDeclaration for the idUKey : {}", bdId);
         return birthDeclarationDAO.getById(bdId);
     }
 }
