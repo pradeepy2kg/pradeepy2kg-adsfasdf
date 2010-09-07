@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.domain;
 
+import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.common.util.NameFormatUtil;
 
@@ -70,7 +71,7 @@ public class Registrar implements Serializable {
      * The preferred language of the registrar
      */
     @Column(nullable = false, columnDefinition = "char(2) default 'si'")
-    private String preferredLanguage;
+    private String preferredLanguage = AppConstants.SINHALA;
 
     /**
      * Phone number of Registrar

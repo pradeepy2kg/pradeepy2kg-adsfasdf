@@ -41,15 +41,6 @@ public interface RegistrarDAO {
     public void updateRegistrar(Registrar registrar, User user);
 
     /**
-     * Return the Birth registrars for the selected DS Division
-     *
-     * @param dsDivision the DS Division of interest
-     * @param active     include only currently active registrars
-     * @return the list of Registrars for the given DS division
-     */
-    public List<Registrar> getRegistrarsByTypeAndDSDivision(DSDivision dsDivision, Assignment.Type type, boolean active);
-
-    /**
      * retriew registrars accourding to pin number
      *
      * @param pin unique pin number of registrar

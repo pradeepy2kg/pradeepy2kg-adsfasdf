@@ -1,5 +1,6 @@
 package lk.rgd.crs.api.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.Assignment;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -46,6 +47,15 @@ public interface AssignmentDAO {
      * @return the list of assignments or an empty List
      */
     public List<Assignment> getAssignmentsForRegistrar(Registrar registrar);
+
+    /**
+     * Return the Assignments for the selected DS Division
+     * @param dsDivisionUKey the DS Division unique ID of interest
+     * @param type the type of assignment (birth, death or marriage)
+     * @param active include only currently active assignments
+     * @return the list of assignments for the given DS division
+     */
+    public List<Assignment> getAssignmentsByTypeAndDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active);
 
     /**
      * get all assignments
