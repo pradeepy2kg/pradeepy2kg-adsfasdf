@@ -33,7 +33,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addBirthAlteration(BirthAlteration ba, User user) {
-        birthAlterationDAO.addBirthAlteration(ba,user);
+        //todo set data entry state
+        logger.debug("adding new birth alteration");
+        validateAccessOfUser(ba, user);
+        //ba.setStatus(BirthAlteration.State.DATA_ENTRY);
+        birthAlterationDAO.addBirthAlteration(ba, user);
     }
 
     /**
@@ -42,15 +46,35 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateBirthAlteration(BirthAlteration ba, User user) {
         //todo validations
-        birthAlterationDAO.updateBirthAlteration(ba,user);
+        logger.debug("Attempt to edit birth alteration record : {}", ba.getIdUKey());
+        validateAccessOfUser(ba, user);
+        BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
+        validateAccessOfUser(existing, user);
+        //final BirthAlteration.State currentState = existing.getStatus();
+        //if (currentState==BirthAlteration.State.DATA_ENTRY){
+        birthAlterationDAO.updateBirthAlteration(ba, user);
+        logger.debug("Saved edit changes to birth alteration record : {}  in data entry state", ba.getIdUKey());
+        //} else
+        /*{
+           handleException("Cannot modify birth alteration : " + existing.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }*/
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteBirthAlteration(long idUKey) {
+    public void deleteBirthAlteration(long idUKey, User user) {
         //todo validations
+        logger.debug("Attempt to delete birth alteration record : {}", idUKey);
+        BirthAlteration ba = birthAlterationDAO.getById(idUKey);
+        validateAccessOfUser(ba, user);
+        /* final BirthAlteration.State currentState = ba.getStatus();
+        if (currentState!=BirthAlteration.State.DATA_ENTRY){
+        handleException("Cannot delete birth alteration : " + ba.getIdUKey() +
+                " Illegal state : " + currentState, ErrorCodes.ILLEGAL_STATE);
+        }*/
         birthAlterationDAO.deleteBirthAlteration(idUKey);
     }
 
@@ -58,12 +82,12 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public BirthAlteration getById(long idUKey) {
+    public BirthAlteration getById(long idUKey, User user) {
         //todo validations
-        return birthAlterationDAO.getById(idUKey);  
+        return birthAlterationDAO.getById(idUKey);
     }
 
-    private void validateAccessOfUser(User user, BirthAlteration ba) {
+    private void validateAccessOfUser(BirthAlteration ba, User user) {
         if (ba != null) {
             BDDivision bdDivision = ba.getAlt52_1().getBirthDivision();
             validateAccessToBDDivision(user, bdDivision);
