@@ -99,8 +99,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String filter() {
         logger.info("filter called");
-        //todo this service method not yet implemented  and find assignment also
-        assignmentList = service.getAllAssignments(user);
+        assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);
         populateLists(districtId, dsDivisionId);
         return SUCCESS;
     }
