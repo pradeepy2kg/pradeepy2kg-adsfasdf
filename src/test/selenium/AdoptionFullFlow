@@ -429,22 +429,13 @@
 	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
 	<td></td>
 </tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birthRegistration-page']/a/label</td>
+	<td></td>
+</tr>
 
-<tr>
-	<td>clickAndWait</td>
-	<td>link=birth confirmation print</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprBirthConfirmationBulkPrint_index</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprBirthConfirmationBulkPrint_0</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>link=birth confirmation</td>
@@ -453,7 +444,7 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>2</td>
+	<td>3</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -483,6 +474,21 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-confirmation-form3_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/ecivil/births/eprConfrimationChangesDirectApproval.do?confirmationApprovalFlag=true&amp;bdId=4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>ConfirmationDirectApprovalIngoreWarning_ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>ConfirmationDirectApprovalIngoreWarning_approve</td>
 	<td></td>
 </tr>
 <tr>

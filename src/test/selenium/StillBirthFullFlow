@@ -84,7 +84,7 @@
 <tr>
 	<td>type</td>
 	<td>father_pinOrNic</td>
-	<td>795246625v</td>
+	<td>925246625v</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -109,7 +109,7 @@
 <tr>
 	<td>type</td>
 	<td>mother_pinOrNic</td>
-	<td>814527525v</td>
+	<td>924527525v</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -152,16 +152,6 @@
 	<td>2010-08-15</td>
 </tr>
 
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-3_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>birth-registration-form-4_</td>
-	<td></td>
-</tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-registration-form-3_0</td>

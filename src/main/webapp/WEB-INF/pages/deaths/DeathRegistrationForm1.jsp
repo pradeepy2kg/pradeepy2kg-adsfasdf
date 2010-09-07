@@ -180,10 +180,11 @@
                 n += ele.offsetLeft || 0;
                 ele = ele.offsetParent;
             }
-        var domobject = document.getElementById('bdfSerialNo');
-    if (isFieldEmpty(domobject)) {
-        domobject.value = new Date().getFullYear() + "0";
-    }     return n;
+            var domobject = document.getElementById('bdfSerialNo');
+            if (isFieldEmpty(domobject)) {
+                domobject.value = new Date().getFullYear() + "0";
+            }
+            return n;
         }
 
         function getTrueOffsetTop(ele)
@@ -348,7 +349,7 @@ function validate() {
         if (isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error11').value;
         }
-       
+
     }
 
 
@@ -473,11 +474,12 @@ function processResponse2(respObj) {
     ;
 }
 
-function initSerialNumber(){
- var domobject = document.getElementById('deathSerialNo');
-    if (isFieldEmpty(domobject)) {
-        domobject.value = new Date().getFullYear() + "0";
-    }}
+function initSerialNumber() {
+    var domObject = document.getElementById('deathSerialNo');
+    if (isFieldEmpty(domObject)) {
+        domObject.value = new Date().getFullYear() + "0";
+    }
+}
 
 function initPage() {
     initSerialNumber();
@@ -513,7 +515,14 @@ function initPage() {
         </td>
 
         <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
-        <td style="border:1px solid #000;"><s:textfield name="death.deathSerialNo" id="deathSerialNo"/></td>
+        <td style="border:1px solid #000;">
+            <s:if test="editMode">
+                <s:textfield name="register.bdfSerialNo" id="deathSerialNo" readonly="true"/>
+            </s:if>
+            <s:else>
+                <s:textfield name="register.bdfSerialNo" id="deathSerialNo"/>
+            </s:else>
+        </td>
     </tr>
     <tr>
         <td colspan="2" style="border:1px solid #000;text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக

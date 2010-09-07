@@ -35,8 +35,8 @@
                         <tr>
                             <td><s:label value="%{getText('ignoreWorning.label')}"/></td>
                             <td><s:checkbox name="ignoreWarning" id="ignoreWarning"/></td>
-                            <s:param value="true" name="directPrint"/>
-                            <s:param value="%{#request.idUKey}" name="idUKey"/>
+                            <s:hidden value="true" name="directPrint"/>
+                            <s:hidden value="%{#request.idUKey}" name="idUKey"/>
                             <td class="button" align="left">
                                 <s:submit name="approve" value="%{getText('approve.label')}"/>
                             </td>
@@ -50,7 +50,10 @@
     <div id="death-registration-details-footer">
         <div class="form-submit">
             <s:if test="pageNo==2">
-                <s:url id="newDR" action="eprInitDeathDeclaration.do"></s:url>
+                <s:url id="newDR" action="eprInitDeathDeclaration.do">
+                    <s:param name="addNewMode" value="true"/>
+                    <s:param name="oldIdUKey" value="#request.idUKey"/>
+                </s:url>
                 <s:a href="%{newDR}"><s:label value="%{getText('newDR.label')}"/></s:a>
                 <s:url id="approveDR" action="eprDirectApproveDeath.do">
                     <s:param name="idUKey" value="#request.idUKey"/>

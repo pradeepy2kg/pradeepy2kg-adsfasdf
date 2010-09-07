@@ -64,6 +64,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private int rowNumber;
 
     private long idUKey;
+    private long oldIdUKey;
 
     private boolean allowEditDeath;
     private boolean allowApproveDeath;
@@ -94,6 +95,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean ignoreWarning;
     private boolean allowPrintCertificate;
     private boolean directPrint;
+    private boolean addNewMode;
 
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
@@ -118,17 +120,18 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public String initDeathDeclaration() {
         DeathRegister ddf;
-        session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+        if (!addNewMode) {
+            session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
+        }
         ddf = new DeathRegister();
-        ddf.setDeathType(getDeathType());
+        ddf.setDeathType(deathType);
         session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
-        populate();
+        populate(ddf);
         return SUCCESS;
     }
 
     public String deathDeclaration() {
         logger.debug("Step {} of 2", pageNo);
-        populate();
         DeathRegister ddf;
         if (back) {
             populate((DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN));
@@ -170,6 +173,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
                 }
                 session.remove(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         }
+        populate(ddf);
         return "form" + pageNo;
     }
 
@@ -456,6 +460,35 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         populateBasicLists(language);
         deathType = ddf.getDeathType();
 
+        if (addNewMode) {
+            DeathRegister oldDdf = service.getById(oldIdUKey, user);
+            logger.debug("Old IDUkey : {} ", oldIdUKey);
+            death = new DeathInfo();
+            death.setDeathSerialNo(oldDdf.getDeath().getDeathSerialNo() + 1);
+            death.setDateOfRegistration(oldDdf.getDeath().getDateOfRegistration());
+            death.setDeathDivision(oldDdf.getDeath().getDeathDivision());
+
+            deathRegister = new DeathRegister();
+            deathRegister.setDeathType(DeathRegister.Type.NORMAL);
+
+            deathDistrictId = oldDdf.getDeath().getDeathDivision().getDistrict().getDistrictUKey();
+            deathDivisionId = oldDdf.getDeath().getDeathDivision().getBdDivisionUKey();
+            dsDivisionId = oldDdf.getDeath().getDeathDivision().getDsDivision().getDsDivisionUKey();
+
+            populateDynamicLists(language);
+
+            notifyingAuthority = new NotifyingAuthorityInfo();
+            notifyingAuthority.setNotifyingAuthorityPIN(oldDdf.getNotifyingAuthority().getNotifyingAuthorityPIN());
+            notifyingAuthority.setNotifyingAuthorityName(oldDdf.getNotifyingAuthority().getNotifyingAuthorityName());
+            notifyingAuthority.setNotifyingAuthorityAddress(oldDdf.getNotifyingAuthority().getNotifyingAuthorityAddress());
+            notifyingAuthority.setNotifyingAuthoritySignDate(oldDdf.getNotifyingAuthority().getNotifyingAuthoritySignDate());
+
+            ddf.setNotifyingAuthority(notifyingAuthority);
+            ddf.setDeath(death);
+            session.put(WebConstants.SESSION_DEATH_DECLARATION_BEAN, ddf);
+
+        }
+        populateDynamicLists(language);
         beanPopulate(ddf);
 
         boolean idsPopulated = false;
@@ -998,5 +1031,21 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDirectPrint(boolean directPrint) {
         this.directPrint = directPrint;
+    }
+
+    public boolean isAddNewMode() {
+        return addNewMode;
+    }
+
+    public void setAddNewMode(boolean addNewMode) {
+        this.addNewMode = addNewMode;
+    }
+
+    public long getOldIdUKey() {
+        return oldIdUKey;
+    }
+
+    public void setOldIdUKey(long oldIdUKey) {
+        this.oldIdUKey = oldIdUKey;
     }
 }

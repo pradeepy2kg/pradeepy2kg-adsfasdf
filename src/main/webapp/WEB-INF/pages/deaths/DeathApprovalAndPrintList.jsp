@@ -202,6 +202,7 @@
 
                 <s:url id="editSelected" action="eprDeathEditMode.do">
                     <s:param name="idUKey" value="idUKey"/>
+                    <s:param name="editMode" value="true"/>
                 </s:url>
 
                 <s:url id="approveSelected" action="eprApproveDeath.do">

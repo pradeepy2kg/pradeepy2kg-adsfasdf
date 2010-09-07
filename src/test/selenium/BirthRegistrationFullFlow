@@ -39,7 +39,7 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2010000003</td>
+	<td>2010000033</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -94,7 +94,7 @@
 <tr>
 	<td>type</td>
 	<td>father_pinOrNic</td>
-	<td>795246625v</td>
+	<td>905246625v</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -119,7 +119,7 @@
 <tr>
 	<td>type</td>
 	<td>mother_pinOrNic</td>
-	<td>814527525v</td>
+	<td>924527525v</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -244,7 +244,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උප්පැන්න ලියාපදිංචිය අනුමත කිරීම</td>
+	<td>link=උපත් ලියාපදිංචි අනුමතය</td>
 	<td></td>
 </tr>
 <tr>
@@ -391,14 +391,30 @@
 	<td>birth-confirmation-form3_0</td>
 	<td></td>
 </tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>ConfirmationDirectApprovalIngoreWarning_ignoreWarning</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>link=මුද්‍රණය අවසානයි</td>
+	<td>ConfirmationDirectApprovalIngoreWarning_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උප්පැන්න සහතික මුද්ද්‍රනය</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -406,7 +422,6 @@
 	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
