@@ -117,36 +117,50 @@
         <thead>
         <tr class="table-title">
             <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
-            <th width="20px"><s:label value="%{getText('label.state')}"/></th>
+            <th width="50px"><s:label value="%{getText('label.name')}"/></th>
+            <th width="20px"><s:label value="%{getText('label.active')}"/></th>
             <th width="20px"><s:label value="%{getText('label.type')}"/></th>
             <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
             <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
         </tr>
         </thead>
-        <%--        <s:if test="registrarList.size>0">
-            <s:iterator status="registrarStatus" value="registrarList" id="registrarList">
+        <s:if test="assignmentList.size>0">
+            <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
                 <tbody>
+                <s:url action="eprRegistrarsView.do" id="assign">
+                    <s:param name="registrarUkey" value="registrar.registrarUKey"/>
+                </s:url>
                 <tr>
-                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
-                    <td><s:property value="fullNameInOfficialLanguage"/> </td>
+                    <s:if test="birthDivision != null">
+                        <td><s:property value="birthDivision.enDivisionName"/></td>
+                    </s:if>
+                    <s:if test="deathDivision != null">
+                        <td><s:property value="deathDivision.enDivisionName"/></td>
+                    </s:if>
+                    <s:if test="marriageDivision != null">
+                        <td><s:property value="marriageDivision.enDivisionName"/></td>
+                    </s:if>
+
+                    <td><s:a href="%{assign}"><s:property value="registrar.fullNameInOfficialLanguage"/></s:a></td>
+                    <td><s:property value="lifeCycleInfo.active"/></td>
+                    <td><s:property value="type"/></td>
+                    <td><s:property value="permanentDate"/></td>
+                    <td><s:property value="terminationDate"/></td>
                 </tr>
                 </tbody>
             </s:iterator>
-        </s:if>--%>
-        <tbody>
+        </s:if>
+        <%--        <tbody>
         <s:url action="eprRegistrarsView.do" id="registrar"/>
         <tr>
             <td><s:a href="%{registrar}"> <s:label value="bdDivision"/></s:a></td>
+            <td><s:label value="name"/></td>
             <td><s:label value="state"/></td>
             <td><s:label value="type"/></td>
             <td><s:label value="start date"/></td>
             <td><s:label value="end date"/></td>
         </tr>
-        </tbody>
+        </tbody>--%>
     </table>
 </div>
 

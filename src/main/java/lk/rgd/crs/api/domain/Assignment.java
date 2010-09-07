@@ -24,9 +24,9 @@ import java.util.Date;
     @NamedQuery(name = "get.marriage.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
         " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
         " AND a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
-    @NamedQuery(name = "get.all.assignments", query = "SELECT asg FROM Assignment asg"),
-    //todo implement follow query
-    @NamedQuery(name = "get.by.registrarUKey", query = "SELECT asg FROM Assignment asg")    
+    @NamedQuery(name = "get.all.assignments", query = "SELECT a FROM Assignment a"),
+    @NamedQuery(name = "get.by.registrarUKey", query = "SELECT a FROM Assignment a " +
+        "WHERE a.registrar.registrarUKey = :registrarUKey")
 })
 public class Assignment implements Serializable {
 
@@ -47,7 +47,7 @@ public class Assignment implements Serializable {
     /**
      * The Registrar against whom this assignment exists
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "registrarUKey", nullable = false, updatable = false)
     private Registrar registrar;
 
