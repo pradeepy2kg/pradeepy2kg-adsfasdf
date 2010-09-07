@@ -1,13 +1,8 @@
 package lk.rgd.crs.api.service;
 
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.Assignment;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Registrar;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -53,27 +48,26 @@ public interface RegistrarManagementService {
     /**
      * Inactivate an assignment of a registrar
      *
-     * @param assignment the assignment being deactivated
+     * @param assignmentUKey
      * @param user       the user invoking the action
      */
-    public void inactivateAssignment(Assignment assignment, User user);
+    public void inactivateAssignment(long assignmentUKey, User user);
 
     /**
      * Inactivate a Registrar
      *
-     * @param registrar the registrar being inactivated
+     * @param registrarUKey
      * @param user      the user invoking the action
      */
-    public void inactivateRegistrar(Registrar registrar, User user);
+    public void inactivateRegistrar(long registrarUKey, User user);
 
     /**
      * Return all assignments for a given Registrar
      *
-     * @param registrar the registrar whose assignments are required
-     * @param user      the user invoking the action
-     * @return
+     * @param registrarUKey
+     *@param user      the user invoking the action  @return
      */
-    public List<Assignment> getAssignments(Registrar registrar, User user);
+    public List<Assignment> getAssignments(long registrarUKey, User user);
 
     /**
      * Get Assignments for the given DS Division

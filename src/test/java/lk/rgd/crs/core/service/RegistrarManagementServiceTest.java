@@ -105,7 +105,7 @@ public class RegistrarManagementServiceTest extends TestCase {
         Assert.assertEquals(2, results.size());
 
         // inactivate assignment
-        regMgtSvc.inactivateAssignment(assign3, admin);
+        regMgtSvc.inactivateAssignment(assign3.getAssignmentUKey(), admin);
 
         results = regMgtSvc.getAssignmentsByDSDivision(
             bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
