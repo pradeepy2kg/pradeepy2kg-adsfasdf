@@ -66,6 +66,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private BirthRegisterInfo register;
     private User user;
     private OldBDInfo oldBDInfo;
+    private Alteration27 alt27;
+    private Alteration27A alt27A;
+    private Alteration52_1 alt52_1;
+    private DeclarantInfo declarant;
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
@@ -839,16 +843,23 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String initBirthAlteration() {
+        pageNo=0;
         populateBasicLists(user.getPrefLanguage());
         populateDynamicLists(user.getPrefLanguage());
-        pageNo = 0;
         return SUCCESS;
     }
-
-    public String loadBirthAlteration() {
+    public String birthAlterationSearch(){
+        pageNo=1;
         populateBasicLists(user.getPrefLanguage());
         populateDynamicLists(user.getPrefLanguage());
-        pageNo = sectionOfAct;
+        return SUCCESS;
+    }
+    public String birthAlteration() {
+        
+  //      register.setCaseFileNumber("1200");
+       // populateBasicLists(user.getPrefLanguage());
+     //   populateDynamicLists(user.getPrefLanguage());
+
         return SUCCESS;
     }
 
@@ -1432,5 +1443,37 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSectionOfAct(int sectionOfAct) {
         this.sectionOfAct = sectionOfAct;
+    }
+
+    public Alteration27 getAlt27() {
+        return alt27;
+    }
+
+    public void setAlt27(Alteration27 alt27) {
+        this.alt27 = alt27;
+    }
+
+    public Alteration27A getAlt27A() {
+        return alt27A;
+    }
+
+    public void setAlt27A(Alteration27A alt27A) {
+        this.alt27A = alt27A;
+    }
+
+    public Alteration52_1 getAlt52_1() {
+        return alt52_1;
+    }
+
+    public void setAlt52_1(Alteration52_1 alt52_1) {
+        this.alt52_1 = alt52_1;
+    }
+
+    public DeclarantInfo getDeclarant() {
+        return declarant;
+    }
+
+    public void setDeclarant(DeclarantInfo declarant) {
+        this.declarant = declarant;
     }
 }

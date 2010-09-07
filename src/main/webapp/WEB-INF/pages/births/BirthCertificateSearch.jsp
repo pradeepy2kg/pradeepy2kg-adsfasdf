@@ -10,7 +10,6 @@
 <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="error2" value="%{getText('p1.serial.text')}"/>
 <s:hidden id="error3" value="%{getText('p1.SerialNum.error.value')}"/>
-
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
 <script>
 
