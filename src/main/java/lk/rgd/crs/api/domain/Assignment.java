@@ -11,13 +11,23 @@ import java.util.Date;
  *
  * @author asankha
  */
-@NamedQueries({
-
-        @NamedQuery(name = "get.all.assignments", query = "SELECT asg FROM Assignment asg"),
-        //todo implement follow query
-        @NamedQuery(name = "get.by.registrarUKey", query = "SELECT asg FROM Assignment asg")})
 @Entity
 @Table(name = "ASSIGNMENT", schema = "CRS")
+@NamedQueries({
+    // Do NOT try to optimize the below three queries into one
+    @NamedQuery(name = "get.birth.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
+        " AND a.birthDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
+    @NamedQuery(name = "get.death.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
+        " AND a.deathDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
+    @NamedQuery(name = "get.marriage.assignments.by.state.type.and.dsdivision", query = "SELECT a FROM Assignment a " +
+        " WHERE a.lifeCycleInfo.active = :active AND a.type = :type " +
+        " AND a.marriageDivision.dsDivision.dsDivisionUKey = :dsDivisionUKey"),
+    @NamedQuery(name = "get.all.assignments", query = "SELECT asg FROM Assignment asg"),
+    //todo implement follow query
+    @NamedQuery(name = "get.by.registrarUKey", query = "SELECT asg FROM Assignment asg")    
+})
 public class Assignment implements Serializable {
 
     /**
@@ -44,19 +54,19 @@ public class Assignment implements Serializable {
     /**
      * The BD division for birth registration
      */
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "birthDivisionUKey", updatable = false)
     private BDDivision birthDivision;
     /**
      * The BD division for death registration
      */
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "deathDivisionUKey", updatable = false)
     private BDDivision deathDivision;
     /**
      * The MR division for marriage registration
      */
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "marriageDivisionUKey", updatable = false)
     private MRDivision marriageDivision;
 

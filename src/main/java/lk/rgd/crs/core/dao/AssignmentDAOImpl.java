@@ -1,5 +1,6 @@
 package lk.rgd.crs.core.dao;
 
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.AssignmentDAO;
@@ -63,6 +64,19 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
     /**
      * @inheritDoc
      */
+    public List<Assignment> getAssignmentsByTypeAndDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active) {
+        Query q = null;
+        switch (type) {
+            case BIRTH   : q = em.createNamedQuery("get.birth.assignments.by.state.type.and.dsdivision"); break;
+            case DEATH   : q = em.createNamedQuery("get.death.assignments.by.state.type.and.dsdivision"); break;
+            case MARRIAGE: q = em.createNamedQuery("get.marriage.assignments.by.state.type.and.dsdivision"); break;
+        }
+        q.setParameter("dsDivisionUKey", dsDivisionUKey);
+        q.setParameter("type", type);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
     public List<Assignment> getAllAssignments(User user) {
         Query q = em.createNamedQuery("get.all.assignments");
         return q.getResultList();

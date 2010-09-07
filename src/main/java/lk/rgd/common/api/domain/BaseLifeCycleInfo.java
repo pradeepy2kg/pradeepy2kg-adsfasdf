@@ -17,7 +17,7 @@ public class BaseLifeCycleInfo implements Serializable {
      * Is this record currently considered as active?
      */
     @Column(nullable = false)
-    private boolean active;
+    private boolean active = true;
 
     @Column(nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)

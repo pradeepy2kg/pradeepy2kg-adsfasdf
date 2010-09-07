@@ -57,17 +57,6 @@ public class RegistrarDAOImpl extends BaseDAO implements RegistrarDAO {
     /**
      * @inheritDoc
      */
-    public List<Registrar> getRegistrarsByTypeAndDSDivision(DSDivision dsDivision, Assignment.Type type, boolean active) {
-        // TODO
-        if (2 > 1) throw new UnsupportedOperationException("Not yet implemented - please check with Asankha");
-        Query q = em.createNamedQuery("get.registrars.by.type.and.dsdivision");
-        q.setParameter("dsDivision", dsDivision.getDsDivisionUKey());
-        return q.getResultList();
-    }
-
-    /**
-     * @inheritDoc
-     */
 
     public List<Registrar> getRegistrarByPin(long pin) {
         Query q = em.createNamedQuery("get.registrars.by.pin");

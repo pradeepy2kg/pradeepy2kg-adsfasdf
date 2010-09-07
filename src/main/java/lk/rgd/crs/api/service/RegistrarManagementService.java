@@ -76,15 +76,14 @@ public interface RegistrarManagementService {
     public List<Assignment> getAssignments(Registrar registrar, User user);
 
     /**
-     * Get registrars for the given DS Division
-     *
-     * @param dsDivision the DS division whose registrars are required
-     * @param type       the type of registrars interested in
-     * @param active     return only active registrars if true, else return only inactive registrars
-     * @param user       the user invoking the action
-     * @return the list of qualifying registrars
+     * Get Assignments for the given DS Division
+     * @param dsDivisionUKey the DS division unique ID whose assignments are required
+     * @param type the type of assignments interested in
+     * @param active return only active assignments if true, else return only inactive assignments
+     * @param user the user invoking the action
+     * @return the list of qualifying assignments
      */
-    public List<Registrar> getRegistrarsByDSDivision(DSDivision dsDivision, Assignment.Type type, boolean active, User user);
+    public List<Assignment> getAssignmentsByDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active, User user);
 
     /**
      * get registrar by idUKey
