@@ -11,6 +11,11 @@ import java.util.Date;
  *
  * @author asankha
  */
+@NamedQueries({
+
+        @NamedQuery(name = "get.all.assignments", query = "SELECT asg FROM Assignment asg"),
+        //todo implement follow query
+        @NamedQuery(name = "get.by.registrarUKey", query = "SELECT asg FROM Assignment asg")})
 @Entity
 @Table(name = "ASSIGNMENT", schema = "CRS")
 public class Assignment implements Serializable {
@@ -32,8 +37,8 @@ public class Assignment implements Serializable {
     /**
      * The Registrar against whom this assignment exists
      */
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="registrarUKey", nullable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "registrarUKey", nullable = false, updatable = false)
     private Registrar registrar;
 
     /**
@@ -61,7 +66,7 @@ public class Assignment implements Serializable {
     @Enumerated
     @Column(nullable = false)
     private Type type;
-    
+
     /**
      * Date of appointment
      */
@@ -151,5 +156,13 @@ public class Assignment implements Serializable {
 
     public void setLifeCycleInfo(BaseLifeCycleInfo lifeCycleInfo) {
         this.lifeCycleInfo = lifeCycleInfo;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

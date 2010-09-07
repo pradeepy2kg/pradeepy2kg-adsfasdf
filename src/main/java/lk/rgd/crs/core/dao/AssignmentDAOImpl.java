@@ -59,4 +59,12 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
         q.setParameter("registrarUKey", registrar.getRegistrarUKey());
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public List<Assignment> getAllAssignments(User user) {
+        Query q = em.createNamedQuery("get.all.assignments");
+        return q.getResultList();
+    }
 }

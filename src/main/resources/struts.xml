@@ -749,6 +749,24 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+        <action name="eprAssignmentAdd" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="assignmentAdd">
+            <result type="tiles" name="success">epr.addAssignment</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprAssignmentAddDirect" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="assignmentAddPageLoad">
+            <result type="tiles" name="success">epr.addAssignment</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprSearchRegistrarByPin" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="searchRegistrarByPin">
+            <result type="tiles" name="success">epr.addAssignment</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
 
         <action name="eprInitUserCreation" class="lk.rgd.crs.web.action.UserManagmentAction"
                 method="initUser">
