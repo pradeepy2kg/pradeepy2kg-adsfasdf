@@ -65,12 +65,7 @@
             <table class="table_reg_datePicker_page_01">
                 <tr>
                     <td>
-                        <s:if test="birthType.ordinal() == 1">
-                            <label><span class="font-8">යොමුකළ දිනය<br>----------<br>Submitted Date</span></label>
-                        </s:if>
-                        <s:else>
-                            <label><span class="font-8">ලියාපදිංචි කල දිනය<br>* In Tamil<br>Date of Registration</span></label>
-                        </s:else>
+                        <label><span class="font-8">යොමුකළ දිනය<br>* In Tamil<br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="%{#session.birthRegister.register.dateOfRegistration}"/>
                     </td>
@@ -80,7 +75,7 @@
     </tr>
     <tr>
         <td colspan="3">
-            <s:if test="birthType.ordinal() == 1">
+            <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
                 තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
@@ -302,7 +297,7 @@
             <s:label name="" value="%{getText('unknown.label')}"/>
         </s:elseif>
     </td>
-    <s:if test="birthType.ordinal() == 1">
+    <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත් බර<br>பிறப்பு நிறை<br>Birth
             Weight (kg)</label></td>
         <td><s:label value="%{#session.birthRegister.child.childBirthWeight}"

@@ -58,7 +58,7 @@
 
         <s:hidden name="pageNo" value="4"/>
 
-        <s:if test="session.birthRegister.register.birthType.ordinal() == 1">
+        <s:if test="session.birthRegister.register.birthType.ordinal() == 1 || session.birthRegister.register.birthType.ordinal() == 3">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
                 <div id="late-belated-registration" class="font-9">
                     <div id="late-belated-registration-title" class="font-12">

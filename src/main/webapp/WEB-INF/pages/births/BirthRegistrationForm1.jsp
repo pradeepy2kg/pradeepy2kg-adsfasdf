@@ -11,7 +11,7 @@
     <%--still birth--%>
     <s:set name="row" value="1"/>
 </s:if>
-<s:elseif test="birthType.ordinal()==1">
+<s:elseif test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
     <%--live birth--%>
     <s:set name="row" value="1"/>
 </s:elseif>
@@ -102,13 +102,8 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
-    }
-
-    ;
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    };
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -132,10 +127,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
@@ -152,7 +144,7 @@ function validate() {
         commonTags();
         stillBirthCommonTags(check);
     }
-    if (declarationType.value == 1) {
+    if (declarationType.value == 1 || declarationType.value == 3) {
         commonTags();
         liveBirthCommonTags(check)
         dateRange();
@@ -280,7 +272,7 @@ function dateRange() {
         }
     }
 }
-function initSerialNumber() {
+function initSerialNumber(){
     var domobject = document.getElementById('bdfSerialNo');
     if (isFieldEmpty(domobject)) {
         domobject.value = new Date().getFullYear() + "0";
@@ -305,7 +297,7 @@ function initPage() {
         <td width="300px"></td>
         <td align="center" style="font-size:12pt; width:430px"><img src="<s:url value="/images/official-logo.png"/>"
                                                                     alt=""/><br>
-            <s:if test="birthType.ordinal() == 1">
+            <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 <label>උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
                     <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Birth</label>
@@ -352,15 +344,14 @@ function initPage() {
                     <td>
                         <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
                     </td>
-                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield
-                            name="register.dateOfRegistration" id="submitDatePicker"/></td>
+                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>
                 </tr>
             </table>
         </td>
     </tr>
     <tr>
         <td colspan="3">
-            <s:if test="birthType.ordinal() == 1">
+            <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
                 තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත ලියාපදිංචි කරනු ලැබේ.
@@ -556,7 +547,7 @@ function initPage() {
                 name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
     </td>
     <s:if test="birthType.ordinal() != 0">
-        <s:if test="birthType.ordinal() == 1">
+        <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
             <td colspan="2">
                 <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
                     බර<br>பிறப்பு நிறை<br>Birth
@@ -573,24 +564,6 @@ function initPage() {
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
                                      cssStyle="width:95%;"/></td>
     </s:if>
-        <%--<s:if test="birthType.ordinal() == 1">
-            <td colspan="2">
-                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                    බර<br>பிறப்பு நிறை<br>Birth
-                    Weight (kg)</label>
-            </td>
-            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                         cssStyle="width:95%;"/></td>
-        </s:if>
-        <s:if test="birthType.ordinal() == 2">
-            <td colspan="2">
-                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපත්
-                    බර (දන්නේ නමි)<br>பிறப்பு
-                    நிறை<br>Birth Weight, if known (kg)</label>
-            </td>
-            <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                         cssStyle="width:95%;"/></td>
-        </s:if>--%>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
             <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
