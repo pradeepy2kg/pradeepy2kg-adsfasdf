@@ -239,6 +239,7 @@ function initPage() {
     document.getElementById('birthDivisionId').disabled = true;
     document.getElementById('birthRegistrationSrialNum').disabled = true;
     document.getElementById('availabeSerial').disabled = true;
+
 }
 
 function enableCertificateNumber(mode) {

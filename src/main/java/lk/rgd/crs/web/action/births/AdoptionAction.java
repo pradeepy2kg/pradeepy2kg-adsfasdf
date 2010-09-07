@@ -299,7 +299,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(birthDivisionId).getDistrict().getDistrictUKey(), language);
                 dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(birthDivisionId).getDsDivision().getDsDivisionUKey(), language);
             }
-
             return SUCCESS;
         }
     }

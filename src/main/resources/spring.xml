@@ -64,6 +64,7 @@
     <bean id="eventDAOImpl" class="lk.rgd.common.core.dao.EventDAOImpl"/>
     <bean id="registrarDAOImpl" class="lk.rgd.crs.core.dao.RegistrarDAOImpl"/>
     <bean id="assignmentDAOImpl" class="lk.rgd.crs.core.dao.AssignmentDAOImpl"/>
+    <bean id="birthAlterationDAOImpl" class="lk.rgd.crs.core.dao.BirthAlterationDAOImpl"/>
 
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
@@ -136,6 +137,19 @@
         <property name="target">
             <bean class="lk.rgd.crs.core.service.AdoptionOrderServiceImpl">
                 <constructor-arg ref="adoptionOrderDAOImpl"/>
+            </bean>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>serviceAuditor</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="birthAlterationService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="lk.rgd.crs.core.service.BirthAlterationServiceImpl">
+                <constructor-arg ref="birthAlterationDAOImpl"/>
             </bean>
         </property>
         <property name="interceptorNames">

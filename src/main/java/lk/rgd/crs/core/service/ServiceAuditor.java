@@ -12,10 +12,7 @@ import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.AdoptionOrderService;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.service.MasterDataManagementService;
+import lk.rgd.crs.api.service.*;
 import lk.rgd.prs.api.domain.PINNumber;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import lk.rgd.prs.core.service.PopulationRegistryImpl;
@@ -55,6 +52,7 @@ public class ServiceAuditor implements MethodInterceptor {
         xstream.alias("birthDeclatation", BirthDeclaration.class);
         xstream.alias("deathRegister", DeathRegister.class);
         xstream.alias("registrar", Registrar.class);
+        xstream.alias("birthAlteration",BirthAlteration.class);
 
         // the service classes that need to be audited
         serviceClasses = new HashMap<Class, Class>();
@@ -63,6 +61,7 @@ public class ServiceAuditor implements MethodInterceptor {
         serviceClasses.put(AdoptionOrderService.class, AdoptionOrderServiceImpl.class);
         serviceClasses.put(MasterDataManagementService.class, MasterDataManagementServiceImpl.class);
         serviceClasses.put(PopulationRegistry.class, PopulationRegistryImpl.class);
+        serviceClasses.put(BirthAlterationService.class,BirthAlterationServiceImpl.class);
 
         // the domain objects to be debug audited
         debugClasses = new ArrayList<Class>();
@@ -72,6 +71,7 @@ public class ServiceAuditor implements MethodInterceptor {
         debugClasses.add(Assignment.class);
         debugClasses.add(Registrar.class);
         debugClasses.add(BirthCertificateSearch.class);
+        debugClasses.add(BirthAlteration.class);
     }
 
     /**
@@ -232,6 +232,8 @@ public class ServiceAuditor implements MethodInterceptor {
             event.setRecordId(((Registrar) obj).getRegistrarUKey());
         } else if (obj instanceof BirthCertificateSearch) {
             event.setRecordId(((BirthCertificateSearch) obj).getSearchUKey());
+        } else if(obj instanceof BirthAlteration){
+            event.setRecordId(((BirthAlteration)obj).getIdUKey());
         }
     }
 }
