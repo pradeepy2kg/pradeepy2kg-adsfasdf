@@ -1498,7 +1498,7 @@ public class BirthRegistrationServiceImpl implements
     private void validateAccessToDSDivison(DSDivision dsDivision, User user) {
         if (!(User.State.ACTIVE == user.getStatus() &&
             (Role.ROLE_RG.equals(user.getRole().getRoleId())
-                || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrictId()))
+                || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey()))
                 || (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
             )
         )) {
