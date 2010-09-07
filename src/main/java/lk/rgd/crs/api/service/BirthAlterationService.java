@@ -28,15 +28,17 @@ public interface BirthAlterationService {
      * remove a requested birth alteration based on given idUKey
      *
      * @param idUKey the unique ID of the BirthAlteration to remove
+     * @param user the user initiating the action
      */
-    public void deleteBirthAlteration(long idUKey);
+    public void deleteBirthAlteration(long idUKey,User user);
 
     /**
      * returns a Birth alteration object for the given idUKey
      *
      * @param idUKey Birth Alteration Id for the given
      *               birth alteration
+     * @param user the user initiating the action
      * @return BirthAlteration or null if none exist
      */
-    public BirthAlteration getById(long idUKey);
+    public BirthAlteration getById(long idUKey,User user);
 }
