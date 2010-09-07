@@ -190,11 +190,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
         }
 
         try {
-            // populate with initial data
-            //SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-            //    new ClassPathResource("database/populate_database.sql"), false);
-            //logger.info("Populated the tables with initial data from : populate_database.sql");
-
             // populate with sample data
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                 new ClassPathResource("database/populate_sample_data.sql"), false);
@@ -203,12 +198,6 @@ public class DatabaseInitializer implements ApplicationContextAware {
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                 new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");
-
-            /*if (!mysql) {
-                SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
-                        new ClassPathResource("database/populate_sample_crs.sql"), false);
-                logger.info("Populated the tables with sample data from : populate_sample_crs.sql");
-            }*/
 
         } catch (Exception e) {
             logger.error("Error populating the database with initial data from : populate_sample_data/crs/prs.sql", e);

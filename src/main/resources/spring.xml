@@ -18,7 +18,7 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!--A special bean that initializes the in-memory test database with populate_database.sql-->
+    <!--A special bean that initializes the database -->
     <bean id="dbInit" class="lk.rgd.crs.core.DatabaseInitializer">
         <property name="dataSource" ref="dataSource"/>
         <property name="createCleanDB" value="false"/>
