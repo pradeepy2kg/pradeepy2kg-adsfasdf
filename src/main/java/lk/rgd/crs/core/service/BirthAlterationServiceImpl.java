@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 /**
  * The central service managing the CRS Birth Alteration process
  *
@@ -83,10 +85,31 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public BirthAlteration getById(long idUKey, User user) {
-        logger.debug("loading birth alteration record : {}",idUKey);
-        BirthAlteration ba=birthAlterationDAO.getById(idUKey);
-        validateAccessOfUser(ba,user);
+        logger.debug("loading birth alteration record : {}", idUKey);
+        BirthAlteration ba = birthAlterationDAO.getById(idUKey);
+        validateAccessOfUser(ba, user);
         return ba;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void approveBirthAlteration(long idUKey, User user) {
+        //todo validations
+        logger.debug("Attempt to approve birth alteration record : {} ", idUKey);
+        BirthAlteration ba = birthAlterationDAO.getById(idUKey);
+        /* if (ba.getStatus() == BirthAlteration.State.DATA_ENTRY) {
+            validateAccessOfUser(ba,user);
+            //ba.setStatus(BirthAlteration.State.APPROVE);
+            ba.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+            ba.getLifeCycleInfo().setApprovalOrRejectUser(user);
+        } else {
+           handleException("Cannot approve birth alteration " + idUKey +
+                " Illegal state : " + ba.getStatus(), ErrorCodes.ILLEGAL_STATE);
+        }*/
+        birthAlterationDAO.updateBirthAlteration(ba, user);
+        logger.debug("Updated birth alteration : {}", idUKey);
     }
 
     private void validateAccessOfUser(BirthAlteration ba, User user) {
