@@ -83,8 +83,10 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public BirthAlteration getById(long idUKey, User user) {
-        //todo validations
-        return birthAlterationDAO.getById(idUKey);
+        logger.debug("loading birth alteration record : {}",idUKey);
+        BirthAlteration ba=birthAlterationDAO.getById(idUKey);
+        validateAccessOfUser(ba,user);
+        return ba;
     }
 
     private void validateAccessOfUser(BirthAlteration ba, User user) {
