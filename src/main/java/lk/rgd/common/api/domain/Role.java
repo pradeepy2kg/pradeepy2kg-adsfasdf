@@ -1,6 +1,7 @@
 package lk.rgd.common.api.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.BitSet;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ROLES", schema = "COMMON")
-public class Role {
+public class Role implements Serializable {
     /** The System Administrator */
     public static final String ROLE_ADMIN = "ADMIN";
     /** The Registrar General */
