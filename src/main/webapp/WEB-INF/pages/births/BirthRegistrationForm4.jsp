@@ -6,7 +6,7 @@
     <%--still birth--%>
     <s:set name="row" value="29"/>
 </s:if>
-<s:elseif test="birthType.ordinal()==1">
+<s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
     <s:set name="row" value="34"/>
 </s:elseif>
@@ -167,7 +167,7 @@
 
         <s:hidden name="pageNo" value="4"/>
 
-        <s:if test="birthType.ordinal() == 1">
+        <s:if test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
             <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
                 <table class="table_reg_page_04" width="100%" cellspacing="0" style="margin-top:20px;">
                     <caption></caption>

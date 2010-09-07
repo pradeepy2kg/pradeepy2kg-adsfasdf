@@ -100,7 +100,7 @@
                 grandfather of the child born in Sri Lanka</label></td>
         </tr>
         <tr>
-            <td rowspan="2" style="width:75px"></td>
+            <td rowspan="2" style="width:55px"></td>
             <td><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
             <td colspan="4"><s:label value="%{#session.birthRegister.grandFather.grandFatherFullName}"
                                      cssStyle="width:98%;"/></td>

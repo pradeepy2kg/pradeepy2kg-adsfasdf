@@ -5,7 +5,7 @@
     <%--still birth--%>
     <s:set name="row" value="23"/>
 </s:if>
-<s:elseif test="birthType.ordinal()==1">
+<s:elseif test="birthType.ordinal()==1 || birthType.ordinal()==3">
     <%--live birth--%>
     <s:set name="row" value="25"/>
 </s:elseif>
