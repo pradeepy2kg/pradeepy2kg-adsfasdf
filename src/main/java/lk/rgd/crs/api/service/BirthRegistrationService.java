@@ -487,8 +487,7 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision, User user);
 
     /**
-     * Returns the Birth Declaration object for a given Id for Adoption registration
-     * purposes here it doesn't consider the user's allowed district or division
+     * Returns the Birth Declaration object for a given Id 
      *
      * @param bdId Birth Declarion Id for the given declaration
      * @param user the user making the request
