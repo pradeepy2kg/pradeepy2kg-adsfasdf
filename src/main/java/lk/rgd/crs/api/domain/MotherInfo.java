@@ -78,54 +78,10 @@ public class MotherInfo {
     private Integer motherAgeAtBirth;
 
     /**
-     * Mother's DS division ID
-     */
-    @OneToOne
-    @JoinColumn(name = "motherDSDivisionUKey")
-    private DSDivision motherDSDivision;
-
-    /**
-     * Mothers DS Division name as a String in the preferred language
-     */
-    @Transient
-    private String motherDsDivisionPrint;
-
-    /**
-     * Mothers district name as a String in the preferred language
-     */
-    @Transient
-    private String motherDistrictPrint;
-
-    /**
      * Address of mother
      */
     @Column(nullable = true, length = 255)
     private String motherAddress;
-
-    /**
-     * Phone number of mother
-     */
-    @Column(nullable = true, length = 30)
-    private String motherPhoneNo;
-
-    /**
-     * Email of mother
-     */
-    @Column(nullable = true, length = 30)
-    private String motherEmail;
-
-    /**
-     * Mothers admission number to the hospital
-     */
-    @Column(nullable = true, length = 15)
-    private String motherAdmissionNo;
-
-    /**
-     * Date the mother admitted that she was pregnant.
-     */
-    @Column(nullable = true)
-    @Temporal(value = TemporalType.DATE)
-    private Date motherAdmissionDate;
 
     public String getMotherNICorPIN() {
         return motherNICorPIN;
@@ -199,46 +155,6 @@ public class MotherInfo {
         this.motherAddress = WebUtils.filterBlanksAndToUpper(motherAddress);
     }
 
-    public String getMotherPhoneNo() {
-        return motherPhoneNo;
-    }
-
-    public void setMotherPhoneNo(String motherPhoneNo) {
-        this.motherPhoneNo = WebUtils.filterBlanks(motherPhoneNo);
-    }
-
-    public String getMotherEmail() {
-        return motherEmail;
-    }
-
-    public void setMotherEmail(String motherEmail) {
-        this.motherEmail = WebUtils.filterBlanks(motherEmail);
-    }
-
-    public String getMotherAdmissionNo() {
-        return motherAdmissionNo;
-    }
-
-    public void setMotherAdmissionNo(String motherAdmissionNo) {
-        this.motherAdmissionNo = WebUtils.filterBlanks(motherAdmissionNo);
-    }
-
-    public Date getMotherAdmissionDate() {
-        return motherAdmissionDate;
-    }
-
-    public void setMotherAdmissionDate(Date motherAdmissionDate) {
-        this.motherAdmissionDate = motherAdmissionDate;
-    }
-
-    public DSDivision getMotherDSDivision() {
-        return motherDSDivision;
-    }
-
-    public void setMotherDSDivision(DSDivision motherDSDivision) {
-        this.motherDSDivision = motherDSDivision;
-    }
-
     public String getMotherRacePrint() {
         return motherRacePrint;
     }
@@ -253,21 +169,5 @@ public class MotherInfo {
 
     public void setMotherCountryPrint(String motherCountryPrint) {
         this.motherCountryPrint = motherCountryPrint;
-    }
-
-    public String getMotherDsDivisionPrint() {
-        return motherDsDivisionPrint;
-    }
-
-    public void setMotherDsDivisionPrint(String motherDsDivisionPrint) {
-        this.motherDsDivisionPrint = motherDsDivisionPrint;
-    }
-
-    public String getMotherDistrictPrint() {
-        return motherDistrictPrint;
-    }
-
-    public void setMotherDistrictPrint(String motherDistrictPrint) {
-        this.motherDistrictPrint = motherDistrictPrint;
     }
 }

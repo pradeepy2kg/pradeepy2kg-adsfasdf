@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
+import java.util.BitSet;
 
 /**
  * @author Ashoka Ekanayaka
