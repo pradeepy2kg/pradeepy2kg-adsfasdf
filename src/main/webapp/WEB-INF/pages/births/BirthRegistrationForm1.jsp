@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -127,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -272,8 +280,11 @@ function dateRange() {
         }
     }
 }
-function initSerialNumber(){
-    document.getElementById('bdfSerialNo').value= new Date().getFullYear()+"0";
+function initSerialNumber() {
+    var domobject = document.getElementById('bdfSerialNo');
+    if (isFieldEmpty(domobject)) {
+        domobject.value = new Date().getFullYear() + "0";
+    }
 }
 
 function initPage() {
@@ -341,7 +352,8 @@ function initPage() {
                     <td>
                         <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
                     </td>
-                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield name="register.dateOfRegistration" id="submitDatePicker"/></td>
+                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield
+                            name="register.dateOfRegistration" id="submitDatePicker"/></td>
                 </tr>
             </table>
         </td>

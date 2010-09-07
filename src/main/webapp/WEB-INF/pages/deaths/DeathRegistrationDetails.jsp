@@ -35,8 +35,11 @@
                         <tr>
                             <td><s:label value="%{getText('ignoreWorning.label')}"/></td>
                             <td><s:checkbox name="ignoreWarning" id="ignoreWarning"/></td>
+                            <s:param value="true" name="directPrint"/>
+                            <s:param value="%{#request.idUKey}" name="idUKey"/>
                             <td class="button" align="left">
-                                <s:submit name="approve" value="%{getText('approve.label')}"/></td>
+                                <s:submit name="approve" value="%{getText('approve.label')}"/>
+                            </td>
                         </tr>
                     </table>
                     <s:hidden id="error1" value="%{getText('ignor.worning.error')}"/>

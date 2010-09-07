@@ -180,7 +180,10 @@
                 n += ele.offsetLeft || 0;
                 ele = ele.offsetParent;
             }
-            return n;
+        var domobject = document.getElementById('bdfSerialNo');
+    if (isFieldEmpty(domobject)) {
+        domobject.value = new Date().getFullYear() + "0";
+    }     return n;
         }
 
         function getTrueOffsetTop(ele)
@@ -471,8 +474,10 @@ function processResponse2(respObj) {
 }
 
 function initSerialNumber(){
-    document.getElementById('deathSerialNo').value= new Date().getFullYear()+"0";
-}
+ var domobject = document.getElementById('deathSerialNo');
+    if (isFieldEmpty(domobject)) {
+        domobject.value = new Date().getFullYear() + "0";
+    }}
 
 function initPage() {
     initSerialNumber();
