@@ -49,7 +49,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         final String shortName = registrar.getShortName();
@@ -67,7 +67,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         final String shortName = registrar.getShortName();
@@ -85,28 +85,28 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         switch (assignment.getType()) {
             case BIRTH: {
                 if (assignment.getBirthDivision() == null) {
                     throw new CRSRuntimeException(
-                        "Invalid Birth Registrar Assignment : No Birth Division", ErrorCodes.INVALID_DATA);
+                            "Invalid Birth Registrar Assignment : No Birth Division", ErrorCodes.INVALID_DATA);
                 }
                 break;
             }
             case DEATH: {
                 if (assignment.getDeathDivision() == null) {
                     throw new CRSRuntimeException(
-                        "Invalid Death Registrar Assignment : No Death Division", ErrorCodes.INVALID_DATA);
+                            "Invalid Death Registrar Assignment : No Death Division", ErrorCodes.INVALID_DATA);
                 }
                 break;
             }
             case MARRIAGE: {
                 if (assignment.getMarriageDivision() == null) {
                     throw new CRSRuntimeException(
-                        "Invalid Marriage Registrar Assignment : No Marriage Division", ErrorCodes.INVALID_DATA);
+                            "Invalid Marriage Registrar Assignment : No Marriage Division", ErrorCodes.INVALID_DATA);
                 }
                 break;
             }
@@ -126,7 +126,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to update Assignment for registrar : {}",
@@ -143,7 +143,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to inactivate Assignment for registrar : {}",
@@ -161,7 +161,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to inactivate Registrar : {}", registrar.getShortName());
@@ -178,7 +178,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to get assignments of Registrar: {}", registrar.getShortName());
@@ -191,10 +191,10 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public Registrar getRegistrarById(long idUKey) {
-        logger.info("requesting registrar id : {}", idUKey);
+        logger.debug("requesting registrar id : {}", idUKey);
         return registrarDao.getById(idUKey);
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -203,11 +203,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
-        logger.debug("Request to get type : " + type.ordinal() + (active ? " ":" in-" ) +
-            "active Assignments of DS Division : {}", dsDivisionUKey);
+        logger.debug("Request to get type : " + type.ordinal() + (active ? " " : " in-") +
+                "active Assignments of DS Division : {}", dsDivisionUKey);
 
         return assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, type, active);
     }

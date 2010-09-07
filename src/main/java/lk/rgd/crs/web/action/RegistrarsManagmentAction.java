@@ -26,7 +26,7 @@ import lk.rgd.crs.api.service.RegistrarManagementService;
 import lk.rgd.crs.web.WebConstants;
 
 /**
- * action class for managing registras
+ * action class for managing registras    and their assignments
  *
  * @author amith jayasekara
  */
@@ -92,8 +92,8 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         this.districtId = 1;
         this.dsDivisionId = 1;
         populateLists(districtId, dsDivisionId);
-/*        Registrar registrar = service.getRegistrarById(registrarUkey);
-        assignmentList = service.getAssignments(registrar, user);*/
+/*        Registrar registrar = service.getRegistrarById(registrarUkey);*/
+        assignmentList = service.getAllAssignments(user);
         return SUCCESS;
     }
 
