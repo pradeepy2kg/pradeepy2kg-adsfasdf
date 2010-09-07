@@ -92,75 +92,98 @@
     });
 
 </script>
-
-<div class="msg_list" style="position:relative;">
-    <p class="msg_head">add a assignment now </p>
-
-    <div class="msg_body">
-        <fieldset>
-            <legend><s:label value="Select BDDivision/MarriageDivision"/></legend>
-            <table cellspacing="0" cellpadding="0">
-                <caption></caption>
-                <col width="500px">
-                <col width="500px">
-                <tbody>
-                <tr>
-                    <td colspan="1" align="left">
-                        <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                                  cssStyle="width:98.5%; width:240px;"/>
-                    </td>
-                    <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
-                                                           list="dsDivisionList"
-                                                           value="%{dsDivisionId}"
-                                                           cssStyle="float:left;  width:240px;"/></td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-        <fieldset>
-            <legend><s:label value="Type"/></legend>
-            <table cellspacing="0" cellpadding="0">
-                <caption></caption>
-                <col width="500px">
-                <col width="500px">
-                <tbody>
-                <tr>
-                    <td colspan="1" align="left"><s:select
-                            list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
-                            name="assignmentType" cssStyle="width:240px; margin-left:5px;"/></td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-        <fieldset>
-            <legend><s:label value="Date"/></legend>
+<s:if test="directAssigment>0">
+    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+        <legend align="right">Find Registrar By Pin</legend>
+        <form action="eprSearchRegistrarByPin.do" method="post">
             <table>
                 <caption/>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
+                <col width="300px"/>
+                <col width="200px"/>
                 <col/>
                 <tbody>
                 <tr>
-                    <fieldset>
-                        <legend><s:label value="appoinment date"/></legend>
-                        <s:textfield name="" id="dateOfAppoinmentDatePicker"/>
-                    </fieldset>
-                    <fieldset>
-                        <legend><s:label value="permenent date"/></legend>
-                        <s:textfield name="" id="dateOfPermenentDatePicker"/>
-                    </fieldset>
-                    <fieldset>
-                        <legend><s:label value="termination date"/></legend>
-                        <s:textfield name="" id="dateOfTerminationDatePicker"/>
-                    </fieldset>
+                    <td><s:textfield id="registrarPin" name="registrarPin" value="registrarPin"/></td>
+                    <td>
+                        <div id="search_button" class="button">
+                            <s:submit name="refresh" value="%{getText('label.button.searchr')}"/>
+                        </div>
+                    </td>
+                    <td>
+                        <s:fielderror name="noRegistrar" cssStyle="color:red;font-size:10pt"/>
+                    </td>
                 </tr>
-
                 </tbody>
             </table>
-        </fieldset>
-        <s:submit name="assignMentSubmit" value="add assignment"/>
-    </div>
-</div>
+        </form>
+    </fieldset>
+</s:if>
+
+<s:form action="eprAssignmentAdd.do" method="post">
+    <fieldset>
+        <legend><s:label value="Select BDDivision/MarriageDivision"/></legend>
+        <table cellspacing="0" cellpadding="0">
+            <caption></caption>
+            <col width="500px">
+            <col width="500px">
+            <tbody>
+            <tr>
+                <td colspan="1" align="left">
+                    <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
+                <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
+                                                       list="dsDivisionList"
+                                                       value="%{dsDivisionId}"
+                                                       cssStyle="float:left;  width:240px;"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend><s:label value="Type"/></legend>
+        <table cellspacing="0" cellpadding="0">
+            <caption></caption>
+            <col width="500px">
+            <col width="500px">
+            <tbody>
+            <tr>
+                <td colspan="1" align="left"><s:select
+                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
+                        name="assignmentType" cssStyle="width:240px; margin-left:5px;"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend><s:label value="Date"/></legend>
+        <table>
+            <caption/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <tbody>
+            <tr>
+                <fieldset>
+                    <legend><s:label value="appoinment date"/></legend>
+                    <s:textfield name="assignment.appointmentDate" id="dateOfAppoinmentDatePicker"/>
+                </fieldset>
+                <fieldset>
+                    <legend><s:label value="permenent date"/></legend>
+                    <s:textfield name="assignment.permanentDate" id="dateOfPermenentDatePicker"/>
+                </fieldset>
+                <fieldset>
+                    <legend><s:label value="termination date"/></legend>
+                    <s:textfield name="assignment.terminationDate" id="dateOfTerminationDatePicker"/>
+                </fieldset>
+            </tr>
+
+            </tbody>
+        </table>
+    </fieldset>
+    <s:submit name="assignMentSubmit" value="add assignment"/>
+    <s:hidden name="directAssigment" value="2"/>
+</s:form>

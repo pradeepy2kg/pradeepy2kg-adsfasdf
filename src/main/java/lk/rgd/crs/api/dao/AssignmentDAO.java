@@ -17,6 +17,7 @@ public interface AssignmentDAO {
 
     /**
      * Get an assignment record by unique ID
+     *
      * @param idUKey the unique id
      * @return the Assignment or null if not found
      */
@@ -24,22 +25,33 @@ public interface AssignmentDAO {
 
     /**
      * Add a new Assignment to a Registrar
+     *
      * @param assignment the assignment
-     * @param user the user invoking the action
+     * @param user       the user invoking the action
      */
     public void addAssignment(Assignment assignment, User user);
 
     /**
      * Update an existing Assignment of a Registrar
+     *
      * @param assignment the assignment
-     * @param user the user invoking the action
+     * @param user       the user invoking the action
      */
     public void updateAssignment(Assignment assignment, User user);
 
     /**
      * Return all Assignments to the given registrar
+     *
      * @param registrar the selected registrar
      * @return the list of assignments or an empty List
      */
     public List<Assignment> getAssignmentsForRegistrar(Registrar registrar);
+
+    /**
+     * get all assignments
+     *
+     * @param user requesting user
+     * @return list of all assignments
+     */
+    public List<Assignment> getAllAssignments(User user);
 }

@@ -303,6 +303,17 @@
 
 </fieldset>
 <%--add a new assignment--%>
-<s:form action="#" method="post">
-    <s:include value="AddAssignment.jsp"/>
-</s:form>
+
+<fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <legend align="right">Add New Assignment</legend>
+    <div class="msg_list" style="position:relative;">
+        <p class="msg_head">add a assignment now </p>
+
+        <div class="msg_body">
+            <s:form action="#" method="post">
+                <s:include value="AddAssignment.jsp"/>
+            </s:form>
+        </div>
+    </div>
+</fieldset>
+

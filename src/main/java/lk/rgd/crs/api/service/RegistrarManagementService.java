@@ -102,4 +102,12 @@ public interface RegistrarManagementService {
      * @return list of registrars
      */
     public List<Registrar> getRegistrarByPin(long pin, User user);
+
+    /**
+     * get all the assignment (in all divisions)
+     *
+     * @param user requeting user
+     * @return
+     */
+    public List<Assignment> getAllAssignments(User user);
 }

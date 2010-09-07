@@ -50,15 +50,19 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private final RegistrarManagementService service;
 
     private Registrar registrar;
+    private Assignment assignment;
 
     private Assignment.Type type;
     private boolean state;
+    private int directAssigment;
 
     private int assignmentState;
     private int dsDivisionId;
     private int districtId;
     private int assignmentType;
     private int page;
+    private int registrarPin;
+    private int divisionId;//cannot determine wich type of diviosn to set in struts layer
 
     private long registrarUkey;
 
@@ -96,7 +100,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     public String filter() {
         logger.info("filter called");
         //todo this service method not yet implemented  and find assignment also
-        //    registrarList = service.getRegistrarsByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), type, state, user);
+        assignmentList = service.getAllAssignments(user);
         populateLists(districtId, dsDivisionId);
         return SUCCESS;
     }
@@ -112,9 +116,56 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             } else {
                 service.addRegistrar(registrar, user);
                 registrar = null;
+                //otherwise it still in requestscope so data in that object populate in new registrar add  
             }
-            //otherwise it still in requestscope so data in that object populate in new registrar add  
         }
+        return SUCCESS;
+    }
+
+    public String assignmentAdd() {
+        //todo divisions are nt setting properly
+        logger.info("attemt to add a new assignment");
+        if (directAssigment == 2) {
+            //gettting exsiting
+            List<Registrar> reg = (List) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+            assignment.setRegistrar((Registrar) reg.get(0));
+            //setting correct divisiontype
+            if (type.equals(Assignment.Type.BIRTH))
+                assignment.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
+            if (type.equals(Assignment.Type.DEATH))
+                assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
+            //todo marrige division
+            /* if (type.equals(Assignment.Type.MARRIAGE))
+            assignment.setMarriageDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));*/
+            assignment.setType(type);
+            service.addAssignment(assignment, user);
+            session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        }
+        //todo remove this populate
+        populateLists(1, 1);
+        return SUCCESS;
+    }
+
+    public String assignmentAddPageLoad() {
+        //requesting addAssignment page directly
+        directAssigment = 1;
+        //todo remove this populate
+        populateLists(1, 1);
+        return SUCCESS;
+    }
+
+    public String searchRegistrarByPin() {
+        logger.info("searching registrar by pin : {} ", registrarPin);
+        List<Registrar> exsistedReg = service.getRegistrarByPin(registrarPin, user);
+        if (exsistedReg.size() != 1) {
+            addFieldError("noRegistrar", "no registrar found add propertie file");
+        } else {
+            //adding found registrar to session
+            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, exsistedReg);
+        }
+        //todo remove this populate
+        populateLists(1, 1);
+        directAssigment = 1;
         return SUCCESS;
     }
 
@@ -286,5 +337,37 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public int getDirectAssigment() {
+        return directAssigment;
+    }
+
+    public void setDirectAssigment(int directAssigment) {
+        this.directAssigment = directAssigment;
+    }
+
+    public int getRegistrarPin() {
+        return registrarPin;
+    }
+
+    public void setRegistrarPin(int registrarPin) {
+        this.registrarPin = registrarPin;
+    }
+
+    public Assignment getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
+    }
+
+    public int getDivisionId() {
+        return divisionId;
+    }
+
+    public void setDivisionId(int divisionId) {
+        this.divisionId = divisionId;
     }
 }

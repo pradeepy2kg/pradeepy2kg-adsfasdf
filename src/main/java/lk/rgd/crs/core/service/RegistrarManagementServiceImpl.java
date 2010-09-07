@@ -202,6 +202,16 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         return s == null || s.trim().length() == 0;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Assignment> getAllAssignments(User user) {
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
+            handleException("User : " + user.getUserId() +
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+        logger.debug("requeting all assignments");
+        return assignmentDao.getAllAssignments(user);
+    }
+
     private void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
