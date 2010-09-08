@@ -476,6 +476,9 @@ function processResponse2(respObj) {
 
 function initSerialNumber() {
     var domObject = document.getElementById('deathSerialNo');
+    if(domObject.value.trim()==0){
+        domObject.value=null;
+    }
     if (isFieldEmpty(domObject)) {
         domObject.value = new Date().getFullYear() + "0";
     }
@@ -517,10 +520,10 @@ function initPage() {
         <td style="border:1px solid #000;">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</td>
         <td style="border:1px solid #000;">
             <s:if test="editMode">
-                <s:textfield name="register.bdfSerialNo" id="deathSerialNo" readonly="true"/>
+                <s:textfield name="death.deathSerialNo" id="deathSerialNo" readonly="true"/>
             </s:if>
             <s:else>
-                <s:textfield name="register.bdfSerialNo" id="deathSerialNo"/>
+                <s:textfield name="death.deathSerialNo" id="deathSerialNo"/>
             </s:else>
         </td>
     </tr>
