@@ -69,11 +69,11 @@
                         $("select#dsDivisionId").html(options1);
 
                         var options2 = '';
-                        var bd = data.bdDivisionList;
+                        var bd = data.divisionList;
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
-                        $("select#birthDivisionId").html(options2);
+                        $("select#divisionId").html(options2);
                     });
         });
 
@@ -82,11 +82,11 @@
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                     function(data) {
                         var options = '';
-                        var bd = data.bdDivisionList;
+                        var bd = data.divisionList;
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
-                        $("select#birthDivisionId").html(options);
+                        $("select#divisionId").html(options);
                     });
         });
     });
@@ -119,6 +119,7 @@
     </fieldset>
 </s:if>
 
+
 <s:form action="eprAssignmentAdd.do" method="post">
     <fieldset>
         <legend><s:label value="Select BDDivision/MarriageDivision"/></legend>
@@ -126,6 +127,7 @@
             <caption></caption>
             <col width="500px">
             <col width="500px">
+            <col>
             <tbody>
             <tr>
                 <td colspan="1" align="left">
@@ -136,6 +138,10 @@
                                                        list="dsDivisionList"
                                                        value="%{dsDivisionId}"
                                                        cssStyle="float:left;  width:240px;"/></td>
+                <td>
+                    <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
+                              cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -150,11 +156,27 @@
             <tr>
                 <td colspan="1" align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
-                        name="assignmentType" cssStyle="width:240px; margin-left:5px;"/></td>
+                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
             </tr>
             </tbody>
         </table>
     </fieldset>
+    <s:if test="assignment != null">
+        <fieldset>
+            <legend>State</legend>
+            <s:if test="assignment != null">
+                <s:select
+                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                        name="assignmentState" cssStyle="width:240px; margin-left:5px;"/>
+            </s:if>
+            <s:else>
+                <s:select
+                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                        name="assignment.lifeCycleInfo.active" cssStyle="width:240px; margin-left:5px;"/>
+            </s:else>
+
+        </fieldset>
+    </s:if>
     <fieldset>
         <legend><s:label value="Date"/></legend>
         <table>
@@ -169,21 +191,51 @@
             <tr>
                 <fieldset>
                     <legend><s:label value="appoinment date"/></legend>
-                    <s:textfield name="assignment.appointmentDate" id="dateOfAppoinmentDatePicker"/>
+                    <s:if test="assignment != null">
+                        <s:textfield value="%{assignment.appointmentDate}" id="dateOfAppoinmentDatePicker"
+                                     name="appoinmentDate"/>
+                    </s:if>
+                    <s:else>
+                        <s:textfield name="assignment.appointmentDate" id="dateOfAppoinmentDatePicker"/> </s:else>
                 </fieldset>
                 <fieldset>
                     <legend><s:label value="permenent date"/></legend>
-                    <s:textfield name="assignment.permanentDate" id="dateOfPermenentDatePicker"/>
+                    <s:if test="assignment != null">
+                        <s:textfield value="%{assignment.permanentDate}" id="dateOfPermenentDatePicker"
+                                     name="permanentDate"/>
+                    </s:if>
+                    <s:else>
+                        <s:textfield name="assignment.permanentDate" id="dateOfPermenentDatePicker"/> </s:else>
+
                 </fieldset>
                 <fieldset>
                     <legend><s:label value="termination date"/></legend>
-                    <s:textfield name="assignment.terminationDate" id="dateOfTerminationDatePicker"/>
+                    <s:if test="assignment != null">
+                        <s:textfield value="%{assignment.terminationDate}" id="dateOfTerminationDatePicker"
+                                     name="terminationDate"/>
+                    </s:if>
+                    <s:else>
+                        <s:textfield name="assignment.terminationDate" id="dateOfTerminationDatePicker"/> </s:else>
                 </fieldset>
             </tr>
 
             </tbody>
         </table>
     </fieldset>
-    <s:submit name="assignMentSubmit" value="add assignment"/>
+    <s:if test="editableAssignment==false">
+        <s:submit name="assignMentSubmit" value="add assignment prop"/>
+    </s:if>
+    <s:else>
+        <s:submit name="assignMentEdit" value="edit assignment prop"/>
+        <s:hidden name="editMode" value="true"/>
+    </s:else>
     <s:hidden name="directAssigment" value="2"/>
 </s:form>
+<s:if test="assignment != null">
+    <script type="text/javascript">
+        document.getElementById('dsDivisionId').disabled = true;
+        document.getElementById('districtId').disabled = true;
+        document.getElementById('divisionId').disabled = true;
+        document.getElementById('type').disabled = true;
+    </script>
+</s:if>

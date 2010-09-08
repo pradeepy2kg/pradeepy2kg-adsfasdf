@@ -49,7 +49,7 @@ public interface RegistrarManagementService {
      * Inactivate an assignment of a registrar
      *
      * @param assignmentUKey
-     * @param user       the user invoking the action
+     * @param user           the user invoking the action
      */
     public void inactivateAssignment(long assignmentUKey, User user);
 
@@ -57,7 +57,7 @@ public interface RegistrarManagementService {
      * Inactivate a Registrar
      *
      * @param registrarUKey
-     * @param user      the user invoking the action
+     * @param user          the user invoking the action
      */
     public void inactivateRegistrar(long registrarUKey, User user);
 
@@ -65,16 +65,17 @@ public interface RegistrarManagementService {
      * Return all assignments for a given Registrar
      *
      * @param registrarUKey
-     *@param user      the user invoking the action  @return
+     * @param user          the user invoking the action  @return
      */
     public List<Assignment> getAssignments(long registrarUKey, User user);
 
     /**
      * Get Assignments for the given DS Division
+     *
      * @param dsDivisionUKey the DS division unique ID whose assignments are required
-     * @param type the type of assignments interested in
-     * @param active return only active assignments if true, else return only inactive assignments
-     * @param user the user invoking the action
+     * @param type           the type of assignments interested in
+     * @param active         return only active assignments if true, else return only inactive assignments
+     * @param user           the user invoking the action
      * @return the list of qualifying assignments
      */
     public List<Assignment> getAssignmentsByDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active, User user);
@@ -103,4 +104,14 @@ public interface RegistrarManagementService {
      * @return
      */
     public List<Assignment> getAllAssignments(User user);
+
+    /**
+     * get a assignment by assignentUKey
+     *
+     * @param assignmentUKey uniquey for assignment
+     * @param user           user who has permisiion to request a assignment
+     * @return assignment wich has given unique key
+     */
+    public Assignment getAssignmentById(long assignmentUKey, User user);
+
 }

@@ -31,7 +31,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private PopulationRegistry ecivil;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-        PopulationRegistry ecivil) {
+                                          PopulationRegistry ecivil) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
@@ -45,7 +45,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         final String shortName = registrar.getShortName();
@@ -63,7 +63,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         final String shortName = registrar.getShortName();
@@ -81,35 +81,35 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         switch (assignment.getType()) {
             case BIRTH: {
                 if (assignment.getBirthDivision() == null) {
                     throw new CRSRuntimeException(
-                        "Invalid Birth Registrar Assignment : No Birth Division", ErrorCodes.INVALID_DATA);
+                            "Invalid Birth Registrar Assignment : No Birth Division", ErrorCodes.INVALID_DATA);
                 }
                 break;
             }
             case DEATH: {
                 if (assignment.getDeathDivision() == null) {
                     throw new CRSRuntimeException(
-                        "Invalid Death Registrar Assignment : No Death Division", ErrorCodes.INVALID_DATA);
+                            "Invalid Death Registrar Assignment : No Death Division", ErrorCodes.INVALID_DATA);
                 }
                 break;
             }
             default: {
                 if (assignment.getMarriageDivision() == null) {
                     throw new CRSRuntimeException(
-                        "Invalid Marriage Registrar Assignment : No Marriage Division", ErrorCodes.INVALID_DATA);
+                            "Invalid Marriage Registrar Assignment : No Marriage Division", ErrorCodes.INVALID_DATA);
                 }
                 break;
             }
         }
 
         logger.debug("Request to add new Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+                assignment.getRegistrar().getShortName());
 
         assignmentDao.addAssignment(assignment, user);
     }
@@ -122,11 +122,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to update Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+                assignment.getRegistrar().getShortName());
 
         assignmentDao.updateAssignment(assignment, user);
     }
@@ -139,12 +139,12 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         Assignment assignment = assignmentDao.getById(assignmentUKey);
         logger.debug("Request to inactivate Assignment for registrar : {}",
-            assignment.getRegistrar().getShortName());
+                assignment.getRegistrar().getShortName());
 
         assignment.getLifeCycleInfo().setActive(false);
         assignmentDao.updateAssignment(assignment, user);
@@ -158,7 +158,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         Registrar registrar = registrarDao.getById(registrarUKey);
@@ -176,7 +176,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         Registrar registrar = registrarDao.getById(registrarUKey);
@@ -202,11 +202,11 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
 
         logger.debug("Request to get type : " + type.ordinal() + (active ? " " : " in-") +
-            "active Assignments of DS Division : {}", dsDivisionUKey);
+                "active Assignments of DS Division : {}", dsDivisionUKey);
 
         return assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, type, active);
     }
@@ -215,7 +215,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     public List<Registrar> getRegistrarByPin(long pin, User user) {
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
         logger.debug("Requesting List of registrars by pin number : {} ", pin);
         return registrarDao.getRegistrarByPin(pin);
@@ -229,7 +229,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     public List<Assignment> getAllAssignments(User user) {
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
-                " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
         logger.debug("requeting all assignments");
         return assignmentDao.getAllAssignments(user);
@@ -238,6 +238,16 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public Assignment getAssignmentById(long assignmentUKey, User user) {
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
+            handleException("User : " + user.getUserId() +
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+        logger.debug("requeting  assignment by assignmentUKey : {}", assignmentUKey);
+        return assignmentDao.getById(assignmentUKey);
     }
 
     private void validateRegistrar(Registrar registrar, String shortName) {

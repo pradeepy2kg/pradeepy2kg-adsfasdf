@@ -5,10 +5,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.CountryDAO;
@@ -17,6 +14,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -65,9 +63,18 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private int divisionId;//cannot determine wich type of diviosn to set in struts layer
 
     private long registrarUkey;
+    private long assignmentUKey;
 
     /*support variable*/
     private boolean onloadPage;
+    private boolean editableAssignment;
+    private boolean editMode;
+    private boolean registrarSession;
+
+    private Date appoinmentDate;
+    private Date permanentDate;
+    private Date terminationDate;
+    private boolean active;
 
     public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service) {
         this.districtDAO = districtDAO;
@@ -77,7 +84,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String registrarsManagmentHome() {
-        //todo no get all registrars method yet so setting here
+        //home is set to dsDivision colombo,type active ,state bith 
         this.state = true;
         this.type = Assignment.Type.BIRTH;
         this.districtId = 1;
@@ -88,12 +95,19 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String registrarsVeiwInit() {
         logger.info("register veiw init called ");
-        //todo remove this
+        if (registrarSession) {
+            //todo
+            Assignment asg = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
+            registrarUkey = asg.getRegistrar().getRegistrarUKey();
+            session.remove(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
+        }
+        //following district and dsdivisions are setted for add assignment 
         this.districtId = 1;
         this.dsDivisionId = 1;
         populateLists(districtId, dsDivisionId);
-/*        Registrar registrar = service.getRegistrarById(registrarUkey);*/
-        assignmentList = service.getAllAssignments(user);
+        registrar = service.getRegistrarById(registrarUkey);
+        assignmentList = service.getAssignments(registrarUkey, user);
+        /*  assignmentList = service.getAllAssignments(user);*/
         return SUCCESS;
     }
 
@@ -122,24 +136,53 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String assignmentAdd() {
-        //todo divisions are nt setting properly
-        logger.info("attemt to add a new assignment");
-        if (directAssigment == 2) {
-            //gettting exsiting
-            List<Registrar> reg = (List) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
-            assignment.setRegistrar((Registrar) reg.get(0));
-            //setting correct divisiontype
-            if (type.equals(Assignment.Type.BIRTH))
-                assignment.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
-            if (type.equals(Assignment.Type.DEATH))
-                assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
-            //todo marrige division
-            /* if (type.equals(Assignment.Type.MARRIAGE))
-            assignment.setMarriageDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));*/
-            assignment.setType(type);
-            service.addAssignment(assignment, user);
-            session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        if (!editMode) {
+            //todo divisions are nt setting properly
+            logger.info("attemt to add a new assignment");
+            if (directAssigment == 2) {
+                //gettting exsiting
+                List<Registrar> reg = (List) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+                assignment.setRegistrar((Registrar) reg.get(0));
+                //setting correct divisiontype
+                if (type.equals(Assignment.Type.BIRTH))
+                    assignment.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
+                if (type.equals(Assignment.Type.DEATH))
+                    assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
+                //todo marrige division
+                /* if (type.equals(Assignment.Type.MARRIAGE))
+                assignment.setMarriageDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));*/
+                assignment.setType(type);
+                service.addAssignment(assignment, user);
+                session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+                assignment = null;
+
+            }
+        } else {
+            logger.info("attemt to edit a assignment with assignmentUKey : {}", assignmentUKey);
+            Assignment beforeEdit = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
+            beforeEdit.setAppointmentDate(appoinmentDate);
+            beforeEdit.setPermanentDate(permanentDate);
+            beforeEdit.setTerminationDate(terminationDate);
+            BaseLifeCycleInfo life = beforeEdit.getLifeCycleInfo();
+            life.setActive(state);
+            beforeEdit.setLifeCycleInfo(life);
+            service.updateAssignment(beforeEdit, user);
+            //todo remove this populate
+            populateLists(1, 1);
+            return "updated";
         }
+        //todo remove this populate
+        populateLists(1, 1);
+        return SUCCESS;
+    }
+
+    public String editAssignment() {
+
+        //todo load assignment form assignmentIDukey
+        //put current assignment in to session for redirection purposes
+        assignment = service.getAssignmentById(assignmentUKey, user);
+        session.put(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR, assignment);
+        //todo update assignment
         //todo remove this populate
         populateLists(1, 1);
         return SUCCESS;
@@ -172,6 +215,9 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         districtList = districtDAO.getAllDistrictNames(language, user);
         dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(distirictId, language, user);
+        divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
+        logger.info("divisionList size  : {}", divisionList.size());
+        //todo load marrage divison list
     }
 
     public void setSession(Map map) {
@@ -371,5 +417,69 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public long getAssignmentUKey() {
+        return assignmentUKey;
+    }
+
+    public void setAssignmentUKey(long assignmentUKey) {
+        this.assignmentUKey = assignmentUKey;
+    }
+
+    public boolean isEditableAssignment() {
+        return editableAssignment;
+    }
+
+    public void setEditableAssignment(boolean editableAssignment) {
+        this.editableAssignment = editableAssignment;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+
+    public boolean isRegistrarSession() {
+        return registrarSession;
+    }
+
+    public void setRegistrarSession(boolean registrarSession) {
+        this.registrarSession = registrarSession;
+    }
+
+    public Date getAppoinmentDate() {
+        return appoinmentDate;
+    }
+
+    public void setAppoinmentDate(Date appoinmentDate) {
+        this.appoinmentDate = appoinmentDate;
+    }
+
+    public Date getPermanentDate() {
+        return permanentDate;
+    }
+
+    public void setPermanentDate(Date permanentDate) {
+        this.permanentDate = permanentDate;
+    }
+
+    public Date getTerminationDate() {
+        return terminationDate;
+    }
+
+    public void setTerminationDate(Date terminationDate) {
+        this.terminationDate = terminationDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

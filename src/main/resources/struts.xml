@@ -756,6 +756,16 @@
         <action name="eprAssignmentAdd" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
                 method="assignmentAdd">
             <result type="tiles" name="success">epr.addAssignment</result>
+            <result type="redirectAction" name="updated">
+                <param name="actionName">eprRegistrarsView</param>
+                <param name="registrarSession">true</param>
+            </result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
+        <action name="eprAssignmentEdit" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="editAssignment">
+            <result type="tiles" name="success">epr.addAssignment</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 
