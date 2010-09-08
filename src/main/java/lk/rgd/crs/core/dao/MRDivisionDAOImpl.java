@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author asankha
@@ -118,21 +119,21 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
 
         Map<Integer, String> districtMap = siDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
-            districtMap = new HashMap<Integer, String>();
+            districtMap = new TreeMap<Integer, String>();
             siDivisions.put(dsDivisionUKey, districtMap);
         }
         districtMap.put(mrDivisionUKey, mrDivisionId + ": " + r.getSiDivisionName());
 
         districtMap = enDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
-            districtMap = new HashMap<Integer, String>();
+            districtMap = new TreeMap<Integer, String>();
             enDivisions.put(dsDivisionUKey, districtMap);
         }
         districtMap.put(mrDivisionUKey, mrDivisionId + SPACER + r.getEnDivisionName());
 
         districtMap = taDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
-            districtMap = new HashMap<Integer, String>();
+            districtMap = new TreeMap<Integer, String>();
             taDivisions.put(dsDivisionUKey, districtMap);
         }
         districtMap.put(mrDivisionUKey, mrDivisionId + SPACER + r.getTaDivisionName());
