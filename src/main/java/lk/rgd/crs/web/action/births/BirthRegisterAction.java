@@ -865,8 +865,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 break;
             case 2:
                 bdf = service.getByPINorNIC(nicOrPin, user);
-                break;
-            
+                break;            
             case 3:
                 bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
                         serialNo, user);
