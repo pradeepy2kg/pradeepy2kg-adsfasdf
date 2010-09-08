@@ -22,10 +22,10 @@ public class MarriedStatusUtil {
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (code) {
-                case 0: return "Unknown";
-                case 1: return "Married Tamil";
-                case 2: return "Unmarried Tamil";
-                case 3: return "Married Later Tamil";
+                case 0: return "Unknown in Tamil";
+                case 1: return "Married in Tamil";
+                case 2: return "Unmarried in Tamil";
+                case 3: return "Married Later in Tamil";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (code) {
