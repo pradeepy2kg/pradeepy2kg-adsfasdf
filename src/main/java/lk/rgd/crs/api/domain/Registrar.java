@@ -55,6 +55,20 @@ public class Registrar implements Serializable {
     private Date dateOfBirth;
 
     /**
+     * Date of appointment
+     */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfAppointment;
+
+    /**
+     * Date of termination
+     */
+    @Column(nullable = true)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfTermination;
+
+    /**
      * The full name in the Official language
      */
     @Column(nullable = false, length = 600)
@@ -84,6 +98,24 @@ public class Registrar implements Serializable {
      */
     @Column(nullable = true, length = 30)
     private String emailAddress;
+
+    /**
+     * Job status is acting?
+     */
+    @Column(nullable = false)
+    private boolean acting;
+
+    /**
+     * Resigned ?
+     */
+    @Column(nullable = false)
+    private boolean resigned;
+
+    /**
+     * Terminated ?
+     */
+    @Column(nullable = false)
+    private boolean terminated;
 
     /**
      * List of assignments for this registrar
@@ -201,5 +233,45 @@ public class Registrar implements Serializable {
 
     public String getShortName() {
         return NameFormatUtil.getDisplayName(fullNameInEnglishLanguage);
+    }
+
+    public Date getDateOfAppointment() {
+        return dateOfAppointment;
+    }
+
+    public void setDateOfAppointment(Date dateOfAppointment) {
+        this.dateOfAppointment = dateOfAppointment;
+    }
+
+    public Date getDateOfTermination() {
+        return dateOfTermination;
+    }
+
+    public void setDateOfTermination(Date dateOfTermination) {
+        this.dateOfTermination = dateOfTermination;
+    }
+
+    public boolean isActing() {
+        return acting;
+    }
+
+    public void setActing(boolean acting) {
+        this.acting = acting;
+    }
+
+    public boolean isResigned() {
+        return resigned;
+    }
+
+    public void setResigned(boolean resigned) {
+        this.resigned = resigned;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        this.terminated = terminated;
     }
 }

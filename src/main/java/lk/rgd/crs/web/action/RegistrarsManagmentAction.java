@@ -239,10 +239,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 this.type = Assignment.Type.DEATH;
                 break;
             case 2:
-                this.type = Assignment.Type.MARRIAGE;
+                this.type = Assignment.Type.GENERAL_MARRIAGE;
                 break;
             case 3:
-                this.type = Assignment.Type.BIRTH;
+                this.type = Assignment.Type.KANDYAN_MARRIAGE;
+                break;
+            case 4:
+                this.type = Assignment.Type.MUSLIM_MARRIAGE;
                 break;
         }
     }

@@ -99,7 +99,7 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 }
                 break;
             }
-            case MARRIAGE: {
+            default: {
                 if (assignment.getMarriageDivision() == null) {
                     throw new CRSRuntimeException(
                         "Invalid Marriage Registrar Assignment : No Marriage Division", ErrorCodes.INVALID_DATA);
