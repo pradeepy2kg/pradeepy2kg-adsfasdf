@@ -185,11 +185,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String updateRegistrar() {
         //todo implement
+        populateLists(1, 1);
         return SUCCESS;
     }
 
     public String assignmentAddPageLoad() {
         //requesting addAssignment page directly
+        populateLists(1, 1);
         directAssigment = 1;
         return SUCCESS;
     }
