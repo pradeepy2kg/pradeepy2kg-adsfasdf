@@ -47,6 +47,22 @@ $(function() {
                     $("textarea#informantAddress").val(data1.lastAddress);
                 });
     });
+
+    $('img#grandFather_lookup').bind('click', function(evt2) {
+        var id2 = $("input#grandFatherNICorPIN").attr("value");
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
+                function(data2) {
+                    $("textarea#grandFatherFullName").val(data2.fullNameInOfficialLanguage);
+                });
+    });
+
+    $('img#greatGrandFather_lookup').bind('click', function(evt3) {
+        var id3 = $("input#greatGrandFatherNICorPIN").attr("value");
+        $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
+                function(data3) {
+                    $("textarea#greatGrandFatherFullName").val(data3.fullNameInOfficialLanguage);
+                });
+    });
 });
 
 var informPerson;
@@ -89,9 +105,14 @@ function validate() {
 
     var check = document.getElementById('skipjs');
     if (!check.checked) {
-        validateBirthYearWithNIC('grandFatherNICorPIN','grandFatherBirthYear','p3error18') ;
-        validateBirthYearWithNIC('greatGrandFatherNICorPIN','greatGrandFatherBirthYear','p3error19') ;
-   }
+        var reg = /^([1-9][0-9]{3})$/;
+        if (document.getElementById('grandFatherBirthYear').value.search(reg) == 0) {
+            validateBirthYearWithNIC('grandFatherNICorPIN', 'grandFatherBirthYear', 'p3error18');
+        }
+        if (document.getElementById('greatGrandFatherBirthYear').value.search(reg) == 0) {
+            validateBirthYearWithNIC('greatGrandFatherNICorPIN', 'greatGrandFatherBirthYear', 'p3error19');
+        }
+    }
 
     if (errormsg != "") {
         alert(errormsg);
@@ -114,6 +135,15 @@ function commonTags() {
     domObject = document.getElementById('grandFatherNICorPIN');
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'error11', 'error14');
+
+    //generate Grand Father birth year
+    function grandFatherBirthYear(grandFatherNIC) {
+        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+        domObject = document.getElementById(grandFatherNIC);
+        if (domObject.value.search(regNIC) == 0) {
+            document.getElementById('grandFatherBirthYear').value = 19 + domElement.value.substring(0, 2);
+        }
+    }
 
     // validate grandfather birth year
     domObject = document.getElementById('grandFatherBirthYear');
@@ -211,7 +241,7 @@ function validateInformant() {
         isDate(domObject.value, "error11", "infomantDate");
     var submit = new Date(document.getElementById('submitDatePicker').value);
     domObject = new Date(domObject.value);
-    if (domObject.getTime() >submit.getTime()) {
+    if (domObject.getTime() > submit.getTime()) {
         errormsg = errormsg + "\n" + document.getElementById('error17').value;
     }
 }
@@ -256,7 +286,6 @@ function disableMarriage(mode) {
 }
 
 
-
 function disableSigns(mode) {
     if (!mode) {
         var name = document.getElementById('fatherName');
@@ -266,7 +295,7 @@ function disableSigns(mode) {
     }
     document.getElementById('motherSigned').disabled = mode;
     document.getElementById('fatherSigned').disabled = mode;
-    if(mode){
+    if (mode) {
         document.getElementById('fatherSigned').checked = false;
         document.getElementById('motherSigned').checked = false;
     }
@@ -342,7 +371,7 @@ function initPage() {
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
             <td colspan="2">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
             <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"/></tr>
         <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
@@ -384,20 +413,28 @@ function initPage() {
                 grandfather of the child born in Sri Lanka</label></td>
         </tr>
         <tr>
-            <td rowspan="2" style="width:75px" colspan="1"></td>
-            <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
-            <td colspan="5"><s:textarea name="grandFather.grandFatherFullName" cssStyle="width:98%;"/></td>
-        </tr>
-        <tr>
+            <td rowspan="3" style="width:75px" colspan="1"></td>
             <td>අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
                 அடையாள அட்டை
                 இலக்கம்<br>PIN / NIC Number
             </td>
-            <td><s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/></td>
+            <td colspan="5"><s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/>
+                <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                     id="grandFather_lookup"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1"><label>ඔහුගේ සම්පුර්ණ නම<br>அவரின் முழுப் பேயர் <br>His Full Name</label></td>
+            <td colspan="5"><s:textarea name="grandFather.grandFatherFullName"
+                                        id="grandFatherFullName" cssStyle="width:97%;"/></td>
+        </tr>
+        <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
-            <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/></td>
+            <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br>
+                <s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/>
+            </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.grandFatherBirthPlace"/></td>
+            <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace" cssStyle="width:93%;"/></td>
         </tr>
         <tr>
             <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
@@ -408,22 +445,28 @@ function initPage() {
                 born in Sri Lanka and if great grandfather born in Sri Lanka great grand father's</label></td>
         </tr>
         <tr>
-            <td rowspan="2" colspan="1"></td>
-            <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
-            <td colspan="5"><s:textarea name="grandFather.greatGrandFatherFullName" cssStyle="width:98%;"/></td>
-        </tr>
-        <tr>
+            <td rowspan="3" colspan="1"></td>
             <td>අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
                 அடையாள அட்டை
                 இலக்கம்<br>PIN / NIC Number
             </td>
-            <td><s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/></td>
+            <td colspan="5"><s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/>
+                <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
+                     id="greatGrandFather_lookup"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1"><label>සම්පුර්ණ නම <br>முழுப் பெயர் <br>Full Name</label></td>
+            <td colspan="5"><s:textarea name="grandFather.greatGrandFatherFullName"
+                                        id="greatGrandFatherFullName" cssStyle="width:97%;"/></td>
+        </tr>
+        <tr>
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
-            <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"
-                             cssStyle="width:95%;"/></td>
+            <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield
+                    name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:95%;"/></td>
+            <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:93%;"/></td>
         </tr>
         </tbody>
     </table>
