@@ -1,31 +1,31 @@
 package lk.rgd.crs.web.action;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionProxy;
+import junit.extensions.TestSetup;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.action.births.BirthRegisterAction;
+import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import lk.rgd.crs.web.action.births.BirthRegisterAction;
-import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.service.UserManager;
-import lk.rgd.UnitTestManager;
-import com.opensymphony.xwork2.ActionProxy;
-import com.opensymphony.xwork2.ActionContext;
 
 import java.util.*;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.extensions.TestSetup;
 
 /**
  * @author Janith Widarshana.
@@ -80,7 +80,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
             rg = userManager.authenticateUser("rg", "password");
         }
         catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
@@ -114,7 +114,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
             register.setPreferredLanguage("si");
             register.setBdfSerialNo(new Long(2010012350 + i));
             register.setPreferredLanguage("si");
-            //birth devision
+            //birth division
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
@@ -129,8 +129,8 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
             parent.setFatherNICorPIN("530232026V");
             parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
 
-            //marrage info
-            MarriageInfo marrage = new MarriageInfo();
+            //marriage info
+            MarriageInfo marriage = new MarriageInfo();
 
             //grand father info
             GrandFatherInfo granFather = new GrandFatherInfo();
@@ -156,7 +156,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
             bd.setChild(child);
             bd.setRegister(register);
             bd.setParent(parent);
-            bd.setMarriage(marrage);
+            bd.setMarriage(marriage);
             bd.setGrandFather(granFather);
             bd.setNotifyingAuthority(notification);
             bd.setInformant(informant);
@@ -178,7 +178,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         return loginAction.getSession();
     }
 
-    private void initAndExucute(String mapping, Map session) {
+    private void initAndExecute(String mapping, Map session) {
         proxy = getActionProxy(mapping);
         registerAction = (BirthRegisterAction) proxy.getAction();
         logger.debug("Action Method to be executed is {} ", proxy.getMethod());
@@ -197,7 +197,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
 
     public void testBirthConfirmationInitMappingProxy() throws Exception {
 
-        //idUkey 1 has serial number 2010012350
+        //idUKey 1 has serial number 2010012350
         User user = loginSampleUser();
         long idUKey = 1;
 
@@ -218,8 +218,8 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         assertEquals("eprBirthConfirmationInit", mapping.getName());
 
         request.setParameter("bdId", "" + bd.getIdUKey());
-        initAndExucute("/births/eprBirthConfirmationInit.do", session);
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+        initAndExecute("/births/eprBirthConfirmationInit.do", session);
+        assertEquals("No Action errors.", 0, registerAction.getActionErrors().size());
         session = registerAction.getSession();
 
         BirthDeclaration bdf, bcf;
@@ -237,7 +237,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         assertEquals("Found Division ", 1, bdf.getRegister().getBirthDivision().getDivisionId());
         logger.debug("getBd division {} ", bdf.getRegister().getBirthDivision().getSiDivisionName());
 
-        assertEquals("Fathercountry", 1, bdf.getParent().getFatherCountry().getCountryId());
+        assertEquals("Father Country", 1, bdf.getParent().getFatherCountry().getCountryId());
 
         assertNotNull("Mother country presence", registerAction.getMotherCountry());
         assertNotNull("Father Race precence", registerAction.getFatherRace());
@@ -264,10 +264,10 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         request.setParameter("parent.fatherNICorPIN", "853303399v");
         request.setParameter("parent.motherNICorPIN", "666666666v");
         request.setParameter("child.childGender", "1");
-        initAndExucute("/births/eprBirthConfirmation.do", session);
+        initAndExecute("/births/eprBirthConfirmation.do", session);
         session = registerAction.getSession();
         bdf = (BirthDeclaration) (session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+        assertEquals("No Action errors.", 0, registerAction.getActionErrors().size());
 
         assertNotNull("child date of birth", registerAction.getChild().getDateOfBirth());
         assertNotNull("child gender ", registerAction.getChild().getChildGender());
@@ -281,31 +281,31 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         request.setParameter("child.childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka");
         request.setParameter("parent.fatherFullName", "Nishshanka Mudiyanselage Chandrasena Nishshanka");
         request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
-        initAndExucute("/births/eprBirthConfirmation.do", session);
+        initAndExecute("/births/eprBirthConfirmation.do", session);
         session = registerAction.getSession();
         bdf = (BirthDeclaration) (session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN));
 
         request.setParameter("pageNo", "3");
-        assertEquals("No Action erros.", 0, registerAction.getActionErrors().size());
+        assertEquals("No Action errors.", 0, registerAction.getActionErrors().size());
         request.setParameter("confirmantRadio", "GUARDIAN");
         request.setParameter("confirmant.confirmantNICorPIN", "853303399v");
         request.setParameter("confirmant.confirmantFullName", "කැලුම් කොඩිප්පිලි");
         request.setParameter("confirmant.confirmantSignDate", "2010-07-28T00:00:00+05:30");
         request.setParameter("skipConfirmationChanges", "false");
-        initAndExucute("/births/eprBirthConfirmation.do", session);
+        initAndExecute("/births/eprBirthConfirmation.do", session);
         session = registerAction.getSession();
         assertNotNull("confirment full name ", registerAction.getConfirmant().getConfirmantFullName());
 
         request.setParameter("confirmationApprovalFlag", "true");
         request.setParameter("bdId", "165");
         request.setParameter("directApprovalFlag", "true");
-        approvalinit("/births/eprConfrimationChangesDirectApproval.do", session);
+        approvalInit("/births/eprConfrimationChangesDirectApproval.do", session);
         session = registerAction.getSession();
 
         assertNotNull("Ds division ", bdf.getRegister().getBirthDivision().getDsDivision().getDivisionId());
     }
 
-    private void approvalinit(String mapping, Map session) {
+    private void approvalInit(String mapping, Map session) {
         proxy = getActionProxy(mapping);
         approvalAction = (BirthRegisterApprovalAction) proxy.getAction();
         ActionContext.getContext().setSession(session);

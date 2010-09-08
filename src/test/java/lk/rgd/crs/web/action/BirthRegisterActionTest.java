@@ -85,7 +85,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
             rg = userManager.authenticateUser("rg", "password");
         }
         catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
@@ -134,8 +134,8 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
             parent.setFatherNICorPIN("530232026V");
             parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
 
-            //marrage info
-            MarriageInfo marrage = new MarriageInfo();
+            //marriage info
+            MarriageInfo marriage = new MarriageInfo();
 
             //grand father info
             GrandFatherInfo granFather = new GrandFatherInfo();
@@ -156,16 +156,16 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
             informant.setInformantAddress("informant address" + i);
             informant.setInformantSignDate(gCal.getTime());
 
-            ConfirmantInfo confermant = new ConfirmantInfo();
+            ConfirmantInfo confirmant = new ConfirmantInfo();
 
             bd.setChild(child);
             bd.setRegister(register);
             bd.setParent(parent);
-            bd.setMarriage(marrage);
+            bd.setMarriage(marriage);
             bd.setGrandFather(granFather);
             bd.setNotifyingAuthority(notification);
             bd.setInformant(informant);
-            bd.setConfirmant(confermant);
+            bd.setConfirmant(confirmant);
 
             list.add(bd);
 
@@ -211,10 +211,10 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         Map session = login("rg", "password");
         initAndExecute("/births/eprBirthRegistrationInit.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 1 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertNotNull("Faild to put Birth Declaration to the session", bd);
+        assertNotNull("Failed to put Birth Declaration to the session", bd);
         obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
         assertNotNull("Request District List Presence", action.getDistrictList());
@@ -236,7 +236,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("birthDivisionId", "10");
         request.setParameter("child.placeOfBirth", "මාතර");
         request.setParameter("child.placeOfBirthEnglish", "Matara");
-        request.setParameter("child.birthAtHospital", "ture");
+        request.setParameter("child.birthAtHospital", "true");
         request.setParameter("child.childFullNameOfficialLang", "kamal silva");
         request.setParameter("child.childFullNameEnglish", "KAMAL SILVA");
         request.setParameter("register.preferredLanguage", "si");
@@ -247,22 +247,22 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
 
-        assertEquals("Action erros for 2 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 2 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         obj = session.get(WebConstants.SESSION_USER_LANG);
-        assertNotNull("Session User Local Presence Faild", obj);
-        assertNotNull("Request Country List Presence Faild", action.getCountryList());
-        assertNotNull("Request Race List Presence Faild", action.getRaceList());
-        assertNotNull("Request Country List Presence Faild", action.getCountryList());
-        assertNotNull("Request Full District List Presence Faild", action.getAllDistrictList());
-        assertNotNull("Request Full DS Division List Presence Faild", action.getAllDSDivisionList());
-        assertEquals("Request parent Bean population faild", bd.getParent(), action.getParent());
+        assertNotNull("Session User Local Presence Failed", obj);
+        assertNotNull("Request Country List Presence Failed", action.getCountryList());
+        assertNotNull("Request Race List Presence Failed", action.getRaceList());
+        assertNotNull("Request Country List Presence Failed", action.getCountryList());
+        assertNotNull("Request Full District List Presence Failed", action.getAllDistrictList());
+        assertNotNull("Request Full DS Division List Presence Failed", action.getAllDSDivisionList());
+        assertEquals("Request parent Bean population failed", bd.getParent(), action.getParent());
 
         //check whether the session bean is updated with the previous request values
         assertEquals("Failed to update the birth declaration session with child full name in english", "KAMAL SILVA", bd.getChild().getChildFullNameEnglish());
         assertEquals("Failed to update the birth declaration session with serial number", 12345, bd.getRegister().getBdfSerialNo());
-        assertEquals("Failed to update the birth declaration session with preffered language", "si", bd.getRegister().getPreferredLanguage());
+        assertEquals("Failed to update the birth declaration session with preferred language", "si", bd.getRegister().getPreferredLanguage());
         assertEquals("Failed to update the birth declaration session with birth place", "මාතර", bd.getChild().getPlaceOfBirth());
 
         //todo
@@ -295,7 +295,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 3 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 3 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
@@ -323,9 +323,9 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("failed to update birth declaration session with mother admission date", "2010-01-09", DateTimeUtils.getISO8601FormattedString(bd.getParent().getMotherAdmissionDate()));
         assertEquals("failed to update birth declaration session with mother phone number", "0112345678", bd.getParent().getMotherPhoneNo());
 
-        assertNotNull("marriage Bean population faild", action.getMarriage());
-        assertNotNull("grandFather Bean population faild", action.getGrandFather());
-        assertNotNull("informant Bean population faild", action.getInformant());
+        assertNotNull("marriage Bean population failed", action.getMarriage());
+        assertNotNull("grandFather Bean population failed", action.getGrandFather());
+        assertNotNull("informant Bean population failed", action.getInformant());
 
         //for 4 of 4BDF
         request.setParameter("pageNo", "3");
@@ -344,7 +344,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 4 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 4 of 4BDF", 0, action.getActionErrors().size());
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
         assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
@@ -366,10 +366,10 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-08-09");
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
+        assertEquals("Action errors for Birth Declaration Form Details", 0, action.getActionErrors().size());
         logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
-        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
-        assertEquals("Faild to remove BirthDeclaration", bd, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        assertNotNull("notifyingAuthority Bean population failed", action.getNotifyingAuthority());
+        assertEquals("Failed to remove BirthDeclaration", bd, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
         logger.debug("successfully persisted with the bdId :{}", action.getBdId());
 
     }
@@ -379,10 +379,10 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("bdId", "9");
         initAndExecute("/births/eprBirthRegistrationInit.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 1 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 1 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertEquals("Data Entry Mode Faild", 0, bd.getRegister().getStatus().ordinal());
+        assertEquals("Data Entry Mode Failed", 0, bd.getRegister().getStatus().ordinal());
 
         Object obj = session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", obj);
@@ -415,7 +415,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("birthDivisionId", "10");
         request.setParameter("child.placeOfBirth", "මාතර");
         request.setParameter("child.placeOfBirthEnglish", "Matara");
-        request.setParameter("child.birthAtHospital", "ture");
+        request.setParameter("child.birthAtHospital", "true");
         request.setParameter("child.childFullNameOfficialLang", bd.getChild().getChildFullNameOfficialLang());
         request.setParameter("child.childFullNameEnglish", bd.getChild().getChildFullNameEnglish());
         request.setParameter("register.preferredLanguage", "si");
@@ -425,20 +425,20 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("child.numberOfChildrenBorn", "1");
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 2 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 2 of 4BDF", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
-        assertEquals("bdId matches with the previous faild", 9, bd.getIdUKey());
+        assertEquals("bdId matches with the previous failed", 9, bd.getIdUKey());
         obj = session.get(WebConstants.SESSION_USER_LANG);
-        assertNotNull("Session User Local Presence Faild", obj);
-        assertNotNull("Request Country List Presence Faild", action.getCountryList());
-        assertNotNull("Request Race List Presence Faild", action.getRaceList());
-        assertNotNull("Request Country List Presence Faild", action.getCountryList());
+        assertNotNull("Session User Local Presence Failed", obj);
+        assertNotNull("Request Country List Presence Failed", action.getCountryList());
+        assertNotNull("Request Race List Presence Failed", action.getRaceList());
+        assertNotNull("Request Country List Presence Failed", action.getCountryList());
 
-        assertNotNull("Request Full District List Presence Faild", action.getAllDistrictList());
-        assertNotNull("Request Full DS Division List Presence Faild", action.getAllDSDivisionList());
+        assertNotNull("Request Full District List Presence Failed", action.getAllDistrictList());
+        assertNotNull("Request Full DS Division List Presence Failed", action.getAllDSDivisionList());
 
-        assertEquals("Request parent Bean population faild", bd.getParent(), action.getParent());
+        assertEquals("Request parent Bean population failed", bd.getParent(), action.getParent());
 
         //for 3 of 4BDF
         request.setParameter("pageNo", "2");
@@ -469,11 +469,11 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 3 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 3 of 4BDF", 0, action.getActionErrors().size());
 
-        assertEquals("Request marriage Bean population faild", bd.getMarriage(), action.getMarriage());
-        assertEquals("Request grandFather Bean population faild", bd.getGrandFather(), action.getGrandFather());
-        assertEquals("Request informant Bean population faild", bd.getInformant(), action.getInformant());
+        assertEquals("Request marriage Bean population failed", bd.getMarriage(), action.getMarriage());
+        assertEquals("Request grandFather Bean population failed", bd.getGrandFather(), action.getGrandFather());
+        assertEquals("Request informant Bean population failed", bd.getInformant(), action.getInformant());
 
         //for 4 of 4BDF
         request.setParameter("pageNo", "3");
@@ -492,7 +492,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         initAndExecute("/births/eprBirthRegistration.do", session);
         session = action.getSession();
-        assertEquals("Action erros for 4 of 4BDF", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 4 of 4BDF", 0, action.getActionErrors().size());
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
         assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
@@ -513,11 +513,11 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         request.setParameter("notifyingAuthority.notifyingAuthorityAddress", "65 C මල්වත්ත පාර, කොට්ටාව");
         request.setParameter("notifyingAuthority.notifyingAuthoritySignDate", "2010-08-09");
         initAndExecute("/births/eprBirthRegistration.do", session);
-        assertNotNull("notifyingAuthority Bean population faild", action.getNotifyingAuthority());
+        assertNotNull("notifyingAuthority Bean population failed", action.getNotifyingAuthority());
         session = action.getSession();
-        assertEquals("Action erros for Birth Declaration Form Details", 0, action.getActionErrors().size());
+        assertEquals("Action errors for Birth Declaration Form Details", 0, action.getActionErrors().size());
         logger.debug("approval permission for the user : {}", action.isAllowApproveBDF());
-        assertEquals("Faild to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
+        assertEquals("Failed to remove BirthDeclaration", null, session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN));
         logger.debug("successfully persisted with the bdId :{}", action.getBdId());
 
     }
@@ -602,7 +602,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Date of registration failed", "2010-08-10", DateTimeUtils.getISO8601FormattedString(bd.getRegister().getDateOfRegistration()));
         assertEquals("Date of birth failed", "2010-07-10", DateTimeUtils.getISO8601FormattedString(bd.getChild().getDateOfBirth()));
         assertEquals("Birth district Id failed", 1, bd.getRegister().getBirthDistrict().getDistrictUKey());
-        assertEquals("DSDivision Id failed", 2, bd.getRegister().getBirthDivision().getDsDivision().getDsDivisionUKey());
+        assertEquals("DSDivision Id failed", 1, bd.getRegister().getBirthDivision().getDsDivision().getDsDivisionUKey());
         assertEquals("Child Birth Division failed", 6, bd.getRegister().getBirthDivision().getBdDivisionUKey());
         assertEquals("Child Place of birth failed", "Colombo Fort (Medical)".toUpperCase(), bd.getChild().getPlaceOfBirth());
         assertEquals("No action errors", 0, action.getActionErrors().size());
