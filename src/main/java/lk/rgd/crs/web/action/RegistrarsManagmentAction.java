@@ -16,6 +16,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.BaseLifeCycleInfo;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Assignment;
@@ -45,6 +46,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
+    private final MRDivisionDAO mrDivisionDAO;
     private final RegistrarManagementService service;
 
     private Registrar registrar;
@@ -76,11 +78,12 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private Date terminationDate;
     private boolean active;
 
-    public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service) {
+    public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.service = service;
+        this.mrDivisionDAO = mrDivisionDAO;
     }
 
     public String registrarsManagmentHome() {
@@ -96,7 +99,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     public String registrarsVeiwInit() {
         logger.info("register veiw init called ");
         if (registrarSession) {
-            //todo
             Assignment asg = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
             registrarUkey = asg.getRegistrar().getRegistrarUKey();
             session.remove(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
@@ -120,7 +122,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String registrarsAdd() {
         logger.info("attemp to add new registrar");
-        //todo add action errors here
         if (page > 0) {
             //check is there a registrar for that pin already exsists
             List<Registrar> exsistingregistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
@@ -129,6 +130,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             } else {
                 service.addRegistrar(registrar, user);
                 registrar = null;
+                //todo add action massage acknwolaging succes
                 //otherwise it still in requestscope so data in that object populate in new registrar add  
             }
         }
@@ -137,7 +139,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String assignmentAdd() {
         if (!editMode) {
-            //todo divisions are nt setting properly
             logger.info("attemt to add a new assignment");
             if (directAssigment == 2) {
                 //gettting exsiting
@@ -149,8 +150,8 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 if (type.equals(Assignment.Type.DEATH))
                     assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
                 //todo marrige division
-                /* if (type.equals(Assignment.Type.MARRIAGE))
-                assignment.setMarriageDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));*/
+                if (type.equals(Assignment.Type.GENERAL_MARRIAGE))
+                    assignment.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(divisionId));
                 assignment.setType(type);
                 service.addAssignment(assignment, user);
                 session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
@@ -167,32 +168,29 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             life.setActive(state);
             beforeEdit.setLifeCycleInfo(life);
             service.updateAssignment(beforeEdit, user);
-            //todo remove this populate
             populateLists(1, 1);
             return "updated";
         }
-        //todo remove this populate
         populateLists(1, 1);
         return SUCCESS;
     }
 
     public String editAssignment() {
-
-        //todo load assignment form assignmentIDukey
         //put current assignment in to session for redirection purposes
         assignment = service.getAssignmentById(assignmentUKey, user);
         session.put(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR, assignment);
-        //todo update assignment
-        //todo remove this populate
         populateLists(1, 1);
+        return SUCCESS;
+    }
+
+    public String updateRegistrar() {
+        //todo implement
         return SUCCESS;
     }
 
     public String assignmentAddPageLoad() {
         //requesting addAssignment page directly
         directAssigment = 1;
-        //todo remove this populate
-        populateLists(1, 1);
         return SUCCESS;
     }
 

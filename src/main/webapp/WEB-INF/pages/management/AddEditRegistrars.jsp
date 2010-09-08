@@ -130,6 +130,27 @@
         });
     });
 
+    function disableFields(mode) {
+        document.getElementById('registrarNameInOfficelaLang').disabled = mode;
+        document.getElementById('registrarNameInEnglish').disabled = mode;
+        document.getElementById('registrarPin').disabled = mode;
+        document.getElementById('registrarNIC').disabled = mode;
+        document.getElementById('registrarGender').disabled = mode;
+        document.getElementById('dateOfBirthDatePicker').disabled = mode;
+        document.getElementById('registrarAddress').disabled = mode;
+        document.getElementById('registrarPhone').disabled = mode;
+        document.getElementById('registrarEmail').disabled = mode;
+        document.getElementById('prefLanguage').disabled = mode;
+    }
+
+    function initPage() {
+        disableFields(true);
+    }
+
+    function x(mode) {
+        document.getElementById('prefLanguage').disable = false;
+    }
+
 </script>
 
 <style type="text/css">
@@ -198,6 +219,8 @@
         clear: both;
     }
 
+    form>
+
     .toggle_container .block {
         padding: 20px; /*--Padding of Container--*/
         background: url(../images/) no-repeat left bottom; /*--Bottom rounded corners--*/
@@ -206,60 +229,77 @@
 </style>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right">Basic info</legend>
-    <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
-        <caption></caption>
-        <col width="400px"/>
-        <col width="1000px"/>
-        <tbody>
-        <tr>
-            <td align="left">name in official language</td>
-            <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
-                                          name="registrar.fullNameInOfficialLanguage"/></td>
-        </tr>
-        <tr>
-            <td align="left">name in English</td>
-            <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
-                                          name="registrar.fullNameInEnglishLanguage"/></td>
-        </tr>
-        <tr>
-            <td align="left">pin/NIC</td>
-            <td align="left"><s:textfield id="registrarPin" name="registrar.pin"/></td>
-        </tr>
-        <tr>
-            <td align="left">NIC</td>
-            <td align="left"><s:textfield id="registrarNIC" name="registrar.nic"/></td>
-        </tr>
-        <tr>
-            <td align="left">gender</td>
-            <td align="left"><s:select
-                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="registrar.gender" cssStyle="width:190px; margin-left:5px;" id="registrarGender"/></td>
-        </tr>
-        <tr>
-            <td align="left">date of birth</td>
-            <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
-        </tr>
-        <tr>
-            <td align="left">address</td>
-            <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
-                                         name="registrar.currentAddress"/></td>
-        </tr>
-        <tr>
-            <td align="left">phone</td>
-            <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
-        </tr>
-        <tr>
-            <td align="left">email</td>
-            <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
-        </tr>
-        <tr>
-            <td align="left">prefered language</td>
-            <td align="left"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
-                                       name="registrar.preferredLanguage"
-                                       cssStyle="width:190px; margin-left:5px;"/></td>
-        </tr>
-        </tbody>
-    </table>
+    <form action="eprUpdateRegistrar.do" method="post">
+        <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
+            <caption></caption>
+            <col width="400px"/>
+            <col width="1000px"/>
+            <tbody>
+            <tr>
+                <td align="left">name in official language</td>
+                <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
+                                              name="registrar.fullNameInOfficialLanguage"/></td>
+            </tr>
+            <tr>
+                <td align="left">name in English</td>
+                <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
+                                              name="registrar.fullNameInEnglishLanguage"/></td>
+            </tr>
+            <tr>
+                <td align="left">pin/NIC</td>
+                <td align="left"><s:textfield id="registrarPin" name="registrar.pin"/></td>
+            </tr>
+            <tr>
+                <td align="left">NIC</td>
+                <td align="left"><s:textfield id="registrarNIC" name="registrar.nic"/></td>
+            </tr>
+            <tr>
+                <td align="left">gender</td>
+                <td align="left"><s:select
+                        list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                        name="registrar.gender" cssStyle="width:190px;" id="registrarGender"/></td>
+            </tr>
+            <tr>
+                <td align="left">date of birth</td>
+                <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
+            </tr>
+            <tr>
+                <td align="left">address</td>
+                <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
+                                             name="registrar.currentAddress"/></td>
+            </tr>
+            <tr>
+                <td align="left">phone</td>
+                <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
+            </tr>
+            <tr>
+                <td align="left">email</td>
+                <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
+            </tr>
+            <tr>
+                <td align="left">prefered language</td>
+                <td align="left"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
+                                           name="registrar.preferredLanguage"
+                                           cssStyle="width:190px;" id="prefLanguage"/></td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <col width="500px">
+            <col width="250px">
+            <col width="250px">
+            <col width="250px">
+            <tbody>
+            <tr>
+                <td colspan="2"></td>
+                <td><s:property value="%{getText('label.enable.edit.mode')}"/> <s:checkbox name="enableEditMode"
+                                                                                           id="enableEditMode"
+                                                                                           onselect="javascript:x(true);"/></td>
+                <td><s:submit value="%{getText('label.submit')}"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
 </fieldset>
 
 <%--current assignments--%>
@@ -334,6 +374,7 @@
         <p class="msg_head">add a assignment now </p>
 
         <div class="msg_body">
+            <%--todo remove this code --%>
             <s:form action="#" method="post">
                 <s:include value="AddAssignment.jsp"/>
             </s:form>
