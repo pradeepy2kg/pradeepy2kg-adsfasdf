@@ -230,7 +230,7 @@ function initPage() {
         domObject.value = null;
     }
     domObject = document.getElementById('childAgeYears');
-    if (domObject.value.trim() == 0) {
+    if (domObject.value.trim() == 0 && document.getElementById('childAgeMonths').value.trim() < 1) {
         domObject.value = null;
     }
     document.getElementById('birthCertificateNumber').disabled = true;
