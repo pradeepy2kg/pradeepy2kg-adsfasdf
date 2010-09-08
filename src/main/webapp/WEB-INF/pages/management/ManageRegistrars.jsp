@@ -142,7 +142,12 @@
                     </s:if>
 
                     <td><s:a href="%{assign}"><s:property value="registrar.fullNameInOfficialLanguage"/></s:a></td>
-                    <td><s:property value="lifeCycleInfo.active"/></td>
+                    <s:if test="lifeCycleInfo.active ==true">
+                        <td><s:property value="%{getText('label.yes')}"/></td>
+                    </s:if>
+                    <s:else>
+                        <td><s:property value="%{getText('label.no')}"/></td>
+                    </s:else>
                     <td><s:property value="type"/></td>
                     <td><s:property value="permanentDate"/></td>
                     <td><s:property value="terminationDate"/></td>

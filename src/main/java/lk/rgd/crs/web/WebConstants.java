@@ -41,4 +41,5 @@ public class WebConstants {
     public static final String SESSION_USER_ADMIN = "ADMIN";
 
     public static final String SESSION_EXSISTING_REGISTRAR = "exsisting_registrar";
+    public static final String SESSION_UPDATED_ASSIGNMENT_REGISTRAR = "updated_assignment";
 }

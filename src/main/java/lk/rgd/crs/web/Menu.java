@@ -62,6 +62,7 @@ public class Menu {
         adminLink.put("eprAssignmentAddDirect.do", new Link("assignment.add", "/ecivil/management/", "eprAssignmentAddDirect.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprAssignmentAdd.do", new Link(null, "/ecivil/management/", "eprAssignmentAdd.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprSearchRegistrarByPin.do", new Link(null, "/ecivil/management/", "eprSearchRegistrarByPin.do", Permission.REGISTRAR_MANAGEMENT));
+        adminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
 
 
         //User Preferance
@@ -88,7 +89,7 @@ public class Menu {
         adrBirthLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/births/", "eprBirthAlteration.do", Permission.EDIT_BDF));
         adrBirthLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/births/", "eprBirthAlterationSearch.do", Permission.EDIT_BDF));
 
-        
+
         deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));
         deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/ecivil/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
         deoBirthLink.put("eprBirthRegistrationHome.do", new Link(null, "/ecivil/births/", "eprBirthRegistrationHome.do", Permission.EDIT_BDF));
