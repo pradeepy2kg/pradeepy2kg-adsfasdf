@@ -1,22 +1,22 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.BirthCertificateSearch;
+import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.struts2.interceptor.SessionAware;
-import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.domain.BirthCertificateSearch;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.CRSRuntimeException;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.DSDivisionDAO;
 
-import java.util.Map;
-import java.util.Locale;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Indunil Moremada
@@ -79,7 +79,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
      */
     public String searchBDFBySerialNumber() {
         logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
-            birthDivisionId, serialNo, birthDistrictId + " recieved");
+            birthDivisionId, serialNo, birthDistrictId + " received");
         try {
             if (serialNo != null) {
                 bdf = service.getActiveRecordByBDDivisionAndSerialNo(
@@ -110,7 +110,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("inside populate() : language {} observed ", language);
         setDistrictList(districtDAO.getDistrictNames(language, user));
-        //intial birth district id
+        //initial birth district id
         if (districtList != null) {
             birthDistrictId = districtList.keySet().iterator().next();
         }

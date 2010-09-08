@@ -309,10 +309,8 @@
                         <s:param name="recordCounter" value="#request.recordCounter"/>
                     </s:url>
                     <td align="center">
-                        <s:if test="register.birthType.ordinal() != 3">
                         <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
                         <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
-                        </s:if>
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">
@@ -328,11 +326,9 @@
                         <s:param name="reject" value="true"/>
                     </s:url>
                     <td align="center">
-                        <s:if test="register.birthType.ordinal() != 3">
                         <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
                             <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
                         </s:a>
-                        </s:if>
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">

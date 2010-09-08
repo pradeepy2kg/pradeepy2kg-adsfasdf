@@ -1,31 +1,30 @@
 package lk.rgd.crs.web.action;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionProxy;
+import junit.extensions.TestSetup;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import lk.rgd.UnitTestManager;
 import lk.rgd.common.CustomStrutsTestCase;
-import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.Country;
-import lk.rgd.common.api.domain.Race;
-import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.crs.web.action.births.BirthRegisterAction;
-import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
-import lk.rgd.crs.web.WebConstants;
+import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.UnitTestManager;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.action.births.BirthRegisterAction;
+import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import com.opensymphony.xwork2.ActionProxy;
-import com.opensymphony.xwork2.ActionContext;
 
 import java.util.*;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.extensions.TestSetup;
 
 
 /**
@@ -86,7 +85,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             rg = userManager.authenticateUser("rg", "password");
         }
         catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
@@ -120,7 +119,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             register.setPreferredLanguage("si");
             register.setBdfSerialNo(new Long(2010012330 + i));
             register.setPreferredLanguage("si");
-            //birth devision
+            //birth division
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
@@ -135,8 +134,8 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             parent.setFatherNICorPIN("530232026V");
             parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
 
-            //marrage info
-            MarriageInfo marrage = new MarriageInfo();
+            //marriage info
+            MarriageInfo marriage = new MarriageInfo();
 
             //grand father info
             GrandFatherInfo granFather = new GrandFatherInfo();
@@ -157,16 +156,16 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             informant.setInformantAddress("informant address" + i);
             informant.setInformantSignDate(gCal.getTime());
 
-            ConfirmantInfo confermant = new ConfirmantInfo();
+            ConfirmantInfo confirmant = new ConfirmantInfo();
 
             bd.setChild(child);
             bd.setRegister(register);
             bd.setParent(parent);
-            bd.setMarriage(marrage);
+            bd.setMarriage(marriage);
             bd.setGrandFather(granFather);
             bd.setNotifyingAuthority(notification);
             bd.setInformant(informant);
-            bd.setConfirmant(confermant);
+            bd.setConfirmant(confirmant);
 
             list.add(bd);
 
@@ -221,7 +220,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
     }
 
     public void testSkipConfirmationChangesForConfirmationChangesCapturedEntry() throws Exception {
-        //idUkey 1 has serial number 2010012330
+        //idUKey 1 has serial number 2010012330
         User user = loginSampleUser();
         long idUKey = 1;
         Object obj;
@@ -230,7 +229,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
 
-        //change state to CONFERMATION_CHANGES_CAPTURED state
+        //change state to CONFIRMATION_CHANGES_CAPTURED state
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
                 new Long("2010012330"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //change state to APPROVE
@@ -247,7 +246,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
 
-        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation Search", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
@@ -265,9 +264,9 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("skipConfirmationChages", "true");
         initAndExecute("/births/eprBirthConfirmationSkipChanges.do", session);
         session = action.getSession();
-        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation skipping changes", 0, action.getActionErrors().size());
 
-        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
+        assertNotNull("failed to initialize confirmant bean", action.getConfirmant());
 
         request.setParameter("pageNo", "3");
         request.setParameter("skipConfirmationChages", "true");
@@ -276,8 +275,8 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("confirmant.confirmantFullName", "Ramya de silva");
         initAndExecute("/births/eprBirthConfirmation.do", session);
         session = action.getSession();
-        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
-        assertFalse("faild to set skipConfirmationChages in confirmation changes captured state", action.isSkipConfirmationChages());
+        assertEquals("Action errors Confirmation skipping changes", 0, action.getActionErrors().size());
+        assertFalse("failed to set skipConfirmationChanges in confirmation changes captured state", action.isSkipConfirmationChages());
 
         //direct approval confirmation changes
         request.setParameter("bdId", Long.toString(action.getBdId()));
@@ -285,7 +284,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecuteApproval("/births/eprConfrimationChangesDirectApproval.do", session);
         session = approvalAction.getSession();
 
-        logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
+        logger.debug("current state after direct approval of confirmation changes : {}", (approvalAction.getService().getById(bdId,
                 (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificate print after direct approval
@@ -320,10 +319,10 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("bdId", bdId.toString());
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
 
-        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation Search", 0, action.getActionErrors().size());
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
-        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation Search", 0, action.getActionErrors().size());
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
@@ -348,11 +347,11 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("child.childGender", "1");
         initAndExecute("/births/eprBirthConfirmation.do", session);
 
-        assertEquals("Action erros for loading second page", 0, action.getActionErrors().size());
+        assertEquals("Action errors for loading second page", 0, action.getActionErrors().size());
         session = action.getSession();
 
-        assertNotNull("faild to initialize child bean", action.getChild());
-        assertNotNull("faild to initialize parent bean", action.getParent());
+        assertNotNull("failed to initialize child bean", action.getChild());
+        assertNotNull("failed to initialize parent bean", action.getParent());
 
         //loading the 3 of 3BCFs
         request.setParameter("pageNo", "2");
@@ -362,14 +361,14 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
         initAndExecute("/births/eprBirthConfirmation.do", session);
 
-        assertEquals("Action erros for loading third page", 0, action.getActionErrors().size());
-        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
+        assertEquals("Action errors for loading third page", 0, action.getActionErrors().size());
+        assertNotNull("failed to initialize confirmant bean", action.getConfirmant());
         session = action.getSession();
 
-        //cheking for back support
+        //checking for back support
         request.setParameter("pageNo", "1");
         initAndExecute("/births/eprBirthConfirmation.do", session);
-        assertEquals("Action erros for loading second page with back support", 0, action.getActionErrors().size());
+        assertEquals("Action errors for loading second page with back support", 0, action.getActionErrors().size());
 
         assertEquals("failed to populate child full name in official language", "නිශ්ශංක මුදියන්සේලාගේ ජනිත් විදර්ශන නිශ්ශංක", action.getChild().getChildFullNameOfficialLang());
         assertEquals("failed to populate childFullNameEnglish", "Nishshanka Mudiyanselage Janith Wiarshana Nishshanka".toUpperCase(), action.getChild().getChildFullNameEnglish());
@@ -385,8 +384,8 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("parent.motherFullName", "Periyapperuma Arachchilage Premawathi");
         initAndExecute("/births/eprBirthConfirmation.do", session);
 
-        assertEquals("Action erros for loading third page", 0, action.getActionErrors().size());
-        assertNotNull("faild to initialize confirmant bean after back support", action.getConfirmant());
+        assertEquals("Action errors for loading third page", 0, action.getActionErrors().size());
+        assertNotNull("failed to initialize confirmant bean after back support", action.getConfirmant());
         session = action.getSession();
 
         //loading the confirmation form detail page
@@ -429,7 +428,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         Map session = login("rg", "password");
         //initiating action to get the required bdId to start the unit test
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
-        //getting the required bdId wich is not having confirmation changes
+        //getting the required bdId which is not having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
                 new Long("2010012332"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry for which confirmation changes to be skipped
@@ -446,7 +445,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         session = action.getSession();
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
 
-        assertEquals("Action erros Confirmation Search", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation Search", 0, action.getActionErrors().size());
 
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
@@ -463,9 +462,9 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("skipConfirmationChages", "true");
         initAndExecute("/births/eprBirthConfirmationSkipChanges.do", session);
         session = action.getSession();
-        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation skipping changes", 0, action.getActionErrors().size());
 
-        assertNotNull("faild to initialize confirmant bean", action.getConfirmant());
+        assertNotNull("failed to initialize confirmant bean", action.getConfirmant());
 
         request.setParameter("pageNo", "3");
         request.setParameter("skipConfirmationChages", "true");
@@ -474,7 +473,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("confirmant.confirmantFullName", "samara jayawardane");
         initAndExecute("/births/eprBirthConfirmation.do", session);
         session = action.getSession();
-        assertEquals("Action erros Confirmation skiping changes", 0, action.getActionErrors().size());
+        assertEquals("Action errors Confirmation skipping changes", 0, action.getActionErrors().size());
         logger.debug("SkipConfirmationChanges : {} ", action.isSkipConfirmationChages());
 
         logger.debug("current state after skipping confirmation changes : {}", (action.getService().getById(bdId,

@@ -174,7 +174,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertNotNull(batchBdf.getNotifyingAuthority());
 
         // check auto populated fields correctly in batch mode
-        assertEquals("BDF serial number not inceremented for the BDF in seesion", serialNo + 1, batchBdf.getRegister().getBdfSerialNo());
+        assertEquals("BDF serial number not incremented for the BDF in session", serialNo + 1, batchBdf.getRegister().getBdfSerialNo());
         assertEquals("BDF date Of registration in session and DB are not equal", DateTimeUtils.getISO8601FormattedString(sampleBD.getRegister().getDateOfRegistration()),
             DateTimeUtils.getISO8601FormattedString(batchBdf.getRegister().getDateOfRegistration()));
         assertEquals("BDF live birth type not matched", sampleBD.getRegister().getBirthType(), batchBdf.getRegister().getBirthType());
@@ -205,7 +205,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         Map session = login("chathuranga", "chathuranga");
         initAndExecute(LIVE_BIRTH_REGISTER_INIT_MAPPING, session);
         session = action.getSession();
-        assertEquals("Action erros for 1 of 4 BDF pages", 0, action.getActionErrors().size());
+        assertEquals("Action errors for 1 of 4 BDF pages", 0, action.getActionErrors().size());
 
         BirthDeclaration bdf = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
         assertNotNull("Birth Declaration Bean does not exist in the session", bdf);

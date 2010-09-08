@@ -80,7 +80,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
             rg = userManager.authenticateUser("rg", "password");
         }
         catch (AuthorizationException e) {
-            logger.debug("exception when autharizing a user :'rg' ");
+            logger.debug("exception when authorizing a user :'rg' ");
         }
         return rg;
     }
@@ -114,7 +114,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
             register.setPreferredLanguage("si");
             register.setBdfSerialNo(new Long(2010012340 + i));
             register.setPreferredLanguage("si");
-            //birth devision
+            //birth division
             register.setBirthDivision(colomboBDDivision);
             register.setDateOfRegistration(gCal.getTime());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
@@ -129,8 +129,8 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
             parent.setFatherNICorPIN("530232026V");
             parent.setFatherFullName("ලෝගේස්වරන් යුවන් ශන්කර්");
 
-            //marrage info
-            MarriageInfo marrage = new MarriageInfo();
+            //marriage info
+            MarriageInfo marriage = new MarriageInfo();
 
             //grand father info
             GrandFatherInfo granFather = new GrandFatherInfo();
@@ -151,16 +151,16 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
             informant.setInformantAddress("informant address" + i);
             informant.setInformantSignDate(gCal.getTime());
 
-            ConfirmantInfo confermant = new ConfirmantInfo();
+            ConfirmantInfo confirmant = new ConfirmantInfo();
 
             bd.setChild(child);
             bd.setRegister(register);
             bd.setParent(parent);
-            bd.setMarriage(marrage);
+            bd.setMarriage(marriage);
             bd.setGrandFather(granFather);
             bd.setNotifyingAuthority(notification);
             bd.setInformant(informant);
-            bd.setConfirmant(confermant);
+            bd.setConfirmant(confirmant);
 
             list.add(bd);
 
@@ -222,32 +222,32 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
 
         //   assertEquals("Number of warnings ", 3, action.getWarnings().size());
         //todo improve approval with out warning
-        //todo try to approve with a user dont have permission
+        //todo try to approve with a user don't have permission
 
         logger.info("testApprove completed");
     }
 
     public void testApproveIgnoringWarning() throws Exception {
-        //to approve with out waring must be in DATA_ENTRY ,mode bdid 2 is in DATA_ENTRY mode
+        //to approve with out waring must be in DATA_ENTRY ,mode bdId 2 is in DATA_ENTRY mode
         Map session = login("rg", "password");
         request.setParameter("bdId", "2");
         request.setParameter("ignoreWarning", "true");
         request.setParameter("confirmationApprovalFlag", "false");
         initAndExecute("/births/eprIgnoreWarning.do", session);
         assertNotNull(" Action errors", action.getActionErrors().size());
-        commanApproval(session);
+        commonApproval(session);
     }
 
     public void testApproveIgnoreWarningsDirect() throws Exception {
-        //cannot approve it already aproved
-        //to approve with out waring must be in DATA_ENTRY ,mode bdid 3 is in DATA_ENTRY mode
+        //cannot approve it already approved
+        //to approve with out waring must be in DATA_ENTRY ,mode bdId 3 is in DATA_ENTRY mode
         Map session = login("rg", "password");
         request.setParameter("bdId", "3");
         request.setParameter("ignoreWarning", "true");
         request.setParameter("confirmationApprovalFlag", "false");
         request.setParameter("directApprovalFlag", "true");
         initAndExecute("/births/eprIgnoreWarning.do", session);
-        commanApproval(session);
+        commonApproval(session);
         assertEquals("Request direct approval", true, action.isDirectApprovalFlag());
     }
 
@@ -286,7 +286,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
 
 
     public void testFilter() throws Exception {
-        //foltering by serail number
+        //filtering by serial number
         //todo filter by date
         Map session = login("rg", "password");
         request.setParameter("confirmationApprovalFlag", "false");
@@ -312,7 +312,7 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
     }
 
     private void populateList(Map session) {
-        //check users preferd language
+        //check users preferred language
         Locale userLan = (Locale) session.get(WebConstants.SESSION_USER_LANG);
         assertNotNull("Session User Local Presence", userLan);
         //check user is not null
@@ -321,20 +321,20 @@ public class BirthRegisterApprovalActionTest extends CustomStrutsTestCase {
         //check initial district are loaded properly
         assertNotNull("Response User districtList", action.getDistrictList());
         //check initial dsDivision are loaded
-        assertNotNull("Response User init dsdivision list", action.getDsDivisionList());
-        //check intial bdDivision
-        assertNotNull("Response User init bddivision list", action.getBdDivisionList());
+        assertNotNull("Response User init DSDivision list", action.getDsDivisionList());
+        //check initial bdDivision
+        assertNotNull("Response User init BDDivision list", action.getBdDivisionList());
     }
 
     //todo implement a method to load table
-    //todo implement a mothod to check permission
+    //todo implement a method to check permission
 
 
-    private void commanApproval(Map session) {
+    private void commonApproval(Map session) {
 
         assertNotNull("BDF object ", action.getBdf());
         assertNotNull("User object", session.get(WebConstants.SESSION_USER_BEAN));
-        assertEquals("Request confermationFlag", false, action.isConfirmationApprovalFlag());
+        assertEquals("Request confirmationFlag", false, action.isConfirmationApprovalFlag());
         assertEquals("Request ignoring warnings", true, action.isIgnoreWarning());
         //this is (167) a live birth
         assertEquals("Is live birth", BirthDeclaration.BirthType.LIVE, action.getBirthType());

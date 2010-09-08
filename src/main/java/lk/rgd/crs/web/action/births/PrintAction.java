@@ -1,23 +1,22 @@
 package lk.rgd.crs.web.action.births;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.Permission;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
-import lk.rgd.common.api.dao.AppParametersDAO;
+import lk.rgd.common.api.domain.User;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Locale;
-
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.BirthDeclaration;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.Permission;
+import java.util.Map;
 
 /**
  * Printing actions
@@ -242,7 +241,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     public String printBulkOfEntries() {
         if (!printed) {
             if (index != null) {
-                logger.debug("bddivision {} and current pageNo {} detected", birthDivisionId);
+                logger.debug("BDDivision {} and current pageNo {} detected", birthDivisionId);
                 service.markBirthCertificateIDsAsPrinted(index, user);
                 if (confirmListFlag) {
                     service.markLiveBirthConfirmationIDsAsPrinted(index, user);
@@ -408,7 +407,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
         }
         logger.debug("inside populate() : birthDistrictId {} selected", birthDistrictId);
     }
-    //todo check distric id
+    //todo check district id
 
     private void populate() {
         language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
