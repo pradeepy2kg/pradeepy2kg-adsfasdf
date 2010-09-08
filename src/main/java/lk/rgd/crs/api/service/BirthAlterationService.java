@@ -3,6 +3,8 @@ package lk.rgd.crs.api.service;
 import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.common.api.domain.User;
 
+import java.util.Hashtable;
+
 /**
  * @author Indunil Moremada
  */
@@ -43,11 +45,16 @@ public interface BirthAlterationService {
     public BirthAlteration getById(long idUKey, User user);
 
     /**
-     * Approve a birth Alteration by an ARG or higher authority
+     * Approve requested fields of birth alteration statement 27A
+     * or alteration statement 52_1 by an ARG or higher authority
      *
-     * @param idUKey the unique ID of the birth alteration
-     *               to be approved
-     * @param user   user the user initiating the action
+     * @param ba                 the birth alteration to be approved
+     * @param isAlteration27A    the boolean if true it
+     *                           requested to approve filelds in alteration
+     *                           statement 27A if it is false requested to
+     *                           approve fields in alteration statement 52_1
+     * @param fieldsToBeApproved the list of field indexes to be approved
+     * @param user               user the user initiating the action
      */
-    public void approveBirthAlteration(long idUKey, User user);
+    public void approveBirthAlteration(BirthAlteration ba, boolean isAlteration27A, Hashtable<Integer, Boolean> fieldsToBeApproved, User user);
 }

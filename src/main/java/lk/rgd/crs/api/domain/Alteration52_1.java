@@ -87,7 +87,7 @@ public class Alteration52_1 {
         this.mother = mother;
     }
 
-    public InformantInfo getInformant() {
+    public InformantInfo getInformant() {  
         return informant;
     }
 

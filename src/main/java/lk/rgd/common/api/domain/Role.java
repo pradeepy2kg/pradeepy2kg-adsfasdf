@@ -109,6 +109,7 @@ public class Role implements Serializable {
         this.permissions = permissions;
         this.permBitSet = new BitSet();
         
+        
         if (permissions != null) {
             for (int i=0; i<permissions.length*8; i++) {
                 if ((permissions[permissions.length-i/8-1]&(1<<(i%8))) > 0) {
