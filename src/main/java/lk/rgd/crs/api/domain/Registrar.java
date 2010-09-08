@@ -115,7 +115,7 @@ public class Registrar implements Serializable {
      * Terminated ?
      */
     @Column(nullable = false)
-    private boolean terminated;
+    private boolean employmentTerminated;
 
     /**
      * List of assignments for this registrar
@@ -267,11 +267,11 @@ public class Registrar implements Serializable {
         this.resigned = resigned;
     }
 
-    public boolean isTerminated() {
-        return terminated;
+    public boolean isEmploymentTerminated() {
+        return employmentTerminated;
     }
 
-    public void setTerminated(boolean terminated) {
-        this.terminated = terminated;
+    public void setEmploymentTerminated(boolean employmentTerminated) {
+        this.employmentTerminated = employmentTerminated;
     }
 }
