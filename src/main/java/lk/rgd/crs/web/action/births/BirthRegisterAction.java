@@ -37,7 +37,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private final BirthRegistrationService service;
     private final AdoptionOrderService adoptionService;
-    private final BirthAlterationService alterationService;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
@@ -68,10 +67,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private BirthRegisterInfo register;
     private User user;
     private OldBDInfo oldBDInfo;
-    private Alteration27 alt27;
-    private Alteration27A alt27A;
-    private Alteration52_1 alt52_1;
-    private DeclarantInfo declarant;
 
 
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
@@ -81,7 +76,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
     private int rowNumber;
     private int counter;
-    private long nicOrPin;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -96,7 +90,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private int bdfLateOrBelated;
     private String caseFileNumber;
     private String newComment;
-    private int sectionOfAct;
     private long idUKey;
 
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
@@ -133,8 +126,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO
-            , BirthAlterationService alterationService) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+                               AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -143,7 +136,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.appParametersDAO = appParametersDAO;
-        this.alterationService = alterationService;
     }
 
     /**
@@ -845,103 +837,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         }
     }
 
-    public String initBirthAlteration() {
-        pageNo = 0;
-        populateBasicLists(user.getPrefLanguage());
-        populateDynamicLists(user.getPrefLanguage());
-
-        return SUCCESS;
-    }
-
-    public String birthAlterationSearch() {
-        BirthDeclaration bdf = new BirthDeclaration();
-        switch (pageNo) {
-            case 1:
-                bdf = service.getById(idUKey, user);
-                break;
-            case 2:
-                bdf = service.getByPINorNIC(nicOrPin, user);
-                break;            
-            case 3:
-                bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        serialNo, user);
-                break;
-        }
-
-        populateAlteration(bdf);
-        pageNo = 1;
-        populateBasicLists(user.getPrefLanguage());
-        populateDynamicLists(user.getPrefLanguage());
-        return SUCCESS;
-    }
-
-    private void populateAlteration(BirthDeclaration bdf) {
-        alt27 = new Alteration27();
-        alt27A = new Alteration27A();
-        alt52_1 = new Alteration52_1();
-
-        //set alt27
-        alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
-        alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
-        //set alt27A
-        FatherInfo father = new FatherInfo();
-        father.setFatherDOB(bdf.getParent().getFatherDOB());
-        father.setFatherFullName(bdf.getParent().getFatherFullName());
-        father.setFatherNICorPIN(bdf.getParent().getFatherNICorPIN());
-        father.setFatherPassportNo(bdf.getParent().getFatherPassportNo());
-        father.setFatherPlaceOfBirth(bdf.getParent().getFatherPlaceOfBirth());
-        father.setFatherRace(bdf.getParent().getFatherRace());
-        alt27A.setFather(father);
-        alt27A.setGrandFather(bdf.getGrandFather());
-        alt27A.setMarriage(bdf.getMarriage());
-        alt52_1.setInformant(bdf.getInformant());
-        alt52_1.setChildGender(bdf.getChild().getChildGender());
-        alt52_1.setDateOfBirth(bdf.getChild().getDateOfBirth());
-        alt52_1.setPlaceOfBirth(bdf.getChild().getPlaceOfBirth());
-
-        //set alt52_1
-        alt52_1.setPlaceOfBirthEnglish(bdf.getChild().getPlaceOfBirthEnglish());
-        MotherInfo mother = new MotherInfo();
-        mother.setMotherAddress(bdf.getParent().getMotherAddress());
-        mother.setMotherAgeAtBirth(bdf.getParent().getMotherAgeAtBirth());
-        mother.setMotherDOB(bdf.getParent().getMotherDOB());
-        mother.setMotherFullName(bdf.getParent().getMotherFullName());
-        mother.setMotherNICorPIN(bdf.getParent().getMotherNICorPIN());
-        mother.setMotherPassportNo(bdf.getParent().getMotherPassportNo());
-        alt52_1.setMother(mother);
-        if (bdf.getParent().getFatherCountry() != null) {
-            fatherCountry = bdf.getParent().getFatherCountry().getCountryId();
-        }
-        if (bdf.getParent().getFatherRace() != null) {
-            fatherRace = bdf.getParent().getFatherRace().getRaceId();
-        }
-        if (bdf.getParent().getMotherCountry() != null) {
-            motherCountry = bdf.getParent().getMotherCountry().getCountryId();
-        }
-        if (bdf.getParent().getMotherRace() != null) {
-            motherRace = bdf.getParent().getMotherRace().getRaceId();
-        }
-        birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
-        birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();
-        dsDivisionId = bdf.getRegister().getDsDivision().getDsDivisionUKey();
-    }
-
-
-    public String birthAlteration() {
-        BirthAlteration ba = new BirthAlteration();
-        alt27.setFullNameOfficialLangApproved(false);
-        alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
-        Date d = new Date();
-        alt52_1.getInformant().setInformantSignDate(d);
-        ba.setAlt27(alt27);
-        ba.setAlt27A(alt27A);
-        ba.setAlt52_1(alt52_1);
-        ba.setDeclarant(declarant);
-        alterationService.addBirthAlteration(ba, user);
-        logger.debug("");
-        return SUCCESS;
-    }
-
     private void populateDynamicLists(String language) {
         if (birthDistrictId == 0) {
             if (!districtList.isEmpty()) {
@@ -1516,46 +1411,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.editMode = editMode;
     }
 
-    public int getSectionOfAct() {
-        return sectionOfAct;
-    }
-
-    public void setSectionOfAct(int sectionOfAct) {
-        this.sectionOfAct = sectionOfAct;
-    }
-
-    public Alteration27 getAlt27() {
-        return alt27;
-    }
-
-    public void setAlt27(Alteration27 alt27) {
-        this.alt27 = alt27;
-    }
-
-    public Alteration27A getAlt27A() {
-        return alt27A;
-    }
-
-    public void setAlt27A(Alteration27A alt27A) {
-        this.alt27A = alt27A;
-    }
-
-    public Alteration52_1 getAlt52_1() {
-        return alt52_1;
-    }
-
-    public void setAlt52_1(Alteration52_1 alt52_1) {
-        this.alt52_1 = alt52_1;
-    }
-
-    public DeclarantInfo getDeclarant() {
-        return declarant;
-    }
-
-    public void setDeclarant(DeclarantInfo declarant) {
-        this.declarant = declarant;
-    }
-
     public long getIdUKey() {
         return idUKey;
     }
@@ -1564,11 +1419,4 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.idUKey = idUKey;
     }
 
-    public long getNicOrPin() {
-        return nicOrPin;
-    }
-
-    public void setNicOrPin(long nicOrPin) {
-        this.nicOrPin = nicOrPin;
-    }
 }
