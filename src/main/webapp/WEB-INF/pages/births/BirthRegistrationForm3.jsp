@@ -63,6 +63,15 @@ $(function() {
                     $("textarea#greatGrandFatherFullName").val(data3.fullNameInOfficialLanguage);
                 });
     });
+
+    $('#grandFatherNICorPIN').change(function() {
+        generateGrandFatherBirthYear('grandFatherNICorPIN', 'grandFatherBirthYear');
+    });
+
+    $('#greatGrandFatherNICorPIN').change(function() {
+        generateGrandFatherBirthYear('greatGrandFatherNICorPIN', 'greatGrandFatherBirthYear');
+        ;
+    });
 });
 
 var informPerson;
@@ -136,14 +145,6 @@ function commonTags() {
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'error11', 'error14');
 
-    //generate Grand Father birth year
-    function grandFatherBirthYear(grandFatherNIC) {
-        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-        domObject = document.getElementById(grandFatherNIC);
-        if (domObject.value.search(regNIC) == 0) {
-            document.getElementById('grandFatherBirthYear').value = 19 + domElement.value.substring(0, 2);
-        }
-    }
 
     // validate grandfather birth year
     domObject = document.getElementById('grandFatherBirthYear');
@@ -160,6 +161,17 @@ function commonTags() {
     if (!isFieldEmpty(domObject))
         validateBirthYear(domObject, 'error11', 'p3error10');
 }
+
+//generate Grand Father birth year
+function generateGrandFatherBirthYear(grandFatherNIC, grandFatherBirthYear) {
+    var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+    domObject = document.getElementById(grandFatherNIC);
+    var domYear = document.getElementById(grandFatherBirthYear) ;
+    if (domObject.value.search(regNIC) == 0) {
+        domYear.value = 19 + domObject.value.substring(0, 2);
+    }
+}
+
 
 // validation marriage related fields
 function validateMarriage() {
@@ -431,7 +443,8 @@ function initPage() {
         <tr>
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
             <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br>
-                <s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"/>
+                <s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"
+                             onclick="javascript:generateGrandFatherBirthYear('grandFatherNICorPIN','grandFatherBirthYear');"/>
             </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace" cssStyle="width:93%;"/></td>
