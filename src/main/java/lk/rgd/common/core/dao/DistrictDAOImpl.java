@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author asankha
@@ -20,9 +21,9 @@ import java.util.Map;
 public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, PreloadableDAO {
 
     private final Map<Integer, District> districtsByPK = new HashMap<Integer, District>();
-    private final Map<Integer, String> siDistricts = new HashMap<Integer, String>();
-    private final Map<Integer, String> enDistricts = new HashMap<Integer, String>();
-    private final Map<Integer, String> taDistricts = new HashMap<Integer, String>();
+    private final Map<Integer, String> siDistricts = new TreeMap<Integer, String>();
+    private final Map<Integer, String> enDistricts = new TreeMap<Integer, String>();
+    private final Map<Integer, String> taDistricts = new TreeMap<Integer, String>();
 
     /**
      * @inheritDoc

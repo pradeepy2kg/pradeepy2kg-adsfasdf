@@ -10,10 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author asankha
@@ -168,21 +165,21 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
 
         subMap = siNames.get(districtUKey);
         if (subMap == null) {
-            subMap = new HashMap<Integer, String>();
+            subMap = new TreeMap<Integer, String>();
             siNames.put(districtUKey, subMap);
         }
         subMap.put(divisionUKey, divisionId + SPACER + d.getSiDivisionName());
 
         subMap = enNames.get(districtUKey);
         if (subMap == null) {
-            subMap = new HashMap<Integer, String>();
+            subMap = new TreeMap<Integer, String>();
             enNames.put(districtUKey, subMap);
         }
         subMap.put(divisionUKey, divisionId + SPACER + d.getEnDivisionName());
 
         subMap = taNames.get(districtUKey);
         if (subMap == null) {
-            subMap = new HashMap<Integer, String>();
+            subMap = new TreeMap<Integer, String>();
             taNames.put(districtUKey, subMap);
         }
         subMap.put(divisionUKey, divisionId + SPACER + d.getTaDivisionName());

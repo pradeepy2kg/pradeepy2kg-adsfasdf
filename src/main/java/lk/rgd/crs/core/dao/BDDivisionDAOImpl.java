@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author asankha
@@ -120,21 +121,21 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
 
         Map<Integer, String> districtMap = siDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
-            districtMap = new HashMap<Integer, String>();
+            districtMap = new TreeMap<Integer, String>();
             siDivisions.put(dsDivisionUKey, districtMap);
         }
         districtMap.put(bdDivisionUKey, bdDivisionId + ": " + r.getSiDivisionName());
 
         districtMap = enDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
-            districtMap = new HashMap<Integer, String>();
+            districtMap = new TreeMap<Integer, String>();
             enDivisions.put(dsDivisionUKey, districtMap);
         }
         districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getEnDivisionName());
 
         districtMap = taDivisions.get(dsDivisionUKey);
         if (districtMap == null) {
-            districtMap = new HashMap<Integer, String>();
+            districtMap = new TreeMap<Integer, String>();
             taDivisions.put(dsDivisionUKey, districtMap);
         }
         districtMap.put(bdDivisionUKey, bdDivisionId + SPACER + r.getTaDivisionName());
