@@ -357,7 +357,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             Calendar cal2 = new GregorianCalendar();
             cal2.setTime(bdf.getRegister().getDateOfRegistration());
             cal2.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_AUTO_CONFIRMATION_DAYS));
-            Calendar cal = cal1.getTime().before(cal2.getTime()) ? cal1 : cal2;
+            Calendar cal = cal1.getTime().after(cal2.getTime()) ? cal1 : cal2;
             bdf.getRegister().setLastDayForConfirmation(cal.getTime());
             logger.debug("Set last day for confirmation as : {} for record : {}", cal.getTime(), bdf.getIdUKey());
 
