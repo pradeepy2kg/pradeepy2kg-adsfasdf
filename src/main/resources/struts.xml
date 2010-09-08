@@ -747,6 +747,12 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
+<!--        <action name="eprUpdateRegistrar" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="filter">
+            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>-->
+
         <action name="eprRegistrarsAdd" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
                 method="registrarsAdd">
             <result type="tiles" name="success">epr.addRegistrar</result>
