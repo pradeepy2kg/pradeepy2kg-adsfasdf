@@ -75,6 +75,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean rePrint;
     private boolean lateDeath;
     private boolean directApprove;
+    private boolean editMode;
 
     private String genderEn;
     private String genderSi;
@@ -140,10 +141,12 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         ddf = (DeathRegister) session.get(WebConstants.SESSION_DEATH_DECLARATION_BEAN);
         switch (pageNo) {
             case 1:
-                DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
-                if (dd != null) {
-                    addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
-                    pageNo = 0;
+                if (ddf.getIdUKey() == 0) {
+                    DeathRegister dd = service.getByBDDivisionAndDeathSerialNo(death.getDeathDivision(), death.getDeathSerialNo(), user);
+                    if (dd != null) {
+                        addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+                        pageNo = 0;
+                    }
                 }
                 deathType = ddf.getDeathType();
                 ddf.setDeath(death);
@@ -1047,5 +1050,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setOldIdUKey(long oldIdUKey) {
         this.oldIdUKey = oldIdUKey;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }

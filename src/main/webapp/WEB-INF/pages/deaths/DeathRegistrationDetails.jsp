@@ -7,7 +7,8 @@
 <script type="text/javascript">
     function Ignorwornings() {
         if (!document.getElementById("ignoreWarning").checked) {
-            alert(document.getElementById("error1").value);
+            var errormsg= document.getElementById("error1").value;
+            alert(errormsg);
             return false;
         }
     }

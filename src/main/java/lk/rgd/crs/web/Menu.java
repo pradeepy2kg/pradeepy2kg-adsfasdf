@@ -172,7 +172,7 @@ public class Menu {
         adrDeathLink.put("eprDirectApproveDeath.do", new Link(null, "/ecivil/deaths/", "eprDirectApproveDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprRejectDeath.do", new Link(null, "/ecivil/deaths/", "eprRejectDeath.do", Permission.APPROVE_DEATH));
         adrDeathLink.put("eprDirectApproveIgnoringWornings.do", new Link(null, "/ecivil/deaths/", "eprDirectApproveIgnoringWornings.do", Permission.APPROVE_DEATH));
-        deoDeathLink.put("eprPrintDeathCertificate.do", new Link(null, "/ecivil/deaths/", "eprPrintDeathCertificate.do", Permission.PRINT_DEATH_CERTIFICATE));
+        adrDeathLink.put("eprPrintDeathCertificate.do", new Link(null, "/ecivil/deaths/", "eprPrintDeathCertificate.do", Permission.PRINT_DEATH_CERTIFICATE));
         adrDeathLink.put("eprDierctPrintDeathCertificate.do", new Link(null, "/ecivil/deaths/", "eprDierctPrintDeathCertificate.do", Permission.PRINT_DEATH_CERTIFICATE));
 
         // Death Registration for ARG
