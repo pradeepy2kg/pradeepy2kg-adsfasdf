@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 /**
  * The central service managing the CRS Birth Alteration process
@@ -95,10 +97,21 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveBirthAlteration(long idUKey, User user) {
+    public void approveBirthAlteration(BirthAlteration ba, boolean isAlteration27A, Hashtable<Integer, Boolean> fieldsToBeApproved, User user) {
         //todo validations
-        logger.debug("Attempt to approve birth alteration record : {} ", idUKey);
-        BirthAlteration ba = birthAlterationDAO.getById(idUKey);
+        logger.debug("Attempt to approve birth alteration record : {} ", ba.getIdUKey());
+        validateAccessOfUser(ba, user);
+        BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
+        validateAccessOfUser(existing, user);
+
+        Enumeration<Integer> fieldList = fieldsToBeApproved.keys();
+        if (isAlteration27A) {
+            while (fieldList.hasMoreElements()) {
+
+            }
+        } else {
+
+        }
         /* if (ba.getStatus() == BirthAlteration.State.DATA_ENTRY) {
             validateAccessOfUser(ba,user);
             //ba.setStatus(BirthAlteration.State.APPROVE);
@@ -109,7 +122,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 " Illegal state : " + ba.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }*/
         birthAlterationDAO.updateBirthAlteration(ba, user);
-        logger.debug("Updated birth alteration : {}", idUKey);
+        logger.debug("Updated birth alteration : {}", ba.getIdUKey());
     }
 
     private void validateAccessOfUser(BirthAlteration ba, User user) {
