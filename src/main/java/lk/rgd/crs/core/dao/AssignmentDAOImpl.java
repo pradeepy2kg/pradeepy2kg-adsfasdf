@@ -69,7 +69,7 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
         switch (type) {
             case BIRTH   : q = em.createNamedQuery("get.birth.assignments.by.state.type.and.dsdivision"); break;
             case DEATH   : q = em.createNamedQuery("get.death.assignments.by.state.type.and.dsdivision"); break;
-            case MARRIAGE: q = em.createNamedQuery("get.marriage.assignments.by.state.type.and.dsdivision"); break;
+            default      : q = em.createNamedQuery("get.marriage.assignments.by.state.type.and.dsdivision"); break;
         }
         q.setParameter("dsDivisionUKey", dsDivisionUKey);
         q.setParameter("type", type);

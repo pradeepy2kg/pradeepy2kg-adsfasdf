@@ -34,7 +34,7 @@ public class Assignment implements Serializable {
      * The types of assignments
      */
     public enum Type {
-        MARRIAGE, DEATH, BIRTH
+        BIRTH, DEATH, GENERAL_MARRIAGE, KANDYAN_MARRIAGE, MUSLIM_MARRIAGE 
     }
 
     @Id

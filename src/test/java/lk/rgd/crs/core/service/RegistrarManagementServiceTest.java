@@ -92,7 +92,7 @@ public class RegistrarManagementServiceTest extends TestCase {
         assign5.setAppointmentDate(DateTimeUtils.getDateFromISO8601String("2010-01-24"));
         assign5.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(1));
         assign5.setRegistrar(reg4);
-        assign5.setType(Assignment.Type.MARRIAGE);
+        assign5.setType(Assignment.Type.GENERAL_MARRIAGE);
         regMgtSvc.addAssignment(assign5, admin);
 
         // query
@@ -142,7 +142,7 @@ public class RegistrarManagementServiceTest extends TestCase {
 
         results = regMgtSvc.getAssignmentsByDSDivision(
             bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.MARRIAGE,
+            Assignment.Type.GENERAL_MARRIAGE,
             true /* active */,
             admin);
 
@@ -150,7 +150,7 @@ public class RegistrarManagementServiceTest extends TestCase {
 
         results = regMgtSvc.getAssignmentsByDSDivision(
             bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.MARRIAGE,
+            Assignment.Type.GENERAL_MARRIAGE,
             false /* inactive */,
             admin);
 
