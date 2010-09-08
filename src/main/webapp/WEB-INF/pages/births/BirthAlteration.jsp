@@ -329,13 +329,52 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:if test="pageNo==0">
     <div id="birth-confirmation-search">
         <s:actionerror cssClass="alreadyPrinted"/>
-        <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate()" method="post">
             <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
                 <legend>
                     <b><s:label name="registrationSerchLegend"
                                 value="%{getText('registrationSerchLegend1.label')}"/></b>
                 </legend>
-
+                <s:form action="eprBirthAlterationSearch.do" method="post" onsubmit="javascript:return validate()">
+                    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+                        <legend>
+                            <b><s:label name="confirmatinSearchLegend"
+                                        value="%{getText('registrationSerchLegend3.label')}"/></b>
+                        </legend>
+                        <table class="search-option-table">
+                            <tr>
+                                <td width="350px"><s:label name="confirmationSearch"
+                                                           value="%{getText('certificateNumber.lable')}"/></td>
+                                <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
+                                <td>
+                                    <s:hidden name="pageNo" value="1"/>
+                                    <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
+                                                                       name="search"/></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </s:form>
+                <s:form action="eprBirthAlterationSearch.do" method="post">
+                    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
+                        <legend>
+                            <b><s:label name="confirmatinSearchLegend"
+                                        value="%{getText('registrationSerchLegend2.label')}"/></b>
+                        </legend>
+                        <table class="search-option-table">
+                            <tr>
+                                <td width="350px"><s:label name="confirmationSearch"
+                                                           value="%{getText('idNumber.lable')}"/></td>
+                                <td width="250px"><s:textfield name="nicOrPin" id="bdfSerialNoId2"/></td>
+                                <td>
+                                     <s:hidden name="pageNo" value="2"/>
+                                    <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
+                                                                       name="search"/></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </s:form>
+                 <s:form action="eprBirthAlterationSearch.do" method="post">
                 <table class="search-option-table">
                     <caption></caption>
                     <col/>
@@ -370,6 +409,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <tr>
                         <td colspan="3"></td>
                         <td>
+                            <s:hidden name="pageNo" value="3"/>
                             <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
                                                                name="search"/></div>
                         </td>
@@ -379,44 +419,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </fieldset>
         </s:form>
         <br/>
-        <s:form action="eprBirthAlterationSearch.do" method="post" onsubmit="javascript:return validate()">
-            <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-                <legend>
-                    <b><s:label name="confirmatinSearchLegend"
-                                value="%{getText('registrationSerchLegend2.label')}"/></b>
-                </legend>
-                <table class="search-option-table">
-                    <tr>
-                        <td width="350px"><s:label name="confirmationSearch"
-                                                   value="%{getText('idNumber.lable')}"/></td>
-                        <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
-                        <td>
-                            <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
-                                                               name="search"/></div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </s:form>
-        <s:form action="eprBirthAlterationSearch.do" method="post" onsubmit="javascript:return validate()">
-            <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-                <legend>
-                    <b><s:label name="confirmatinSearchLegend"
-                                value="%{getText('registrationSerchLegend3.label')}"/></b>
-                </legend>
-                <table class="search-option-table">
-                    <tr>
-                        <td width="350px"><s:label name="confirmationSearch"
-                                                   value="%{getText('certificateNumber.lable')}"/></td>
-                        <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
-                        <td>
-                            <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
-                                                               name="search"/></div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </s:form>
+
     </div>
 </s:if>
 <s:if test="pageNo==1">
@@ -440,14 +443,14 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         தொடர் இலக்கம் <br>
                         Serial Number
                     </td>
-                    <td width="60%"><s:textfield id="bdfSerialNo"/></td>
+                    <td width="60%"><s:textfield id="bdfSerialNo" value="2010" name="register.bdfSerialNo"/></td>
                 </tr>
                 <tr>
                     <td>භාරගත් දිනය <br>
                         பிறப்பைப் பதிவு திகதி <br>
                         Date of Acceptance
                     </td>
-                    <td><s:textfield id="acceptanceDate"/></td>
+                    <td><s:textfield id="acceptanceDate" name="register.dateOfRegistration"/></td>
                 </tr>
                 <tr>
                     <td>පනතේ වගන්තිය <br>
@@ -457,6 +460,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <td><s:select
                             list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
                             name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" id="sectionOfAct"/></td>
+
                 </tr>
             </table>
         </td>
@@ -593,7 +597,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 மாவட்டம் /<br>
                 District
             </td>
-            <td colspan="4"><s:select id="childBirthDistrictId" name="districtId" list="districtList" value="districtId"
+            <td colspan="4"><s:select id="childBirthDistrictId" name="birthDistrictId" list="districtList"
+                                      value="districtId"
                                       cssStyle="width:95%"/></td>
         </tr>
         <tr>
@@ -866,7 +871,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 நாடு<br>
                 Country
             </td>
-            <td><s:select name="" list="countryList" headerKey="0"
+            <td><s:select name="fatherCountry" list="countryList" headerKey="0"
                           headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
@@ -1195,7 +1200,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </table>
 
 
-<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
+<%--<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
     <caption></caption>
     <col width="330px;"/>
     <col width="330px;"/>
@@ -1231,7 +1236,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td colspan="2"><s:textarea/></td>
     </tr>
     </tbody>
-</table>
+</table>--%>
 </div>
 <%--common errors--%>
 <s:hidden id="comError1" value="%{getText('p1.invalide.inputType')}"/>

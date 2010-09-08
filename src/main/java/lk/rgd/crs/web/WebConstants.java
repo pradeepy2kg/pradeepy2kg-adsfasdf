@@ -21,6 +21,7 @@ public class WebConstants {
 
     public static final String SESSION_BIRTH_DECLARATION_BEAN = "birthRegister";
     public static final String SESSION_BIRTH_CONFIRMATION_BEAN = "birthConfirmation";
+    public static final String SESSION_BIRTH_ALTERATION_BEAN = "birthAlteration";
 
     public static final String RETURN_TYPE_ERROR = "error";
     public static final String RETURN_TYPE_SUCCESS = "success";

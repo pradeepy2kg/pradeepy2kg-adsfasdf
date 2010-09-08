@@ -6,14 +6,14 @@ import java.util.BitSet;
 
 /**
  * @author Ashoka Ekanayaka
- * To model the alterations which comes under secion 52_1 in the Act.
- * Registration Info, Mother and Informant.
+ *         To model the alterations which comes under secion 52_1 in the Act.
+ *         Registration Info, Mother and Informant.
  */
 @Embeddable
 public class Alteration52_1 {
     private static final int DATE_OF_BIRTH = 1;
     private static final int PLACE_OF_BIRTH = 2;
-    private static final int PLACE_OF_BIRTH_ENGLISH = 3; 
+    private static final int PLACE_OF_BIRTH_ENGLISH = 3;
     private static final int BIRTH_DIVISION = 4;
     private static final int GENDER = 5;
 
@@ -80,6 +80,9 @@ public class Alteration52_1 {
     private String natureOfError;
 
     public MotherInfo getMother() {
+        if (mother == null) {
+            return new MotherInfo();
+        }
         return mother;
     }
 

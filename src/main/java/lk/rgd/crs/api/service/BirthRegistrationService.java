@@ -272,6 +272,8 @@ public interface BirthRegistrationService {
      * @param user       the user making the request
      * @return true if the serial number is unique and not used at present
      */
+
+
     public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
@@ -487,12 +489,19 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision, User user);
 
     /**
-     * Returns the Birth Declaration object for a given Id 
+     * Returns the Birth Declaration object for a given Id
      *
      * @param bdId Birth Declarion Id for the given declaration
      * @param user the user making the request
      * @return the BDF if found, and the user has access to the record
      */
     public BirthDeclaration getByIdForAdoptionLookup(long bdId, User user);
+
+    /**
+     * @param PINorNIC PIN or NIC number of child
+     * @param user     the user making the request
+     * @return
+     */
+    public BirthDeclaration getByPINorNIC(long PINorNIC, User user);
 }
 

@@ -20,6 +20,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.AdoptionOrderService;
+import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.api.bean.UserWarning;
 
 import lk.rgd.crs.web.WebConstants;
@@ -36,6 +37,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     private final BirthRegistrationService service;
     private final AdoptionOrderService adoptionService;
+    private final BirthAlterationService alterationService;
     private final DistrictDAO districtDAO;
     private final CountryDAO countryDAO;
     private final RaceDAO raceDAO;
@@ -71,6 +73,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Alteration52_1 alt52_1;
     private DeclarantInfo declarant;
 
+
     private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private long oldBdId;    // bdId of previously persisted birth declaration, used in add neew entry in batch mode
@@ -78,6 +81,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private boolean confirmationSearchFlag;//if true request to search an entry based on serialNo
     private int rowNumber;
     private int counter;
+    private long nicOrPin;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -93,6 +97,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String caseFileNumber;
     private String newComment;
     private int sectionOfAct;
+    private long idUKey;
 
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean addNewMode;
@@ -128,7 +133,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, AppParametersDAO appParametersDAO
+            , BirthAlterationService alterationService) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -137,6 +143,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.appParametersDAO = appParametersDAO;
+        this.alterationService = alterationService;
     }
 
     /**
@@ -366,7 +373,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -480,7 +487,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -607,7 +614,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     return ERROR;
                 }
@@ -655,7 +662,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 /* if (birthType == BirthDeclaration.BirthType.LIVE) {
@@ -843,23 +850,99 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String initBirthAlteration() {
-        pageNo=0;
+        pageNo = 0;
         populateBasicLists(user.getPrefLanguage());
         populateDynamicLists(user.getPrefLanguage());
-        return SUCCESS;
-    }
-    public String birthAlterationSearch(){
-        pageNo=1;
-        populateBasicLists(user.getPrefLanguage());
-        populateDynamicLists(user.getPrefLanguage());
-        return SUCCESS;
-    }
-    public String birthAlteration() {
-        
-  //      register.setCaseFileNumber("1200");
-       // populateBasicLists(user.getPrefLanguage());
-     //   populateDynamicLists(user.getPrefLanguage());
 
+        return SUCCESS;
+    }
+
+    public String birthAlterationSearch() {
+        BirthDeclaration bdf = new BirthDeclaration();
+        switch (pageNo) {
+            case 1:
+                bdf = service.getById(idUKey, user);
+                break;
+            case 2:
+                bdf = service.getByPINorNIC(nicOrPin, user);
+                break;
+            case 3:
+                bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                        serialNo, user);
+                break;
+        }
+
+        populateAlteration(bdf);
+        pageNo = 1;
+        populateBasicLists(user.getPrefLanguage());
+        populateDynamicLists(user.getPrefLanguage());
+        return SUCCESS;
+    }
+
+    private void populateAlteration(BirthDeclaration bdf) {
+        alt27 = new Alteration27();
+        alt27A = new Alteration27A();
+        alt52_1 = new Alteration52_1();
+
+        //set alt27
+        alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
+        alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
+        //set alt27A
+        FatherInfo father = new FatherInfo();
+        father.setFatherDOB(bdf.getParent().getFatherDOB());
+        father.setFatherFullName(bdf.getParent().getFatherFullName());
+        father.setFatherNICorPIN(bdf.getParent().getFatherNICorPIN());
+        father.setFatherPassportNo(bdf.getParent().getFatherPassportNo());
+        father.setFatherPlaceOfBirth(bdf.getParent().getFatherPlaceOfBirth());
+        father.setFatherRace(bdf.getParent().getFatherRace());
+        alt27A.setFather(father);
+        alt27A.setGrandFather(bdf.getGrandFather());
+        alt27A.setMarriage(bdf.getMarriage());
+        alt52_1.setInformant(bdf.getInformant());
+        alt52_1.setChildGender(bdf.getChild().getChildGender());
+        alt52_1.setDateOfBirth(bdf.getChild().getDateOfBirth());
+        alt52_1.setPlaceOfBirth(bdf.getChild().getPlaceOfBirth());
+
+        //set alt52_1
+        alt52_1.setPlaceOfBirthEnglish(bdf.getChild().getPlaceOfBirthEnglish());
+        MotherInfo mother = new MotherInfo();
+        mother.setMotherAddress(bdf.getParent().getMotherAddress());
+        mother.setMotherAgeAtBirth(bdf.getParent().getMotherAgeAtBirth());
+        mother.setMotherDOB(bdf.getParent().getMotherDOB());
+        mother.setMotherFullName(bdf.getParent().getMotherFullName());
+        mother.setMotherNICorPIN(bdf.getParent().getMotherNICorPIN());
+        mother.setMotherPassportNo(bdf.getParent().getMotherPassportNo());
+        alt52_1.setMother(mother);
+        if (bdf.getParent().getFatherCountry() != null) {
+            fatherCountry = bdf.getParent().getFatherCountry().getCountryId();
+        }
+        if (bdf.getParent().getFatherRace() != null) {
+            fatherRace = bdf.getParent().getFatherRace().getRaceId();
+        }
+        if (bdf.getParent().getMotherCountry() != null) {
+            motherCountry = bdf.getParent().getMotherCountry().getCountryId();
+        }
+        if (bdf.getParent().getMotherRace() != null) {
+            motherRace = bdf.getParent().getMotherRace().getRaceId();
+        }
+        birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
+        birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();
+        dsDivisionId = bdf.getRegister().getDsDivision().getDsDivisionUKey();
+    }
+
+
+    public String birthAlteration() {
+        BirthAlteration ba = new BirthAlteration();
+        alt27.setFullNameOfficialLangApproved(false);
+        alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+        Date d = new Date();
+        alt52_1.getInformant().setInformantSignDate(d);
+        ba.setAlt27(alt27);
+        ba.setAlt27A(alt27A);
+        ba.setAlt52_1(alt52_1);
+        ba.setDeclarant(declarant);
+        alterationService.addBirthAlteration(ba, user);
+        logger.debug("");
         return SUCCESS;
     }
 
@@ -1475,5 +1558,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setDeclarant(DeclarantInfo declarant) {
         this.declarant = declarant;
+    }
+
+    public long getIdUKey() {
+        return idUKey;
+    }
+
+    public void setIdUKey(long idUKey) {
+        this.idUKey = idUKey;
+    }
+
+    public long getNicOrPin() {
+        return nicOrPin;
+    }
+
+    public void setNicOrPin(long nicOrPin) {
+        this.nicOrPin = nicOrPin;
     }
 }

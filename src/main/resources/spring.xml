@@ -216,6 +216,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="adoptionOrderService"/>
+        <constructor-arg ref="birthAlterationService"/>
     </bean>
 
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">

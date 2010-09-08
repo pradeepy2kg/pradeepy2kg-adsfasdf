@@ -72,7 +72,7 @@
         '4':getText('rejected.label'),'5':getText('certificate.issual.request.captured.label'),'6':getText('adoption.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
                           headerValue="%{getText('select.status.label')}"
-                          cssStyle="width:250px; margin-left:5px;"></s:select></td>
+                          cssStyle="width:250px; margin-left:5px;"/></td>
             <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
         </tr>
         </tbody>
