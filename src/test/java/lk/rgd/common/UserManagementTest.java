@@ -58,14 +58,14 @@ public class UserManagementTest extends TestCase {
 
         DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
         List<User> usersByAssignedBDDistrict = userManager.getUsersByAssignedBDDistrict(districtDAO.getDistrict(1));
-        Assert.assertEquals(12, usersByAssignedBDDistrict.size());
+        Assert.assertEquals(20, usersByAssignedBDDistrict.size());
 
         List<User> usersByRoleAndAssignedBDDistrict = userManager.getUsersByRoleAndAssignedBDDistrict(
             roleDAO.getRole("DR"), districtDAO.getDistrict(1));
         Assert.assertEquals(1, usersByRoleAndAssignedBDDistrict.size());
 
         List<User> usersByAssignedMRDistrict = userManager.getUsersByAssignedMRDistrict(districtDAO.getDistrict(1));
-        Assert.assertEquals(11, usersByAssignedMRDistrict.size());
+        Assert.assertEquals(19, usersByAssignedMRDistrict.size());
 
         List<User> usersByRoleAndAssignedMRDistrict = userManager.getUsersByRoleAndAssignedMRDistrict(
             roleDAO.getRole("DR"), districtDAO.getDistrict(1));
