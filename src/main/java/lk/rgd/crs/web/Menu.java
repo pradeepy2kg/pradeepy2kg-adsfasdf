@@ -85,9 +85,14 @@ public class Menu {
         deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/births/", "eprBirthAlterationInit.do", Permission.EDIT_BDF));
-        adrBirthLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/births/", "eprBirthAlteration.do", Permission.EDIT_BDF));
-        adrBirthLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/births/", "eprBirthAlterationSearch.do", Permission.EDIT_BDF));
+
+        //birth alteration for DEO
+        deoBirthLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/births/", "eprBirthAlterationInit.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoBirthLink.put("eprBirthAlterationPendingApproval.do",new Link("birth_alteration_pending_approval.title", "/ecivil/births/", "eprBirthAlterationPendingApproval.do", Permission.EDIT_BIRTH_ALTERATION));
+        //TODO tharanga place following adr links to the relevent place
+        adrBirthLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/births/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+        adrBirthLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/births/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
+        
 
 
         deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));

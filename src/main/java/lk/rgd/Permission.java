@@ -22,6 +22,8 @@ public final class Permission {
     public static final int SEARCH_BDF = 17;
     public static final int EDIT_BDF_CONFIRMATION = 18;
     public static final int APPROVE_BDF_BELATED = 19;
+    public static final int EDIT_BIRTH_ALTERATION=20;
+    public static final int APPROVE_BIRTH_ALTERATION=21;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;

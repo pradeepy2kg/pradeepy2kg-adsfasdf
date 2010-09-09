@@ -225,6 +225,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.PRS_EDIT_PERSON);
             bs.set(Permission.SEARCH_PRS);
             bs.set(Permission.USER_PREFERENCES);
+            bs.set(Permission.EDIT_BIRTH_ALTERATION);
 
             deoRole.setPermBitSet(bs);
             roleDao.save(deoRole);
@@ -258,6 +259,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
 
             bs.set(Permission.APPROVE_ADOPTION);
             bs.set(Permission.APPROVE_BDF_BELATED);
+            bs.set(Permission.APPROVE_BIRTH_ALTERATION);
+            
             argRole.setPermBitSet(bs);
             roleDao.save(argRole);
 
