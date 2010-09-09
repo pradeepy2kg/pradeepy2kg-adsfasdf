@@ -161,6 +161,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
 
     public String birthAlteration() {
+        //todo tharanga >> remove country and race DAOs if they not wanted and also allDistrictList and AllDSDivisionList
         BirthAlteration ba = new BirthAlteration();
         alt27.setFullNameOfficialLangApproved(false);
         alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
