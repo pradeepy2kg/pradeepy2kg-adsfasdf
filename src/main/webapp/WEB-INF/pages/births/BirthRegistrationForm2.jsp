@@ -32,6 +32,10 @@
 <script>
 
 $(function() {
+    var currentYear = new Date().getFullYear();
+    var id1 = $("input#father_pinOrNic").attr("value");
+
+
     $("#fatherDatePicker").datepicker({
         changeYear: true,
         yearRange: '1960:2020',
@@ -39,8 +43,10 @@ $(function() {
         startDate:'2000-01-01',
         endDate:'2020-12-31',
         defaultDate:-365 * 18
+
     });
-});
+})
+        ;
 
 $(function() {
     $("#motherDatePicker").datepicker({
@@ -79,18 +85,32 @@ $(function() {
 });
 
 $(function() {
+    var currentYear = new Date().getFullYear();
+
     $('img#father_lookup').bind('click', function(evt1) {
         var id1 = $("input#father_pinOrNic").attr("value");
+        var fatherBirthYear = 19 + id1.substring(0, 2);
+        var D = new Date(fatherBirthYear, 01, 01) ;
+        D.setDate(D.getDate() + id1.substring(2, 5) - 1000);
+        $('#fatherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
                     $("input#fatherDatePicker").val(data1.dateOfBirth);
+
                 });
     });
 
     $('img#mother_lookup').bind('click', function(evt2) {
         var id2 = $("input#mother_pinOrNic").attr("value");
+        var motherBirthYear = 19 + id2.substring(0, 2);
+        //var motherBirthDay = id2.substring(2, 5);
+        var D = new Date(motherBirthYear, 01, 01) ;
+        D.setDate(D.getDate() + id2.substring(2, 5) - 1500);
+        $('#motherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
+
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
@@ -98,14 +118,18 @@ $(function() {
                     $("textarea#motherAddress").val(data2.lastAddress);
                     $("input#motherDatePicker").val(data2.dateOfBirth);
 
-                    var child_bday = new Date(document.getElementById('childDateOfBirth').value);
-                    var mother_bday = document.getElementById('motherDatePicker').value;
-                    if (mother_bday != "") {
-                        var motherbday = new Date(mother_bday);
-                        var mother_age = child_bday.getYear() - motherbday.getYear();
-                        $("input#motherAgeAtBirth").val(mother_age);
-                    }
+
                 });
+    });
+
+    $('#mother_lookup').click (function() {
+        var child_bday = new Date(document.getElementById('childDateOfBirth').value);
+        var mother_bday = document.getElementById('motherDatePicker').value;
+        if (mother_bday != "") {
+            var motherbday = new Date(mother_bday);
+            var mother_age = child_bday.getYear() - motherbday.getYear();
+            $("input#motherAgeAtBirth").val(mother_age);
+        }
     });
 
     $('select#motherDistrictId').bind('change', function(evt3) {
@@ -158,8 +182,8 @@ function validate() {
             isEmpty(domObject, "", 'mother_age');
         }
 
-        validateBirthYearWithNIC("father_pinOrNic","fatherDatePicker","error7") ;
-        validateBirthYearWithNIC("mother_pinOrNic","motherDatePicker","error8") ;
+        validateBirthYearWithNIC("father_pinOrNic", "fatherDatePicker", "error7");
+        validateBirthYearWithNIC("mother_pinOrNic", "motherDatePicker", "error8");
     }
 
     // validate mother phone number
@@ -311,7 +335,7 @@ function commonTags() {
             திகதி <br>Date of Birth</label></td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:180px;font-size:10px"/><br>
-            <s:textfield name="parent.fatherDOB" id="fatherDatePicker" />
+            <s:textfield name="parent.fatherDOB" id="fatherDatePicker"/>
         </td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                    value="#i+1"/>)උපන්

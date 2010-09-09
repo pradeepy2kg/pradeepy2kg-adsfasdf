@@ -53,6 +53,7 @@ $(function() {
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#grandFatherFullName").val(data2.fullNameInOfficialLanguage);
+                    $("input#grandFatherBirthPlace").val(data2.placeOfBirth);
                 });
     });
 
@@ -61,6 +62,7 @@ $(function() {
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id3},
                 function(data3) {
                     $("textarea#greatGrandFatherFullName").val(data3.fullNameInOfficialLanguage);
+                    $("input#greatGrandFatherBirthPlace").val(data3.placeOfBirth);
                 });
     });
 
@@ -447,7 +449,8 @@ function initPage() {
                              onclick="javascript:generateGrandFatherBirthYear('grandFatherNICorPIN','grandFatherBirthYear');"/>
             </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace" cssStyle="width:93%;"/></td>
+            <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace"
+                                         id="grandFatherBirthPlace" cssStyle="width:93%;"/></td>
         </tr>
         <tr>
             <td colspan="7"><label> (<s:property value="#row"/><s:set name="row" value="#row+1"/>)ළමයාගේ පියා ශ්‍රී
@@ -479,7 +482,8 @@ function initPage() {
             <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield
                     name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
-            <td><s:textfield name="grandFather.greatGrandFatherBirthPlace" cssStyle="width:93%;"/></td>
+            <td><s:textfield name="grandFather.greatGrandFatherBirthPlace"
+                             id="greatGrandFatherBirthPlace" cssStyle="width:93%;"/></td>
         </tr>
         </tbody>
     </table>
