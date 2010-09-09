@@ -7,9 +7,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Locale;
+import java.util.Set;
 
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.service.UserManager;
 
@@ -65,22 +68,22 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public String userPreferenceInit() {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
-        userType=user.getRole().getRoleId();
-        logger.debug("Role of the {} is  :{}",user.getUserName(),userType);
-        if(!(userType.equals(WebConstants.SESSION_USER_ADMIN))){
-        districtList = districtDAO.getDistrictNames(language, user);
-        if (user.getPrefBDDistrict() != null) {
-            birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
-        } else {
-            birthDistrictId = districtList.keySet().iterator().next();
-        }
+        userType = user.getRole().getRoleId();
+        logger.debug("Role of the {} is  :{}", user.getUserName(), userType);
+        if (!(userType.equals(WebConstants.SESSION_USER_ADMIN))) {
+            districtList = districtDAO.getDistrictNames(language, user);
+            if (user.getPrefBDDistrict() != null) {
+                birthDistrictId = user.getPrefBDDistrict().getDistrictUKey();
+            } else {
+                birthDistrictId = districtList.keySet().iterator().next();
+            }
 
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-        if (user.getPrefBDDSDivision() != null) {
-            dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
-        } else {
-            dsDivisionId = dsDivisionList.keySet().iterator().next();
-        }
+            dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
+            if (user.getPrefBDDSDivision() != null) {
+                dsDivisionId = user.getPrefBDDSDivision().getDsDivisionUKey();
+            } else {
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
+            }
         }
         return "pageload";
     }
@@ -192,7 +195,6 @@ public class UserPreferencesAction extends ActionSupport implements SessionAware
     public void setRetypeNewPassword(String retypeNewPassword) {
         this.retypeNewPassword = retypeNewPassword;
     }
-
 
     public int getTotalDeclarations() {
         return totalDeclarations;
