@@ -8,20 +8,21 @@ import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.BirthAlterationService;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.Permission;
 
 import java.util.Map;
 import java.util.Date;
 import java.util.BitSet;
-import java.util.List;
+import java.util.Locale;
 
 /**
- * User: tharanga
+ * @author tharanga
  */
 public class AlterationAction extends ActionSupport implements SessionAware {
+
     private static final Logger logger = LoggerFactory.getLogger(AlterationAction.class);
     private BirthRegistrationService service;
     private DistrictDAO districtDAO;
@@ -63,9 +64,12 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private int sectionOfAct;
     private long idUKey;
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
+    private boolean allowApproveAlteration;
+
+    private String language;
 
     public AlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO
-            , BirthAlterationService alterationService) {
+        , BirthAlterationService alterationService) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
@@ -78,8 +82,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public String initBirthAlteration() {
         pageNo = 0;
-        populateBasicLists(user.getPrefLanguage());
-        populateDynamicLists(user.getPrefLanguage());
+        populateBasicLists();
 
         return SUCCESS;
     }
@@ -95,14 +98,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 break;
             case 3:
                 bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        serialNo, user);
+                    serialNo, user);
                 break;
         }
 
         populateAlteration(bdf);
         pageNo = 1;
-        populateBasicLists(user.getPrefLanguage());
-        populateDynamicLists(user.getPrefLanguage());
+        populateBasicLists();
         return SUCCESS;
     }
 
@@ -176,44 +178,51 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
-    private void populateDynamicLists(String language) {
-        if (birthDistrictId == 0) {
-            if (!districtList.isEmpty()) {
-                birthDistrictId = districtList.keySet().iterator().next();
-                logger.debug("first allowed district in the list {} was set", birthDistrictId);
-            }
-        }
-        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, language, user);
-
-        if (dsDivisionId == 0) {
-            if (!dsDivisionList.isEmpty()) {
-                dsDivisionId = dsDivisionList.keySet().iterator().next();
-                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
-            }
-        }
-
+    /**
+     * this is responsible for loading the birth alteration
+     * which are still in the pending state to be approved
+     * by the ARG or higher authority
+     *
+     * @return
+     */
+    public String initBirthAlterationPendingList() {
+        populateDistrictAndDSDivision();
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        initPermission();
+        return SUCCESS;
+    }
+
+    private void initPermission() {
+        setAllowApproveAlteration(user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION));
+    }
+
+    private void populateBasicLists() {
+        populateDistrictAndDSDivision();
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, getLanguage(), user);
         if (birthDivisionId == 0) {
             birthDivisionId = bdDivisionList.keySet().iterator().next();
             logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
         }
     }
 
-    private void populateBasicLists(String language) {
-        countryList = countryDAO.getCountries(language);
+    private void populateDistrictAndDSDivision() {
+        setLanguage(((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+
         districtList = districtDAO.getDistrictNames(language, user);
-        raceList = raceDAO.getRaces(language);
-
-        /** getting full district list and DS list for mother info on page 4 */
-        allDistrictList = districtDAO.getAllDistrictNames(language, user);
-        if (!allDistrictList.isEmpty()) {
-            int selectedDistrictId = allDistrictList.keySet().iterator().next();
-            allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(selectedDistrictId, language, user);
+        if (birthDistrictId == 0) {
+            if (!districtList.isEmpty()) {
+                birthDistrictId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+            }
         }
-    }
 
-    private void populateAllDSDivisionList(int districtID, String language) {
-        allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(districtID, language, user);
+        dsDivisionList = dsDivisionDAO.getDSDivisionNames(birthDistrictId, getLanguage(), user);
+        if (dsDivisionId == 0) {
+            if (!dsDivisionList.isEmpty()) {
+                dsDivisionId = dsDivisionList.keySet().iterator().next();
+                logger.debug("first allowed DS Division in the list {} was set", dsDivisionId);
+            }
+        }
     }
 
 
@@ -402,4 +411,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         logger.debug("setting BirthDivision: {}", register.getBirthDivision().getEnDivisionName());
     }
 
+    public boolean isAllowApproveAlteration() {
+        return allowApproveAlteration;
+    }
+
+    public void setAllowApproveAlteration(boolean allowApproveAlteration) {
+        this.allowApproveAlteration = allowApproveAlteration;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

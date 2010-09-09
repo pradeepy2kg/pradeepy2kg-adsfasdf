@@ -5,6 +5,7 @@ import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.dao.BirthAlterationDAO;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.service.UserManager;
@@ -110,7 +111,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 if (fieldsToBeApproved.get(aKey) == true) {
                     if (existing.getAlt27A().getApprovalStatuses().get(aKey) == false) {
                         logger.debug("setting status as approval for the alteration statement 27A");
-                        existing.getAlt27A().getApprovalStatuses().set(aKey, 1);
+                        existing.getAlt27A().getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE);
                     } else {
                         handleException("Cannot approve alteration according to the alteration statement 27A : " + ba.getIdUKey() +
                             " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
@@ -123,7 +124,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                 if (fieldsToBeApproved.get(aKey) == true) {
                     if (existing.getAlt52_1().getApprovalStatuses().get(aKey) == false) {
                         logger.debug("setting status as approval for the alteration statement 52_1");
-                        existing.getAlt52_1().getApprovalStatuses().set(aKey, 1);
+                        existing.getAlt52_1().getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE);
                     } else {
                         handleException("Cannot approve alteration according to the alteration statement 52_1 : " + ba.getIdUKey() +
                             " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);

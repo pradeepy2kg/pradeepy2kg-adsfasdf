@@ -202,11 +202,17 @@
         <put-attribute name="body" value="/WEB-INF/pages/births/stillBirth.jsp"/>
         <put-attribute name="title" value="still_birth_registration.label"/>
     </definition>
+
     <definition name="epr.birthAlteration" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlteration.jsp"/>
         <put-attribute name="title" value="birth_alteration.title"/>
     </definition>
 
+     <definition name="epr.birthAlterationPendingApproval" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationApproval.jsp"/>
+        <put-attribute name="title" value="birth_alteration_pending_approval.label"/>
+    </definition>
+    
     <!-- Death Registration Tiles -->
 
     <definition name="epr.deathHome" extends="epr.template">
