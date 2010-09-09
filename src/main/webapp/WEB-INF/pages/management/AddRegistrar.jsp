@@ -60,7 +60,7 @@
                 <td align="left">gender</td>
                 <td align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                        name="registrar.gender" cssStyle="width:190px; margin-left:5px;" id="registrarGender"/></td>
+                        name="registrar.gender" cssStyle="width:190px;" id="registrarGender"/></td>
             </tr>
             <tr>
                 <td align="left">date of birth</td>
@@ -83,7 +83,7 @@
                 <td align="left">prefered language</td>
                 <td align="left"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
                                            name="registrar.preferredLanguage"
-                                           cssStyle="width:190px; margin-left:5px;"/></td>
+                                           cssStyle="width:190px;"/></td>
             </tr>
             </tbody>
         </table>

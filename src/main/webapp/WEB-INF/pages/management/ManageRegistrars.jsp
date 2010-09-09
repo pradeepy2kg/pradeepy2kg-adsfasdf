@@ -117,7 +117,7 @@
         <thead>
         <tr class="table-title">
             <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
-            <th width="50px"><s:label value="%{getText('label.name')}"/></th>
+            <th width="300px"><s:label value="%{getText('label.name')}"/></th>
             <th width="20px"><s:label value="%{getText('label.active')}"/></th>
             <th width="20px"><s:label value="%{getText('label.type')}"/></th>
             <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
@@ -141,7 +141,7 @@
                         <td><s:property value="marriageDivision.enDivisionName"/></td>
                     </s:if>
 
-                    <td><s:a href="%{assign}"><s:property value="registrar.fullNameInOfficialLanguage"/></s:a></td>
+                    <td><s:a href="%{assign}"><s:property value="registrar.fullNameInEnglishLanguage"/></s:a></td>
                     <s:if test="lifeCycleInfo.active ==true">
                         <td><s:property value="%{getText('label.yes')}"/></td>
                     </s:if>

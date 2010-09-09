@@ -2,6 +2,7 @@ package lk.rgd.crs.web;
 
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.dao.DSDivisionDAO;
+import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class JSONDivisionLookupService extends HttpServlet {
 
     private DSDivisionDAO dsDivisionDAO;
     private BDDivisionDAO bdDivisionDAO;
+    private DistrictDAO districtDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -36,6 +38,7 @@ public class JSONDivisionLookupService extends HttpServlet {
         WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         dsDivisionDAO = (DSDivisionDAO) context.getBean("dsDivisionDAOImpl");
         bdDivisionDAO = (BDDivisionDAO) context.getBean("bdDivisionDAOImpl");
+        districtDAO = (DistrictDAO) context.getBean("districtDAOImpl");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,14 +51,15 @@ public class JSONDivisionLookupService extends HttpServlet {
         logger.debug("Received Division Id and mode : {} {} ", id, mode);
         User user;
         String lang;
-        HashMap<String,Object> optionLists;
+        HashMap<String, Object> optionLists;
 
         try {
             HttpSession session = request.getSession();
             user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
             lang = ((Locale) session.getAttribute(WebConstants.SESSION_USER_LANG)).getLanguage();
             int divisionId = Integer.parseInt(id);
-            optionLists = new HashMap<String,Object>();
+            optionLists = new HashMap<String, Object>();
+            logger.info("selected district : {}", id);
 
             if ("1".equals(mode)) {
                 // passing districtId, return only the DS list
@@ -63,10 +67,12 @@ public class JSONDivisionLookupService extends HttpServlet {
             } else if ("2".equals(mode)) {
                 // passing dsDivisionId, return the BD list
                 optionLists.put("bdDivisionList", getBDDivisions(lang, divisionId, user));
-            } else if("3".equals(mode)){
+            } else if ("3".equals(mode)) {
                 // passing districtId, return all DSDivision list.
                 optionLists.put("dsDivisionList", getAllDSDivisions(lang, divisionId, user));
-            }else {
+            } else if ("4".equals(mode)) {
+                optionLists.put("districtList", getAllDisList(lang, user));
+            } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
                 int dsDivisionId = ((SelectOption) ds.get(0)).getOptionValue();
@@ -100,6 +106,11 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(dsDivisionList);
     }
 
+    private List getAllDisList(String language, User user) {
+        Map<Integer, String> districtList = districtDAO.getAllDistrictNames(language, user);
+        return getList(districtList);
+    }
+
     private List getDSDivisions(String language, int BDId, User user) {
         Map<Integer, String> dsDivisionList = dsDivisionDAO.getDSDivisionNames(BDId, language, user);
         logger.debug("Loaded DS list : {}", dsDivisionList);
@@ -107,7 +118,6 @@ public class JSONDivisionLookupService extends HttpServlet {
         return getList(dsDivisionList);
     }
 
-   
 
     private List getList(Map<Integer, String> map) {
         List<SelectOption> ds = new ArrayList<SelectOption>();

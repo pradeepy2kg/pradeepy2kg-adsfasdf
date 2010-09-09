@@ -11,9 +11,11 @@
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<s:set name="usr" value="user"/>
 
 <script type="text/javascript">
     $(function() {
+
         $('select#districtId').bind('change', function(evt1) {
             var options1 = '';
             var oSelect = document.getElementById('districtId');
@@ -33,7 +35,42 @@
 
         });
 
+
     });
+
+  
+    function y() {
+        alert('fffff')
+        //todo
+        var options1 = '';
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:4},
+                function(data) {
+                    var ds = data.districtList;
+                    for (var i = 0; i < ds.length; i++) {
+                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option> \n';
+                    }
+                    $("select#districtIdCurrent").html(options1);
+                });
+
+        /*
+         var options1 = '';
+         var oSelect = document.getElementById('districtIdCurrent');
+         for (var iCount = 0; oSelect.options[iCount]; iCount++) {
+         if (oSelect.options[iCount].selected == true) {
+         var id = oSelect.options[iCount].value;
+         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
+         function(data) {
+         var ds = data.districtList;
+         for (var i = 0; i < ds.length; i++) {
+         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option> \n';
+         }
+         $("select#divisionIdCurrent").html(options1);
+         });
+         }
+         }*/
+
+    }
+
     function validate() {
         var errormsg = "";
         var domObject;
@@ -103,17 +140,75 @@
                         <s:select list="#@java.util.HashMap@{'en':'English','si':'සිංහල','ta':'Tamil'}"
                                   name="user.prefLanguage" id="prefferedLanguage"/>
             </tr>
-            <tr>
-                <td><s:label value="%{getText('assigned_districts.label')}"/></td>
-                <td><s:select list="districtList" name="assignedDistricts" multiple="true" size="10" id="districtId"/>
+            <div id="abc">
+                <tr>
+                    <td>
+                        <s:if test="user != null">
+                            <s:label value="%{getText('assigned_districts.label')}"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        <s:if test="user != null">
+                            <s:select list="currentDistrictList" name="assignedDistricts" multiple="true"
+                                      size="10"
+                                      id="districtIdCurrent"/>
+                        </s:if>
+                    </td>
+                <tr>
+            </div>
+            <s:label>
+                <td>
+                    <s:if test="user != null">
+                        <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                    </s:if>
                 </td>
-            <tr>
-                <s:label>
-                    <td><s:label value="%{getText('assigned_ds_divisions.label')}"/></td>
-                    <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true" size="10"
-                                  id="divisionId"/></td>
-                </s:label>
+                <s:if test="user != null">
+                    <td><s:select list=" currentbdDivisionList" name="assignedDivisions" multiple="true"
+                                  size="10"
+                                  id="divisionIdCurrent"/>
+                </s:if>
+                <s:if test="user != null">
+                    <s:checkbox id="enableEditMode" name="enableEditModeName"
+                                onclick="javascript:x();"></s:checkbox>
+                </s:if>
+                </td>
+            </s:label>
             </tr>
+
+                <%--todo--%>
+            <div id="edit">
+                <tr>
+                    <td>
+                        <s:if test="user == null">
+                            <s:label value="%{getText('assigned_districts.label')}"/>
+                        </s:if>
+                    </td>
+                    <td>
+                        <s:if test="user == null">
+                            <s:select list="districtList" name="assignedDistricts" multiple="true"
+                                      size="10"
+                                      id="districtId"/>
+                        </s:if>
+                    </td>
+                <tr>
+                    <s:label>
+                        <td>
+                            <s:if test="user == null">
+                                <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                            </s:if>
+                        </td>
+                        <s:if test="user == null">
+                            <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
+                                          size="10"
+                                          id="divisionId"/>
+                        </s:if>
+                        </td>
+                    </s:label>
+                </tr>
+            </div>
+                <%--todo end--%>
+
+
             <tr>
                 <td style="border-bottom:none;">
                     <s:label>

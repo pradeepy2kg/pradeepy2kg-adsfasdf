@@ -60,14 +60,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private District district;
     private MRDivision mrDivision;
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleId() {
-
-        return roleId;
-    }
 
     private String roleId;
     private final DistrictDAO districtDAO;
@@ -81,6 +73,19 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private Map<String, String> roleList;
     private Map<Integer, String> dsDivisionList;
 
+    /*support variables*/
+    private Map<Integer, String> currentbdDivisionList; //users current
+    private Map<Integer, String> currentDistrictList;
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleId() {
+
+        return roleId;
+    }
+
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManagerImpl service,
                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
@@ -93,6 +98,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String creatUser() {
+        User updated = (User) session.get(WebConstants.SESSION_UPDATED_USER);
         /*logger.debug("creat user called");
         if (divisions.equals(getText("get_ds_divisions.label"))) {
             generateDSDivisions();
@@ -117,9 +123,25 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         user.setAssignedBDDSDivisions(assDSDivision);
         if (userId == null) {
             service.createUser(user, currentUser);
-        } else if (userId.length() > 0) {
-            user.setUserId(userId);
-            service.updateUser(user, currentUser);
+        } else if (updated != null) {
+            //     user.setUserId(userId);
+            //setting new district list and division list and role
+            Set assgnDistrict = new HashSet();
+            for (int i = 0; i < assignedDistricts.length; i++) {
+                assgnDistrict.add(districtDAO.getDistrict(assignedDistricts[i]));
+            }
+            updated.setAssignedBDDistricts(assgnDistrict);
+            updated.setAssignedMRDistricts(assgnDistrict);
+
+            Set assgnDSDivision = new HashSet();
+            for (int i = 0; i < assignedDivisions.length; i++) {
+                assgnDSDivision.add(dsDivisionDAO.getDSDivisionByPK(assignedDivisions[i]));
+            }
+            updated.setAssignedBDDSDivisions(assgnDSDivision);
+            updated.setRole(roleDAO.getRole(roleId));
+
+            service.updateUser(updated, currentUser);
+            session.remove(WebConstants.SESSION_UPDATED_USER);
             session.put("viewUsers", null);
         }
         return "success";
@@ -130,7 +152,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         user = service.getUsersByIDMatch(userId).get(0);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
-        logger.debug("Deleting  user {} is successfull", user.getUserId());
+        logger.debug("Deleting  user {} is successoption body.full", user.getUserId());
         usersList = service.getAllUsers();
         session.put("viewUsers", usersList);
         return "success";
@@ -142,6 +164,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populateDynamicLists("en");
         if (userId != null) {
             user = service.getUsersByIDMatch(getUserId()).get(0);
+            currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
+            currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
+            session.put(WebConstants.SESSION_UPDATED_USER, user);
         }
         return "pageLoad";
     }
@@ -342,6 +367,26 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 getDivisionList().putAll(dsDivisionDAO.getAllDSDivisionNames(assignedDistricts[i], ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage(), user));
             }
         }
+    }
+
+    private Map convertDistricSetToMap(Set set) {
+        Map retMap = new HashMap();
+        Iterator itr = set.iterator();
+        while (itr.hasNext()) {
+            District district = (District) itr.next();
+            retMap.put(district.getDistrictUKey(), district.getEnDistrictName());
+        }
+        return retMap;
+    }
+
+    private Map convertDivisionSetToMap(Set set) {
+        Map ret = new HashMap();
+        Iterator itr = set.iterator();
+        while (itr.hasNext()) {
+            DSDivision dsd = (DSDivision) itr.next();
+            ret.put(dsd.getDivisionId(), dsd.getEnDivisionName());
+        }
+        return ret;
     }
 
     public User getUser() {
@@ -606,5 +651,21 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public Map getSession() {
         return session;
+    }
+
+    public Map<Integer, String> getCurrentbdDivisionList() {
+        return currentbdDivisionList;
+    }
+
+    public void setCurrentbdDivisionList(Map<Integer, String> currentbdDivisionList) {
+        this.currentbdDivisionList = currentbdDivisionList;
+    }
+
+    public Map<Integer, String> getCurrentDistrictList() {
+        return currentDistrictList;
+    }
+
+    public void setCurrentDistrictList(Map<Integer, String> currentDistrictList) {
+        this.currentDistrictList = currentDistrictList;
     }
 }
