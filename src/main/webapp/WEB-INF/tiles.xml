@@ -148,6 +148,11 @@
         <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
     </definition>
 
+    <definition name="epr.approveBelatedWarning" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationBelatedApprovalWarning.jsp"/>
+        <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
+    </definition>
+
     <definition name="epr.confirmationApprovalWorning" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationApprovalWarning.jsp"/>
         <put-attribute name="title" value="BirthRegisterApprovalWarning.title"/>
@@ -188,6 +193,11 @@
         <put-attribute name="title" value="reject.title"/>
     </definition>
 
+    <definition name="epr.birthRegisterBelatedReject" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthDeclarationBelatedReject.jsp"/>
+        <put-attribute name="title" value="reject.title"/>
+    </definition>
+
     <definition name="epr.BirthConfirmationApproval" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthConfirmationApproval.jsp"/>
         <put-attribute name="title" value="BirthConfirmationApproval.title"/>
@@ -208,11 +218,11 @@
         <put-attribute name="title" value="birth_alteration.title"/>
     </definition>
 
-     <definition name="epr.birthAlterationPendingApproval" extends="epr.template">
+    <definition name="epr.birthAlterationPendingApproval" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationApproval.jsp"/>
         <put-attribute name="title" value="birth_alteration_pending_approval.label"/>
     </definition>
-    
+
     <!-- Death Registration Tiles -->
 
     <definition name="epr.deathHome" extends="epr.template">

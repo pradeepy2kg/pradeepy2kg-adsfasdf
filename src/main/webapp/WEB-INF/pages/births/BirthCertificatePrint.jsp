@@ -127,9 +127,9 @@
                     <tr>
                         <th width="15px"></th>
                         <th width="20px"><s:label value="%{getText('division.label')}"/></th>
-                        <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                        <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                        <th width="100px"><s:label name="registered_date"
+                        <th width="90px"><s:label name="registered_date"
                                                    value="%{getText('registered_date.label')}"/></th>
                         <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
                         <th width="20px"></th>

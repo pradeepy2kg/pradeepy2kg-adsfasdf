@@ -43,7 +43,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         super.setUp();
 
         birthDeclarationDAO = (BirthDeclarationDAO)
-                ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
+            ctx.getBean("birthDeclarationDAOImpl", BirthDeclarationDAO.class);
     }
 
     public BirthRegistrationServiceTest() {
@@ -393,6 +393,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf.getChild().setDateOfBirth(dob);
         bdf.getChild().setPlaceOfBirth("Place of birth for child " + serial);
         bdf.getChild().setChildGender(0);
+        bdf.getChild().setChildFullNameOfficialLang("සිංහලෙන් ළමයාගේ නම  " + serial);
 
         bdf.getInformant().setInformantName("Name of Informant for Child : " + serial);
         bdf.getInformant().setInformantAddress("Address of Informant for Child : " + serial);

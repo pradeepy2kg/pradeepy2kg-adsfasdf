@@ -257,9 +257,9 @@
             <tr>
                 <th width="15px"></th>
                 <th width="20px"><s:label value="%{getText('division.label')}"/></th>
-                <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                <th width="100px"><s:label name="received" value="%{getText('received.label')}"/></th>
+                <th width="90px"><s:label name="received" value="%{getText('received.label')}"/></th>
                 <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
                 <th width="20px"></th>
                 <th width="20px"></th>
@@ -278,7 +278,7 @@
                                 fieldValue="%{#approvalList.idUKey}"/></td>
                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
-                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(30)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
                     <s:if test="register.birthType.ordinal() != 0">

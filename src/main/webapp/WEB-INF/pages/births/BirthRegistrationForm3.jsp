@@ -403,13 +403,13 @@ function initPage() {
             </td>
             <td><label>විවාහ වු ස්ථානය<br>விவாகம் இடம்பெற்ற இடம் <br>Place of Marriage</label></td>
             <td colspan="2"><s:textfield name="marriage.placeOfMarriage" id="placeOfMarriage"
-                                         cssStyle="float:right;"/></td>
+                                         cssStyle="float:left;"/></td>
         </tr>
         <tr>
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
             <td colspan="2">
-                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:50px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"/></tr>
+                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
+            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" cssStyle="float:left;margin-left:5px;"/></tr>
         <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
                 විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
@@ -664,8 +664,8 @@ function initPage() {
     <tr>
         <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
         <td colspan="4">
-                <s:label value="YYYY-MM-DD" cssStyle="margin-left:76%;font-size:10px"/><br>
-                <s:textfield name="informant.informantSignDate" id="informDatePicker"/>
+                <s:label value="YYYY-MM-DD" cssStyle="float:right;margin-right:190px;font-size:10px"/><br>
+                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;"/>
     </tr>
     </tbody>
 </table>

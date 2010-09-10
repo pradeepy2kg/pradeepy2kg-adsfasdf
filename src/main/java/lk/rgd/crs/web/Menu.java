@@ -88,11 +88,10 @@ public class Menu {
 
         //birth alteration for DEO
         deoBirthLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/births/", "eprBirthAlterationInit.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoBirthLink.put("eprBirthAlterationPendingApproval.do",new Link("birth_alteration_pending_approval.title", "/ecivil/births/", "eprBirthAlterationPendingApproval.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoBirthLink.put("eprBirthAlterationPendingApproval.do", new Link("birth_alteration_pending_approval.title", "/ecivil/births/", "eprBirthAlterationPendingApproval.do", Permission.EDIT_BIRTH_ALTERATION));
         //TODO tharanga place following adr links to the relevent place
         adrBirthLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/births/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         adrBirthLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/births/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
-        
 
 
         deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));
@@ -156,6 +155,12 @@ public class Menu {
         //Birth for ARG
         argBirthLink.putAll(adrBirthLink);
         argBirthLink.put("eprBirthRegisterBelatedApproval.do", new Link("birth_register_belated_approval.label", "/ecivil/births/", "eprBirthRegisterBelatedApproval.do", Permission.APPROVE_BDF_BELATED));
+
+        argBirthLink.put("eprBelatedApprovalRefresh.do", new Link(null, "/ecivil/births/", "eprBelatedApprovalRefresh.do", Permission.APPROVE_BDF_BELATED));
+        argBirthLink.put("eprApproveBelatedBirthDeclaration.do", new Link(null, "/ecivil/births/", "eprApproveBelatedBirthDeclaration.do", Permission.APPROVE_BDF_BELATED));
+        argBirthLink.put("eprBelatedIgnoreWarning.do", new Link(null, "/ecivil/births/", "eprBelatedIgnoreWarning.do", Permission.APPROVE_BDF_BELATED));
+        argBirthLink.put("eprRejectBelatedBirthDeclaration.do", new Link(null, "/ecivil/births/", "eprRejectBelatedBirthDeclaration.do", Permission.APPROVE_BDF_BELATED));
+        argBirthLink.put("eprDeleteBelatedApprovalPending.do", new Link(null, "/ecivil/births/", "eprDeleteBelatedApprovalPending.do", Permission.APPROVE_BDF_BELATED));
 
         //Death Registration for DEO
         deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/ecivil/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));

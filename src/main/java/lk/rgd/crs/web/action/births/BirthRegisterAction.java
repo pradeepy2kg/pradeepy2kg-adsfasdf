@@ -407,7 +407,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String birthDeclarationInit() {
         BirthDeclaration bdf;
-        logger.debug("Birth type is a live birth : {}", birthType);
+        logger.debug("Birth type is : {}", birthType);
         session.remove(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         if (bdId == 0) {
             if (!addNewMode) {

@@ -1,4 +1,4 @@
-<%--@author Indunil Moremada--%>
+<%--@author Chathuranga Withana--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
@@ -23,7 +23,7 @@
 
     <s:actionerror/>
 
-    <s:form action="eprRejectBirthDeclaration.do" method="post">
+    <s:form action="eprRejectBelatedBirthDeclaration.do" method="post">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="bdId" value="%{#request.bdId}"/>
