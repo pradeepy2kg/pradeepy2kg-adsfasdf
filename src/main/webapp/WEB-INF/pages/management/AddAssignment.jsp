@@ -109,7 +109,14 @@
 <s:set name="indirect" value="directAssigment"/>
 <s:if test="directAssigment>0">
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-        <legend align="right">Find Registrar By Pin</legend>
+        <legend align="right">
+            <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
+                <s:property value="%{getText('registrar.find.by.pin')}"/>
+            </s:if>
+            <s:else>
+                <s:property value="%{getText('acknowladgmnet.assignment')}"/>
+            </s:else>
+        </legend>
         <form action="eprSearchRegistrarByPin.do" method="post">
             <table>
                 <caption/>
@@ -120,18 +127,21 @@
                 <tbody>
                 <tr>
                     <td>
-                        <s:if test="%{#session.exsisting_registrar == null}">
+                        <s:if test="%{(#session.exsisting_registrar == null  &&  directAssigment!=0)}">
                             <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/>
-                        </s:if> <s:else>
-                        <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}" disabled="true"/>
-                    </s:else>
+                        </s:if>
+                        <s:else>
+                        </s:else>
                     </td>
                     <td>
                         <div id="search_button" class="button">
-                            <s:if test="%{#session.exsisting_registrar == null}">
+                            <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
                                 <s:submit name="refresh" value="%{getText('label.button.searchr')}"
                                           onclick="javascript:searchButtonClick();"/>
                             </s:if>
+                            <s:else>
+
+                            </s:else>
                         </div>
                     </td>
                     <td>
@@ -259,14 +269,8 @@
     </s:else>
     <s:hidden name="directAssigment" value="2"/>
     <s:hidden name="registrarSession" value="true"/>
-
-    <s:if test="directAssigment==1">
-        <s:hidden name="indirect" value="true"/>
-        <s:property value="directAssigment"/>
-    </s:if>
-    <s:property value="directAssigment"/>
 </s:form>
-
+<s:property value="directAssigment"/>
 <s:if test="assignment != null">
     <script type="text/javascript">
         document.getElementById('dsDivisionId').disabled = true;

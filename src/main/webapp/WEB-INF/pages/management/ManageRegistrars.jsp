@@ -125,8 +125,9 @@
         </tr>
         </thead>
         <s:if test="assignmentList.size>0">
-            <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
+
                 <tbody>
+                <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
                 <s:url action="eprRegistrarsView.do" id="assign">
                     <s:param name="registrarUkey" value="registrar.registrarUKey"/>
                 </s:url>
@@ -152,8 +153,9 @@
                     <td><s:property value="permanentDate"/></td>
                     <td><s:property value="terminationDate"/></td>
                 </tr>
+                 </s:iterator>
                 </tbody>
-            </s:iterator>
+
         </s:if>
         <%--        <tbody>
         <s:url action="eprRegistrarsView.do" id="registrar"/>
