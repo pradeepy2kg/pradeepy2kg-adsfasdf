@@ -166,6 +166,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             user = service.getUsersByIDMatch(getUserId()).get(0);
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
             currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
+            logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
+            logger.info("current division list size  : {} for user : {}", currentbdDivisionList.size(), user.getUserName());
             session.put(WebConstants.SESSION_UPDATED_USER, user);
         }
         return "pageLoad";

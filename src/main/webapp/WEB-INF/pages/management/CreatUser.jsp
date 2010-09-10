@@ -35,41 +35,28 @@
 
         });
 
+        $('select#districtIdCurrent').bind('change', function(evt1) {
+            var options1 = '';
+            var oSelect = document.getElementById('districtIdCurrent');
+            for (var iCount = 0; oSelect.options[iCount]; iCount++) {
+                if (oSelect.options[iCount].selected == true) {
+                    var id = oSelect.options[iCount].value;
+                    $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
+                            function(data) {
+                                var ds = data.dsDivisionList;
+                                for (var i = 0; i < ds.length; i++) {
+                                    options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option> \n';
+                                }
+                                $("select#divisionIdCurrent").html(options1);
+                            });
+                }
+            }
+
+        });
+
 
     });
 
-  
-    function y() {
-        alert('fffff')
-        //todo
-        var options1 = '';
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:4},
-                function(data) {
-                    var ds = data.districtList;
-                    for (var i = 0; i < ds.length; i++) {
-                        options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option> \n';
-                    }
-                    $("select#districtIdCurrent").html(options1);
-                });
-
-        /*
-         var options1 = '';
-         var oSelect = document.getElementById('districtIdCurrent');
-         for (var iCount = 0; oSelect.options[iCount]; iCount++) {
-         if (oSelect.options[iCount].selected == true) {
-         var id = oSelect.options[iCount].value;
-         $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
-         function(data) {
-         var ds = data.districtList;
-         for (var i = 0; i < ds.length; i++) {
-         options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option> \n';
-         }
-         $("select#divisionIdCurrent").html(options1);
-         });
-         }
-         }*/
-
-    }
 
     function validate() {
         var errormsg = "";
@@ -149,9 +136,9 @@
                     </td>
                     <td>
                         <s:if test="user != null">
-                            <s:select list="currentDistrictList" name="assignedDistricts" multiple="true"
+                            <s:select list="districtList" name="assignedDistricts" multiple="true"
                                       size="10"
-                                      id="districtIdCurrent"/>
+                                      id="districtIdCurrent" value="currentDistrictList"/>
                         </s:if>
                     </td>
                 <tr>
@@ -165,11 +152,7 @@
                 <s:if test="user != null">
                     <td><s:select list=" currentbdDivisionList" name="assignedDivisions" multiple="true"
                                   size="10"
-                                  id="divisionIdCurrent"/>
-                </s:if>
-                <s:if test="user != null">
-                    <s:checkbox id="enableEditMode" name="enableEditModeName"
-                                onclick="javascript:x();"></s:checkbox>
+                                  id="divisionIdCurrent" value="currentbdDivisionList"/>
                 </s:if>
                 </td>
             </s:label>
