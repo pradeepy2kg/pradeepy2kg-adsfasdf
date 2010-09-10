@@ -108,6 +108,22 @@ $(function() {
                     });
         });
     });
+
+    $('#applicant_NIC_V').bind('click', function() {
+        $('#applicantPin').val($("#applicantPin").val() + "V");
+    });
+
+    $('#applicant_NIC_X').bind('click', function() {
+        $('#applicantPin').val($("#applicantPin").val() + "X");
+    });
+
+    $('#wife_NIC_V').bind('click', function() {
+        $('#wifePINorNIC').val($("#wifePINorNIC").val() + "V");
+    });
+
+    $('#wife_NIC_X').bind('click', function() {
+        $('#wifePINorNIC').val($("#wifePINorNIC").val() + "X");
+    });
 })
 
 
@@ -373,9 +389,15 @@ function enableSerialNumber(mode) {
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Applicant's PIN / NIC Number
         </td>
-        <td colspan="2" align="center" class="find-person"><s:textfield name="adoption.applicantPINorNIC"
-                                                                        id="applicantPin"
-                                                                        cssStyle="float:left;width:250px;"/>
+        <td colspan="2" align="left" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="applicant_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="applicant_NIC_X">
+            <br>
+            <s:textfield name="adoption.applicantPINorNIC"
+                         id="applicantPin"
+                         cssStyle="float:left;width:250px;"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup"></td>
     </tr>
@@ -427,8 +449,14 @@ function enableSerialNumber(mode) {
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2" align="left"><s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
-                                                  cssStyle="float:left;width:250px;"/>
+        <td colspan="2"  class="find-person" >
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="wife_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="wife_NIC_X">
+            <br>
+            <s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
+                         cssStyle="float:left;width:250px;"/>
             <img src="<s:url value="/images/search-mother.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="mother_lookup"></td>
     </tr>

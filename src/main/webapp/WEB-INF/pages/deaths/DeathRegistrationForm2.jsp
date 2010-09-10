@@ -64,6 +64,22 @@
                         $("textarea#notifyingAuthorityAddress").val(data4.lastAddress);
                     });
         });
+
+        $('#notifying_authority_NIC_V').bind('click', function() {
+            $('#notifying_authority_NICorPIN').val($("#notifying_authority_NICorPIN").val() + "V");
+        });
+
+        $('#notifying_authority_NIC_X').bind('click', function() {
+            $('#notifying_authority_NICorPIN').val($("#notifying_authority_NICorPIN").val() + "X");
+        });
+
+        $('#declarant_NIC_V').bind('click', function() {
+            $('#declarant_pinOrNic').val($("#declarant_pinOrNic").val() + "V");
+        });
+
+        $('#declarant_NIC_X').bind('click', function() {
+            $('#declarant_pinOrNic').val($("#declarant_pinOrNic").val() + "X");
+        });
     });
 
     var informPerson;
@@ -99,16 +115,16 @@
         }
 
         //Validate Declarant Type
-        var i,error=false;
-        for (i=0;i<6;i++) {
+        var i,error = false;
+        for (i = 0; i < 6; i++) {
             domObject = document.getElementsByName('declarant.declarantType')[i];
             if (domObject.checked) {
-                error=true;
+                error = true;
                 //break;
             }
         }
-        if(!error){
-                errormsg = errormsg + "\n" + document.getElementById('p2error8').value;
+        if (!error) {
+            errormsg = errormsg + "\n" + document.getElementById('p2error8').value;
         }
 
         /*date related validations*/
@@ -188,29 +204,35 @@
                 <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                                         list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
-                        onchange="setInformPerson('','');"/></td>
+                                                        onchange="setInformPerson('','');"/></td>
             </tr>
             <tr>
                 <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                                         list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
-                        onchange="setInformPerson('','');"/></td>
+                                                        onchange="setInformPerson('','');"/></td>
                 <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                                         list="#@java.util.HashMap@{'RELATIVE':''}"
-                        onchange="setInformPerson('','');"/></td>
+                                                        onchange="setInformPerson('','');"/></td>
                 <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
                 <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
                                                         list="#@java.util.HashMap@{'OTHER':''}"
-                        onchange="setInformPerson('','');"/></td>
+                                                        onchange="setInformPerson('','');"/></td>
             </tr>
             <tr>
                 <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය /
                     ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
                     <br>PIN / NIC
                 </td>
-                <td colspan="3" class="find-person"><s:textfield id="declarant_pinOrNic"
-                                                                 name="declarant.declarantNICorPIN"/><img
+                <td colspan="3" class="find-person">
+                    <img src="<s:url value="/images/alphabet-V.gif" />"
+                         id="declarant_NIC_V">
+                    <img src="<s:url value="/images/alphabet-X.gif" />"
+                         id="declarant_NIC_X">
+                    <br>
+                    <s:textfield id="declarant_pinOrNic"
+                                 name="declarant.declarantNICorPIN"/><img
                         src="<s:url value="/images/search-father.png"/>"
                         style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
             </tr>
@@ -272,8 +294,14 @@
                 <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
                     NIC
                 </td>
-                <td colspan="2"><s:textfield id="notifying_authority_NICorPIN"
-                                             name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
+                <td colspan="2" class="find-person" >
+                    <img src="<s:url value="/images/alphabet-V.gif" />"
+                         id="notifying_authority_NIC_V">
+                    <img src="<s:url value="/images/alphabet-X.gif" />"
+                         id="notifying_authority_NIC_X">
+                    <br>
+                    <s:textfield id="notifying_authority_NICorPIN"
+                                 name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
                     <img src="<s:url value="/images/search-father.png" />"
                          style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
                 </td>
@@ -299,7 +327,7 @@
                 <td colspan="1">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:50%;font-size:10px"/><br>
                     <s:textfield id="submitDatePicker"
-                                             name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
+                                 name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
             </tr>
             </tbody>
         </table>

@@ -25,6 +25,13 @@
                         $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
                     });
         });
+        $('#confirmant_NIC_V').bind('click', function() {
+            $('#confirmantNICorPIN').val($("#confirmantNICorPIN").val() + "V");
+        });
+
+        $('#confirmant_NIC_X').bind('click', function() {
+            $('#confirmantNICorPIN').val($("#confirmantNICorPIN").val() + "X");
+        });
     });
 
     function setConfirmPerson(id, nICorPIN, name) {
@@ -155,6 +162,11 @@
                     <br>PIN / NIC of person confirming the birth details
                 </label></td>
                 <td colspan="3" class="find-person">
+                    <img src="<s:url value="/images/alphabet-V.gif" />"
+                         id="confirmant_NIC_V">
+                    <img src="<s:url value="/images/alphabet-X.gif" />"
+                         id="confirmant_NIC_X">
+                    <br>
                     <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="confirmant_lookup"/>
