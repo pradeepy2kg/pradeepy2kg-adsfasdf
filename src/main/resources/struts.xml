@@ -778,11 +778,15 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <!--        <action name="eprUpdateRegistrar" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
-                method="filter">
-            <result type="tiles" name="success">epr.registrarsManagmentList</result>
+        <action name="eprUpdateRegistrar" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
+                method="updateRegistrar">
+            <result type="redirectAction" name="success">
+                <param name="actionName">
+                    eprRegistrarsView
+                </param>
+            </result>
             <result type="tiles" name="error">epr.error</result>
-        </action>-->
+        </action>
 
         <action name="eprRegistrarsAdd" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
                 method="registrarsAdd">
