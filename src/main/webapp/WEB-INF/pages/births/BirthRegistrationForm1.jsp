@@ -197,7 +197,7 @@ function commonTags() {
     var submit = new Date(document.getElementById('submitDatePicker').value);
     var birthdate = new Date(document.getElementById('birthDatePicker').value);
     // compare birth date and date of registration
-    if (birthdate.getTime() < submit.getTime()) {
+    if (birthdate.getTime() > submit.getTime()) {
         errormsg = errormsg + "\n" + document.getElementById('error6').value;
     }
 
