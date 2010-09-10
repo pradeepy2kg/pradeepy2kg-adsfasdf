@@ -42,7 +42,8 @@ public class WebConstants {
 
     public static final String SESSION_EXSISTING_REGISTRAR = "exsisting_registrar";
     public static final String SESSION_UPDATED_ASSIGNMENT_REGISTRAR = "updated_assignment";
+    public static final String SESSION_REGISTRAR = "current_updating_registrar";
 
-    public static final int BIRTH_ALTERATION_APPROVE=1;
+    public static final int BIRTH_ALTERATION_APPROVE = 1;
     public static final String SESSION_UPDATED_USER = "updated_user";
 }

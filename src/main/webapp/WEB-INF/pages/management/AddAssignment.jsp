@@ -91,10 +91,6 @@
         });
     });
 
-    function initPage() {
-        //  disableAssignment(true);
-    }
-
     function disableAssignment(mode) {
         document.getElementById('districtId').disabled = mode;
         document.getElementById('dsDivisionId').disabled = mode;
@@ -110,6 +106,7 @@
     }
 </script>
 <s:actionerror cssStyle="color:red;"/>
+<s:set name="indirect" value="directAssigment"/>
 <s:if test="directAssigment>0">
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <legend align="right">Find Registrar By Pin</legend>
@@ -122,11 +119,19 @@
                 <col/>
                 <tbody>
                 <tr>
-                    <td><s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/></td>
+                    <td>
+                        <s:if test="%{#session.exsisting_registrar == null}">
+                            <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/>
+                        </s:if> <s:else>
+                        <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}" disabled="true"/>
+                    </s:else>
+                    </td>
                     <td>
                         <div id="search_button" class="button">
-                            <s:submit name="refresh" value="%{getText('label.button.searchr')}"
-                                      onclick="javascript:searchButtonClick();"/>
+                            <s:if test="%{#session.exsisting_registrar == null}">
+                                <s:submit name="refresh" value="%{getText('label.button.searchr')}"
+                                          onclick="javascript:searchButtonClick();"/>
+                            </s:if>
                         </div>
                     </td>
                     <td>
@@ -140,12 +145,12 @@
             </table>
         </form>
     </fieldset>
-</s:if>
 
+</s:if>
 
 <s:form action="eprAssignmentAdd.do" method="post">
     <fieldset>
-        <legend><s:label value="Select BDDivision/MarriageDivision"/></legend>
+        <legend><s:property value="%{getText('assignment.bd.marraige.division')}"/></legend>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
             <col width="500px">
@@ -170,7 +175,7 @@
         </table>
     </fieldset>
     <fieldset>
-        <legend><s:label value="Type"/></legend>
+        <legend><s:property value="%{getText('assignment.type')}"/></legend>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
             <col width="500px">
@@ -186,7 +191,7 @@
     </fieldset>
     <s:if test="assignment != null">
         <fieldset>
-            <legend>State</legend>
+            <legend><s:property value="%{getText('assignment.state')}"/></legend>
             <s:if test="assignment != null">
                 <s:select
                         list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
@@ -201,7 +206,7 @@
         </fieldset>
     </s:if>
     <fieldset>
-        <legend><s:label value="Date"/></legend>
+        <legend><s:property value="%{getText('assignment.dates')}"/></legend>
         <table>
             <caption/>
             <col/>
@@ -253,7 +258,15 @@
         <s:hidden name="editMode" value="true"/>
     </s:else>
     <s:hidden name="directAssigment" value="2"/>
+    <s:hidden name="registrarSession" value="true"/>
+
+    <s:if test="directAssigment==1">
+        <s:hidden name="indirect" value="true"/>
+        <s:property value="directAssigment"/>
+    </s:if>
+    <s:property value="directAssigment"/>
 </s:form>
+
 <s:if test="assignment != null">
     <script type="text/javascript">
         document.getElementById('dsDivisionId').disabled = true;
@@ -262,3 +275,5 @@
         document.getElementById('type').disabled = true;
     </script>
 </s:if>
+
+

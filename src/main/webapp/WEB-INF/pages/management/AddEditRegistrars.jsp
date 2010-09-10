@@ -142,13 +142,7 @@
         document.getElementById('registrarEmail').disabled = mode;
         document.getElementById('prefLanguage').disabled = mode;
     }
-
     function initPage() {
-        disableFields(true);
-    }
-
-    function x(mode) {
-        document.getElementById('prefLanguage').disable = false;
     }
 
 </script>
@@ -228,7 +222,7 @@
 
 </style>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right">Basic info</legend>
+    <legend align="right"><s:property value="%{getText('registrar.basic.info')}"/></legend>
     <form action="eprUpdateRegistrar.do" method="post">
         <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
             <caption></caption>
@@ -236,48 +230,48 @@
             <col width="1000px"/>
             <tbody>
             <tr>
-                <td align="left">name in official language</td>
+                <td align="left"><s:property value="%{getText('registrar.full.name.officelaLang')}"/></td>
                 <td align="left"><s:textfield id="registrarNameInOfficelaLang" cssStyle="width:100%"
                                               name="registrar.fullNameInOfficialLanguage"/></td>
             </tr>
             <tr>
-                <td align="left">name in English</td>
+                <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/></td>
                 <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
                                               name="registrar.fullNameInEnglishLanguage"/></td>
             </tr>
             <tr>
-                <td align="left">pin/NIC</td>
+                <td align="left"><s:property value="%{getText('registrar.pin')}"/></td>
                 <td align="left"><s:textfield id="registrarPin" name="registrar.pin"/></td>
             </tr>
             <tr>
-                <td align="left">NIC</td>
+                <td align="left"><s:property value="%{getText('registrar.nic')}"/></td>
                 <td align="left"><s:textfield id="registrarNIC" name="registrar.nic"/></td>
             </tr>
             <tr>
-                <td align="left">gender</td>
+                <td align="left"><s:property value="%{getText('registrar.gender')}"/></td>
                 <td align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                         name="registrar.gender" cssStyle="width:190px;" id="registrarGender"/></td>
             </tr>
             <tr>
-                <td align="left">date of birth</td>
+                <td align="left"><s:property value="%{getText('registrar.dateofbirth')}"/></td>
                 <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
             </tr>
             <tr>
-                <td align="left">address</td>
+                <td align="left"><s:property value="%{getText('registrar.address')}"/></td>
                 <td align="left"><s:textarea id="registrarAddress" cssStyle="width:100%"
                                              name="registrar.currentAddress"/></td>
             </tr>
             <tr>
-                <td align="left">phone</td>
+                <td align="left"><s:property value="%{getText('registrar.phone')}"/></td>
                 <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
             </tr>
             <tr>
-                <td align="left">email</td>
+                <td align="left"><s:property value="%{getText('registrar.email')}"/></td>
                 <td align="left"><s:textfield id="registrarEmail" name="registrar.emailAddress"/></td>
             </tr>
             <tr>
-                <td align="left">prefered language</td>
+                <td align="left"><s:property value="%{getText('registrar.prefLang')}"/></td>
                 <td align="left"><s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
                                            name="registrar.preferredLanguage"
                                            cssStyle="width:190px;" id="prefLanguage"/></td>
@@ -304,7 +298,7 @@
 
 <%--current assignments--%>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right">Current Assignment</legend>
+    <legend align="right"><s:property value="%{getText('registrar.current.assignments')}"/></legend>
     <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
         <tr class="table-title">
@@ -352,33 +346,115 @@
                 </tbody>
             </s:iterator>
         </s:if>
-        <%--        <tbody>
-        <s:url action="eprRegistrarsView.do" id="registrar"/>
-        <tr>
-            <td><s:a href="%{registrar}"> <s:label value="bdDivision"/></s:a></td>
-            <td><s:label value="name"/></td>
-            <td><s:label value="state"/></td>
-            <td><s:label value="type"/></td>
-            <td><s:label value="start date"/></td>
-            <td><s:label value="end date"/></td>
-        </tr>
-        </tbody>--%>
     </table>
 
 </fieldset>
 <%--add a new assignment--%>
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right">Add New Assignment</legend>
-    <div class="msg_list" style="position:relative;">
-        <p class="msg_head">add a assignment now </p>
+    <legend align="right"><s:property value="%{getText('registrar.add.new.assignment')}"/></legend>
+    <s:url action="eprAssignmentAddDirect.do" id="x">
+        <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
+        <s:param value="3" name="directAssigment"></s:param>
+    </s:url>
+    <s:a href="%{x}"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
 
-        <div class="msg_body">
-            <%--todo remove this code --%>
-            <s:form action="#" method="post">
-                <s:include value="AddAssignment.jsp"/>
-            </s:form>
-        </div>
+    <%--    <div class="msg_list" style="position:relative;">
+    <p class="msg_head">
+        <s:url action="eprAddAssignmentIndirect.do" id="x">
+            <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
+        </s:url>
+        <s:a href=""><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
+
+    </p>--%>
+
+    <%--        <div class="msg_body">
+        <s:form action="eprAssignmentAdd.do" method="post">
+            <fieldset>
+                <legend><s:property value="%{getText('assignment.bd.marraige.division')}"/></legend>
+                <table cellspacing="0" cellpadding="0">
+                    <caption></caption>
+                    <col width="500px">
+                    <col width="500px">
+                    <col>
+                    <tbody>
+                    <tr>
+                        <td colspan="1" align="left">
+                            <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                                      cssStyle="width:98.5%; width:240px;"/>
+                        </td>
+                        <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
+                                                               list="dsDivisionList"
+                                                               value="%{dsDivisionId}"
+                                                               cssStyle="float:left;  width:240px;"/></td>
+                        <td>
+                            <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
+                                      cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend><s:property value="%{getText('assignment.type')}"/></legend>
+                <table cellspacing="0" cellpadding="0">
+                    <caption></caption>
+                    <col width="500px">
+                    <col width="500px">
+                    <tbody>
+                    <tr>
+                        <td colspan="1" align="left"><s:select
+                                list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
+                                name="" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend><s:property value="%{getText('assignment.state')}"/></legend>
+                <s:select
+                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                        name="" cssStyle="width:240px; margin-left:5px;"/>
+            </fieldset>
+
+            <fieldset>
+                <legend><s:property value="%{getText('assignment.dates')}"/></legend>
+                <table>
+                    <caption/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <tbody>
+                    <tr>
+                        <fieldset>
+                            <legend><s:property value="%{getText('assignemnt.appointed.date')}"/></legend>
+                            <s:textfield name="" id="dateOfAppoinmentDatePicker"/>
+
+                        </fieldset>
+                        <fieldset>
+                            <legend><s:property value="%{getText('assignment.permanent.date')}"/></legend>
+                            <s:textfield name="" id="dateOfPermenentDatePicker"/>
+
+                        </fieldset>
+                        <fieldset>
+                            <legend><s:property value="%{getText('assignment.temination.date')}"/></legend>
+                            <s:textfield name="" id="dateOfTerminationDatePicker"/>
+                        </fieldset>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <s:submit name="assignMentSubmit" value="%{getText('assignment.submit')}"/>
+            <s:hidden name="directAssigment" value="2"/>
+            <s:hidden name="registrarPin" value="%{registrar.pin}"/>
+            <s:hidden name="registrarSession" value="false"/>
+        </s:form>
     </div>
+    </div>--%>
 </fieldset>
+
 

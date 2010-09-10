@@ -77,6 +77,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private Date permanentDate;
     private Date terminationDate;
     private boolean active;
+    private boolean indirect;
 
     public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
@@ -97,6 +98,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String registrarsVeiwInit() {
+
         logger.info("register veiw init called ");
         if (registrarSession) {
             Assignment asg = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
@@ -128,10 +130,15 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             if (exsistingregistrarsList.size() > 1) { //there is a lready one before
                 addActionError(getText("error.registrar.already.exsists"));
             } else {
-                service.addRegistrar(registrar, user);
-                registrar = null;
-                //todo add action massage acknwolaging succes
-                //otherwise it still in requestscope so data in that object populate in new registrar add  
+                try {
+                    service.addRegistrar(registrar, user);
+                    registrar = null;
+                    //todo add action massage acknwolaging succes
+                    //otherwise it still in requestscope so data in that object populate in new registrar add
+                    addActionMessage("recode.saved.success");
+                } catch (Exception e) {
+                    addActionError("error.registrar.add");
+                }
             }
         }
         return SUCCESS;
@@ -140,9 +147,15 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     public String assignmentAdd() {
         if (!editMode) {
             logger.info("attemt to add a new assignment");
+            logger.info("registrars in session : {}", registrarSession);
+            logger.info("registrar pin : {}", registrarPin);
+            logger.info("indiirect came : {}", indirect);
             if (directAssigment == 2) {
                 //gettting exsiting
                 List<Registrar> reg = (List) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+                if (registrarPin > 0) {
+                    reg = service.getRegistrarByPin(registrarPin, user);
+                }
                 if (reg == null) {
                     //subbmitting without searching for a registrar
                     addActionError("serach.registrar.first");
@@ -150,6 +163,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                     assignment = null;
                     return SUCCESS;
                 }
+
                 assignment.setRegistrar((Registrar) reg.get(0));
                 //setting correct divisiontype
                 if (type.equals(Assignment.Type.BIRTH))
@@ -164,7 +178,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 assignment = null;
                 addActionMessage("assignment.saved.successfully");
-
             }
         } else {
             logger.info("attemt to edit a assignment with assignmentUKey : {}", assignmentUKey);
@@ -199,6 +212,9 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String assignmentAddPageLoad() {
         //requesting addAssignment page directly
+        if (registrarPin > 0) {
+            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user));
+        }
         populateLists(1, 1);
         directAssigment = 1;
         return SUCCESS;
@@ -490,5 +506,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isIndirect() {
+        return indirect;
+    }
+
+    public void setIndirect(boolean indirect) {
+        this.indirect = indirect;
     }
 }
