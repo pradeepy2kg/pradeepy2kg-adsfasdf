@@ -148,14 +148,13 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
-
+        //todo check this by after adding data 
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by DSDivision ID : " + dsDivision.getDsDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToDSDivison(dsDivision, user);
         List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByDSDivision(dsDivision, pageNo, noOfRows);
-
         return getApprovalPendingAlterations(alterationList);
     }
 
@@ -165,19 +164,18 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getApprovalPendingByBDDivision
         (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
-
+        //todo check this by after adding data
         if (logger.isDebugEnabled()) {
             logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
                 + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
         }
         validateAccessToBDDivision(user, bdDivision);
         List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
-
         return getApprovalPendingAlterations(alterationList);
     }
 
     private List<BirthAlteration> getApprovalPendingAlterations(List<BirthAlteration> alterationList) {
-
+       //todo Alteration27 is not considered here it also has to be considered
         List<BirthAlteration> pendingApprovalList = new ArrayList<BirthAlteration>();
         Boolean alreadyAdded;
         for (BirthAlteration ba : alterationList) {
