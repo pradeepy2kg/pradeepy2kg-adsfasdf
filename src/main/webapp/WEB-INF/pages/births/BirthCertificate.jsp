@@ -148,7 +148,7 @@
                 <s:label name="" value="%{gender}"/><br/>
                 <s:label name="" value="%{genderEn}"/>
             </td>
-            <td width="350px">දරැවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
+            <td width="350px">දරුවා මැරී උපදින විට ගර්භයට සති කීයක් ගත වී තිබුනේද යන්න
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth
             </td>
@@ -191,7 +191,10 @@
         </td>
     </tr>
     <tr>
-        <td height="70px">පියාගේ අනන්‍යතා අංකය <br>தந்தையின் அடையாள எண் <br> Father's PIN
+        <td height="70px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+            தந்தையின் அடையாள எண் <br>
+            Father's PIN / NIC
+
         </td>
         <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
         <td>පියාගේ ජාතිය<br>தந்தையின் இனம் <br> Father's Race
@@ -211,7 +214,9 @@
         </td>
     </tr>
     <tr>
-        <td height="70px">ම‌වගේ අනන්‍යතා අංකය <br>தாயின் அடையாள எண் <br> Mother's PIN
+        <td height="70px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+            தாயின் அடையாள எண் <br>
+            Mother's PIN / NIC
         </td>
         <td><s:label name="" value="%{#request.parent.motherNICorPIN}"/></td>
         <td>මවගේ ජාතිය<br>தாயின் இனம் <br> Mother's Race

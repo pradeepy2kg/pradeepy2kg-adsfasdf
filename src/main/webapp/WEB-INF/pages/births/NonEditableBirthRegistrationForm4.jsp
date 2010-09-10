@@ -21,7 +21,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
+                <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) පුද්ගල අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
                 <td colspan="2" class="find-person" width="200px">

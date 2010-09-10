@@ -174,17 +174,13 @@
 
         function getTrueOffsetLeft(ele)
         {
-            var n = 0;
-            while (ele)
-            {
-                n += ele.offsetLeft || 0;
-                ele = ele.offsetParent;
-            }
-            var domobject = document.getElementById('bdfSerialNo');
-            if (isFieldEmpty(domobject)) {
-                domobject.value = new Date().getFullYear() + "0";
-            }
-            return n;
+          var n = 0;
+          while (ele)
+          {
+              n += ele.offsetLeft || 0;
+              ele = ele.offsetParent;
+          }
+          return n;
         }
 
         function getTrueOffsetTop(ele)
@@ -436,7 +432,7 @@ function validate() {
     errormsg = "";
     return returnval;
 }
-
+$(function() {
 $('img#place').bind('click', function(evt6) {
     var id = $("input#placeOfDeath").attr("value");
     var wsMethod = "transliterate";
@@ -457,14 +453,10 @@ $('img#place').bind('click', function(evt6) {
     SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
 });
 
-function processResponse1(respObj) {
-    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
-    return[0].Text
-)
-    ;
-}
-;
+function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+    }
 
 $('img#deathName').bind('click', function(evt7) {
     var id = $("textarea#deathPersonNameOfficialLang").attr("value");
@@ -488,11 +480,9 @@ $('img#deathName').bind('click', function(evt7) {
 
 function processResponse2(respObj) {
     //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-    return[0].Text
-)
-    ;
+    $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
 }
+});
 
 function initSerialNumber() {
     var domObject = document.getElementById('deathSerialNo');

@@ -178,7 +178,7 @@
     <tr>
         <td class="cell_011">4</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
-        <td><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
+        <td><label>අවුරුද්ද  <br>இயர் <br>Year</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
                                       size="4"/></td>
         <td><label>මාසය<br>மாதம்<br>Month</label></td>
@@ -187,7 +187,7 @@
         <td><label>දිනය<br>திகதி<br>Day</label></td>
         <td width="60px"><s:textfield value="%{child.dateOfBirth.date}" cssClass="disable" disabled="true"
                                       size="4"/></td>
-        <td colspan="6"><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
+        <td colspan="6"><label>අවුරුද්ද  <br>இயர் <br>Year</label></td>
         <td width="60px"></td>
         <td><label>මාසය<br>மாதம்<br>Month</label></td>
         <td width="60px"></td>
