@@ -31,16 +31,19 @@ public class Menu {
     private static final Map deoBirthLink = new LinkedHashMap();
     private static final Map deoAdoptionLink = new LinkedHashMap();
     private static final Map deoDeathLink = new LinkedHashMap();
+    private static final Map deoAlterationLink = new LinkedHashMap();
 
     // adr menu items
     private static final Map adrBirthLink = new LinkedHashMap();
     private static final Map adrAdoptionLink = new LinkedHashMap();
     private static final Map adrDeathLink = new LinkedHashMap();
+    private static final Map adrAlterationLink = new LinkedHashMap();
 
     //arg menu items
     private static final Map argBirthLink = new LinkedHashMap();
     private static final Map argDeathLink = new LinkedHashMap();
     private static final Map argAdoptionLink = new LinkedHashMap();
+    private static final Map argAlterationLink = new LinkedHashMap();
 
     static {
         //Admin
@@ -85,14 +88,6 @@ public class Menu {
         deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
         deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
-
-        //birth alteration for DEO
-        deoBirthLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/births/", "eprBirthAlterationInit.do", Permission.EDIT_BIRTH_ALTERATION));
-        deoBirthLink.put("eprBirthAlterationPendingApproval.do", new Link("birth_alteration_pending_approval.title", "/ecivil/births/", "eprBirthAlterationPendingApproval.do", Permission.EDIT_BIRTH_ALTERATION));
-        //TODO tharanga place following adr links to the relevent place
-        adrBirthLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/births/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
-        adrBirthLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/births/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
-
 
         deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));
         deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/ecivil/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
@@ -228,6 +223,20 @@ public class Menu {
         argAdoptionLink.put("eprRejectAdoption.do", new Link(null, "/ecivil/adoption/", "eprRejectAdoption.do", Permission.APPROVE_ADOPTION));
         argAdoptionLink.put("eprAdoptionDirectApproval.do", new Link(null, "/ecivil/adoption/", "eprAdoptionDirectApproval.do", Permission.APPROVE_ADOPTION));
 
+
+        //birth alteration for DEO
+        deoAlterationLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/alteration/", "eprBirthAlterationInit.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprBirthAlterationPendingApproval.do", new Link("birth_alteration_pending_approval.title", "/ecivil/alteration/", "eprBirthAlterationPendingApproval.do", Permission.EDIT_BIRTH_ALTERATION));
+        //TODO tharanga place following adr links to the relevent place
+        deoAlterationLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
+
+        // Birth Alteration for ADR
+        adrAlterationLink.putAll(deoAlterationLink);
+
+        //Birth Alteration for ARG
+        argAlterationLink.putAll(adrAlterationLink);
+
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
         adminLinks.put("preference", preferanceLink);
@@ -236,12 +245,14 @@ public class Menu {
         deoLinks.put("birth", deoBirthLink);
         deoLinks.put("death", deoDeathLink);
         deoLinks.put("adoption", deoAdoptionLink);
+        deoLinks.put("alteration", deoAlterationLink);
         deoLinks.put("preference", preferanceLink);
 
         // assemble menu for adr
         adrLinks.put("birth", adrBirthLink);
         adrLinks.put("death", adrDeathLink);
         adrLinks.put("adoption", adrAdoptionLink);
+        adrLinks.put("alteration", adrAlterationLink);
         adrLinks.put("preference", preferanceLink);
         adrLinks.put("prs", prsLink);
 
@@ -249,6 +260,7 @@ public class Menu {
         argLinks.put("birth", argBirthLink);
         argLinks.put("death", argDeathLink);
         argLinks.put("adoption", argAdoptionLink);
+        argLinks.put("alteration", argAlterationLink);
         argLinks.put("preference", preferanceLink);
         argLinks.put("prs", prsLink);
     }

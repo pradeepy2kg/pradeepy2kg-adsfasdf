@@ -44,7 +44,7 @@
     });
 
 
-    </script>
+</script>
 <s:actionerror/>
 <table cellpadding="5" cellspacing="0">
     <s:form action="" method="post">
@@ -74,6 +74,101 @@
         </tr>
         </tbody>
     </s:form>
-    </table>
+</table>
 
+
+<fieldset style="margin-bottom:10px;margin-top:20px;border:none">
+    <legend></legend>
+    <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+        <s:if test="birthAlterationPendingApprovalList.size>0">
+        <thead>
+        <tr>
+            <%--<th width="15px"></th>--%>
+            <th width="20px"><s:label value="%{getText('division.label')}"/></th>
+            <th width="100px"><s:label value="%{getText('name.label')}"/></th>
+            <th></th>
+            <th></th>
+            <%--<th width="100px"></th>
+           <th width="40px"></th>
+           <th width="20px"></th>
+           <th width="20px"></th>--%>
+            <%--<th width="20px"></th>
+           <th width="20px"></th>--%>
+        </tr>
+        </thead>
+            </s:if>
+        <tbody>
+        <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
+            <tr>
+                <td><s:property value="alt52_1.birthDivision.bdDivisionUKey"/></td>
+                <td><s:property value="alt27.childFullNameOfficialLang"/></td>
+                <td align="center">
+                    <s:if test="#request.allowApproveAlteration">
+                        <s:url id="approveSelected" action="approveSelectedAlteration.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                            <%--<s:param name="recordCounter" value="#request.recordCounter"/>--%>
+                        </s:url>
+                        <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                            <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
+                    </s:if>
+                </td>
+                <td align="center">
+                    <s:if test="#request.allowApproveAlteration">
+                        <s:url id="rejectSelected" action="rejectSelectedAlteration.do">
+                            <s:param name="idUKey" value="idUKey"/>
+                            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+                            <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+                            <%--<s:param name="recordCounter" value="#request.recordCounter"/>--%>
+                        </s:url>
+                        <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
+                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/></s:a>
+                    </s:if>
+                </td>
+            </tr>
+        </s:iterator>
+        </tbody>
+    </table>
+</fieldset>
+
+<div class="next-previous">
+    <%-- Next link to visible next records will only visible if nextFlag is
+  set to 1--%>
+    <s:url id="previousUrl" action="eprAlterationApprovalPrevious.do" encode="true">
+        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+        <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+        <%--<s:param name="recordCounter" value="#request.recordCounter"/>--%>
+    </s:url>
+
+    <s:url id="nextUrl" action="eprAlterationApprovalNext.do" encode="true">
+        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
+        <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
+        <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
+        <%--<s:param name="recordCounter" value="#request.recordCounter"/>--%>
+    </s:url>
+    <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
+        <img src="<s:url value='/images/previous.gif'/>"
+             border="none"/></s:a><s:label value="%{getText('previous.label')}"
+                                           cssStyle="margin-right:5px;"/></s:if>
+
+    <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
+                                            cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
+        <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
+</div>
     

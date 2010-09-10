@@ -1,7 +1,11 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.crs.api.domain.BirthAlteration;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
+
+import java.util.List;
 
 /**
  * @author Indunil Moremada
@@ -39,4 +43,24 @@ public interface BirthAlterationDAO {
      * @return BirthAlteration or null if none exist
      */
     public BirthAlteration getById(long idUKey);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given DSDivison id.
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given BDDivison id
+     *
+     * @param BDDivision the birth/death division
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByBDDivision(BDDivision BDDivision, int pageNo, int noOfRows);
 }

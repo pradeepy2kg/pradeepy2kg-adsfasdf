@@ -460,25 +460,6 @@
             <result type="tiles" name="success">epr.stillBirth</result>
         </action>
 
-        <action name="eprBirthAlterationInit" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="initBirthAlteration">
-            <result type="tiles" name="success">epr.birthAlteration</result>
-        </action>
-
-        <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="birthAlterationSearch">
-            <result type="tiles" name="success">epr.birthAlteration</result>
-        </action>
-
-        <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="birthAlteration">
-            <result type="tiles" name="success">epr.home</result>
-        </action>
-
-        <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="initBirthAlterationPendingList">
-            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
-        </action>
         <!--Birth Certificate Search-->
         <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
                 method="birthCertificateSearch">
@@ -876,5 +857,30 @@
                 method="addDivisionsAndDsDivisions">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
+    </package>
+
+    <package name="alteration" namespace="/alteration" extends="NG">
+        <default-interceptor-ref name="default"/>
+
+        <action name="eprBirthAlterationInit" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="initBirthAlteration">
+            <result type="tiles" name="success">epr.birthAlteration</result>
+        </action>
+
+        <action name="eprBirthAlterationSearch" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="birthAlterationSearch">
+            <result type="tiles" name="success">epr.birthAlteration</result>
+        </action>
+
+        <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="birthAlteration">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
+
+        <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="initBirthAlterationPendingApprovalList">
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+        </action>
+
     </package>
 </struts>
