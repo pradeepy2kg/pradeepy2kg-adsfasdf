@@ -211,9 +211,9 @@
 
 
         </div>
+        <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
     </s:form>
 
-    <s:hidden name="skipConfirmationChages" value="%{#request.skipConfirmationChages}"/>
     <s:hidden id="error1" value="%{getText('confirmant.person.value')}"/>
     <s:hidden id="error2" value="%{getText('cp3.error.NIC.value')}"/>
     <s:hidden id="error3" value="%{getText('cp3.error.FullName.value')}"/>
