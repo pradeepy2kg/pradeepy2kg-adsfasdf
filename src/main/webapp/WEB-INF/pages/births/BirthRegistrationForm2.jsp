@@ -122,7 +122,7 @@ $(function() {
                 });
     });
 
-    $('#mother_lookup').click (function() {
+    $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
         var mother_bday = document.getElementById('motherDatePicker').value;
         if (mother_bday != "") {
@@ -281,8 +281,14 @@ function commonTags() {
 
     // validate hospital addmission date
     domObject = document.getElementById('admitDatePicker');
-    if (!isFieldEmpty(domObject))
+    if (!isFieldEmpty(domObject)) {
         isDate(domObject.value, "error2", "dateOfAddmission");
+        var submit = new Date(document.getElementById('birthDatePicker').value);
+        domObject = new Date(domObject.value);
+        if (domObject.getTime() > submit.getTime()) {
+            errormsg = errormsg + "\n" + document.getElementById('dateOfAddmissionWrong').value;
+        }
+    }
 }
 
 </script>
@@ -312,7 +318,7 @@ function commonTags() {
     <tr>
         <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
                 name="i" value="#i+1"/>)අනන්‍යතා අංකය
-            / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
+            / ජාතික හැඳුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td rowspan="2" width="230px" class="find-person">
@@ -402,7 +408,7 @@ function commonTags() {
     <tr>
         <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
                 name="i" value="#i+1"/>)අනන්‍යතා අංකය
-            / ජාතික හැදුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
+            / ජාතික හැඳුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td colspan="2" rowspan="2" width="230px" class="find-person">
@@ -588,6 +594,9 @@ function commonTags() {
 <s:hidden id="fatherDOB" value="%{getText('p2.father.dob')}"/>
 <s:hidden id="motherDOB" value="%{getText('p2.mother.dob')}"/>
 <s:hidden id="dateOfAddmission" value="%{getText('p2.hospital.addmission.date')}"/>
+<s:hidden id="dateOfAddmissionWrong" value="%{getText('p2.hospital.addmission.date.wrong')}"/>
+<s:hidden id="birthDatePicker" value="%{child.dateOfBirth}"/>
+
 
 </div>
 <%-- Styling Completed --%>

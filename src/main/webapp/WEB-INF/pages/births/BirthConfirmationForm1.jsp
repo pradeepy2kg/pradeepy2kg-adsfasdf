@@ -275,14 +275,14 @@
             உள்ளடக்கப்பட்டுள்ள
             விபரம<br>Information included in Civil Registration System </label></td>
         <td class="cell_02" colspan="6"><label>
-            වෙනස් විය යුතු විස්තර අතුලත් කරන්න.
+             ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් .
             <br>புதியசிவில் பதிவ..ண்டிய விப...
-            <br>Insert new details or modify existing details</label></td>
+            <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
         <td class="cell_01">3</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
-        <td class="cell_03"><label>අව්රුද්ද <br>இயர் <br>Year</label></td>
+        <td class="cell_03"><label>අවුරුද්ද  <br>இயர் <br>Year</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}"
                                          cssClass="disable" disabled="true"
                                          size="4"/></td>
