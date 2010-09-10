@@ -23,6 +23,11 @@ import java.io.Serializable;
         "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
+    @NamedQuery(name = "get.by.division.status.birthType.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND bdf.register.birthType = :birthType AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
     @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
         "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
@@ -59,6 +64,11 @@ import java.io.Serializable;
     @NamedQuery(name = "get.by.dsdivision.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
         "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
         "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
+    @NamedQuery(name = "get.by.dsdivision.status.birthType.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+        "AND bdf.register.birthType = :birthType AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
         "ORDER BY bdf.register.dateOfRegistration desc"),
 
     @NamedQuery(name = "get.by.dsdivision.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +

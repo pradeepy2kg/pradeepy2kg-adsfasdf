@@ -126,6 +126,24 @@ public interface BirthDeclarationDAO {
         BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
+     * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
+     * particular status and birth type.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param birthDivision the birth division
+     * @param status        BirthDeclaration state
+     * @param birthType     BirthDeclaration birth type
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByBDDivisionStatusBirthTypeAndRegisterDateRange(BDDivision birthDivision,
+        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
+        int noOfRows);
+
+    /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR for selected BD Division and selected range of confirmation received dates.
      * Results are ordered on the descending confirmationProcessedTimestamp
@@ -207,6 +225,24 @@ public interface BirthDeclarationDAO {
         BirthDeclaration.State status, Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
+     * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in
+     * particular status and birth type.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param status     BirthDeclaration state
+     * @param birthType  BirthDeclaration birthType
+     * @param startDate  starting date of the range
+     * @param endDate    ending date of the range
+     * @param pageNo     page number
+     * @param noOfRows   number of rows
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getByDSDivisionStatusBirthTypeAndRegisterDateRange(DSDivision dsDivision,
+        BirthDeclaration.State status, BirthDeclaration.BirthType birthType, Date startDate, Date endDate, int pageNo,
+        int noOfRows);
+
+    /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR for selected DS Division and selected range of confirmation received dates.
      * Results are ordered on the descending confirmationProcessedTimestamp
@@ -230,10 +266,9 @@ public interface BirthDeclarationDAO {
     public List<BirthDeclaration> getByDSDivision(DSDivision dsDivision);
 
     /**
-     * 
-     * @param PINorNIC     PIN or NIC number of child
-     * @return     BirthDeclaration or null if none exist
+     * @param PINorNIC PIN or NIC number of child
+     * @return BirthDeclaration or null if none exist
      */
-     public BirthDeclaration getByPINorNIC(long PINorNIC);
+    public BirthDeclaration getByPINorNIC(long PINorNIC);
 }
 
