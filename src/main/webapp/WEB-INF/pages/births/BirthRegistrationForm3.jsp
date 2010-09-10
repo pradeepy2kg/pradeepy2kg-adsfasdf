@@ -235,6 +235,24 @@ function validateMarriage() {
             errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
         }
     }
+
+    // for parents married - No, but since married
+    domObject=document.getElementsByName("marriage.parentsMarried")[2];
+    if(domObject.checked){
+         domObject = document.getElementById('fatherName');
+        var element3 = document.getElementById('fatherSigned');
+
+        // validate father signed
+        if (!element3.checked && domObject.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+        }
+
+        // validate mother signed
+        var element4 = document.getElementById('motherSigned');
+        if (!element4.checked && domObject.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
+        }
+    }
 }
 
 // validate informant fields
@@ -389,7 +407,7 @@ function initPage() {
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"
-                                     onclick="disableMarriage(false);disableSigns(true)"/>
+                                     onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
                     </tr>
                     <tr>
