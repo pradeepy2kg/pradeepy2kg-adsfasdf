@@ -8,16 +8,16 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.ErrorCodes;
+import lk.rgd.Permission;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Enumeration;
+import java.util.*;
 
 /**
  * The central service managing the CRS Birth Alteration process
@@ -104,6 +104,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
         validateAccessOfUser(existing, user);
 
+        if (!user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION)) {
+            handleException("User : " + user.getUserId() + " is not allowed to approve/reject birth alteration",
+                ErrorCodes.PERMISSION_DENIED);
+        }
+
         Enumeration<Integer> fieldList = fieldsToBeApproved.keys();
         if (isAlteration27A) {
             while (fieldList.hasMoreElements()) {
@@ -138,6 +143,66 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         logger.debug("Updated birth alteration : {}", existing.getIdUKey());
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user) {
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by DSDivision ID : " + dsDivision.getDsDivisionUKey()
+                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToDSDivison(dsDivision, user);
+        List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByDSDivision(dsDivision, pageNo, noOfRows);
+
+        return getApprovalPendingAlterations(alterationList);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByBDDivision
+        (BDDivision bdDivision, int pageNo, int noOfRows, User user) {
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey()
+                + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToBDDivision(user, bdDivision);
+        List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByBDDivision(bdDivision, pageNo, noOfRows);
+
+        return getApprovalPendingAlterations(alterationList);
+    }
+
+    private List<BirthAlteration> getApprovalPendingAlterations(List<BirthAlteration> alterationList) {
+
+        List<BirthAlteration> pendingApprovalList = new ArrayList<BirthAlteration>();
+        Boolean alreadyAdded;
+        for (BirthAlteration ba : alterationList) {
+            alreadyAdded = false;
+            BitSet bs = ba.getAlt27A().getApprovalStatuses();
+            for (int i = 1; i <= bs.size(); i++) {
+                if (!bs.get(i)) {
+                    pendingApprovalList.add(ba);
+                    alreadyAdded = true;
+                }
+            }
+            if (!alreadyAdded) {
+                bs = ba.getAlt52_1().getApprovalStatuses();
+                for (int i = 1; i <= bs.size(); i++) {
+                    if (!bs.get(i)) {
+                        pendingApprovalList.add(ba);
+                        alreadyAdded = true;
+                    }
+                }
+            }
+        }
+
+        return pendingApprovalList;
+    }
+
     private void validateAccessOfUser(BirthAlteration ba, User user) {
         if (ba != null) {
             BDDivision bdDivision = ba.getAlt52_1().getBirthDivision();
@@ -160,6 +225,18 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                 bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
                 bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
+        }
+    }
+
+    private void validateAccessToDSDivison(DSDivision dsDivision, User user) {
+        if (!(User.State.ACTIVE == user.getStatus() &&
+            (Role.ROLE_ARG.equals(user.getRole().getRoleId())
+                || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey()))
+                || (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
+            )
+        )) {
+            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
+                dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 

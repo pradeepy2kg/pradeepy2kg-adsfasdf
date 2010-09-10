@@ -1,9 +1,12 @@
 package lk.rgd.crs.api.service;
 
 import lk.rgd.crs.api.domain.BirthAlteration;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * @author Indunil Moremada
@@ -54,7 +57,31 @@ public interface BirthAlterationService {
      *                           statement 27A if it is false requested to
      *                           approve fields in alteration statement 52_1
      * @param fieldsToBeApproved the list of field indexes to be approved
-     * @param user               user the user initiating the action
+     * @param user               the user initiating the action
      */
     public void approveBirthAlteration(BirthAlteration ba, boolean isAlteration27A, Hashtable<Integer, Boolean> fieldsToBeApproved, User user);
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given DSDivison id.
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows
+     * @param user       the user initiating the action
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given birth/death division.
+     *
+     * @param bdDivision the birth/death division
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows
+     * @param user       the user initiating the action
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows, User user);
 }

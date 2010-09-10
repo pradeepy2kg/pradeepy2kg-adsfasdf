@@ -13,10 +13,7 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.Permission;
 
-import java.util.Map;
-import java.util.Date;
-import java.util.BitSet;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * @author tharanga
@@ -31,6 +28,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private BDDivisionDAO bdDivisionDAO;
     private DSDivisionDAO dsDivisionDAO;
     private BirthAlterationService alterationService;
+    private AppParametersDAO appParametersDAO;
+    private static final String BA_APPROVAL_ROWS_PER_PAGE = "crs.br_approval_rows_per_page";
+
     private Map session;
 
     private Map<Integer, String> districtList;
@@ -49,7 +49,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private BirthRegisterInfo register;
 
 
-    private int pageNo; //pageNo is used to decide the current pageNo of the Birth Registration Form
+    private int pageNo;
+    private int noOfRows;
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private long nicOrPin;
 
@@ -65,11 +66,14 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private long idUKey;
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean allowApproveAlteration;
+    private boolean nextFlag;
+    private boolean previousFlag;
+    private List<BirthAlteration> birthAlterationPendingApprovalList;
 
     private String language;
 
-    public AlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO
-        , BirthAlterationService alterationService) {
+    public AlterationAction(BirthRegistrationService service, DistrictDAO districtDAO, CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO,
+                            DSDivisionDAO dsDivisionDAO, BirthAlterationService alterationService, AppParametersDAO appParametersDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.countryDAO = countryDAO;
@@ -77,6 +81,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.alterationService = alterationService;
+        this.appParametersDAO = appParametersDAO;
     }
 
 
@@ -186,15 +191,109 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
-    public String initBirthAlterationPendingList() {
+    public String initBirthAlterationPendingApprovalList() {
         populateDistrictAndDSDivision();
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
+        setPageNo(1);
+        birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         initPermission();
         return SUCCESS;
     }
 
     private void initPermission() {
         setAllowApproveAlteration(user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION));
+    }
+
+    /**
+     * handles pagination of BirthAlterations which are to be displayed in jsp
+     *
+     * @return String
+     */
+    public String nextPage() {
+        //todo not completely implemented
+        if (logger.isDebugEnabled()) {
+            logger.debug("inside nextPage() : current birthDistrictId {}, birthDivisionId {}", birthDistrictId, birthDivisionId +
+                " requested from pageNo " + pageNo);
+        }
+        setPageNo(getPageNo() + 1);
+
+        noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
+        /**
+         * gets the user selected district to get the records
+         * variable nextFlag is used to handle the pagination link
+         * in the jsp page
+         */
+        if (birthDivisionId != 0) {
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+        } else {
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+        }
+        paginationHandler(birthAlterationPendingApprovalList.size());
+        setPreviousFlag(true);
+        populateBasicLists();
+        initPermission();
+        return SUCCESS;
+    }
+
+    /**
+     * handles pagination of BirthAlteration approval pending data
+     *
+     * @return String
+     */
+    public String previousPage() {
+        
+        if (logger.isDebugEnabled()) {
+            logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId
+                + " requested from pageNo " + pageNo);
+        }
+        /**
+         * UI related. decides whether to display
+         * next and previous links
+         */
+        if (previousFlag && getPageNo() == 2) {
+            /**
+             * request is comming backword(calls previous
+             * to load the very first page
+             */
+            setPreviousFlag(false);
+        } else if (getPageNo() == 1) {
+            /**
+             * if request is from page one
+             * in the next page previous link
+             * should be displayed
+             */
+            setPreviousFlag(false);
+        } else {
+            setPreviousFlag(true);
+        }
+        setNextFlag(true);
+        if (getPageNo() > 1) {
+            setPageNo(getPageNo() - 1);
+        }
+        noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
+
+        if (birthDivisionId != 0) {
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+        } else {
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+        }
+        populateBasicLists();
+        initPermission();
+        return SUCCESS;
+    }
+
+    private void paginationHandler(int recordsFound) {
+        if (recordsFound == appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE)) {
+            setNextFlag(true);
+        } else {
+            setNextFlag(false);
+        }
     }
 
     private void populateBasicLists() {
@@ -426,5 +525,37 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public List<BirthAlteration> getBirthAlterationPendingApprovalList() {
+        return birthAlterationPendingApprovalList;
+    }
+
+    public void setBirthAlterationPendingApprovalList(List<BirthAlteration> birthAlterationPendingApprovalList) {
+        this.birthAlterationPendingApprovalList = birthAlterationPendingApprovalList;
+    }
+
+    public int getNoOfRows() {
+        return noOfRows;
+    }
+
+    public void setNoOfRows(int noOfRows) {
+        this.noOfRows = noOfRows;
+    }
+
+    public boolean isNextFlag() {
+        return nextFlag;
+    }
+
+    public void setNextFlag(boolean nextFlag) {
+        this.nextFlag = nextFlag;
+    }
+
+    public boolean isPreviousFlag() {
+        return previousFlag;
+    }
+
+    public void setPreviousFlag(boolean previousFlag) {
+        this.previousFlag = previousFlag;
     }
 }

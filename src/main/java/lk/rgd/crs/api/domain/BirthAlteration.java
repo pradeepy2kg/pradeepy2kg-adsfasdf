@@ -3,20 +3,35 @@ package lk.rgd.crs.api.domain;
 import javax.persistence.*;
 import java.util.Date;
 
+
+/**
+ * @author Ashoka Ekanayaka
+ *         The entity to store a single field alteration of a death, marriage or a birth record.
+ *         There will be many to one relationship with one of those tables. after approval, alterations will be aplied to the base death/birth/marrige
+ *         record .
+ */
 @Entity
 @Table(name = "ALT_BIRTH", schema = "CRS")
-/**
- *  @author Ashoka Ekanayaka
- *  The entity to store a single field alteration of a death, marriage or a birth record.
- *  There will be many to one relationship with one of those tables. after approval, alterations will be aplied to the base death/birth/marrige
- *  record .
- */
+@NamedQueries({
+
+    @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba " +
+        "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision " +
+        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+
+    @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba " +
+        "WHERE ba.alt52_1.birthDivision = :bdDivision " +
+        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
+
+})
+
 public class BirthAlteration {
-    @Id     // This is an auto generated unique row identifier
+    @Id
+    // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    @Column(nullable = false) // the ID points to Birth Declarition 
+    @Column(nullable = false)
+    // the ID points to Birth Declarition
     private long bdId;
 
     @Embedded

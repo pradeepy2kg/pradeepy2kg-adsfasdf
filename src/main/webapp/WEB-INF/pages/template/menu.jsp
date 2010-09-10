@@ -10,7 +10,7 @@
         <s:iterator value="#session.allowed_menue" id="menue">
             <s:if test="%{value.size > 0}">
                 <s:if test="%{#session.context==key}">
-                   <li class="exp">
+                    <li class="exp">
                 </s:if>
                 <s:else><li></s:else>
                 <s:if test="%{key == 'birth'}">
@@ -58,6 +58,12 @@
                 <s:if test="%{key == 'prs'}">
                     <s:a href="#">
                         <s:label value="%{getText('category_prs')}"/>
+                    </s:a>
+                </s:if>
+
+                <s:if test="%{key == 'alteration'}">
+                    <s:a href="#">
+                        <s:label value="%{getText('category_alteration')}"/>
                     </s:a>
                 </s:if>
 
