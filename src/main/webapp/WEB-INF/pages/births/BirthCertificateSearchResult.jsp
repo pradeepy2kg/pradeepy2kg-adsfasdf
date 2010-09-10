@@ -36,7 +36,7 @@
                     <th></th>
                 </s:if>
                 <th width="100px"><s:label name="certificate" value="%{getText('certificate.label')}"/></th>
-                <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
                 <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
                 <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>

@@ -115,6 +115,15 @@ public interface BirthRegistrationService {
     public void deleteStillBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
 
     /**
+     * Remove an existing BDF for a Belated birth by a DEO or ADR <b>before</b> approval
+     *
+     * @param bdf            the BDF to be added
+     * @param ignoreWarnings an explicit switch to disable optional validations
+     * @param user           the user initiating the action
+     */
+    public void deleteBelatedBirthDeclaration(BirthDeclaration bdf, boolean ignoreWarnings, User user);
+
+    /**
      * Remove an existing BDF for a adoption birth by a ADR <b>before</b> approval
      *
      * @param bdf            the BDF to be added
@@ -134,7 +143,7 @@ public interface BirthRegistrationService {
     public List<UserWarning> approveBirthDeclarationIdList(long[] approveIDList, User user);
 
     /**
-     * Approve a single BDF for a Live birth by an ADR or higher authority
+     * Approve a single BDF for a Live birth(Live and Late birth type) by an ADR or higher authority
      *
      * @param idUKey
      * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
@@ -150,6 +159,15 @@ public interface BirthRegistrationService {
      * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
      */
     public List<UserWarning> approveStillBirthDeclaration(long idUkey, boolean ignoreWarnings, User user);
+
+    /**
+     * Approve a single BDF for a Live birth by an ADR or higher authority
+     *
+     * @param idUKey
+     * @param ignoreWarnings an explicit switch that indicates that the record should be approved ignoring warnings
+     * @param user           the user initiating the action   @return a list of warnings, if ignoreWarnings is false
+     */
+    public List<UserWarning> approveBelatedBirthDeclaration(long idUKey, boolean ignoreWarnings, User user);
 
     /**
      * Approve a single BDF for a child adoption by an ADR or higher authority
@@ -325,6 +343,18 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows, User user);
 
     /**
+     * Returns a limited set of Belated BirthDeclarations for which confirmation changes are not captured yet awaiting approval
+     * by an ARG. Results are ordered on the descending dateOfRegistration
+     *
+     * @param birthDivision the birth division
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows to return per page
+     * @param user          user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getBelatedDeclarationApprovalPending(BDDivision birthDivision, int pageNo, int noOfRows, User user);
+
+    /**
      * Load names of values for print or display, in the preferred language of the record
      *
      * @param bdf  the BDF to load values for
@@ -347,7 +377,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -363,7 +393,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -412,6 +442,18 @@ public interface BirthRegistrationService {
     public List<BirthDeclaration> getDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
 
     /**
+     * Returns a limited set of Belated BirthDeclarations for which confirmation changes are not captured yet awaiting approval
+     * by an ADR and based on given DSDivison id. Results are ordered on the descending dateOfRegistration
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param pageNo     the page number for the results required (start from 1)
+     * @param noOfRows   number of rows to return per page
+     * @param user       user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getBelatedDeclarationApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
+
+    /**
      * Returns a limited set of approval pending BirthDeclarations for selected DS Division and selected range of
      * registration dates.
      * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
@@ -425,7 +467,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -453,7 +495,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
-                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Get the list of BDFs for which the Confirmation form should be printed

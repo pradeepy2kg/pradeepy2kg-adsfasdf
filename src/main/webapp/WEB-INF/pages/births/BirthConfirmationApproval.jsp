@@ -195,9 +195,9 @@
                 <tr class="table-title">
                     <th width="15px"></th>
                     <th width="20px"><s:label value="%{getText('division.label')}"/></th>
-                    <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                    <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                    <th width="100px"><s:label name="received" value="%{getText('received.label')}"/></th>
+                    <th width="90px"><s:label name="received" value="%{getText('received.label')}"/></th>
                     <th width="20px"></th>
                     <th width="20px"></th>
                     <th width="20px"></th>

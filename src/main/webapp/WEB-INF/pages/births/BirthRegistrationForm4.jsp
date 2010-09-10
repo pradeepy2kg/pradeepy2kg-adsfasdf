@@ -170,8 +170,8 @@
                 <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
                 <td colspan="4">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:77%;font-size:10px"/><br>
-                    <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate"
-                                             id="modifiedDatePicker"/>
+                    <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
+                                 cssStyle="margin-right:60px;"/>
                 </td>
             </tr>
             </tbody>
@@ -207,15 +207,9 @@
                         <td width="200px"><label>ලිපිගොනු අංකය<br>*in tamil<br>Case File Number</label></td>
                         <td colspan="2"><s:textfield name="register.caseFileNumber" id="caseFileNumber"/></td>
                     </tr>
-                        <%-- <s:if test="register.comments != null">
-                            <tr>
-                                <td><label>දැනට පවතින අදහස්<br>* in tamil<br>Prevoius Comments </label></td>
-                                <td><s:textarea name="register.comments" disabled="true" cssStyle="width:98%;"/></td>
-                            </tr>
-                        </s:if>--%>
                     <tr>
                         <td><label>අදහස් දක්වන්න<br>* in tamil<br>Add Comments </label></td>
-                        <td><s:textarea name="register.comments" id="comments" cssStyle="width:98%;"/></td>
+                        <td><s:textarea name="register.comments" id="comments" cssStyle="width:98%;" rows="10"/></td>
                     </tr>
                     </tbody>
                 </table>

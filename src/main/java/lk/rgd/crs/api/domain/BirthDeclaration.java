@@ -10,64 +10,71 @@ import java.io.Serializable;
 @Table(name = "BIRTH_REGISTER", schema = "CRS")
 
 @NamedQueries({
-        @NamedQuery(name = "filter.by.division.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "filter.by.division.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-                "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "filter.by.division.status.and.birthType", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND bdf.register.birthType = :birthType ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
-                "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
-                "ORDER BY bdf.confirmant.confirmationProcessedTimestamp desc"),
+    @NamedQuery(name = "get.by.division.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.by.bddivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "get.by.division.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.status = :status " +
+        "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.confirmant.confirmationProcessedTimestamp desc"),
 
-        @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
-                "AND bdf.lifeCycleInfo.activeRecord IS FALSE " +
-                "ORDER BY bdf.lifeCycleInfo.lastUpdatedTimestamp desc"),
+    @NamedQuery(name = "get.by.bddivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.active.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
-                "AND bdf.lifeCycleInfo.activeRecord IS TRUE"),
+    @NamedQuery(name = "get.historical.records.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE (bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo) " +
+        "AND bdf.lifeCycleInfo.activeRecord IS FALSE " +
+        "ORDER BY bdf.lifeCycleInfo.lastUpdatedTimestamp desc"),
 
-        @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
+    @NamedQuery(name = "get.active.by.bddivision.and.serialNo", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision = :birthDivision AND bdf.register.bdfSerialNo = :bdfSerialNo " +
+        "AND bdf.lifeCycleInfo.activeRecord IS TRUE"),
 
-        @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.status = 2 " +
-                "AND bdf.register.dateOfRegistration < :date"),
+    @NamedQuery(name = "get.by.dateOfBirth_range.and.motherNICorPIN", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.child.dateOfBirth BETWEEN :start AND :end AND bdf.parent.motherNICorPIN = :motherNICorPIN "),
 
-        @NamedQuery(name = "filter.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "filter.by.unconfirmed.by.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.status = 2 " +
+        "AND bdf.register.dateOfRegistration < :date"),
 
-        @NamedQuery(name = "get.by.dsdivision.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
-                "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "filter.by.dsdivision.and.status", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.by.dsdivision.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
-                "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
-                "ORDER BY bdf.confirmant.confirmationProcessedTimestamp desc"),
+    @NamedQuery(name = "filter.by.dsdivision.status.and.birthType", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+        "AND bdf.register.birthType = :birthType ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "findAll", query = "SELECT bdf FROM BirthDeclaration bdf"),
+    @NamedQuery(name = "get.by.dsdivision.status.register.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+        "AND (bdf.register.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.by.dsdivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.register.birthDivision.dsDivision = :dsDivision " +
-                "ORDER BY bdf.register.dateOfRegistration desc"),
+    @NamedQuery(name = "get.by.dsdivision.status.confirmation.receive.date", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision AND bdf.register.status = :status " +
+        "AND (bdf.confirmant.confirmationProcessedTimestamp BETWEEN :startDate AND :endDate) " +
+        "ORDER BY bdf.confirmant.confirmationProcessedTimestamp desc"),
 
-        @NamedQuery(name = "get.by.NicOrPin", query = "SELECT bdf FROM BirthDeclaration bdf " +
-                "WHERE bdf.child.pin = :PINorNIC")
+    @NamedQuery(name = "findAll", query = "SELECT bdf FROM BirthDeclaration bdf"),
+
+    @NamedQuery(name = "get.by.dsdivision", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.register.birthDivision.dsDivision = :dsDivision " +
+        "ORDER BY bdf.register.dateOfRegistration desc"),
+
+    @NamedQuery(name = "get.by.NicOrPin", query = "SELECT bdf FROM BirthDeclaration bdf " +
+        "WHERE bdf.child.pin = :PINorNIC")
 })
-
 public class BirthDeclaration implements Serializable {
 
     /**
@@ -142,7 +149,7 @@ public class BirthDeclaration implements Serializable {
          */
         ADOPTION,
         /**
-         * 3 - belated birth
+         * 3 - belated birth 
          */
         BELATED
     }

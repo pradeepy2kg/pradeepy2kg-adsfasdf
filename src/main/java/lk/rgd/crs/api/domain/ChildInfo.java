@@ -117,14 +117,15 @@ public class ChildInfo implements Serializable {
     }
 
     /**
-     * Returns the full name in the official language, limited to the maxLength. e.g. as "අසංඛ චමත් පෙ..."
+     * Returns the full name in the official language, limited to the maxLength. e.g. as "...ඛ චමත් පෙරේරා"
      *
      * @param maxLength the maximum length of the name to return
      * @return length limited name in the official language
      */
     public String getChildFullNameOfficialLangToLength(int maxLength) {
-        if (childFullNameOfficialLang != null && childFullNameOfficialLang.length() > maxLength) {
-            return childFullNameOfficialLang.substring(0, maxLength - 3) + "...";
+        int childNameLength = childFullNameOfficialLang.length();
+        if (childFullNameOfficialLang != null && childNameLength > maxLength) {
+            return "..." + childFullNameOfficialLang.substring(childNameLength - maxLength - 3, childNameLength);
         }
         return childFullNameOfficialLang;
     }

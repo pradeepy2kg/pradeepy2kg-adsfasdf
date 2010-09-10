@@ -537,8 +537,8 @@ function commonTags() {
             )රෝහලට ඇතුලත් කිරිමේ
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3">
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:45px;font-size:10px"/><br>
-            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker"/></td>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
+            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"/></td>
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)ම‌ව

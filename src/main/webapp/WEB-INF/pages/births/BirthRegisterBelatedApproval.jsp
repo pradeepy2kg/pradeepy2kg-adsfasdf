@@ -73,77 +73,7 @@
                     });
         })
     });
-
-
-    var fieldName = 'index';
-
-    function
-            selectall(form, allCheck) {
-        var i = form.elements.length;
-        var e = form.elements;
-        var name = new Array();
-        var value = new Array();
-        var j = 0;
-        for (var k = 0; k < i; k++)
-        {
-            if (form.elements[k].name == fieldName)
-            {
-                if (form.elements[k].checked == true) {
-                    value[j] = form.elements[k].value;
-                    j++;
-                }
-            }
-        }
-        checkSelect(form, allCheck);
-    }
-    function selectCheck(obj, form, allCheck)
-    {
-        var i = form.elements.length;
-        for (var k = 0; k < i; k++)
-        {
-            if (form.elements[k].name == fieldName)
-            {
-                form.elements[k].checked = obj;
-            }
-        }
-        selectall(form, allCheck);
-    }
-
-    function selectallMe(form, allCheck)
-    {
-        if (allCheck.checked == true)
-        {
-            selectCheck(true, form, allCheck);
-        }
-        else
-        {
-            selectCheck(false, form, allCheck);
-        }
-    }
-    function checkSelect(form, allCheck)
-    {
-        var i = form.elements.length;
-        var berror = true;
-        for (var k = 0; k < i; k++)
-        {
-            if (form.elements[k].name == fieldName)
-            {
-                if (form.elements[k].checked == false)
-                {
-                    berror = false;
-                    break;
-                }
-            }
-        }
-        if (berror == false)
-        {
-            allCheck.checked = false;
-        }
-        else
-        {
-            allCheck.checked = true;
-        }
-    }
+    
     var errormsg = "";
     function validate() {
         var domObject;
@@ -175,7 +105,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="birth-register-approval">
-<s:form action="eprApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form"
+<s:form action="eprBelatedApprovalRefresh" name="birth_register_approval_header" id="birth-register-approval-form"
         onsubmit="javascript:return validate()">
 <div id="birth-register-approval-header">
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
@@ -244,10 +174,6 @@
     </div>
 </s:if>
 <div id="birth-register-approval-body">
-    <%--todo permission handling--%>
-    <%--<s:if test="approvalPendingList.size==0">--%>
-    <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
-    <%--</s:if>--%>
     <s:form action="eprApproveBulk" name="birth_register_approval_body" method="POST">
         <s:if test="approvalPendingList.size>0">
             <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
@@ -255,11 +181,10 @@
             <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th width="15px"></th>
                 <th width="20px"><s:label value="%{getText('division.label')}"/></th>
-                <th width="100px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="name" value="%{getText('name.label')}"/></th>
-                <th width="100px"><s:label name="received" value="%{getText('received.label')}"/></th>
+                <th width="90px"><s:label name="received" value="%{getText('received.label')}"/></th>
                 <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
                 <th width="20px"></th>
                 <th width="20px"></th>
@@ -271,14 +196,9 @@
         <tbody>
         <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
             <tr>
-                    <%--<td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
-                <td><s:checkbox name="index"
-                                onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
-                                title="%{getText('select.label')}" value="%{#index}"
-                                fieldValue="%{#approvalList.idUKey}"/></td>
                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
-                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(38)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
                     <s:if test="register.birthType.ordinal() != 0">
@@ -298,7 +218,7 @@
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">
-                    <s:url id="approveSelected" action="eprApproveBirthDeclaration.do">
+                    <s:url id="approveSelected" action="eprApproveBelatedBirthDeclaration.do">
                         <s:param name="bdId" value="idUKey"/>
                         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -314,7 +234,7 @@
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">
-                    <s:url id="rejectSelected" action="eprRejectBirthDeclaration.do">
+                    <s:url id="rejectSelected" action="eprRejectBelatedBirthDeclaration.do">
                         <s:param name="bdId" value="idUKey"/>
                         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -332,7 +252,7 @@
                     </td>
                 </s:if>
                 <s:if test="#request.allowApproveBDF">
-                    <s:url id="deleteSelected" action="eprDeleteApprovalPending.do">
+                    <s:url id="deleteSelected" action="eprDeleteBelatedApprovalPending.do">
                         <s:param name="bdId" value="idUKey"/>
                         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -357,23 +277,6 @@
         </table>
         </fieldset>
 
-        <div class="form-submit">
-            <s:if test="#request.counter>1">
-                <s:label><s:checkbox name="allCheck"
-                        onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
-                    <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                    <s:label><span><s:label name="print_selected" value="%{getText('selected_all.label')}"/></span></s:label>
-                <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-                <s:hidden name="birthDistrictId" value="%{#request.birthDistrictId}"/>
-                <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
-                <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-                <s:hidden name="recordCounter" value="%{#request.recordCounter}"/>
-                <s:submit name="approveSelected" value="%{getText('approve.label')}"/>
-            </s:if>
-        </div>
         <div class="next-previous">
                 <%-- Next link to visible next records will only visible if nextFlag is
               set to 1--%>
