@@ -91,7 +91,25 @@
         });
     });
 
+    function initPage() {
+        //  disableAssignment(true);
+    }
+
+    function disableAssignment(mode) {
+        document.getElementById('districtId').disabled = mode;
+        document.getElementById('dsDivisionId').disabled = mode;
+        document.getElementById('divisionId').disabled = mode;
+        document.getElementById('dateOfAppoinmentDatePicker').disabled = mode;
+        document.getElementById('dateOfPermenentDatePicker').disabled = mode;
+        document.getElementById('dateOfTerminationDatePicker').disabled = mode;
+        document.getElementById('eprAssignmentAdd_assignMentSubmit').disabled = mode;
+    }
+
+    function searchButtonClick() {
+        //  disableAssignment(false);
+    }
 </script>
+<s:actionerror cssStyle="color:red;"/>
 <s:if test="directAssigment>0">
     <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <legend align="right">Find Registrar By Pin</legend>
@@ -101,16 +119,21 @@
                 <col width="300px"/>
                 <col width="200px"/>
                 <col/>
+                <col/>
                 <tbody>
                 <tr>
-                    <td><s:textfield id="registrarPin" name="registrarPin" value="registrarPin"/></td>
+                    <td><s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/></td>
                     <td>
                         <div id="search_button" class="button">
-                            <s:submit name="refresh" value="%{getText('label.button.searchr')}"/>
+                            <s:submit name="refresh" value="%{getText('label.button.searchr')}"
+                                      onclick="javascript:searchButtonClick();"/>
                         </div>
                     </td>
                     <td>
-                        <s:fielderror name="noRegistrar" cssStyle="color:red;font-size:10pt"/>
+                        <s:fielderror name="noRegistrar" cssStyle="color:red;font-size:10pt" id="noregistrarError"/>
+                    </td>
+                    <td>
+                        <s:actionmessage name="registrarFound" cssStyle="color:blue;font-size:10pt"/>
                     </td>
                 </tr>
                 </tbody>

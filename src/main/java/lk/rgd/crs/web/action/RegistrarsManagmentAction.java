@@ -143,6 +143,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             if (directAssigment == 2) {
                 //gettting exsiting
                 List<Registrar> reg = (List) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+                if (reg == null) {
+                    //subbmitting without searching for a registrar
+                    addActionError("serach.registrar.first");
+                    populateLists(1, 1);
+                    assignment = null;
+                    return SUCCESS;
+                }
                 assignment.setRegistrar((Registrar) reg.get(0));
                 //setting correct divisiontype
                 if (type.equals(Assignment.Type.BIRTH))
@@ -156,6 +163,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 service.addAssignment(assignment, user);
                 session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 assignment = null;
+                addActionMessage("assignment.saved.successfully");
 
             }
         } else {
@@ -200,9 +208,10 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         logger.info("searching registrar by pin : {} ", registrarPin);
         List<Registrar> exsistedReg = service.getRegistrarByPin(registrarPin, user);
         if (exsistedReg.size() != 1) {
-            addFieldError("noRegistrar", "no registrar found add propertie file");
+            addFieldError("noRegistrar", "no.registrart.found");
         } else {
             //adding found registrar to session
+            addActionMessage("registrar.found");
             session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, exsistedReg);
         }
         //todo remove this populate
