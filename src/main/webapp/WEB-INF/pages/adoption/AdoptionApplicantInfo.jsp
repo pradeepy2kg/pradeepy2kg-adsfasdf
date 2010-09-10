@@ -15,6 +15,14 @@
                         $("textarea#certificateApplicantAddress").val(data1.lastAddress);
                     });
         });
+
+        $('#applicant_NIC_V').bind('click', function() {
+            $('#certifcateApplicantPin').val($("#certifcateApplicantPin").val() + "V");
+        });
+
+        $('#applicant_NIC_X').bind('click', function() {
+            $('#certifcateApplicantPin').val($("#certifcateApplicantPin").val() + "X");
+        });
     });
 
     function setApplicantInfo(pin, name, address)
@@ -264,7 +272,12 @@
                 Applicant's PIN / NIC Number
                 <br>
             </td>
-            <td colspan="4">
+            <td colspan="4" class="find-person">
+                <img src="<s:url value="/images/alphabet-V.gif" />"
+                     id="applicant_NIC_V">
+                <img src="<s:url value="/images/alphabet-X.gif" />"
+                     id="applicant_NIC_X">
+                <br>
                 <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC"/> <img
                     src="<s:url value="/images/search-father.png" />"
                     style="vertical-align:middle; margin-left:20px;" id="adoption_applicant_lookup">

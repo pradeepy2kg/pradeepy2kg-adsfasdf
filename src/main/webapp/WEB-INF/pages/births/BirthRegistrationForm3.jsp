@@ -74,6 +74,29 @@ $(function() {
         generateGrandFatherBirthYear('greatGrandFatherNICorPIN', 'greatGrandFatherBirthYear');
         ;
     });
+
+    $('#informant_NIC_V').bind('click', function() {
+        $('#informantNICorPIN').val($("#informantNICorPIN").val() + "V");
+    });
+
+    $('#informant_NIC_X').bind('click', function() {
+        $('#informantNICorPIN').val($("#informantNICorPIN").val() + "X");
+    });
+    $('#grandFather_NIC_V').bind('click', function() {
+        $('#grandFatherNICorPIN').val($("#grandFatherNICorPIN").val() + "V");
+    });
+
+    $('#grandFather_NIC_X').bind('click', function() {
+        $('#grandFatherNICorPIN').val($("#grandFatherNICorPIN").val() + "X");
+    });
+    $('#greatGrandFather_NIC_V').bind('click', function() {
+        $('#greatGrandFatherNICorPIN').val($("#greatGrandFatherNICorPIN").val() + "V");
+    });
+
+    $('#greatGrandFather_NIC_X').bind('click', function() {
+        $('#greatGrandFatherNICorPIN').val($("#greatGrandFatherNICorPIN").val() + "X");
+    });
+
 });
 
 var informPerson;
@@ -432,7 +455,13 @@ function initPage() {
                 அடையாள அட்டை
                 இலக்கம்<br>PIN / NIC Number
             </td>
-            <td colspan="5"><s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/>
+            <td colspan="5" class="find-person">
+                <img src="<s:url value="/images/alphabet-V.gif" />"
+                     id="grandFather_NIC_V">
+                <img src="<s:url value="/images/alphabet-X.gif" />"
+                     id="grandFather_NIC_X">
+                <br>
+                <s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                      id="grandFather_lookup"/>
             </td>
@@ -466,7 +495,13 @@ function initPage() {
                 அடையாள அட்டை
                 இலக்கம்<br>PIN / NIC Number
             </td>
-            <td colspan="5"><s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/>
+            <td colspan="5" class="find-person">
+                <img src="<s:url value="/images/alphabet-V.gif" />"
+                     id="greatGrandFather_NIC_V">
+                <img src="<s:url value="/images/alphabet-X.gif" />"
+                     id="greatGrandFather_NIC_X">
+                <br>
+                <s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                      id="greatGrandFather_lookup"/>
             </td>
@@ -592,6 +627,11 @@ function initPage() {
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
         <td colspan="3" class="find-person">
+             <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="informant_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="informant_NIC_X">
+            <br>
             <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                  id="informant_lookup"/>

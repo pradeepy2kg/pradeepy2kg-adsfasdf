@@ -40,6 +40,13 @@
                         $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
                     });
         });
+        $('#notifying_authority_NIC_V').bind('click', function() {
+            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "V");
+        });
+
+        $('#notifying_authority_NIC_X').bind('click', function() {
+            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "X");
+        });
     });
 
     var errormsg = "";
@@ -133,6 +140,11 @@
                     அடையாள எண் / அடையாள
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
                 <td colspan="1" class="find-person" width="250px">
+                    <img src="<s:url value="/images/alphabet-V.gif" />"
+                         id="notifying_authority_NIC_V">
+                    <img src="<s:url value="/images/alphabet-X.gif" />"
+                         id="notifying_authority_NIC_X">
+                    <br>
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>

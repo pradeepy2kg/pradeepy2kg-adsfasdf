@@ -146,6 +146,21 @@ $(function() {
                     $("select#motherDSDivisionId").html(options);
                 });
     });
+    $('#father_NIC_V').bind('click', function() {
+        $('#father_pinOrNic').val($("#father_pinOrNic").val() + "V");
+    });
+
+    $('#father_NIC_X').bind('click', function() {
+        $('#father_pinOrNic').val($("#father_pinOrNic").val() + "X");
+    });
+
+    $('#mother_NIC_V').bind('click', function() {
+        $('#mother_pinOrNic').val($("#mother_pinOrNic").val() + "V");
+    });
+
+    $('#mother_NIC_X').bind('click', function() {
+        $('#mother_pinOrNic').val($("#mother_pinOrNic").val() + "X");
+    });
 })
 
 //javascript for form validation
@@ -300,8 +315,13 @@ function commonTags() {
             / ජාතික හැදුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
-        <td rowspan="2" width="230px" class="find-person"><s:textfield id="father_pinOrNic"
-                                                                       name="parent.fatherNICorPIN"/>
+        <td rowspan="2" width="230px" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="father_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="father_NIC_X">
+            <br>
+            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
@@ -386,6 +406,11 @@ function commonTags() {
             அடையாள அட்டை
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td colspan="2" rowspan="2" width="230px" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="mother_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="mother_NIC_X">
+            <br>
             <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN"/>
             <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
         </td>

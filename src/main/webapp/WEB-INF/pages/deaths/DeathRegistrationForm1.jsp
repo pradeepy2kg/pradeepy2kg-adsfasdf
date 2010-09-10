@@ -322,7 +322,27 @@ $(function() {
                     $("textarea#deathPersonMotherFullName").val(data3.fullNameInOfficialLanguage);
                 });
     });
+    $('#death_person_NIC_V').bind('click', function() {
+        $('#deathPerson_PINorNIC').val($("#deathPerson_PINorNIC").val()+"V");
+    });
 
+    $('#death_person_NIC_X').bind('click', function() {
+        $('#deathPerson_PINorNIC').val($("#deathPerson_PINorNIC").val()+"X");
+    });
+    $('#death_person_father_NIC_V').bind('click', function() {
+        $('#deathPersonFather_PINorNIC').val($("#deathPersonFather_PINorNIC").val()+"V");
+    });
+
+    $('#death_person_father_NIC_X').bind('click', function() {
+        $('#deathPersonFather_PINorNIC').val($("#deathPersonFather_PINorNIC").val()+"X");
+    });
+    $('#death_person_mother_NIC_V').bind('click', function() {
+        $('#deathPersonMother_PINorNIC').val($("#deathPersonMother_PINorNIC").val()+"V");
+    });
+
+    $('#death_person_mother_NIC_X').bind('click', function() {
+        $('#deathPersonMother_PINorNIC').val($("#deathPersonMother_PINorNIC").val()+"X");
+    });
 
 });
 var errormsg = "";
@@ -772,11 +792,18 @@ function initPage() {
             හැදුනුම්පත් අංකය<br>தனிநபர் அடையாள எண் / அடையாள அட்டை இல.
             <br>PIN / NIC
         </td>
-        <td rowspan="2" colspan="2" class="find-person"><s:textfield name="deathPerson.deathPersonPINorNIC"
-                                                                     id="deathPerson_PINorNIC"
+        <td rowspan="2" colspan="2" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                id="death_person_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                id="death_person_NIC_X">
+            <br>
+            <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
                                                                      cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="death_person_lookup"></td>
+                 style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
+
+        </td>
         <td rowspan="2">විදේශිකය‍කු නම්<br>வெளிநாட்டவர் <br>If a foreigner</td>
         <td>රට<br>நாடு<br>Country</td>
         <td><s:select id="deathPersonCountryId" name="deathPersonCountry" list="countryList" headerKey="0"
@@ -837,10 +864,18 @@ function initPage() {
             tamil<br>Fathers PIN / NIC
         </td>
         <td colspan="6" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                id="death_person_father_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                id="death_person_father_NIC_X">
+            <br>
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
                          cssStyle="float:left;"/>
+
             <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup"></td>
+                 style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup">
+
+            </td>
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ සම්පුර්ණ නම<br>*in tamil
@@ -856,6 +891,11 @@ function initPage() {
             tamil<br>Mothers PIN / NIC
         </td>
         <td colspan="6" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                id="death_person_mother_NIC_V">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                id="death_person_mother_NIC_X">
+            <br>
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
                          cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-mother.png" />"
