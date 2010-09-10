@@ -1,11 +1,15 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style type="text/css" title="currentStyle">
+    @import "../lib/datatables/media/css/demo_page.css";
+    @import "../lib/datatables/media/css/demo_table.css";
+    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
+</style>
 
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
-
+<script type="text/javascript" src="../js/validate.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
 
     $(function() {
@@ -45,9 +49,11 @@
 
 
 </script>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror/>
 <table cellpadding="5" cellspacing="0">
-    <s:form action="" method="post">
+    <s:form action="eprFilterAlteration" method="post">
 
         <tbody>
         <tr>
@@ -99,12 +105,13 @@
             </s:if>
         <tbody>
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
+            <%--todo has to be completed--%>
             <tr>
                 <td><s:property value="alt52_1.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration">
-                        <s:url id="approveSelected" action="approveSelectedAlteration.do">
+                        <s:url id="approveSelected" action="eprApproveSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -120,7 +127,7 @@
                 </td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration">
-                        <s:url id="rejectSelected" action="rejectSelectedAlteration.do">
+                        <s:url id="rejectSelected" action="#">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>

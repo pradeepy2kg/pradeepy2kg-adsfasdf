@@ -569,7 +569,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String nextPage() {
-        //todo searchdate should be fixed worng logic
         initPermission(approveBelated);
         if (logger.isDebugEnabled()) {
             logger.debug("inside nextPage() : current birthDistrictId {}, birthDivisionId {}", birthDistrictId, birthDivisionId + " requested from pageNo " + pageNo);
@@ -623,7 +622,6 @@ public class BirthRegisterApprovalAction extends ActionSupport implements Sessio
      * @return String
      */
     public String previousPage() {
-        //todo searchdate should be fixed worng logic
         initPermission(approveBelated);
         if (logger.isDebugEnabled()) {
             logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId

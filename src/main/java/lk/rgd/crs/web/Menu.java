@@ -228,6 +228,10 @@ public class Menu {
         //birth alteration for DEO
         deoAlterationLink.put("eprBirthAlterationInit.do", new Link("birth_alteration.label", "/ecivil/alteration/", "eprBirthAlterationInit.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationPendingApproval.do", new Link("birth_alteration_pending_approval.title", "/ecivil/alteration/", "eprBirthAlterationPendingApproval.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprAlterationApprovalNext.do", new Link(null, "/ecivil/alteration/", "eprAlterationApprovalNext.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprAlterationApprovalPrevious.do", new Link(null, "/ecivil/alteration/", "eprAlterationApprovalPrevious.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprFilterAlteration.do", new Link(null, "/ecivil/alteration/", "eprFilterAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+
         //TODO tharanga place following adr links to the relevent place
         deoAlterationLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
@@ -237,7 +241,8 @@ public class Menu {
 
         //Birth Alteration for ARG
         argAlterationLink.putAll(adrAlterationLink);
-
+        argAlterationLink.put("eprApproveSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveSelectedAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
+        
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
         adminLinks.put("preference", preferanceLink);
