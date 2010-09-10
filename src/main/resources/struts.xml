@@ -899,5 +899,25 @@
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
 
+        <action name="eprAlterationApprovalPrevious" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+        </action>
+
+        <action name="eprAlterationApprovalNext" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="nextPage">
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+        </action>
+
+        <action name="eprFilterAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="filter">
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+        </action>
+
+        <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="approve">
+            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+        </action>
+
     </package>
 </struts>

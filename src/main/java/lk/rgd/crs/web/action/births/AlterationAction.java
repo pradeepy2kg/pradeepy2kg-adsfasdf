@@ -110,6 +110,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         populateAlteration(bdf);
         pageNo = 1;
         populateBasicLists();
+        populateCountryRacesAndAllDSDivisions();
         return SUCCESS;
     }
 
@@ -202,6 +203,42 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    /**
+     * responsible for filtering requested birth alteration by its
+     * birth division or DS division
+     *
+     * @return
+     */
+    public String filter() {
+        setPageNo(1);
+        noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
+        if (birthDivisionId != 0) {
+            logger.debug("requested to filter birth alterations by birthDivisionId : {} ", birthDivisionId);
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+        } else {
+            logger.debug("requested to filter birth alterations by dsDivisionId : {}", dsDivisionId);
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+        }
+        paginationHandler(birthAlterationPendingApprovalList.size());
+        initPermission();
+        populateBasicLists();
+        return SUCCESS;
+    }
+
+    /**
+     * responsible for approving a requested birth alteration field
+     *
+     * @return
+     */
+    public String approve() {
+        //todo has to be implemented
+        initPermission();
+        populateBasicLists();
+        return SUCCESS;
+    }
+
     private void initPermission() {
         setAllowApproveAlteration(user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION));
     }
@@ -212,7 +249,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String nextPage() {
-        //todo not completely implemented
         if (logger.isDebugEnabled()) {
             logger.debug("inside nextPage() : current birthDistrictId {}, birthDivisionId {}", birthDistrictId, birthDivisionId +
                 " requested from pageNo " + pageNo);
@@ -245,7 +281,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      * @return String
      */
     public String previousPage() {
-        
+
         if (logger.isDebugEnabled()) {
             logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId
                 + " requested from pageNo " + pageNo);
@@ -325,6 +361,14 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         }
     }
 
+    private void populateCountryRacesAndAllDSDivisions() {
+        countryList = countryDAO.getCountries(language);
+        districtList = districtDAO.getDistrictNames(language, user);
+        raceList = raceDAO.getRaces(language);
+
+        /** getting full district list and DS list */
+        allDistrictList = districtDAO.getAllDistrictNames(language, user);
+    }
 
     public int getPageNo() {
         return pageNo;
