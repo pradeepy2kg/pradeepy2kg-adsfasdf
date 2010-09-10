@@ -380,6 +380,22 @@ public interface BirthRegistrationService {
         Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
+     * Returns a limited set of approval pending Belated BirthDeclarations for selected BD Division and selected range of
+     * registration dates.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param birthDivision the birth division
+     * @param startDate     starting date of the range
+     * @param endDate       ending date of the range
+     * @param pageNo        page number
+     * @param noOfRows      number of rows
+     * @param user          user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getBelatedDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+
+    /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
      * by an ADR for selected BD Division and selected range of confirmation recevied dates.
      * Results are ordered on the descending confirmationProcessedTimestamp. pageNo  and noOfRows used for pagination
@@ -467,6 +483,22 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+
+    /**
+     * Returns a limited set of approval pending Belated BirthDeclarations for selected DS Division and selected range
+     * of registration dates.
+     * Results are ordered on the descending dateOfRegistration. pageNo  and noOfRows used for pagination
+     *
+     * @param dsDivision the divisional Secretariat
+     * @param startDate  starting date of the range
+     * @param endDate    ending date of the range
+     * @param pageNo     page number
+     * @param noOfRows   number of rows
+     * @param user       user initiating the action
+     * @return the birth declaration results
+     */
+    public List<BirthDeclaration> getBelatedDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**

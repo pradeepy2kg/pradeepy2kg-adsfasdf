@@ -1196,7 +1196,6 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
         Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
-
         if (logger.isDebugEnabled()) {
             logger.debug("Get records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
                 " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
@@ -1205,6 +1204,23 @@ public class BirthRegistrationServiceImpl implements
         validateAccessToBDDivision(user, bdDivision);
         return birthDeclarationDAO.getByBDDivisionStatusAndRegisterDateRange(
             bdDivision, BirthDeclaration.State.DATA_ENTRY, startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getBelatedDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision bdDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get Belated records pending approval by BDDivision ID : " + bdDivision.getBdDivisionUKey() +
+                " and date range : " + startDate + " to " + endDate + " Page : " + pageNo +
+                " with number of rows per page : " + noOfRows);
+        }
+        validateAccessToBDDivision(user, bdDivision);
+        return birthDeclarationDAO.getByBDDivisionStatusBirthTypeAndRegisterDateRange(
+            bdDivision, BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED, startDate, endDate,
+            pageNo, noOfRows);
     }
 
     /**
@@ -1601,6 +1617,17 @@ public class BirthRegistrationServiceImpl implements
         validateAccessToDSDivison(dsDivision, user);
         return birthDeclarationDAO.getByDSDivisionStatusAndRegisterDateRange(dsDivision, BirthDeclaration.State.DATA_ENTRY,
             startDate, endDate, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthDeclaration> getBelatedDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
+        Date startDate, Date endDate, int pageNo, int noOfRows, User user) {
+        validateAccessToDSDivison(dsDivision, user);
+        return birthDeclarationDAO.getByDSDivisionStatusBirthTypeAndRegisterDateRange(dsDivision,
+            BirthDeclaration.State.DATA_ENTRY, BirthDeclaration.BirthType.BELATED, startDate, endDate, pageNo, noOfRows);
     }
 
     /**

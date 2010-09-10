@@ -173,7 +173,7 @@
         <!--BirthDeclaration Approval related actions-->
         <action name="eprBirthRegisterApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="initBirthDeclarationApproval">
-            <result type="tiles" name="pageLoad">epr.birthRegisterApproval</result>
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
         </action>
 
         <action name="eprApprovalNext" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
@@ -220,11 +220,10 @@
         </action>
 
         <!--Approve Belated Birth Declarations-->
-        <!--TODO-->
         <action name="eprBirthRegisterBelatedApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="initBirthDeclarationApproval">
             <param name="approveBelated">true</param>
-            <result type="tiles" name="pageLoad">epr.birthRegisterBelatedApproval</result>
+            <result type="tiles" name="success">epr.birthRegisterBelatedApproval</result>
         </action>
 
         <action name="eprBelatedApprovalRefresh" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
@@ -243,6 +242,7 @@
 
         <action name="eprRejectBelatedBirthDeclaration" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="reject">
+            <param name="approveBelated">true</param>
             <result type="tiles" name="successDeclarationReject">epr.birthRegisterBelatedApproval</result>
             <result type="tiles" name="rejectGetComments">epr.birthRegisterBelatedReject</result>
         </action>
@@ -252,18 +252,27 @@
             <param name="approveBelated">true</param>
             <result type="tiles" name="success">epr.birthRegisterBelatedApproval</result>
         </action>
-
-        <!--TODO belated related bulk-->
+                
         <action name="eprBelatedIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="approveIgnoringWarning">
             <param name="approveBelated">true</param>
             <result type="tiles" name="success">epr.birthRegisterBelatedApproval</result>
         </action>
 
+        <action name="eprBelatedApprovalNext" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="nextPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
+        <action name="eprBelatedApprovalPrevious" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.birthRegisterApproval</result>
+        </action>
+
         <!--Birth Confirmation Approval related actions-->
         <action name="eprBirthConfirmationApproval" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="initBirthConfirmationApproval">
-            <result type="tiles" name="pageLoad">epr.BirthConfirmationApproval</result>
+            <result type="tiles" name="success">epr.BirthConfirmationApproval</result>
         </action>
 
         <action name="eprConfirmationApprovalRefresh" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"

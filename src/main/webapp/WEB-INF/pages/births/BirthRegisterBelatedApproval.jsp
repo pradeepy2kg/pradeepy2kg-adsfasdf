@@ -198,7 +198,7 @@
             <tr>
                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
-                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(38)}"/></td>
+                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(34)}"/></td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
                     <s:if test="register.birthType.ordinal() != 0">
@@ -280,7 +280,7 @@
         <div class="next-previous">
                 <%-- Next link to visible next records will only visible if nextFlag is
               set to 1--%>
-            <s:url id="previousUrl" action="eprApprovalPrevious.do" encode="true">
+            <s:url id="previousUrl" action="eprBelatedApprovalPrevious.do" encode="true">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -293,7 +293,7 @@
                 <s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>
             </s:url>
 
-            <s:url id="nextUrl" action="eprApprovalNext.do" encode="true">
+            <s:url id="nextUrl" action="eprBelatedApprovalNext.do" encode="true">
                 <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:param name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:param name="pageNo" value="%{#request.pageNo}"/>
