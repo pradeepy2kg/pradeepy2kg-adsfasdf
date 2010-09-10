@@ -143,83 +143,17 @@
         document.getElementById('prefLanguage').disabled = mode;
     }
     function initPage() {
+        disableFields(true)
     }
-
 </script>
 
 <style type="text/css">
 
-    <%--styles for inner --%>
-    p {
-        padding: 0 0 1em;
-    }
-
-    .msg_list {
-        margin: 0px;
-        padding: 0px;
-        width: 1000px;
-    }
-
-    .msg_head {
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
+    #assignments {
         background-color: #3399FF;
-        margin: 1px;
+        font-size: 30px;
+        cursor: default;
     }
-
-    .msg_body {
-        padding: 5px 10px 15px;
-        background-color: #E0E0E0;
-    }
-
-    <%--style for inner finish--%>
-
-    h2.trigger {
-        padding: 0 0 0 50px;
-        margin: 0 0 5px 0;
-        background: #3366ff;
-        height: 46px;
-        line-height: 46px;
-        width: 1000px;
-        font-size: 2em;
-        font-weight: normal;
-        float: left;
-    }
-
-    h2.trigger a {
-        color: #fff;
-        text-decoration: none;
-        display: block;
-    }
-
-    h2.trigger a:hover {
-        color: #ccc;
-    }
-
-    h2.active {
-        background-position: left bottom;
-    }
-
-    /*--When toggle is triggered, it will shift the image to the bottom to show its "opened" state--*/
-    .toggle_container {
-        margin: 0 0 5px;
-        padding: 0;
-        border-top: 1px solid #d6d6d6;
-        background: #f0f0f0 url(../images/) repeat-y left top;
-        overflow: hidden;
-        font-size: 1.2em;
-        width: 1050px;
-        clear: both;
-    }
-
-    form>
-
-    .toggle_container .block {
-        padding: 20px; /*--Padding of Container--*/
-        background: url(../images/) no-repeat left bottom; /*--Bottom rounded corners--*/
-    }
-
 </style>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><s:property value="%{getText('registrar.basic.info')}"/></legend>
@@ -288,7 +222,7 @@
                 <td colspan="2"></td>
                 <td><s:property value="%{getText('label.enable.edit.mode')}"/> <s:checkbox name="enableEditMode"
                                                                                            id="enableEditMode"
-                                                                                           onselect="javascript:x(true);"/></td>
+                                                                                           onclick="javascript:disableFields(false);"/></td>
                 <td><s:submit value="%{getText('label.submit')}"/></td>
             </tr>
             </tbody>
@@ -311,8 +245,8 @@
         </tr>
         </thead>
         <s:if test="assignmentList.size>0">
+            <tbody>
             <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
-                <tbody>
                 <s:url action="eprAssignmentEdit.do" id="editSelected">
                     <s:param name="assignmentUKey" value="assignmentUKey"/>
                     <s:param name="editableAssignment" value="true"/>
@@ -343,8 +277,8 @@
                                  border="none"/></s:a>
                     </td>
                 </tr>
-                </tbody>
             </s:iterator>
+            </tbody>
         </s:if>
     </table>
 
@@ -353,108 +287,13 @@
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><s:property value="%{getText('registrar.add.new.assignment')}"/></legend>
-    <s:url action="eprAssignmentAddDirect.do" id="x">
-        <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
-        <s:param value="3" name="directAssigment"></s:param>
-    </s:url>
-    <s:a href="%{x}"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
-
-    <%--    <div class="msg_list" style="position:relative;">
-    <p class="msg_head">
-        <s:url action="eprAddAssignmentIndirect.do" id="x">
+    <div id="assignments">
+        <s:url action="eprAssignmentAddDirect.do" id="x">
             <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
+            <s:param value="3" name="directAssigment"></s:param>
         </s:url>
-        <s:a href=""><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
-
-    </p>--%>
-
-    <%--        <div class="msg_body">
-        <s:form action="eprAssignmentAdd.do" method="post">
-            <fieldset>
-                <legend><s:property value="%{getText('assignment.bd.marraige.division')}"/></legend>
-                <table cellspacing="0" cellpadding="0">
-                    <caption></caption>
-                    <col width="500px">
-                    <col width="500px">
-                    <col>
-                    <tbody>
-                    <tr>
-                        <td colspan="1" align="left">
-                            <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                                      cssStyle="width:98.5%; width:240px;"/>
-                        </td>
-                        <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
-                                                               list="dsDivisionList"
-                                                               value="%{dsDivisionId}"
-                                                               cssStyle="float:left;  width:240px;"/></td>
-                        <td>
-                            <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
-                                      cssStyle="float:left;  width:240px; margin:2px 5px;"/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </fieldset>
-            <fieldset>
-                <legend><s:property value="%{getText('assignment.type')}"/></legend>
-                <table cellspacing="0" cellpadding="0">
-                    <caption></caption>
-                    <col width="500px">
-                    <col width="500px">
-                    <tbody>
-                    <tr>
-                        <td colspan="1" align="left"><s:select
-                                list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
-                                name="" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </fieldset>
-
-            <fieldset>
-                <legend><s:property value="%{getText('assignment.state')}"/></legend>
-                <s:select
-                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
-                        name="" cssStyle="width:240px; margin-left:5px;"/>
-            </fieldset>
-
-            <fieldset>
-                <legend><s:property value="%{getText('assignment.dates')}"/></legend>
-                <table>
-                    <caption/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <tbody>
-                    <tr>
-                        <fieldset>
-                            <legend><s:property value="%{getText('assignemnt.appointed.date')}"/></legend>
-                            <s:textfield name="" id="dateOfAppoinmentDatePicker"/>
-
-                        </fieldset>
-                        <fieldset>
-                            <legend><s:property value="%{getText('assignment.permanent.date')}"/></legend>
-                            <s:textfield name="" id="dateOfPermenentDatePicker"/>
-
-                        </fieldset>
-                        <fieldset>
-                            <legend><s:property value="%{getText('assignment.temination.date')}"/></legend>
-                            <s:textfield name="" id="dateOfTerminationDatePicker"/>
-                        </fieldset>
-                    </tr>
-                    </tbody>
-                </table>
-            </fieldset>
-            <s:submit name="assignMentSubmit" value="%{getText('assignment.submit')}"/>
-            <s:hidden name="directAssigment" value="2"/>
-            <s:hidden name="registrarPin" value="%{registrar.pin}"/>
-            <s:hidden name="registrarSession" value="false"/>
-        </s:form>
+        <s:a href="%{x}"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
     </div>
-    </div>--%>
 </fieldset>
 
 

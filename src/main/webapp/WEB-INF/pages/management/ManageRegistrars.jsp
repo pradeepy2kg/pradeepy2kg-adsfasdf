@@ -157,17 +157,6 @@
                 </tbody>
 
         </s:if>
-        <%--        <tbody>
-        <s:url action="eprRegistrarsView.do" id="registrar"/>
-        <tr>
-            <td><s:a href="%{registrar}"> <s:label value="bdDivision"/></s:a></td>
-            <td><s:label value="name"/></td>
-            <td><s:label value="state"/></td>
-            <td><s:label value="type"/></td>
-            <td><s:label value="start date"/></td>
-            <td><s:label value="end date"/></td>
-        </tr>
-        </tbody>--%>
     </table>
 </div>
 

@@ -270,7 +270,6 @@
     <s:hidden name="directAssigment" value="2"/>
     <s:hidden name="registrarSession" value="true"/>
 </s:form>
-<s:property value="directAssigment"/>
 <s:if test="assignment != null">
     <script type="text/javascript">
         document.getElementById('dsDivisionId').disabled = true;

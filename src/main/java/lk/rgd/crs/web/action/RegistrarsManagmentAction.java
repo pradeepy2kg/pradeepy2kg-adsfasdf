@@ -216,7 +216,9 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String updateRegistrar() {
         //todo implement
-        populateLists(1, 1);
+        logger.info("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
+        service.updateRegistrar(registrar, user);
+        session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
         return SUCCESS;
     }
 
