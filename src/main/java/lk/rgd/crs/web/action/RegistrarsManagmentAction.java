@@ -100,6 +100,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     public String registrarsVeiwInit() {
 
         logger.info("register veiw init called ");
+
         if (registrarSession) {
             Assignment asg = (Assignment) session.get(WebConstants.SESSION_UPDATED_ASSIGNMENT_REGISTRAR);
             registrarUkey = asg.getRegistrar().getRegistrarUKey();
@@ -109,8 +110,17 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         this.districtId = 1;
         this.dsDivisionId = 1;
         populateLists(districtId, dsDivisionId);
-        registrar = service.getRegistrarById(registrarUkey);
-        assignmentList = service.getAssignments(registrarUkey, user);
+
+        if (registrarUkey > 0) {
+            registrar = service.getRegistrarById(registrarUkey);
+            assignmentList = service.getAssignments(registrarUkey, user);
+        }
+        List<Registrar> exsisting = (List<Registrar>) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        logger.info("exsisting  : {}", exsisting);
+        if (exsisting != null && exsisting.size() > 0) {
+            registrar = exsisting.get(0);
+            assignmentList = service.getAssignments(registrar.getRegistrarUKey(), user);
+        }
         /*  assignmentList = service.getAllAssignments(user);*/
         return SUCCESS;
     }
@@ -175,7 +185,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                     assignment.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(divisionId));
                 assignment.setType(type);
                 service.addAssignment(assignment, user);
-                session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
+                // session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 assignment = null;
                 addActionMessage("assignment.saved.successfully");
             }
@@ -211,6 +221,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String assignmentAddPageLoad() {
+        session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         //requesting addAssignment page directly
         if (registrarPin > 0) {
             session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user));
@@ -241,7 +252,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         districtList = districtDAO.getAllDistrictNames(language, user);
         dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(distirictId, language, user);
         divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
-        logger.info("divisionList size  : {}", divisionList.size());
         //todo load marrage divison list
     }
 
