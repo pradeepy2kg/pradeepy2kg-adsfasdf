@@ -333,7 +333,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
                 <legend>
                     <b><s:label name="confirmatinSearchLegend"
-                                value="%{getText('registrationSerchLegend3.label')}"/></b>
+                                value="%{getText('registrationSerchLegend3.label')}"/><s:actionerror/></b>
                 </legend>
                 <table class="search-option-table">
                     <tr>
@@ -443,7 +443,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         தொடர் இலக்கம் <br>
                         Serial Number
                     </td>
-                    <td width="60%"><s:textfield id="bdfSerialNo" value="2010" name="register.bdfSerialNo"/></td>
+                    <td width="60%"><s:textfield id="bdfSerialNo" name="register.bdfSerialNo"/></td>
                 </tr>
                 <tr>
                     <td>භාරගත් දිනය <br>
