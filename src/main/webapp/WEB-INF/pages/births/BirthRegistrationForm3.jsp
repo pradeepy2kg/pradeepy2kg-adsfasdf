@@ -237,9 +237,9 @@ function validateMarriage() {
     }
 
     // for parents married - No, but since married
-    domObject=document.getElementsByName("marriage.parentsMarried")[2];
-    if(domObject.checked){
-         domObject = document.getElementById('fatherName');
+    domObject = document.getElementsByName("marriage.parentsMarried")[2];
+    if (domObject.checked) {
+        domObject = document.getElementById('fatherName');
         var element3 = document.getElementById('fatherSigned');
 
         // validate father signed
@@ -427,7 +427,9 @@ function initPage() {
             <td><label>විවාහ වු දිනය<br>விவாகம் இடம்பெற்ற திகதி <br>Date of Marriage</label></td>
             <td colspan="2">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker" cssStyle="float:left;margin-left:5px;"/></tr>
+                    <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"
+                                 cssStyle="float:left;margin-left:5px;"/>
+        </tr>
         <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
                 විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
@@ -645,7 +647,7 @@ function initPage() {
             தனிநபர்
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
         <td colspan="3" class="find-person">
-             <img src="<s:url value="/images/alphabet-V.gif" />"
+            <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="informant_NIC_V">
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="informant_NIC_X">
@@ -734,6 +736,17 @@ function initPage() {
 <s:hidden id="error17" value="%{getText('p3.informdate.with.reg.date')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
 
+<%--hidden values for capture parent details for marrage unknown state--%>
+<s:if test="%{#session.birthRegister.parent.fatherFullName == null}">
+    <s:hidden id="isFatherCaptured" value="true"/>
+    <s:property value="%{#session.birthRegister.parent.fatherFullName}"/>
+</s:if>
+<s:if test="%{#session.birthRegister.parent.motherFullName == null}">
+    <s:hidden id="isMotherCaptured" value="true"/>
+    <s:property value="%{#session.birthRegister.parent.motherFullName}"/>
+</s:if>
+<s:property value="%{#session.birthRegister.parent.motherFullName}"/>
+<s:label value="hhhhhhh"/>
 
 </div>
 
