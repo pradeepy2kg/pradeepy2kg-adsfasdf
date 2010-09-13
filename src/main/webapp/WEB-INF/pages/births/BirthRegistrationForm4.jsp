@@ -40,13 +40,21 @@
                         $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
                     });
         });
-        $('#notifying_authority_NIC_V').bind('click', function() {
-            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "V");
-        });
-
-        $('#notifying_authority_NIC_X').bind('click', function() {
-            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "X");
-        });
+//        $('#notifying_authority_NIC_V').bind('click', function() {
+//            if ($('#notifyingAuthorityPIN').val().length == 9) {
+//            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "V");
+//            } else {
+//            alert(document.getElementById('error5').value);
+//        }
+//        });
+//
+//        $('#notifying_authority_NIC_X').bind('click', function() {
+//            if ($('#notifyingAuthorityPIN').val().length == 9) {
+//            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "X");
+//            } else {
+//            alert(document.getElementById('error5').value);
+//        }
+//        });
     });
 
     var errormsg = "";
@@ -141,9 +149,9 @@
                     அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
                 <td colspan="1" class="find-person" width="250px">
                     <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="notifying_authority_NIC_V">
+                         id="notifying_authority_NIC_V" onclick="javascript:addXorV('notifyingAuthorityPIN','V','error5')">
                     <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="notifying_authority_NIC_X">
+                         id="notifying_authority_NIC_X" onclick="javascript:addXorV('notifyingAuthorityPIN','X','error5')">
                     <br>
                     <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
@@ -238,5 +246,7 @@
     <s:hidden id="bdfLateBelate" name="bdfLateOrBelated"/>
     <s:hidden id="error3" value="%{getText('late.caseFileNo.text')}"/>
     <s:hidden id="error4" value="%{getText('late.comments.text')}"/>
+    <s:hidden id="error5" value="%{getText('NIC.error.add.VX')}"/>
+
 
 </div>

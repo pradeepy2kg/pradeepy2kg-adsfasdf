@@ -74,29 +74,6 @@ $(function() {
         generateGrandFatherBirthYear('greatGrandFatherNICorPIN', 'greatGrandFatherBirthYear');
         ;
     });
-
-    $('#informant_NIC_V').bind('click', function() {
-        $('#informantNICorPIN').val($("#informantNICorPIN").val() + "V");
-    });
-
-    $('#informant_NIC_X').bind('click', function() {
-        $('#informantNICorPIN').val($("#informantNICorPIN").val() + "X");
-    });
-    $('#grandFather_NIC_V').bind('click', function() {
-        $('#grandFatherNICorPIN').val($("#grandFatherNICorPIN").val() + "V");
-    });
-
-    $('#grandFather_NIC_X').bind('click', function() {
-        $('#grandFatherNICorPIN').val($("#grandFatherNICorPIN").val() + "X");
-    });
-    $('#greatGrandFather_NIC_V').bind('click', function() {
-        $('#greatGrandFatherNICorPIN').val($("#greatGrandFatherNICorPIN").val() + "V");
-    });
-
-    $('#greatGrandFather_NIC_X').bind('click', function() {
-        $('#greatGrandFatherNICorPIN').val($("#greatGrandFatherNICorPIN").val() + "X");
-    });
-
 });
 
 var informPerson;
@@ -471,9 +448,9 @@ function initPage() {
             </td>
             <td colspan="5" class="find-person">
                 <img src="<s:url value="/images/alphabet-V.gif" />"
-                     id="grandFather_NIC_V">
+                     id="grandFather_NIC_V" onclick="javascript:addXorV('grandFatherNICorPIN','V','error20')">
                 <img src="<s:url value="/images/alphabet-X.gif" />"
-                     id="grandFather_NIC_X">
+                     id="grandFather_NIC_X" onclick="javascript:addXorV('grandFatherNICorPIN','X','error20')">
                 <br>
                 <s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
@@ -511,9 +488,9 @@ function initPage() {
             </td>
             <td colspan="5" class="find-person">
                 <img src="<s:url value="/images/alphabet-V.gif" />"
-                     id="greatGrandFather_NIC_V">
+                     id="greatGrandFather_NIC_V" onclick="javascript:addXorV('greatGrandFatherNICorPIN','V','error20')">
                 <img src="<s:url value="/images/alphabet-X.gif" />"
-                     id="greatGrandFather_NIC_X">
+                     id="greatGrandFather_NIC_X" onclick="javascript:addXorV('greatGrandFatherNICorPIN','X','error20')">
                 <br>
                 <s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
@@ -642,9 +619,9 @@ function initPage() {
             அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
         <td colspan="3" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="informant_NIC_V">
+                 id="informant_NIC_V" onclick="javascript:addXorV('informantNICorPIN','V','error20')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="informant_NIC_X">
+                 id="informant_NIC_X" onclick="javascript:addXorV('informantNICorPIN','X','error20')">
             <br>
             <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
@@ -715,6 +692,7 @@ function initPage() {
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
 <s:hidden id="p3error18" value="%{getText('p3.GrandFather.birthYear.mismatch')}"/>
 <s:hidden id="p3error19" value="%{getText('p3.GreatGrandFather.birthYear.mismatch')}"/>
+<s:hidden id="error20" value="%{getText('NIC.error.add.VX')}"/>
 
 <s:hidden id="fatherName" value="%{parent.fatherFullName}"/>
 <s:hidden id="submitDatePicker" value="%{register.dateOfRegistration}"/>

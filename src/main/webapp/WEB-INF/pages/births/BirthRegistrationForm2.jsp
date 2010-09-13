@@ -146,21 +146,6 @@ $(function() {
                     $("select#motherDSDivisionId").html(options);
                 });
     });
-    $('#father_NIC_V').bind('click', function() {
-        $('#father_pinOrNic').val($("#father_pinOrNic").val() + "V");
-    });
-
-    $('#father_NIC_X').bind('click', function() {
-        $('#father_pinOrNic').val($("#father_pinOrNic").val() + "X");
-    });
-
-    $('#mother_NIC_V').bind('click', function() {
-        $('#mother_pinOrNic').val($("#mother_pinOrNic").val() + "V");
-    });
-
-    $('#mother_NIC_X').bind('click', function() {
-        $('#mother_pinOrNic').val($("#mother_pinOrNic").val() + "X");
-    });
 })
 
 //javascript for form validation
@@ -323,9 +308,9 @@ function commonTags() {
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td rowspan="2" width="230px" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="father_NIC_V">
+                 id="father_NIC_V" onclick="javascript:addXorV('father_pinOrNic','V','error9')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="father_NIC_X">
+                 id="father_NIC_X" onclick="javascript:addXorV('father_pinOrNic','X','error9')">
             <br>
             <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
@@ -413,9 +398,9 @@ function commonTags() {
             இலக்கம்<br>PIN / NIC Number</label></td>
         <td colspan="2" rowspan="2" width="230px" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="mother_NIC_V">
+                 id="mother_NIC_V" onclick="javascript:addXorV('mother_pinOrNic','V','error9')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="mother_NIC_X">
+                 id="mother_NIC_X" onclick="javascript:addXorV('mother_pinOrNic','X','error9')">
             <br>
             <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN"/>
             <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
@@ -544,7 +529,8 @@ function commonTags() {
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"/></td>
+            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"/>
+        </td>
     </tr>
     <tr>
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)ම‌ව
@@ -596,6 +582,8 @@ function commonTags() {
 <s:hidden id="dateOfAddmission" value="%{getText('p2.hospital.addmission.date')}"/>
 <s:hidden id="dateOfAddmissionWrong" value="%{getText('p2.hospital.addmission.date.wrong')}"/>
 <s:hidden id="birthDatePicker" value="%{child.dateOfBirth}"/>
+<s:hidden id="error9" value="%{getText('NIC.error.add.VX')}"/>
+
 
 
 </div>

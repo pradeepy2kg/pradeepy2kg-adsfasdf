@@ -109,21 +109,6 @@ $(function() {
         });
     });
 
-    $('#applicant_NIC_V').bind('click', function() {
-        $('#applicantPin').val($("#applicantPin").val() + "V");
-    });
-
-    $('#applicant_NIC_X').bind('click', function() {
-        $('#applicantPin').val($("#applicantPin").val() + "X");
-    });
-
-    $('#wife_NIC_V').bind('click', function() {
-        $('#wifePINorNIC').val($("#wifePINorNIC").val() + "V");
-    });
-
-    $('#wife_NIC_X').bind('click', function() {
-        $('#wifePINorNIC').val($("#wifePINorNIC").val() + "X");
-    });
 })
 
 
@@ -391,9 +376,9 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="2" align="left" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="applicant_NIC_V">
+                 id="applicant_NIC_V" onclick="javascript:addXorV('applicantPin','V','error21')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="applicant_NIC_X">
+                 id="applicant_NIC_X" onclick="javascript:addXorV('applicantPin','X','error21')">
             <br>
             <s:textfield name="adoption.applicantPINorNIC"
                          id="applicantPin"
@@ -451,9 +436,9 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="2"  class="find-person" >
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                 id="wife_NIC_V">
+                 id="wife_NIC_V" onclick="javascript:addXorV('wifePINorNIC','V','error21')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                 id="wife_NIC_X">
+                 id="wife_NIC_X" onclick="javascript:addXorV('wifePINorNIC','X','error21')">
             <br>
             <s:textfield name="adoption.wifePINorNIC" id="wifePINorNIC"
                          cssStyle="float:left;width:250px;"/>
@@ -686,4 +671,6 @@ function enableSerialNumber(mode) {
 <s:hidden id="error18" value="%{getText('er.label.orderIssuedDate.orderRecievedDate')}"/>
 <s:hidden id="error19" value="%{getText('er.label.wifePINorNIC')}"/>
 <s:hidden id="error20" value="%{getText('er.label.childPIN')}"/>
+<s:hidden id="error21" value="%{getText('NIC.error.add.VX')}"/>
+
 </div>
