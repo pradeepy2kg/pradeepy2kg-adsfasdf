@@ -12,8 +12,8 @@
 <tr><td rowspan="1" colspan="3">AdoptionFullFlow</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/ecivil/eprLogout.do</td>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,6 +31,7 @@
 	<td>eprLogin_0</td>
 	<td></td>
 </tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='xmain-menu']/ul/li[3]/a/label</td>
@@ -444,7 +445,7 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>3</td>
+	<td>2</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -478,22 +479,17 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/ecivil/births/eprConfrimationChangesDirectApproval.do?confirmationApprovalFlag=true&amp;bdId=4</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>ConfirmationDirectApprovalIngoreWarning_ignoreWarning</td>
+	<td>/ecivil/births/eprFilterBirthCetificateList.do</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>ConfirmationDirectApprovalIngoreWarning_approve</td>
+	<td>link=Print Birth Certificate</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
 	<td></td>
 </tr>
 <tr>
@@ -501,11 +497,7 @@
 	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
-	<td></td>
-</tr>
+
 
 </tbody></table>
 </body>

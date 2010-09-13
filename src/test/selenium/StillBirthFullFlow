@@ -44,7 +44,7 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2010000005</td>
+	<td>2010000055</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -109,7 +109,7 @@
 <tr>
 	<td>type</td>
 	<td>mother_pinOrNic</td>
-	<td>924527525v</td>
+	<td>926527525v</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -151,7 +151,6 @@
 	<td>informDatePicker</td>
 	<td>2010-08-15</td>
 </tr>
-
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-registration-form-3_0</td>
@@ -182,21 +181,7 @@
 	<td>birth-registration-form-4_0</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprDirectApproveIgnoreWarning_approve</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
