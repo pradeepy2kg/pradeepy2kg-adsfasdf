@@ -97,10 +97,10 @@ public class RegistrarManagementServiceTest extends TestCase {
 
         // query
         List<Assignment> results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.BIRTH,
-            true /* active */,
-            admin);
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.BIRTH,
+                true /* active */,
+                admin);
 
         Assert.assertEquals(2, results.size());
 
@@ -108,51 +108,51 @@ public class RegistrarManagementServiceTest extends TestCase {
         regMgtSvc.inactivateAssignment(assign3.getAssignmentUKey(), admin);
 
         results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.BIRTH,
-            true /* active */,
-            admin);
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.BIRTH,
+                true /* active */,
+                admin);
 
         Assert.assertEquals(1, results.size());
 
         results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.BIRTH,
-            false /* inactive */,
-            admin);
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.BIRTH,
+                false /* inactive */,
+                admin);
 
         Assert.assertEquals(1, results.size());
 
         // check death registrars
         results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.DEATH,
-            true /* active */,
-            admin);
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.DEATH,
+                true /* active */,
+                admin);
 
         Assert.assertEquals(2, results.size());
 
         results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.DEATH,
-            false /* inactive */,
-            admin);
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.DEATH,
+                false /* inactive */,
+                admin);
 
         Assert.assertEquals(0, results.size());
 
         results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.GENERAL_MARRIAGE,
-            true /* active */,
-            admin);
-
-        Assert.assertEquals(1, results.size());
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.GENERAL_MARRIAGE,
+                true /* active */,
+                admin);
+        //todo
+        Assert.assertEquals(2, results.size());
 
         results = regMgtSvc.getAssignmentsByDSDivision(
-            bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
-            Assignment.Type.GENERAL_MARRIAGE,
-            false /* inactive */,
-            admin);
+                bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
+                Assignment.Type.GENERAL_MARRIAGE,
+                false /* inactive */,
+                admin);
 
         Assert.assertEquals(0, results.size());
     }
