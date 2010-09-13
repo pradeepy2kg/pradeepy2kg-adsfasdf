@@ -17,12 +17,12 @@
                 <tr>
                     <td>type</td>
                     <td>eprLogin_userName</td>
-                    <td>amith</td>
+                    <td>rg</td>
                 </tr>
                 <tr>
                     <td>type</td>
                     <td>eprLogin_password</td>
-                    <td>amith</td>
+                    <td>password</td>
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
@@ -121,7 +121,7 @@
                 </tr>
                 <tr>
                     <td>type</td>
-                    <td>death-registration-form-1_deathPerson_deathPersonAge</td>
+                    <td>deathPersonAge</td>
                     <td>56</td>
                 </tr>
                 <tr>
@@ -131,7 +131,7 @@
                 </tr>
                 <tr>
                     <td>select</td>
-                    <td>death-registration-form-1_deathPersonRace</td>
+                    <td>deathPersonRace</td>
                     <td>label=2 : Sri Lankan Tamil</td>
                 </tr>
                 <tr>
