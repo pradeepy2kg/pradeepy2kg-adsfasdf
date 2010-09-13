@@ -201,7 +201,6 @@ function generateGrandFatherBirthYear(grandFatherNIC, grandFatherBirthYear) {
 // validation marriage related fields
 function validateMarriage() {
     var domObject;
-    //    var submit = new Date(document.getElementById('marriageDatePicker').value);
 
     // for parrents married - Yes
     domObject = document.getElementsByName("marriage.parentsMarried")[0];
@@ -220,54 +219,30 @@ function validateMarriage() {
 
     // for parrents married - No
     domObject = document.getElementsByName("marriage.parentsMarried")[1];
-    if (domObject.checked) {
-        domObject = document.getElementById('fatherName');
-        var element3 = document.getElementById('fatherSigned');
-
-        // validate father signed
-        if (!element3.checked && domObject.value.length > 0) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-        }
-
-        // validate mother signed
-        var element4 = document.getElementById('motherSigned');
-        if (!element4.checked && domObject.value.length > 0) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
-        }
-    }
+    validateParentSigns(domObject);
 
     // for parents married - No, but since married
     domObject = document.getElementsByName("marriage.parentsMarried")[2];
-    if (domObject.checked) {
-        domObject = document.getElementById('fatherName');
-        var element3 = document.getElementById('fatherSigned');
-
-        // validate father signed
-        if (!element3.checked && domObject.value.length > 0) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
-        }
-
-        // validate mother signed
-        var element4 = document.getElementById('motherSigned');
-        if (!element4.checked && domObject.value.length > 0) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
-        }
-    }
+    validateParentSigns(domObject);
 
     // for parents married - No, but since married
     domObject = document.getElementsByName("marriage.parentsMarried")[3];
+    validateParentSigns(domObject);
+}
+
+function validateParentSigns(domObject) {
     if (domObject.checked) {
-        domObject = document.getElementById('fatherName');
+        var element = document.getElementById('fatherName');
         var element3 = document.getElementById('fatherSigned');
 
         // validate father signed
-        if (!element3.checked && domObject.value.length > 0) {
+        if (!element3.checked && element.value.length > 0) {
             errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
         }
 
         // validate mother signed
         var element4 = document.getElementById('motherSigned');
-        if (!element4.checked && domObject.value.length > 0) {
+        if (!element4.checked && element.value.length > 0) {
             errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
         }
     }
