@@ -18,7 +18,7 @@ rm -rf /data/tomcat6/work/Catalina/localhost/
 rm -rf /data/tomcat6/webapps/ecivil
 rm -rf /data/tomcat6/webapps/popreg
 
-sleep 2
-echo "Starting Tomcat .."
-/data/tomcat6/bin/catalina.sh start
+#sleep 2
+#echo "Starting Tomcat .."
+echo "Backup and clear database and start Tomcat as /data/tomcat6/bin/catalina.sh start"
 
