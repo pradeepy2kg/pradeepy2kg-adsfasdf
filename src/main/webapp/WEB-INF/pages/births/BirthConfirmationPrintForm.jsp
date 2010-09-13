@@ -26,6 +26,46 @@
 
 
 <div id="birth-confirmation-print-form-outer">
+
+<s:if test="directPrint">
+<s:url id="print" action="eprDirectPrintBirthConfirmation.do">
+    <s:param name="bdId" value="#request.bdId"/>
+    <s:param name="confirmListFlag" value="true"/>
+</s:url>
+    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
+</s:if>
+<s:else>
+    <%--TODO remove unused parameters--%>
+<s:url id="print" action="eprMarkBirthConfirmationAsPrint.do">
+    <s:param name="bdId" value="#request.bdId"/>
+    <s:param name="confirmListFlag" value="true"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+    <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+    <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+    <s:param name="printed" value="#request.printed"/>
+    <s:param name="printStart" value="#request.printStart"/>
+</s:url>
+<s:url id="cancel" action="eprBirthCancelConfirmationPrint.do">
+    <s:param name="confirmListFlag" value="true"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+    <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+    <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+    <s:param name="printed" value="#request.printed"/>
+    <s:param name="printStart" value="#request.printStart"/>
+</s:url>
+</s:else>
+
+<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
+    <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>
+<div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+</div>
+
+<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
+    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
+</div>
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
 <table style="width:65%;float:left;">
     <caption></caption>
@@ -658,42 +698,16 @@
     </tbody>
 </table>
 
-<s:if test="directPrint">
-<s:url id="print" action="eprDirectPrintBirthConfirmation.do">
-    <s:param name="bdId" value="#request.bdId"/>
-    <s:param name="confirmListFlag" value="true"/>
-</s:url>
-    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
-</s:if>
-<s:else>
-    <%--TODO remove unused parameters--%>
-<s:url id="print" action="eprMarkBirthConfirmationAsPrint.do">
-    <s:param name="bdId" value="#request.bdId"/>
-    <s:param name="confirmListFlag" value="true"/>
-    <s:param name="pageNo" value="%{#request.pageNo}"/>
-    <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-    <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-    <s:param name="printed" value="#request.printed"/>
-    <s:param name="printStart" value="#request.printStart"/>
-</s:url>
-<s:url id="cancel" action="eprBirthCancelConfirmationPrint.do">
-    <s:param name="confirmListFlag" value="true"/>
-    <s:param name="pageNo" value="%{#request.pageNo}"/>
-    <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-    <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-    <s:param name="printed" value="#request.printed"/>
-    <s:param name="printStart" value="#request.printStart"/>
-</s:url>
-</s:else>
 
-<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:25px;">
+</div>
+<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
 <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
-</div>
-<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:14px;">
+
+<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
