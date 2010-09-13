@@ -16,6 +16,39 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="adoption-registration-form-outer">
+<div class="form-submit">
+    <s:if test="#request.approved">
+        <s:url id="markAsPrint" action="eprMarkDirectlyAdoptionNoticeAsPrinted.do">
+            <s:param name="idUKey" value="%{#request.idUKey}"/>
+        </s:url>
+        <s:url id="cancel" action="cancelPrintAdoptionNotice.do">
+            <s:param name="idUKey" value="%{#request.idUKey}"/>
+            <s:param name="approved" value="#request.approved"/>
+        </s:url>
+    </s:if>
+    <s:else>
+        <s:url id="markAsPrint" action="eprMarkAdoptionNoticeAsPrinted.do">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="idUKey" value="%{#request.idUKey}"/>
+        </s:url>
+        <s:url id="cancel" action="eprAdoptionBackToPreviousState.do">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+        </s:url>
+    </s:else>
+</div>
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
+<div id="adoption-page">
+    <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
+</div>
 <table class="adoption-reg-form-header-table">
     <tr>
         <td align="center" style="font-size:12pt">
@@ -306,32 +339,7 @@
     </tr>
     </tbody>
 </table>
-<div class="form-submit">
-    <s:if test="#request.approved">
-        <s:url id="markAsPrint" action="eprMarkDirectlyAdoptionNoticeAsPrinted.do">
-            <s:param name="idUKey" value="%{#request.idUKey}"/>
-        </s:url>
-        <s:url id="cancel" action="cancelPrintAdoptionNotice.do">
-            <s:param name="idUKey" value="%{#request.idUKey}"/>
-            <s:param name="approved" value="#request.approved"/>
-        </s:url>
-    </s:if>
-    <s:else>
-        <s:url id="markAsPrint" action="eprMarkAdoptionNoticeAsPrinted.do">
-            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-            <s:param name="pageNo" value="%{#request.pageNo}"/>
-            <s:param name="idUKey" value="%{#request.idUKey}"/>
-        </s:url>
-        <s:url id="cancel" action="eprAdoptionBackToPreviousState.do">
-            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:param name="pageNo" value="%{#request.pageNo}"/>
-            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-        </s:url>
-    </s:else>
-</div>
+
 </div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>

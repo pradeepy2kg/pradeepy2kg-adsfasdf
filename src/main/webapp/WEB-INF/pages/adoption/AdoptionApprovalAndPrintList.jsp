@@ -79,7 +79,6 @@
     </s:form>
 </table>
 <div id="birth-register-approval-body">
-
 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
 <legend></legend>
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
