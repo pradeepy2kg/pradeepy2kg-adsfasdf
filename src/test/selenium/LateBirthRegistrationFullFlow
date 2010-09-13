@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//label[@id='']</td>
+	<td>link=උපත් ලියාපදිංචිය</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,17 +44,22 @@
 <tr>
 	<td>type</td>
 	<td>bdfSerialNo</td>
-	<td>2010000022</td>
+	<td>2010000003</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>submitDatePicker</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>submitDatePicker</td>
-	<td>2010-08-24</td>
+	<td>2010-09-07</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>birthDatePicker</td>
-	<td>2010-03-12</td>
+	<td>2010-05-03</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -69,12 +74,12 @@
 <tr>
 	<td>type</td>
 	<td>childFullNameOfficialLang</td>
-	<td>late baby name</td>
+	<td>late baby name in sinhala</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>childFullNameEnglish</td>
-	<td>late baby name in english</td>
+	<td>late baby namein english</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -84,7 +89,7 @@
 <tr>
 	<td>type</td>
 	<td>childRank</td>
-	<td>3</td>
+	<td>2</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -94,7 +99,7 @@
 <tr>
 	<td>type</td>
 	<td>father_pinOrNic</td>
-	<td>925246625v</td>
+	<td>781245852v</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -102,39 +107,24 @@
 	<td>father name</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>birth-registration-form-2_fatherRace</td>
-	<td>label=1 : සිංහල</td>
+	<td>click</td>
+	<td>father_lookup</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>mother_pinOrNic</td>
-	<td>924527525v</td>
+	<td>805741245v</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother_lookup</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>motherFullName</td>
 	<td>mother name</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>motherDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/table/tbody/tr[3]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>fatherDatePicker</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=1</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -151,16 +141,40 @@
 	<td>informantTypeMOTHER</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='birth-registration-form-3_']/label</td>
+	<td></td>
+</tr>
 <tr>
 	<td>type</td>
-	<td>informantAddress</td>
+	<td>motherAddress</td>
 	<td>mother address</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-registration-form-2_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>birth-registration-form-3_marriage_parentsMarried0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informDatePicker</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>informDatePicker</td>
-	<td>2010-08-10</td>
+	<td>2010-09-05</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -170,32 +184,34 @@
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityPIN</td>
-	<td>725552255v</td>
+	<td>656582541v</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityName</td>
-	<td>N.A. Name</td>
+	<td>na name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>notifyingAuthorityAddress</td>
-	<td>N.A. address</td>
+	<td>na address</td>
 </tr>
-<tr>
-	<td>type</td>
-	<td>modifiedDatePicker</td>
-	<td>2010-09-01</td>
-</tr>
+
 <tr>
 	<td>type</td>
 	<td>caseFileNumber</td>
-	<td>4545454555</td>
+	<td>123</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>comments</td>
-	<td>no reson</td>
+	<td>comments</td>
+</tr>
+
+<tr>
+	<td>type</td>
+	<td>modifiedDatePicker</td>
+	<td>2010-09-09</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -205,26 +221,6 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>eprDirectApproveIgnoreWarning_approve</td>
 	<td></td>
 </tr>
 <tr>
@@ -239,13 +235,18 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>link=උපත් තහවුරු කිරීම</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>6</td>
+	<td>3</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -268,34 +269,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>click</td>
 	<td>datePicker</td>
-	<td>2010-09-01</td>
+	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=1</td>
-	<td></td>
+	<td>type</td>
+	<td>datePicker</td>
+	<td>2010-09-08</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-confirmation-form3_0</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>open</td>
-	<td>/ecivil/births/eprConfrimationChangesDirectApproval.do?confirmationApprovalFlag=true&amp;bdId=5</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>ConfirmationDirectApprovalIngoreWarning_ignoreWarning</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>ConfirmationDirectApprovalIngoreWarning_approve</td>
 	<td></td>
 </tr>
 <tr>
@@ -305,7 +290,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=මුද්‍රණය අවසානයි</td>
+	<td>//div[@id='birth-certificate-outer']/div[4]/a/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -313,8 +298,6 @@
 	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
 	<td></td>
 </tr>
-
-
 
 </tbody></table>
 </body>
