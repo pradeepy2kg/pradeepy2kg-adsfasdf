@@ -25,6 +25,44 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="birth-certificate-outer">
+<s:if test="directPrint">
+    <s:url id="print" action="eprDirectPrintBirthCertificate.do">
+        <s:param name="bdId" value="#request.bdId"/>
+    </s:url>
+    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
+</s:if>
+<s:else>
+    <%--TODO remove unused parameters--%>
+    <s:url id="print" action="eprMarkCertificateAsPrinted.do">
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="bdId" value="%{#request.bdId}"/>
+        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="printed" value="#request.printed"/>
+        <s:param name="printStart" value="#request.printStart"/>
+    </s:url>
+    <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
+        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="printed" value="#request.printed"/>
+        <s:param name="printStart" value="#request.printStart"/></s:url>
+</s:else>
+
+<s:if test="#request.allowPrintCertificate">
+    <div class="form-submit" style="margin:15px 0 0 10px; ">
+        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    </div>
+    <div class="form-submit">
+        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+    </div>
+</s:if>
+<div class="form-submit" style="margin-top:15px;">
+    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
+</div>
 
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
@@ -266,38 +304,7 @@
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
 
 
-<s:if test="directPrint">
-    <s:url id="print" action="eprDirectPrintBirthCertificate.do">
-        <s:param name="bdId" value="#request.bdId"/>
-        <%--<s:param name="directPrint" value="true"/>--%>
-    </s:url>
-    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
-</s:if>
-<%--<s:elseif test="directPrintBirthCertificate">
-    <s:url id="print" action="eprDirectPrintBirthCertificate.do">
-        <s:param name="bdId" value="#request.bdId"/>
-    </s:url>
-    <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
-</s:elseif>--%>
-<s:else>
-    <%--TODO remove unused parameters--%>
-    <s:url id="print" action="eprMarkCertificateAsPrinted.do">
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="bdId" value="%{#request.bdId}"/>
-        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
-        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-        <s:param name="printed" value="#request.printed"/>
-        <s:param name="printStart" value="#request.printStart"/>
-    </s:url>
-    <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
-        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-        <s:param name="printed" value="#request.printed"/>
-        <s:param name="printStart" value="#request.printStart"/></s:url>
-</s:else>
+
 <s:if test="#request.allowPrintCertificate">
     <div class="form-submit" style="margin:15px 0 0 10px; ">
         <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>

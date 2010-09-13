@@ -25,7 +25,44 @@
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
 <div id="death-certificate-outer">
+    <s:if test="directPrint">
+        <s:url id="print" action="eprDierctPrintDeathCertificate.do">
+            <s:param name="idUKey" value="#request.idUKey"/>
+        </s:url>
+        <s:url id="cancel" action="eprInitDeathHome.do"/>
+    </s:if>
 
+    <s:else>
+        <s:url id="print" action="eprPrintDeathCertificate.do">
+            <s:param name="idUKey" value="#request.idUKey"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+            <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
+        </s:url>
+        <s:url id="cancel" action="eprDeathBackToPreviousState.do">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+            <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
+        </s:url>
+    </s:else>
+<s:if test="#request.allowPrintCertificate">
+        <div id="birthRegistration-page" style="margin-top:15px;float:right;">
+            <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+        </div>
+        <div class="form-submit">
+            <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+            <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+        </div>
+    </s:if>
+    <div id="birthRegistration-page" style="margin-top:15px;float:right;">
+        <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    </div>
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="300px"/>
     <col width="400px"/>
@@ -194,32 +231,7 @@
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
 </s:label>
 
-    <s:if test="directPrint">
-        <s:url id="print" action="eprDierctPrintDeathCertificate.do">
-            <s:param name="idUKey" value="#request.idUKey"/>
-        </s:url>
-        <s:url id="cancel" action="eprInitDeathHome.do"/>
-    </s:if>
 
-    <s:else>
-        <s:url id="print" action="eprPrintDeathCertificate.do">
-            <s:param name="idUKey" value="#request.idUKey"/>
-            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-            <s:param name="pageNo" value="%{#request.pageNo}"/>
-            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-            <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
-        </s:url>
-        <s:url id="cancel" action="eprDeathBackToPreviousState.do">
-            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-            <s:param name="pageNo" value="%{#request.pageNo}"/>
-            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-            <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-            <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
-        </s:url>
-    </s:else>
     <s:if test="#request.allowPrintCertificate">
         <div id="birthRegistration-page" style="margin-top:15px;float:right;">
             <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
