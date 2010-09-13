@@ -65,21 +65,6 @@
                     });
         });
 
-        $('#notifying_authority_NIC_V').bind('click', function() {
-            $('#notifying_authority_NICorPIN').val($("#notifying_authority_NICorPIN").val() + "V");
-        });
-
-        $('#notifying_authority_NIC_X').bind('click', function() {
-            $('#notifying_authority_NICorPIN').val($("#notifying_authority_NICorPIN").val() + "X");
-        });
-
-        $('#declarant_NIC_V').bind('click', function() {
-            $('#declarant_pinOrNic').val($("#declarant_pinOrNic").val() + "V");
-        });
-
-        $('#declarant_NIC_X').bind('click', function() {
-            $('#declarant_pinOrNic').val($("#declarant_pinOrNic").val() + "X");
-        });
     });
 
     var informPerson;
@@ -227,9 +212,9 @@
                 </td>
                 <td colspan="3" class="find-person">
                     <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="declarant_NIC_V">
+                         id="declarant_NIC_V" onclick="javascript:addXorV('declarant_pinOrNic','V','error12')">
                     <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="declarant_NIC_X">
+                         id="declarant_NIC_X" onclick="javascript:addXorV('declarant_pinOrNic','X','error12')">
                     <br>
                     <s:textfield id="declarant_pinOrNic"
                                  name="declarant.declarantNICorPIN"/><img
@@ -294,11 +279,11 @@
                 <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
                     NIC
                 </td>
-                <td colspan="2" class="find-person" >
+                <td colspan="2" class="find-person">
                     <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="notifying_authority_NIC_V">
+                         id="notifying_authority_NIC_V" onclick="javascript:addXorV('notifying_authority_NICorPIN','V','error12')">
                     <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="notifying_authority_NIC_X">
+                         id="notifying_authority_NIC_X" onclick="javascript:addXorV('notifying_authority_NICorPIN','X','error12')">
                     <br>
                     <s:textfield id="notifying_authority_NICorPIN"
                                  name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
@@ -346,6 +331,7 @@
         <s:hidden id="p2error6" value="%{getText('notifierDate.text')}"/>
         <s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
         <s:hidden id="p2error8" value="%{getText('declarentType.text')}"/>
+        <s:hidden id="error12" value="%{getText('NIC.error.add.VX')}"/>
 
         <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 

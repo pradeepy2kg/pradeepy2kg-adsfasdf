@@ -15,14 +15,6 @@
                         $("textarea#certificateApplicantAddress").val(data1.lastAddress);
                     });
         });
-
-        $('#applicant_NIC_V').bind('click', function() {
-            $('#certifcateApplicantPin').val($("#certifcateApplicantPin").val() + "V");
-        });
-
-        $('#applicant_NIC_X').bind('click', function() {
-            $('#certifcateApplicantPin').val($("#certifcateApplicantPin").val() + "X");
-        });
     });
 
     function setApplicantInfo(pin, name, address)
@@ -274,9 +266,9 @@
             </td>
             <td colspan="4" class="find-person">
                 <img src="<s:url value="/images/alphabet-V.gif" />"
-                     id="applicant_NIC_V">
+                     id="applicant_NIC_V" onclick="javascript:addXorV('certifcateApplicantPin','V','error6')">
                 <img src="<s:url value="/images/alphabet-X.gif" />"
-                     id="applicant_NIC_X">
+                     id="applicant_NIC_X" onclick="javascript:addXorV('certifcateApplicantPin','X','error6')">
                 <br>
                 <s:textfield id="certifcateApplicantPin" name="certificateApplicantPINorNIC"/> <img
                     src="<s:url value="/images/search-father.png" />"
@@ -316,5 +308,7 @@
     <s:hidden id="error3" value="%{getText('er.label.applicantType')}"/>
     <s:hidden id="error4" value="%{getText('er.label.courtOrderNumber')}"/>
     <s:hidden id="error5" value="%{getText('p1.invalide.inputType')}"/>
+    <s:hidden id="error6" value="%{getText('NIC.error.add.VX')}"/>
+
 </s:form>
 </div>

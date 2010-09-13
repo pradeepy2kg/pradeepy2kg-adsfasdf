@@ -25,13 +25,6 @@
                         $("textarea#confirmantFullName").val(data1.fullNameInOfficialLanguage);
                     });
         });
-        $('#confirmant_NIC_V').bind('click', function() {
-            $('#confirmantNICorPIN').val($("#confirmantNICorPIN").val() + "V");
-        });
-
-        $('#confirmant_NIC_X').bind('click', function() {
-            $('#confirmantNICorPIN').val($("#confirmantNICorPIN").val() + "X");
-        });
     });
 
     function setConfirmPerson(id, nICorPIN, name) {
@@ -163,9 +156,9 @@
                 </label></td>
                 <td colspan="3" class="find-person">
                     <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="confirmant_NIC_V">
+                         id="confirmant_NIC_V" onclick="javascript:addXorV('confirmantNICorPIN','V','error5')">
                     <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="confirmant_NIC_X">
+                         id="confirmant_NIC_X" onclick="javascript:addXorV('confirmantNICorPIN','X','error5')">
                     <br>
                     <s:textfield name="confirmant.confirmantNICorPIN" id="confirmantNICorPIN"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
@@ -221,6 +214,6 @@
     <s:hidden id="invalid" value="%{getText('p1.invalide.inputType')}"/>
     <s:hidden id="infomantDate" value="%{getText('confirmant.confirmDate.text')}"/>
     <s:hidden id="confirmantPINorNIC" value="%{getText('confirmant.PINorNIC.text')}"/>
-
+    <s:hidden id="error5" value="%{getText('NIC.error.add.VX')}"/>
 
 </div>

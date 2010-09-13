@@ -318,28 +318,6 @@ $(function() {
                     $("textarea#deathPersonMotherFullName").val(data3.fullNameInOfficialLanguage);
                 });
     });
-    $('#death_person_NIC_V').bind('click', function() {
-        $('#deathPerson_PINorNIC').val($("#deathPerson_PINorNIC").val()+"V");
-    });
-
-    $('#death_person_NIC_X').bind('click', function() {
-        $('#deathPerson_PINorNIC').val($("#deathPerson_PINorNIC").val()+"X");
-    });
-    $('#death_person_father_NIC_V').bind('click', function() {
-        $('#deathPersonFather_PINorNIC').val($("#deathPersonFather_PINorNIC").val()+"V");
-    });
-
-    $('#death_person_father_NIC_X').bind('click', function() {
-        $('#deathPersonFather_PINorNIC').val($("#deathPersonFather_PINorNIC").val()+"X");
-    });
-    $('#death_person_mother_NIC_V').bind('click', function() {
-        $('#deathPersonMother_PINorNIC').val($("#deathPersonMother_PINorNIC").val()+"V");
-    });
-
-    $('#death_person_mother_NIC_X').bind('click', function() {
-        $('#deathPersonMother_PINorNIC').val($("#deathPersonMother_PINorNIC").val()+"X");
-    });
-
 });
 var errormsg = "";
 function validate() {
@@ -784,9 +762,9 @@ function initPage() {
         </td>
         <td rowspan="2" colspan="2" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                id="death_person_NIC_V">
+                id="death_person_NIC_V" onclick="javascript:addXorV('deathPerson_PINorNIC','V','error12')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                id="death_person_NIC_X">
+                id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
                                                                      cssStyle="float:left;"/>
@@ -855,9 +833,9 @@ function initPage() {
         </td>
         <td colspan="6" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                id="death_person_father_NIC_V">
+                id="death_person_father_NIC_V" onclick="javascript:addXorV('deathPersonFather_PINorNIC','V','error12')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                id="death_person_father_NIC_X">
+                id="death_person_father_NIC_X" onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
                          cssStyle="float:left;"/>
@@ -882,9 +860,9 @@ function initPage() {
         </td>
         <td colspan="6" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                id="death_person_mother_NIC_V">
+                id="death_person_mother_NIC_V" onclick="javascript:addXorV('deathPersonMother_PINorNIC','V','error12')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                id="death_person_mother_NIC_X">
+                id="death_person_mother_NIC_X" onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
                          cssStyle="float:left;"/>
@@ -914,6 +892,7 @@ function initPage() {
 <s:hidden id="error9" value="%{getText('p1.errorlable.deathPerson.NameOfficialLang')}"/>
 <s:hidden id="error10" value="%{getText('p1.errorlable.deathPerson.NameInEnglish')}"/>
 <s:hidden id="error11" value="%{getText('p1.errorlable.deathPerson.PermanentAddress')}"/>
+<s:hidden id="error12" value="%{getText('NIC.error.add.VX')}"/>
 
 <s:hidden id="p1error1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="p1errorPIN1" value="%{getText('p1.deathPerson_PIN')}"/>
