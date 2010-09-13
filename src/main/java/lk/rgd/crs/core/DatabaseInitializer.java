@@ -195,6 +195,11 @@ public class DatabaseInitializer implements ApplicationContextAware {
                 new ClassPathResource("database/populate_sample_data.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_data.sql");
 
+            // populate with migrated data
+            SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
+                new ClassPathResource("database/populate_migrated_data.sql"), false);
+            logger.info("Populated the tables with sample data from : populate_migrated_data.sql");
+
             SimpleJdbcTestUtils.executeSqlScript(new SimpleJdbcTemplate(dataSource),
                 new ClassPathResource("database/populate_sample_prs.sql"), false);
             logger.info("Populated the tables with sample data from : populate_sample_prs.sql");

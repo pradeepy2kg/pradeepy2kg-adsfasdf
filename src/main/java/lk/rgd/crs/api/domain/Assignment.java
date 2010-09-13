@@ -78,6 +78,12 @@ public class Assignment implements Serializable {
     private Type type;
 
     /**
+     * Is this an Additional Registrar assignment ?
+     */
+    @Column(nullable = false)
+    private boolean additional;
+
+    /**
      * Date of appointment
      */
     @Column(nullable = true)
@@ -174,5 +180,13 @@ public class Assignment implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public boolean isAdditional() {
+        return additional;
+    }
+
+    public void setAdditional(boolean additional) {
+        this.additional = additional;
     }
 }
