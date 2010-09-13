@@ -94,6 +94,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public String birthAlterationSearch() {
         BirthDeclaration bdf = new BirthDeclaration();
+         populateBasicLists();
         switch (pageNo) {
             case 1:
                 bdf = service.getById(idUKey, user);
@@ -103,8 +104,17 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 break;
             case 3:
                 bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                    serialNo, user);
+                        serialNo, user);
                 break;
+        }
+        try {
+            idUKey = bdf.getIdUKey();
+        }
+        catch (Exception e) {
+            handleErrors(e);
+            addActionError(getText("cp1.error.entryNotAvailable"));
+            pageNo = 0;
+            return SUCCESS;
         }
 
         populateAlteration(bdf);
@@ -198,7 +208,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         setPageNo(1);
         birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-            dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         initPermission();
         return SUCCESS;
     }
@@ -215,11 +225,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (birthDivisionId != 0) {
             logger.debug("requested to filter birth alterations by birthDivisionId : {} ", birthDivisionId);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else {
             logger.debug("requested to filter birth alterations by dsDivisionId : {}", dsDivisionId);
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         paginationHandler(birthAlterationPendingApprovalList.size());
         initPermission();
@@ -251,7 +261,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String nextPage() {
         if (logger.isDebugEnabled()) {
             logger.debug("inside nextPage() : current birthDistrictId {}, birthDivisionId {}", birthDistrictId, birthDivisionId +
-                " requested from pageNo " + pageNo);
+                    " requested from pageNo " + pageNo);
         }
         setPageNo(getPageNo() + 1);
 
@@ -263,10 +273,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
          */
         if (birthDivisionId != 0) {
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else {
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         paginationHandler(birthAlterationPendingApprovalList.size());
         setPreviousFlag(true);
@@ -284,7 +294,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         if (logger.isDebugEnabled()) {
             logger.debug("inside previousPage() : current birthDistrictId {}, birthDivisionId {} ", birthDistrictId, birthDivisionId
-                + " requested from pageNo " + pageNo);
+                    + " requested from pageNo " + pageNo);
         }
         /**
          * UI related. decides whether to display
@@ -314,10 +324,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         if (birthDivisionId != 0) {
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
         } else {
             birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         populateBasicLists();
         initPermission();
@@ -368,6 +378,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         /** getting full district list and DS list */
         allDistrictList = districtDAO.getAllDistrictNames(language, user);
+    }
+
+    private void handleErrors(Exception e) {
+        logger.error("Handle Error  ", e);
+        //todo pass the error to the error.jsp page
     }
 
     public int getPageNo() {
