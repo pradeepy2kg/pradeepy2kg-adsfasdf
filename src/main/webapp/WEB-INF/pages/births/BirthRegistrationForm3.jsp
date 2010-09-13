@@ -253,6 +253,24 @@ function validateMarriage() {
             errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
         }
     }
+
+    // for parents married - No, but since married
+    domObject = document.getElementsByName("marriage.parentsMarried")[3];
+    if (domObject.checked) {
+        domObject = document.getElementById('fatherName');
+        var element3 = document.getElementById('fatherSigned');
+
+        // validate father signed
+        if (!element3.checked && domObject.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+        }
+
+        // validate mother signed
+        var element4 = document.getElementById('motherSigned');
+        if (!element4.checked && domObject.value.length > 0) {
+            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
+        }
+    }
 }
 
 // validate informant fields
@@ -342,6 +360,7 @@ function disableMarriage(mode) {
 
 
 function disableSigns(mode) {
+
     if (!mode) {
         var name = document.getElementById('fatherName');
         if (name.value.length == 0) {
@@ -413,7 +432,7 @@ function initPage() {
                     <tr>
                         <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
-                                     onclick="disableMarriage(true);disableSigns(true)"/>
+                                     onclick="disableMarriage(true);disableSigns(false)" id="unknownMarriage"/>
                         </td>
                     </tr>
                     </tbody>
@@ -735,18 +754,6 @@ function initPage() {
 <s:hidden id="error16" value="%{getText('p3.Informant.telephone.error.value')}"/>
 <s:hidden id="error17" value="%{getText('p3.informdate.with.reg.date')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
-
-<%--hidden values for capture parent details for marrage unknown state--%>
-<s:if test="%{#session.birthRegister.parent.fatherFullName == null}">
-    <s:hidden id="isFatherCaptured" value="true"/>
-    <s:property value="%{#session.birthRegister.parent.fatherFullName}"/>
-</s:if>
-<s:if test="%{#session.birthRegister.parent.motherFullName == null}">
-    <s:hidden id="isMotherCaptured" value="true"/>
-    <s:property value="%{#session.birthRegister.parent.motherFullName}"/>
-</s:if>
-<s:property value="%{#session.birthRegister.parent.motherFullName}"/>
-<s:label value="hhhhhhh"/>
 
 </div>
 
