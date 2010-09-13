@@ -112,6 +112,12 @@ public class Registrar implements Serializable {
     private boolean resigned;
 
     /**
+     * Is this a Medical Registrar ?
+     */
+    @Column(nullable = false)
+    private boolean medical;
+
+    /**
      * Terminated ?
      */
     @Column(nullable = false)
@@ -273,5 +279,13 @@ public class Registrar implements Serializable {
 
     public void setEmploymentTerminated(boolean employmentTerminated) {
         this.employmentTerminated = employmentTerminated;
+    }
+
+    public boolean isMedical() {
+        return medical;
+    }
+
+    public void setMedical(boolean medical) {
+        this.medical = medical;
     }
 }
