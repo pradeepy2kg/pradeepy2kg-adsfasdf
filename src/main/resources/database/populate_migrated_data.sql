@@ -2780,7 +2780,7 @@ INSERT INTO CRS.MR_DIVISIONS(dsDivisionUKey, divisionId, enDivisionName, siDivis
 -- Registrar information
 
 INSERT INTO CRS.REGISTRAR(fullNameInEnglishLanguage, fullNameInOfficialLanguage, acting, currentAddress, dateOfAppointment, dateOfBirth, active, pin, resigned, medical, employmentTerminated, gender)
-  VALUES('Mrs. M. A. C. F. Jazila', '- name pending translation -', 0, 'Mosque Road, Adidalachchena - 3', NULL, NULL, 0, 1, 0, 0, 0, 0);
+  VALUES('Mrs. M. A. C. F. Jazila', '- name pending translation -', 0, 'Mosque Road, Adidalachchena - 3',null, null, 0, 1, 0, 0, 0, 0);
 INSERT INTO CRS.REGISTRAR(fullNameInEnglishLanguage, fullNameInOfficialLanguage, acting, currentAddress, dateOfAppointment, dateOfBirth, active, pin, resigned, medical, employmentTerminated, gender)
   VALUES('Mr. Sahibu Lebbe Marikkar Mustafa', '- name pending translation -', 0, 'Ansadi Rd., Palamuna 02', '1991-07-20', '1941-08-03', 1, 2, 0, 0, 0, 0);
 INSERT INTO CRS.REGISTRAR(fullNameInEnglishLanguage, fullNameInOfficialLanguage, acting, currentAddress, dateOfAppointment, dateOfBirth, active, pin, resigned, medical, employmentTerminated, gender)
