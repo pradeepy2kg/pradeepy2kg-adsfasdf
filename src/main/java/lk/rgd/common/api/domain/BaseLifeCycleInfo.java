@@ -19,7 +19,7 @@ public class BaseLifeCycleInfo implements Serializable {
     @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false) //, columnDefinition = "TIMESTAMP default '0000-00-00 00:00:00'")
+    @Column(nullable = true)     //(nullable = false, columnDefinition = "TIMESTAMP default '0000-00-00 00:00:00'")
     @Temporal(value = TemporalType.TIMESTAMP)
     /**
      * The database row level created timestamp (i.e. when a user first enters the record to the system)
