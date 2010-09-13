@@ -15,6 +15,11 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>clickAndWait</td>
+                    <td>logout-button</td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>type</td>
                     <td>eprLogin_userName</td>
                     <td>rg</td>
