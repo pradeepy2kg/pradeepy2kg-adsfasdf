@@ -12,11 +12,9 @@ echo "Updated and built the code.."
 sleep 2
 
 echo "Deploying updates .."
-rm /data/tomcat6/webapps/popreg.war
 cp /data/code/popreg/target/ecivil.war /data/tomcat6/webapps/ecivil.war
 rm -rf /data/tomcat6/work/Catalina/localhost/
 rm -rf /data/tomcat6/webapps/ecivil
-rm -rf /data/tomcat6/webapps/popreg
 
 #sleep 2
 #echo "Starting Tomcat .."
