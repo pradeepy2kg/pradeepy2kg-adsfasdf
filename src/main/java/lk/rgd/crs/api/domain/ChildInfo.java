@@ -124,8 +124,8 @@ public class ChildInfo implements Serializable {
      */
     public String getChildFullNameOfficialLangToLength(int maxLength) {
         if (childFullNameOfficialLang != null && childFullNameOfficialLang.length() > maxLength) {
-            return "..." + childFullNameOfficialLang.substring(childFullNameOfficialLang.length() - maxLength - 3,
-                childFullNameOfficialLang.length());
+            return "..." + childFullNameOfficialLang.substring(childFullNameOfficialLang.length() - maxLength + 3,
+                    childFullNameOfficialLang.length());
         }
         return childFullNameOfficialLang;
     }
