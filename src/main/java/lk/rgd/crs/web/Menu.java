@@ -194,12 +194,13 @@ public class Menu {
         deoAdoptionLink.put("eprAdoptionRegistrationAction.do", new Link("adoption_registration.label", "/ecivil/adoption/", "eprAdoptionRegistrationAction.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionApprovalAndPrint.do", new Link("adoption_approval_and_print.lable", "/ecivil/adoption/", "eprAdoptionApprovalAndPrint.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionApplicantInfo.do", new Link("adoption_applicant.label", "/ecivil/adoption/", "eprAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
+        deoAdoptionLink.put("eprAdoptionReRegistration.do", new Link("adoption_re_registration.label", "/ecivil/adoption/", "eprAdoptionReRegistration.do", Permission.EDIT_ADOPTION));
 
         deoAdoptionLink.put("eprAdoptionAction.do", new Link(null, "/ecivil/adoption/", "eprAdoptionAction.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionRegistrationHome.do", new Link(null, "/ecivil/adoption/", "eprAdoptionRegistrationHome.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionProcessApplicantInfo.do", new Link(null, "/ecivil/adoption/", "eprAdoptionProcessApplicantInfo.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprBirthRegistrationHome.do", new Link(null, "/ecivil/adoption/", "eprBirthRegistrationHome.do", Permission.EDIT_ADOPTION));
-        //    deoAdoptionLink.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/ecivil/adoption/", "eprAdoptionCertificate.do",0)));
+        //    deoAdoptionLink.put(Permission.PAGE_ADOPTION_APPLICANT_INFO, new Link("adoption_certificate.label", "/ecivil/adoption/", "eprAdoptionCertificate.do"));
         deoAdoptionLink.put("eprAdoptionBirthRegistrationInit.do", new Link(null, "/ecivil/births/", "eprAdoptionBirthRegistrationInit.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionViewMode.do", new Link(null, "/ecivil/adoption/", "eprAdoptionViewMode.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprMarkDirectlyAdoptionNoticeAsPrinted.do", new Link(null, "/ecivil/adoption/", "eprMarkDirectlyAdoptionNoticeAsPrinted.do", Permission.EDIT_ADOPTION));
@@ -218,7 +219,8 @@ public class Menu {
         deoAdoptionLink.put("eprAdoptionFilterByStatus.do", new Link(null, "/ecivil/adoption/", "eprAdoptionFilterByStatus.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprAdoptionBackToPreviousState.do", new Link(null, "/ecivil/adoption/", "eprAdoptionBackToPreviousState.do", Permission.EDIT_ADOPTION));
         deoAdoptionLink.put("eprCaptureAdoptionApplicantInfo.do", new Link(null, "/ecivil/adoption/", "eprCaptureAdoptionApplicantInfo.do", Permission.EDIT_ADOPTION));
-        //deoAdoptionLink.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/ecivil/births/", "eprAdoptionRegistrationHome.do",0)));
+        deoAdoptionLink.put("eprAdoptionReRegistrationFindEntry.do", new Link(null, "/ecivil/adoption/", "eprAdoptionReRegistrationFindEntry.do", Permission.EDIT_ADOPTION));
+        //deoAdoptionLink.put(Permission.PAGE_ADOPTION_BDF_HOME, new Link(null, "/ecivil/births/", "eprAdoptionRegistrationHome.do"));
 
         // Adoption Registration for ADR
         adrAdoptionLink.putAll(deoAdoptionLink);

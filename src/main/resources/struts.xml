@@ -252,7 +252,7 @@
             <param name="approveBelated">true</param>
             <result type="tiles" name="success">epr.birthRegisterBelatedApproval</result>
         </action>
-                
+
         <action name="eprBelatedIgnoreWarning" class="lk.rgd.crs.web.action.births.BirthRegisterApprovalAction"
                 method="approveIgnoringWarning">
             <param name="approveBelated">true</param>
@@ -680,6 +680,21 @@
             <result type="tiles" name="success">epr.adoptionRegistrationHome</result>
         </action>
 
+        <action name="eprAdoptionReRegistration" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="reRegistrationInit">
+            <result type="tiles" name="success">epr.adoptionReRegistrationLookup</result>
+        </action>
+
+        <action name="eprAdoptionReRegistrationFindEntry" class="lk.rgd.crs.web.action.births.AdoptionAction"
+                method="loadReRegistrationRecord">
+            <result type="tiles" name="invalidData">epr.adoptionReRegistrationLookup</result>
+            <result type="redirectAction" name="success">
+                <param name="actionName">eprAdoptionBirthRegistrationInit</param>
+                <param name="adoptionId">%{#request.idUKey}</param>
+                <param name="namespace">../births</param>
+            </result>
+        </action>
+
         <!--approve and print list related-->
         <action name="eprAdoptionApprovalAndPrint" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="adoptionApprovalAndPrint">
@@ -753,6 +768,7 @@
                 method="adoptionBackToPreviouseState">
             <result type="tiles" name="success">epr.adoptionApprovalAndPrint</result>
         </action>
+
     </package>
 
     <package name="management" namespace="/management" extends="NG">

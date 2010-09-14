@@ -349,4 +349,9 @@
         <put-attribute name="title" value="adoption_certificate.label"/>
     </definition>
 
+    <definition name="epr.adoptionReRegistrationLookup" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/adoption/AdoptionReRegistrationLookup.jsp"/>
+        <put-attribute name="title" value="adoption_re_registration.label"/>
+    </definition>
+
 </tiles-definitions>

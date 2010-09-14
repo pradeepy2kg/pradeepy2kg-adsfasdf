@@ -61,6 +61,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map session;
 
     private long idUKey;
+    private long adoptionId;
     private int pageNo;
     private String courtOrderNo;
     private boolean allowEditAdoption;
@@ -217,12 +218,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             populateApprovalAndPrintList();
             return "skip";
         }
-        if (adoption.getStatus() != AdoptionOrder.State.APPROVED) {
+        if (!(adoption.getStatus() == AdoptionOrder.State.APPROVED || adoption.getStatus() == AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
-            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
+            logger.debug("Current state of adoption order : {}", adoption.getStatus());
             return ERROR;
         } else {
-            logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
+            logger.debug("Current state of adoption order : {}", adoption.getStatus());
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             return SUCCESS;
@@ -238,7 +239,10 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      */
     public String markAdoptionNoticeAsPrinted() {
         logger.debug("requested to mark Adoption Notice as printed for idUKey : {} ", idUKey);
-        service.setStatusToPrintedNotice(idUKey, user);
+        adoption = service.getById(idUKey, user);
+        if (adoption != null && adoption.getStatus() == AdoptionOrder.State.APPROVED) {
+            service.setStatusToPrintedNotice(idUKey, user);
+        }
         populate();
         initPermissionForApprovalAndPrint();
         noOfRows = appParametersDAO.getIntParameter(ADOPTION_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
@@ -535,6 +539,24 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             session.remove(WebConstants.SESSION_ADOPTION_ORDER);
         }
         return SUCCESS;
+    }
+
+    public String reRegistrationInit() {
+        return SUCCESS;
+    }
+
+    public String loadReRegistrationRecord() {
+        adoption = service.getById(idUKey, user);
+        if (adoption == null) {
+            addActionError(getText("er.adoption.re.registration.invalid.entry"));
+            return "invalidData";
+        }
+        if (AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED != adoption.getStatus()) {
+            addActionError(getText("er.adoption.re.registration.invalid.state"));
+            return "invalidData";
+        } else {
+            return SUCCESS;
+        }
     }
 
     public void initPermissionForApprovalAndPrint() {
@@ -912,5 +934,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setPrinted(boolean printed) {
         this.printed = printed;
+    }
+
+    public long getAdoptionId() {
+        return adoptionId;
+    }
+
+    public void setAdoptionId(long adoptionId) {
+        this.adoptionId = adoptionId;
     }
 }

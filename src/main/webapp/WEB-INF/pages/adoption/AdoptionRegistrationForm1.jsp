@@ -148,11 +148,9 @@ function validate() {
         isEmpty(domObject, "", 'error6');
     }
     domObject = document.getElementById("applicantPin");
-    if (isFieldEmpty(domObject)) {
-        isEmpty(domObject, "", 'error13');
-    } else {
-        validatePINorNIC(domObject, 'error12', 'error13');
-    }
+    if (!isFieldEmpty(domObject)) {
+         validatePINorNIC(domObject, 'error12', 'error13');
+    } 
     domObject = document.getElementById("childAgeYears");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error7');
@@ -430,7 +428,7 @@ function enableSerialNumber(mode) {
             தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
             Wife's PIN / NIC Number
         </td>
-        <td colspan="2"  class="find-person" >
+        <td colspan="2" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="wife_NIC_V" onclick="javascript:addXorV('wifePINorNIC','V','error21')">
             <img src="<s:url value="/images/alphabet-X.gif" />"

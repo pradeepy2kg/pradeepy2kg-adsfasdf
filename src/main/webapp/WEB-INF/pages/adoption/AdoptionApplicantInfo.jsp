@@ -17,7 +17,7 @@
         });
     });
 
-    function setApplicantInfo(pin, name, address)
+    function setApplicantInfo(pin, name, address, fatherAddress, wifeName, wifePin)
     {
 
         var applicantPin = document.getElementById("certifcateApplicantPin").value = "";
@@ -31,9 +31,15 @@
         }
         domObject1 = document.getElementsByName("certificateApplicantType")[1];
         if (domObject1.checked) {
-            var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
-            var applicantName = document.getElementById("certificateApplicantName").value = name;
-            var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+            if (pin != "" && name != "" && address != "") {
+                var applicantPin = document.getElementById("certifcateApplicantPin").value = pin;
+                var applicantName = document.getElementById("certificateApplicantName").value = name;
+                var applicantAddress = document.getElementById("certificateApplicantAddress").value = address;
+            }
+            else {
+                var applicantPin = document.getElementById("certifcateApplicantPin").value = wifePin;
+                var applicantName = document.getElementById("certificateApplicantName").value = wifeName;
+            }
         }
     }
 
@@ -74,6 +80,14 @@
         errormsg = "";
         return returnval;
     }
+
+    function initPage() {
+        var domObject = document.getElementById('idUKey');
+        if (domObject.value.trim() == 0) {
+            domObject.value = null;
+        }
+    }
+
 </script>
 
 <div id="adoption-applicant-info-form-outer">
@@ -227,10 +241,11 @@
             <td><s:if test="#request.adoption.applicantMother==false">
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'FATHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','','','');"/>
             </s:if>
                 <s:else><s:radio name="certificateApplicantType" id="certificateApplicantType"
-                                 list="#@java.util.HashMap@{'FATHER':''}" onchange="setApplicantInfo('','','');"/>
+                                 list="#@java.util.HashMap@{'FATHER':''}"
+                                 onchange="setApplicantInfo('','','','','','');"/>
                 </s:else>
             </td>
             <td>මව <br/>
@@ -239,12 +254,12 @@
             <td><s:if test="#request.adoption.applicantMother==true">
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
                          list="#@java.util.HashMap@{'MOTHER':''}"
-                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}');"/>
+                         onchange="setApplicantInfo('%{#request.adoption.applicantPINorNIC}','%{#request.adoption.applicantName}','%{#request.adoption.applicantAddress}','','','');"/>
             </s:if>
                 <s:else>
                     <s:radio name="certificateApplicantType" id="certificateApplicantType"
                              list="#@java.util.HashMap@{'MOTHER':''}"
-                             onchange="setApplicantInfo('','','');"/>
+                             onchange="setApplicantInfo('','','','%{#request.adoption.applicantAddress}','%{#request.adoption.wifeName}','%{#request.adoption.wifePINorNIC}');"/>
                 </s:else>
             </td>
             <td>වෙනත් <br/>
@@ -252,7 +267,7 @@
             </td>
             <td>
                 <s:radio name="certificateApplicantType" id="certificateApplicantType"
-                         list="#@java.util.HashMap@{'OTHER':''}" onchange="setApplicantInfo('','','');"/>
+                         list="#@java.util.HashMap@{'OTHER':''}" onchange="setApplicantInfo('','','','','','');"/>
             </td>
         </tr>
         <tr>
