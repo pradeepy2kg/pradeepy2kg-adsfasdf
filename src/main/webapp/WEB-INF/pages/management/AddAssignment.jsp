@@ -9,6 +9,7 @@
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 
@@ -91,19 +92,30 @@
         });
     });
 
-    function disableAssignment(mode) {
-        document.getElementById('districtId').disabled = mode;
-        document.getElementById('dsDivisionId').disabled = mode;
-        document.getElementById('divisionId').disabled = mode;
-        document.getElementById('dateOfAppoinmentDatePicker').disabled = mode;
-        document.getElementById('dateOfPermenentDatePicker').disabled = mode;
-        document.getElementById('dateOfTerminationDatePicker').disabled = mode;
-        document.getElementById('eprAssignmentAdd_assignMentSubmit').disabled = mode;
+    var appoinmentDate = document.getElementById('dateOfAppoinmentDatePicker');
+    var permanentDate = document.getElementById('dateOfPermenentDatePicker');
+    var terminationDate = document.getElementById('dateOfTerminationDatePicker');
+    var errormsg = "";
+
+    function validateForm() {
+        var returnval = true;
+        //validate date formats
+        isDate(appoinmentDate, "invalideData", "appoinmentDate")
+        isDate(permanentDate, "invalideData", "permanentDate")
+        isDate(terminationDate, "invalideData", "terminationDate")
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
     }
 
-    function searchButtonClick() {
-        //  disableAssignment(false);
+    function initPage() {
+
     }
+
 </script>
 <s:actionerror cssStyle="color:red;"/>
 <s:set name="indirect" value="directAssigment"/>
@@ -158,117 +170,117 @@
 
 </s:if>
 
-<s:form action="eprAssignmentAdd.do" method="post">
+<s:form action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()>
     <fieldset>
         <legend><s:property value="%{getText('assignment.bd.marraige.division')}"/></legend>
-        <table cellspacing="0" cellpadding="0">
-            <caption></caption>
-            <col width="500px">
-            <col width="500px">
-            <col>
-            <tbody>
-            <tr>
-                <td colspan="1" align="left">
-                    <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:98.5%; width:240px;"/>
-                </td>
-                <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
-                                                       list="dsDivisionList"
-                                                       value="%{dsDivisionId}"
-                                                       cssStyle="float:left;  width:240px;"/></td>
-                <td>
-                    <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
-                              cssStyle="float:left;  width:240px; margin:2px 5px;"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
+<table cellspacing="0" cellpadding="0">
+    <caption></caption>
+    <col width="500px">
+    <col width="500px">
+    <col>
+    <tbody>
+    <tr>
+        <td colspan="1" align="left">
+            <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
+                      cssStyle="width:98.5%; width:240px;"/>
+        </td>
+        <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
+                                               list="dsDivisionList"
+                                               value="%{dsDivisionId}"
+                                               cssStyle="float:left;  width:240px;"/></td>
+        <td>
+            <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
+                      cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</fieldset>
+<fieldset>
+    <legend><s:property value="%{getText('assignment.type')}"/></legend>
+    <table cellspacing="0" cellpadding="0">
+        <caption></caption>
+        <col width="500px">
+        <col width="500px">
+        <tbody>
+        <tr>
+            <td colspan="1" align="left"><s:select
+                    list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
+                    name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
+<s:if test="assignment != null">
     <fieldset>
-        <legend><s:property value="%{getText('assignment.type')}"/></legend>
-        <table cellspacing="0" cellpadding="0">
-            <caption></caption>
-            <col width="500px">
-            <col width="500px">
-            <tbody>
-            <tr>
-                <td colspan="1" align="left"><s:select
-                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
-                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
-            </tr>
-            </tbody>
-        </table>
+        <legend><s:property value="%{getText('assignment.state')}"/></legend>
+        <s:if test="assignment != null">
+            <s:select
+                    list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                    name="assignmentState" cssStyle="width:240px; margin-left:5px;"/>
+        </s:if>
+        <s:else>
+            <s:select
+                    list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                    name="assignment.lifeCycleInfo.active" cssStyle="width:240px; margin-left:5px;"/>
+        </s:else>
+
     </fieldset>
-    <s:if test="assignment != null">
-        <fieldset>
-            <legend><s:property value="%{getText('assignment.state')}"/></legend>
-            <s:if test="assignment != null">
-                <s:select
-                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
-                        name="assignmentState" cssStyle="width:240px; margin-left:5px;"/>
-            </s:if>
-            <s:else>
-                <s:select
-                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
-                        name="assignment.lifeCycleInfo.active" cssStyle="width:240px; margin-left:5px;"/>
-            </s:else>
+</s:if>
+<fieldset>
+    <legend><s:property value="%{getText('assignment.dates')}"/></legend>
+    <table>
+        <caption/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <fieldset>
+                <legend><s:label value="appoinment date"/></legend>
+                <s:if test="assignment != null">
+                    <s:textfield value="%{assignment.appointmentDate}" id="dateOfAppoinmentDatePicker"
+                                 name="appoinmentDate"/>
+                </s:if>
+                <s:else>
+                    <s:textfield name="assignment.appointmentDate" id="dateOfAppoinmentDatePicker"/> </s:else>
+            </fieldset>
+            <fieldset>
+                <legend><s:label value="permenent date"/></legend>
+                <s:if test="assignment != null">
+                    <s:textfield value="%{assignment.permanentDate}" id="dateOfPermenentDatePicker"
+                                 name="permanentDate"/>
+                </s:if>
+                <s:else>
+                    <s:textfield name="assignment.permanentDate" id="dateOfPermenentDatePicker"/> </s:else>
 
-        </fieldset>
-    </s:if>
-    <fieldset>
-        <legend><s:property value="%{getText('assignment.dates')}"/></legend>
-        <table>
-            <caption/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <tbody>
-            <tr>
-                <fieldset>
-                    <legend><s:label value="appoinment date"/></legend>
-                    <s:if test="assignment != null">
-                        <s:textfield value="%{assignment.appointmentDate}" id="dateOfAppoinmentDatePicker"
-                                     name="appoinmentDate"/>
-                    </s:if>
-                    <s:else>
-                        <s:textfield name="assignment.appointmentDate" id="dateOfAppoinmentDatePicker"/> </s:else>
-                </fieldset>
-                <fieldset>
-                    <legend><s:label value="permenent date"/></legend>
-                    <s:if test="assignment != null">
-                        <s:textfield value="%{assignment.permanentDate}" id="dateOfPermenentDatePicker"
-                                     name="permanentDate"/>
-                    </s:if>
-                    <s:else>
-                        <s:textfield name="assignment.permanentDate" id="dateOfPermenentDatePicker"/> </s:else>
+            </fieldset>
+            <fieldset>
+                <legend><s:label value="termination date"/></legend>
+                <s:if test="assignment != null">
+                    <s:textfield value="%{assignment.terminationDate}" id="dateOfTerminationDatePicker"
+                                 name="terminationDate"/>
+                </s:if>
+                <s:else>
+                    <s:textfield name="assignment.terminationDate" id="dateOfTerminationDatePicker"/> </s:else>
+            </fieldset>
+        </tr>
 
-                </fieldset>
-                <fieldset>
-                    <legend><s:label value="termination date"/></legend>
-                    <s:if test="assignment != null">
-                        <s:textfield value="%{assignment.terminationDate}" id="dateOfTerminationDatePicker"
-                                     name="terminationDate"/>
-                    </s:if>
-                    <s:else>
-                        <s:textfield name="assignment.terminationDate" id="dateOfTerminationDatePicker"/> </s:else>
-                </fieldset>
-            </tr>
-
-            </tbody>
-        </table>
-    </fieldset>
-    <s:if test="editableAssignment==false">
-        <s:submit name="assignMentSubmit" value="add assignment prop"/>
-    </s:if>
-    <s:else>
-        <s:submit name="assignMentEdit" value="edit assignment prop"/>
-        <s:hidden name="editMode" value="true"/>
-    </s:else>
-    <s:hidden name="directAssigment" value="2"/>
-    <s:hidden name="registrarSession" value="true"/>
+        </tbody>
+    </table>
+</fieldset>
+<s:if test="editableAssignment==false">
+    <s:submit name="assignMentSubmit" value="add assignment prop"/>
+</s:if>
+<s:else>
+    <s:submit name="assignMentEdit" value="edit assignment prop"/>
+    <s:hidden name="editMode" value="true"/>
+</s:else>
+<s:hidden name="directAssigment" value="2"/>
+<s:hidden name="registrarSession" value="true"/>
 </s:form>
 <s:if test="assignment != null">
     <script type="text/javascript">
@@ -278,5 +290,11 @@
         document.getElementById('type').disabled = true;
     </script>
 </s:if>
+
+<s:hidden id="invalideData" value="%{getText('invalide.data')}"/>
+<s:hidden id="cannotNull" value="%{getText('cannot.null')}"/>
+<s:hidden id="appoinmentDate" value="%{getText('field.appoinment.date')}"/>
+<s:hidden id="permanentDate" value="%{getText('field.permanent.data')}"/>
+<s:hidden id="terminationDate" value="%{getText('field.termination.data')}"/>
 
 
