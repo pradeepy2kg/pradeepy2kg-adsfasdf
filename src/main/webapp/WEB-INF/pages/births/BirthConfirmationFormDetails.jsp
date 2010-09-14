@@ -69,12 +69,12 @@
                         </s:else>
                     </s:if>
                     <s:if test="skipConfirmationChages">
-                        <%--<s:if test="#request.allowPrintCertificate">--%>
+                        <s:if test="#request.allowPrintCertificate">
                             <s:a href="%{printBirthCertificate}">
                                 <s:label
                                         value="%{getText('printBirthCertificate_link.label')}"/></s:a> &nbsp;&nbsp;&nbsp;&nbsp;
                         </s:if>
-                    <%--</s:if>--%>
+                    </s:if>
                 </td>
             </tr>
         </table>
