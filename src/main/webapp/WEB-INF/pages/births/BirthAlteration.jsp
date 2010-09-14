@@ -311,7 +311,13 @@ function validate() {
         if (!isFieldEmpty(domObject))
             validateBirthYear(domObject, 'searchCertificateError1', 'grandGrandFatherError2');
     }
-
+    var mother = document.getElementById('declarantTypeMOTHER').checked;
+    var father = document.getElementById('declarantTypeFATHER').checked;
+    var other = document.getElementById('declarantTypeOTHER').checked;
+    var self = document.getElementById('declarantTypeRELATIVE').checked;
+    if (!(mother || father || other || self)) {
+        errormsg = errormsg +"\n" +document.getElementById("declarantError1").value;
+    }
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -1376,6 +1382,11 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:hidden id="grandFatherError2" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
 <s:hidden id="grandGrandFatherError1" value="%{getText('greatGrandFatherNICorPIN.text')}"/>
 <s:hidden id="grandGrandFatherError2" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
+
+
+<s:hidden id="declarantError1" value="%{getText('declarantType.lable')}"/>
+
+
 <%--Search Errors--%>
 <s:hidden id="searchCertificateError1" value="%{getText('certificateNumber.lable')}"/>
 <s:hidden id="searchCertificateError2" value="%{getText('idNumber.lable')}"/>
