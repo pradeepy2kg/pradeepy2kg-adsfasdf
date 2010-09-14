@@ -25,14 +25,20 @@ import java.util.Date;
 })
 
 public class BirthAlteration {
-    @Id
-    // This is an auto generated unique row identifier
+    @Id    // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    @Column(nullable = false)
-    // the ID points to Birth Declarition
+    // This is the serial number for the BirthAlteration
+    @Column(nullable = false, updatable = false)
+    private Long alterationSerialNo;
+
+    @Column(nullable = false) // the ID points to Birth Declarition
     private long bdId;
+
+    @Column(nullable = false)   // The date when the alteration request was received
+    @Temporal(value = TemporalType.DATE)
+    private Date dateReceived;
 
     @Embedded
     private Alteration27 alt27;
@@ -147,5 +153,21 @@ public class BirthAlteration {
 
     public void setBdId(long bdId) {
         this.bdId = bdId;
+    }
+
+    public Long getAlterationSerialNo() {
+        return alterationSerialNo;
+    }
+
+    public void setAlterationSerialNo(Long alterationSerialNo) {
+        this.alterationSerialNo = alterationSerialNo;
+    }
+
+    public Date getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(Date dateReceived) {
+        this.dateReceived = dateReceived;
     }
 }
