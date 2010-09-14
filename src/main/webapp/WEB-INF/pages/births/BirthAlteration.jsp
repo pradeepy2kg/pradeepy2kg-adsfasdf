@@ -130,14 +130,14 @@ $(function() {
     $('#header-info-max').click(function() {
         maximize("header-info");
     });
-    $('select#sectionOfAct').change(function() {
-        var id = $("select#sectionOfAct").attr("value");
-        document.getElementById("actNumber1").style.display = 'none';
-        document.getElementById("actNumber2").style.display = 'none';
-        document.getElementById("actNumber3").style.display = 'none';
-        document.getElementById("actNumber" + id).style.display = 'block';
+    /*  $('select#sectionOfAct').change(function() {
+     var id = $("select#sectionOfAct").attr("value");
+     document.getElementById("actNumber1").style.display = 'none';
+     document.getElementById("actNumber2").style.display = 'none';
+     document.getElementById("actNumber3").style.display = 'none';
+     document.getElementById("actNumber" + id).style.display = 'block';
 
-    });
+     });*/
 });
 function minimize(id) {
     document.getElementById(id).style.display = 'none';
@@ -153,8 +153,11 @@ function maximize(id, click) {
 }
 
 function initPage() {
-    var idNames = new Array('errors-info', 'mother-info', 'informant-info', 'father-info',
-            'marriage-info', 'grandFather-info', 'error-explanation-info', 'mother-after-marriage-info', 'header-info');
+    var sectionOfAct = document.getElementById("sectionOfAct").value;
+    var idNames;
+    if (sectionOfAct == 1)   idNames = new Array('header-info', 'error-explanation-info');
+    if (sectionOfAct == 2)    idNames = new Array('errors-info', 'header-info', 'mother-info', 'informant-info', 'error-explanation-info');
+    if (sectionOfAct == 3)   idNames = new Array('father-info', 'marriage-info', 'header-info', 'mother-after-marriage-info', 'grandFather-info', 'error-explanation-info');
     for (var i = 0; i < idNames.length; i++) {
         document.getElementById(idNames[i]).style.display = 'none';
         document.getElementById(idNames[i] + "-min").style.display = 'none';
@@ -207,7 +210,6 @@ $(function() {
     });
 });
 var errormsg = "";
-
 function validate() {
     var act = document.getElementById("sectionOfAct").value;
     var domObject;
@@ -307,8 +309,9 @@ function validate() {
         }
         domObject = document.getElementById('grandGrandFatherBirthYear');
         if (!isFieldEmpty(domObject))
-            validateBirthYear(domObject, 'comError1', 'grandGrandFatherError2');
+            validateBirthYear(domObject, 'searchCertificateError1', 'grandGrandFatherError2');
     }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -326,22 +329,57 @@ function validateBirthYear(domElement, errorText, errorCode) {
     }
 }
 </script>
+<script type="text/javascript">
+    var errormsg = "";
+    function validate2(text) {
+        var domObject;
+        var returnval = true;
+        if (text == 1) {
+            domObject = document.getElementById("bdfSerialNoIdSearch");
+            if (!isFieldEmpty(domObject)) {
+                isNumeric(domObject.value, 'searchCertificateError1', 'comError1')
+            }
+        }
+        if (text == 2) {
+            domObject = document.getElementById("idNumberSearch");
+            if (!isFieldEmpty(domObject)) {
+                isNumeric(domObject.value, 'searchCertificateError2', 'comError1')
+            }
+        }
+        if (text == 3) {
+            domObject = document.getElementById("bdfSearchSerialNoId");
+            if (!isFieldEmpty(domObject)) {
+                validateSerialNo(domObject, 'searchCertificateError2', 'comError1')
+            }
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
+</script>
 <s:if test="pageNo==0">
     <div id="birth-confirmation-search">
         <s:actionerror cssClass="alreadyPrinted"/>
-        <s:form action="eprBirthAlterationSearch.do" method="post" onsubmit="javascript:return validate()">
+        <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2('1')">
             <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
                 <legend>
                     <b><s:label name="confirmatinSearchLegend"
-                                value="%{getText('registrationSerchLegend3.label')}"/><s:actionerror/></b>
+                                value="%{getText('registrationSerchLegend3.label')}"/></b>
                 </legend>
                 <table class="search-option-table">
                     <tr>
-                        <td width="350px"><s:label name="confirmationSearch"
+                        <td width="200px"><s:label name="confirmationSearch"
                                                    value="%{getText('certificateNumber.lable')}"/></td>
-                        <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
+                        <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch"/></td>
+                        <td width="200px"><s:label value="%{getText('sectionOfTheAct.lable')}"/></td>
+                        <td width="200px"><s:select
+                                list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
+                                name="sectionOfAct" cssStyle="width:190px; margin-left:5px;"/></td>
                         <td>
-                            <s:hidden name="pageNo" value="1"/>
+                            <s:hidden name="pageNo" value="1"/> <s:hidden id="pageNo" value="1"/>
                             <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
                                                                name="search"/></div>
                         </td>
@@ -349,7 +387,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 </table>
             </fieldset>
         </s:form>
-        <s:form action="eprBirthAlterationSearch.do" method="post">
+        <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2('2')">
             <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
                 <legend>
                     <b><s:label name="confirmatinSearchLegend"
@@ -359,12 +397,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <tr>
                         <td width="350px"><s:label name="confirmationSearch"
                                                    value="%{getText('idNumber.lable')}"/></td>
-                        <td width="250px"><s:textfield name="nicOrPin" id="bdfSerialNoId2"/></td>
-                        <td>
+                        <td width="250px"><s:textfield name="nicOrPin" id="idNumberSearch"/></td>
+
+                        <td rowspan="2">
                             <s:hidden name="pageNo" value="2"/>
                             <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
                                                                name="search"/></div>
                         </td>
+                    </tr>
+                    <tr>
+                        <td><s:label value="%{getText('sectionOfTheAct.lable')}"/></td>
+                        <td><s:select
+                                list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
+                                name="sectionOfAct" cssStyle="width:235px;"/></td>
                     </tr>
                 </table>
             </fieldset>
@@ -374,7 +419,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <b><s:label name="registrationSerchLegend"
                             value="%{getText('registrationSerchLegend1.label')}"/></b>
             </legend>
-            <s:form action="eprBirthAlterationSearch.do" method="post">
+            <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2('3')">
             <table class="search-option-table">
                 <caption></caption>
                 <col/>
@@ -385,7 +430,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <tbody>
                 <tr>
                     <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td><s:textfield name="serialNo" id="bdfSerialNoId1"/></td>
+                    <td><s:textfield name="serialNo" id="bdfSearchSerialNoId"/></td>
                     <td><s:label value="%{getText('district.label')}"/></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
@@ -407,7 +452,10 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3"></td>
+                    <td><s:label value="%{getText('sectionOfTheAct.lable')}"/></td>
+                    <td colspan="2"><s:select
+                            list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
+                            name="sectionOfAct" cssStyle="width:240px;"/></td>
                     <td>
                         <s:hidden name="pageNo" value="3"/>
                         <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
@@ -443,15 +491,14 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         தொடர் இலக்கம் <br>
                         Serial Number
                     </td>
-                    <td width="60%"><s:textfield id="bdfSerialNo" name="register.bdfSerialNo"/></td>
+                    <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo"/></td>
                 </tr>
                 <tr>
                     <td>භාරගත් දිනය <br>
                         பிறப்பைப் பதிவு திகதி <br>
                         Date of Acceptance
                     </td>
-                    <td><s:textfield id="acceptanceDate" name="register.dateOfRegistration"/></td>
-                </tr>
+                    <td><s:textfield id="acceptanceDate" name="dateReceived"/></td>
                 <tr>
                     <td>පනතේ වගන්තිය <br>
                         பிறப்பைப் <br>
@@ -459,7 +506,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                     <td><s:select
                             list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                            name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" id="sectionOfAct"/></td>
+                            name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" disabled="true"
+                            id="sectionOfAct"/></td>
 
                 </tr>
             </table>
@@ -487,6 +535,53 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
         </tr>
     </table>
+    <table class="birth-alteration-table-style02" style=" margin-top:0px;width:100%;" cellpadding="0"
+           cellspacing="0">
+        <caption></caption>
+        <col style="width:20%"/>
+        <col style="width:20%"/>
+        <col style="width:20%"/>
+        <col style="width:20%"/>
+        <col style="width:20%"/>
+        <tbody>
+        <tr>
+            <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
+                தனிநபர்அடையாள எண் <br>
+                Person Identification Number (PIN) stated in the Certificate
+            </td>
+            <td><s:label name="nicOrPin"/></td>
+            <td>සහතික පත්‍රයේ අංකය <br>
+                சான்றிதழ் இல <br>
+                Certificate Number
+            </td>
+            <td><s:label name="idUKey"/></td>
+        </tr>
+        <tr>
+            <td>දිස්ත්‍රික්කය <br>
+                மாவட்டம் <br>
+                District
+            </td>
+            <td><s:label name="districtName"/></td>
+            <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
+                பிரிவு <br>
+                Divisional Secretariat
+            </td>
+            <td colspan="2"><s:label name="dsDivisionName"/></td>
+        </tr>
+        <tr>
+            <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
+                பிரிவு <br>
+                Registration Division
+            </td>
+            <td><s:label name="bdDivisionName"/></td>
+            <td>ලියාපදිංචි කිරීමේ අංකය <br>
+                சான்றிதழ் இல <br>
+                Registration Number
+            </td>
+            <td colspan="2"><s:label name="serialNo"/></td>
+        </tr>
+        </tbody>
+    </table>
     <table class="birth-alteration-table-style01" style="width:100%;">
         <tr>
             <td style="text-align:center;font-size:11pt;">
@@ -506,51 +601,55 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
     </table>
 </div>
-<div id="actNumber1">
-    <table class="birth-alteration-table-style01" style="width:100%">
-        <tr>
-            <td colspan="2" style="text-align:center;font-size:11pt;border-bottom:none;">නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම
-                (27
-                වගන්තිය) <br>
-                தந்தை பற்றிய தகவல் <br>
-                Insertion or Alteration of the Name (Section 27)
-            </td>
-        </tr>
-    </table>
-    <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
-        <caption></caption>
-        <col width="250px"/>
-        <col width="760px"/>
-        <tbody>
-        <tr>
-            <td colspan="2" style="text-align:center;">මෙම වගන්තිය යටතේ මව්පියන් හෝ භාරකරු හට අවුරුදු 21 කට අඩු
-                දරුවකුගේ නම වෙනස් කිරීමට ඉල්ලීම් කල හැක. අවු
-                රුදු 21 කට වැඩි පුද්ගලයෙකුගේ නම වෙනස් කිරීමට ඔහු විසින් ඉල්ලුම් පත්‍රයක් ඉදිරිපත් කල හැක. <br>
-                தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை
-                பற்றிய தகவல் தந்தை பற்றிய தகவல் <br>
-                Under this section the name change of a child under 21 years could be requested by his parents or
-                the
-                guardian. A person over 21 years in age could request for a name change on his own.
-            </td>
-        </tr>
-        <tr>
-            <td>නම රාජ්‍ය භාෂාවෙන්
-                (සිංහල / දෙමළ) <br>
-                பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
-                Name in any of the official languages (Sinhala / Tamil)
-            </td>
-            <td><s:textarea name="alt27.childFullNameOfficialLang" id="nameInOfficialLanguages"/></td>
-        </tr>
-        <tr>
-            <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>
-                பிறப்பு அத்தாட்சி ….. <br>
-                Name in English
-            </td>
-            <td><s:textarea name="alt27.childFullNameEnglish" id="nameInEnglish"/></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<s:if test="sectionOfAct==1">
+    <div id="actNumber1">
+        <table class="birth-alteration-table-style01" style="width:100%">
+            <tr>
+                <td colspan="2" style="text-align:center;font-size:11pt;border-bottom:none;">නම ඇතුලත් කිරීම හෝ වෙනස්
+                    කිරීම
+                    (27
+                    වගන්තිය) <br>
+                    தந்தை பற்றிய தகவல் <br>
+                    Insertion or Alteration of the Name (Section 27)
+                </td>
+            </tr>
+        </table>
+        <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
+            <caption></caption>
+            <col width="250px"/>
+            <col width="760px"/>
+            <tbody>
+            <tr>
+                <td colspan="2" style="text-align:center;">මෙම වගන්තිය යටතේ මව්පියන් හෝ භාරකරු හට අවුරුදු 21 කට අඩු
+                    දරුවකුගේ නම වෙනස් කිරීමට ඉල්ලීම් කල හැක. අවු
+                    රුදු 21 කට වැඩි පුද්ගලයෙකුගේ නම වෙනස් කිරීමට ඔහු විසින් ඉල්ලුම් පත්‍රයක් ඉදිරිපත් කල හැක. <br>
+                    தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை
+                    பற்றிய தகவல் தந்தை பற்றிய தகவல் <br>
+                    Under this section the name change of a child under 21 years could be requested by his parents or
+                    the
+                    guardian. A person over 21 years in age could request for a name change on his own.
+                </td>
+            </tr>
+            <tr>
+                <td>නම රාජ්‍ය භාෂාවෙන්
+                    (සිංහල / දෙමළ) <br>
+                    பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
+                    Name in any of the official languages (Sinhala / Tamil)
+                </td>
+                <td><s:textarea name="alt27.childFullNameOfficialLang" id="nameInOfficialLanguages"/></td>
+            </tr>
+            <tr>
+                <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>
+                    பிறப்பு அத்தாட்சி ….. <br>
+                    Name in English
+                </td>
+                <td><s:textarea name="alt27.childFullNameEnglish" id="nameInEnglish"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</s:if>
+<s:if test="sectionOfAct==2">
 <div id="actNumber2">
 <table class="birth-alteration-table-style01" style="text-align:center;width:100%">
     <tr>
@@ -827,6 +926,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
     </table>
 </div>
 </div>
+</s:if>
+<s:if test="sectionOfAct==3">
 <div id="actNumber3">
 <table class="birth-alteration-table-style01" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -1091,6 +1192,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     </table>
 </div>
 </div>
+</s:if>
 <div id="actNumber4">
     <div id="error-explanation-info">
         <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
@@ -1236,8 +1338,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <td colspan="2"><s:textarea/></td>
     </tr>
     </tbody>
-</table>--%>
+</table>
+</div>--%>
+<s:hidden name="idUKey"/>
+<s:hidden name="sectionOfAct"/>
+<div class="form-submit">
+<s:submit value="%{getText('submit.label')}"/>
+</s:form>
 </div>
+</s:if>
 <%--common errors--%>
 <s:hidden id="comError1" value="%{getText('p1.invalide.inputType')}"/>
 <s:hidden id="comError2" value="%{getText('p1.serial.text')}"/>
@@ -1265,11 +1374,9 @@ function validateBirthYear(domElement, errorText, errorCode) {
 
 <s:hidden id="grandFatherError1" value="%{getText('grandFatherNICorPIN.text')}"/>
 <s:hidden id="grandFatherError2" value="%{getText('p1.YearofBirthOfGrandFather')}"/>
-
 <s:hidden id="grandGrandFatherError1" value="%{getText('greatGrandFatherNICorPIN.text')}"/>
 <s:hidden id="grandGrandFatherError2" value="%{getText('p1.YearofBirthOfGreatGrandFather')}"/>
-<div class="form-submit">
-<s:submit value="%{getText('submit.label')}"/>
-</s:form>
-</div>
-</s:if>
+<%--Search Errors--%>
+<s:hidden id="searchCertificateError1" value="%{getText('certificateNumber.lable')}"/>
+<s:hidden id="searchCertificateError2" value="%{getText('idNumber.lable')}"/>
+<s:hidden id="searchCertificateError2" value="%{getText('searchDeclarationSearial.label')}"/>

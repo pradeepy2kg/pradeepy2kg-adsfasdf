@@ -1681,5 +1681,7 @@ birth-alteration-table-style01 td{border:none;}
 .birth-alteration-table-style02 textarea{width:95%; margin:10px;}
 .birth-alteration-table-style02 input{width:85%;margin:10px;}
 .birth-alteration-table-style02 select{width:95%;margin:10px;}
+.birth-alteration-table-style02 label{width:95%;margin:10px;}
+
 .birth-alteration-minimize-icon{background:url(../images/minimize-icon.jpg) no-repeat ;float:right;width:35px;height:26px;}
 .birth-alteration-maximize-icon{background:url(../images/maximize-icon.jpg) no-repeat ;float:right;width:35px;height:26px;}

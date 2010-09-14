@@ -47,12 +47,17 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Alteration52_1 alt52_1;
     private DeclarantInfo declarant;
     private BirthRegisterInfo register;
+    private Date dateReceived;
+    private Long alterationSerialNo;
 
 
     private int pageNo;
     private int noOfRows;
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
-    private long nicOrPin;
+    private Long nicOrPin;
+    private String districtName;
+    private String dsDivisionName;
+    private String bdDivisionName;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -63,7 +68,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private int motherRace;
     private int dsDivisionId;
     private int sectionOfAct;
-    private long idUKey;
+    private Long idUKey;
     private long serialNo; //to be used in the case where search is performed from confirmation 1 page.
     private boolean allowApproveAlteration;
     private boolean nextFlag;
@@ -94,7 +99,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public String birthAlterationSearch() {
         BirthDeclaration bdf = new BirthDeclaration();
-         populateBasicLists();
+        populateBasicLists();
         switch (pageNo) {
             case 1:
                 bdf = service.getById(idUKey, user);
@@ -109,6 +114,12 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         }
         try {
             idUKey = bdf.getIdUKey();
+            //nicOrPin = bdf.getChild().getPin();
+            serialNo = bdf.getRegister().getBdfSerialNo();
+            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+            districtName = districtDAO.getNameByPK(birthDistrictId, language);
+            dsDivisionName = dsDivisionDAO.getNameByPK(dsDivisionId, language);
+            bdDivisionName = bdDivisionDAO.getNameByPK(birthDivisionId, language);
         }
         catch (Exception e) {
             handleErrors(e);
@@ -128,49 +139,58 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt27 = new Alteration27();
         alt27A = new Alteration27A();
         alt52_1 = new Alteration52_1();
+        switch (sectionOfAct) {
+            //set alt27
+            case 1:
+                alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
+                alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
+                break;
+            //set alt52_1
+            case 2:
+                InformantInfo bdfInformant = bdf.getInformant();
+                alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
+                        bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
+                alt52_1.setChildGender(bdf.getChild().getChildGender());
+                alt52_1.setDateOfBirth(bdf.getChild().getDateOfBirth());
+                alt52_1.setPlaceOfBirth(bdf.getChild().getPlaceOfBirth());
+                alt52_1.setPlaceOfBirthEnglish(bdf.getChild().getPlaceOfBirthEnglish());
+                MotherInfo mother = new MotherInfo();
+                mother.setMotherAddress(bdf.getParent().getMotherAddress());
+                mother.setMotherAgeAtBirth(bdf.getParent().getMotherAgeAtBirth());
+                mother.setMotherDOB(bdf.getParent().getMotherDOB());
+                mother.setMotherFullName(bdf.getParent().getMotherFullName());
+                mother.setMotherNICorPIN(bdf.getParent().getMotherNICorPIN());
+                mother.setMotherPassportNo(bdf.getParent().getMotherPassportNo());
+                alt52_1.setMother(mother);
+                logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
+                        alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
+                if (bdf.getParent().getMotherCountry() != null) {
+                    motherCountry = bdf.getParent().getMotherCountry().getCountryId();
+                }
+                if (bdf.getParent().getMotherRace() != null) {
+                    motherRace = bdf.getParent().getMotherRace().getRaceId();
+                }
+                break;
+            case 3:
+                //set alt27A
+                FatherInfo father = new FatherInfo();
+                father.setFatherDOB(bdf.getParent().getFatherDOB());
+                father.setFatherFullName(bdf.getParent().getFatherFullName());
+                father.setFatherNICorPIN(bdf.getParent().getFatherNICorPIN());
+                father.setFatherPassportNo(bdf.getParent().getFatherPassportNo());
+                father.setFatherPlaceOfBirth(bdf.getParent().getFatherPlaceOfBirth());
+                father.setFatherRace(bdf.getParent().getFatherRace());
+                if (bdf.getParent().getFatherCountry() != null) {
+                    fatherCountry = bdf.getParent().getFatherCountry().getCountryId();
+                }
+                if (bdf.getParent().getFatherRace() != null) {
+                    fatherRace = bdf.getParent().getFatherRace().getRaceId();
+                }
+                alt27A.setFather(father);
+                alt27A.setGrandFather(bdf.getGrandFather());
+                alt27A.setMarriage(bdf.getMarriage());
+                break;
 
-        //set alt27
-        alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
-        alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
-        //set alt27A
-        FatherInfo father = new FatherInfo();
-        father.setFatherDOB(bdf.getParent().getFatherDOB());
-        father.setFatherFullName(bdf.getParent().getFatherFullName());
-        father.setFatherNICorPIN(bdf.getParent().getFatherNICorPIN());
-        father.setFatherPassportNo(bdf.getParent().getFatherPassportNo());
-        father.setFatherPlaceOfBirth(bdf.getParent().getFatherPlaceOfBirth());
-        father.setFatherRace(bdf.getParent().getFatherRace());
-        alt27A.setFather(father);
-        alt27A.setGrandFather(bdf.getGrandFather());
-        alt27A.setMarriage(bdf.getMarriage());
-        InformantInfo bdfInformant = bdf.getInformant();
-        alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
-                bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
-        alt52_1.setChildGender(bdf.getChild().getChildGender());
-        alt52_1.setDateOfBirth(bdf.getChild().getDateOfBirth());
-        alt52_1.setPlaceOfBirth(bdf.getChild().getPlaceOfBirth());
-
-        //set alt52_1
-        alt52_1.setPlaceOfBirthEnglish(bdf.getChild().getPlaceOfBirthEnglish());
-        MotherInfo mother = new MotherInfo();
-        mother.setMotherAddress(bdf.getParent().getMotherAddress());
-        mother.setMotherAgeAtBirth(bdf.getParent().getMotherAgeAtBirth());
-        mother.setMotherDOB(bdf.getParent().getMotherDOB());
-        mother.setMotherFullName(bdf.getParent().getMotherFullName());
-        mother.setMotherNICorPIN(bdf.getParent().getMotherNICorPIN());
-        mother.setMotherPassportNo(bdf.getParent().getMotherPassportNo());
-        alt52_1.setMother(mother);
-        if (bdf.getParent().getFatherCountry() != null) {
-            fatherCountry = bdf.getParent().getFatherCountry().getCountryId();
-        }
-        if (bdf.getParent().getFatherRace() != null) {
-            fatherRace = bdf.getParent().getFatherRace().getRaceId();
-        }
-        if (bdf.getParent().getMotherCountry() != null) {
-            motherCountry = bdf.getParent().getMotherCountry().getCountryId();
-        }
-        if (bdf.getParent().getMotherRace() != null) {
-            motherRace = bdf.getParent().getMotherRace().getRaceId();
         }
         birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
         birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();
@@ -181,18 +201,32 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String birthAlteration() {
         //todo tharanga >> remove country and race DAOs if they not wanted and also allDistrictList and AllDSDivisionList
         BirthAlteration ba = new BirthAlteration();
-        alt27.setFullNameOfficialLangApproved(false);
-        alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
-        Date d = new Date();
         BitSet bitSet = new BitSet();
-        alt27A.setApprovalStatuses(bitSet);
-        alt52_1.setApprovalStatuses(bitSet);
-        ba.setAlt27(alt27);
-        ba.setAlt27A(alt27A);
-        ba.setAlt52_1(alt52_1);
+        switch (sectionOfAct) {
+            //case 1 is used to set alteration27
+            case 1:
+                alt27.setFullNameOfficialLangApproved(false);
+                alt27.setFullNameEnglishApproved(false);
+                ba.setAlt27(alt27);
+                break;
+            //case 2 is used to set alteration52_1
+            case 2:
+                alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                alt52_1.setApprovalStatuses(bitSet);
+                ba.setAlt52_1(alt52_1);
+                break;
+            //case 2 is used to set alteration27A
+            case 3:
+                alt27A.setApprovalStatuses(bitSet);
+                ba.setAlt27A(alt27A);
+                break;
+        }
+        logger.debug("value of the idUkey  :{}", idUKey);
+        ba.setBdId(idUKey);
         ba.setDeclarant(declarant);
+        ba.setDateReceived(dateReceived);
+        ba.setAlterationSerialNo(alterationSerialNo);
         alterationService.addBirthAlteration(ba, user);
-        logger.debug("");
         return SUCCESS;
     }
 
@@ -208,8 +242,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         setPageNo(1);
-        birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+        /*birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);*/
         initPermission();
         return SUCCESS;
     }
@@ -534,19 +568,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.declarant = declarant;
     }
 
-    public long getIdUKey() {
+    public Long getIdUKey() {
         return idUKey;
     }
 
-    public void setIdUKey(long idUKey) {
+    public void setIdUKey(Long idUKey) {
         this.idUKey = idUKey;
     }
 
-    public long getNicOrPin() {
+    public Long getNicOrPin() {
         return nicOrPin;
     }
 
-    public void setNicOrPin(long nicOrPin) {
+    public void setNicOrPin(Long nicOrPin) {
         this.nicOrPin = nicOrPin;
     }
 
@@ -617,5 +651,45 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setPreviousFlag(boolean previousFlag) {
         this.previousFlag = previousFlag;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getDsDivisionName() {
+        return dsDivisionName;
+    }
+
+    public void setDsDivisionName(String dsDivisionName) {
+        this.dsDivisionName = dsDivisionName;
+    }
+
+    public String getBdDivisionName() {
+        return bdDivisionName;
+    }
+
+    public void setBdDivisionName(String bdDivisionName) {
+        this.bdDivisionName = bdDivisionName;
+    }
+
+    public Date getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(Date dateReceived) {
+        this.dateReceived = dateReceived;
+    }
+
+    public Long getAlterationSerialNo() {
+        return alterationSerialNo;
+    }
+
+    public void setAlterationSerialNo(Long alterationSerialNo) {
+        this.alterationSerialNo = alterationSerialNo;
     }
 }
