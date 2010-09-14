@@ -143,7 +143,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt27A.setFather(father);
         alt27A.setGrandFather(bdf.getGrandFather());
         alt27A.setMarriage(bdf.getMarriage());
-        alt52_1.setInformant(bdf.getInformant());
+        InformantInfo bdfInformant = bdf.getInformant();
+        alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
+                bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
         alt52_1.setChildGender(bdf.getChild().getChildGender());
         alt52_1.setDateOfBirth(bdf.getChild().getDateOfBirth());
         alt52_1.setPlaceOfBirth(bdf.getChild().getPlaceOfBirth());
@@ -182,7 +184,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt27.setFullNameOfficialLangApproved(false);
         alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
         Date d = new Date();
-        alt52_1.getInformant().setInformantSignDate(d);
         BitSet bitSet = new BitSet();
         alt27A.setApprovalStatuses(bitSet);
         alt52_1.setApprovalStatuses(bitSet);

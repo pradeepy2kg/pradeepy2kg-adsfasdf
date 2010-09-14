@@ -11,10 +11,6 @@ import java.util.Date;
 
 @Embeddable
 public class InformantInfo implements Serializable {
-
-    /**
-     * 0 - father, 1 - mother, 2 - guardian, 3 - relative
-     */
     public enum InformantType {
         FATHER,
         MOTHER,

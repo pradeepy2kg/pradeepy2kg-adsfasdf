@@ -35,13 +35,13 @@ public class Alteration52_1 {
     /**
      * Contains the approval bit set for each field.
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     private BitSet approvalStatuses52;
 
     /**
      * The date of the birth
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
     private Date dateOfBirth;
 
@@ -61,20 +61,20 @@ public class Alteration52_1 {
      * The Birth/Death registration division where the birth is registered (Includes District)
      */
     @ManyToOne
-    @JoinColumn(name = "bdDivisionUKey", nullable = false)
+    @JoinColumn(name = "bdDivisionUKey", nullable = true)
     private BDDivision birthDivision;
 
     /**
      * Gender 0 - male, 1 - female, 2 - unknown
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int childGender;
 
     @Embedded
     private MotherInfo mother;
 
     @Embedded
-    private InformantInfo informant;
+    private AlterationInformatInfo informant;
 
     @Column(nullable = true, length = 1000)
     private String natureOfError;
@@ -90,11 +90,11 @@ public class Alteration52_1 {
         this.mother = mother;
     }
 
-    public InformantInfo getInformant() {  
+    public AlterationInformatInfo getInformant() {
         return informant;
     }
 
-    public void setInformant(InformantInfo informant) {
+    public void setInformant(AlterationInformatInfo informant) {
         this.informant = informant;
     }
 
