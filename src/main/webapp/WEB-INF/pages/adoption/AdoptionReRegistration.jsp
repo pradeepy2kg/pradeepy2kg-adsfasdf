@@ -3,19 +3,27 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
+    #adoption-registration-form-outer table tr td {
+        padding: 0 5px;
+    }
+
     @media print {
         .form-submit {
             display: none;
         }
 
         td {
-            font-size: 11pt;
+            font-size: 8pt;
         }
+    }
+
+    #adoption-registration-form-outer .form-submit {
+        margin: 5px 0 15px 0;
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 
-<div id="adoption-registration-form-outer">
+
 <div class="form-submit">
     <s:if test="#request.approved">
         <s:url id="markAsPrint" action="eprMarkDirectlyAdoptionNoticeAsPrinted.do">
@@ -45,10 +53,11 @@
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
-<div id="adoption-page">
+<div id="adoption-page" class="form-submit">
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
 </div>
+<div id="adoption-registration-form-outer">
 <table class="adoption-reg-form-header-table">
     <tr>
         <td align="center" style="font-size:12pt">
@@ -350,7 +359,7 @@
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
-<div id="adoption-page">
+<div id="adoption-page"  class="form-submit">
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
 </div>

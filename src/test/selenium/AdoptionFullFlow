@@ -484,7 +484,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Print Birth Certificate</td>
+	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
 	<td></td>
 </tr>
 <tr>
@@ -497,7 +497,21 @@
 	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>click</td>
+	<td>birth-certificate-print-form_printedtrue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth-certificate-print-form_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=උපත් ලියාපදිංචිය</td>
+	<td></td>
+</tr>
 
 </tbody></table>
 </body>
