@@ -178,7 +178,7 @@ public class ParentInfo implements Serializable {
     private String motherAdmissionNo;
 
     /**
-     * Date the mother admitted that she was pregnant.
+     * Date the mother admitted that she was pregnant. -- just kidding, the date she got addmitted to the hospital of course. -- 
      */
     @Column(nullable = true)
     @Temporal(value = TemporalType.DATE)
