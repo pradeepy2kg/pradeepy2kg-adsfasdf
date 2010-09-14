@@ -1,8 +1,11 @@
 package lk.rgd.crs.core.service;
 
 import lk.rgd.crs.api.service.BirthAlterationService;
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.Alteration27;
+import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.dao.BirthAlterationDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.web.WebConstants;
@@ -28,9 +31,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationServiceImpl.class);
     private final BirthAlterationDAO birthAlterationDAO;
+    private final BirthRegistrationService birthRegistrationService;
 
-    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO) {
+    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthRegistrationService birthRegistrationService) {
         this.birthAlterationDAO = birthAlterationDAO;
+        this.birthRegistrationService = birthRegistrationService;
     }
 
     /**
@@ -41,7 +46,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         //todo set data entry state
         logger.debug("adding new birth alteration");
         validateAccessOfUser(ba, user);
-        //ba.setStatus(BirthAlteration.State.DATA_ENTRY);
+        BirthDeclaration bd = birthRegistrationService.getById(ba.getBdId(), user);
         birthAlterationDAO.addBirthAlteration(ba, user);
     }
 
@@ -175,16 +180,23 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
     }
 
     private List<BirthAlteration> getApprovalPendingAlterations(List<BirthAlteration> alterationList) {
-       //todo Alteration27 is not considered here it also has to be considered
         List<BirthAlteration> pendingApprovalList = new ArrayList<BirthAlteration>();
         Boolean alreadyAdded;
+
         for (BirthAlteration ba : alterationList) {
             alreadyAdded = false;
+            Alteration27 alt27 = ba.getAlt27();
+            if (!(alt27.isFullNameEnglishApproved() && alt27.isFullNameOfficialLangApproved())) {
+                pendingApprovalList.add(ba);
+                alreadyAdded = true;
+            }
             BitSet bs = ba.getAlt27A().getApprovalStatuses();
-            for (int i = 1; i <= bs.size(); i++) {
-                if (!bs.get(i)) {
-                    pendingApprovalList.add(ba);
-                    alreadyAdded = true;
+            if (!alreadyAdded) {
+                for (int i = 1; i <= bs.size(); i++) {
+                    if (!bs.get(i)) {
+                        pendingApprovalList.add(ba);
+                        alreadyAdded = true;
+                    }
                 }
             }
             if (!alreadyAdded) {
