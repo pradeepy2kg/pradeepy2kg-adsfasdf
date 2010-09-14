@@ -10,14 +10,13 @@ public class Link implements Serializable {
     private String category;
     private String action;
     private int permissionKey;
-    private int orderNum;
 
-    public Link(String propertyKey, String link, String action, int permissionKey, int orderNum) {
+
+    public Link(String propertyKey, String link, String action, int permissionKey) {
         this.propertyKey = propertyKey;
         this.category = link;
         this.action = action;
         this.permissionKey = permissionKey;
-        this.orderNum = orderNum;
     }
 
     public String getAction() {
@@ -51,13 +50,5 @@ public class Link implements Serializable {
 
     public void setPermissionKey(int permissionKey) {
         this.permissionKey = permissionKey;
-    }
-
-    public int getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(int orderNum) {
-        this.orderNum = orderNum;
     }
 }

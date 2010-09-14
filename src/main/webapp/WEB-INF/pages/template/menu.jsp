@@ -78,12 +78,6 @@
                         <s:if test="%{value.propertyKey != null}">
                             <li>
                                 <s:a href="%{value.category+value.action}">
-                                    <s:if test="%{value.orderNum != 0}">
-                                        <s:label value="("/><s:property value="%{value.orderNum}"/><s:label value=")"/>
-                                    </s:if>
-                                    <s:else>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                    </s:else>
                                     <s:property
                                             value="%{getText(value.propertyKey)}"/>
                                 </s:a>
