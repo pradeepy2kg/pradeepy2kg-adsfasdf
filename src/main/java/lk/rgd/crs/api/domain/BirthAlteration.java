@@ -140,4 +140,12 @@ public class BirthAlteration {
     public void setStampFee(float stampFee) {
         this.stampFee = stampFee;
     }
+
+    public long getBdId() {
+        return bdId;
+    }
+
+    public void setBdId(long bdId) {
+        this.bdId = bdId;
+    }
 }

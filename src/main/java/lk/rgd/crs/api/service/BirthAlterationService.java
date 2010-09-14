@@ -62,7 +62,7 @@ public interface BirthAlterationService {
     public void approveBirthAlteration(BirthAlteration ba, boolean isAlteration27A, Hashtable<Integer, Boolean> fieldsToBeApproved, User user);
 
     /**
-     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27A or statement
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
      * 52_1 are awaiting approval by an ARG or higher authority based on given DSDivison id.
      *
      * @param dsDivision the divisional Secretariat
@@ -74,7 +74,7 @@ public interface BirthAlterationService {
     public List<BirthAlteration> getApprovalPendingByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
 
     /**
-     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27A or statement
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
      * 52_1 are awaiting approval by an ARG or higher authority based on given birth/death division.
      *
      * @param bdDivision the birth/death division
