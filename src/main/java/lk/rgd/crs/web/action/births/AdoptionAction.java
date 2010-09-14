@@ -117,8 +117,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     populate();
                     return "invalidBirthCertificateNumber";
                 }
-                service.updateAdoptionOrder(adoption, user);
             }
+            service.updateAdoptionOrder(adoption, user);
         } else {
             birthCertificateNo = adoption.getBirthCertificateNumber();
             if (birthCertificateNo > 0) {
