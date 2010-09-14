@@ -9,6 +9,7 @@
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script>
@@ -130,20 +131,70 @@
         });
     });
 
+    var nameOfficialLang ;
+    var nameEnglish ;
+    var pin ;
+    var nic ;
+    var gender;
+    var dob;
+    var address;
+    var phone;
+    var email;
+    var lang;
+    var errormsg = "";
+
     function disableFields(mode) {
-        document.getElementById('registrarNameInOfficelaLang').disabled = mode;
-        document.getElementById('registrarNameInEnglish').disabled = mode;
-        document.getElementById('registrarPin').disabled = mode;
-        document.getElementById('registrarNIC').disabled = mode;
-        document.getElementById('registrarGender').disabled = mode;
-        document.getElementById('dateOfBirthDatePicker').disabled = mode;
-        document.getElementById('registrarAddress').disabled = mode;
-        document.getElementById('registrarPhone').disabled = mode;
-        document.getElementById('registrarEmail').disabled = mode;
-        document.getElementById('prefLanguage').disabled = mode;
+        nameOfficialLang.disabled = mode;
+        nameEnglish.disabled = mode;
+        pin.disabled = mode;
+        nic.disabled = mode;
+        gender.disabled = mode;
+        dob.disabled = mode;
+        address.disabled = mode;
+        phone.disabled = mode;
+        email.disabled = mode;
+        lang.disabled = mode;
+        document.getElementById('saveUpdate').disabled = mode;
+
     }
     function initPage() {
+
+        nameOfficialLang = document.getElementById('registrarNameInOfficelaLang');
+        nameEnglish = document.getElementById('registrarNameInEnglish');
+        pin = document.getElementById('registrarPin');
+        nic = document.getElementById('registrarNIC');
+        gender = document.getElementById('registrarGender');
+        dob = document.getElementById('dateOfBirthDatePicker');
+        address = document.getElementById('registrarAddress');
+        phone = document.getElementById('registrarPhone');
+        email = document.getElementById('registrarEmail');
+        lang = document.getElementById('prefLanguage');
         disableFields(true)
+    }
+
+    function validateForm() {
+
+        var returnval = true;
+        //valdiate numbers
+        isNumeric(pin.value, "invalideData", "pin")
+        //validate PIN or NIC
+        validatePINorNIC(pin, "invalideData", "pin")
+        validatePINorNIC(nic, "invalideData", "nic")
+        //validate phone number
+        validatePhoneNo(phone, "invalideData", "phone")
+        //validate email
+        validateEmail(email, "invalideData", "email")
+        /*        //validate date of birth
+         isDate(dob, "invalideData", "email")*/
+        /*todo validate compulsory fields*/
+        isEmpty(nameOfficialLang, "nameOfficial", "cannotNull")
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
     }
 </script>
 
@@ -157,7 +208,7 @@
 </style>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><s:property value="%{getText('registrar.basic.info')}"/></legend>
-    <form action="eprUpdateRegistrar.do" method="post">
+    <form action="eprUpdateRegistrar.do" method="post" onsubmit="javascript:return validateForm()">
         <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
             <caption></caption>
             <col width="400px"/>
@@ -223,7 +274,7 @@
                 <td><s:property value="%{getText('label.enable.edit.mode')}"/> <s:checkbox name="enableEditMode"
                                                                                            id="enableEditMode"
                                                                                            onclick="javascript:disableFields(false);"/></td>
-                <td><s:submit value="%{getText('label.submit')}"/></td>
+                <td><s:submit value="%{getText('label.submit')}" id="saveUpdate"/></td>
             </tr>
             </tbody>
         </table>
@@ -295,5 +346,16 @@
         <s:a href="%{x}"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
     </div>
 </fieldset>
+
+<s:hidden id="invalideData" value="%{getText('invalide.data')}"/>
+<s:hidden id="cannotNull" value="%{getText('cannot.null')}"/>
+<s:hidden id="pin" value="%{getText('filed.pin')}"/>
+<s:hidden id="nic" value="%{getText('field.nic')}"/>
+<s:hidden id="dob" value="%{getText('field.dob')}"/>
+<s:hidden id="address" value="%{getText('field.address')}"/>
+<s:hidden id="phone" value="%{getText('field.phone')}"/>
+<s:hidden id="email" value="%{getText('field.email')}"/>
+<s:hidden id="nameOfficial" value="%{getText('field.nameOfficial')}"/>
+
 
 

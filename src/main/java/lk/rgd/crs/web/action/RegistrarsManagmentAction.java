@@ -115,13 +115,15 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             registrar = service.getRegistrarById(registrarUkey);
             assignmentList = service.getAssignments(registrarUkey, user);
         }
-        List<Registrar> exsisting = (List<Registrar>) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+        Registrar exsisting = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
         logger.info("exsisting  : {}", exsisting);
-        if (exsisting != null && exsisting.size() > 0) {
-            registrar = exsisting.get(0);
+        if (exsisting != null && exsisting.getRegistrarUKey() > 0) {
+            registrar = exsisting;
             assignmentList = service.getAssignments(registrar.getRegistrarUKey(), user);
         }
         /*  assignmentList = service.getAllAssignments(user);*/
+        //use for edit this registrar
+        session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
         return SUCCESS;
     }
 
@@ -162,9 +164,9 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             logger.info("indiirect came : {}", indirect);
             if (directAssigment == 2) {
                 //gettting exsiting
-                List<Registrar> reg = (List) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+                Registrar reg = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 if (registrarPin > 0) {
-                    reg = service.getRegistrarByPin(registrarPin, user);
+                    reg = service.getRegistrarByPin(registrarPin, user).get(0);
                 }
                 if (reg == null) {
                     //subbmitting without searching for a registrar
@@ -174,18 +176,18 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                     return SUCCESS;
                 }
 
-                assignment.setRegistrar((Registrar) reg.get(0));
+                assignment.setRegistrar(reg);
                 //setting correct divisiontype
                 if (type.equals(Assignment.Type.BIRTH))
                     assignment.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
                 if (type.equals(Assignment.Type.DEATH))
                     assignment.setDeathDivision(bdDivisionDAO.getBDDivisionByPK(divisionId));
-                //todo marrige division
-                if (type.equals(Assignment.Type.GENERAL_MARRIAGE))
+                if (type.equals(Assignment.Type.GENERAL_MARRIAGE) || (type.equals(Assignment.Type.KANDYAN_MARRIAGE)) ||
+                        (type.equals(Assignment.Type.MUSLIM_MARRIAGE)))
                     assignment.setMarriageDivision(mrDivisionDAO.getMRDivisionByPK(divisionId));
+
                 assignment.setType(type);
                 service.addAssignment(assignment, user);
-                // session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 assignment = null;
                 addActionMessage("assignment.saved.successfully");
             }
@@ -215,8 +217,16 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String updateRegistrar() {
-        //todo implement
+        Registrar exsisting = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
+
         logger.info("attempting to update registrar : {}", registrar.getFullNameInEnglishLanguage());
+        //setting previouse life cycyle info
+        registrar.setLifeCycleInfo(exsisting.getLifeCycleInfo());
+        //setting current assignment
+        registrar.setAssignments(exsisting.getAssignments());
+        //setting uK
+        registrar.setRegistrarUKey(exsisting.getRegistrarUKey());
+
         service.updateRegistrar(registrar, user);
         session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
         return SUCCESS;
@@ -226,7 +236,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         //requesting addAssignment page directly
         if (registrarPin > 0) {
-            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user));
+            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, service.getRegistrarByPin(registrarPin, user).get(0));
         }
         populateLists(1, 1);
         directAssigment = 1;
@@ -241,7 +251,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         } else {
             //adding found registrar to session
             addActionMessage("registrar.found");
-            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, exsistedReg);
+            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, exsistedReg.get(0));
         }
         //todo remove this populate
         populateLists(1, 1);

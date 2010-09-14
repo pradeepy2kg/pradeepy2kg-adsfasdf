@@ -78,10 +78,10 @@ function validatePINorNIC(domElement, errorText, errorCode) {
 }
 
 //add X or V at the end of the NIC
-function addXorV(domElement, letter,error) {
-    var reg= /^([0-9]{9})$/;
+function addXorV(domElement, letter, error) {
+    var reg = /^([0-9]{9})$/;
     if ((document.getElementById(domElement).value.length == 9) && isInteger((document.getElementById(domElement).value))) {
-        document.getElementById(domElement).value =document.getElementById(domElement).value + letter;
+        document.getElementById(domElement).value = document.getElementById(domElement).value + letter;
     } else {
         alert(document.getElementById(error).value);
     }
