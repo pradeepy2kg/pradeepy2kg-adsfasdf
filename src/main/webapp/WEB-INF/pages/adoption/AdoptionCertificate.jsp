@@ -208,6 +208,8 @@
 </tr>
 </tbody>
 </table>
+
+<s:if test="#request.adoption.birthCertificateNumber>0 || #request.adoption.birthRegistrationSerial>0">
 <table style="font-size:12pt;text-align:center;width:100%">
     <tr></tr>
     <tr>
@@ -250,7 +252,7 @@
         </td>
     </tr>
 </table>
-
+</s:if>
 <table style="width:100%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
     <tr>
         <td>
