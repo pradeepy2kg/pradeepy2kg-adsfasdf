@@ -226,7 +226,6 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         User user = loginSampleUser();
         long idUKey = 3;
         //set state to approve
-        AdoptionOrder adoption = adoptionOrderService.getById(idUKey, user);
         adoptionOrderService.approveAdoptionOrder(idUKey, user);
         //set to notice letter printed
         adoptionOrderService.setStatusToPrintedNotice(idUKey, user);
@@ -236,7 +235,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         session = adoptionAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
 
-        request.setParameter("courtOrderNo", "gampaha1232");
+        request.setParameter("idUKey", "3");
         request.setParameter("search", "සොයන්න");
         initAndExucute("/adoption/eprAdoptionFind.do", session);
         session = adoptionAction.getSession();

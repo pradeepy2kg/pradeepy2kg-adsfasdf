@@ -67,7 +67,7 @@ public class UserManagementTest extends TestCase {
         Assert.assertEquals(1, usersByRoleAndAssignedBDDistrict.size());
 
         List<User> usersByAssignedMRDistrict = userManager.getUsersByAssignedMRDistrict(districtDAO.getDistrict(1));
-        Assert.assertEquals(19, usersByAssignedMRDistrict.size());
+        Assert.assertEquals(17, usersByAssignedMRDistrict.size());
 
         List<User> usersByRoleAndAssignedMRDistrict = userManager.getUsersByRoleAndAssignedMRDistrict(
                 roleDAO.getRole("DR"), districtDAO.getDistrict(1));
