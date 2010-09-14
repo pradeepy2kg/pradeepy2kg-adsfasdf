@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href='/ecivil/css/menu.css'/>
 <script src="/ecivil/lib/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="/ecivil/js/menu.js" type="text/javascript"></script>
+<style type="text/css">
+
+</style>
 
 <div id="xmain-menu">
     <ul class="menu">
@@ -77,12 +80,13 @@
                     <s:iterator value="value" id="x">
                         <s:if test="%{value.propertyKey != null}">
                             <li>
-                                <s:a href="%{value.category+value.action}">
+                                <s:a href="%{value.category+value.action}" id="%{value.propertyKey}">
                                     <s:property
                                             value="%{getText(value.propertyKey)}"/>
                                 </s:a>
                             </li>
                         </s:if>
+
                     </s:iterator>
                 </ul>
                 </li>
@@ -90,3 +94,8 @@
         </s:iterator>
     </ul>
 </div>
+<script type="text/javascript">
+    document.getElementById("birth_register_approval.label").style.color = "red";
+    document.getElementById("birth_confirmation_approval.label").style.color = "red";
+    document.getElementById("birth_register_belated_approval.label").style.color = "red";
+</script>
