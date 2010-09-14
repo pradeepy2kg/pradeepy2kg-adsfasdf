@@ -10,13 +10,13 @@ import java.util.BitSet;
  */
 @Embeddable
 public class Alteration27 {
-    @Column(nullable = false, length = 600)
+    @Column(nullable = true, length = 600)
     private String childFullNameOfficialLang;
 
     @Column(nullable = true, length = 600)
     private String childFullNameEnglish;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean fullNameOfficialLangApproved;
 
     @Column(nullable = true)

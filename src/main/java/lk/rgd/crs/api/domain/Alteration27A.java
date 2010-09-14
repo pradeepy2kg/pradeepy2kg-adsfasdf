@@ -49,7 +49,7 @@ public class Alteration27A {
     /**
      * Contains the approval bit set for each field.
      */
-    @Column(nullable = false)
+    @Column(nullable = true)
     private BitSet approvalStatuses27A;
 
     public GrandFatherInfo getGrandFather() {
