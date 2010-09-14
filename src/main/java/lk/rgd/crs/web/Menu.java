@@ -26,6 +26,7 @@ public class Menu {
     // common menu items
     private static final Map preferanceLink = new LinkedHashMap();
     private static final Map prsLink = new LinkedHashMap();
+    private static final Map searchLink = new LinkedHashMap();
 
     // deo menu items
     private static final Map deoBirthLink = new LinkedHashMap();
@@ -77,6 +78,13 @@ public class Menu {
         preferanceLink.put("passChangePageLoad.do", new Link(null, "/ecivil/preferences/", "passChangePageLoad.do", Permission.USER_PREFERENCES));
         preferanceLink.put("eprUserPreferencesAction.do", new Link(null, "/ecivil/preferences/", "eprUserPreferencesAction.do", Permission.USER_PREFERENCES));
 
+        //search links
+        /*todo*/
+        searchLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
+        searchLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
+        searchLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
+
+
         // PRS
         prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));
 
@@ -86,9 +94,6 @@ public class Menu {
         deoBirthLink.put("eprBirthConfirmationPrintList.do", new Link("birth_confirmation_print.label", "/ecivil/births/", "eprBirthConfirmationPrintList.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprBirthConfirmationInit.do", new Link("birth_confirmation.label", "/ecivil/births/", "eprBirthConfirmationInit.do", Permission.EDIT_BDF_CONFIRMATION));
         deoBirthLink.put("eprBirthCertificateList.do", new Link("print_birthcertificate.label", "/ecivil/births/", "eprBirthCertificateList.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
-        deoBirthLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
 
         deoBirthLink.put("eprHome.do", new Link(null, "/ecivil/births/", "eprHome.do", Permission.USER_PREFERENCES));
         deoBirthLink.put("eprBirthRegistration.do", new Link(null, "/ecivil/births/", "eprBirthRegistration.do", Permission.EDIT_BDF));
@@ -242,10 +247,11 @@ public class Menu {
         //Birth Alteration for ARG
         argAlterationLink.putAll(adrAlterationLink);
         argAlterationLink.put("eprApproveSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveSelectedAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
-        
+
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
         adminLinks.put("preference", preferanceLink);
+
 
         // assemble menu for deo
         deoLinks.put("birth", deoBirthLink);
@@ -253,6 +259,7 @@ public class Menu {
         deoLinks.put("adoption", deoAdoptionLink);
         deoLinks.put("alteration", deoAlterationLink);
         deoLinks.put("preference", preferanceLink);
+        deoLinks.put("certificateSearch", searchLink);
 
         // assemble menu for adr
         adrLinks.put("birth", adrBirthLink);
@@ -261,6 +268,7 @@ public class Menu {
         adrLinks.put("alteration", adrAlterationLink);
         adrLinks.put("preference", preferanceLink);
         adrLinks.put("prs", prsLink);
+        adrLinks.put("certificateSearch", searchLink);
 
         //assemble menu for arg
         argLinks.put("birth", argBirthLink);
@@ -269,6 +277,7 @@ public class Menu {
         argLinks.put("alteration", argAlterationLink);
         argLinks.put("preference", preferanceLink);
         argLinks.put("prs", prsLink);
+        argLinks.put("certificateSearch", searchLink);
     }
 
     public static Map<String, Map> getAllowedLinks(Role role) {
