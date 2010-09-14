@@ -1,4 +1,6 @@
-<%--@author Chathuranga Withana--%>
+<%--@author Chathuranga Withana
+@author  amith jayasekara
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
@@ -214,3 +216,9 @@
     <div id="birth-register-approval-footer">
     </div>
 </div>
+<%--todo--%>
+<%--<s:property value="%{#session.user_bean.role.roleId}"/>
+<s:if test="%{#session.user_bean.role.roleId == 'DEO'}">
+    <s:label value="huiiiii"/>
+</s:if>--%>
+
