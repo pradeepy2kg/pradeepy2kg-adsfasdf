@@ -52,23 +52,25 @@ public class UserManagementTest extends TestCase {
         Assert.assertTrue(asankha.getRole().equals(roleDAO.getRole("ADR")));
         Assert.assertFalse(asankha.getRole().equals(roleDAO.getRole("DEO")));
         Assert.assertTrue(asankha.isAuthorized(Permission.APPROVE_BDF));
+        //ADR cannot approve ADOPTION
+        Assert.assertFalse(asankha.isAuthorized(Permission.APPROVE_ADOPTION));
 
         List<User> rgs = userManager.getUsersByRole("RG");
         Assert.assertEquals(2, rgs.size());
 
         DistrictDAO districtDAO = (DistrictDAO) ctx.getBean("districtDAOImpl", DistrictDAO.class);
         List<User> usersByAssignedBDDistrict = userManager.getUsersByAssignedBDDistrict(districtDAO.getDistrict(1));
-        Assert.assertEquals(20, usersByAssignedBDDistrict.size());
+        Assert.assertEquals(18, usersByAssignedBDDistrict.size());
 
         List<User> usersByRoleAndAssignedBDDistrict = userManager.getUsersByRoleAndAssignedBDDistrict(
-            roleDAO.getRole("DR"), districtDAO.getDistrict(1));
+                roleDAO.getRole("DR"), districtDAO.getDistrict(1));
         Assert.assertEquals(1, usersByRoleAndAssignedBDDistrict.size());
 
         List<User> usersByAssignedMRDistrict = userManager.getUsersByAssignedMRDistrict(districtDAO.getDistrict(1));
         Assert.assertEquals(19, usersByAssignedMRDistrict.size());
 
         List<User> usersByRoleAndAssignedMRDistrict = userManager.getUsersByRoleAndAssignedMRDistrict(
-            roleDAO.getRole("DR"), districtDAO.getDistrict(1));
+                roleDAO.getRole("DR"), districtDAO.getDistrict(1));
         Assert.assertEquals(1, usersByRoleAndAssignedMRDistrict.size());
 
         User admin = userManager.authenticateUser("admin", "password");

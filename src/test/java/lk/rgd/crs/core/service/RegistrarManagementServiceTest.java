@@ -146,7 +146,7 @@ public class RegistrarManagementServiceTest extends TestCase {
                 true /* active */,
                 admin);
         //todo
-        Assert.assertEquals(2, results.size());
+        Assert.assertEquals(1, results.size());
 
         results = regMgtSvc.getAssignmentsByDSDivision(
                 bdDivisionDAO.getBDDivisionByPK(2).getDsDivision().getDsDivisionUKey(),
