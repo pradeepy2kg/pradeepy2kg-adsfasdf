@@ -11,11 +11,34 @@
             font-size: 11pt;
         }
     }
+    #adoption-certificate-form-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-
+<s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do" >
+    <s:param name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
+    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+    <s:param name="idUKey" value="%{#request.idUKey}"/>
+</s:url>
+<s:url id="cancel" action="eprAdoptionBackToPreviousState.do">
+    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+    <s:param name="pageNo" value="%{#request.pageNo}"/>
+</s:url>
 <div id="adoption-certificate-form-outer">
-<form action="eprMarkAdoptionCertificateAsPrinted.do">
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
+
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>
+<%--<form action="eprMarkAdoptionCertificateAsPrinted.do">--%>
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
     <col width="400px">
@@ -263,26 +286,14 @@
     </tr>
 </table>
 
-<div class="form-submit">
-    <s:hidden name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
-    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-    <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
-    <s:hidden name="idUKey" value="%{#request.idUKey}"/>
-    <s:submit value="%{getText('mark_as_print.button')}" cssStyle="margin-top:10px;"/>
-</div>
-</form>
-<s:form action="eprAdoptionBackToPreviousState.do">
-    <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
-    <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
-    <s:hidden name="currentStatus" value="%{#request.currentStatus}"/>
-    <s:hidden name="pageNo" value="%{#request.pageNo}"/>
-    <div class="form-submit">
-        <s:submit value="%{getText('cancel.button')}" cssStyle="margin-top:10px;"/>
-    </div>
-</s:form>
+
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
+
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
-<%--eprPrintDeath.do?idUKey=5&currentStatus=0&pageNo=1&nextFlag=false&previousFlag=false--%>
+</div>
+
