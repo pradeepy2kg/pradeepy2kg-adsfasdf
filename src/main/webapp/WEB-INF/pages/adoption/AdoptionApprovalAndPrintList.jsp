@@ -222,14 +222,21 @@
         <img src="<s:url value='/images/view.gif'/>" width="25" height="25"
              border="none"/></s:a>
     </td>
-    <td>
-            <%--<s:url id="cetificatePrintUrl" action="">
-                <s:param name="idUKey" value="idUKey"/>
-            </s:url>
-            <s:a href="%{cetificatePrintUrl}" title="%{getText('printAdoptionRegistrationTooltip.label')}">
-                <img src="<s:url value='/images/print_icon.gif'/>" border="none" width="25"
-                     height="25"/>
-            </s:a>--%>
+    <td align="center">
+        <s:url id="cetificatePrintUrl" action="eprPrintAdoptionNotice.do">
+            <s:param name="idUKey" value="idUKey"/>
+            <s:param name="certificateflag" value="false"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+        </s:url>
+        <s:a href="%{cetificatePrintUrl}"
+             title="%{getText('printAdoptionRegistrationTooltip.label')}">
+            <img id="printImage" src="<s:url value='/images/print_icon.gif'/>" border="none"
+                 width="25"
+                 height="25"/>
+        </s:a>
     </td>
     <td></td>
     <td></td>
