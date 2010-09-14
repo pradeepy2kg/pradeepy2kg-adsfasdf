@@ -100,7 +100,7 @@
                         list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
                         name="assignmentState" cssStyle="width:240px; margin-left:5px;"/></td>
                 <td colspan="1" align="left"><s:select
-                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
+                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
                         name="assignmentType" cssStyle="width:240px; margin-left:5px;"/></td>
             </tr>
             </tbody>
@@ -126,8 +126,8 @@
         </thead>
         <s:if test="assignmentList.size>0">
 
-                <tbody>
-                <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
+            <tbody>
+            <s:iterator status="assignmentStatus" value="assignmentList" id="assignmentList">
                 <s:url action="eprRegistrarsView.do" id="assign">
                     <s:param name="registrarUkey" value="registrar.registrarUKey"/>
                 </s:url>
@@ -153,8 +153,8 @@
                     <td><s:property value="permanentDate"/></td>
                     <td><s:property value="terminationDate"/></td>
                 </tr>
-                 </s:iterator>
-                </tbody>
+            </s:iterator>
+            </tbody>
 
         </s:if>
     </table>

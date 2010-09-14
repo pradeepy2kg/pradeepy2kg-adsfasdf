@@ -193,7 +193,7 @@
             <tbody>
             <tr>
                 <td colspan="1" align="left"><s:select
-                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marrage')}"
+                        list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
                         name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
             </tr>
             </tbody>
