@@ -82,9 +82,9 @@
         <tr><s:actionerror cssStyle="color:red;"/></tr>
         <tr>
             <td>
-                <s:label value="%{getText('adoption_court_order_serial.label')}"/>
+                <s:label value="%{getText('adoption_order_serial.label')}"/>
             </td>
-            <td><s:textfield name="courtOrderNo" id="courtOrderNo"/></td>
+            <td><s:textfield name="idUKey" id="idUKey"/></td>
         </tr>
     </table>
     <table style=" width:300px">

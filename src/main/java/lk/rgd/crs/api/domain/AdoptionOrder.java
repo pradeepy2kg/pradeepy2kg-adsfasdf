@@ -72,7 +72,7 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = false)
     private String court;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String judgeName;
 
     @Column(nullable = false)
@@ -281,11 +281,27 @@ public class AdoptionOrder implements Serializable {
         return childExistingName;
     }
 
+    public String getChildExistingNameToLength(int maxLength) {
+        if (childExistingName != null && childExistingName.length() > maxLength) {
+            return "..." + childExistingName.substring(childExistingName.length() - maxLength + 3,
+                childExistingName.length());
+        }
+        return childExistingName;
+    }
+
     public void setChildExistingName(String childExistingName) {
         this.childExistingName = WebUtils.filterBlanksAndToUpper(childExistingName);
     }
 
     public String getChildNewName() {
+        return childNewName;
+    }
+
+    public String getChildNewNameToLength(int maxLength) {
+        if (childNewName != null && childNewName.length() > maxLength) {
+            return "..." + childNewName.substring(childNewName.length() - maxLength + 3,
+                childNewName.length());
+        }
         return childNewName;
     }
 

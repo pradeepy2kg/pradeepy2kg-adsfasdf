@@ -551,7 +551,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     public String populateAdoption() {
-        adoption = service.getByCourtAndCourtOrderNumber(0 /* TODO FIX ME*/, courtOrderNo, user);
+        //adoption = service.getByCourtAndCourtOrderNumber(0 /* TODO FIX ME*/, courtOrderNo, user);
+        adoption = service.getById(idUKey, user);
         if (adoption != null) {
             if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);

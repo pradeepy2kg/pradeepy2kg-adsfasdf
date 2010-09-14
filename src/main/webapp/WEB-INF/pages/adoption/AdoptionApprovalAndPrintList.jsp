@@ -84,7 +84,7 @@
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
 <thead>
 <tr>
-    <th><s:label name="serial" value="%{getText('courtOrderNumber.label')}"/></th>
+    <th><s:label name="serial" value="%{getText('adoption_serial.label')}"/></th>
     <th><s:label name="name" value="%{getText('name.label')}"/></th>
     <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
     <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
@@ -100,12 +100,12 @@
 <tbody>
 <s:iterator status="approvalStatus" value="adoptionApprovalAndPrintList" id="approvalList">
 <tr>
-<td><s:property value="courtOrderNumber"/></td>
+<td><s:property value="idUKey"/></td>
 <s:if test="childExistingName!=null">
-    <td><s:property value="childExistingName"/></td>
+    <td><s:property value="getChildExistingNameToLength(30)"/></td>
 </s:if>
 <s:else>
-    <td><s:property value="childNewName"/></td>
+    <td><s:property value="getChildNewNameToLength(30)"/></td>
 </s:else>
 <s:if test="status.ordinal()==0">
     <s:url id="editSelected" action="eprAdoptionEditMode.do">

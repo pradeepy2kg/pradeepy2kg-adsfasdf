@@ -139,10 +139,6 @@ function validate() {
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error1');
     }
-    domObject = document.getElementById("judgeName");
-    if (isFieldEmpty(domObject)) {
-        isEmpty(domObject, "", 'error4');
-    }
     domObject = document.getElementById("applicantName");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error5');
@@ -645,7 +641,7 @@ function enableSerialNumber(mode) {
 <s:hidden name="idUKey" value="%{#request.idUKey}"/>
 <%--<s:hidden name="pageNo" value="1"/>--%>
 <div class="button" align="right">
-    <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
+    <s:submit value="%{getText('adoption.submit')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
 <s:hidden id="error0" value="%{getText('er.label.receivedDate')}"/>

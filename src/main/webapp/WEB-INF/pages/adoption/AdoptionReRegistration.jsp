@@ -213,6 +213,12 @@
         <td></td>
     </tr>
     <tr>
+        <td colspan="3" height="40px">PIN අංකය හෝ NIC අංකය<br/>
+            PIN or NIC
+        </td>
+        <td colspan="3"></td>
+    </tr>
+    <tr>
         <td rowspan="3" colspan="3" height="120px">නම <br/>
             Name of the Applicant
         </td>
