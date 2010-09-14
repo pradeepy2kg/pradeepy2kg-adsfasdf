@@ -66,6 +66,12 @@
                         <s:label value="%{getText('category_alteration')}"/>
                     </s:a>
                 </s:if>
+                <s:if test="%{key == 'certificateSearch'}">
+                    <s:a href="#">
+                        <s:label value="%{getText('category_certificate_search')}"/>
+                    </s:a>
+                </s:if>
+
 
                 <ul class="acitem">
                     <s:iterator value="value" id="x">
