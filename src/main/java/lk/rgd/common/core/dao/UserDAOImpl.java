@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,21 +79,25 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
         return q.getResultList();
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void changePassword(User user) {
-        //todo update  password
         em.merge(user);
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void addUser(User user) {
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void addUser(User user, User admin) {
+        user.getLifeCycleInfo().setCreatedUser(admin);
+        user.getLifeCycleInfo().setLastUpdatedUser(admin);
+        user.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        user.getLifeCycleInfo().setCreatedTimestamp(new Date());
         em.persist(user);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void updateUser(User user) {
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void updateUser(User user, User admin) {
+        user.getLifeCycleInfo().setLastUpdatedUser(admin);
+        user.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
         em.merge(user);
     }
 }

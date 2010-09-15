@@ -66,6 +66,8 @@
     <bean id="registrarDAOImpl" class="lk.rgd.crs.core.dao.RegistrarDAOImpl"/>
     <bean id="assignmentDAOImpl" class="lk.rgd.crs.core.dao.AssignmentDAOImpl"/>
     <bean id="birthAlterationDAOImpl" class="lk.rgd.crs.core.dao.BirthAlterationDAOImpl"/>
+    <bean id="locationDAOImpl" class="lk.rgd.common.core.dao.LocationDAOImpl"/>
+    <bean id="userLocationDAOImpl" class="lk.rgd.common.core.dao.UserLocationDAOImpl"/>
 
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
@@ -84,6 +86,8 @@
         <constructor-arg ref="userDAOImpl"/>
         <constructor-arg ref="roleDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="locationDAOImpl"/>
+        <constructor-arg ref="userLocationDAOImpl"/>
     </bean>
 
     <bean id="registrarManagmentService" class="lk.rgd.crs.core.service.RegistrarManagementServiceImpl">

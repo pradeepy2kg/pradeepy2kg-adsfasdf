@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Date;
 
@@ -55,6 +57,10 @@ public class User implements Serializable {
     @Id
     @Column(updatable = false, length = 30)
     private String userId;
+
+    @Embedded
+    private BaseLifeCycleInfo lifeCycleInfo = new BaseLifeCycleInfo();
+
     /**
      * The simple name of the user
      */
@@ -139,6 +145,15 @@ public class User implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roleId")
     private Role role;
+
+    /**
+     * The Locations assigned to this user
+     */
+    @OneToMany(mappedBy = "user")
+    private List<UserLocation> locations = new ArrayList<UserLocation>();
+
+    @Column
+    private String signatureText;
 
     public User() {
     }
@@ -271,6 +286,30 @@ public class User implements Serializable {
 
     public boolean isAuthorized(int permission) {
         return role == null ? false : role.getPermBitSet().get(permission);
+    }
+
+    public BaseLifeCycleInfo getLifeCycleInfo() {
+        return lifeCycleInfo;
+    }
+
+    public void setLifeCycleInfo(BaseLifeCycleInfo lifeCycleInfo) {
+        this.lifeCycleInfo = lifeCycleInfo;
+    }
+
+    public List<UserLocation> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<UserLocation> locations) {
+        this.locations = locations;
+    }
+
+    public String getSignatureText() {
+        return signatureText;
+    }
+
+    public void setSignatureText(String signatureText) {
+        this.signatureText = signatureText;
     }
 
     public boolean isAllowedAccessToBDDistrict(int id) {
