@@ -130,19 +130,51 @@ $(function() {
     $('#header-info-max').click(function() {
         maximize("header-info");
     });
-    /*  $('select#sectionOfAct').change(function() {
-     var id = $("select#sectionOfAct").attr("value");
-     document.getElementById("actNumber1").style.display = 'none';
-     document.getElementById("actNumber2").style.display = 'none';
-     document.getElementById("actNumber3").style.display = 'none';
-     document.getElementById("actNumber" + id).style.display = 'block';
+    $('#errors-info-check').click(function() {
+        document.getElementById("errors-info-check").disabled = true;
+        var fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
+                'placeOfBirth', 'placeOfBirthEnglish', 'childGender');
+        enableFields(fieldIds);
 
-     });*/
+    });
+    $('#mother-info-check').click(function() {
+        document.getElementById("mother-info-check").disabled = true;
+        var fieldIds = new Array('mother_pinOrNic', 'motherCountryId', 'motherPassportNoId', 'motherFullNameId', 'motherDateOfBirth',
+                'motherAgeAtBirth', 'motherRaceId', 'motherPlaceOfBirthId', 'motherAddressId');
+        enableFields(fieldIds);
+    });
+    $('#informant-info-check').click(function() {
+        document.getElementById("informant-info-check").disabled = true;
+        var fieldIds = new Array('informent_pinOrNic', 'informentName', 'informentAddress');
+        enableFields(fieldIds);
+    });
+    $('#father-info-check').click(function() {
+        document.getElementById("father-info-check").disabled = true;
+        var fieldIds = new Array('father_pinOrNic', 'fatherCountryId', 'fatherPassportNoId', 'fatherName', 'fatherDadeOfbirth',
+                'fatherRaceId', 'fatherPlaceOfBirth');
+        enableFields(fieldIds);
+    });
+    $('#marriage-info-check').click(function() {
+        document.getElementById("marriage-info-check").disabled = true;
+        var fieldIds = new Array('placeOfMarriageId', 'dateOfMarriage');
+        enableFields(fieldIds);
+    });
+    $('#mother-after-marriage-info-check').click(function() {
+        document.getElementById("mother-after-marriage-info-check").disabled = true;
+        document.getElementById('mothersNameAfterMarriageId').disabled = false;
+    });
+    $('#grandFather-info-check').click(function() {
+        document.getElementById("grandFather-info-check").disabled = true;
+        var fieldIds = new Array('grandFatherFullName', 'grandFather_pinOrNic', 'grandFatherBirthYear', 'grandFatherBirthPlaceId',
+                'greatGrandFatherFullNameId', 'grandGrandFather_pinOrNic', 'grandGrandFatherBirthYear', 'greatGrandFatherBirthPlaceId')
+        enableFields(fieldIds);
+    });
 });
 function minimize(id) {
     document.getElementById(id).style.display = 'none';
     document.getElementById(id + "-min").style.display = 'none';
     document.getElementById(id + "-max").style.display = 'block';
+    document.getElementById(id + "-check").style.display = 'none';
 
 }
 
@@ -150,17 +182,55 @@ function maximize(id, click) {
     document.getElementById(id).style.display = 'block';
     document.getElementById(id + "-max").style.display = 'none';
     document.getElementById(id + "-min").style.display = 'block';
+    document.getElementById(id + "-check").style.display = 'block';
+
+}
+function enableFields(fieldIds) {
+    for (var i = 0; i < fieldIds.length; i++) {
+        document.getElementById(fieldIds[i]).disabled = false;
+    }
 }
 
 function initPage() {
     var sectionOfAct = document.getElementById("sectionOfAct").value;
     var idNames;
-    if (sectionOfAct == 1)   idNames = new Array('header-info', 'error-explanation-info');
-    if (sectionOfAct == 2)    idNames = new Array('errors-info', 'header-info', 'mother-info', 'informant-info', 'error-explanation-info');
-    if (sectionOfAct == 3)   idNames = new Array('father-info', 'marriage-info', 'header-info', 'mother-after-marriage-info', 'grandFather-info', 'error-explanation-info');
+    var checkIdNames;
+    var fieldIds;
+    alert(sectionOfAct);
+    if (sectionOfAct == 1) {
+        idNames = new Array('header-info', 'error-explanation-info');
+    }
+    if (sectionOfAct == 2) {
+        idNames = new Array('errors-info', 'header-info', 'mother-info', 'informant-info',
+                'error-explanation-info');
+        checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
+        fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
+                'placeOfBirth', 'placeOfBirthEnglish', 'childGender', 'mother_pinOrNic', 'motherCountryId', 'motherPassportNoId', 'motherFullNameId',
+                'motherDateOfBirth', 'motherAgeAtBirth', 'motherRaceId', 'motherPlaceOfBirthId', 'motherAddressId', 'informent_pinOrNic',
+                'informentName', 'informentAddress');
+
+    }
+    if (sectionOfAct == 3) {
+        idNames = new Array('father-info', 'marriage-info', 'header-info', 'mother-after-marriage-info',
+                'grandFather-info', 'error-explanation-info');
+        checkIdNames = new Array('father-info-check', 'marriage-info-check', 'mother-after-marriage-info-check', 'grandFather-info-check');
+        fieldIds = new Array('father_pinOrNic', 'fatherCountryId', 'fatherPassportNoId', 'fatherName', 'fatherDadeOfbirth',
+                'fatherRaceId', 'fatherPlaceOfBirth', 'placeOfMarriageId', 'dateOfMarriage', 'grandFatherFullName', 'grandFather_pinOrNic',
+                'grandFatherBirthYear', 'grandFatherBirthPlaceId', 'greatGrandFatherFullNameId', 'grandGrandFather_pinOrNic',
+                'grandGrandFatherBirthYear', 'greatGrandFatherBirthPlaceId', 'mothersNameAfterMarriageId')
+
+    }
     for (var i = 0; i < idNames.length; i++) {
         document.getElementById(idNames[i]).style.display = 'none';
         document.getElementById(idNames[i] + "-min").style.display = 'none';
+    }
+    if (!(sectionOfAct == 1)) {
+        for (var i = 0; i < checkIdNames.length; i++) {
+            document.getElementById(checkIdNames[i]).style.display = 'none';
+        }
+        for (var i = 0; i < fieldIds.length; i++) {
+            document.getElementById(fieldIds[i]).disabled = true;
+        }
     }
 }
 
@@ -316,7 +386,7 @@ function validate() {
     var other = document.getElementById('declarantTypeOTHER').checked;
     var self = document.getElementById('declarantTypeRELATIVE').checked;
     if (!(mother || father || other || self)) {
-        errormsg = errormsg +"\n" +document.getElementById("declarantError1").value;
+        errormsg = errormsg + "\n" + document.getElementById("declarantError1").value;
     }
     if (errormsg != "") {
         alert(errormsg);
@@ -601,7 +671,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 කොටුවේ සඳහන් කරන්න. ඉවත් කිරීමක් සඳහා "ඉවත්
                 කරන්න" යන්න අදාළ කොටුවේ සඳහන් කරන්න <br>
                 in Tamil <br>
-                For alteration / insertion state the entry value as it should appear. For omission, state “omit” within
+                For alteration / insertion state the entry value as it should appear.For omission, state “omit” within
                 the relavent cage.
             </td>
         </tr>
@@ -671,6 +741,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Child's Information
             <div class="birth-alteration-minimize-icon" id="errors-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="errors-info-max"></div>
+            <s:checkbox id="errors-info-check" name="childInformation" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -740,7 +811,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 in tamil<br>
                 In English
             </td>
-            <td colspan="4"><s:textfield cssStyle="width:95%" name="alt52_1.placeOfBirthEnglish"/></td>
+            <td colspan="4"><s:textfield cssStyle="width:95%" name="alt52_1.placeOfBirthEnglish"
+                                         id="placeOfBirthEnglish"/></td>
         </tr>
         <tr>
             <td>
@@ -750,7 +822,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td colspan="6"><s:select
                     list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="alt52_1.childGender" cssStyle="width:50%; margin-left:5px;"/>
+                    name="alt52_1.childGender" cssStyle="width:50%; margin-left:5px;" id="childGender"/>
         </tr>
         </tbody>
     </table>
@@ -761,6 +833,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Mother
             <div class="birth-alteration-minimize-icon" id="mother-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="mother-info-max"></div>
+            <s:checkbox id="mother-info-check" name="motherInformation" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -792,19 +865,20 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
             </td>
             <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-            <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0"
+            <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0" id="motherCountryId"
                                       headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
             <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
-            <td colspan="2" class="passport"><s:textfield name="alt52_1.mother.motherPassportNo"/></td>
+            <td colspan="2" class="passport"><s:textfield name="alt52_1.mother.motherPassportNo"
+                                                          id="motherPassportNoId"/></td>
         </tr>
         <tr>
             <td>සම්පුර්ණ නම <br>
                 முழுப் பெயர் <br>
                 Full Name
             </td>
-            <td colspan="8"><s:textarea name="alt52_1.mother.motherFullName"/></td>
+            <td colspan="8"><s:textarea name="alt52_1.mother.motherFullName" id="motherFullNameId"/></td>
         </tr>
         <tr>
             <td>උපන් දිනය<br>
@@ -822,7 +896,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 இனம்<br>
                 Race
             </td>
-            <td colspan="2"><s:select list="raceList" name="motherRace" headerKey="0"
+            <td colspan="2"><s:select list="raceList" name="motherRace" headerKey="0" id="motherRaceId"
                                       headerValue="%{getText('select_race.label')}"
                                       cssStyle="width:80%;"/></td>
         </tr>
@@ -831,14 +905,14 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 பிறந்த இடம் <br>
                 Place of Birth
             </td>
-            <td colspan="8"><s:textarea name="alt52_1.mother.motherPlaceOfBirth"/></td>
+            <td colspan="8"><s:textarea name="alt52_1.mother.motherPlaceOfBirth" id="motherPlaceOfBirthId"/></td>
         </tr>
         <tr>
             <td>ස්ථිර ලිපිනය<br>
                 தாயின் நிரந்தர வதிவிட முகவரி<br>
                 Permanent Address
             </td>
-            <td colspan="8"><s:textarea name="alt52_1.mother.motherAddress"/></td>
+            <td colspan="8"><s:textarea name="alt52_1.mother.motherAddress" id="motherAddressId"/></td>
         </tr>
         </tbody>
     </table>
@@ -856,6 +930,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Details of the Informant
             <div class="birth-alteration-minimize-icon" id="informant-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="informant-info-max"></div>
+            <s:checkbox id="informant-info-check" name="childInformation" cssStyle="float:right;"/>
         </td>
     </tr>
     </tbody>
@@ -950,6 +1025,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Details of the Father
             <div class="birth-alteration-minimize-icon" id="father-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="father-info-max"></div>
+            <s:checkbox id="father-info-check" name="fatherInformation" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -978,7 +1054,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 நாடு<br>
                 Country
             </td>
-            <td><s:select name="fatherCountry" list="countryList" headerKey="0"
+            <td><s:select name="fatherCountry" list="countryList" headerKey="0" id="fatherCountryId"
                           headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
@@ -986,7 +1062,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 கடவுச் சீட்டு<br>
                 Passport No.
             </td>
-            <td><s:textfield name="alt27A.father.fatherPassportNo"/></td>
+            <td><s:textfield name="alt27A.father.fatherPassportNo" id="fatherPassportNoId"/></td>
         </tr>
         <tr>
             <td>සම්පුර්ණ නම<br>
@@ -1005,7 +1081,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 இனம்<br>
                 Race
             </td>
-            <td><s:select list="raceList" name="fatherRace" headerKey="0"
+            <td><s:select list="raceList" name="fatherRace" headerKey="0" id="fatherRaceId"
                           headerValue="%{getText('select_race.label')}"
                           cssStyle="width:80%;"/></td>
         </tr>
@@ -1014,7 +1090,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 பிறந்த இடம்<br>
                 Place of Birth
             </td>
-            <td colspan="4"><s:textfield name="alt27A.father.fatherPlaceOfBirth"/></td>
+            <td colspan="4"><s:textfield name="alt27A.father.fatherPlaceOfBirth" id="fatherPlaceOfBirth"/></td>
         </tr>
         </tbody>
     </table>
@@ -1027,6 +1103,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Changing of Details of the Marriage
             <div class="birth-alteration-minimize-icon" id="marriage-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="marriage-info-max"></div>
+            <s:checkbox id="marriage-info-check" name="marriageInformation" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -1072,7 +1149,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 விவாகம் இடம்பெற்ற இடம்<br>
                 Place of Marriage
             </td>
-            <td><s:textfield name="alt27A.marriage.placeOfMarriage"/></td>
+            <td><s:textfield name="alt27A.marriage.placeOfMarriage" id="placeOfMarriageId"/></td>
         </tr>
         <tr>
             <td>
@@ -1092,6 +1169,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Change of Mothers name after marriage
             <div class="birth-alteration-minimize-icon" id="mother-after-marriage-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="mother-after-marriage-info-max"></div>
+            <s:checkbox id="mother-after-marriage-info-check" name="motherMarriageInformation" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -1103,7 +1181,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 முழுப் பெயர்<br>
                 Full Name of Mother after Marriage
             </td>
-            <td style="width:760px;"><s:textarea name="alt27A.mothersNameAfterMarriage"/></td>
+            <td style="width:760px;"><s:textarea name="alt27A.mothersNameAfterMarriage"
+                                                 id="mothersNameAfterMarriageId"/></td>
         </tr>
     </table>
 </div>
@@ -1116,6 +1195,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Changing of the Details of the Grand Father / Great Grand Father
             <div class="birth-alteration-minimize-icon" id="grandFather-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="grandFather-info-max"></div>
+            <s:checkbox id="grandFather-info-check" name="grandFatherInformation" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -1143,7 +1223,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 அவரின் முழுப் பேயர்<br>
                 His Full Name
             </td>
-            <td colspan="6"><s:textarea name="alt27A.grandFather.grandFatherFullName"/></td>
+            <td colspan="6"><s:textarea name="alt27A.grandFather.grandFatherFullName" id="grandFatherFullName"/></td>
         </tr>
         <tr>
             <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය (තිබේ නම්)<br>
@@ -1160,7 +1240,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
             </td>
-            <td><s:textfield name="alt27A.grandFather.grandFatherBirthPlace"/></td>
+            <td><s:textfield name="alt27A.grandFather.grandFatherBirthPlace" id="grandFatherBirthPlaceId"/></td>
         </tr>
         <tr>
             <td colspan="8">ළමයාගේ පියා ශ්‍රී ලංකාවේ නොඉපිද මීමුත්තා ලංකාවේ උපන්නේ නම් මී මුත්තාගේ<br>
@@ -1175,7 +1255,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 முழுப் பெயர்<br>
                 His Full Name
             </td>
-            <td colspan="6"><s:textarea name="alt27A.grandFather.greatGrandFatherFullName"/></td>
+            <td colspan="6"><s:textarea name="alt27A.grandFather.greatGrandFatherFullName"
+                                        id="greatGrandFatherFullNameId"/></td>
         </tr>
         <tr>
             <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය (තිබේ නම්)<br>
@@ -1192,7 +1273,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
             </td>
-            <td><s:textfield name="alt27A.grandFather.greatGrandFatherBirthPlace"/></td>
+            <td><s:textfield name="alt27A.grandFather.greatGrandFatherBirthPlace"
+                             id="greatGrandFatherBirthPlaceId"/></td>
         </tr>
         </tbody>
     </table>
