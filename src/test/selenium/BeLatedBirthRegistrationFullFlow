@@ -33,17 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//label[@id='']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=උපත් ලියාපදිංචිය</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='body-content-data']/div/a[2]/div/label</td>
+	<td>birth_registration.label</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,7 +139,17 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>birth-registration-form-3_marriage_parentsMarried0</td>
+	<td>unknownMarriage0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>motherSigned</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>fatherSigned</td>
 	<td></td>
 </tr>
 <tr>
@@ -230,17 +230,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උපත් ලියාපදිංචිය</td>
+	<td>//label[@id='']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උපත් ලියාපදිංචි අනුමතය</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=කල්පසු වූ උපත් ලියාපදිංචි අනුමතය</td>
+	<td>birth_register_belated_approval.label</td>
 	<td></td>
 </tr>
 <tr>
@@ -260,7 +255,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උපත් තහවුරු කිරීම් මුද්‍රණය</td>
+	<td>birth_confirmation_print.label</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,13 +270,13 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උපත් තහවුරු කිරීම</td>
+	<td>birth_confirmation.label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>4</td>
+	<td>3</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -318,16 +313,7 @@
 	<td>birth-confirmation-form3_0</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-certificate-outer']/div[4]/a/label</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>link=මුල් පිටුවට</td>

@@ -526,8 +526,10 @@ function initPage() {
         <col/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Details of the
-                Marriage
+            <td colspan="5" style="text-align:center;font-size:12pt">
+                විවාහයේ විස්තර        <br>
+                திருமணத்தின் விபரங்கள்<br>
+                Details of the Marriage
             </td>
         </tr>
         <tr>

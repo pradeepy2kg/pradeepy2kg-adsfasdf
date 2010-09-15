@@ -38,7 +38,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=මළ උපතක් ලියාපදිංචිය</td>
+	<td>still_birth_registration.label</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,7 +190,7 @@
 
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උප්පැන්න සහතික මුද්‍රණය</td>
+	<td>print_birthcertificate.label</td>
 	<td></td>
 </tr>
 <tr>
