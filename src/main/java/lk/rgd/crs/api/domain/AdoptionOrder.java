@@ -17,14 +17,14 @@ import java.util.Date;
 // TODO add a constraint to ensure court ID and court order number combination is unique
 
 @NamedQueries({
-    @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
-        "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
+        @NamedQuery(name = "adoption.filter.by.status.paginated", query = "SELECT adoption FROM AdoptionOrder adoption " +
+                "WHERE adoption.status = :status " + "ORDER BY adoption.orderIssuedDate desc"),
 
-    @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
-        "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
-    // TODO fix this to use the courtUKey
+        @NamedQuery(name = "get.by.court.and.courtOrderNumber", query = "SELECT adoption FROM AdoptionOrder adoption " +
+                "WHERE adoption.courtOrderNumber = :courtOrderNumber"),
+        // TODO fix this to use the courtUKey
 
-    @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
+        @NamedQuery(name = "getAllAdoptions", query = "SELECT adoption FROM AdoptionOrder adoption")
 })
 
 public class AdoptionOrder implements Serializable {
@@ -69,8 +69,9 @@ public class AdoptionOrder implements Serializable {
     @Column(nullable = false)
     private String courtOrderNumber;
 
-    @Column(nullable = false)
-    private String court;
+    @OneToOne
+    @JoinColumn(name = "courtUKey", nullable = true)
+    private Court court;
 
     @Column(nullable = true)
     private String judgeName;
@@ -181,12 +182,12 @@ public class AdoptionOrder implements Serializable {
         this.orderReceivedDate = orderReceivedDate;
     }
 
-    public String getCourt() {
+    public Court getCourt() {
         return court;
     }
 
-    public void setCourt(String court) {
-        this.court = WebUtils.filterBlanksAndToUpper(court);
+    public void setCourt(Court court) {
+        this.court = court;// WebUtils.filterBlanksAndToUpper(court);
     }
 
     public String getJudgeName() {
@@ -284,7 +285,7 @@ public class AdoptionOrder implements Serializable {
     public String getChildExistingNameToLength(int maxLength) {
         if (childExistingName != null && childExistingName.length() > maxLength) {
             return "..." + childExistingName.substring(childExistingName.length() - maxLength + 3,
-                childExistingName.length());
+                    childExistingName.length());
         }
         return childExistingName;
     }
@@ -300,7 +301,7 @@ public class AdoptionOrder implements Serializable {
     public String getChildNewNameToLength(int maxLength) {
         if (childNewName != null && childNewName.length() > maxLength) {
             return "..." + childNewName.substring(childNewName.length() - maxLength + 3,
-                childNewName.length());
+                    childNewName.length());
         }
         return childNewName;
     }

@@ -16,6 +16,7 @@ import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.domain.AdoptionOrder;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.service.AdoptionOrderService;
@@ -41,11 +42,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final CountryDAO countryDAO;
+    private final CourtDAO courtDAO;
     private final AppParametersDAO appParametersDAO;
     private final BirthRegistrationService birthRegistrationService;
 
     private int birthDistrictId;
     private int birthDivisionId;
+    private int courtId;
     private int dsDivisionId;
     private String language;
     private int currentStatus;
@@ -54,6 +57,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+    private Map<Integer, String> courtList;
     private List<AdoptionOrder> adoptionApprovalAndPrintList;
     private Map<Integer, String> countryList;
     private AdoptionOrder adoption;
@@ -72,6 +76,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String dsDivisionName;
     private String birthDivisionName;
     private String applicantCountryName;
+    private String courtName;
     private String wifeCountryName;
     private String birthDistrictName;
     private String certificateApplicantAddress;
@@ -87,7 +92,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private boolean printed;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO, BirthRegistrationService birthRegistrationService) {
+                          AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
+                          BirthRegistrationService birthRegistrationService, CourtDAO courtDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -95,6 +101,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         this.countryDAO = countryDAO;
         this.appParametersDAO = appParametersDAO;
         this.birthRegistrationService = birthRegistrationService;
+        this.courtDAO = courtDAO;
     }
 
     public String initAdoptionRegistrationOrCancelPrintAdoptionNotice() {
@@ -192,15 +199,18 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
             dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
-                adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+                    adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
             birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
-                adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
+                    adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
         }
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
         }
         if (adoption.getWifeCountryId() > 0) {
             wifeCountryName = countryDAO.getNameByPK(adoption.getWifeCountryId(), language);
+        }
+        if (adoption.getCourt().getCourtId() > 0) {
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtId(), language);
         }
 
         return SUCCESS;
@@ -226,6 +236,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             logger.debug("Current state of adoption order : {}", adoption.getStatus());
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
+                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             return SUCCESS;
         }
     }
@@ -280,12 +292,14 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return "skip";
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
         } else {
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
+                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             birthDivisionId = adoption.getBirthDivisionId();
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
@@ -576,6 +590,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         //adoption = service.getByCourtAndCourtOrderNumber(0 /* TODO FIX ME*/, courtOrderNo, user);
         adoption = service.getById(idUKey, user);
         if (adoption != null) {
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
+                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
 
@@ -595,6 +611,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private void populateBasicLists(String language) {
         countryList = countryDAO.getCountries(language);
         districtList = districtDAO.getAllDistrictNames(language, user);
+        courtList = (courtDAO.getCourtNames(language));
     }
 
     private void populateDynamicLists(String language) {
@@ -942,5 +959,34 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAdoptionId(long adoptionId) {
         this.adoptionId = adoptionId;
+    }
+
+    public Map<Integer, String> getCourtList() {
+        return courtList;
+    }
+
+    public void setCourtList(Map<Integer, String> courtList) {
+        this.courtList = courtList;
+    }
+
+    public int getCourtId() {
+        return courtId;
+    }
+
+    public void setCourtId(int courtId) {
+        this.courtId = courtId;
+        this.birthDivisionId = birthDivisionId;
+        if (adoption == null) {
+            adoption = new AdoptionOrder();
+        }
+        adoption.setCourt(courtDAO.getCourt(courtId));
+    }
+
+    public String getCourtName() {
+        return courtName;
+    }
+
+    public void setCourtName(String courtName) {
+        this.courtName = courtName;
     }
 }

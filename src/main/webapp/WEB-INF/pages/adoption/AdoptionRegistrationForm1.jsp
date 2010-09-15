@@ -293,7 +293,7 @@ function enableSerialNumber(mode) {
         <td>අධිකරණය<br/>
             Court
         </td>
-        <td style="text-align:center;" width="70"><s:textfield name="adoption.court" id="court"/></td>
+        <td style="text-align:center;" width="70"><s:select list="courtList" name="courtId" cssStyle="width:90%;margin-left:15px;"/>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>

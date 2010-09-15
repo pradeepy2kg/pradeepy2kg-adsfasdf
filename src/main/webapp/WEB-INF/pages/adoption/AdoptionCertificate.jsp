@@ -84,7 +84,7 @@
             Court Issuing Order
         </td>
         <td colspan="5">
-            <s:label value="%{adoption.court}"/>
+            <s:label name="courtName" cssStyle="margin-left:10px;"/>
         </td>
     </tr>
     <tr>

@@ -126,7 +126,7 @@
         <td>අධිකරණය<br/>
             Court
         </td>
-        <td style="text-align:center;"><s:label value="%{#request.adoption.court}" id="court"/></td>
+        <td style="text-align:center;"><s:label name="courtName" id="court"/></td>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
