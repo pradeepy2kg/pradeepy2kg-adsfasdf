@@ -76,6 +76,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean lateDeath;
     private boolean directApprove;
     private boolean editMode;
+    private boolean reject;
 
     private String genderEn;
     private String genderSi;
@@ -87,6 +88,8 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private String deathPersondsDivision;
     private String deathPersondsDivisionEn;
     private String time;
+    private String comment;
+    private String serialNumber;
 
     private Date fromDate;
     private Date endDate;
@@ -328,8 +331,17 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String rejectDeath() {
+        if (reject) {
+            //load get comment page for rejection
+            return "getComment";
+        }
         logger.debug("requested to reject Death Decalaration with idUKey : {}", idUKey);
-        service.rejectDeathRegistration(idUKey, user);
+        try {
+            service.rejectDeathRegistration(idUKey, user, comment);
+        } catch (CRSRuntimeException e) {
+            addFieldError("errorField", getText("%{death.comment.is.required}"));
+            return "getComment";
+        }
         noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
         if (deathDivisionId != 0) {
             deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
@@ -1058,5 +1070,29 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public boolean isReject() {
+        return reject;
+    }
+
+    public void setReject(boolean reject) {
+        this.reject = reject;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

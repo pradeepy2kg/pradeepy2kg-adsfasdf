@@ -104,7 +104,7 @@ public interface DeathRegistrationService {
      * <p/>
      * //@param deathRegisterIdUKey the unique id of the death registration which is to be approved
      *
-     * @param user the user initiating the action
+     * @param user           the user initiating the action
      * @param ignoreWarnings
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
@@ -115,9 +115,10 @@ public interface DeathRegistrationService {
      *
      * @param deathRegisterIdUKey the unique id of the death registration which is to be rejected
      * @param user                the user initiating the action
+     * @param comment             reason for rejecting death declaration
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
-    public void rejectDeathRegistration(long deathRegisterIdUKey, User user);
+    public void rejectDeathRegistration(long deathRegisterIdUKey, User user, String comment);
 
     /**
      * mark that death certificate for the death registration as printed

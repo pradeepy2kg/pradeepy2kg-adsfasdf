@@ -97,6 +97,10 @@ public class DeathRegister implements Serializable {
     @Enumerated
     private Type deathType;
 
+    // comment for rejecting death declaraion
+    @Column(nullable = true, length = 100, name = "COMMENT")
+    private String comment;
+
 
     public State getStatus() {
         return status;
@@ -164,5 +168,13 @@ public class DeathRegister implements Serializable {
 
     public void setDeathType(Type deathType) {
         this.deathType = deathType;
+    }
+
+    public String getCommnet() {
+        return comment;
+    }
+
+    public void setCommnet(String comment) {
+        this.comment = comment;
     }
 }
