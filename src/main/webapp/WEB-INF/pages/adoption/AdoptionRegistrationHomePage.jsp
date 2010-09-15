@@ -151,13 +151,13 @@
         <s:label value="%{getText('lb.print.application.lable02')}"/></div>
 </s:a>
 <s:a href="eprAdoptionApprovalAndPrint.do">
-    <div class="link-print-certified"><s:label value="%{getText('Print Certified Copy')}" cssStyle="cursor:pointer;"/>
+    <div class="link-print-certified"><s:label value="%{getText('lb.adoption.print.certified.copy')}" cssStyle="cursor:pointer;"/>
         <br/>
         <s:label value="%{getText('lb.deo.adr.lable')}" cssStyle="cursor:pointer;"/>
     </div>
 </s:a>
 <s:a href="eprAdoptionApplicantInfo.do">
-    <div class="link-data-entry-02"><s:label value="%{getText('lb.data.entry')}" cssStyle="cursor:pointer;"/></div>
+    <div class="link-data-entry-02"><s:label value="%{getText('lb.data.entry.applicant.info')}" cssStyle="cursor:pointer;"/></div>
 </s:a>
 <%-- div tags for labels of image--%>
 <div class="label01"><s:label value="%{getText('lb.receive.copy')}"/></div>
