@@ -91,7 +91,7 @@
     </s:if>
     <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
         <tr>
-            <td>
+            <td colspan="5">
                 නැතිවුණු පුද්ගලයෙකුගේ මරණයක්ද ? <br/>
                 in tamil <br/>
                 Is the death of a missing person?
