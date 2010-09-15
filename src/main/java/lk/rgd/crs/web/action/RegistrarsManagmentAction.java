@@ -88,7 +88,8 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     }
 
     public String registrarsManagmentHome() {
-        //home is set to dsDivision colombo,type active ,state bith 
+        //home is set to dsDivision colombo,type active ,state bith
+        session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         this.state = true;
         this.type = Assignment.Type.BIRTH;
         this.districtId = 1;
