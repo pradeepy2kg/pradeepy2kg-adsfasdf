@@ -409,6 +409,7 @@ public class DeathRegistrationDeclarationTest extends CustomStrutsTestCase {
         request.setParameter("idUKey", idUKey);
         request.setParameter("deathDivisionId", "1");
         request.setParameter("pageNo", "1");
+        request.setParameter("comment", "this is comment");
     }
 
     private void compareApproveAndReject(long idUKey) {

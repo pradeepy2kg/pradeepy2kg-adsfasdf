@@ -70,17 +70,21 @@
 <div id="manage_registrars"/>
 <s:form action="eprRegistrarsFilter.do" method="post">
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend><s:property value="%{getText('filter.dsDivisions')}"/></legend>
+            <%--    <legend><s:property value="%{getText('filter.dsDivisions')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
+            <col width="200px">
             <col width="500px">
+            <col width="200px">
             <col width="500px">
             <tbody>
             <tr>
+                <td><s:property value="%{getText('label.district')}"/></td>
                 <td colspan="1" align="left">
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
                               cssStyle="width:98.5%; width:240px;"/>
                 </td>
+                <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
                                                        value="%{dsDivisionId}"
                                                        cssStyle="float:left;  width:240px;"/></td>
@@ -89,16 +93,21 @@
         </table>
     </fieldset>
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend><s:property value="%{getText('filter.active.inactive')}"/></legend>
+            <%--<legend align="right"><s:property value="%{getText('filter.active.inactive')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
+            <col width="200px">
             <col width="500px">
+            <col width="200px">
             <col width="500px">
+
             <tbody>
             <tr>
+                <td><s:property value="%{getText('label.state')}"/></td>
                 <td colspan="1" align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
                         name="assignmentState" cssStyle="width:240px; margin-left:5px;"/></td>
+                <td><s:property value="%{getText('label.type')}"/></td>
                 <td colspan="1" align="left"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
                         name="assignmentType" cssStyle="width:240px; margin-left:5px;"/></td>
@@ -116,7 +125,7 @@
     <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
         <tr class="table-title">
-            <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
+            <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
             <th width="300px"><s:label value="%{getText('label.name')}"/></th>
             <th width="20px"><s:label value="%{getText('label.active')}"/></th>
             <th width="20px"><s:label value="%{getText('label.type')}"/></th>

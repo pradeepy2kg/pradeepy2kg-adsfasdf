@@ -42,7 +42,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private List<Registrar> registrarList;
     private List<Assignment> assignmentList;
 
-
     private final DistrictDAO districtDAO;
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
@@ -51,11 +50,11 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     private Registrar registrar;
     private Assignment assignment;
-
     private Assignment.Type type;
-    private boolean state;
-    private int directAssigment;
 
+    private boolean state;
+
+    private int directAssigment;
     private int assignmentState;
     private int dsDivisionId;
     private int districtId;
@@ -72,12 +71,13 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private boolean editableAssignment;
     private boolean editMode;
     private boolean registrarSession;
+    private boolean active;
+    private boolean indirect;
 
     private Date appoinmentDate;
     private Date permanentDate;
     private Date terminationDate;
-    private boolean active;
-    private boolean indirect;
+
 
     public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
