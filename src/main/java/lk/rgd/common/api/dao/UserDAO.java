@@ -31,16 +31,18 @@ public interface UserDAO {
     /**
      * Add a user
      *
-     * @param user the user to be added
+     * @param userToCreate the user to be added
+     * @param adminUser the admin user performing the operation
      */
-    public void addUser(User user);
+    public void addUser(User userToCreate, User adminUser);
 
     /**
      * Update a user
      *
      * @param user the updated user
+     * @param adminUser the admin user performing the operation
      */
-    public void updateUser(User user);
+    public void updateUser(User user, User adminUser);
 
     /**
      * Return the list of users assigned to the Birth / Death Registration district

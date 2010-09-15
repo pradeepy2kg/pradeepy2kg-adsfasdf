@@ -61,6 +61,8 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(Registrar.class);
         entityClasses.add(Assignment.class);
         entityClasses.add(Court.class);
+        entityClasses.add(Location.class);
+        entityClasses.add(UserLocation.class);
 
         entityClasses.add(Address.class);
         entityClasses.add(Person.class);

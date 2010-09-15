@@ -3,6 +3,7 @@ package lk.rgd.common.api.service;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.core.AuthorizationException;
 
 import java.util.List;
@@ -132,4 +133,18 @@ public interface UserManager {
      * @param user user account 
      */
     void updatePassword(String newPass, User user);
+
+    /**
+     * Add a user to a location or vice versa
+     * @param userLocation user location object to be saved
+     * @param adminUser user performing the action
+     */
+    public void addUserLocation(UserLocation userLocation, User adminUser);
+
+    /**
+     * Update a user location assignment - but not its existing relationships to user and location tables 
+     * @param userLocation user location object to be saved
+     * @param adminUser user performing the action
+     */
+    public void updateUserLocation(UserLocation userLocation, User adminUser);
 }
