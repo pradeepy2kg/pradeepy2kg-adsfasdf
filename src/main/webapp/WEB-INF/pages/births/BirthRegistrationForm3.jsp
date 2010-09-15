@@ -113,15 +113,16 @@ function validate() {
     }
 
     validateInformant();
-
-    var check = document.getElementById('skipjs');
-    if (!check.checked) {
-        var reg = /^([1-9][0-9]{3})$/;
-        if (document.getElementById('grandFatherBirthYear').value.search(reg) == 0) {
-            validateBirthYearWithNIC('grandFatherNICorPIN', 'grandFatherBirthYear', 'p3error18');
-        }
-        if (document.getElementById('greatGrandFatherBirthYear').value.search(reg) == 0) {
-            validateBirthYearWithNIC('greatGrandFatherNICorPIN', 'greatGrandFatherBirthYear', 'p3error19');
+    if (declarationType.value != 0) {
+        var check = document.getElementById('skipjs');
+        if (!check.checked) {
+            var reg = /^([1-9][0-9]{3})$/;
+            if (document.getElementById('grandFatherBirthYear').value.search(reg) == 0) {
+                validateBirthYearWithNIC('grandFatherNICorPIN', 'grandFatherBirthYear', 'p3error18');
+            }
+            if (document.getElementById('greatGrandFatherBirthYear').value.search(reg) == 0) {
+                validateBirthYearWithNIC('greatGrandFatherNICorPIN', 'greatGrandFatherBirthYear', 'p3error19');
+            }
         }
     }
 
@@ -285,6 +286,7 @@ function checkInformantType() {
         var guardian = document.getElementById('informantTypeGUARDIAN').checked;
         informantAvailable(mother, father, guardian);
     }
+
 }
 
 function validateBirthYear(domElement, errorText, errorCode) {
