@@ -31,10 +31,15 @@ public class UnitTestManager extends TestCase {
     public static final ApplicationContext ctx = getApplicationContext();
 
     private static ApplicationContext getApplicationContext() {
+
+        logger.info("Creating Application Context for testing... Use NW Derby : " +
+            Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY));
+
         try {
             GenericApplicationContext ctx = new GenericApplicationContext();
             XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
             if (Boolean.getBoolean(DatabaseInitializer.USE_NW_DERBY)) {
+                logger.info("**** **** **** Using existing database for unit tests **** **** ****");
                 xmlReader.loadBeanDefinitions(new ClassPathResource("unitTestKeepDB_applicationContext.xml"));
             } else {
                 xmlReader.loadBeanDefinitions(new ClassPathResource("unitTest_applicationContext.xml"));

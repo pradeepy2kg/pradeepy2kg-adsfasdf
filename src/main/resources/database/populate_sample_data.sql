@@ -1385,6 +1385,58 @@ INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, ENDIVISIONNAME, SIDIVI
 INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, ENDIVISIONNAME, SIDIVISIONNAME, TADIVISIONNAME) VALUES(326, 0, 'Divisional Secretary', '@ Divisional Secretary @', '# Divisional Secretary #');
 INSERT INTO CRS.BD_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, ENDIVISIONNAME, SIDIVISIONNAME, TADIVISIONNAME) VALUES(326, 29, 'Atulugam-East', '@ Atulugam-East @', '# Atulugam-East #');
 
+-- list of courts
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(1,'මාරවිල දිසා අධිකරණය','@ මාරවිල දිසා අධිකරණය @','# මාරවිල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(2,'හලාවත දිසා අධිකරණය','@ හලාවත දිසා අධිකරණය @','# හලාවත දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(3,'මීගමුව දිසා අධිකරණය','@ මීගමුව දිසා අධිකරණය @','# මීගමුව දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(4,'ගමිපහ දිසා අධිකරණය','@ ගමිපහ දිසා අධිකරණය @','# ගමිපහ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(5,'මහනුවර දිසා අධිකරණය','@ මහනුවර දිසා අධිකරණය @','# මහනුවර දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(6,'රත්නපුරය දිසා අධිකරණය','@ රත්නපුරය දිසා අධිකරණය @','# රත්නපුරය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(7,'කුරුණෑගල දිසා අධිකරණය','@ කුරුණෑගල දිසා අධිකරණය @','# කුරුණෑගල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(8,'කුලියාපිටිය දිසා අධිකරණය','@ කුලියාපිටිය දිසා අධිකරණය @','# කුලියාපිටිය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(9,'නුවරඑලිය දිසා අධිකරණය','@ නුවරඑලිය දිසා අධිකරණය @','# නුවරඑලිය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(10,'ගාල්ල දිසා අධිකරණය','@ ගාල්ල දිසා අධිකරණය @','# ගාල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(11,'ගමිපොල දිසා අධිකරණය','@ ගමිපොල දිසා අධිකරණය @','# ගමිපොල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(12,'පොලොන්නරුව දිසා අධිකරණය','@ පොලොන්නරුව දිසා අධිකරණය @','# පොලොන්නරුව දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(13,'තංගල්ල දිසා අධිකරණය','@ තංගල්ල දිසා අධිකරණය @','# තංගල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(14,'හමිබන්තොට දිසා අධිකරණය','@ හමිබන්තොට දිසා අධිකරණය @','# හමිබන්තොට දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(15,'මාවනැල්ල දිසා අධිකරණය','@ මාවනැල්ල දිසා අධිකරණය @','# මාවනැල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(16,'බණ්ඩාරවෙල දිසා අධිකරණය','@ බණ්ඩාරවෙල දිසා අධිකරණය @','# බණ්ඩාරවෙල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(17,'මොරටුව දිසා අධිකරණය','@ මොරටුව දිසා අධිකරණය @','# මොරටුව දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(18,'පානදුුර දිසා අධිකරණය','@ පානදුුර දිසා අධිකරණය @','# පානදුුර දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(19,'බලපිටිය දිසා අධිකරණය','@ බලපිටිය දිසා අධිකරණය @','# බලපිටිය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(20,'බදුුල්ල දිසා අධිකරණය','@ බදුුල්ල දිසා අධිකරණය @','# බදුුල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(21,'වැලිමඩ දිසා අධිකරණය','@ වැලිමඩ දිසා අධිකරණය @','# වැලිමඩ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(22,'මොණරාගල දිසා අධිකරණය','@ මොණරාගල දිසා අධිකරණය @','# මොණරාගල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(23,'මාතලේ දිසා අධිකරණය','@ මාතලේ දිසා අධිකරණය @','# මාතලේ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(24,'හැටන් දිසා අධිකරණය','@ හැටන් දිසා අධිකරණය @','# හැටන් දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(25,'කෑගල්ල දිසා අධිකරණය','@ කෑගල්ල දිසා අධිකරණය @','# කෑගල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(26,'මහව දිසා අධිකරණය','@ මහව දිසා අධිකරණය @','# මහව දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(27,'අනුරාධපුරය දිසා අධිකරණය','@ අනුරාධපුරය දිසා අධිකරණය @','# අනුරාධපුරය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(28,'පුත්තලම දිසා අධිකරණය','@ පුත්තලම දිසා අධිකරණය @','# පුත්තලම දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(29,'අමිපාර දිසා අධිකරණය','@ අමිපාර දිසා අධිකරණය @','# අමිපාර දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(30,'නාවලපිටිය දිසා අධිකරණය','@ නාවලපිටිය දිසා අධිකරණය @','# නාවලපිටිය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(31,'වැල්ලවාය දිසා අධිකරණය','@ වැල්ලවාය දිසා අධිකරණය @','# වැල්ලවාය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(32,'ඇල්පිටිය දිසා අධිකරණය','@ ඇල්පිටිය දිසා අධිකරණය @','# ඇල්පිටිය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(33,'වලස්මුල්ල දිසා අධිකරණය','@ වලස්මුල්ල දිසා අධිකරණය @','# වලස්මුල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(34,'බලංගොඩ දිසා අධිකරණය','@ බලංගොඩ දිසා අධිකරණය @','# බලංගොඩ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(35,'පැල්මඩුල්ල දිසා අධිකරණය','@ පැල්මඩුල්ල දිසා අධිකරණය @','# පැල්මඩුල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(36,'කොළඹ දිසා අධිකරණය','@ කොළඹ දිසා අධිකරණය @','# කොළඹ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(37,'ගල්කිස්ස දිසා අධිකරණය','@ ගල්කිස්ස දිසා අධිකරණය @','# ගල්කිස්ස දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(38,'කඑතර දිසා අධිකරණය','@ කඑතර දිසා අධිකරණය @','# කඑතර දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(39,'හෝමාගම දිසා අධිකරණය','@ හෝමාගම දිසා අධිකරණය @','# හෝමාගම දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(40,'මාතර දිසා අධිකරණය','@ මාතර දිසා අධිකරණය @','# මාතර දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(41,'අත්තනගල්ල දිසා අධිකරණය','@ අත්තනගල්ල දිසා අධිකරණය @','# අත්තනගල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(42,'ඇඹිලිපිටිය දිසා අධිකරණය','@ ඇඹිලිපිටිය දිසා අධිකරණය @','# ඇඹිලිපිටිය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(43,'මතුගම දිසා අධිකරණය','@ මතුගම දිසා අධිකරණය @','# මතුගම දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(44,'අව්ස්සාµවිල්ල දිසා අධිකරණය','@ අව්ස්සාµවිල්ල දිසා අධිකරණය @','# අව්ස්සාµවිල්ල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(45,'තිස්සමහාරාමය දිසා අධිකරණය','@ තිස්සමහාරාමය දිසා අධිකරණය @','# තිස්සමහාරාමය දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(46,'හොරණ දිසා අධිකරණය','@ හොරණ දිසා අධිකරණය @','# හොරණ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(47,'පූගොඩ දිසා අධිකරණය','@ පූගොඩ දිසා අධිකරණය @','# පූගොඩ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(48,'නුගේගොඩ දිසා අධිකරණය','@ නුගේගොඩ දිසා අධිකරණය @','# නුගේගොඩ දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(49,'කඩුවෙල දිසා අධිකරණය','@ කඩුවෙල දිසා අධිකරණය @','# කඩුවෙල දිසා අධිකරණය #');
+INSERT INTO CRS.COURTS (COURTID, ENCOURTNAME, SICOURTNAME, TACOURTNAME) VALUES(50,'මොරවක දිසා අධිකරණය','@ මොරවක දිසා අධිකරණය @','# මොරවක දිසා අධිකරණය #');
+
 -- Marriage Declaration Divisions
 INSERT INTO CRS.MR_DIVISIONS (DSDIVISIONUKEY, DIVISIONID, SIDIVISIONNAME, ENDIVISIONNAME, TADIVISIONNAME) VALUES(1, 1, 'කොළඹ කොටුව (Marriage)', 'Colombo Fort (Marriage)', 'கொலோம்போ போர');
 
