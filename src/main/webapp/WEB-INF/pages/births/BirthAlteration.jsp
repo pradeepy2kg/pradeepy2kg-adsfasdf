@@ -196,7 +196,6 @@ function initPage() {
     var idNames;
     var checkIdNames;
     var fieldIds;
-    alert(sectionOfAct);
     if (sectionOfAct == 1) {
         idNames = new Array('header-info', 'error-explanation-info');
     }
@@ -297,8 +296,8 @@ function validate() {
         isDate(domObject.value, "comError1", "comError4");
     domObject = document.getElementById('placeOfBirth');
     /*validation of the Act 27*/
-    if (act == 1) {
-        /*validation for child's information */
+   /* if (act == 1) {
+        *//*validation for child's information *//*
         domObject = document.getElementById('nameInOfficialLanguages');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'childError1');
@@ -308,7 +307,7 @@ function validate() {
             isEmpty(domObject, "", 'childError2');
         }
     }
-    /*validation of the Act 52*/
+    *//*validation of the Act 52*//*
     if (act == 2) {
         domObject = document.getElementById('childBirthDatePicker');
         if (isFieldEmpty(domObject))
@@ -318,7 +317,7 @@ function validate() {
         domObject = document.getElementById('placeOfBirth');
         isEmpty(domObject, "", 'childError5');
 
-        /*validation of mother's information*/
+        *//*validation of mother's information*//*
         domObject = document.getElementById('mother_pinOrNic');
         if (!isFieldEmpty(domObject))
             validatePINorNIC(domObject, 'comError1', 'motherError1');
@@ -335,7 +334,7 @@ function validate() {
             isEmpty(domObject, "", 'motherError3');
         }
 
-        /*validation for informent's information */
+        *//*validation for informent's information *//*
         domObject = document.getElementById('informentName');
         if (isFieldEmpty(domObject)) {
             isEmpty(domObject, "", 'informentError1');
@@ -348,9 +347,9 @@ function validate() {
         if (!isFieldEmpty(domObject))
             validatePINorNIC(domObject, 'comError1', 'informentError3');
     }
-    /*validation of the Act 27A*/
+    *//*validation of the Act 27A*//*
     if (act == 3) {
-        /* validation of father's information */
+        *//* validation of father's information *//*
         domObject = document.getElementById('father_pinOrNic');
         if (!isFieldEmpty(domObject))
             validatePINorNIC(domObject, 'comError1', 'fatherError1');
@@ -362,7 +361,7 @@ function validate() {
         if (!isFieldEmpty(domObject))
             isDate(domObject.value, "comError1", "fatherError3");
 
-        /*validation of Grand Father's validation*/
+        *//*validation of Grand Father's validation*//*
         domObject = document.getElementById('grandFather_pinOrNic');
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, "comError1", "grandFatherError1");
@@ -372,7 +371,7 @@ function validate() {
             validateBirthYear(domObject, 'comError1', 'grandFatherError2');
 
 
-        /*validation of Grand Grand Father's validation*/
+        *//*validation of Grand Grand Father's validation*//*
         domObject = document.getElementById('grandGrandFather_pinOrNic');
         if (!isFieldEmpty(domObject)) {
             validatePINorNIC(domObject, "comError1", "grandGrandFatherError1");
@@ -380,7 +379,7 @@ function validate() {
         domObject = document.getElementById('grandGrandFatherBirthYear');
         if (!isFieldEmpty(domObject))
             validateBirthYear(domObject, 'searchCertificateError1', 'grandGrandFatherError2');
-    }
+    }*/
     var mother = document.getElementById('declarantTypeMOTHER').checked;
     var father = document.getElementById('declarantTypeFATHER').checked;
     var other = document.getElementById('declarantTypeOTHER').checked;
