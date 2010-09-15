@@ -4,8 +4,8 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
@@ -29,7 +29,7 @@ public class BirthRegistrationServiceTest extends TestCase {
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final BirthRegistrationService birthRegSvc;
     protected final BDDivisionDAO bdDivisionDAO;
-    protected final UserManagerImpl userManager;
+    protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
     protected final BDDivision negamboBDDivision;
     protected BirthDeclarationDAO birthDeclarationDAO;
@@ -50,7 +50,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
         birthRegSvc = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
-        userManager = (UserManagerImpl) ctx.getBean("userManagerService", UserManagerImpl.class);
+        userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
 
         try {
             deoColomboColombo = userManager.authenticateUser("deo-colombo-colombo", "password");

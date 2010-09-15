@@ -5,8 +5,8 @@ import junit.framework.TestCase;
 import lk.rgd.AppConstants;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
@@ -39,7 +39,7 @@ public class RegistrarManagementServiceTest extends TestCase {
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         mrDivisionDAO = (MRDivisionDAO) ctx.getBean("mrDivisionDAOImpl", MRDivisionDAO.class);
 
-        UserManagerImpl userManager = (UserManagerImpl) ctx.getBean("userManagerService", UserManagerImpl.class);
+        UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
         try {
             admin = userManager.authenticateUser("admin", "password");
         } catch (AuthorizationException e) {

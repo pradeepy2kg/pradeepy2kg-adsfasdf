@@ -5,11 +5,11 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 import junit.extensions.TestSetup;
+import lk.rgd.common.api.service.UserManager;
 import org.springframework.context.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lk.rgd.UnitTestManager;
-import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.common.core.AuthorizationException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
@@ -36,7 +36,7 @@ public class DeathRegistrationServiceTest extends TestCase {
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final DeathRegistrationService deathRegService;
     protected final BDDivisionDAO bdDivisionDAO;
-    protected final UserManagerImpl userManager;
+    protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
     protected final BDDivision negamboBDDivision;
     protected DeathRegisterDAO deathRegisterDAO;
@@ -70,7 +70,7 @@ public class DeathRegistrationServiceTest extends TestCase {
     public DeathRegistrationServiceTest() {
         deathRegService = (DeathRegistrationService) ctx.getBean("deathRegisterService", DeathRegistrationService.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
-        userManager = (UserManagerImpl) ctx.getBean("userManagerService", UserManagerImpl.class);
+        userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
 
         try {
             deoColomboColombo = userManager.authenticateUser("deo-colombo-colombo", "password");

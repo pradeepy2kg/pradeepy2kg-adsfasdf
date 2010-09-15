@@ -1,6 +1,7 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.service.UserManager;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
@@ -27,7 +27,7 @@ import lk.rgd.crs.api.service.MasterDataManagementService;
 public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     private static final Logger logger = LoggerFactory.getLogger(UserManagmentAction.class);
-    private final UserManagerImpl service;
+    private final UserManager service;
     private final MasterDataManagementService dataManagementService;
     private Map session;
     private User user;
@@ -86,7 +86,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return roleId;
     }
 
-    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManagerImpl service,
+    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service,
                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
