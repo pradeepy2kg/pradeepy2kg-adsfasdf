@@ -213,16 +213,26 @@ function validateParentSigns(domObject) {
         var element = document.getElementById('fatherName');
         var element3 = document.getElementById('fatherSigned');
 
-        // validate father signed
-        if (!element3.checked && element.value.length > 0) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+        if (!document.getElementsByName("marriage.parentsMarried")[3].checked) {
+            // validate father signed
+            if (!element3.checked && element.value.length > 0) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error7').value;
+            }
+
+            // validate mother signed
+            var element4 = document.getElementById('motherSigned');
+            if (!element4.checked && element.value.length > 0) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
+            }
+        }
+        else {
+            //logic for state 4
+            var faName = document.getElementById('fatherName');
+            if (!isFieldEmpty(faName)) {
+                errormsg = errormsg + "\n" + document.getElementById('p3error9').value;
+            }
         }
 
-        // validate mother signed
-        var element4 = document.getElementById('motherSigned');
-        if (!element4.checked && element.value.length > 0) {
-            errormsg = errormsg + "\n" + document.getElementById('p3error8').value;
-        }
     }
 }
 
@@ -386,7 +396,7 @@ function initPage() {
                     <tr>
                         <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
-                                     onclick="disableMarriage(true);disableSigns(false)" id="unknownMarriage"/>
+                                     onclick="disableMarriage(true);disableSigns(true)" id="unknownMarriage"/>
                         </td>
                     </tr>
                     </tbody>
@@ -527,7 +537,7 @@ function initPage() {
         <tbody>
         <tr>
             <td colspan="5" style="text-align:center;font-size:12pt">
-                විවාහයේ විස්තර        <br>
+                විවාහයේ විස්තර <br>
                 திருமணத்தின் விபரங்கள்<br>
                 Details of the Marriage
             </td>
@@ -694,6 +704,7 @@ function initPage() {
 <s:hidden id="p3error6" value="%{getText('p3.Marriage.place.value')}"/>
 <s:hidden id="p3error7" value="%{getText('p3.father.Signature')}"/>
 <s:hidden id="p3error8" value="%{getText('p3.mother.Signature')}"/>
+<s:hidden id="p3error9" value="%{getText('p3.father.info.captured.before')}"/>
 <s:hidden id="p3error18" value="%{getText('p3.GrandFather.birthYear.mismatch')}"/>
 <s:hidden id="p3error19" value="%{getText('p3.GreatGrandFather.birthYear.mismatch')}"/>
 <s:hidden id="error20" value="%{getText('NIC.error.add.VX')}"/>
