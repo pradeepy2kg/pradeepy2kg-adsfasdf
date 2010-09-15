@@ -1,6 +1,24 @@
 <%--@author amith jayasekara--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<script type="text/javascript">
+    var errormsg = "";
+    function validate() {
+        var returnval = true;
+        var comment = document.getElementById('comment');
+        isEmpty(comment, document.getElementById("error").value, "commentField")
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+
+        errormsg = "";
+        return returnval;
+    }
+
+</script>
 <div id="birth-declaration-reject-outer" class="birth-declaration-reject-outer">
     <table>
         <tr>
@@ -13,7 +31,7 @@
 
     <s:actionerror/>
 
-    <s:form action="eprRejectDeath.do" method="post">
+    <s:form action="eprRejectDeath.do" method="post" onsubmit="javascript:return validate()">
         <fieldset>
             <legend><b><s:label value="%{getText('rejectLegend.label')}"/></b></legend>
             <s:hidden name="idUKey" value="%{#request.idUKey}"/>
@@ -39,3 +57,5 @@
         </fieldset>
     </s:form>
 </div>
+<s:hidden id="error" value="%{getText('cannot.empty')}"/>
+<s:hidden id="commentField" value="%{getText('field.comment')}"/>

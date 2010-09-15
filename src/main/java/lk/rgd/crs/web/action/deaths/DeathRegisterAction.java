@@ -339,6 +339,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
         try {
             service.rejectDeathRegistration(idUKey, user, comment);
         } catch (CRSRuntimeException e) {
+            //todo
+            /*
+            * after retruning this error comment page doesnt have death object so when submitting it gives exception
+            * so set object here before forword to page
+            * */
             addFieldError("errorField", getText("%{death.comment.is.required}"));
             return "getComment";
         }
