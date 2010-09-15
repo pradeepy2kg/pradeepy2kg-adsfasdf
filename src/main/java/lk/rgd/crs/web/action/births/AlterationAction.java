@@ -114,7 +114,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         }
         try {
             idUKey = bdf.getIdUKey();
-            //nicOrPin = bdf.getChild().getPin();
+            nicOrPin = bdf.getChild().getPin();
             serialNo = bdf.getRegister().getBdfSerialNo();
             String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             districtName = districtDAO.getNameByPK(birthDistrictId, language);
@@ -127,6 +127,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             pageNo = 0;
             return SUCCESS;
         }
+        // check that birth Certificate is printed
 
         populateAlteration(bdf);
         pageNo = 1;
@@ -199,7 +200,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
 
     public String birthAlteration() {
-        //todo tharanga >> remove country and race DAOs if they not wanted and also allDistrictList and AllDSDivisionList
         BirthAlteration ba = new BirthAlteration();
         BitSet bitSet = new BitSet();
         switch (sectionOfAct) {

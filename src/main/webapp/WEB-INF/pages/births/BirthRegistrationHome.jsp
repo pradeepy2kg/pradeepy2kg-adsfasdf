@@ -130,7 +130,7 @@
     text-align: center;
     position: absolute;
     width: 180px;
-    margin: 240px 0px 0px 820px;
+    margin: 300px 0px 0px 735px;
 }
 
 .lable-fill {
@@ -138,7 +138,7 @@
     text-align: center;
     position: absolute;
     width: 160px;
-    margin: 465px 0px 0px 825px;
+    margin: 100px 0px 0px 720px;
 }
 
 .lable-ADR {
@@ -146,7 +146,7 @@
     text-align: center;
     position: absolute;
     width: 120px;
-    margin: 245px 0px 0px 658px;
+    margin: 275px 0px 0px 620px;
 }
 
 .lable-parent {

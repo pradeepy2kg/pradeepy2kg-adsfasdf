@@ -9,7 +9,9 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.crs.web.action.births.AdoptionAction;
 import lk.rgd.crs.api.domain.AdoptionOrder;
+import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
+import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.UnitTestManager;
 
@@ -28,16 +30,21 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
     private AdoptionAction adoptionAction;
     private static final Logger logger = LoggerFactory.getLogger(AdoptionActionTest.class);
     private ActionProxy proxy;
+
+    protected static Court AvissawellaCourt;
+
     protected final static ApplicationContext ctx = UnitTestManager.ctx;
     protected final static AdoptionOrderService adoptionOrderService = (AdoptionOrderService) ctx.getBean("adoptionOrderService", AdoptionOrderService.class);
     protected final static AdoptionOrderDAO adoptionOrderDAO = (AdoptionOrderDAO) ctx.getBean("adoptionOrderDAOImpl", AdoptionOrderDAO.class);
     protected final static UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+   protected final static CourtDAO courtDAO = (CourtDAO) ctx.getBean("courtDAOImpl", CourtDAO.class);
 
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(AdoptionActionTest.class)) {
             protected void setUp() throws Exception {
                 logger.info("setup called");
+                AvissawellaCourt=courtDAO.getCourt(44);
                 List adop = persistAdoption();
                 User sampleUser = loginSampleUser();
                 for (int i = 0; i < adop.size(); i++) {
@@ -92,7 +99,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.childExistingName", "Priyankara Perera");
         request.setParameter("adoption.childGender", "1");
         request.setParameter("adoption.childNewName", "Rasika Bandara");
-        request.setParameter("adoption.court", "badulla");
+        request.setParameter("courtId", "44");
         request.setParameter("adoption.courtOrderNumber", "20100803");
         request.setParameter("adoption.judgeName", "Ruwan Perera");
         request.setParameter("adoption.languageToTransliterate", "si");
@@ -113,7 +120,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         initAndExucute("/adoption/eprAdoptionAction.do", session);
         session = adoptionAction.getSession();
 
-        assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
+        //assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("Child Birthday ", adoptionAction.getAdoption().getChildBirthDate());
         assertNotNull("Child New name ", adoptionAction.getAdoption().getChildNewName());
@@ -143,7 +150,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         request.setParameter("adoption.childExistingName", "Priyankara Perera");
         request.setParameter("adoption.childGender", "1");
         request.setParameter("adoption.childNewName", "Rasika Bandara");
-        request.setParameter("adoption.court", "badulla");
+        request.setParameter("courtId", "44");
         request.setParameter("adoption.courtOrderNumber", "20100803");
         request.setParameter("adoption.judgeName", "Ruwan Perera");
         request.setParameter("adoption.languageToTransliterate", "si");
@@ -162,7 +169,6 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         initAndExucute("/adoption/eprAdoptionAction.do", session);
         session = adoptionAction.getSession();
 
-        assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("Child Birthday ", adoptionAction.getAdoption().getChildBirthDate());
         assertNotNull("Child New name ", adoptionAction.getAdoption().getChildNewName());
@@ -201,8 +207,8 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
 
         assertNotNull("child new name", adoptionAction.getAdoption().getChildNewName());
         assertNotNull("child birth day", adoptionAction.getAdoption().getChildAgeYears());
-        assertNotNull("Court", adoptionAction.getAdoption().getCourt());
-        assertNotNull("Court", adoptionAction.getAdoption().getCourt());
+        //assertNotNull("Court", adoptionAction.getAdoption().getCourt());
+        //assertNotNull("Court", adoptionAction.getAdoption().getCourt());
         assertNotNull("father NIC ", adoptionAction.getAdoption().getApplicantPINorNIC());
     }
 
@@ -240,7 +246,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         initAndExucute("/adoption/eprAdoptionFind.do", session);
         session = adoptionAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, adoptionAction.getActionErrors().size());
-        assertNotNull("court ", adoptionAction.getAdoption().getCourt());
+        //assertNotNull("court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("court ordernumber ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("child given name ", adoptionAction.getAdoption().getChildNewName());
         assertNotNull("child new name ", adoptionAction.getAdoption().getChildNewName());
@@ -295,7 +301,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
         session = adoptionAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 1, adoptionAction.getActionErrors().size());
 
-        assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
+       // assertNotNull("Court ", adoptionAction.getAdoption().getCourt());
         assertNotNull("Court order Number ", adoptionAction.getAdoption().getCourtOrderNumber());
         assertNotNull("Child Age Year ", adoptionAction.getAdoption().getChildAgeYears());
         assertNotNull("Child New name ", adoptionAction.getAdoption().getChildNewName());
@@ -345,7 +351,7 @@ public class AdoptionActionTest extends CustomStrutsTestCase {
             adoption.setOrderIssuedDate(new Date());
             adoption.setOrderReceivedDate(new Date());
             adoption.setCourtOrderNumber("gampaha123" + i);
-            adoption.setCourt("gampaha");
+            adoption.setCourt(AvissawellaCourt);
             adoption.setJudgeName("judge name");
             adoption.setApplicantName("applicant name" + i);
             adoption.setApplicantAddress("applicant address" + i);
