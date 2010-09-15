@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=සජීවී උපතක් ලියාපදිංචි කිරීම</td>
+	<td>birth_registration.label</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,14 +183,9 @@
 	<td>na address</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>modifiedDatePicker</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>modifiedDatePicker</td>
-	<td>2010-09-09</td>
+	<td>2010-09-10</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -199,12 +194,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td>link=අනුමත කරන්න</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td>link=තහවුර මුද්‍රණය</td>
 	<td></td>
 </tr>
 <tr>
@@ -214,7 +209,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=උපත් තහවුරු කිරීම</td>
+	<td>birth_confirmation.label</td>
 	<td></td>
 </tr>
 <tr>
@@ -243,14 +238,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>datePicker</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>datePicker</td>
-	<td>2010-09-07</td>
+	<td>2010-09-14</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -259,22 +249,17 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td>print_birthcertificate.label</td>
 	<td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/ecivil/births/eprBirthCertificatDirectPrint.do?bdId=1&amp;directPrint=true</td>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[1]/a/label</td>
 	<td></td>
 </tr>
 

@@ -38,7 +38,6 @@
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
-<%--<form action="eprMarkAdoptionCertificateAsPrinted.do">--%>
 <table style="width: 100%; border:none; border-collapse:collapse; ">
     <col width="200px">
     <col width="400px">
