@@ -50,6 +50,7 @@
     <bean id="districtDAOImpl" class="lk.rgd.common.core.dao.DistrictDAOImpl"/>
     <bean id="dsDivisionDAOImpl" class="lk.rgd.common.core.dao.DSDivisionDAOImpl"/>
     <bean id="countryDAOImpl" class="lk.rgd.common.core.dao.CountryDAOImpl"/>
+    <bean id="courtDAOImpl" class="lk.rgd.crs.core.dao.CourtDAOImpl"/>
     <bean id="raceDAOImpl" class="lk.rgd.common.core.dao.RaceDAOImpl"/>
     <bean id="bdDivisionDAOImpl" class="lk.rgd.crs.core.dao.BDDivisionDAOImpl"/>
     <bean id="mrDivisionDAOImpl" class="lk.rgd.crs.core.dao.MRDivisionDAOImpl"/>
@@ -217,7 +218,6 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
         <constructor-arg ref="adoptionOrderService"/>
-        <constructor-arg ref="birthAlterationService"/>
     </bean>
     <bean id="alterationAction" scope="prototype" class="lk.rgd.crs.web.action.births.AlterationAction">
         <constructor-arg ref="manageBirthService"/>
@@ -227,6 +227,7 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">
@@ -270,6 +271,7 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="courtDAOImpl"/>
     </bean>
 
     <bean id="userManagmentAction" class="lk.rgd.crs.web.action.UserManagmentAction">
