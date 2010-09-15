@@ -1723,7 +1723,6 @@ public class BirthRegistrationServiceImpl implements
         return birthDeclarationDAO.getById(bdId);
     }
 
-    @Override
     public BirthDeclaration getByPINorNIC(long PINorNIC, User user) {
         logger.debug("Get active record by NIC or Pin number : {}", PINorNIC);
         BirthDeclaration bdf = birthDeclarationDAO.getByPINorNIC(PINorNIC);
