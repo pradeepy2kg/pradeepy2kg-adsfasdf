@@ -118,79 +118,92 @@
 
 </script>
 <s:actionerror cssStyle="color:red;"/>
+
+<s:actionmessage name="registrarFound" cssStyle="color:blue;font-size:10pt"/><s:property
+        value="%{#session.exsisting_registrar.fullNameInOfficialLanguage}"/>
+
 <s:set name="indirect" value="directAssigment"/>
 <s:if test="directAssigment>0">
-    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-        <legend align="right">
-            <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
-                <s:property value="%{getText('registrar.find.by.pin')}"/>
-            </s:if>
-            <s:else>
-                <s:property value="%{getText('acknowladgmnet.assignment')}"/>
-            </s:else>
-        </legend>
-        <form action="eprSearchRegistrarByPin.do" method="post">
-            <table>
-                <caption/>
-                <col width="300px"/>
-                <col width="200px"/>
-                <col/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td>
-                        <s:if test="%{(#session.exsisting_registrar == null  &&  directAssigment!=0)}">
-                            <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/>
+    <%--    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+    <legend align="right">
+        <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
+            <s:property value="%{getText('registrar.find.by.pin')}"/>
+        </s:if>
+        <s:else>
+            <s:property value="%{getText('acknowladgmnet.assignment')}"/>
+        </s:else>
+    </legend>--%>
+    <form action="eprSearchRegistrarByPin.do" method="post">
+        <table>
+            <caption/>
+            <col width="300px"/>
+            <col width="200px"/>
+            <col/>
+            <col/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:if test="%{(#session.exsisting_registrar == null  &&  directAssigment!=0)}">
+                        <s:textfield id="registrarPin" name="registrarPin" value="%{registrarPin}"/>
+                    </s:if>
+                    <s:else>
+                    </s:else>
+                </td>
+                <td>
+                    <div id="search_button" class="button">
+                        <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
+                            <s:submit name="refresh" value="%{getText('label.button.searchr')}"
+                                      onclick="javascript:searchButtonClick();"/>
                         </s:if>
                         <s:else>
-                        </s:else>
-                    </td>
-                    <td>
-                        <div id="search_button" class="button">
-                            <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
-                                <s:submit name="refresh" value="%{getText('label.button.searchr')}"
-                                          onclick="javascript:searchButtonClick();"/>
-                            </s:if>
-                            <s:else>
 
-                            </s:else>
-                        </div>
-                    </td>
-                    <td>
-                        <s:fielderror name="noRegistrar" cssStyle="color:red;font-size:10pt" id="noregistrarError"/>
-                    </td>
-                    <td>
-                        <s:actionmessage name="registrarFound" cssStyle="color:blue;font-size:10pt"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-    </fieldset>
+                        </s:else>
+                    </div>
+                </td>
+                <td>
+                    <s:fielderror name="noRegistrar" cssStyle="color:red;font-size:10pt" id="noregistrarError"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <%--    </fieldset>--%>
 
 </s:if>
 
 <s:form action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()">
 
     <fieldset>
-        <legend>
-            <s:property value="%{getText('assignment.bd.marraige.division')}"/>
-        </legend>
+            <%--        <legend>
+                <s:property value="%{getText('assignment.bd.marraige.division')}"/>
+            </legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
-            <col width="500px">
-            <col width="500px">
-            <col>
+            <col width="100px">
+            <col width="300px">
+            <col width="100px">
+            <col width="300px">
+            <col width="100px">
+            <col width="300px">
             <tbody>
             <tr>
+                <td>
+                    <s:property value="%{getText('label.district')}"/>
+                </td>
                 <td colspan="1" align="left">
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
                               cssStyle="width:98.5%; width:240px;"/>
+                </td>
+                <td>
+                    <s:property value="%{getText('label.dsDivision')}"/>
                 </td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
                                                        list="dsDivisionList"
                                                        value="%{dsDivisionId}"
                                                        cssStyle="float:left;  width:240px;"/></td>
+                <td>
+                    <s:property value="%{getText('label.division')}"/>
+                </td>
                 <td>
                     <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
                               cssStyle="float:left;  width:240px; margin:2px 5px;"/>
@@ -200,92 +213,108 @@
         </table>
     </fieldset>
     <fieldset>
-        <legend><s:property value="%{getText('assignment.type')}"/></legend>
+            <%--       <legend><s:property value="%{getText('assignment.type')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
-            <col width="500px">
-            <col width="500px">
             <tbody>
             <tr>
-                <td colspan="1" align="left"><s:select
+                <td width="74px">
+                    <s:property value="%{getText('label.type')}"/>
+                </td>
+                <td colspan="1" align=left><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
                         name="assignmentType" cssStyle="width:240px; margin-left:5px;" id="type"/></td>
             </tr>
             </tbody>
         </table>
     </fieldset>
+
     <s:if test="assignment != null">
         <fieldset>
-            <legend><s:property value="%{getText('assignment.state')}"/></legend>
-            <s:if test="assignment != null">
-                <s:select
-                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
-                        name="assignmentState" cssStyle="width:240px; margin-left:5px;"/>
-            </s:if>
-            <s:else>
-                <s:select
-                        list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
-                        name="assignment.lifeCycleInfo.active" cssStyle="width:240px; margin-left:5px;"/>
-            </s:else>
+                <%--  <legend><s:property value="%{getText('assignment.state')}"/></legend>--%>
+            <table cellspacing="0" cellpadding="0">
+                <caption></caption>
+                <tbody>
+                <tr>
+                    <td width="74px">
+                        <s:property value="%{getText('label.state')}"/>
+                    </td>
+                    <td>
+                        <s:if test="assignment != null">
+                            <s:select
+                                    list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                                    name="assignmentState" cssStyle="width:240px; margin-left:5px;"/>
+                        </s:if>
+                        <s:else>
+                            <s:select
+                                    list="#@java.util.HashMap@{'0':getText('label.state.active'),'1':getText('label.state.inactive')}"
+                                    name="assignment.lifeCycleInfo.active" cssStyle="width:240px; margin-left:5px;"/>
+                        </s:else>
+                    </td>
+                </tr>
 
+                </tbody>
+            </table>
         </fieldset>
     </s:if>
+
+
     <fieldset>
-        <legend><s:property value="%{getText('assignment.dates')}"/></legend>
+            <%--  <legend align="right"><s:property value="%{getText('assignment.dates')}"/></legend>--%>
         <table>
             <caption/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
+            <col width="74px">
+            <col>
             <tbody>
             <tr>
-                <fieldset>
-                    <legend><s:label value="appoinment date"/></legend>
+                <td><s:property value="%{getText('label.appoinment.date')}"/></td>
+                <td>
                     <s:if test="assignment != null">
                         <s:textfield value="%{assignment.appointmentDate}" id="dateOfAppoinmentDatePicker"
                                      name="appoinmentDate"/>
                     </s:if>
                     <s:else>
                         <s:textfield name="assignment.appointmentDate" id="dateOfAppoinmentDatePicker"/> </s:else>
-                </fieldset>
-                <fieldset>
-                    <legend><s:label value="permenent date"/></legend>
+                </td>
+            </tr>
+            <tr>
+                <td><s:property value="%{getText('label.permanent.date')}"/></td>
+                <td>
                     <s:if test="assignment != null">
                         <s:textfield value="%{assignment.permanentDate}" id="dateOfPermenentDatePicker"
                                      name="permanentDate"/>
                     </s:if>
                     <s:else>
                         <s:textfield name="assignment.permanentDate" id="dateOfPermenentDatePicker"/> </s:else>
-
-                </fieldset>
-                <fieldset>
-                    <legend><s:label value="termination date"/></legend>
+                </td>
+            </tr>
+            <tr>
+                <td><s:property value="%{getText('label.termination.date')}"/></td>
+                <td>
                     <s:if test="assignment != null">
                         <s:textfield value="%{assignment.terminationDate}" id="dateOfTerminationDatePicker"
                                      name="terminationDate"/>
                     </s:if>
                     <s:else>
                         <s:textfield name="assignment.terminationDate" id="dateOfTerminationDatePicker"/> </s:else>
-                </fieldset>
+                </td>
             </tr>
-
             </tbody>
         </table>
     </fieldset>
-    <s:if test="editableAssignment==false">
-        <s:submit name="assignMentSubmit" value="add assignment prop"/>
+    <s:if test="%{#session.exsisting_registrar != null && !editableAssignment}">
+        <s:submit name="assignMentSubmit" value="%{getText('add.assignment')}"/>
     </s:if>
-    <s:else>
-        <s:submit name="assignMentEdit" value="edit assignment prop"/>
+    <s:elseif test="editableAssignment">
+        <s:submit name="assignMentEdit" value="%{getText('update.assignment')}"/>
         <s:hidden name="editMode" value="true"/>
-    </s:else>
+    </s:elseif>
     <s:hidden name="directAssigment" value="2"/>
     <s:hidden name="registrarSession" value="true"/>
 </s:form>
-
+<%--<s:property value="%{#session.exsisting_registrar != null}"/>
+<s:property value="editableAssignment"/>
+<s:property value="%{#session.exsisting_registrar != null && editableAssignment}"/>--%>
 
 <s:if test="assignment != null">
     <script type="text/javascript">

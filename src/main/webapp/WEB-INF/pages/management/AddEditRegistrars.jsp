@@ -287,7 +287,7 @@
     <table id="registrars-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
         <tr class="table-title">
-            <th width="50px"><s:label value="%{getText('label.bdDivision')}"/></th>
+            <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
             <th width="20px"><s:label value="%{getText('label.active')}"/></th>
             <th width="20px"><s:label value="%{getText('label.type')}"/></th>
             <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
