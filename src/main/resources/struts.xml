@@ -541,6 +541,7 @@
 
         <action name="eprRejectDeath" class="lk.rgd.crs.web.action.deaths.DeathRegisterAction"
                 method="rejectDeath">
+            <result type="tiles" name="getComment">epr.deathRejectGetComment</result>
             <result type="tiles" name="success">epr.deathApproveAndPrint</result>
         </action>
 

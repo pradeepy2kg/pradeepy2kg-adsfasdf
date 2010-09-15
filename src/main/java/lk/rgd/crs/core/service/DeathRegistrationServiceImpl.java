@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Indunil Moremada
+ * @authar amith jayasekara
  */
 public class DeathRegistrationServiceImpl implements DeathRegistrationService {
 
@@ -115,7 +116,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         deathDeclarationValidator.validateMinimalRequirments(getById(deathRegisterIdUKey, user));
         List<UserWarning> warnings = deathDeclarationValidator.validateStandardRequirements(deathRegisterDAO, getById(deathRegisterIdUKey, user), user);
         if (warnings.isEmpty() || ignoreWarnings) {
-            setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED);
+            setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.APPROVED, null);
         }
         return warnings;
     }
@@ -124,9 +125,14 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void rejectDeathRegistration(long deathRegisterIdUKey, User user) {
+    public void rejectDeathRegistration(long deathRegisterIdUKey, User user, String comment) {
         logger.debug("attempt to reject death registration record : {}", deathRegisterIdUKey);
-        setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.REJECTED);
+
+        if (comment == null || comment.trim().length() < 1) {
+            handleException("A comment is required to reject a birth declaration",
+                    ErrorCodes.COMMENT_REQUIRED_BDF_REJECT);
+        }
+        setApprovalStatus(deathRegisterIdUKey, user, DeathRegister.State.REJECTED, comment);
     }
 
     /**
@@ -145,7 +151,7 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         deathRegisterDAO.updateDeathRegistration(dr, user);
     }
 
-    private void setApprovalStatus(long idUKey, User user, DeathRegister.State state) {
+    private void setApprovalStatus(long idUKey, User user, DeathRegister.State state, String comment) {
         // check approve permission
         if (!user.isAuthorized(Permission.APPROVE_DEATH)) {
             handleException("User : " + user.getUserId() + " is not allowed to approve/reject death declarations",
@@ -165,6 +171,9 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
             handleException("Cannot approve/reject death registration " + dr.getIdUKey() +
                     " Illegal state : " + dr.getStatus(), ErrorCodes.ILLEGAL_STATE);
         }
+        //setting comment, this is relative only to death rejaction
+        dr.setCommnet(comment);
+        //updating 
         deathRegisterDAO.updateDeathRegistration(dr, user);
     }
 

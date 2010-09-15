@@ -271,6 +271,11 @@
         <put-attribute name="title" value="death_approve_print_list.label"/>
     </definition>
 
+    <definition name="epr.deathRejectGetComment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathDeclarationReject.jsp"/>
+        <put-attribute name="title" value="death_reject_get_comment.label"/>
+    </definition>
+
     <!--  User Management Tiles -->
     <definition name="epr.creatUser" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/CreatUser.jsp"/>
