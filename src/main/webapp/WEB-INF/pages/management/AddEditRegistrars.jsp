@@ -173,21 +173,30 @@
     }
 
     function validateForm() {
-
+        var check = document.getElementById('skipValidationId');
         var returnval = true;
         //valdiate numbers
-        isNumeric(pin.value, "invalideData", "pin")
-        //validate PIN or NIC
-        validatePINorNIC(pin, "invalideData", "pin")
-        validatePINorNIC(nic, "invalideData", "nic")
-        //validate phone number
-        validatePhoneNo(phone, "invalideData", "phone")
-        //validate email
-        validateEmail(email, "invalideData", "email")
+        if ((check.checked && !isFieldEmpty(pin)) || (!check.checked)) {
+            isNumeric(pin.value, "invalideData", "pin")
+            //validate PIN or NIC
+            validatePINorNIC(pin, "invalideData", "pin")
+        }
+        if ((check.checked && !isFieldEmpty(nic)) || (!check.checked)) {
+            validatePINorNIC(nic, "invalideData", "nic")
+        }
+        if ((check.checked && !isFieldEmpty(phone)) || (!check.checked)) {
+            //validate phone number
+            validatePhoneNo(phone, "invalideData", "phone")
+        }
+        if ((check.checked && !isFieldEmpty(email)) || (!check.checked)) {
+            //validate email
+            validateEmail(email, "invalideData", "email")
+        }
         /*        //validate date of birth
          isDate(dob, "invalideData", "email")*/
         /*todo validate compulsory fields*/
         isEmpty(nameOfficialLang, "nameOfficial", "cannotNull")
+
 
         if (errormsg != "") {
             alert(errormsg);
