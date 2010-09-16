@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -209,6 +210,29 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
                 "active Assignments of DS Division : {}", dsDivisionUKey);
 
         return assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, type, active);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Assignment> getAssignmentsByDSDivision(int dsDivisionUKey, boolean active, User user) {
+
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
+            handleException("User : " + user.getUserId() +
+                    " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+
+        logger.debug("Request to get " + (active ? " " : " in-") +
+                "active Assignments of DS Division : {}", dsDivisionUKey);
+
+        List<Assignment> results = new ArrayList<Assignment>();
+        results.addAll(assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, Assignment.Type.BIRTH, active));
+        results.addAll(assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, Assignment.Type.DEATH, active));
+        results.addAll(assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, Assignment.Type.GENERAL_MARRIAGE, active));
+        results.addAll(assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, Assignment.Type.KANDYAN_MARRIAGE, active));
+        results.addAll(assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, Assignment.Type.MUSLIM_MARRIAGE, active));
+        return results;
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

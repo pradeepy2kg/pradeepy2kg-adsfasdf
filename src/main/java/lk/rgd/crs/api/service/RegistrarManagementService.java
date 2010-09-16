@@ -70,7 +70,7 @@ public interface RegistrarManagementService {
     public List<Assignment> getAssignments(long registrarUKey, User user);
 
     /**
-     * Get Assignments for the given DS Division
+     * Get Assignments of a particular type for the given DS Division
      *
      * @param dsDivisionUKey the DS division unique ID whose assignments are required
      * @param type           the type of assignments interested in
@@ -79,6 +79,16 @@ public interface RegistrarManagementService {
      * @return the list of qualifying assignments
      */
     public List<Assignment> getAssignmentsByDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active, User user);
+
+    /**
+     * Get all types of Assignments for the given DS Division
+     *
+     * @param dsDivisionUKey the DS division unique ID whose assignments are required
+     * @param active         return only active assignments if true, else return only inactive assignments
+     * @param user           the user invoking the action
+     * @return the list of qualifying assignments
+     */
+    public List<Assignment> getAssignmentsByDSDivision(int dsDivisionUKey, boolean active, User user);
 
     /**
      * get registrar by idUKey

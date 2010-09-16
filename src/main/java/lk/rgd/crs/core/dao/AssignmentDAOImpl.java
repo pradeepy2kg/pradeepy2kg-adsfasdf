@@ -77,6 +77,16 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
         return q.getResultList();
     }
 
+    /**
+     * @inheritDoc
+     */
+    public List<Assignment> getAssignmentsByStateAndDSDivision(int dsDivisionUKey, boolean active) {
+        Query q = em.createNamedQuery("get.assignments.by.state.and.dsdivision");
+        q.setParameter("dsDivisionUKey", dsDivisionUKey);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
+
     public List<Assignment> getAllAssignments(User user) {
         Query q = em.createNamedQuery("get.all.assignments");
         return q.getResultList();
