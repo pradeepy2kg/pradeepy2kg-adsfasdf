@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.Country;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -197,6 +198,29 @@ public class Person {
     @JoinColumn(name = "lastMarriageUKey")
     private Marriage lastMarriage;
 
+    /**
+     * Add a record of a marriage. Marks this marriage as the 'last' marriage
+     * @param m marriage details
+     */
+    public void specifyMarriage(Marriage m) {
+        if (marriages == null) {
+            marriages = new HashSet<Marriage>();
+        }
+        marriages.add(m);
+        lastMarriage = m;
+    }
+
+    /**
+     * Add a record of an address. Marks this address as the 'last' address
+     * @param a address details
+     */
+    public void specifyAddress(Address a) {
+        if (addresses == null) {
+            addresses = new HashSet<Address>();
+        }
+        addresses.add(a);
+        lastAddress = a;
+    }
 
     //----------------------------------- getters and setters -----------------------------------
     public Long getPin() {

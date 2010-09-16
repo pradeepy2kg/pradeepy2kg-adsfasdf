@@ -62,6 +62,10 @@ public class Address {
     @JoinColumn(name = "countryId")
     private Country country;
 
+    public Address(String line1) {
+        this.line1 = line1;
+    }
+
     public long getAddressUKey() {
         return addressUKey;
     }
