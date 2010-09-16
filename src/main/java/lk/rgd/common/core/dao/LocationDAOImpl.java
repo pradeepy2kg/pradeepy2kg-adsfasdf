@@ -27,7 +27,7 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void save(Location location, User admin) {
+    public void add(Location location, User admin) {
         location.getLifeCycleInfo().setCreatedUser(admin);
         location.getLifeCycleInfo().setCreatedTimestamp(new Date());
         location.getLifeCycleInfo().setLastUpdatedUser(admin);

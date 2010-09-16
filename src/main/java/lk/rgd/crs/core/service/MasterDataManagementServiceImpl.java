@@ -4,8 +4,10 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.LocationDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -31,12 +33,15 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     private final MRDivisionDAO mrDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final DistrictDAO districtDAO;
+    private final LocationDAO locationDAO;
 
-    public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO, DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO) {
+    public MasterDataManagementServiceImpl(BDDivisionDAO bdDivisionDAO, MRDivisionDAO mrDivisionDAO,
+        DSDivisionDAO dsDivisionDAO, DistrictDAO districtDAO, LocationDAO locationDAO) {
         this.bdDivisionDAO = bdDivisionDAO;
         this.mrDivisionDAO = mrDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.districtDAO = districtDAO;
+        this.locationDAO = locationDAO;
     }
 
     /**
@@ -68,16 +73,16 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateBDDivision(BDDivision bdDivision, User user) {
-        updateBDActivation(bdDivision.getBdDivisionUKey(), false, user);
+    public void inactivateBDDivision(int bdDivisionUKey, User user) {
+        updateBDActivation(bdDivisionUKey, false, user);
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void activateBDDivision(BDDivision bdDivision, User user) {
-        updateBDActivation(bdDivision.getBdDivisionUKey(), true, user);
+    public void activateBDDivision(int bdDivisionUKey, User user) {
+        updateBDActivation(bdDivisionUKey, true, user);
     }
 
     private void updateBDActivation(int bdDivisionUKey, boolean activate, User user) {
@@ -128,16 +133,16 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateMRDivision(MRDivision mrDivision, User user) {
-        updateMRActivation(mrDivision.getMrDivisionUKey(), false, user);
+    public void inactivateMRDivision(int mrDivisionUKey, User user) {
+        updateMRActivation(mrDivisionUKey, false, user);
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void activateMRDivision(MRDivision mrDivision, User user) {
-        updateMRActivation(mrDivision.getMrDivisionUKey(), true, user);
+    public void activateMRDivision(int mrDivisionUKey, User user) {
+        updateMRActivation(mrDivisionUKey, true, user);
     }
 
     private void updateMRActivation(int mrDivisionUKey, boolean activate, User user) {
@@ -188,16 +193,16 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateDSDivision(DSDivision dsDivision, User user) {
-        updateDSActivation(dsDivision.getDsDivisionUKey(), false, user);
+    public void inactivateDSDivision(int dsDivisionUKey, User user) {
+        updateDSActivation(dsDivisionUKey, false, user);
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void activateDSDivision(DSDivision dsDivision, User user) {
-        updateDSActivation(dsDivision.getDsDivisionUKey(), true, user);
+    public void activateDSDivision(int dsDivisionUKey, User user) {
+        updateDSActivation(dsDivisionUKey, true, user);
     }
 
     private void updateDSActivation(int dsDivisionUKey, boolean activate, User user) {
@@ -208,10 +213,12 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
                 if (existing != null) {
                     existing.setActive(activate);
                     dsDivisionDAO.update(existing, user);
-                    logger.info("DS Division : {} inactivated by : {}", existing.getEnDivisionName(), user.getUserId());
+                    logger.info("DS Division : {} " + (activate ? "" : "in-") + "activated by : {}",
+                        existing.getEnDivisionName(), user.getUserId());
                 }
             } catch (Exception e) {
-                logger.error("Attempt to inactivate DS Division with key : " + dsDivisionUKey + " failed", e);
+                logger.error("Attempt to " + (activate ? "" : "in-") + "activate DS Division with key : "
+                    + dsDivisionUKey + " failed", e);
             }
         } else {
             logger.error("User : " + user.getUserId() +
@@ -248,16 +255,16 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void inactivateDistrict(District district, User user) {
-        updateDistrictActivation(district.getDistrictUKey(), false, user);
+    public void inactivateDistrict(int districtUKey, User user) {
+        updateDistrictActivation(districtUKey, false, user);
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void activateDistrict(District district, User user) {
-        updateDistrictActivation(district.getDistrictUKey(), true, user);
+    public void activateDistrict(int districtUKey, User user) {
+        updateDistrictActivation(districtUKey, true, user);
     }
 
     private void updateDistrictActivation(int districtUKey, boolean activate, User user) {
@@ -279,6 +286,69 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
         }
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addLocation(Location location, User user) {
+        if (isEmptyString(location.getEnLocationName()) ||
+            isEmptyString(location.getSiLocationName()) ||
+            isEmptyString(location.getTaLocationName())) {
+            throw new CRSRuntimeException(
+                "One or more names of the Location names is invalid - check all languages", ErrorCodes.INVALID_DATA);
+        }
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            try {
+                locationDAO.add(location, user);
+            } catch (Exception e) {
+                logger.error("Attempt to add Location : " + location.getEnLocationName() + " failed", e);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() +
+                " was not allowed to add a new Location : " + location.getEnLocationName());
+        }
+    }
+
+
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void activateLocation(int locationUKey, User user) {
+        updateLocationActivation(locationUKey, true, user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void inactivateLocation(int locationUKey, User user) {
+        updateLocationActivation(locationUKey, false, user);
+    }
+
+    private void updateLocationActivation(int locationUKey, boolean activate, User user) {
+
+        if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
+            try {
+                Location existing = locationDAO.getLocation(locationUKey);
+                if (existing != null) {
+                    existing.getLifeCycleInfo().setActive(activate);
+                    locationDAO.update(existing, user);
+                    logger.info("Location : {} " + (activate ? "" : "in-") + "activated by : {}",
+                        existing.getEnLocationName(), user.getUserId());
+                }
+            } catch (Exception e) {
+                logger.error("Attempt to "  + (activate ? "" : "in-") +  "activate Location with key : "
+                    + locationUKey + " failed", e);
+            }
+        } else {
+            logger.error("User : " + user.getUserId() +
+                " was not allowed to activate/inactivate Location with key : " + locationUKey);
+        }
+    }
+    
     private static final boolean isEmptyString(String s) {
         return s == null || s.trim().length() == 0;
     }

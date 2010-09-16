@@ -113,7 +113,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void update(DSDivision dsDivision, User user) {
         em.merge(dsDivision);
         updateCache(dsDivision);
@@ -122,7 +122,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void add(DSDivision dsDivision, User user) {
         em.persist(dsDivision);
         updateCache(dsDivision);

@@ -80,6 +80,13 @@ public interface UserManager {
     public List<User> getUsersByIDMatch(String userId);
 
     /**
+     * Get the user by ID or null
+     * @param userId user id to lookup
+     * @return the corresponding user or null
+     */
+    public User getUsersByID(String userId);
+
+    /**
      * Get non-deleted users by name - with a wildcard match
      *
      * @param userName the userid to match within the userId field

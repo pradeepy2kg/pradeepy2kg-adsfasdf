@@ -22,7 +22,7 @@ public interface LocationDAO {
      * @param userLocation the UserLocation to be added
      * @param admin the user performing the action
      */
-    public void save(Location userLocation, User admin);
+    public void add(Location userLocation, User admin);
 
     /**
      * Update a Location

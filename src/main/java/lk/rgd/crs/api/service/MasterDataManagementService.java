@@ -2,6 +2,7 @@ package lk.rgd.crs.api.service;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
@@ -24,17 +25,17 @@ public interface MasterDataManagementService {
 
     /**
      * Mark a BD Division as inactive
-     * @param bdDivision the BD Division to be updated
+     * @param bdDivisionUKey the BD Division to be updated
      * @param user the user invoking the action
      */
-    void inactivateBDDivision(BDDivision bdDivision, User user);
+    void inactivateBDDivision(int bdDivisionUKey, User user);
 
     /**
      * Mark a BD Division as active
-     * @param bdDivision the BD Division to be updated
+     * @param bdDivisionUKey the BD Division to be updated
      * @param user the user invoking the action
      */
-    void activateBDDivision(BDDivision bdDivision, User user);
+    void activateBDDivision(int bdDivisionUKey, User user);
 
     /**
      * Add a new MR Division
@@ -45,17 +46,17 @@ public interface MasterDataManagementService {
 
     /**
      * Mark a MR Division as inactive
-     * @param mrDivision the MR Division to be updated
+     * @param mrDivisionUKey the MR Division to be updated
      * @param user the user invoking the action
      */
-    void inactivateMRDivision(MRDivision mrDivision, User user);
+    void inactivateMRDivision(int mrDivisionUKey, User user);
 
     /**
      * Mark a MR Division as active
-     * @param mrDivision the MR Division to be updated
+     * @param mrDivisionUKey the MR Division to be updated
      * @param user the user invoking the action
      */
-    void activateMRDivision(MRDivision mrDivision, User user);
+    void activateMRDivision(int mrDivisionUKey, User user);
 
     /**
      * Add a new DS Division
@@ -66,17 +67,17 @@ public interface MasterDataManagementService {
 
     /**
      * Mark a DS Division as inactive
-     * @param dsDivision the DS Division to be updated
+     * @param dsDivisionUKey the DS Division to be updated
      * @param user the user invoking the action
      */
-    void inactivateDSDivision(DSDivision dsDivision, User user);
+    void inactivateDSDivision(int dsDivisionUKey, User user);
 
     /**
      * Mark a DS Division as active
-     * @param dsDivision the DS Division to be updated
+     * @param dsDivisionUKey the DS Division to be updated
      * @param user the user invoking the action
      */
-    void activateDSDivision(DSDivision dsDivision, User user);
+    void activateDSDivision(int dsDivisionUKey, User user);
 
     /**
      * Add a new District
@@ -87,15 +88,36 @@ public interface MasterDataManagementService {
 
     /**
      * Mark a District as inactive
-     * @param district the District to be updated
+     * @param districtUKey the District to be updated
      * @param user the user invoking the action
      */
-    void inactivateDistrict(District district, User user);
+    void inactivateDistrict(int districtUKey, User user);
 
     /**
      * Mark a District as active
-     * @param district the District to be updated
+     * @param districtUKey the District to be updated
      * @param user the user invoking the action
      */
-    void activateDistrict(District district, User user);
+    void activateDistrict(int districtUKey, User user);
+
+    /**
+     * Add a new Location as active
+     * @param location the new location, the name of the location in all three languages must be filled
+     * @param user user invoking the action
+     */
+    public void addLocation(Location location, User user);
+
+    /**
+     * Mark a Location as active
+     * @param locationUKey the location to mark as active
+     * @param user user invoking the action
+     */
+    public void activateLocation(int locationUKey, User user);
+
+    /**
+     * Mark a Location as inactive
+     * @param locationUKey the location to mark as inactive
+     * @param user user invoking the action
+     */
+    public void inactivateLocation(int locationUKey, User user);    
 }

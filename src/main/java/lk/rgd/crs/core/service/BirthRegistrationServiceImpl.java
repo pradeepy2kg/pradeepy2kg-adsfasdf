@@ -1392,22 +1392,23 @@ public class BirthRegistrationServiceImpl implements
                 mother = ecivil.findPersonByPIN(pin, user);
                 if (mother != null) {
                     logger.debug("Found mother by PIN : {}", pin);
-                    person.setMother(mother);
                 }
             } catch (NumberFormatException ignore) {
                 // this could be an NIC
                 List<Person> records = ecivil.findPersonsByNIC(motherNICorPIN, user);
-                if (records != null && records.size() == 1) {
-                    logger.debug("Found mother by INC : {}", records.get(0).getNic());
-                    mother = records.get(0);
-                } else {
-                    logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
-                    // TODO issue a user warning
+                if (records != null) {
+                    if (records.size() == 1) {
+                        logger.debug("Found mother by INC : {}", records.get(0).getNic());
+                        mother = records.get(0);
+                    } else if (records.size() > 1) {
+                        logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
+                        return;
+                    }
                 }
             }
 
-            // if we couldn't locate the mother, add an unverified record to the PRS
             if (mother == null && parent.getMotherFullName() != null) {
+                // if we couldn't locate the mother, add an unverified record to the PRS
                 mother = new Person();
                 mother.setFullNameInOfficialLanguage(parent.getMotherFullName());
                 mother.setDateOfBirth(parent.getMotherDOB());
@@ -1426,6 +1427,11 @@ public class BirthRegistrationServiceImpl implements
 
                 logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
             }
+
+            // mark mother child relationship
+            if (mother != null) {
+                person.setMother(mother);
+            }
         }
     }
 
@@ -1439,7 +1445,6 @@ public class BirthRegistrationServiceImpl implements
                 father = ecivil.findPersonByPIN(pin, user);
                 if (father != null) {
                     logger.debug("Found father by PIN : {}", pin);
-                    person.setFather(father);
                 }
             } catch (NumberFormatException ignore) {
                 // this could be an NIC
@@ -1447,8 +1452,7 @@ public class BirthRegistrationServiceImpl implements
                 if (records != null && records.size() == 1) {
                     logger.debug("Found father by INC : {}", records.get(0).getNic());
                     father = records.get(0);
-                } else {
-                    // TODO issue a user warning
+                } else if (records.size() > 1) {
                     logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
                 }
             }
@@ -1465,6 +1469,11 @@ public class BirthRegistrationServiceImpl implements
                 ecivil.addPerson(father, user);
 
                 logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
+            }
+
+            // set father child relationship
+            if (father != null) {
+                person.setFather(father);
             }
         }
     }

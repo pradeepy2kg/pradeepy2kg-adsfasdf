@@ -172,6 +172,7 @@
                 <constructor-arg ref="mrDivisionDAOImpl"/>
                 <constructor-arg ref="dsDivisionDAOImpl"/>
                 <constructor-arg ref="districtDAOImpl"/>
+                <constructor-arg ref="locationDAOImpl"/>
             </bean>
         </property>
         <property name="interceptorNames">

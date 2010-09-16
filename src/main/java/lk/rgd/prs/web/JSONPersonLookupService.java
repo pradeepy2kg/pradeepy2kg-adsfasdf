@@ -62,24 +62,33 @@ public class JSONPersonLookupService extends HttpServlet {
         }
 
         Person person = ecivil.findPersonByPINorNIC(pinOrNic, user);
-        logger.debug("Loaded person : " + person.getFullNameInOfficialLanguage());
+        if (person != null) {
+            logger.debug("Loaded person : " + person.getFullNameInOfficialLanguage());
 
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = response.getWriter();
+            response.setContentType("application/json; charset=utf-8");
+            PrintWriter out = response.getWriter();
 
-        HashMap<String,Object> untyped = new HashMap<String,Object>();
-        untyped.put("fullNameInOfficialLanguage", person.getFullNameInOfficialLanguage());
-        untyped.put("gender", person.getGender());
-        untyped.put("dateOfBirth", person.getDateOfBirth());
-        untyped.put("placeOfBirth", person.getPlaceOfBirth());
+            HashMap<String,Object> untyped = new HashMap<String,Object>();
 
-        if (person.getLastAddress() != null) {
-            untyped.put("lastAddress", person.getLastAddress().toString());
-        } else {
-            untyped.put("lastAddress", "");
+            final String nameInOfficialLanguage = person.getFullNameInOfficialLanguage();
+            // For any record in the PRS the name should be available at least one language (e.g. for migrated data)
+            if (nameInOfficialLanguage == null || nameInOfficialLanguage.trim().length() == 0) {
+                untyped.put("fullNameInOfficialLanguage", person.getFullNameInEnglishLanguage());
+            } else {
+                untyped.put("fullNameInOfficialLanguage", nameInOfficialLanguage);
+            }
+            untyped.put("gender", person.getGender());
+            untyped.put("dateOfBirth", person.getDateOfBirth());
+            untyped.put("placeOfBirth", person.getPlaceOfBirth());
+
+            if (person.getLastAddress() != null) {
+                untyped.put("lastAddress", person.getLastAddress().toString());
+            } else {
+                untyped.put("lastAddress", "");
+            }
+
+            mapper.writeValue(out, untyped);
+            out.flush();
         }
-
-        mapper.writeValue(out, untyped);
-        out.flush();
     }
 }
