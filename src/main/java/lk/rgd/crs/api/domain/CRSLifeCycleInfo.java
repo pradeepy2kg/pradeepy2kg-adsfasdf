@@ -62,7 +62,7 @@ public class CRSLifeCycleInfo implements Serializable {
      */
     private User lastUpdatedUser;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "integer default 1")
     private boolean activeRecord = true;
 
     public Date getCreatedTimestamp() {

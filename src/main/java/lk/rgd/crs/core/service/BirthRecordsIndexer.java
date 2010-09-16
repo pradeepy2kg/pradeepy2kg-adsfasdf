@@ -19,8 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.ConnectException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This is the bridge class that exposes the Solr indexing to the rest of the application
@@ -90,55 +91,57 @@ public class BirthRecordsIndexer {
         }
     }
 
-    public List<BirthDeclaration> searchBirthRecords(BirthCertificateSearch bcs) {
+    public List<BirthDeclaration> searchBirthRecords(CertificateSearch cs) {
 
         SolrQuery query = new SolrQuery();
 
         StringBuilder sb = new StringBuilder(128).append("(");
 
+        SearchInfo search = cs.getSearch();
+
         // childs name in official and english languages
-        if (isSpecified(bcs.getChildFullNameOfficialLang())) {
+        if (isSpecified(search.getSearchFullNameOfficialLang())) {
             sb.append(SPACE);
             sb.append(FIELD_CHILD_FULL_NAME_OFFICIAL_LANG);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(bcs.getChildFullNameOfficialLang());
+            sb.append(search.getSearchFullNameOfficialLang());
             sb.append(QUOTE_TILDE_3);
         }
-        if (isSpecified(bcs.getChildFullNameEnglish())) {
+        if (isSpecified(search.getSearchFullNameEnglish())) {
             sb.append(SPACE);
             sb.append(FIELD_CHILD_FULL_NAME_ENGLISH);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(bcs.getChildFullNameEnglish());
+            sb.append(search.getSearchFullNameEnglish());
             sb.append(QUOTE_TILDE_3);
         }
 
         // names of mother and father
-        if (isSpecified(bcs.getMotherFullName())) {
+        if (isSpecified(search.getMotherFullName())) {
             sb.append(SPACE);
             sb.append(FIELD_MOTHER_FULL_NAME);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(bcs.getMotherFullName());
+            sb.append(search.getMotherFullName());
             sb.append(QUOTE_TILDE_3);
         }
-        if (isSpecified(bcs.getFatherFullName())) {
+        if (isSpecified(search.getFatherFullName())) {
             sb.append(SPACE);
             sb.append(FIELD_FATHER_FULL_NAME);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(bcs.getFatherFullName());
+            sb.append(search.getFatherFullName());
             sb.append(QUOTE_TILDE_3);
         }
 
         // place of birth
-        if (bcs.getPlaceOfBirth() != null) {
+        if (search.getPlaceOfEvent() != null) {
             sb.append(SPACE);
             sb.append(FIELD_PLACE_OF_BIRTH);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(bcs.getPlaceOfBirth());
+            sb.append(search.getPlaceOfEvent());
             sb.append(QUOTE_TILDE_12);
         }
 
@@ -152,26 +155,26 @@ public class BirthRecordsIndexer {
         sb.append(FIELD_CHILD_GENDER);
         sb.append(COLON);
         sb.append(QUOTE);
-        sb.append(GenderUtil.getGenderString(bcs.getGender()));
+        sb.append(GenderUtil.getGenderString(search.getGender()));
         sb.append(QUOTE);
 
         // date of birth
-        if (bcs.getDateOfBirth() != null) {
+        if (search.getDateOfEvent() != null) {
             sb.append(" AND ");
             sb.append(FIELD_DATE_OF_BIRTH);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(DateTimeUtils.dayToUTCString(bcs.getDateOfBirth()));
+            sb.append(DateTimeUtils.dayToUTCString(search.getDateOfEvent()));
             sb.append(QUOTE);
         }
 
         // date of birth
-        if (bcs.getDateOfRegistration() != null) {
+        if (search.getCertificateIssueDate() != null) {
             sb.append(" AND ");
             sb.append(FIELD_DATE_OF_REGISTRATION);
             sb.append(COLON);
             sb.append(QUOTE);
-            sb.append(DateTimeUtils.dayToUTCString(bcs.getDateOfRegistration()));
+            sb.append(DateTimeUtils.dayToUTCString(search.getCertificateIssueDate()));
             sb.append(QUOTE);
         }
 
@@ -228,10 +231,10 @@ public class BirthRecordsIndexer {
 
             solrIndexManager.getBirthServer().optimize();
             solrIndexManager.getBirthServer().commit();
-            
+
             logger.debug("Successfully indexed : " + count + " documents..");
 
-        // TODO we do not print the stack trace for now..
+            // TODO we do not print the stack trace for now..
         } catch (SolrServerException e) {
             logger.error("Error from Solr server during re-indexing");
         } catch (IOException e) {

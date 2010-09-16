@@ -2,7 +2,7 @@ package lk.rgd.crs.core.service;
 
 import junit.framework.Assert;
 import lk.rgd.common.util.DateTimeUtils;
-import lk.rgd.crs.api.domain.BirthCertificateSearch;
+import lk.rgd.crs.api.domain.CertificateSearch;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 
 import java.util.Date;
@@ -45,72 +45,72 @@ public class BirthRegistrationServiceIntegrationTest extends BirthRegistrationSe
         bdf3 = birthRegSvc.getById(bdf3.getIdUKey(), deoColomboColombo);
         birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf3, deoColomboColombo);
 
-        BirthCertificateSearch bcs = new BirthCertificateSearch();
-        bcs.setApplicantFullName("applicant name");
-        bcs.setApplicantAddress("applicant address");
-        bcs.setDsDivision(colomboBDDivision.getDsDivision());
-        bcs.setApplicationNo("1");
-        bcs.setDateOfSubmission(new Date());
+        CertificateSearch cs = new CertificateSearch();
+        cs.getCertificate().setApplicantFullName("applicant name");
+        cs.getCertificate().setApplicantAddress("applicant address");
+        cs.getCertificate().setDsDivision(colomboBDDivision.getDsDivision());
+        cs.getCertificate().setApplicationNo("1");
+        cs.getCertificate().setDateOfSubmission(new Date());
 
         // should find when the search term does occur within the field
-        bcs.setChildFullNameEnglish("aaaa bbbb");
-        List<BirthDeclaration> results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setSearchFullNameEnglish("aaaa bbbb");
+        List<BirthDeclaration> results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(1, results.size());
 
         // should find when the search term does occur within the field
-        bcs.setChildFullNameEnglish("ffff zzzz");
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("2");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setSearchFullNameEnglish("ffff zzzz");
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("2");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(1, results.size());
 
         // should not find when the search term does not occur
-        bcs.setChildFullNameEnglish("xxxx yyyy");
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("3");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setSearchFullNameEnglish("xxxx yyyy");
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("3");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(0, results.size());
 
-        bcs.setGender(0);
-        bcs.setChildFullNameEnglish("zzzz");
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("4");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setGender(0);
+        cs.getSearch().setSearchFullNameEnglish("zzzz");
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("4");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(3, results.size());
 
         // should not match zzzz for gender = 1 as gender is an exact match
-        bcs.setGender(1);
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("5");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setGender(1);
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("5");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(0, results.size());
 
-        bcs.setGender(0);
-        bcs.setDateOfBirth(null);
-        bcs.setMotherFullName("zzzz");
-        bcs.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("2010-07-22"));
+        cs.getSearch().setGender(0);
+        cs.getSearch().setDateOfEvent(null);
+        cs.getSearch().setMotherFullName("zzzz");
+        cs.getSearch().setDateOfEvent(DateTimeUtils.getDateFromISO8601String("2010-07-22"));
 
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("6");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("6");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(2, results.size());
 
-        bcs.setMotherFullName("zzzz");
-        bcs.setChildFullNameEnglish(null);
-        bcs.setDateOfBirth(DateTimeUtils.getDateFromISO8601String("2010-07-21"));
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("7");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setMotherFullName("zzzz");
+        cs.getSearch().setSearchFullNameEnglish(null);
+        cs.getSearch().setDateOfEvent(DateTimeUtils.getDateFromISO8601String("2010-07-21"));
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("7");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(1, results.size());
 
         // search on issued date
 
-        bcs.setDateOfBirth(null);
-        bcs.setMotherFullName(null);
-        bcs.setDateOfRegistration(new Date()); // TODO
-        bcs.setSearchUKey(0);
-        bcs.setApplicationNo("8");
-        results = birthRegSvc.performBirthCertificateSearch(bcs, adrColomboColombo);
+        cs.getSearch().setDateOfEvent(null);
+        cs.getSearch().setMotherFullName(null);
+        cs.getSearch().setCertificateIssueDate(new Date()); // TODO
+        cs.setIdUKey(0);
+        cs.getCertificate().setApplicationNo("8");
+        results = birthRegSvc.performBirthCertificateSearch(cs, adrColomboColombo);
         Assert.assertEquals(3, results.size());
     }
 }

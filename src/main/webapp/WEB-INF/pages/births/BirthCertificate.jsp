@@ -33,6 +33,10 @@
 </s:if>
 <s:else>
     <%--TODO remove unused parameters--%>
+    <%--<s:if test="#request.certificateSearch">--%>
+
+    <%--</s:if>--%>
+    <%--<s:else>--%>
     <s:url id="print" action="eprMarkCertificateAsPrinted.do">
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="bdId" value="%{#request.bdId}"/>
@@ -48,7 +52,9 @@
         <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
         <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
         <s:param name="printed" value="#request.printed"/>
-        <s:param name="printStart" value="#request.printStart"/></s:url>
+        <s:param name="printStart" value="#request.printStart"/>
+    </s:url>
+    <%--<s:else>--%>
 </s:else>
 
 <s:if test="#request.allowPrintCertificate">

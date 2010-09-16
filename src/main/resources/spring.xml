@@ -59,7 +59,7 @@
     <bean id="birthDeclarationDAOImpl" class="lk.rgd.crs.core.dao.BirthDeclarationDAOImpl"/>
     <bean id="personDAOImpl" class="lk.rgd.prs.core.dao.PersonDAOImpl"/>
     <bean id="pinNumberDAOImpl" class="lk.rgd.prs.core.dao.PINNumberDAOImpl"/>
-    <bean id="bcSearchDAOImpl" class="lk.rgd.crs.core.dao.BCSearchDAOImpl"/>
+    <bean id="certSearchDAOImpl" class="lk.rgd.crs.core.dao.CertificateSearchDAOImpl"/>
     <bean id="adoptionOrderDAOImpl" class="lk.rgd.crs.core.dao.AdoptionOrderDAOImpl"/>
     <bean id="deathRegisterDAOImpl" class="lk.rgd.crs.core.dao.DeathRegisterDAOImpl"/>
     <bean id="eventDAOImpl" class="lk.rgd.common.core.dao.EventDAOImpl"/>
@@ -111,7 +111,7 @@
                 <constructor-arg ref="appParametersDAOImpl"/>
                 <constructor-arg ref="userManagerService"/>
                 <constructor-arg ref="birthRecordsIndexer"/>
-                <constructor-arg ref="bcSearchDAOImpl"/>
+                <constructor-arg ref="certSearchDAOImpl"/>
                 <constructor-arg ref="adoptionOrderDAOImpl"/>
                 <constructor-arg ref="birthDeclarationValidator"/>
             </bean>
@@ -232,7 +232,7 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
-        <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>        
     </bean>
 
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">

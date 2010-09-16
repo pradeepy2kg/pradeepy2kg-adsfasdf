@@ -60,7 +60,7 @@ public class PrintAction extends ActionSupport implements SessionAware {
     private BirthDeclaration.BirthType birthType;
 
     public PrintAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
-                       BirthRegistrationService service, AppParametersDAO appParametersDAO) {
+        BirthRegistrationService service, AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
@@ -206,6 +206,8 @@ public class PrintAction extends ActionSupport implements SessionAware {
                         service.markStillBirthCertificateAsPrinted(bdf, user);
                     } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
                         service.markAdoptionBirthCertificateAsPrinted(bdf, user);
+                    } else if (birthType == BirthDeclaration.BirthType.BELATED) {
+                        service.markBelatedBirthCertificateAsPrinted(bdf, user);
                     }
                 }
             }
