@@ -22,6 +22,7 @@ import lk.rgd.crs.api.dao.BCSearchDAO;
 import lk.rgd.crs.api.dao.AdoptionOrderDAO;
 
 import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PopulationRegistry;
 import org.slf4j.Logger;
@@ -1360,8 +1361,8 @@ public class BirthRegistrationServiceImpl implements
         // check mother and father
         ParentInfo parent = bdf.getParent();
         if (bdf.getParent() != null) {
-            processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
-            processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
+            Person mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
+            processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(), mother, bdf.getMarriage());
         }
 
         // generate a PIN number
@@ -1380,13 +1381,14 @@ public class BirthRegistrationServiceImpl implements
         return warnings;
     }
 
-    private void processMotherToPRS(User user, Person person, ParentInfo parent, String prefLanguage) {
+    private Person processMotherToPRS(User user, Person person, ParentInfo parent, String prefLanguage) {
 
         String motherNICorPIN = parent.getMotherNICorPIN();
         logger.debug("Processing details of the mother for NIC/PIN : {}", motherNICorPIN);
 
+        Person mother = null;
         if (motherNICorPIN != null) {
-            Person mother = null;
+
             try {
                 long pin = Long.parseLong(motherNICorPIN);
                 mother = ecivil.findPersonByPIN(pin, user);
@@ -1402,7 +1404,7 @@ public class BirthRegistrationServiceImpl implements
                         mother = records.get(0);
                     } else if (records.size() > 1) {
                         logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
-                        return;
+                        return null;
                     }
                 }
             }
@@ -1414,17 +1416,15 @@ public class BirthRegistrationServiceImpl implements
                 mother.setDateOfBirth(parent.getMotherDOB());
                 mother.setGender(AppConstants.Gender.FEMALE.ordinal());
                 mother.setPreferredLanguage(prefLanguage);
-                if (parent.getMotherAddress() != null) {
-                    Address mothersAddress = new Address();
-                    mothersAddress.setLine1(parent.getMotherAddress());
-                    Set<Address> addresses = new HashSet<Address>();
-                    addresses.add(mothersAddress);
-                    mother.setAddresses(addresses);
-                }
+                mother.setNic(motherNICorPIN);
                 mother.setStatus(Person.Status.UNVERIFIED);
                 mother.setLifeStatus(Person.LifeStatus.ALIVE);
-                ecivil.addPerson(mother, user);
 
+                if (parent.getMotherAddress() != null) {
+                    mother.specifyAddress(new Address(parent.getMotherAddress()));
+                }
+
+                ecivil.addPerson(mother, user);
                 logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
             }
 
@@ -1433,9 +1433,11 @@ public class BirthRegistrationServiceImpl implements
                 person.setMother(mother);
             }
         }
+        return mother;
     }
 
-    private void processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage) {
+    private void processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
+        Person mother, MarriageInfo marriage) {
 
         String fatherNICorPIN = parent.getFatherNICorPIN();
         if (fatherNICorPIN != null) {
@@ -1450,7 +1452,7 @@ public class BirthRegistrationServiceImpl implements
                 // this could be an NIC
                 List<Person> records = ecivil.findPersonsByNIC(fatherNICorPIN, user);
                 if (records != null && records.size() == 1) {
-                    logger.debug("Found father by INC : {}", records.get(0).getNic());
+                    logger.debug("Found father by NIC : {}", records.get(0).getNic());
                     father = records.get(0);
                 } else if (records.size() > 1) {
                     logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
@@ -1466,14 +1468,30 @@ public class BirthRegistrationServiceImpl implements
                 father.setPreferredLanguage(prefLanguage);
                 father.setStatus(Person.Status.UNVERIFIED);
                 father.setLifeStatus(Person.LifeStatus.ALIVE);
-                ecivil.addPerson(father, user);
+                father.setNic(fatherNICorPIN);
 
+                ecivil.addPerson(father, user);
                 logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
             }
 
             // set father child relationship
             if (father != null) {
                 person.setFather(father);
+                
+                if (mother != null && marriage.getDateOfMarriage() != null) {
+                    Marriage m = new Marriage();
+                    m.setBride(mother);
+                    m.setGroom(father);
+                    m.setDateOfMarriage(marriage.getDateOfMarriage());
+                    m.setPlaceOfMarriage(marriage.getPlaceOfMarriage());
+                    m.setState(Marriage.State.MARRIED);
+                    father.specifyMarriage(m);
+                    mother.specifyMarriage(m);
+
+                    if (mother.getLastAddress() != null) {
+                        father.specifyAddress(mother.getLastAddress());
+                    }
+                }
             }
         }
     }
