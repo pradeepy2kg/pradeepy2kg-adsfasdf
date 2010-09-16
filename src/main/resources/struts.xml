@@ -470,10 +470,19 @@
         </action>
 
         <!--Birth Certificate Search-->
+        <!--TODO by chathuranga-->
         <action name="eprBirthCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
                 method="birthCertificateSearch">
-            <result type="tiles" name="page0">epr.birthCertificateSearch</result>
-            <result type="tiles" name="page1">epr.birthCertificateSearchResult</result>
+            <param name="certificateType">BIRTH</param>
+            <result type="tiles" name="page0">epr.certificateSearch</result>
+            <result type="tiles" name="page1">epr.certificateSearchResult</result>
+        </action>
+
+        <action name="eprDeathCertificateSearch" class="lk.rgd.crs.web.action.births.SearchAction"
+                method="birthCertificateSearch">
+            <param name="certificateType">DEATH</param>
+            <result type="tiles" name="page0">epr.certificateSearch</result>
+            <result type="tiles" name="page1">epr.certificateSearchResult</result>
         </action>
     </package>
 

@@ -1,26 +1,25 @@
 package lk.rgd.crs.core.dao;
 
-import lk.rgd.crs.api.dao.BCSearchDAO;
-import lk.rgd.crs.api.domain.BirthCertificateSearch;
-import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.api.domain.DSDivision;
-import org.springframework.transaction.annotation.Transactional;
+import lk.rgd.common.core.dao.BaseDAO;
+import lk.rgd.crs.api.dao.CertificateSearchDAO;
+import lk.rgd.crs.api.domain.CertificateSearch;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.List;
 
 /**
  * @author Chathuranga Withana
  */
-public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
+public class CertificateSearchDAOImpl extends BaseDAO implements CertificateSearchDAO {
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addBirthCertificateSearch(BirthCertificateSearch bcs) {
+    public void addBirthCertificateSearch(CertificateSearch bcs) {
         em.persist(bcs);
     }
 
@@ -28,12 +27,12 @@ public class BCSearchDAOImpl extends BaseDAO implements BCSearchDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public BirthCertificateSearch getByDSDivisionAndSerialNo(DSDivision dsDivision, String serialNo) {
+    public CertificateSearch getByDSDivisionAndSerialNo(DSDivision dsDivision, String serialNo) {
         Query q = em.createNamedQuery("get.by.serialNo.and.dsDivision");
         q.setParameter("serialNo", serialNo);
         q.setParameter("dsDivision", dsDivision);
         try {
-            return (BirthCertificateSearch) q.getSingleResult();
+            return (CertificateSearch) q.getSingleResult();
         } catch (NoResultException ignore) {
             return null;
         }

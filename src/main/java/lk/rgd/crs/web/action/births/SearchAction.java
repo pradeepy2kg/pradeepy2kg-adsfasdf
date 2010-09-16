@@ -6,8 +6,8 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.domain.BirthCertificateSearch;
 import lk.rgd.crs.api.domain.BirthDeclaration;
+import lk.rgd.crs.api.domain.CertificateSearch;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * @author Indunil Moremada
+ * @author Chathuranga Withana
  *         Struts Action Class for Search puposes
  */
 public class SearchAction extends ActionSupport implements SessionAware {
@@ -30,14 +31,15 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
 
-    private Map session;
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private List<BirthDeclaration> searchResultList;
+    private Map session;
     private User user;
     private BirthDeclaration bdf;
-    private BirthCertificateSearch bcSearch;
+    private CertificateSearch certSearch;
+    private CertificateSearch.CertificateType certificateType;
 
     private int birthDistrictId;
     private int dsDivisionId;
@@ -50,7 +52,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-                        BDDivisionDAO bdDivisionDAO) {
+        BDDivisionDAO bdDivisionDAO) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -71,14 +73,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * This method responsible for searching  Birth declaration based on searialNo,
-     * district and bdDivision. If serialNo is set to  0 search is done based on
-     * the birthDivision
+     * This method responsible for searching  Birth declaration based on searialNo, district and bdDivision. If serialNo
+     * is set to  0 search is done based on the birthDivision
      *
      * @return String
      */
     public String searchBDFBySerialNumber() {
-        logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} " + "and birthDivisionId " +
+        logger.debug("inside searchBDFBySerialNumber() : search parameters serialNo {}, birthDistrictId {} and birthDivisionId " +
             birthDivisionId, serialNo, birthDistrictId + " received");
         try {
             if (serialNo != null) {
@@ -125,8 +126,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * This method is responsible for searching particular BirthDeclaration
-     * based on IdUKey
+     * This method is responsible for searching particular BirthDeclaration based on IdUKey
      *
      * @return
      */
@@ -152,18 +152,19 @@ public class SearchAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String birthCertificateSearch() {
-        logger.debug("birth certificate search: Page {}", pageNo);
+        logger.debug("{} certificate search: Page {}", certificateType, pageNo);
         // TODO Still implementing
         if (pageNo == 1) {
-
             try {
-                bcSearch.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                searchResultList = service.performBirthCertificateSearch(bcSearch, user);
+                certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                // TODO if entering application is a duplicate have to give an action error                
+
+                searchResultList = service.performBirthCertificateSearch(certSearch, user);
 
             } catch (CRSRuntimeException e) {
                 logger.error("inside birthCertificateSearch()", e);
-                addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + bcSearch.getApplicationNo() +
-                    " , " + bcSearch.getDsDivision().getDsDivisionUKey());
+                addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + certSearch.getCertificate().getApplicationNo() +
+                    " , " + certSearch.getCertificate().getDsDivision().getDsDivisionUKey());
             } catch (Exception e) {
                 logger.error("inside birthCertificateSearch()", e);
                 return ERROR;
@@ -274,12 +275,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.searchResultList = searchResultList;
     }
 
-    public BirthCertificateSearch getBcSearch() {
-        return bcSearch;
+    public CertificateSearch getCertSearch() {
+        return certSearch;
     }
 
-    public void setBcSearch(BirthCertificateSearch bcSearch) {
-        this.bcSearch = bcSearch;
+    public void setCertSearch(CertificateSearch certSearch) {
+        this.certSearch = certSearch;
     }
 
     public int getPageNo() {
@@ -288,5 +289,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public CertificateSearch.CertificateType getCertificateType() {
+        return certificateType;
+    }
+
+    public void setCertificateType(CertificateSearch.CertificateType certificateType) {
+        this.certificateType = certificateType;
     }
 }

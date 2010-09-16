@@ -5,7 +5,7 @@ import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.BirthCertificateSearch;
+import lk.rgd.crs.api.domain.CertificateSearch;
 
 import java.util.List;
 import java.util.Date;
@@ -248,6 +248,14 @@ public interface BirthRegistrationService {
     public void markStillBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
 
     /**
+     * Mark that the Birth Certificate for the Belated BDF has been printed
+     *
+     * @param bdf  the BDF for which the BC has been printed
+     * @param user the user initiating the action
+     */
+    public void markBelatedBirthCertificateAsPrinted(BirthDeclaration bdf, User user);
+
+    /**
      * Mark that the Birth Certificate for the BDF has been printed for adopted child
      *
      * @param bdf  the BDF for which the BC has been printed
@@ -430,11 +438,11 @@ public interface BirthRegistrationService {
     /**
      * Perform a birth certificate search, and add an entry on the search performed
      *
-     * @param bcs  the Birth certificate search details
+     * @param cs   the Birth certificate search details
      * @param user the user performing the action
      * @return the list of records found and returned to the user
      */
-    public List<BirthDeclaration> performBirthCertificateSearch(BirthCertificateSearch bcs, User user);
+    public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user);
 
     /**
      * Returns historical records for the given BD Division and Serial number

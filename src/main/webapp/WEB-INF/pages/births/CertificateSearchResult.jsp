@@ -32,21 +32,21 @@
         <table id="search-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <s:if test="searchResultList.size>0">
+                <%--<s:if test="searchResultList.size>0">
                     <th></th>
-                </s:if>
-                <th width="100px"><s:label name="certificate" value="%{getText('certificate.label')}"/></th>
-                <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
+                </s:if>--%>
+                <th width="80px"><s:label name="certificate" value="%{getText('certificate.label')}"/></th>
+                <th width="80px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                 <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
-                <th><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
-                <th width="50px"><s:label name="live" value="%{getText('live.label')}"/></th>
-                <th></th>
+                <th width="50px"><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
+                <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                <th width="20px"></th>
             </tr>
             </thead>
             <tbody>
             <s:iterator status="searchStatus" value="searchResultList" id="searchId">
                 <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                    <td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>
+                        <%--<td class="table-row-index"><s:property value="%{#searchStatus.count}"/></td>--%>
                     <td><s:property value="idUKey"/></td>
                     <td><s:property value="register.bdfSerialNo"/></td>
                     <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
@@ -72,11 +72,7 @@
                     <td align="center">
                         <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
                             <s:param name="bdId" value="idUKey"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
-                            <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
-                            <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
-                            <s:param name="printed" value="#request.printed"/>
-                            <s:param name="printStart" value="#request.printStart"/>
+                            <s:param name="certificateSearch" value="true"/>
                         </s:url>
                         <s:a href="%{cetificatePrintUrl}">
                             <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>

@@ -173,13 +173,13 @@
         <put-attribute name="title" value="search.title"/>
     </definition>
 
-    <definition name="epr.birthCertificateSearch" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/births/BirthCertificateSearch.jsp"/>
+    <definition name="epr.certificateSearch" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearch.jsp"/>
         <put-attribute name="title" value="BirthCertificateSearch.title"/>
     </definition>
 
-    <definition name="epr.birthCertificateSearchResult" extends="epr.template">
-        <put-attribute name="body" value="/WEB-INF/pages/births/BirthCertificateSearchResult.jsp"/>
+    <definition name="epr.certificateSearchResult" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/CertificateSearchResult.jsp"/>
         <put-attribute name="title" value="BirthCertificateSearch.title"/>
     </definition>
 
