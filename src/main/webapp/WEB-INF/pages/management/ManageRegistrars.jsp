@@ -82,12 +82,15 @@
                 <td><s:property value="%{getText('label.district')}"/></td>
                 <td colspan="1" align="left">
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:98.5%; width:240px;"/>
+                              cssStyle="width:98.5%; width:240px;" headerValue="%{getText('all.district.label')}"
+                              headerKey="0"/>
                 </td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
                                                        value="%{dsDivisionId}"
-                                                       cssStyle="float:left;  width:240px;"/></td>
+                                                       cssStyle="float:left;  width:240px;"
+                                                       headerValue="%{getText('all.divisions.label')}"
+                                                       headerKey="0"/></td>
             </tr>
             </tbody>
         </table>
@@ -116,7 +119,8 @@
                 <td width="129px"><s:property value="%{getText('label.type')}"/></td>
                 <td width="200px"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
-                        name="assignmentType" cssStyle="width:240px; margin-left:5px;"/></td>
+                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" headerKey="0"
+                        headerValue="%{getText('label.all.types')}"/></td>
             </tr>
             </tbody>
         </table>

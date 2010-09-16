@@ -9,6 +9,7 @@
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script type="text/javascript">
@@ -22,6 +23,55 @@
             endDate:'2040-12-31'
         });
     });
+
+
+    var errormsg = "";
+
+    function validate() {
+
+        var nameOfficialLang = document.getElementById('registrarNameInOfficelaLang');
+        var nameEnglish = document.getElementById('registrarNameInEnglish');
+        var pin = document.getElementById('registrarPin');
+        var nic = document.getElementById('registrarNIC');
+        var gender = document.getElementById('registrarGender');
+        var dob = document.getElementById('dateOfBirthDatePicker');
+        var address = document.getElementById('registrarAddress');
+        var phone = document.getElementById('registrarPhone');
+        var email = document.getElementById('registrarEmail');
+        var lang = document.getElementById('prefLanguage');
+
+        var check = document.getElementById('skipValidationId');
+        var returnval = true;
+
+        //valdiate numbers
+        if ((check.checked && !isFieldEmpty(pin)) || (!check.checked)) {
+            isNumeric(pin.value, "invalideData", "pin")
+            //validate PIN or NIC
+            validatePINorNIC(pin, "invalideData", "pin")
+        }
+        if ((check.checked && !isFieldEmpty(nic)) || (!check.checked)) {
+            validatePINorNIC(nic, "invalideData", "nic")
+        }
+        if ((check.checked && !isFieldEmpty(phone)) || (!check.checked)) {
+            //validate phone number
+            validatePhoneNo(phone, "invalideData", "phone")
+        }
+        if ((check.checked && !isFieldEmpty(email)) || (!check.checked)) {
+            //validate email
+            validateEmail(email, "invalideData", "email")
+        }
+        /*        //validate date of birth
+         isDate(dob, "invalideData", "email")*/
+        /*todo validate compulsory fields*/
+        isEmpty(nameOfficialLang, "nameOfficial", "cannotNull")
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
 </script>
 <style type="text/css">
     .add-registrar-body {
@@ -34,7 +84,7 @@
 
 <div class="add-registrar-body">
     <div class="block">
-        <s:form action="eprRegistrarsAdd.do" method="post">
+        <s:form action="eprRegistrarsAdd.do" method="post" onsubmit="javascript:return validate()">
         <table border="0" style="width: 100%" cellpadding="5" cellspacing="5">
             <caption></caption>
             <col width="400px"/>
@@ -97,7 +147,8 @@
         <col width="1000px"/>
         <tbody>
         <tr>
-            <td></td>
+            <td><s:property value="%{getText('label.skip.validation')}"/><s:checkbox id="skipValidationId"
+                                                                                     name="skipValidationName"/></td>
             <td align="right">
                 <div id="addNew_button" class="button">
                     <s:submit name="refresh" value="add"/>
@@ -109,3 +160,13 @@
     <s:hidden name="page" value="1"/>
     </s:form>
 </div>
+
+<s:hidden id="invalideData" value="%{getText('invalide.data')}"/>
+<s:hidden id="cannotNull" value="%{getText('cannot.null')}"/>
+<s:hidden id="pin" value="%{getText('filed.pin')}"/>
+<s:hidden id="nic" value="%{getText('field.nic')}"/>
+<s:hidden id="dob" value="%{getText('field.dob')}"/>
+<s:hidden id="address" value="%{getText('field.address')}"/>
+<s:hidden id="phone" value="%{getText('field.phone')}"/>
+<s:hidden id="email" value="%{getText('field.email')}"/>
+<s:hidden id="nameOfficial" value="%{getText('field.nameOfficial')}"/>
