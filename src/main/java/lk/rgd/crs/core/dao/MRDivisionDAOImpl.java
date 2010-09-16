@@ -70,7 +70,7 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void add(MRDivision mrDivision, User user) {
         em.persist(mrDivision);
         updateCache(mrDivision);
@@ -79,7 +79,7 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void update(MRDivision mrDivision, User user) {
         em.merge(mrDivision);
         updateCache(mrDivision);

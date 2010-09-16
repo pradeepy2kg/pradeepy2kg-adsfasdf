@@ -53,6 +53,9 @@ public class UserLocation {
     private Date endDate;
 
     public String getUserId() {
+        if (user != null) {
+            return user.getUserId();
+        }
         return userId;
     }
 
@@ -61,6 +64,9 @@ public class UserLocation {
     }
 
     public int getLocationId() {
+        if (location != null) {
+            return location.getLocationUKey();
+        }
         return locationId;
     }
 

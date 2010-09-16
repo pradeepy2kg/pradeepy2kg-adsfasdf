@@ -106,7 +106,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void update(District district, User user) {
         em.merge(district);
         updateCache(district);
@@ -115,7 +115,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void add(District district, User user) {
         em.persist(district);
         updateCache(district);

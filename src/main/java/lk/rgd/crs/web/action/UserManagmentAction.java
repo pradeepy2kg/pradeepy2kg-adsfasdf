@@ -150,7 +150,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String deleteUser() {
         populate();
-        user = service.getUsersByIDMatch(userId).get(0);
+        user = service.getUsersByID(userId);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("Deleting  user {} is successoption body.full", user.getUserId());
         usersList = service.getAllUsers();
@@ -163,7 +163,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         populateDynamicLists("en");
         if (userId != null) {
-            user = service.getUsersByIDMatch(getUserId()).get(0);
+            user = service.getUsersByID(getUserId());
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
             currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
             logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
@@ -220,23 +220,19 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     public String initActive() {
         switch (pageNo) {
             case 1:
-                district = districtDAO.getDistrict(UserDistrictId);
-                dataManagementService.activateDistrict(district, currentUser);
+                dataManagementService.activateDistrict(UserDistrictId, currentUser);
                 logger.debug("Id of Active District ({}) is    :{}", district.getEnDistrictName(), district.getDistrictId());
                 break;
             case 2:
-                dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
-                dataManagementService.activateDSDivision(dsDivision, currentUser);
+                dataManagementService.activateDSDivision(dsDivisionId, currentUser);
                 logger.debug("Id of Active Ds Division ({}) is    :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
                 break;
             case 3:
-                bdDivision = bdDivisionDAO.getBDDivisionByPK(divisionId);
-                dataManagementService.activateBDDivision(bdDivision, currentUser);
+                dataManagementService.activateBDDivision(divisionId, currentUser);
                 logger.debug("Id of Active Division ({}) is    :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
                 break;
             case 4:
-                mrDivision = mrDivisionDAO.getMRDivisionByPK(getMrdivisionId());
-                dataManagementService.activateMRDivision(mrDivision, currentUser);
+                dataManagementService.activateMRDivision(mrdivisionId, currentUser);
                 logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
                 break;
 
@@ -248,23 +244,19 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     public String initInactive() {
         switch (pageNo) {
             case 1:
-                district = districtDAO.getDistrict(UserDistrictId);
-                dataManagementService.inactivateDistrict(district, currentUser);
+                dataManagementService.inactivateDistrict(UserDistrictId, currentUser);
                 logger.debug("Id of Inactive District ({}) is    :{}", district.getEnDistrictName(), district.getDistrictId());
                 break;
             case 2:
-                dsDivision = dsDivisionDAO.getDSDivisionByPK(dsDivisionId);
-                dataManagementService.inactivateDSDivision(dsDivision, currentUser);
+                dataManagementService.inactivateDSDivision(dsDivisionId, currentUser);
                 logger.debug("Id of Inactive Ds Division ({}) is    :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
                 break;
             case 3:
-                bdDivision = bdDivisionDAO.getBDDivisionByPK(divisionId);
-                dataManagementService.inactivateBDDivision(bdDivision, currentUser);
+                dataManagementService.inactivateBDDivision(divisionId, currentUser);
                 logger.debug("Id of Inactive Division ({}) is    :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
                 break;
             case 4:
-                mrDivision = mrDivisionDAO.getMRDivisionByPK(getMrdivisionId());
-                dataManagementService.inactivateMRDivision(mrDivision, currentUser);
+                dataManagementService.inactivateMRDivision(mrdivisionId, currentUser);
                 logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
                 break;
 

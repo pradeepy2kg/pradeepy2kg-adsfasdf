@@ -4,9 +4,12 @@ import junit.framework.TestCase;
 import lk.rgd.Permission;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.crs.api.service.MasterDataManagementService;
 import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
 
@@ -21,6 +24,10 @@ public class UserManagementTest extends TestCase {
 
     public void testUsersAndRoles() throws Exception {
         UserManager userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
+        LocationDAO locationDAO = (LocationDAO) ctx.getBean("locationDAOImpl", LocationDAO.class);
+        MasterDataManagementService masterDataManagementService =
+            (MasterDataManagementService) ctx.getBean("masterDataManagementService", MasterDataManagementService.class);
+
         User user = userManager.authenticateUser("asankha", "asankha");
         Assert.assertNotNull(user);
         try {
@@ -119,5 +126,33 @@ public class UserManagementTest extends TestCase {
         } catch (Exception ignore) {
             // Caught expected exception - ignore
         }
+
+        // user locations testing
+        for (int i=0; i<10; i++) {
+            Location location = new Location();
+            location.setLocationCode(i);
+            location.setEnLocationName("Location " + i);
+            location.setSiLocationName("@Location " + i + "@");
+            location.setTaLocationName("#Location " + i + "#");
+            masterDataManagementService.addLocation(location, admin);
+        }
+
+        User newUser4 = new User();
+        newUser4.setUserId("newUser4");
+        newUser4.setUserName("newUser4 Name");
+        newUser4.setPin(2);
+        newUser4.setPrefLanguage("si");
+        newUser4.setRole(roleDAO.getRole("DEO"));
+        newUser4.setPasswordHash(userManager.hashPassword("newUser4"));
+        newUser4.setStatus(User.State.ACTIVE);
+        userManager.createUser(newUser4, admin);
+
+        UserLocation ul = new UserLocation();
+        ul.setUser(newUser4);
+        ul.setLocation(locationDAO.getLocation(1));
+        ul.setSignBirthCert(true);
+        userManager.addUserLocation(ul, admin);
+
+        //TODO check user assignments
     }
 }

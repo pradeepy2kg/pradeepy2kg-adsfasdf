@@ -72,7 +72,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void add(BDDivision bdDivision, User user) {
         em.persist(bdDivision);
         updateCache(bdDivision);
@@ -81,7 +81,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void update(BDDivision bdDivision, User user) {
         em.merge(bdDivision);
         updateCache(bdDivision);

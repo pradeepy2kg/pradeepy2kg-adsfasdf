@@ -234,6 +234,11 @@ public class UserManagerImpl implements UserManager {
         return userDao.getUsersByIDMatch(userId);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public User getUsersByID(String userId) {
+        return userDao.getUserByPK(userId);
+    }
+
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<User> getUsersByNameMatch(String userName) {
         return userDao.getUsersByNameMatch(userName);
