@@ -11,11 +11,11 @@ import java.util.BitSet;
  */
 @Embeddable
 public class Alteration52_1 {
-    private static final int DATE_OF_BIRTH = 1;
-    private static final int PLACE_OF_BIRTH = 2;
-    private static final int PLACE_OF_BIRTH_ENGLISH = 3;
-    private static final int BIRTH_DIVISION = 4;
-    private static final int GENDER = 5;
+    public static final int DATE_OF_BIRTH = 1;
+    public static final int PLACE_OF_BIRTH = 2;
+    public static final int PLACE_OF_BIRTH_ENGLISH = 3;
+    public static final int BIRTH_DIVISION = 4;
+    public static final int GENDER = 5;
 
     public static final int MOTHER_FULLNAME = 6;
     public static final int MOTHER_NIC_OR_PIN = 7;
