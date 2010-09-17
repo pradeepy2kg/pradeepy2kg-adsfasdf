@@ -816,7 +816,12 @@
 
         <action name="eprRegistrarsAdd" class="lk.rgd.crs.web.action.RegistrarsManagmentAction"
                 method="registrarsAdd">
-            <result type="tiles" name="success">epr.addRegistrar</result>
+            <result type="tiles" name="pageLoad">epr.addRegistrar</result>
+            <result type="redirectAction" name="success">
+                <param name="actionName">
+                    eprRegistrarsView
+                </param>
+            </result>
             <result type="tiles" name="error">epr.error</result>
         </action>
 

@@ -153,6 +153,8 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String registrarsAdd() {
         logger.info("attemp to add new registrar");
+        //clearing session
+        session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         if (page > 0) {
             //check is there a registrar for that pin already exsists
             List<Registrar> exsistingregistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
@@ -161,24 +163,19 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             } else {
                 try {
                     service.addRegistrar(registrar, user);
-                    registrar = null;
-                    //todo add action massage acknwolaging succes
-                    //otherwise it still in requestscope so data in that object populate in new registrar add
-                    addActionMessage("recode.saved.success");
+                    session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
                 } catch (Exception e) {
                     addActionError("error.registrar.add");
                 }
             }
+        } else {
+            return "pageLoad";
         }
         return SUCCESS;
     }
 
     public String assignmentAdd() {
         if (!editMode) {
-            logger.info("attemt to add a new assignment");
-            logger.info("registrars in session : {}", registrarSession);
-            logger.info("registrar pin : {}", registrarPin);
-            logger.info("indiirect came : {}", indirect);
             if (directAssigment == 2) {
                 //gettting exsiting
                 Registrar reg = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
