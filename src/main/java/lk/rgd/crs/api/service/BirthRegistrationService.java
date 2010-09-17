@@ -298,8 +298,6 @@ public interface BirthRegistrationService {
      * @param user       the user making the request
      * @return true if the serial number is unique and not used at present
      */
-
-
     public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user);
 
     /**
@@ -434,15 +432,6 @@ public interface BirthRegistrationService {
      * from parents on confirmation details
      */
     public void triggerScheduledJobs();
-
-    /**
-     * Perform a birth certificate search, and add an entry on the search performed
-     *
-     * @param cs   the Birth certificate search details
-     * @param user the user performing the action
-     * @return the list of records found and returned to the user
-     */
-    public List<BirthDeclaration> performBirthCertificateSearch(CertificateSearch cs, User user);
 
     /**
      * Returns historical records for the given BD Division and Serial number

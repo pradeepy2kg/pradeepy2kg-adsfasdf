@@ -46,7 +46,6 @@
                             </s:if>
                         </td>
                     </tr>
-
                     </tbody>
                 </table>
             </td>
