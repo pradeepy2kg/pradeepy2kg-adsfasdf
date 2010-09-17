@@ -10,9 +10,13 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "DS_DIVISIONS", schema = "COMMON",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
-@NamedQuery(name = "findAllDSDivisions", query = "SELECT d FROM DSDivision d")
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
+@NamedQueries({
+        @NamedQuery(name = "findAllDSDivisions", query = "SELECT d FROM DSDivision d"),
+        @NamedQuery(name = "get.all.divisions.by.districtId", query = "SELECT d FROM DSDivision d WHERE d.district.districtUKey = :districtUKey")}
+)
+
 public class DSDivision implements Serializable {
 
     /**
@@ -43,13 +47,14 @@ public class DSDivision implements Serializable {
      * A D.S. Division maybe marked as inactive if one is split into two, or amalgamated to create a new one
      * The UI will only show D.S. Divisions that are currently active for every data entry form
      */
-    @Column(name="active", columnDefinition="smallint not null default 1")
+    @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
-    public DSDivision() {}
+    public DSDivision() {
+    }
 
     public DSDivision(District district, int divisionId,
-        String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
+                      String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
         this.district = district;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;

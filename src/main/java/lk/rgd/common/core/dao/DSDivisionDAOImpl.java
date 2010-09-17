@@ -26,8 +26,7 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
 
 
     /**
-     * @inheritDoc
-     * This method is there for getting all the DS division names for a given district
+     * @inheritDoc This method is there for getting all the DS division names for a given district
      * Without restricting on user/role permissions. This is needed to capture mothers DS division in
      * Birth dicration data entry.
      */
@@ -154,6 +153,18 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
 
         logger.debug("Loaded : {} DSDivisions from the database", results.size());
     }
+
+    //todo
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DSDivision> getAllDSDivisionByDistrictKey(int districtUKey) {
+        Query q = em.createNamedQuery("get.all.divisions.by.districtId");
+        q.setParameter("districtUKey", districtUKey);
+        return q.getResultList();
+    }
+
 
     private void updateCache(DSDivision d) {
         Map<Integer, String> subMap;

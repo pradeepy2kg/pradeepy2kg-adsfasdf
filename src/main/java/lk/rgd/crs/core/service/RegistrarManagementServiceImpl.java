@@ -3,6 +3,9 @@ package lk.rgd.crs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.dao.RegistrarDAO;
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  * Manage Registrars and Registration Assignments
@@ -30,12 +34,16 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
     private RegistrarDAO registrarDao;
     private AssignmentDAO assignmentDao;
     private PopulationRegistry ecivil;
+    private DistrictDAO districtDAO;
+    private DSDivisionDAO dsDivisionDAO;
 
     public RegistrarManagementServiceImpl(RegistrarDAO registrarDao, AssignmentDAO assignmentDao,
-                                          PopulationRegistry ecivil) {
+                                          PopulationRegistry ecivil, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO) {
         this.registrarDao = registrarDao;
         this.assignmentDao = assignmentDao;
         this.ecivil = ecivil;
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
     }
 
     /**
@@ -261,12 +269,19 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user) {
+        logger.debug("requeting all assignments for given district id : {}", districtId);
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
             handleException("User : " + user.getUserId() +
                     " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
-        logger.debug("requeting all assignments for given district id : {}", districtId);
-        return assignmentDao.getAllAssignmentByDistricAndType(districtId, type, active);
+        List<DSDivision> divisions = dsDivisionDAO.getAllDSDivisionByDistrictKey(districtId);
+        List<Assignment> results = new ArrayList<Assignment>();
+        Iterator itr = divisions.iterator();
+        while (itr.hasNext()) {
+            DSDivision current = (DSDivision) itr.next();
+            results.addAll(assignmentDao.getAssignmentsByTypeAndDSDivision(current.getDsDivisionUKey(), type, active));
+        }
+        return results;
     }
 
     private void handleException(String message, int code) {

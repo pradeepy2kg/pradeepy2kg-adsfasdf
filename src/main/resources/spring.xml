@@ -93,6 +93,8 @@
     <bean id="registrarManagmentService" class="lk.rgd.crs.core.service.RegistrarManagementServiceImpl">
         <constructor-arg ref="registrarDAOImpl"/>
         <constructor-arg ref="assignmentDAOImpl"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>  
         <constructor-arg ref="ecivilService"/>
     </bean>
 
@@ -232,7 +234,7 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="birthAlterationService"/>
-        <constructor-arg ref="appParametersDAOImpl"/>        
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="birthPrintAction" scope="prototype" class="lk.rgd.crs.web.action.births.PrintAction">
