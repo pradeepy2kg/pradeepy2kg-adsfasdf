@@ -126,9 +126,11 @@
     <col/>
     <tbody>
     <tr>
-        <td width="300px"></td>
-        <td align="center" style="font-size:12pt; width:430px">
+            <%--<td width="300px"></td>--%>
+        <td align="center" style="font-size:12pt; width:180px">
             <img src="<s:url value="/images/official-logo.png"></s:url>" alt=""/><br>
+        </td>
+        <td align="center" style="font-size:12pt;">
             <s:if test="certificateType.ordinal() == 0">
                 <label>උප්පැන්න සහතිකයක් ගැනීමේ සහ/නොහොත් ලේකම් පොත් සොයා බැලීමේ ඉල්ලුම් පත්‍රය
                     <br>* Tamil
@@ -140,8 +142,11 @@
                     <br>APPLICATION FOR DEATH CERTIFICATE AND/OR SEARCH OF REGISTERS</label>
             </s:elseif>
         </td>
-        <td>
+        <td width="300px">
             <table class="table_reg_datePicker_page_01">
+                <tr>
+                    <s:fielderror name="duplicateApplicationNoError" cssStyle="color:red;font-size:10pt"/>
+                </tr>
                 <tr>
                     <td><label><span class="font-8">ඉල්ලුම් පත්‍ර අංකය<br>*Tamil<br>Application No</span></label>
                     </td>
@@ -151,7 +156,7 @@
             </table>
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
+                    <td align="center" colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
                         <br>For office use only
                         <hr>
                     </td>
