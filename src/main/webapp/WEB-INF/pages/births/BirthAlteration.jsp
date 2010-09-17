@@ -145,7 +145,7 @@ $(function() {
     });
     $('#informant-info-check').click(function() {
         document.getElementById("informant-info-check").disabled = true;
-        var fieldIds = new Array('informent_pinOrNic', 'informentName', 'informentAddress');
+        var fieldIds = new Array('informent_pinOrNic', 'informentName', 'informentAddress', 'informantTypeFATHER', 'informantTypeMOTHER', 'informantTypeGUARDIAN');
         enableFields(fieldIds);
     });
     $('#father-info-check').click(function() {
@@ -156,7 +156,8 @@ $(function() {
     });
     $('#marriage-info-check').click(function() {
         document.getElementById("marriage-info-check").disabled = true;
-        var fieldIds = new Array('placeOfMarriageId', 'dateOfMarriage');
+        var fieldIds = new Array('placeOfMarriageId', 'dateOfMarriage', 'parentsMarried1',
+                'parentsMarried2', 'parentsMarried3', 'parentsMarried0');
         enableFields(fieldIds);
     });
     $('#mother-after-marriage-info-check').click(function() {
@@ -206,7 +207,7 @@ function initPage() {
         fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
                 'placeOfBirth', 'placeOfBirthEnglish', 'childGender', 'mother_pinOrNic', 'motherCountryId', 'motherPassportNoId', 'motherFullNameId',
                 'motherDateOfBirth', 'motherAgeAtBirth', 'motherRaceId', 'motherPlaceOfBirthId', 'motherAddressId', 'informent_pinOrNic',
-                'informentName', 'informentAddress');
+                'informentName', 'informentAddress', 'informantTypeFATHER', 'informantTypeMOTHER', 'informantTypeGUARDIAN');
 
     }
     if (sectionOfAct == 3) {
@@ -216,7 +217,8 @@ function initPage() {
         fieldIds = new Array('father_pinOrNic', 'fatherCountryId', 'fatherPassportNoId', 'fatherName', 'fatherDadeOfbirth',
                 'fatherRaceId', 'fatherPlaceOfBirth', 'placeOfMarriageId', 'dateOfMarriage', 'grandFatherFullName', 'grandFather_pinOrNic',
                 'grandFatherBirthYear', 'grandFatherBirthPlaceId', 'greatGrandFatherFullNameId', 'grandGrandFather_pinOrNic',
-                'grandGrandFatherBirthYear', 'greatGrandFatherBirthPlaceId', 'mothersNameAfterMarriageId')
+                'grandGrandFatherBirthYear', 'greatGrandFatherBirthPlaceId', 'mothersNameAfterMarriageId', 'parentsMarried1',
+                'parentsMarried2', 'parentsMarried3', 'parentsMarried0')
 
     }
     for (var i = 0; i < idNames.length; i++) {
@@ -296,90 +298,90 @@ function validate() {
         isDate(domObject.value, "comError1", "comError4");
     domObject = document.getElementById('placeOfBirth');
     /*validation of the Act 27*/
-   /* if (act == 1) {
-        *//*validation for child's information *//*
-        domObject = document.getElementById('nameInOfficialLanguages');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'childError1');
-        }
-        domObject = document.getElementById('nameInEnglish');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'childError2');
-        }
-    }
-    *//*validation of the Act 52*//*
-    if (act == 2) {
-        domObject = document.getElementById('childBirthDatePicker');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, "", 'childError3')
-        else
-            isDate(domObject.value, "comError1", "childError4");
-        domObject = document.getElementById('placeOfBirth');
-        isEmpty(domObject, "", 'childError5');
+    /* if (act == 1) {
+     *//*validation for child's information *//*
+     domObject = document.getElementById('nameInOfficialLanguages');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'childError1');
+     }
+     domObject = document.getElementById('nameInEnglish');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'childError2');
+     }
+     }
+     *//*validation of the Act 52*//*
+     if (act == 2) {
+     domObject = document.getElementById('childBirthDatePicker');
+     if (isFieldEmpty(domObject))
+     isEmpty(domObject, "", 'childError3')
+     else
+     isDate(domObject.value, "comError1", "childError4");
+     domObject = document.getElementById('placeOfBirth');
+     isEmpty(domObject, "", 'childError5');
 
-        *//*validation of mother's information*//*
-        domObject = document.getElementById('mother_pinOrNic');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'comError1', 'motherError1');
-        domObject = document.getElementById('motherDateOfBirth');
-        if (!isFieldEmpty(domObject)) {
-            isDate(domObject.value, "comError1", "motherError2");
-        }
-        domObject = document.getElementById('Declarant_pinOrNic');
-        if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject.value, "comError1", "error12");
-        }
-        domObject = document.getElementById('motherAgeAtBirth');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'motherError3');
-        }
+     *//*validation of mother's information*//*
+     domObject = document.getElementById('mother_pinOrNic');
+     if (!isFieldEmpty(domObject))
+     validatePINorNIC(domObject, 'comError1', 'motherError1');
+     domObject = document.getElementById('motherDateOfBirth');
+     if (!isFieldEmpty(domObject)) {
+     isDate(domObject.value, "comError1", "motherError2");
+     }
+     domObject = document.getElementById('Declarant_pinOrNic');
+     if (!isFieldEmpty(domObject)) {
+     validatePINorNIC(domObject.value, "comError1", "error12");
+     }
+     domObject = document.getElementById('motherAgeAtBirth');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'motherError3');
+     }
 
-        *//*validation for informent's information *//*
-        domObject = document.getElementById('informentName');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'informentError1');
-        }
-        domObject = document.getElementById('informentAddress');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'informentError2');
-        }
-        domObject = document.getElementById('informent_pinOrNic');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'comError1', 'informentError3');
-    }
-    *//*validation of the Act 27A*//*
-    if (act == 3) {
-        *//* validation of father's information *//*
-        domObject = document.getElementById('father_pinOrNic');
-        if (!isFieldEmpty(domObject))
-            validatePINorNIC(domObject, 'comError1', 'fatherError1');
-        domObject = document.getElementById('fatherName');
-        if (isFieldEmpty(domObject)) {
-            isEmpty(domObject, "", 'fatherError2');
-        }
-        domObject = document.getElementById('fatherDadeOfbirth');
-        if (!isFieldEmpty(domObject))
-            isDate(domObject.value, "comError1", "fatherError3");
+     *//*validation for informent's information *//*
+     domObject = document.getElementById('informentName');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'informentError1');
+     }
+     domObject = document.getElementById('informentAddress');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'informentError2');
+     }
+     domObject = document.getElementById('informent_pinOrNic');
+     if (!isFieldEmpty(domObject))
+     validatePINorNIC(domObject, 'comError1', 'informentError3');
+     }
+     *//*validation of the Act 27A*//*
+     if (act == 3) {
+     *//* validation of father's information *//*
+     domObject = document.getElementById('father_pinOrNic');
+     if (!isFieldEmpty(domObject))
+     validatePINorNIC(domObject, 'comError1', 'fatherError1');
+     domObject = document.getElementById('fatherName');
+     if (isFieldEmpty(domObject)) {
+     isEmpty(domObject, "", 'fatherError2');
+     }
+     domObject = document.getElementById('fatherDadeOfbirth');
+     if (!isFieldEmpty(domObject))
+     isDate(domObject.value, "comError1", "fatherError3");
 
-        *//*validation of Grand Father's validation*//*
-        domObject = document.getElementById('grandFather_pinOrNic');
-        if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject, "comError1", "grandFatherError1");
-        }
-        domObject = document.getElementById('grandFatherBirthYear');
-        if (!isFieldEmpty(domObject))
-            validateBirthYear(domObject, 'comError1', 'grandFatherError2');
+     *//*validation of Grand Father's validation*//*
+     domObject = document.getElementById('grandFather_pinOrNic');
+     if (!isFieldEmpty(domObject)) {
+     validatePINorNIC(domObject, "comError1", "grandFatherError1");
+     }
+     domObject = document.getElementById('grandFatherBirthYear');
+     if (!isFieldEmpty(domObject))
+     validateBirthYear(domObject, 'comError1', 'grandFatherError2');
 
 
-        *//*validation of Grand Grand Father's validation*//*
-        domObject = document.getElementById('grandGrandFather_pinOrNic');
-        if (!isFieldEmpty(domObject)) {
-            validatePINorNIC(domObject, "comError1", "grandGrandFatherError1");
-        }
-        domObject = document.getElementById('grandGrandFatherBirthYear');
-        if (!isFieldEmpty(domObject))
-            validateBirthYear(domObject, 'searchCertificateError1', 'grandGrandFatherError2');
-    }*/
+     *//*validation of Grand Grand Father's validation*//*
+     domObject = document.getElementById('grandGrandFather_pinOrNic');
+     if (!isFieldEmpty(domObject)) {
+     validatePINorNIC(domObject, "comError1", "grandGrandFatherError1");
+     }
+     domObject = document.getElementById('grandGrandFatherBirthYear');
+     if (!isFieldEmpty(domObject))
+     validateBirthYear(domObject, 'searchCertificateError1', 'grandGrandFatherError2');
+     }*/
     var mother = document.getElementById('declarantTypeMOTHER').checked;
     var father = document.getElementById('declarantTypeFATHER').checked;
     var other = document.getElementById('declarantTypeOTHER').checked;
@@ -726,6 +728,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </s:if>
 <s:if test="sectionOfAct==2">
 <div id="actNumber2">
+<s:textarea name="alt27.childFullNameOfficialLang" cssStyle="visibility:hidden;"/>
+<s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
 <table class="birth-alteration-table-style01" style="text-align:center;width:100%">
     <tr>
         <td style="font-size:11pt;text-align:center;" colspan="7">උප්පැන සහතිකයක දෝෂ නිවැරදි කිරීම (52 (1) වගන්තිය) <br>
@@ -740,7 +744,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Child's Information
             <div class="birth-alteration-minimize-icon" id="errors-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="errors-info-max"></div>
-            <s:checkbox id="errors-info-check" name="childInformation" cssStyle="float:right;"/>
+            <s:checkbox id="errors-info-check" name="editChildInfo" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -832,7 +836,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Mother
             <div class="birth-alteration-minimize-icon" id="mother-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="mother-info-max"></div>
-            <s:checkbox id="mother-info-check" name="motherInformation" cssStyle="float:right;"/>
+            <s:checkbox id="mother-info-check" name="editMotherInfo" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -929,7 +933,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Details of the Informant
             <div class="birth-alteration-minimize-icon" id="informant-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="informant-info-max"></div>
-            <s:checkbox id="informant-info-check" name="childInformation" cssStyle="float:right;"/>
+            <s:checkbox id="informant-info-check" name="editInformantInfo" cssStyle="float:right;"/>
         </td>
     </tr>
     </tbody>
@@ -955,7 +959,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             Mother
                         </td>
                         <td style="width:25%;border:none;">
-                            <s:radio id="" name="alt52_1.informant.informantType"
+                            <s:radio id="informantType" name="alt52_1.informant.informantType"
                                      list="#@java.util.HashMap@{'MOTHER':''}"/></td>
                 </table>
             </td>
@@ -965,7 +969,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <td style="width:75%;border:none"> පියා<br> பிதா<br> Father
                         </td>
                         <td style="width:25%;border:none;">
-                            <s:radio id="" name="alt52_1.informant.informantType"
+                            <s:radio id="informantType" name="alt52_1.informant.informantType"
                                      list="#@java.util.HashMap@{'FATHER':''}"/></td>
                 </table>
 
@@ -976,7 +980,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <td style="width:75%;border:none"> භාරකරු<br> பாதுகாவலர் <br> Guardian
                         </td>
                         <td style="width:25%;border:none;">
-                            <s:radio id="" name="alt52_1.informant.informantType"
+                            <s:radio id="informantType" name="alt52_1.informant.informantType"
                                      list="#@java.util.HashMap@{'GUARDIAN':''}"/></td>
                 </table>
             </td>
@@ -1009,6 +1013,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </s:if>
 <s:if test="sectionOfAct==3">
 <div id="actNumber3">
+<s:textarea name="alt27.childFullNameOfficialLang" cssStyle="visibility:hidden;"/>
+<s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
 <table class="birth-alteration-table-style01" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="text-align:center;font-size:11pt"> උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)<br>
@@ -1024,7 +1030,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Details of the Father
             <div class="birth-alteration-minimize-icon" id="father-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="father-info-max"></div>
-            <s:checkbox id="father-info-check" name="fatherInformation" cssStyle="float:right;"/>
+            <s:checkbox id="father-info-check" name="editFatherInfo" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -1102,7 +1108,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Changing of Details of the Marriage
             <div class="birth-alteration-minimize-icon" id="marriage-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="marriage-info-max"></div>
-            <s:checkbox id="marriage-info-check" name="marriageInformation" cssStyle="float:right;"/>
+            <s:checkbox id="marriage-info-check" name="editMarriageInfo" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -1118,26 +1124,26 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <tbody>
                     <tr>
                         <td style="border:none"><label>ඔව්<br>*in tamil<br>Yes</label></td>
-                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried"
+                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
                                                          list="#@java.util.HashMap@{'1':''}" value="1"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border:none"><label>නැත<br>*in tamil<br>No</label></td>
-                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried"
+                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
                                                          list="#@java.util.HashMap@{'2':''}"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border:none"><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since
                             married</label></td>
-                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried"
+                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
                                                          list="#@java.util.HashMap@{'3':''}"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border:none"><label>නොදනී<br>*in tamil<br>Unknown</label></td>
-                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried"
+                        <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
                                                          list="#@java.util.HashMap@{'0':''}"/>
                         </td>
                     </tr>
@@ -1168,7 +1174,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Change of Mothers name after marriage
             <div class="birth-alteration-minimize-icon" id="mother-after-marriage-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="mother-after-marriage-info-max"></div>
-            <s:checkbox id="mother-after-marriage-info-check" name="motherMarriageInformation" cssStyle="float:right;"/>
+            <s:checkbox id="mother-after-marriage-info-check" name="editMothersNameAfterMarriageInfo"
+                        cssStyle="float:right;"/>
         </td>
     </tr>
 </table>
@@ -1194,7 +1201,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             Changing of the Details of the Grand Father / Great Grand Father
             <div class="birth-alteration-minimize-icon" id="grandFather-info-min"></div>
             <div class="birth-alteration-maximize-icon" id="grandFather-info-max"></div>
-            <s:checkbox id="grandFather-info-check" name="grandFatherInformation" cssStyle="float:right;"/>
+            <s:checkbox id="grandFather-info-check" name="editGrandFatherInfo" cssStyle="float:right;"/>
         </td>
     </tr>
 </table>

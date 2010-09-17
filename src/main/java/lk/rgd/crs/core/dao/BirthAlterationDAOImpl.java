@@ -76,6 +76,7 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
     public List<BirthAlteration> getBulkOfAlterationByBDDivision(BDDivision BDDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.bddivision").
             setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        logger.debug("get Approval pending list from bdDivision Number is :{}",BDDivision.getDivisionId());
         q.setParameter("bdDivision", BDDivision);
         return q.getResultList();
     }
