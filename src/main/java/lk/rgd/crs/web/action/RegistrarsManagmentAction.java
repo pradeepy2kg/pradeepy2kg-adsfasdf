@@ -132,6 +132,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         logger.info("filter called");
         //selecting all division
         if (dsDivisionId == -1) {
+            assignmentList = service.getAssignmentsByDistrictId(districtId, type, state, user);
         } else {
             if (type != null) {
                 assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);

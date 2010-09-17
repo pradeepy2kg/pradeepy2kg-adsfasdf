@@ -50,21 +50,32 @@ public interface DSDivisionDAO {
 
     /**
      * Update a DS Division
+     *
      * @param dsDivision division to be updated
-     * @param user user executing the operation
+     * @param user       user executing the operation
      */
     public void update(DSDivision dsDivision, User user);
 
     /**
      * Add a new DS Division
+     *
      * @param dsDivision division to be marked
-     * @param user user executing the operation
+     * @param user       user executing the operation
      */
     public void add(DSDivision dsDivision, User user);
 
     /**
      * Return all DS Divisions
+     *
      * @return all DS Divisions
      */
     public List<DSDivision> findAll();
+
+    /**
+     * get all DSDivsions for given district
+     *
+     * @param districtUKey districtUKey
+     * @return List of DSDivisons
+     */
+    public List<DSDivision> getAllDSDivisionByDistrictKey(int districtUKey);
 }

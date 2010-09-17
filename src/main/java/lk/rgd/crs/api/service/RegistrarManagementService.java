@@ -135,4 +135,6 @@ public interface RegistrarManagementService {
      */
     public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user);
 
+    /*  public List<Assignment> getAssignmentsByDistrictId(int districtId, boolean active, User user);*/
+
 }
