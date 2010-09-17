@@ -456,7 +456,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
+    <td rowspan="6" ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
         ස්ථානය<br>பிறந்த
         இடம்<br> Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
@@ -506,7 +506,7 @@ function initPage() {
 <s:if test="birthType.ordinal() != 0">
     <tr>
         <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+           නම සිංහල හෝ දෙමළ භාෂාවෙන් 
             <br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
