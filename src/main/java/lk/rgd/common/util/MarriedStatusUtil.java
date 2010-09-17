@@ -16,7 +16,7 @@ public class MarriedStatusUtil {
         if (AppConstants.SINHALA.equals(language)) {
             switch (code) {
                 case 0: return "නොදනී";
-                case 1: return "විවාහිකයි";
+                case 1: return "විවාහකයි";
                 case 2: return "අවිවාහකයි";
                 case 3: return "පසු විවාහයකි";
             }

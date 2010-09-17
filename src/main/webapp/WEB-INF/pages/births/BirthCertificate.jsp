@@ -90,12 +90,12 @@
     <tr>
         <td align="center" style="font-size:11pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             <s:if test="birthType.ordinal() != 0">
-                උප්පැන්න සහතික<br>
+                උප්පැන්න සහතිකය<br>
                 பிறப்பு சான்றிதழ்﻿<br>
                 BIRTH CERTIFICATE
             </s:if>
             <s:else>
-                මළ උප්පැන්න සහතික<br>
+                මළ උප්පැන්න සහතිකය<br>
                 * In Tamil<br>
                 STILL BIRTH CERTIFICATE
             </s:else>
