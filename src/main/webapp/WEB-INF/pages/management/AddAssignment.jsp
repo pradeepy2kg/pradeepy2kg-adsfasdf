@@ -124,15 +124,7 @@
 
 <s:set name="indirect" value="directAssigment"/>
 <s:if test="directAssigment>0">
-    <%--    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
-    <legend align="right">
-        <s:if test="%{#session.exsisting_registrar == null  &&  directAssigment!=0}">
-            <s:property value="%{getText('registrar.find.by.pin')}"/>
-        </s:if>
-        <s:else>
-            <s:property value="%{getText('acknowladgmnet.assignment')}"/>
-        </s:else>
-    </legend>--%>
+
     <form action="eprSearchRegistrarByPin.do" method="post">
         <table>
             <caption/>
@@ -179,29 +171,25 @@
             </legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
-            <col width="100px">
-            <col width="300px">
-            <col width="100px">
-            <col width="300px">
-            <col width="100px">
-            <col width="300px">
             <tbody>
             <tr>
-                <td>
+                <td width="200px">
                     <s:property value="%{getText('label.district')}"/>
                 </td>
                 <td colspan="1" align="left">
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
                               cssStyle="width:98.5%; width:240px;"/>
                 </td>
-                <td>
+                <td width="200px">
                     <s:property value="%{getText('label.dsDivision')}"/>
                 </td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
                                                        list="dsDivisionList"
                                                        value="%{dsDivisionId}"
                                                        cssStyle="float:left;  width:240px;"/></td>
-                <td>
+            </tr>
+            <tr style="border-top:5px">
+                <td width="200px">
                     <s:property value="%{getText('label.division')}"/>
                 </td>
                 <td>
@@ -218,7 +206,7 @@
             <caption></caption>
             <tbody>
             <tr>
-                <td width="74px">
+                <td width="200px">
                     <s:property value="%{getText('label.type')}"/>
                 </td>
                 <td colspan="1" align=left><s:select
@@ -263,7 +251,7 @@
             <%--  <legend align="right"><s:property value="%{getText('assignment.dates')}"/></legend>--%>
         <table>
             <caption/>
-            <col width="74px">
+            <col width="200px">
             <col>
             <tbody>
             <tr>
@@ -303,7 +291,7 @@
         </table>
     </fieldset>
     <s:if test="%{#session.exsisting_registrar != null && !editableAssignment}">
-        <s:submit name="assignMentSubmit" value="%{getText('add.assignment')}"/>
+        <s:submit name="assignMentSubmit" value="%{getText('add.assignment')}" align="right"/>
     </s:if>
     <s:elseif test="editableAssignment">
         <s:submit name="assignMentEdit" value="%{getText('update.assignment')}"/>

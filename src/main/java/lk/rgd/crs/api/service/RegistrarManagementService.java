@@ -124,4 +124,15 @@ public interface RegistrarManagementService {
      */
     public Assignment getAssignmentById(long assignmentUKey, User user);
 
+    /**
+     * get all assignments in given district
+     *
+     * @param districtId distict ID
+     * @param type       assignment type
+     * @param active     assignment state
+     * @param user       userr who has permiassion to request assignments
+     * @return list of assignment filter by given district ,state and type
+     */
+    public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user);
+
 }

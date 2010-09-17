@@ -130,7 +130,17 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     public String filter() {
         logger.info("filter called");
-        assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);
+        //selecting all division
+        if (dsDivisionId == -1) {
+        } else {
+            if (type != null) {
+                assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, type, state, user);
+
+            } else {
+                assignmentList = service.getAssignmentsByDSDivision(dsDivisionId, state, user);
+
+            }
+        }
         populateLists(districtId, dsDivisionId);
         return SUCCESS;
     }
@@ -326,6 +336,9 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     public void setAssignmentType(int assignmentType) {
         this.assignmentType = assignmentType;
         switch (assignmentType) {
+            case -1:
+                this.type = null;
+                break;
             case 0:
                 this.type = Assignment.Type.BIRTH;
                 break;

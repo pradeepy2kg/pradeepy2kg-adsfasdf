@@ -36,6 +36,9 @@
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
+                        //adding header value for DSDivision
+                        //use option value as -1 because if nt set it could be 0(default value for int)
+                        options1 += '<option value="' + -1 + '">' + document.getElementById('divisionHeaderValue').value + '</option>';
                         for (var i = 0; i < ds.length; i++) {
                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
@@ -82,15 +85,13 @@
                 <td><s:property value="%{getText('label.district')}"/></td>
                 <td colspan="1" align="left">
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:98.5%; width:240px;" headerValue="%{getText('all.district.label')}"
-                              headerKey="0"/>
+                              cssStyle="width:98.5%; width:240px;"/>
                 </td>
                 <td><s:property value="%{getText('label.DSDivision')}"/></td>
                 <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
                                                        value="%{dsDivisionId}"
                                                        cssStyle="float:left;  width:240px;"
-                                                       headerValue="%{getText('all.divisions.label')}"
-                                                       headerKey="0"/></td>
+                        /></td>
             </tr>
             </tbody>
         </table>
@@ -119,7 +120,7 @@
                 <td width="129px"><s:property value="%{getText('label.type')}"/></td>
                 <td width="200px"><s:select
                         list="#@java.util.HashMap@{'0':getText('label.type.birth'),'1':getText('label.type.death'),'2':getText('label.type.marriage.general'),'3':getText('label.type.marriage.kandyan'),'4':getText('label.type.marriage.muslim')}"
-                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" headerKey="0"
+                        name="assignmentType" cssStyle="width:240px; margin-left:5px;" headerKey="-1"
                         headerValue="%{getText('label.all.types')}"/></td>
             </tr>
             </tbody>
@@ -178,4 +179,5 @@
         </s:if>
     </table>
 </div>
+<s:hidden id="divisionHeaderValue" value="%{getText('all.divisions.label')}"/>
 
