@@ -1,3 +1,5 @@
+<%@ page import="java.util.Locale" %>
+<%@ page import="lk.rgd.common.util.AssignmentUtill" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
@@ -279,7 +281,9 @@
             <col width="250px">
             <tbody>
             <tr>
-                <td colspan="2"></td>
+                <td colspan="1"></td>
+                <td><s:property value="%{getText('label.skip.validation')}"/><s:checkbox id="skipValidationId"
+                                                                                         name="skipValidationName"/></td>
                 <td><s:property value="%{getText('label.enable.edit.mode')}"/> <s:checkbox name="enableEditMode"
                                                                                            id="enableEditMode"
                                                                                            onclick="javascript:disableFields(false);"/></td>
@@ -328,7 +332,11 @@
                     <s:else>
                         <td><s:property value="%{getText('label.no')}"/></td>
                     </s:else>
-                    <td><s:property value="type"/></td>
+                    <td>
+                        <%= AssignmentUtill.getAssignmentType((Integer) request.getAttribute("type.ordinal()"),
+                                ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage())
+                        %>
+                    </td>
                     <td><s:property value="permanentDate"/></td>
                     <td><s:property value="terminationDate"/></td>
                     <td align="center">

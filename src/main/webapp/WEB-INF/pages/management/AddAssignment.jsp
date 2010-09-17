@@ -123,7 +123,7 @@
         value="%{#session.exsisting_registrar.fullNameInOfficialLanguage}"/>
 
 <s:set name="indirect" value="directAssigment"/>
-<s:if test="directAssigment>0">
+<%--<s:if test="directAssigment>0">
 
     <form action="eprSearchRegistrarByPin.do" method="post">
         <table>
@@ -159,49 +159,44 @@
             </tbody>
         </table>
     </form>
-    <%--    </fieldset>--%>
+    --%><%--    </fieldset>--%><%--
 
-</s:if>
+</s:if>--%>
 
 <s:form action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()">
 
     <fieldset>
-            <%--        <legend>
-                <s:property value="%{getText('assignment.bd.marraige.division')}"/>
-            </legend>--%>
-        <table cellspacing="0" cellpadding="0">
-            <caption></caption>
+        <table>
             <tbody>
             <tr>
                 <td width="200px">
                     <s:property value="%{getText('label.district')}"/>
                 </td>
-                <td colspan="1" align="left">
+                <td>
                     <s:select id="districtId" name="districtId" list="districtList" value="%{districtId}"
-                              cssStyle="width:98.5%; width:240px;"/>
+                              cssStyle="width:240px;"/>
                 </td>
                 <td width="200px">
                     <s:property value="%{getText('label.dsDivision')}"/>
                 </td>
-                <td colspan="1" align="left"><s:select id="dsDivisionId" name="dsDivisionId"
-                                                       list="dsDivisionList"
-                                                       value="%{dsDivisionId}"
-                                                       cssStyle="float:left;  width:240px;"/></td>
+                <td><s:select id="dsDivisionId" name="dsDivisionId"
+                              list="dsDivisionList"
+                              value="%{dsDivisionId}"
+                              cssStyle="float:left;  width:240px;"/></td>
             </tr>
-            <tr style="border-top:5px">
+            <tr>
                 <td width="200px">
                     <s:property value="%{getText('label.division')}"/>
                 </td>
                 <td>
                     <s:select id="divisionId" name="divisionId" value="%{divisionId}" list="divisionList"
-                              cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+                              cssStyle="float:left;  width:240px;"/>
                 </td>
             </tr>
             </tbody>
         </table>
     </fieldset>
     <fieldset>
-            <%--       <legend><s:property value="%{getText('assignment.type')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
             <tbody>
@@ -219,12 +214,11 @@
 
     <s:if test="assignment != null">
         <fieldset>
-                <%--  <legend><s:property value="%{getText('assignment.state')}"/></legend>--%>
             <table cellspacing="0" cellpadding="0">
                 <caption></caption>
                 <tbody>
                 <tr>
-                    <td width="74px">
+                    <td width="200px">
                         <s:property value="%{getText('label.state')}"/>
                     </td>
                     <td>
@@ -248,7 +242,6 @@
 
 
     <fieldset>
-            <%--  <legend align="right"><s:property value="%{getText('assignment.dates')}"/></legend>--%>
         <table>
             <caption/>
             <col width="200px">
@@ -300,10 +293,6 @@
     <s:hidden name="directAssigment" value="2"/>
     <s:hidden name="registrarSession" value="true"/>
 </s:form>
-<%--<s:property value="%{#session.exsisting_registrar != null}"/>
-<s:property value="editableAssignment"/>
-<s:property value="%{#session.exsisting_registrar != null && editableAssignment}"/>--%>
-
 <s:if test="assignment != null">
     <script type="text/javascript">
         document.getElementById('dsDivisionId').disabled = true;

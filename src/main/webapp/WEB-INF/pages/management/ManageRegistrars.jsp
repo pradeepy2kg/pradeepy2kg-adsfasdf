@@ -1,4 +1,7 @@
 <%@ page import="java.util.Map" %>
+<%@ page import="lk.rgd.common.util.AssignmentUtill" %>
+<%@ page import="lk.rgd.crs.api.domain.Assignment" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
@@ -137,9 +140,9 @@
         <thead>
         <tr class="table-title">
             <th width="200px"><s:label value="%{getText('label.bdDivision')}"/></th>
-            <th width="300px"><s:label value="%{getText('label.name')}"/></th>
+            <th width="200px"><s:label value="%{getText('label.name')}"/></th>
             <th width="20px"><s:label value="%{getText('label.active')}"/></th>
-            <th width="20px"><s:label value="%{getText('label.type')}"/></th>
+            <th width="75px"><s:label value="%{getText('label.type')}"/></th>
             <th width="100px"><s:label value="%{getText('label.startDate')}"/></th>
             <th width="100px"><s:label value="%{getText('label.endDate')}"/></th>
         </tr>
@@ -169,7 +172,11 @@
                     <s:else>
                         <td><s:property value="%{getText('label.no')}"/></td>
                     </s:else>
-                    <td><s:property value="type"/></td>
+                    <td>
+                        <%= AssignmentUtill.getAssignmentType((Integer) request.getAttribute("type.ordinal()"),
+                                ((Locale) session.getAttribute("WW_TRANS_I18N_LOCALE")).getLanguage())
+                        %>
+                    </td>
                     <td><s:property value="permanentDate"/></td>
                     <td><s:property value="terminationDate"/></td>
                 </tr>

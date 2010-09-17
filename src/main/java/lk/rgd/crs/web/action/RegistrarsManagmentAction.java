@@ -246,6 +246,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         return SUCCESS;
     }
 
+
     public String assignmentAddPageLoad() {
         session.remove(WebConstants.SESSION_EXSISTING_REGISTRAR);
         //requesting addAssignment page directly
@@ -257,21 +258,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
         return SUCCESS;
     }
 
-    public String searchRegistrarByPin() {
-        logger.info("searching registrar by pin : {} ", registrarPin);
-        List<Registrar> exsistedReg = service.getRegistrarByPin(registrarPin, user);
-        if (exsistedReg.size() != 1) {
-            addFieldError("noRegistrar", "no.registrart.found");
-        } else {
-            //adding found registrar to session
-            addActionMessage("registrar.found");
-            session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, exsistedReg.get(0));
-        }
-        //todo remove this populate
-        populateLists(1, 1);
-        directAssigment = 1;
-        return SUCCESS;
-    }
 
     private void populateLists(int distirictId, int dsDivisionId) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
