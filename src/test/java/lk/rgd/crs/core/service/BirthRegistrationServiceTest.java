@@ -13,6 +13,7 @@ import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.InformantInfo;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.service.CertificateSearchService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final BirthRegistrationService birthRegSvc;
+    protected final CertificateSearchService certSearchSvc;
     protected final BDDivisionDAO bdDivisionDAO;
     protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
@@ -49,6 +51,7 @@ public class BirthRegistrationServiceTest extends TestCase {
     public BirthRegistrationServiceTest() {
 
         birthRegSvc = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+        certSearchSvc = (CertificateSearchService) ctx.getBean("certificateSearchService", CertificateSearchService.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
 

@@ -19,17 +19,17 @@ public class CertificateSearchDAOImpl extends BaseDAO implements CertificateSear
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void addBirthCertificateSearch(CertificateSearch bcs) {
-        em.persist(bcs);
+    public void addCertificateSearch(CertificateSearch cs) {
+        em.persist(cs);
     }
 
     /**
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public CertificateSearch getByDSDivisionAndSerialNo(DSDivision dsDivision, String serialNo) {
-        Query q = em.createNamedQuery("get.by.serialNo.and.dsDivision");
-        q.setParameter("serialNo", serialNo);
+    public CertificateSearch getByDSDivisionAndApplicationNo(DSDivision dsDivision, String applicationNo) {
+        Query q = em.createNamedQuery("get.by.applicationNo.and.dsDivision");
+        q.setParameter("applicationNo", applicationNo);
         q.setParameter("dsDivision", dsDivision);
         try {
             return (CertificateSearch) q.getSingleResult();

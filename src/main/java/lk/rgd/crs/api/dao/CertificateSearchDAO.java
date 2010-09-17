@@ -1,7 +1,7 @@
 package lk.rgd.crs.api.dao;
 
-import lk.rgd.crs.api.domain.CertificateSearch;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.crs.api.domain.CertificateSearch;
 
 /**
  * DAO for Certificate Search Process of life events
@@ -15,14 +15,14 @@ public interface CertificateSearchDAO {
      *
      * @param cs the birth certificate search to be added
      */
-    public void addBirthCertificateSearch(CertificateSearch cs);
+    public void addCertificateSearch(CertificateSearch cs);
 
     /**
-     * Returns the Birth Certificate Search object for a given serial number(application number) and DSDivision
+     * Returns the Certificate Search object for a given application number and DS Division
      *
-     * @param dsDivision the DS division under which the BirthCertificateSearch serial number should be searched
+     * @param dsDivision the DS division under which the BirthCertificateSearch application number should be searched
      * @param serialNo   applicationNo given to the BirthCertificateSearch
-     * @return BirthCertificateSearch or null if results not found
+     * @return CertificateSearch, or null if none exist
      */
-    public CertificateSearch getByDSDivisionAndSerialNo(DSDivision dsDivision, String serialNo);
+    public CertificateSearch getByDSDivisionAndApplicationNo(DSDivision dsDivision, String serialNo);
 }
