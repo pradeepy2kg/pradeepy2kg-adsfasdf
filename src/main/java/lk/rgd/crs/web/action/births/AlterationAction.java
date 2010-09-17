@@ -14,6 +14,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.Permission;
 
 import java.util.*;
+import java.lang.reflect.Array;
 
 /**
  * @author tharanga
@@ -40,15 +41,25 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
+    private List birthAlterationApprovalList;
+    private List birthChangeList;
 
     private User user;
     private Alteration27 alt27;
     private Alteration27A alt27A;
     private Alteration52_1 alt52_1;
     private DeclarantInfo declarant;
-    private BirthRegisterInfo register;
     private Date dateReceived;
     private Long alterationSerialNo;
+
+    private ChildInfo child;
+    private FatherInfo father;
+    private GrandFatherInfo grandFather;
+    private MarriageInfo marriage;
+    private AlterationInformatInfo informant;
+    private NotifyingAuthorityInfo notifyingAuthority;
+    private ConfirmantInfo confirmant;
+    private BirthRegisterInfo register;
 
 
     private int pageNo;
@@ -58,6 +69,16 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private String districtName;
     private String dsDivisionName;
     private String bdDivisionName;
+
+    /*boolean values to    */
+    private boolean editChildInfo;
+    private boolean editMotherInfo;
+    private boolean editInformantInfo;
+    private boolean editFatherInfo;
+    private boolean editMarriageInfo;
+    private boolean editMothersNameAfterMarriageInfo;
+    private boolean editGrandFatherInfo;
+
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -140,12 +161,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt27 = new Alteration27();
         alt27A = new Alteration27A();
         alt52_1 = new Alteration52_1();
+        alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
+        alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
         switch (sectionOfAct) {
-            //set alt27
-            case 1:
-                alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
-                alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
-                break;
             //set alt52_1
             case 2:
                 InformantInfo bdfInformant = bdf.getInformant();
@@ -202,13 +220,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String birthAlteration() {
         BirthAlteration ba = new BirthAlteration();
         BitSet bitSet = new BitSet();
+        alt27.setFullNameOfficialLangApproved(false);
+        alt27.setFullNameEnglishApproved(false);
+        ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
-            //case 1 is used to set alteration27
-            case 1:
-                alt27.setFullNameOfficialLangApproved(false);
-                alt27.setFullNameEnglishApproved(false);
-                ba.setAlt27(alt27);
-                break;
             //case 2 is used to set alteration52_1
             case 2:
                 alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
@@ -218,6 +233,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             //case 2 is used to set alteration27A
             case 3:
                 alt27A.setApprovalStatuses(bitSet);
+                //if (!editFatherInfo) alt27A.setFather(null);
+                /*if(! editMarriageInfo) alt27A.setMarriage(null);
+                if(! editMothersNameAfterMarriageInfo) alt27A.setMothersNameAfterMarriage(null);
+                if(! editGrandFatherInfo) alt27A.setGrandFather(null);*/
                 ba.setAlt27A(alt27A);
                 break;
         }
@@ -242,8 +261,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
         setPageNo(1);
-        /*birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);*/
+        /* birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);*/
         initPermission();
         return SUCCESS;
     }
@@ -267,6 +286,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
         }
         paginationHandler(birthAlterationPendingApprovalList.size());
+        logger.debug("number of rows in Birth Alteration Approval List is :{}", birthAlterationPendingApprovalList.size());
         initPermission();
         populateBasicLists();
         return SUCCESS;
@@ -277,11 +297,198 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
-    public String approve() {
+    public String approveInit() {
         //todo has to be implemented
+        BirthDeclaration bdf = service.getById(bdId, user);
+        BirthAlteration ba = alterationService.getById(idUKey, user);
+        alt27 = ba.getAlt27();
+        alt27A = ba.getAlt27A();
+        alt52_1 = ba.getAlt52_1();
+
+        child = bdf.getChild();
+
+        if (child.getChildFullNameEnglish().equals(alt27.getChildFullNameEnglish()) &&
+                child.getChildFullNameOfficialLang().equals(alt27.getChildFullNameOfficialLang())) {
+            alt27 = null;
+        }
+        birthAlterationApprovalList = new ArrayList();
+        birthChangeList = new ArrayList();
+        if (alt27 != null) {
+            birthAlterationApprovalList.add(alt27.getChildFullNameOfficialLang());
+            birthAlterationApprovalList.add(alt27.getChildFullNameEnglish());
+            logger.debug("Child full name in English is :{}", alt27.getChildFullNameEnglish());
+        }
+        if (alt27A != null) {
+            changesOfAlt27A(bdf);
+        }
         initPermission();
         populateBasicLists();
         return SUCCESS;
+    }
+
+    private void changesOfAlt27A(BirthDeclaration bdf) {
+        father = alt27A.getFather();
+        ParentInfo parent;
+        parent = bdf.getParent();
+        String[] compareChanges;
+        grandFather = alt27A.getGrandFather();
+        if (grandFather != null) {
+            GrandFatherInfo grandFatherOriginal = bdf.getGrandFather();
+            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_FULLNAME),
+                    grandFatherOriginal.getGrandFatherFullName(), grandFather.getGrandFatherFullName());
+
+            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_NIC_OR_PIN),
+                    grandFatherOriginal.getGrandFatherNICorPIN(), grandFather.getGrandFatherNICorPIN());
+
+            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_BIRTH_YEAR),
+                    grandFatherOriginal.getGrandFatherBirthYear().toString(), grandFather.getGrandFatherBirthYear().toString());
+
+            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_BIRTH_PLACE),
+                    grandFatherOriginal.getGrandFatherBirthPlace(), grandFather.getGrandFatherBirthPlace());
+
+            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_FULLNAME),
+                    grandFatherOriginal.getGreatGrandFatherFullName(), grandFather.getGreatGrandFatherFullName());
+
+            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN),
+                    grandFatherOriginal.getGreatGrandFatherNICorPIN(), grandFather.getGreatGrandFatherNICorPIN());
+
+            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR),
+                    grandFatherOriginal.getGreatGrandFatherBirthYear().toString(), grandFather.getGreatGrandFatherBirthYear().toString());
+
+            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE),
+                    grandFatherOriginal.getGreatGrandFatherBirthPlace(), grandFather.getGreatGrandFatherBirthPlace());
+        }
+        if (father != null) {
+            compareAndAdd(Integer.toString(Alteration27A.FATHER_FULLNAME), parent.getFatherFullName(), father.getFatherFullName());
+            compareAndAdd(Integer.toString(Alteration27A.FATHER_NIC_OR_PIN), parent.getFatherNICorPIN(), father.getFatherNICorPIN());
+
+            //compareChanges[0] = Integer.toString(Alteration27A.FATHER_BIRTH_YEAR);
+            // compareChanges[1] = parent.getFatherDOB().toString();
+            //compareChanges[2] = father.getFatherDOB().toString();
+            // if (!compareChanges[2].equals(compareChanges[1])) birthAlterationApprovalList.add(compareChanges);
+            // compareChanges=null;
+            // compareChanges = new String[3];
+            compareAndAdd(Integer.toString(Alteration27A.FATHER_BIRTH_PLACE),
+                    parent.getFatherPlaceOfBirth(), father.getFatherPlaceOfBirth());
+
+
+            // compareChanges[0] = Integer.toString(Alteration27A.FATHER_COUNTRY);
+            //compareChanges[1] = parent.getFatherCountry().getCountryCode();
+            // compareChanges[2] = father.getFatherCountry().getCountryCode();
+            // if (compareChanges[2].equals(compareChanges[1])) birthAlterationApprovalList.add(compareChanges);
+            /*compareChanges=null;
+            compareChanges = new String[3];*/
+            compareAndAdd(Integer.toString(Alteration27A.FATHER_PASSPORT),
+                    parent.getFatherPassportNo(), father.getFatherPassportNo());
+
+            //compareChanges[0] = Integer.toString(Alteration27A.FATHER_RACE);
+            //compareChanges[1] = father.getFatherRace().getEnRaceName();
+            //compareChanges[2] = parent.getFatherRace().getEnRaceName();
+//            compareAndAdd(compareChanges);
+        }
+        marriage = alt27A.getMarriage();
+        MarriageInfo marriageOriginal = bdf.getMarriage();
+        if (marriage != null) {
+            compareAndAdd(Integer.toString(Alteration27A.WERE_PARENTS_MARRIED),
+                    marriageOriginal.getParentsMarried().toString(), marriage.getParentsMarried().toString());
+            compareAndAdd(Integer.toString(Alteration27A.PLACE_OF_MARRIAGE),
+                    marriageOriginal.getPlaceOfMarriage(), marriage.getPlaceOfMarriage());
+            compareAndAdd(Integer.toString(Alteration27A.DATE_OF_MARRIAGE),
+                    marriageOriginal.getDateOfMarriage().toString(), marriage.getDateOfMarriage().toString());
+
+        }
+        if (alt27A.getMothersNameAfterMarriage() != null) {
+            compareChanges = new String[3];
+            compareChanges[0] = Integer.toString(Alteration27A.MOTHER_NAME_AFTER_MARRIAGE);
+            compareChanges[0] = parent.getMotherFullName();
+            compareChanges[2] = alt27A.getMothersNameAfterMarriage();
+            birthAlterationApprovalList.add(compareChanges);
+        }
+
+    }
+
+    private void changesOfAlt52_1(BirthDeclaration bdf) {
+        child = bdf.getChild();
+        register = bdf.getRegister();
+        if (alt52_1.getDateOfBirth() != null)
+            compareAndAdd(Integer.toString(Alteration52_1.DATE_OF_BIRTH)
+                    , alt52_1.getDateOfBirth().toString(), child.getDateOfBirth().toString());
+        if (alt52_1.getPlaceOfBirth() != null)
+            compareAndAdd(Integer.toString(Alteration52_1.PLACE_OF_BIRTH)
+                    , alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
+        compareAndAdd(Integer.toString(Alteration52_1.PLACE_OF_BIRTH_ENGLISH),
+                alt52_1.getPlaceOfBirthEnglish(), child.getPlaceOfBirthEnglish());
+        if (alt52_1.getBirthDivision() != null && register.getBirthDivision() != null)
+            compareAndAdd(Integer.toString(Alteration52_1.BIRTH_DIVISION),
+                    alt52_1.getBirthDivision().getEnDivisionName(), register.getBirthDivision().getEnDivisionName());
+        if (alt52_1.getChildGender() > 0 && child.getChildGender() > 0)
+            compareAndAdd(Integer.toString(Alteration52_1.GENDER),
+                    Integer.toString(alt52_1.getChildGender()), Integer.toString(child.getChildGender()));
+        if (alt52_1.getChildGender() > 0 && child.getChildGender() < 0) {
+            String[] compareChanges = new String[3];
+            compareChanges[0] = Integer.toString(Alteration52_1.GENDER);
+            compareChanges[1] = "";
+            compareChanges[2] = Integer.toString(alt52_1.getChildGender());
+            birthAlterationApprovalList.add(compareChanges);
+        }
+        MotherInfo mother = alt52_1.getMother();
+        if (mother != null) {
+            ParentInfo parent = bdf.getParent();
+            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_FULLNAME),
+                    parent.getMotherFullName(), mother.getMotherFullName());
+            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_BIRTH_YEAR),
+                    parent.getMotherDOB().toString(), mother.getMotherDOB().toString());
+            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_BIRTH_PLACE),
+                    parent.getMotherPlaceOfBirth(), mother.getMotherPlaceOfBirth());
+            //if mother country is not null in bdf and ba
+            if (mother.getMotherCountry() != null && parent.getMotherCountry() != null) {
+                compareAndAdd(Integer.toString(Alteration52_1.MOTHER_COUNTRY)
+                        , countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), language),
+                        countryDAO.getNameByPK(mother.getMotherCountry().getCountryId(), language));
+            }
+            //todo if mother country is not null in bdf but null in ba
+            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_PASSPORT),
+                    parent.getMotherPassportNo(), mother.getMotherPassportNo());
+            //if mother race is not null in both bdf and ba
+            if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
+                compareAndAdd(Integer.toString(Alteration52_1.MOTHER_RACE),
+                        raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
+                        raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
+            }
+            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_AGE_AT_BIRTH),
+                    parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
+            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_ADDRESS), parent.getMotherAddress(), mother.getMotherAddress());
+
+            //compare the informant information
+            informant = alt52_1.getInformant();
+            if (informant != null) {
+                InformantInfo informantOriginal = bdf.getInformant();
+                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_TYPE)
+                        , informantOriginal.getInformantType().name(), informant.getInformantType().name());
+
+                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_NIC_OR_PIN),
+                        informantOriginal.getInformantNICorPIN(), informant.getInformantNICorPIN());
+
+                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_NAME),
+                        informantOriginal.getInformantName(), informant.getInformantName());
+
+                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_ADDRESS),
+                        informantOriginal.getInformantAddress(), informant.getInformantAddress());
+
+            }
+
+
+        }
+    }
+
+    private void compareAndAdd(String index, String bdfName, String baName) {
+        String[] compareChanges = new String[3];
+        compareChanges[0] = index;
+        compareChanges[1] = bdfName;
+        compareChanges[2] = baName;
+        if (!compareChanges[2].equals(compareChanges[1])) {
+            birthAlterationApprovalList.add(compareChanges);
+        }
     }
 
     private void initPermission() {
@@ -598,11 +805,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
-        if (register == null) {
-            register = new BirthRegisterInfo();
+        if (getRegister() == null) {
+            setRegister(new BirthRegisterInfo());
         }
-        register.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
-        logger.debug("setting BirthDivision: {}", register.getBirthDivision().getEnDivisionName());
+        getRegister().setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+        logger.debug("setting BirthDivision: {}", getRegister().getBirthDivision().getEnDivisionName());
     }
 
     public boolean isAllowApproveAlteration() {
@@ -691,5 +898,141 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setAlterationSerialNo(Long alterationSerialNo) {
         this.alterationSerialNo = alterationSerialNo;
+    }
+
+    public boolean isEditChildInfo() {
+        return editChildInfo;
+    }
+
+    public void setEditChildInfo(boolean editChildInfo) {
+        this.editChildInfo = editChildInfo;
+    }
+
+    public boolean isEditMotherInfo() {
+        return editMotherInfo;
+    }
+
+    public void setEditMotherInfo(boolean editMotherInfo) {
+        this.editMotherInfo = editMotherInfo;
+    }
+
+    public boolean isEditInformantInfo() {
+        return editInformantInfo;
+    }
+
+    public void setEditInformantInfo(boolean editInformantInfo) {
+        this.editInformantInfo = editInformantInfo;
+    }
+
+    public boolean isEditFatherInfo() {
+        return editFatherInfo;
+    }
+
+    public void setEditFatherInfo(boolean editFatherInfo) {
+        this.editFatherInfo = editFatherInfo;
+    }
+
+    public boolean isEditMarriageInfo() {
+        return editMarriageInfo;
+    }
+
+    public void setEditMarriageInfo(boolean editMarriageInfo) {
+        this.editMarriageInfo = editMarriageInfo;
+    }
+
+    public boolean isEditMothersNameAfterMarriageInfo() {
+        return editMothersNameAfterMarriageInfo;
+    }
+
+    public void setEditMothersNameAfterMarriageInfo(boolean editMothersNameAfterMarriageInfo) {
+        this.editMothersNameAfterMarriageInfo = editMothersNameAfterMarriageInfo;
+    }
+
+    public boolean isEditGrandFatherInfo() {
+        return editGrandFatherInfo;
+    }
+
+    public void setEditGrandFatherInfo(boolean editGrandFatherInfo) {
+        this.editGrandFatherInfo = editGrandFatherInfo;
+    }
+
+    public ChildInfo getChild() {
+        return child;
+    }
+
+    public void setChild(ChildInfo child) {
+        this.child = child;
+    }
+
+    public GrandFatherInfo getGrandFather() {
+        return grandFather;
+    }
+
+    public void setGrandFather(GrandFatherInfo grandFather) {
+        this.grandFather = grandFather;
+    }
+
+    public MarriageInfo getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(MarriageInfo marriage) {
+        this.marriage = marriage;
+    }
+
+    public AlterationInformatInfo getInformant() {
+        return informant;
+    }
+
+    public void setInformant(AlterationInformatInfo informant) {
+        this.informant = informant;
+    }
+
+    public NotifyingAuthorityInfo getNotifyingAuthority() {
+        return notifyingAuthority;
+    }
+
+    public void setNotifyingAuthority(NotifyingAuthorityInfo notifyingAuthority) {
+        this.notifyingAuthority = notifyingAuthority;
+    }
+
+    public ConfirmantInfo getConfirmant() {
+        return confirmant;
+    }
+
+    public void setConfirmant(ConfirmantInfo confirmant) {
+        this.confirmant = confirmant;
+    }
+
+    public BirthRegisterInfo getRegister() {
+        return register;
+    }
+
+    public void setRegister(BirthRegisterInfo register) {
+        this.register = register;
+    }
+
+    public List getBirthAlterationApprovalList() {
+        return birthAlterationApprovalList;
+    }
+
+    public void setBirthAlterationApprovalList(List birthAlterationApprovalList) {
+        this.birthAlterationApprovalList = birthAlterationApprovalList;
+    }
+
+    public FatherInfo getFather() {
+        return father;
+    }
+
+    public void setFather(FatherInfo father) {
+        this.father = father;
+    }
+
+    public List getBirthChangeList() {
+        return birthChangeList;
+    }
+
+    public void setBirthChangeList(List birthChangeList) {
+        this.birthChangeList = birthChangeList;
     }
 }

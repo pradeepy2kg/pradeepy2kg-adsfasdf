@@ -946,8 +946,12 @@
         </action>
 
         <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="approve">
-            <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
+                method="approveInit">
+            <result type="tiles" name="success">epr.birthAlterationApproval</result>
+        </action>
+        <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="alterationApprove">
+            <result type="tiles" name="success">epr.birthAlterationApproval</result>
         </action>
 
     </package>

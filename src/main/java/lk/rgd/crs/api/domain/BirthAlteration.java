@@ -14,18 +14,22 @@ import java.util.Date;
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
 
-    @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba " +
-        "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision " +
-        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-
-    @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba " +
-        "WHERE ba.alt52_1.birthDivision = :bdDivision " +
-        "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
+        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba " +
+                "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision " +
+                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
+/*
+        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba " +
+                "WHERE ba.alt52_1.birthDivision = :bdDivision " +
+                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),*/
+        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
+                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision " +
+                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 
 })
 
 public class BirthAlteration {
-    @Id    // This is an auto generated unique row identifier
+    @Id
+    // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
@@ -33,10 +37,12 @@ public class BirthAlteration {
     @Column(nullable = false, updatable = false)
     private Long alterationSerialNo;
 
-    @Column(nullable = false) // the ID points to Birth Declarition
+    @Column(nullable = false)
+    // the ID points to Birth Declarition
     private long bdId;
 
-    @Column(nullable = false)   // The date when the alteration request was received
+    @Column(nullable = false)
+    // The date when the alteration request was received
     @Temporal(value = TemporalType.DATE)
     private Date dateReceived;
 
