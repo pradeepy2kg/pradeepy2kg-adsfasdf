@@ -72,10 +72,7 @@
 
         function processResponse(respObj) {
             //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
-            return[0].Text
-        )
-            ;
+            $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
         }
     })
 
@@ -188,6 +185,7 @@
                 </table>
             </form>
             <form action="eprBirthConfirmationSkipChanges.do" onsubmit="javascript:return validate()">
+                <s:if test="#session.birthConfirmation_db.register.status.ordinal() == 2">
                 <table style=" border:1px solid #000000; width:300px">
                     <tr>
                         <td style="width:55%"><s:label value="%{getText('noConfirmationChanges.label')}"/></td>
@@ -202,6 +200,7 @@
 
                     </tr>
                 </table>
+                </s:if>
             </form>
 
         </td>
