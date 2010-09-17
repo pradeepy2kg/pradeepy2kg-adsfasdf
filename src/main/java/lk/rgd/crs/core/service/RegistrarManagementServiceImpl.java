@@ -243,6 +243,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         return results;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Registrar> getRegistrarByPin(long pin, User user) {
         if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
@@ -267,6 +270,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         return assignmentDao.getAllAssignments(user);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user) {
         logger.debug("requeting all assignments for given district id : {}", districtId);
@@ -283,6 +289,28 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         }
         return results;
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Assignment> getAssignmentsByDistrictId(int districtId, boolean active, User user) {
+        logger.debug("requeting all assignments filter by state for given district id : {}", districtId);
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
+            handleException("User : " + user.getUserId() +
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+        List<Assignment> results = new ArrayList<Assignment>();
+        List<DSDivision> dsDivisions = dsDivisionDAO.getAllDSDivisionByDistrictKey(districtId);
+        Iterator itr = dsDivisions.iterator();
+        while (itr.hasNext()) {
+            DSDivision current = (DSDivision) itr.next();
+            results.addAll(getAssignmentsByDSDivision(current.getDsDivisionUKey(), active, user));
+        }
+        logger.info("results : {}", results.size());
+        return results;
+    }
+
 
     private void handleException(String message, int code) {
         logger.error(message);
