@@ -84,7 +84,7 @@ public interface UserManager {
      * @param userId user id to lookup
      * @return the corresponding user or null
      */
-    public User getUsersByID(String userId);
+    public User getUserByID(String userId);
 
     /**
      * Get non-deleted users by name - with a wildcard match
