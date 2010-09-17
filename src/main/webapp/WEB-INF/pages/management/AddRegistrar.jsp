@@ -151,7 +151,7 @@
                                                                                      name="skipValidationName"/></td>
             <td align="right">
                 <div id="addNew_button" class="button">
-                    <s:submit name="refresh" value="add"/>
+                    <s:submit name="refresh" value="%{getText(label.add.registrar)}"/>
                 </div>
             </td>
         </tr>
