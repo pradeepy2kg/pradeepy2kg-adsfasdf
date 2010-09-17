@@ -9,6 +9,7 @@ import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.CertificateSearch;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.api.service.CertificateSearchService;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private static final Logger logger = LoggerFactory.getLogger(SearchAction.class);
 
     private final BirthRegistrationService service;
+    private final CertificateSearchService certificateSearchService;
     private final DistrictDAO districtDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final BDDivisionDAO bdDivisionDAO;
@@ -52,11 +54,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private int pageNo;
 
     public SearchAction(BirthRegistrationService service, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO) {
+        BDDivisionDAO bdDivisionDAO, CertificateSearchService certificateSearchService) {
         this.service = service;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.bdDivisionDAO = bdDivisionDAO;
+        this.certificateSearchService = certificateSearchService;
     }
 
     public String welcome() {
@@ -157,9 +160,15 @@ public class SearchAction extends ActionSupport implements SessionAware {
         if (pageNo == 1) {
             try {
                 certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                // TODO if entering application is a duplicate have to give an action error                
-
-                searchResultList = service.performBirthCertificateSearch(certSearch, user);
+                // TODO if entering application is a duplicate have to give an action error
+                boolean validNo = certificateSearchService.isValidCertificateSearchApplicationNo(
+                    certSearch.getCertificate().getDsDivision(), certSearch.getCertificate().getApplicationNo());
+                if (!validNo) {
+                    addFieldError("duplicateApplicationNoError", getText("duplicateApplicationNo.label"));
+                    pageNo = 0;
+                } else {
+                    searchResultList = certificateSearchService.performBirthCertificateSearch(certSearch, user);
+                }
 
             } catch (CRSRuntimeException e) {
                 logger.error("inside birthCertificateSearch()", e);

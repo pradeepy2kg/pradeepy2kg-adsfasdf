@@ -13,8 +13,8 @@ import java.io.Serializable;
     uniqueConstraints = {@UniqueConstraint(columnNames = {"dsDivisionUKey", "applicationNo"})})
 
 @NamedQueries({
-    @NamedQuery(name = "get.by.serialNo.and.dsDivision", query = "SELECT cs FROM CertificateSearch cs " +
-        "WHERE cs.certificate.applicationNo = :serialNo AND cs.certificate.dsDivision = :dsDivision")
+    @NamedQuery(name = "get.by.applicationNo.and.dsDivision", query = "SELECT cs FROM CertificateSearch cs " +
+        "WHERE cs.certificate.applicationNo = :applicationNo AND cs.certificate.dsDivision = :dsDivision")
 })
 public class CertificateSearch implements Serializable {
 

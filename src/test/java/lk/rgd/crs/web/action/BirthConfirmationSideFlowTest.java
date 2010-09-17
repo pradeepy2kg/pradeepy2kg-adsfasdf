@@ -219,7 +219,8 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         return loginAction.getSession();
     }
 
-    public void testSkipConfirmationChangesForConfirmationChangesCapturedEntry() throws Exception {
+    // confirmation chages captured entries can not confirm by skipping confirmation changes again 
+    /*public void testSkipConfirmationChangesForConfirmationChangesCapturedEntry() throws Exception {
         //idUKey 1 has serial number 2010012330
         User user = loginSampleUser();
         long idUKey = 1;
@@ -294,7 +295,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         session = action.getSession();
         logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
                 (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
-    }
+    }*/
 
     public void testCaptureConfirmationChanges() throws Exception {
         Long bdId;
