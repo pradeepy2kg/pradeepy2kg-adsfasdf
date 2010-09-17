@@ -67,9 +67,15 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
     public List<Assignment> getAssignmentsByTypeAndDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active) {
         Query q = null;
         switch (type) {
-            case BIRTH   : q = em.createNamedQuery("get.birth.assignments.by.state.type.and.dsdivision"); break;
-            case DEATH   : q = em.createNamedQuery("get.death.assignments.by.state.type.and.dsdivision"); break;
-            default      : q = em.createNamedQuery("get.marriage.assignments.by.state.type.and.dsdivision"); break;
+            case BIRTH:
+                q = em.createNamedQuery("get.birth.assignments.by.state.type.and.dsdivision");
+                break;
+            case DEATH:
+                q = em.createNamedQuery("get.death.assignments.by.state.type.and.dsdivision");
+                break;
+            default:
+                q = em.createNamedQuery("get.marriage.assignments.by.state.type.and.dsdivision");
+                break;
         }
         q.setParameter("dsDivisionUKey", dsDivisionUKey);
         q.setParameter("type", type);
@@ -77,18 +83,47 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
         return q.getResultList();
     }
 
-    /**
+    /*  //todo remove no usage found
+    *//**
      * @inheritDoc
-     */
+     *//*
     public List<Assignment> getAssignmentsByStateAndDSDivision(int dsDivisionUKey, boolean active) {
         Query q = em.createNamedQuery("get.assignments.by.state.and.dsdivision");
         q.setParameter("dsDivisionUKey", dsDivisionUKey);
         q.setParameter("active", active);
         return q.getResultList();
-    }
-
+    }*/
     public List<Assignment> getAllAssignments(User user) {
         Query q = em.createNamedQuery("get.all.assignments");
         return q.getResultList();
     }
+
+    //todo
+    public List<Assignment> getAllAssignmentByDistricAndType(int districtId, Assignment.Type type, boolean active) {
+        Query q = null;
+        List<Assignment> result = null;
+        if (type != null) {
+            switch (type) {
+                case BIRTH:
+                    q = em.createNamedQuery("get.birth.assignments.by.state.type.and.districtID");
+                    break;
+                case DEATH:
+                    q = em.createNamedQuery("get.death.assignments.by.state.type.and.districtID");
+                    break;
+                default:
+                    q = em.createNamedQuery("get.marriage.assignments.by.state.type.and.districtID");
+                    break;
+            }
+            q.setParameter("dsDivisionUKey", districtId);
+            q.setParameter("type", type);
+            q.setParameter("active", active);
+            result = q.getResultList();
+        } else {
+            //requesting any type
+            q = em.createNamedQuery("get.assignments.by.state.all.type.and.districtID");
+            result = q.getResultList();
+        }
+        return result;
+    }
+
 }

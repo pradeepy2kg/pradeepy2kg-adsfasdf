@@ -205,9 +205,9 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
             handleException("User : " + user.getUserId() +
                     " is not authorized to manage registrars", ErrorCodes.PERMISSION_DENIED);
         }
-
-        logger.debug("Request to get type : " + type.ordinal() + (active ? " " : " in-") +
-                "active Assignments of DS Division : {}", dsDivisionUKey);
+        //todo edit this log line for type == null
+/*        logger.debug("Request to get type : " + type.ordinal() + (active ? " " : " in-") +
+                "active Assignments of DS Division : {}", dsDivisionUKey);*/
 
         return assignmentDao.getAssignmentsByTypeAndDSDivision(dsDivisionUKey, type, active);
     }
@@ -257,6 +257,16 @@ public class RegistrarManagementServiceImpl implements RegistrarManagementServic
         }
         logger.debug("requeting all assignments");
         return assignmentDao.getAllAssignments(user);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Assignment> getAssignmentsByDistrictId(int districtId, Assignment.Type type, boolean active, User user) {
+        if (!user.isAuthorized(Permission.REGISTRAR_MANAGEMENT)) {
+            handleException("User : " + user.getUserId() +
+                    " is not authorized to manage manage registrars", ErrorCodes.PERMISSION_DENIED);
+        }
+        logger.debug("requeting all assignments for given district id : {}", districtId);
+        return assignmentDao.getAllAssignmentByDistricAndType(districtId, type, active);
     }
 
     private void handleException(String message, int code) {

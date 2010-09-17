@@ -49,21 +49,14 @@ public interface AssignmentDAO {
     public List<Assignment> getAssignmentsForRegistrar(Registrar registrar);
 
     /**
-     * Return the Assignments of a selected type for the selected DS Division
+     * Return the Assignments for the selected DS Division
+     *
      * @param dsDivisionUKey the DS Division unique ID of interest
-     * @param type the type of assignment (birth, death or marriage)
-     * @param active include only currently active assignments
+     * @param type           the type of assignment (birth, death or marriage)
+     * @param active         include only currently active assignments
      * @return the list of assignments for the given DS division
      */
     public List<Assignment> getAssignmentsByTypeAndDSDivision(int dsDivisionUKey, Assignment.Type type, boolean active);
-
-    /**
-     * Return all the Assignments for the selected DS Division
-     * @param dsDivisionUKey the DS Division unique ID of interest
-     * @param active include only currently active assignments
-     * @return the list of assignments for the given DS division
-     */
-    public List<Assignment> getAssignmentsByStateAndDSDivision(int dsDivisionUKey, boolean active);
 
     /**
      * get all assignments
@@ -72,4 +65,14 @@ public interface AssignmentDAO {
      * @return list of all assignments
      */
     public List<Assignment> getAllAssignments(User user);
+
+    /**
+     * get all assignment on given district
+     *
+     * @param districtId district id
+     * @param type       assignment type
+     * @param active     assignment state
+     * @return list of assignment
+     */
+    public List<Assignment> getAllAssignmentByDistricAndType(int districtId, Assignment.Type type, boolean active);
 }
