@@ -1392,8 +1392,8 @@ public class BirthRegistrationServiceImpl implements
         // check mother and father
         ParentInfo parent = bdf.getParent();
         if (bdf.getParent() != null) {
-            Person mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
-            processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(), mother, bdf.getMarriage());
+            //Person mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
+            //processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(), mother, bdf.getMarriage());
         }
 
         // generate a PIN number
