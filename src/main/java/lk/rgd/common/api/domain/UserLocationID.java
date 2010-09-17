@@ -8,9 +8,12 @@ import java.io.Serializable;
 public class UserLocationID implements Serializable {
 
     private String userId;
-    private long locationId;
+    private int locationId;
 
-    public UserLocationID(String userId, long locationId) {
+    public UserLocationID() {
+    }
+
+    public UserLocationID(String userId, int locationId) {
         this.userId = userId;
         this.locationId = locationId;
     }
@@ -27,7 +30,7 @@ public class UserLocationID implements Serializable {
         return locationId;
     }
 
-    public void setLocationId(long locationId) {
+    public void setLocationId(int locationId) {
         this.locationId = locationId;
     }
 }

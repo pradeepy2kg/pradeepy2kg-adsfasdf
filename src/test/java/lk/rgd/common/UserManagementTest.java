@@ -153,6 +153,8 @@ public class UserManagementTest extends TestCase {
         ul.setSignBirthCert(true);
         userManager.addUserLocation(ul, admin);
 
-        //TODO check user assignments
+        newUser4 = userManager.getUserByID("newUser4");
+        Assert.assertEquals(1, newUser4.getLocations().size());
+        Assert.assertEquals(ul.getLocation().getLocationUKey(), newUser4.getLocations().get(0).getLocation().getLocationUKey());
     }
 }
