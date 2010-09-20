@@ -20,6 +20,9 @@
             font-size: 8pt;
         }
     }
+     #birth-confirmation-print-form-outer .form-submit {
+        margin: 5px 0 15px 0;
+    }
 
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
@@ -55,7 +58,7 @@
 </s:url>
 </s:else>
 
-<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
+<div id="birthRegistration-page" class="form-submit" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
 <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
@@ -63,7 +66,7 @@
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
 
-<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
+<div id="birthRegistration-page" class="form-submit" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 <div class="birth-confirmation-print-form-outer" id="page1" style="page-break-after:always;">
@@ -700,7 +703,7 @@
 
 
 </div>
-<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
+<div id="birthRegistration-page" class="form-submit" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{print}" ><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
 <div class="form-submit" style="margin-bottom:20px;margin-right:10px;">
@@ -708,6 +711,6 @@
     <s:hidden id="printMessage" value="%{getText('print.message')}"/>
 </div>
 
-<div id="birthRegistration-page" style="float:right;margin-left:10px; margin-top:16px;">
+<div id="birthRegistration-page" class="form-submit" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
