@@ -1,44 +1,18 @@
 <%@ page import="lk.rgd.common.util.GenderUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<style type="text/css" title="currentStyle">
-    @import "../lib/datatables/media/css/demo_page.css";
-    @import "../lib/datatables/media/css/demo_table.css";
-    @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
-</style>
 
-<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
-<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
-<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
-<script type="text/javascript" src="../js/validate.js"></script>
-<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#approval-list-table').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
-        });
-    });
-
-</script>
-
+<div id="alteration-approval-list-outer">
 <fieldset>
-    <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-        <thead>
+<s:form action="eprApproveAlteration.do">
+    <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <th width="20px"></th>
-            <th width="350px"><s:label value="Birth Name"/></th>
-            <th width="350px"><s:label value="%{getText('name.label')}"/></th>
-            <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
+            <td style="width:10%"></td>
+            <td style="width:40%;font-size:12pt; text-align:center;"><s:label value="Birth Name"/></td>
+            <td style="width:40%;font-size:12pt; text-align:center;"><s:label
+                    value="%{getText('name.label')}"/></td>
+            <td style="width:10%;font-size:12pt; text-align:center;"><s:label
+                    value="%{getText('approve.label')}"/></td>
         </tr>
-        </thead>
-        <tbody>
         <s:iterator status="approvalStatus" value="birthAlterationApprovalList" id="approvalList">
             <tr>
                     <%--<td><s:property value="birthChangeList[#approvalStatus.index]"/></td>--%>
@@ -46,13 +20,22 @@
                 <td><s:property value="birthAlterationApprovalList[#approvalStatus.index][1]"/></td>
                 <td><s:property value="birthAlterationApprovalList[#approvalStatus.index][2]"/></td>
                 <td align="center">
-                    <s:checkbox name=""/>
+                    <s:checkbox name="index"
+                                value="%{#index}"
+                                fieldValue="%{birthAlterationApprovalList[#approvalStatus.index][0]}"/>
                 </td>
             </tr>
         </s:iterator>
-        </tbody>
     </table>
-</fieldset>
+
+    </fieldset>
+    </div>
+    <s:hidden name="sectionOfAct"/>
+    <s:hidden name="idUKey"/>
+    <div class="form-submit">
+        <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
+    </div>
+</s:form>
 <%--
 <%
 

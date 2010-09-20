@@ -950,8 +950,8 @@
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
         </action>
         <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="alterationApprove">
-            <result type="tiles" name="success">epr.birthAlterationApproval</result>
+                method="alterationApproval">
+            <result type="tiles" name="success">epr.home</result>
         </action>
 
     </package>

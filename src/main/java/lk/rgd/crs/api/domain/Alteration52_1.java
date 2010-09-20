@@ -32,11 +32,6 @@ public class Alteration52_1 {
     public static final int INFORMANT_NAME = 17;
     public static final int INFORMANT_ADDRESS = 18;
 
-    /**
-     * Contains the approval bit set for each field.
-     */
-    @Column(nullable = true)
-    private BitSet approvalStatuses52;
 
     /**
      * The date of the birth
@@ -146,11 +141,4 @@ public class Alteration52_1 {
         this.childGender = childGender;
     }
 
-    public BitSet getApprovalStatuses() {
-        return approvalStatuses52;
-    }
-
-    public void setApprovalStatuses(BitSet approvalStatuses) {
-        this.approvalStatuses52 = approvalStatuses;
-    }
 }

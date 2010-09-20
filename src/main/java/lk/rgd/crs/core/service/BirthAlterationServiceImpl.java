@@ -102,9 +102,9 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             while (fieldList.hasMoreElements()) {
                 Integer aKey = fieldList.nextElement();
                 if (fieldsToBeApproved.get(aKey) == true) {
-                    if (existing.getAlt27A().getApprovalStatuses().get(aKey) == false) {
+                    if (ba.getApprovalStatuses().get(aKey) == false) {
                         logger.debug("setting status as approval for the alteration statement 27A");
-                        existing.getAlt27A().getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE);
+                        ba.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A);
                     } else {
                         handleException("Cannot approve alteration according to the alteration statement 27A : " + ba.getIdUKey() +
                                 " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
@@ -115,9 +115,9 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             while (fieldList.hasMoreElements()) {
                 Integer aKey = fieldList.nextElement();
                 if (fieldsToBeApproved.get(aKey) == true) {
-                    if (existing.getAlt52_1().getApprovalStatuses().get(aKey) == false) {
+                    if (ba.getApprovalStatuses().get(aKey) == false) {
                         logger.debug("setting status as approval for the alteration statement 52_1");
-                        existing.getAlt52_1().getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE);
+                        ba.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1);
                     } else {
                         handleException("Cannot approve alteration according to the alteration statement 52_1 : " + ba.getIdUKey() +
                                 " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
@@ -167,8 +167,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         Boolean alreadyAdded;
 
         for (BirthAlteration ba : alterationList) {
-             pendingApprovalList.add(ba);
-           /* alreadyAdded = false;
+            pendingApprovalList.add(ba);
+            /* alreadyAdded = false;
             Alteration27 alt27 = ba.getAlt27();
             if (alt27 != null) {
                 if (!(alt27.isFullNameEnglishApproved() && alt27.isFullNameOfficialLangApproved())) {

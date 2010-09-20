@@ -46,12 +46,6 @@ public class Alteration27A {
     @Column(nullable = true, length=600)
     private String mothersNameAfterMarriage;
 
-    /**
-     * Contains the approval bit set for each field.
-     */
-    @Column(nullable = true)
-    private BitSet approvalStatuses27A;
-
     public GrandFatherInfo getGrandFather() {
         return grandFather;
     }
@@ -84,11 +78,4 @@ public class Alteration27A {
         this.mothersNameAfterMarriage = mothersNameAfterMarriage;
     }
 
-    public BitSet getApprovalStatuses() {
-        return approvalStatuses27A;
-    }
-
-    public void setApprovalStatuses(BitSet approvalStatuses) {
-        this.approvalStatuses27A = approvalStatuses;
-    }
 }

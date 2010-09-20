@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.BitSet;
 
 
 /**
@@ -22,12 +23,17 @@ import java.util.Date;
                 "WHERE ba.alt52_1.birthDivision = :bdDivision " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),*/
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision " +
+                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.approvalStatuses is null " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 
 })
 
 public class BirthAlteration {
+    /**
+     * Contains the approval bit set for each field.
+     */
+    @Column(nullable = true)
+    private BitSet approvalStatuses;
     @Id
     // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -175,5 +181,13 @@ public class BirthAlteration {
 
     public void setDateReceived(Date dateReceived) {
         this.dateReceived = dateReceived;
+    }
+
+    public BitSet getApprovalStatuses() {
+        return approvalStatuses;
+    }
+
+    public void setApprovalStatuses(BitSet approvalStatuses) {
+        this.approvalStatuses = approvalStatuses;
     }
 }
