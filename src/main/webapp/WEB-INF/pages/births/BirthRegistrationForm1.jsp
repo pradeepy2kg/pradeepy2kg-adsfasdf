@@ -162,7 +162,7 @@ function validate() {
     return returnval;
 }
 
-//comment tags
+//common tags
 function commonTags() {
     var domObject;
     //serial number

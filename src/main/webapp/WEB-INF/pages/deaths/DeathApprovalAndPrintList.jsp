@@ -300,7 +300,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td align="center" width="60px"><s:a href="%{viewSelected}"
+            <td align="center"><s:a href="%{viewSelected}"
                                                  title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
@@ -329,7 +329,7 @@
             <td></td>
             <td></td>
 
-            <td align="center" width="60px"><s:a href="%{viewSelected}"
+            <td align="center"><s:a href="%{viewSelected}"
                                                  title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
@@ -349,12 +349,12 @@
             <td></td>
             <td></td>
 
-            <td align="center" width="60px"><s:a href="%{viewSelected}"
+            <td align="center"><s:a href="%{viewSelected}"
                                                  title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
-            <td align="center" width="60px">
+            <td align="center">
                 <s:url id="cetificatePrintUrl" action="eprDeathCertificate.do">
                     <s:param name="idUKey" value="idUKey"/>
                     <s:param name="currentStatus" value="%{#request.currentStatus}"/>
