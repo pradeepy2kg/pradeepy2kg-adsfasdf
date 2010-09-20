@@ -14,7 +14,7 @@
         }
 
         td {
-            font-size: 8pt;
+            font-size: 7pt;
         }
     }
 
@@ -79,7 +79,7 @@
         <td rowspan="3"></td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"
-                 style="display: block; text-align: center;" width="80" height="100">
+                 style="display: block; text-align: center;" width="70" height="90">
         </td>
         <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
         </td>
@@ -88,7 +88,7 @@
         <td><s:label name="bdId"/></td>
     </tr>
     <tr>
-        <td align="center" style="font-size:11pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+        <td align="center" style="font-size:8.5pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             <s:if test="birthType.ordinal() != 0">
                 උප්පැන්න සහතිකය<br>
                 பிறப்பு சான்றிதழ்﻿<br>
@@ -105,14 +105,14 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;">
+<table  border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="135px">
     <col>
     <col width="145px">
     <col>
     <tbody>
     <tr>
-        <td width="175px" height="80px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
+        <td width="175px" height="60px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
         </td>
         <td width="300px"><s:label name="" value="%{childDistrict}"/><br/>
             <s:label name="" value="%{childDistrictEn}"/></td>
@@ -120,12 +120,12 @@
             <br> பிரிவு
             <br> Divisional Secretariat
         </td>
-        <td><s:label name="" value="%{childDsDivision}"/><br/>
+        <td width="200px"><s:label name="" value="%{childDsDivision}"/><br/>
             <s:label name="" value="%{childDsDivisionEn}"/></td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td width="200px" height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+            <td width="200px" height="70px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
                 <br>பிரிவு
                 <br>Registration Division
             </td>
@@ -156,7 +156,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="150px">
     <col width="160px">
     <col width="100px">
@@ -166,7 +166,7 @@
     <tbody>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td height="80px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)
+            <td height="60px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)
             </td>
             <td><s:label name="" value="%{#request.child.pin}"/></td>
             <td width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
@@ -182,7 +182,7 @@
     </s:if>
     <s:else>
         <tr>
-            <td height="80px" width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
+            <td height="60px" width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
             </td>
             <td><s:label name="" value="%{#request.child.childDateOfBirthForPrint}"/></td>
             <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
@@ -200,7 +200,7 @@
         </tr>
     </s:else>
     <tr>
-        <td height="70px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
+        <td height="50px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
         </td>
         <td colspan="2">
             <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}"/><br>
@@ -213,29 +213,29 @@
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td height="120px">නම <br>பெயர் <br>Name
+            <td height="70px">නම <br>பெயர் <br>Name
             </td>
-            <td colspan="5" class="bc-name" style="font-size:11pt">
+            <td colspan="5" class="bc-name" style="font-size:8pt">
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
-            <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
+            <td height="70px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
-            <td colspan="5" class="bc-name" style="font-size:11pt">
+            <td colspan="5" class="bc-name" style="font-size:8pt">
                 <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             </td>
         </tr>
     </s:if>
     <tr>
-        <td height="120px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="60px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:11pt">
+        <td colspan="5" class="bc-name" style="font-size:8pt">
             <s:label name="" value="%{#request.parent.fatherFullName}"/>
         </td>
     </tr>
     <tr>
-        <td height="70px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+        <td height="40px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
             தந்தையின் அடையாள எண் <br>
             Father's PIN / NIC
 
@@ -249,16 +249,16 @@
     </tr>
 
     <tr>
-        <td height="120px">මවගේ සම්පූර්ණ නම
+        <td height="60px">මවගේ සම්පූර්ණ නම
             <br> தாயின் முழுப் பெயர்
             <br> Mother's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:11pt">
+        <td colspan="5" class="bc-name" style="font-size:8pt">
             <s:label name="" value="%{#request.parent.motherFullName}"/>
         </td>
     </tr>
     <tr>
-        <td height="70px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+        <td height="40px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
             தாயின் அடையாள எண் <br>
             Mother's PIN / NIC
         </td>
@@ -272,14 +272,14 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="195px">
-    <col width="215px">
+    <col width="200px">
     <col width="120px">
     <col>
     <tbody>
     <tr>
-        <td height="70px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
+        <td height="50px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
         </td>
         <td><s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/></td>
         <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
@@ -288,15 +288,15 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="120px">
+        <td colspan="2" height="70px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" style="font-size:10pt"><s:label value="%{#request.register.confirmantFullName}"/></td>
+        <td colspan="2" style="font-size:8pt"><s:label value="%{#request.register.confirmantFullName}"/></td>
     </tr>
     <tr>
-        <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+        <td colspan="2" height="20px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
         <%--TODO--%>
         <td colspan="2"><s:label value="%{#request.register.originalBCPlaceOfIssuePrint}"/></td>
@@ -304,7 +304,7 @@
     </tbody>
 </table>
 
-<p>උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+<p style="font-size:5pt">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
     ලදි.<br>
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>

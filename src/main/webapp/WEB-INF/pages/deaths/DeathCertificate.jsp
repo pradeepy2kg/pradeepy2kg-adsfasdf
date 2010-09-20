@@ -14,7 +14,7 @@
         }
 
         td {
-            font-size: 8pt;
+            font-size: 9pt;
         }
     }
 
@@ -123,7 +123,7 @@
     <col width="160px"/>
     <col width="100px"/>
     <col width="100px"/>
-    <col width="150px"/>
+    <col width="180px"/>
     <col width="120px"/>
     <col width="100px"/>
     <col/>
@@ -143,49 +143,49 @@
     </tr>
     <tr>
         <td colspan="1">මරණය සිදුවූ ස්ථානය<br>*in tamil<br>Place of death</td>
-        <td colspan="7"><s:label name="" value="%{death.placeOfDeathInOfficialLang}"/>
+        <td colspan="7"><s:label name="" value="%{death.placeOfDeath}"/>
             <br><s:label name="" value="%{death.placeOfDeathInEnglish}"/></td>
     </tr>
     <tr>
         <td colspan="1">මරණයට හේතුව<br>*in tamil<br>Cause of Death</td>
-        <td colspan="5"><s:label name="" value="%{death.causeOfDeath}"/></td>
+        <td colspan="4" style="font-size:9pt"><s:label name="" value="%{death.causeOfDeath}"/></td>
         <td colspan="1">හේතුවේ ICD කේත අංකය<br>*in tamil<br>ICD Code of cause</td>
-        <td colspan="1"><s:label name="" value="%{death.icdCodeOfCause}"/></td>
+        <td colspan="2"><s:label name="" value="%{death.icdCodeOfCause}"/></td>
     </tr>
     <tr>
         <td colspan="1">ආදාහන හෝ භූමදාන ස්ථානය<br>*in tamil<br>Place of burial or cremation</td>
-        <td colspan="7"><s:label name="" value="%{death.placeOfBurial}"/></td>
+        <td colspan="7" style="font-size:10pt"><s:label name="" value="%{death.placeOfBurial}"/></td>
     </tr>
     <tr>
-        <td colspan="1" height="120px">නම <br>பெயர் <br>Name</td>
+        <td colspan="1" height="110px">නම <br>பெயர் <br>Name</td>
         <td colspan="7" style="font-size:10pt"><s:label name=""
                                                         value="%{deathPerson.deathPersonNameOfficialLang}"/></td>
     </tr>
     <tr>
-        <td colspan="1" height="120px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English</td>
-        <td colspan="7"><s:label name="" value="%{deathPerson.deathPersonNameInEnglish}"/></td>
+        <td colspan="1" height="100px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English</td>
+        <td colspan="7" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonNameInEnglish}"/></td>
     </tr>
     <tr>
         <td colspan="1" height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name</td>
-        <td colspan="5"><s:label name="" value="%{deathPerson.deathPersonFatherFullName}"/></td>
+        <td colspan="4" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonFatherFullName}"/></td>
         <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-        <td colspan="1"><s:label name="" value="%{deathPerson.deathPersonFatherPINorNIC}"/></td>
+        <td colspan="2"><s:label name="" value="%{deathPerson.deathPersonFatherPINorNIC}"/></td>
     </tr>
     <tr>
         <td colspan="1" height="100px">මවගේ සම්පූර්ණ නම<br> தாயின் முழுப் பெயர்<br> Mother's Full Name</td>
-        <td colspan="5"><s:label name="" value="%{deathPerson.deathPersonMotherFullName}"/></td>
+        <td colspan="4" style="font-size:10pt"><s:label name="" value="%{deathPerson.deathPersonMotherFullName}"/></td>
         <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-        <td colspan="1"><s:label name="" value="%{deathPerson.deathPersonMotherPINorNIC}"/></td>
+        <td colspan="2"><s:label name="" value="%{deathPerson.deathPersonMotherPINorNIC}"/></td>
     </tr>
     <tr>
         <td colspan="1" height="100px">දැනුම් දෙන්නගේ නම<br>கொடுப்பவரின் பெயர்<br>Informant's Name</td>
-        <td colspan="5"><s:label name="" value="%{declarant.declarantFullName}"/></td>
+        <td colspan="4" style="font-size:10pt"><s:label name="" value="%{declarant.declarantFullName}"/></td>
         <td colspan="1">පු.අ.අ. හෝ ජා.හැ.අ.<br>*in tamil <br>PIN / NIC</td>
-        <td colspan="1"><s:label name="" value="%{declarant.declarantNICorPIN}"/></td>
+        <td colspan="2"><s:label name="" value="%{declarant.declarantNICorPIN}"/></td>
     </tr>
     <tr>
-        <td colspan="1" height="100px">දැනුම් ලිපිනය <br>கொடுப்பவரின் பெயர்<br>Informant's Address</td>
-        <td colspan="7"><s:label name="" value="%{declarant.declarantAddress}"/></td>
+        <td colspan="1" height="90px">දැනුම් ලිපිනය <br>கொடுப்பவரின் பெயர்<br>Informant's Address</td>
+        <td colspan="7" style="font-size:10pt"><s:label name="" value="%{declarant.declarantAddress}"/></td>
     </tr>
     </tbody>
 </table>
@@ -209,7 +209,7 @@
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" height="120px"><s:label name="nameOfOfficer" value="%{}"/>,
+        <td colspan="2" height="100px"><s:label name="nameOfOfficer" value="%{}"/>,
             <br>
             <s:label name="designationOfCertifyingOfficer " value="%{}"/>
         </td>
