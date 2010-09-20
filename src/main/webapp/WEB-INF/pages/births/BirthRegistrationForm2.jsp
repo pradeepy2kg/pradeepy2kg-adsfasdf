@@ -89,11 +89,16 @@ $(function() {
 
     $('img#father_lookup').bind('click', function(evt1) {
         var id1 = $("input#father_pinOrNic").attr("value");
-        var fatherBirthYear = 19 + id1.substring(0, 2);
-        var D = new Date(fatherBirthYear, 01, 01) ;
-        D.setDate(D.getDate() + id1.substring(2, 5) - 1000);
-        $('#fatherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
-
+        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+        var day = id1.substring(2, 5);
+        if ((id1.search(regNIC) == 0 && (day >= 0 && day <= 367))) {
+            var fatherBirthYear = 19 + id1.substring(0, 2);
+            var D = new Date(fatherBirthYear, 01, 01) ;
+            D.setDate(D.getDate() + id1.substring(2, 5) - 1000);
+            $('#fatherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
+        } else {
+            alert("enter valid NIC for father")
+        }
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
@@ -105,12 +110,16 @@ $(function() {
 
     $('img#mother_lookup').bind('click', function(evt2) {
         var id2 = $("input#mother_pinOrNic").attr("value");
-        var motherBirthYear = 19 + id2.substring(0, 2);
-        //var motherBirthDay = id2.substring(2, 5);
-        var D = new Date(motherBirthYear, 01, 01) ;
-        D.setDate(D.getDate() + id2.substring(2, 5) - 1500);
-        $('#motherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
-
+        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+        var day = id2.substring(2, 5);
+        if ((id2.search(regNIC) == 0) && (day >= 501 && day <= 867)) {
+            var motherBirthYear = 19 + id2.substring(0, 2);
+            var D = new Date(motherBirthYear, 01, 01) ;
+            D.setDate(D.getDate() + id2.substring(2, 5) - 1500);
+            $('#motherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
+        } else {
+            alert("enter valid NIC for Mother")
+        }
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
@@ -583,7 +592,8 @@ function commonTags() {
 <s:hidden id="dateOfAddmissionWrong" value="%{getText('p2.hospital.addmission.date.wrong')}"/>
 <s:hidden id="birthDatePicker" value="%{child.dateOfBirth}"/>
 <s:hidden id="error9" value="%{getText('NIC.error.add.VX')}"/>
-
+<s:hidden id="error10" value="%{getText('p2.NIC.error.format.father')}"/>
+<s:hidden id="error11" value="%{getText('p2.NIC.error.format.mother')}"/>
 
 
 </div>
