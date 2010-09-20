@@ -299,7 +299,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
 
     public void testCaptureConfirmationChanges() throws Exception {
         Long bdId;
-        //idUkey 2 has serial number 2010012331
+        //idUkey 2 has serial number 2010012331          
         User user = loginSampleUser();
         long idUKey = 2;
         Map session = login("rg", "password");
