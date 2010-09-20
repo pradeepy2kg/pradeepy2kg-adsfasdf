@@ -442,10 +442,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 
     $('img#deathName').bind('click', function(evt7) {
@@ -470,10 +467,7 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
-        return[0].Text
-    )
-        ;
+        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
     }
 });
 
