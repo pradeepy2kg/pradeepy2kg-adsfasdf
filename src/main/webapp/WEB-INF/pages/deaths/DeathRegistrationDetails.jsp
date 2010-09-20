@@ -6,8 +6,8 @@
 
 <script type="text/javascript">
     function Ignorwornings() {
-        if (!document.getElementById("ignoreWarning").checked) {
-            var errormsg= document.getElementById("error1").value;
+        if (!document.getElementById("ignoreWarningId").checked) {
+            var errormsg = document.getElementById("error1").value;
             alert(errormsg);
             return false;
         }
@@ -22,28 +22,30 @@
 
     <div id="death-registration-details-body">
         <s:if test="#request.warnings.size>0">
+            <fieldset>
+            <legend><b><s:label value="%{getText('death_approval_warning.label')}"/></b></legend>
+            <table class="birth-declaration-approval-warning-table">
+                <s:iterator value="#request.warnings">
+                    <tr>
+                        <td><s:property value="message"/></td>
+                    </tr>
+                </s:iterator>
+            </table>
             <s:form action="eprDirectApproveIgnoringWornings" onsubmit="javascript:return Ignorwornings()">
-                <fieldset>
-                    <legend><s:label value="%{getText('death_approval_warning.label')}"/></legend>
-                    <table border="0">
-                        <s:iterator value="#request.warnings">
-                            <tr>
-                                <td><s:property value="message"/></td>
-                            </tr>
-                        </s:iterator>
-                    </table>
-                    <table border="0">
-                        <tr>
-                            <td><s:label value="%{getText('ignoreWorning.label')}"/></td>
-                            <td><s:checkbox name="ignoreWarning" id="ignoreWarning"/></td>
-                            <s:hidden value="true" name="directPrint"/>
-                            <s:hidden value="%{#request.idUKey}" name="idUKey"/>
-                            <td class="button" align="left">
-                                <s:submit name="approve" value="%{getText('approve.label')}"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <s:hidden id="error1" value="%{getText('ignor.worning.error')}"/>
+                <table align="center" border="0">
+                    <tr>
+                        <s:hidden value="true" name="directPrint"/>
+                        <s:hidden value="%{#request.idUKey}" name="idUKey"/>
+                    </tr>
+                    <tr>
+                        <td><s:label value="%{getText('ignoreWorning.label')}"/></td>
+                        <td><s:checkbox name="ignoreWarning" id="ignoreWarningId"/></td>
+                        <td class="button" align="left">
+                            <s:submit name="approve" value="%{getText('approve.label')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <s:hidden id="error1" value="%{getText('ignor.worning.error')}"/>
                 </fieldset>
             </s:form>
         </s:if>

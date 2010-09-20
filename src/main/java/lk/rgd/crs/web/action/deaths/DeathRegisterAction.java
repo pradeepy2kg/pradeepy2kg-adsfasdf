@@ -322,6 +322,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public String directApproveIgnoringWornings() {
+        logger.debug("Direct approve death registration with IdUKey : {} IgnoreWarning : {}", idUKey, ignoreWarning);
         if (ignoreWarning) {
             service.approveDeathRegistration(idUKey, user, ignoreWarning);
             initPermissionForApprovalAndPrint();
@@ -1100,5 +1101,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public boolean isIgnoreWarning() {
+        return ignoreWarning;
+    }
+
+    public void setIgnoreWarning(boolean ignoreWarning) {
+        this.ignoreWarning = ignoreWarning;
     }
 }
