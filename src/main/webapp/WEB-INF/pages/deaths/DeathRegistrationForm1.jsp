@@ -174,13 +174,13 @@
 
         function getTrueOffsetLeft(ele)
         {
-          var n = 0;
-          while (ele)
-          {
-              n += ele.offsetLeft || 0;
-              ele = ele.offsetParent;
-          }
-          return n;
+            var n = 0;
+            while (ele)
+            {
+                n += ele.offsetLeft || 0;
+                ele = ele.offsetParent;
+            }
+            return n;
         }
 
         function getTrueOffsetTop(ele)
@@ -324,28 +324,16 @@ function validate() {
     var domObject;
     var returnval;
     var check = document.getElementById('skipjs');
-
-    // validations that can skip
-    if (!check.checked) {
-        domObject = document.getElementById('deathPerson_PINorNIC');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error8').value;
-        }
-        domObject = document.getElementById('deathPersonNameOfficialLang');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error9').value;
-        }
-        domObject = document.getElementById('deathPersonNameInEnglish');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error10').value;
-        }
-        domObject = document.getElementById('deathPersonPermanentAddress');
-        if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "\n" + document.getElementById('error11').value;
-        }
+    var declarationType = document.getElementById('deathTypeId');
+    
+    //validation for emptry fields
+    domObject = document.getElementById('deathSerialNo');
+    if (isFieldEmpty(domObject)) {
+        errormsg = errormsg + "\n" + document.getElementById('error0').value;
+    } else {
+        validateSerialNo(domObject, 'p1error1', 'p1errorSerial');
 
     }
-
 
     /*date related validations*/
     domObject = document.getElementById('dateOfRegistrationDatePicker');
@@ -353,6 +341,13 @@ function validate() {
         errormsg = errormsg + "\n" + document.getElementById('error1').value;
     } else {
         isDate(domObject.value, 'p1error1', 'p1errordate1');
+    }
+
+    if (declarationType.value == 2) {
+        domObject = document.getElementById('resonForLateRegistration');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, '', 'error13');
+        }
     }
 
     domObject = document.getElementById('deathDatePicker');
@@ -375,14 +370,6 @@ function validate() {
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'p1error1', 'p1errorPIN3');
 
-    //validation for emptry fields
-    domObject = document.getElementById('deathSerialNo');
-    if (isFieldEmpty(domObject)) {
-        errormsg = errormsg + "\n" + document.getElementById('error0').value;
-    } else {
-        validateSerialNo(domObject, 'p1error1', 'p1errorSerial');
-
-    }
     domObject = document.getElementById('placeOfDeath');
     if (isFieldEmpty(domObject)) {
         errormsg = errormsg + "\n" + document.getElementById('error3').value;
@@ -402,6 +389,27 @@ function validate() {
         errormsg = errormsg + "\n" + document.getElementById("error7").value;
     }
 
+    // validations that can skip
+    if (!check.checked) {
+        domObject = document.getElementById('deathPerson_PINorNIC');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error8').value;
+        }
+        domObject = document.getElementById('deathPersonNameOfficialLang');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error9').value;
+        }
+        domObject = document.getElementById('deathPersonNameInEnglish');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error10').value;
+        }
+        domObject = document.getElementById('deathPersonPermanentAddress');
+        if (isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error11').value;
+        }
+
+    }
+
     if (errormsg != "") {
         alert(errormsg);
         returnval = false;
@@ -410,62 +418,69 @@ function validate() {
     errormsg = "";
     return returnval;
 }
+
 $(function() {
-$('img#place').bind('click', function(evt6) {
-    var id = $("input#placeOfDeath").attr("value");
-    var wsMethod = "transliterate";
-    var soapNs = "http://translitwebservice.transliteration.icta.com/";
+    $('img#place').bind('click', function(evt6) {
+        var id = $("input#placeOfDeath").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-    var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-    soapBody.attr("xmlns:trans", soapNs);
-    soapBody.appendChild(new SOAPObject('InputName')).val(id);
-    soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-    soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-    soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-    //Create a new SOAP Request
-    var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-    //Lets send it
-    SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-    SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
-});
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse1); //Send request to server and assign a callback
+    });
 
-function processResponse2(respObj) {
+    function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfDeathInEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 
-$('img#deathName').bind('click', function(evt7) {
-    var id = $("textarea#deathPersonNameOfficialLang").attr("value");
-    var wsMethod = "transliterate";
-    var soapNs = "http://translitwebservice.transliteration.icta.com/";
+    $('img#deathName').bind('click', function(evt7) {
+        var id = $("textarea#deathPersonNameOfficialLang").attr("value");
+        var wsMethod = "transliterate";
+        var soapNs = "http://translitwebservice.transliteration.icta.com/";
 
-    var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
-    soapBody.attr("xmlns:trans", soapNs);
-    soapBody.appendChild(new SOAPObject('InputName')).val(id);
-    soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
-    soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
-    soapBody.appendChild(new SOAPObject('Gender')).val('U');
+        var soapBody = new SOAPObject("trans:" + wsMethod); //Create a new request object
+        soapBody.attr("xmlns:trans", soapNs);
+        soapBody.appendChild(new SOAPObject('InputName')).val(id);
+        soapBody.appendChild(new SOAPObject('SourceLanguage')).val(0);
+        soapBody.appendChild(new SOAPObject('TargetLanguage')).val(3);
+        soapBody.appendChild(new SOAPObject('Gender')).val('U');
 
-    //Create a new SOAP Request
-    var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
+        //Create a new SOAP Request
+        var sr = new SOAPRequest(soapNs + wsMethod, soapBody); //Request is ready to be sent
 
-    //Lets send it
-    SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
-    SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
-});
+        //Lets send it
+        SOAPClient.Proxy = "/TransliterationWebService/TransliterationService";
+        SOAPClient.SendRequest(sr, processResponse2); //Send request to server and assign a callback
+    });
 
-function processResponse2(respObj) {
-    //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-    $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-}
+    function processResponse2(respObj) {
+        //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
+        $("textarea#deathPersonNameInEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
 });
 
 function initSerialNumber() {
     var domObject = document.getElementById('deathSerialNo');
-    if(domObject.value.trim()==0){
-        domObject.value=null;
+    if (domObject.value.trim() == 0) {
+        domObject.value = null;
     }
     if (isFieldEmpty(domObject)) {
         domObject.value = new Date().getFullYear() + "0";
@@ -584,7 +599,8 @@ function initPage() {
                 in tamil <br/>
                 Reason for the late registration of the death
             </td>
-            <td><s:textarea name="death.reasonForLateRegistration" cssStyle="width:880px;"/></td>
+            <td><s:textarea id="resonForLateRegistration" name="death.reasonForLateRegistration"
+                            cssStyle="width:880px;"/></td>
         </tr>
     </table>
 </s:if>
@@ -762,12 +778,12 @@ function initPage() {
         </td>
         <td rowspan="2" colspan="2" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                id="death_person_NIC_V" onclick="javascript:addXorV('deathPerson_PINorNIC','V','error12')">
+                 id="death_person_NIC_V" onclick="javascript:addXorV('deathPerson_PINorNIC','V','error12')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
+                 id="death_person_NIC_X" onclick="javascript:addXorV('deathPerson_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                                                                     cssStyle="float:left;"/>
+                         cssStyle="float:left;"/>
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
 
@@ -833,9 +849,11 @@ function initPage() {
         </td>
         <td colspan="6" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                id="death_person_father_NIC_V" onclick="javascript:addXorV('deathPersonFather_PINorNIC','V','error12')">
+                 id="death_person_father_NIC_V"
+                 onclick="javascript:addXorV('deathPersonFather_PINorNIC','V','error12')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                id="death_person_father_NIC_X" onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
+                 id="death_person_father_NIC_X"
+                 onclick="javascript:addXorV('deathPersonFather_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonFatherPINorNIC" id="deathPersonFather_PINorNIC"
                          cssStyle="float:left;"/>
@@ -843,7 +861,7 @@ function initPage() {
             <img src="<s:url value="/images/search-father.png" />"
                  style="vertical-align:middle; margin-left:20px;" id="death_person_father_lookup">
 
-            </td>
+        </td>
     </tr>
     <tr>
         <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පියාගේ සම්පුර්ණ නම<br>*in tamil
@@ -860,9 +878,11 @@ function initPage() {
         </td>
         <td colspan="6" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
-                id="death_person_mother_NIC_V" onclick="javascript:addXorV('deathPersonMother_PINorNIC','V','error12')">
+                 id="death_person_mother_NIC_V"
+                 onclick="javascript:addXorV('deathPersonMother_PINorNIC','V','error12')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
-                id="death_person_mother_NIC_X" onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
+                 id="death_person_mother_NIC_X"
+                 onclick="javascript:addXorV('deathPersonMother_PINorNIC','X','error12')">
             <br>
             <s:textfield name="deathPerson.deathPersonMotherPINorNIC" id="deathPersonMother_PINorNIC"
                          cssStyle="float:left;"/>
@@ -915,4 +935,8 @@ function initPage() {
     <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
 </div>
 </s:form>
+
+<s:hidden id="deathTypeId" value="%{deathType.ordinal()}"/>
+<s:hidden id="error13" value="%{getText('enter.reasonForLate.label')}"/>
+
 </div>
