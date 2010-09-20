@@ -42,6 +42,9 @@ function printForm() {
     jsPrintSetup.setOption('footerStrCenter', '');
     jsPrintSetup.setOption('footerStrRight', '');
 
+    jsPrintSetup.setGlobalOption('paperWidth', 210);
+    jsPrintSetup.setGlobalOption('paperHeight',297);
+    
     jsPrintSetup.print();
 }
 
