@@ -97,7 +97,7 @@ $(function() {
             D.setDate(D.getDate() + id1.substring(2, 5) - 1000);
             $('#fatherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
         } else {
-            alert("enter valid NIC for father")
+            alert(document.getElementById('error10').value)
         }
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
@@ -118,7 +118,7 @@ $(function() {
             D.setDate(D.getDate() + id2.substring(2, 5) - 1500);
             $('#motherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
         } else {
-            alert("enter valid NIC for Mother")
+            alert(document.getElementById('error11').value)
         }
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {

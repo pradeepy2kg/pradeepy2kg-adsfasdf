@@ -18,7 +18,7 @@
         }
     }
 
-    #birth-certificate-outer .form-submit {
+    #death-certificate-outer .form-submit {
         margin: 5px 0 15px 0;
     }
 </style>
@@ -52,7 +52,7 @@
         </s:url>
     </s:else>
 <s:if test="#request.allowPrintCertificate">
-        <div id="birthRegistration-page" style="margin-top:15px;float:right;">
+        <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
             <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
         </div>
         <div class="form-submit">
@@ -60,7 +60,7 @@
             <s:hidden id="printMessage" value="%{getText('print.message')}"/>
         </div>
     </s:if>
-    <div id="birthRegistration-page" style="margin-top:15px;float:right;">
+    <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">
         <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
     </div>
 <table style="width: 100%; border:none; border-collapse:collapse; ">
@@ -233,7 +233,7 @@
 
 
     <s:if test="#request.allowPrintCertificate">
-        <div id="birthRegistration-page" style="margin-top:15px;float:right;">
+        <div id="birthRegistration-page"  class="form-submit" style="margin-top:15px;float:right;">
             <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
         </div>
         <div class="form-submit">
@@ -241,7 +241,7 @@
             <s:hidden id="printMessage" value="%{getText('print.message')}"/>
         </div>
     </s:if>
-    <div id="birthRegistration-page" style="margin-top:15px;float:right;">
+    <div id="birthRegistration-page"  class="form-submit" style="margin-top:15px;float:right;">
         <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
     </div>
 
