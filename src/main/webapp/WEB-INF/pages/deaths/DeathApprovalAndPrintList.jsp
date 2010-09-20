@@ -173,15 +173,21 @@
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
 <thead>
 <tr>
-    <th><s:label name="serial" value="%{getText('serial.label')}"/></th>
+    <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
     <th><s:label name="name" value="%{getText('name.label')}"/></th>
     <th><s:label name="state" value="%{getText('state.label')}"/></th>
-    <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
-    <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
-    <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
-    <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
-    <th><s:label name="veiw" value="%{getText('view.label')}"/></th>
-    <th><s:label name="print" value="%{getText('printCertificete.label')}"/></th>
+    <%--<th><s:label name="edit" value="%{getText('edit.label')}"/></th>--%>
+    <%--<th><s:label name="approve" value="%{getText('approve.label')}"/></th>--%>
+    <%--<th><s:label name="reject" value="%{getText('reject.label')}"/></th>--%>
+    <%--<th><s:label name="delete" value="%{getText('delete.label')}"/></th>--%>
+    <%--<th><s:label name="veiw" value="%{getText('view.label')}"/></th>--%>
+    <%--<th><s:label name="print" value="%{getText('printCertificete.label')}"/></th>--%>
+    <th width="20px"></th>
+    <th width="20px"></th>
+    <th width="20px"></th>
+    <th width="20px"></th>
+    <th width="20px"></th>
+    <th width="20px"></th>
 </tr>
 </thead>
 <tbody>
@@ -241,31 +247,31 @@
                 <s:param name="idUKey" value="idUKey"/>
             </s:url>
 
-            <td align="center" width="60px">
+            <td align="center">
                 <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
                     <img id="editImage" src="<s:url value='/images/edit.png'/>" width="25" height="25"
                          border="none"/></s:a>
             </td>
-            <td align="center" width="60px"><s:a href="%{approveSelected}"
+            <td align="center"><s:a href="%{approveSelected}"
                                                  title="%{getText('approveTooltip.label')}">
                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                      border="none" id="approveImage"/></s:a>
             </td>
-            <td align="center" width="60px"><s:a href="%{rejectSelected}"
+            <td align="center"><s:a href="%{rejectSelected}"
                                                  title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
                                                                                                 src="<s:url value='/images/reject.gif'/>"
                                                                                                 width="25"
                                                                                                 height="25"
                                                                                                 border="none"/></s:a>
             </td>
-            <td align="center" width="60px"><s:a href="%{deleteSelected}"
+            <td align="center"><s:a href="%{deleteSelected}"
                                                  title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
                                                                                                 src="<s:url value='/images/delete.gif'/>"
                                                                                                 width="25"
                                                                                                 height="25"
                                                                                                 border="none"/></s:a>
             </td>
-            <td align="center" width="60px"><s:a href="%{viewSelected}"
+            <td align="center"><s:a href="%{viewSelected}"
                                                  title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
@@ -299,7 +305,7 @@
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
-            <td align="center" width="60px">
+            <td align="center">
                 <s:if test="#request.allowPrintCertificate">
                     <s:a href="%{cetificatePrintUrl}"
                          title="%{getText('printDeathRegistrationTooltip.label')}">
