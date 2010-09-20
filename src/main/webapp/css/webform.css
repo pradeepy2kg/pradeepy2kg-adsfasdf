@@ -1685,3 +1685,7 @@ birth-alteration-table-style01 td{border:none;}
 
 .birth-alteration-minimize-icon{background:url(../images/minimize-icon.jpg) no-repeat ;float:right;width:35px;height:26px;}
 .birth-alteration-maximize-icon{background:url(../images/maximize-icon.jpg) no-repeat ;float:right;width:35px;height:26px;}
+
+#alteration-approval-list-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
+.alteration-approval-list-table{width:98%;border-top:1px solid #000;border-left:1px solid #000;}
+.alteration-approval-list-table td{border-right:1px solid #000;border-bottom:1px solid #000}

@@ -42,7 +42,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
     private List birthAlterationApprovalList;
-    private List birthChangeList;
 
     private User user;
     private Alteration27 alt27;
@@ -51,6 +50,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private DeclarantInfo declarant;
     private Date dateReceived;
     private Long alterationSerialNo;
+    private int[] index;
 
     private ChildInfo child;
     private FatherInfo father;
@@ -219,33 +219,25 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public String birthAlteration() {
         BirthAlteration ba = new BirthAlteration();
-        BitSet bitSet = new BitSet();
-        alt27.setFullNameOfficialLangApproved(false);
-        alt27.setFullNameEnglishApproved(false);
         ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
             //case 2 is used to set alteration52_1
             case 2:
                 alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
-                alt52_1.setApprovalStatuses(bitSet);
                 ba.setAlt52_1(alt52_1);
                 break;
             //case 2 is used to set alteration27A
             case 3:
-                alt27A.setApprovalStatuses(bitSet);
-                //if (!editFatherInfo) alt27A.setFather(null);
-                /*if(! editMarriageInfo) alt27A.setMarriage(null);
-                if(! editMothersNameAfterMarriageInfo) alt27A.setMothersNameAfterMarriage(null);
-                if(! editGrandFatherInfo) alt27A.setGrandFather(null);*/
                 ba.setAlt27A(alt27A);
                 break;
         }
-        logger.debug("value of the idUkey  :{}", idUKey);
+        //set the idUKey of the bdf in alteration as bdId
         ba.setBdId(idUKey);
         ba.setDeclarant(declarant);
         ba.setDateReceived(dateReceived);
         ba.setAlterationSerialNo(alterationSerialNo);
         alterationService.addBirthAlteration(ba, user);
+        logger.debug("Add a new Birth Alteration with Alteration Serial No  :{}", alterationSerialNo);
         return SUCCESS;
     }
 
@@ -312,14 +304,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             alt27 = null;
         }
         birthAlterationApprovalList = new ArrayList();
-        birthChangeList = new ArrayList();
         if (alt27 != null) {
             birthAlterationApprovalList.add(alt27.getChildFullNameOfficialLang());
             birthAlterationApprovalList.add(alt27.getChildFullNameEnglish());
+            sectionOfAct = 1;
             logger.debug("Child full name in English is :{}", alt27.getChildFullNameEnglish());
         }
         if (alt27A != null) {
+            sectionOfAct = 2;
             changesOfAlt27A(bdf);
+        }
+        if (alt52_1 != null) {
+            sectionOfAct = 3;
+            changesOfAlt52_1(bdf);
         }
         initPermission();
         populateBasicLists();
@@ -334,67 +331,54 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         grandFather = alt27A.getGrandFather();
         if (grandFather != null) {
             GrandFatherInfo grandFatherOriginal = bdf.getGrandFather();
-            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_FULLNAME),
-                    grandFatherOriginal.getGrandFatherFullName(), grandFather.getGrandFatherFullName());
-
-            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_NIC_OR_PIN),
+            compareAndAdd(Alteration27A.GRAND_FATHER_FULLNAME, grandFatherOriginal.getGrandFatherFullName(), grandFather.getGrandFatherFullName());
+            compareAndAdd(Alteration27A.GRAND_FATHER_NIC_OR_PIN,
                     grandFatherOriginal.getGrandFatherNICorPIN(), grandFather.getGrandFatherNICorPIN());
-
-            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_BIRTH_YEAR),
-                    grandFatherOriginal.getGrandFatherBirthYear().toString(), grandFather.getGrandFatherBirthYear().toString());
-
-            compareAndAdd(Integer.toString(Alteration27A.GRAND_FATHER_BIRTH_PLACE),
-                    grandFatherOriginal.getGrandFatherBirthPlace(), grandFather.getGrandFatherBirthPlace());
-
-            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_FULLNAME),
+            compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_YEAR, grandFatherOriginal.getGrandFatherBirthYear().toString(), grandFather.getGrandFatherBirthYear().toString());
+            compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_PLACE, grandFatherOriginal.getGrandFatherBirthPlace(), grandFather.getGrandFatherBirthPlace());
+            compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_FULLNAME,
                     grandFatherOriginal.getGreatGrandFatherFullName(), grandFather.getGreatGrandFatherFullName());
-
-            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN),
+            compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN,
                     grandFatherOriginal.getGreatGrandFatherNICorPIN(), grandFather.getGreatGrandFatherNICorPIN());
-
-            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR),
+            compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR,
                     grandFatherOriginal.getGreatGrandFatherBirthYear().toString(), grandFather.getGreatGrandFatherBirthYear().toString());
+            compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE, grandFatherOriginal.getGreatGrandFatherBirthPlace(), grandFather.getGreatGrandFatherBirthPlace());
+            logger.debug("Check and add to approval list all information of {} (GrandFather) of idUKey :{}", grandFather.getGrandFatherFullName(), idUKey);
 
-            compareAndAdd(Integer.toString(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE),
-                    grandFatherOriginal.getGreatGrandFatherBirthPlace(), grandFather.getGreatGrandFatherBirthPlace());
         }
         if (father != null) {
-            compareAndAdd(Integer.toString(Alteration27A.FATHER_FULLNAME), parent.getFatherFullName(), father.getFatherFullName());
-            compareAndAdd(Integer.toString(Alteration27A.FATHER_NIC_OR_PIN), parent.getFatherNICorPIN(), father.getFatherNICorPIN());
+            compareAndAdd(Alteration27A.FATHER_FULLNAME, parent.getFatherFullName(), father.getFatherFullName());
+            compareAndAdd(Alteration27A.FATHER_NIC_OR_PIN, parent.getFatherNICorPIN(), father.getFatherNICorPIN());
+            compareAndAdd(Alteration27A.FATHER_BIRTH_YEAR, parent.getFatherDOB().toString(), father.getFatherDOB().toString());
+            compareAndAdd(Alteration27A.FATHER_BIRTH_PLACE, parent.getFatherPlaceOfBirth(), father.getFatherPlaceOfBirth());
+            //if father country is not null in both ba and bdf
+            if (father.getFatherCountry() != null && parent.getFatherCountry() != null) {
+                compareAndAdd(Alteration27A.FATHER_COUNTRY, parent.getFatherCountry().getSiCountryName(), father.getFatherCountry().getSiCountryName());
+            }
+            //if father country in not null in ba but null in bdf
+            if (father.getFatherCountry() != null && parent.getFatherCountry() == null) {
+                compareAndAdd(Alteration27A.FATHER_COUNTRY, "", father.getFatherCountry().getSiCountryName());
 
-            //compareChanges[0] = Integer.toString(Alteration27A.FATHER_BIRTH_YEAR);
-            // compareChanges[1] = parent.getFatherDOB().toString();
-            //compareChanges[2] = father.getFatherDOB().toString();
-            // if (!compareChanges[2].equals(compareChanges[1])) birthAlterationApprovalList.add(compareChanges);
-            // compareChanges=null;
-            // compareChanges = new String[3];
-            compareAndAdd(Integer.toString(Alteration27A.FATHER_BIRTH_PLACE),
-                    parent.getFatherPlaceOfBirth(), father.getFatherPlaceOfBirth());
-
-
-            // compareChanges[0] = Integer.toString(Alteration27A.FATHER_COUNTRY);
-            //compareChanges[1] = parent.getFatherCountry().getCountryCode();
-            // compareChanges[2] = father.getFatherCountry().getCountryCode();
-            // if (compareChanges[2].equals(compareChanges[1])) birthAlterationApprovalList.add(compareChanges);
-            /*compareChanges=null;
-            compareChanges = new String[3];*/
-            compareAndAdd(Integer.toString(Alteration27A.FATHER_PASSPORT),
-                    parent.getFatherPassportNo(), father.getFatherPassportNo());
-
-            //compareChanges[0] = Integer.toString(Alteration27A.FATHER_RACE);
-            //compareChanges[1] = father.getFatherRace().getEnRaceName();
-            //compareChanges[2] = parent.getFatherRace().getEnRaceName();
-//            compareAndAdd(compareChanges);
+            }
+            //if father country in  null in ba but not null in bdf
+            if (father.getFatherCountry() == null && parent.getFatherCountry() != null) {
+                compareAndAdd(Alteration27A.FATHER_COUNTRY, parent.getFatherCountry().getSiCountryName(), "");
+                logger.debug("Delete the country of the {} child's father  :{}", bdf.getChild().getChildFullNameOfficialLang(),
+                        parent.getFatherCountry().getSiCountryName());
+            }
+            compareAndAdd(Alteration27A.FATHER_PASSPORT, parent.getFatherPassportNo(), father.getFatherPassportNo());
+            if (father.getFatherRace() != null && parent.getFatherRace() != null) {
+                compareAndAdd(Alteration27A.FATHER_RACE, father.getFatherRace().getEnRaceName(), parent.getFatherRace().getEnRaceName());
+            }
+            logger.debug("Check and add to approval list all information of {} (Father) of idUKey :{}", father.getFatherFullName(), idUKey);
         }
         marriage = alt27A.getMarriage();
         MarriageInfo marriageOriginal = bdf.getMarriage();
         if (marriage != null) {
-            compareAndAdd(Integer.toString(Alteration27A.WERE_PARENTS_MARRIED),
-                    marriageOriginal.getParentsMarried().toString(), marriage.getParentsMarried().toString());
-            compareAndAdd(Integer.toString(Alteration27A.PLACE_OF_MARRIAGE),
-                    marriageOriginal.getPlaceOfMarriage(), marriage.getPlaceOfMarriage());
-            compareAndAdd(Integer.toString(Alteration27A.DATE_OF_MARRIAGE),
-                    marriageOriginal.getDateOfMarriage().toString(), marriage.getDateOfMarriage().toString());
+            compareAndAdd(Alteration27A.WERE_PARENTS_MARRIED, marriageOriginal.getParentsMarried().toString(), marriage.getParentsMarried().toString());
+            compareAndAdd(Alteration27A.PLACE_OF_MARRIAGE, marriageOriginal.getPlaceOfMarriage(), marriage.getPlaceOfMarriage());
+            compareAndAdd(Alteration27A.DATE_OF_MARRIAGE, marriageOriginal.getDateOfMarriage().toString(), marriage.getDateOfMarriage().toString());
+            logger.debug("Check and add to all field of Marriage to approval list of idUKey :{}", idUKey);
 
         }
         if (alt27A.getMothersNameAfterMarriage() != null) {
@@ -403,6 +387,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareChanges[0] = parent.getMotherFullName();
             compareChanges[2] = alt27A.getMothersNameAfterMarriage();
             birthAlterationApprovalList.add(compareChanges);
+            logger.debug("Check {} mother name after Marriage if idUKey :{}", compareChanges[0], idUKey);
         }
 
     }
@@ -411,19 +396,14 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         child = bdf.getChild();
         register = bdf.getRegister();
         if (alt52_1.getDateOfBirth() != null)
-            compareAndAdd(Integer.toString(Alteration52_1.DATE_OF_BIRTH)
-                    , alt52_1.getDateOfBirth().toString(), child.getDateOfBirth().toString());
+            compareAndAdd(Alteration52_1.DATE_OF_BIRTH, alt52_1.getDateOfBirth().toString(), child.getDateOfBirth().toString());
         if (alt52_1.getPlaceOfBirth() != null)
-            compareAndAdd(Integer.toString(Alteration52_1.PLACE_OF_BIRTH)
-                    , alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
-        compareAndAdd(Integer.toString(Alteration52_1.PLACE_OF_BIRTH_ENGLISH),
-                alt52_1.getPlaceOfBirthEnglish(), child.getPlaceOfBirthEnglish());
+            compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
+        compareAndAdd(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, alt52_1.getPlaceOfBirthEnglish(), child.getPlaceOfBirthEnglish());
         if (alt52_1.getBirthDivision() != null && register.getBirthDivision() != null)
-            compareAndAdd(Integer.toString(Alteration52_1.BIRTH_DIVISION),
-                    alt52_1.getBirthDivision().getEnDivisionName(), register.getBirthDivision().getEnDivisionName());
+            compareAndAdd(Alteration52_1.BIRTH_DIVISION, alt52_1.getBirthDivision().getEnDivisionName(), register.getBirthDivision().getEnDivisionName());
         if (alt52_1.getChildGender() > 0 && child.getChildGender() > 0)
-            compareAndAdd(Integer.toString(Alteration52_1.GENDER),
-                    Integer.toString(alt52_1.getChildGender()), Integer.toString(child.getChildGender()));
+            compareAndAdd(Alteration52_1.GENDER, Integer.toString(alt52_1.getChildGender()), Integer.toString(child.getChildGender()));
         if (alt52_1.getChildGender() > 0 && child.getChildGender() < 0) {
             String[] compareChanges = new String[3];
             compareChanges[0] = Integer.toString(Alteration52_1.GENDER);
@@ -434,61 +414,75 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         MotherInfo mother = alt52_1.getMother();
         if (mother != null) {
             ParentInfo parent = bdf.getParent();
-            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_FULLNAME),
-                    parent.getMotherFullName(), mother.getMotherFullName());
-            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_BIRTH_YEAR),
-                    parent.getMotherDOB().toString(), mother.getMotherDOB().toString());
-            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_BIRTH_PLACE),
-                    parent.getMotherPlaceOfBirth(), mother.getMotherPlaceOfBirth());
+            compareAndAdd(Alteration52_1.MOTHER_FULLNAME, parent.getMotherFullName(), mother.getMotherFullName());
+            compareAndAdd(Alteration52_1.MOTHER_BIRTH_YEAR, parent.getMotherDOB().toString(), mother.getMotherDOB().toString());
+            compareAndAdd(Alteration52_1.MOTHER_BIRTH_PLACE, parent.getMotherPlaceOfBirth(), mother.getMotherPlaceOfBirth());
             //if mother country is not null in bdf and ba
             if (mother.getMotherCountry() != null && parent.getMotherCountry() != null) {
-                compareAndAdd(Integer.toString(Alteration52_1.MOTHER_COUNTRY)
+                compareAndAdd(Alteration52_1.MOTHER_COUNTRY
                         , countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), language),
                         countryDAO.getNameByPK(mother.getMotherCountry().getCountryId(), language));
             }
             //todo if mother country is not null in bdf but null in ba
-            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_PASSPORT),
-                    parent.getMotherPassportNo(), mother.getMotherPassportNo());
+            compareAndAdd(Alteration52_1.MOTHER_PASSPORT, parent.getMotherPassportNo(), mother.getMotherPassportNo());
             //if mother race is not null in both bdf and ba
             if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
-                compareAndAdd(Integer.toString(Alteration52_1.MOTHER_RACE),
-                        raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
+                compareAndAdd(Alteration52_1.MOTHER_RACE, raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
                         raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
             }
-            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_AGE_AT_BIRTH),
-                    parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
-            compareAndAdd(Integer.toString(Alteration52_1.MOTHER_ADDRESS), parent.getMotherAddress(), mother.getMotherAddress());
+            compareAndAdd(Alteration52_1.MOTHER_AGE_AT_BIRTH, parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
+            compareAndAdd(Alteration52_1.MOTHER_ADDRESS, parent.getMotherAddress(), mother.getMotherAddress());
 
             //compare the informant information
             informant = alt52_1.getInformant();
             if (informant != null) {
                 InformantInfo informantOriginal = bdf.getInformant();
-                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_TYPE)
-                        , informantOriginal.getInformantType().name(), informant.getInformantType().name());
-
-                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_NIC_OR_PIN),
-                        informantOriginal.getInformantNICorPIN(), informant.getInformantNICorPIN());
-
-                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_NAME),
-                        informantOriginal.getInformantName(), informant.getInformantName());
-
-                compareAndAdd(Integer.toString(Alteration52_1.INFORMANT_ADDRESS),
-                        informantOriginal.getInformantAddress(), informant.getInformantAddress());
-
+                compareAndAdd(Alteration52_1.INFORMANT_TYPE, informantOriginal.getInformantType().name(), informant.getInformantType().name());
+                compareAndAdd(Alteration52_1.INFORMANT_NIC_OR_PIN, informantOriginal.getInformantNICorPIN(), informant.getInformantNICorPIN());
+                compareAndAdd(Alteration52_1.INFORMANT_NAME, informantOriginal.getInformantName(), informant.getInformantName());
+                compareAndAdd(Alteration52_1.INFORMANT_ADDRESS, informantOriginal.getInformantAddress(), informant.getInformantAddress());
             }
 
 
         }
     }
 
-    private void compareAndAdd(String index, String bdfName, String baName) {
+    private void compareAndAdd(int index, String bdfName, String baName) {
         String[] compareChanges = new String[3];
-        compareChanges[0] = index;
+        compareChanges[0] = Integer.toString(index);
         compareChanges[1] = bdfName;
         compareChanges[2] = baName;
         if (!compareChanges[2].equals(compareChanges[1])) {
             birthAlterationApprovalList.add(compareChanges);
         }
+    }
+
+    public String alterationApproval() {
+        BirthAlteration ba = alterationService.getById(idUKey, user);
+        boolean isAct27A = false;
+        Hashtable approvalsBitSet = new Hashtable();
+        if (sectionOfAct == 2) {
+            isAct27A = true;
+            int check = 0;
+            for (int i = 1; i < WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A; i++) {
+                if (check < index.length) {
+                    if (i == index[check]) {
+                        //if a field is approved bit set to true
+                        approvalsBitSet.put(i, true);
+                        check++;
+                    } else {
+                        approvalsBitSet.put(i, false);
+                    }
+                } else {
+                    approvalsBitSet.put(i, false);
+                }
+            }
+            logger.debug("Change The alt27A bit set of the Birth Alteration idUKey :{}", idUKey);
+        }
+        logger.debug("length of the apprrovals list is  :{}", approvalsBitSet.size());
+        alterationService.approveBirthAlteration(ba, isAct27A, approvalsBitSet, user);
+        ba = alterationService.getById(idUKey, user);
+        return SUCCESS;
     }
 
     private void initPermission() {
@@ -1028,11 +1022,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.father = father;
     }
 
-    public List getBirthChangeList() {
-        return birthChangeList;
+    public int[] getIndex() {
+        return index;
     }
 
-    public void setBirthChangeList(List birthChangeList) {
-        this.birthChangeList = birthChangeList;
+    public void setIndex(int[] index) {
+        this.index = index;
     }
 }
