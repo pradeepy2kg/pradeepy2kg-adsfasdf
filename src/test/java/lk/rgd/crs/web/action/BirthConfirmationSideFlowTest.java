@@ -117,7 +117,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(2010012330 + i));
+            register.setBdfSerialNo(new Long(2010012330 + i));               
             register.setPreferredLanguage("si");
             //birth division
             register.setBirthDivision(colomboBDDivision);

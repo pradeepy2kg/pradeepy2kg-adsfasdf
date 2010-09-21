@@ -228,7 +228,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 break;
             //case 2 is used to set alteration27A
             case 3:
-                ba.setAlt27A(alt27A);
+                ba.setAlt27A(alt27A); 
                 break;
         }
         //set the idUKey of the bdf in alteration as bdId
