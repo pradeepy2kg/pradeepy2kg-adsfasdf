@@ -222,16 +222,22 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
             //case 2 is used to set alteration52_1
+            case 1:
+                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27));
+                break;
             case 2:
+                alt52_1.setMother(null);
                 alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
                 ba.setAlt52_1(alt52_1);
+                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
                 break;
             //case 2 is used to set alteration27A
             case 3:
-                ba.setAlt27A(alt27A); 
+                ba.setAlt27A(alt27A);
+                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
                 break;
         }
-        //set the idUKey of the bdf in alteration as bdId
+        ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         ba.setBdId(idUKey);
         ba.setDeclarant(declarant);
         ba.setDateReceived(dateReceived);
@@ -305,16 +311,20 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         }
         birthAlterationApprovalList = new ArrayList();
         if (alt27 != null) {
-            birthAlterationApprovalList.add(alt27.getChildFullNameOfficialLang());
-            birthAlterationApprovalList.add(alt27.getChildFullNameEnglish());
+            logger.debug("loading birth alteration record of alt27 of idUKey  :{}", ba.getIdUKey());
+            compareAndAdd(Alteration27.CHILD_FULL_NAME_OFFICIAL_LANG, bdf.getChild().getChildFullNameOfficialLang(),
+                    alt27.getChildFullNameOfficialLang());
+            compareAndAdd(Alteration27.CHILD_FULL_NAME_ENGLISH, bdf.getChild().getChildFullNameEnglish(), alt27.getChildFullNameEnglish());
             sectionOfAct = 1;
             logger.debug("Child full name in English is :{}", alt27.getChildFullNameEnglish());
         }
         if (alt27A != null) {
+            logger.debug("loading birth alteration record of alt27A of idUKey  :{}", ba.getIdUKey());
             sectionOfAct = 2;
             changesOfAlt27A(bdf);
         }
         if (alt52_1 != null) {
+            logger.debug("loading birth alteration record of alt52_1 of idUKey  :{}", ba.getIdUKey());
             sectionOfAct = 3;
             changesOfAlt52_1(bdf);
         }
@@ -432,19 +442,18 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             }
             compareAndAdd(Alteration52_1.MOTHER_AGE_AT_BIRTH, parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
             compareAndAdd(Alteration52_1.MOTHER_ADDRESS, parent.getMotherAddress(), mother.getMotherAddress());
-
-            //compare the informant information
-            informant = alt52_1.getInformant();
-            if (informant != null) {
-                InformantInfo informantOriginal = bdf.getInformant();
-                compareAndAdd(Alteration52_1.INFORMANT_TYPE, informantOriginal.getInformantType().name(), informant.getInformantType().name());
-                compareAndAdd(Alteration52_1.INFORMANT_NIC_OR_PIN, informantOriginal.getInformantNICorPIN(), informant.getInformantNICorPIN());
-                compareAndAdd(Alteration52_1.INFORMANT_NAME, informantOriginal.getInformantName(), informant.getInformantName());
-                compareAndAdd(Alteration52_1.INFORMANT_ADDRESS, informantOriginal.getInformantAddress(), informant.getInformantAddress());
-            }
-
-
         }
+        //compare the informant information     
+        informant = alt52_1.getInformant();
+        if (informant != null) {
+            InformantInfo informantOriginal = bdf.getInformant();
+            compareAndAdd(Alteration52_1.INFORMANT_TYPE, informantOriginal.getInformantType().name(), informant.getInformantType().name());
+            compareAndAdd(Alteration52_1.INFORMANT_NIC_OR_PIN, informantOriginal.getInformantNICorPIN(), informant.getInformantNICorPIN());
+            compareAndAdd(Alteration52_1.INFORMANT_NAME, informantOriginal.getInformantName(), informant.getInformantName());
+            compareAndAdd(Alteration52_1.INFORMANT_ADDRESS, informantOriginal.getInformantAddress(), informant.getInformantAddress());
+        }
+
+
     }
 
     private void compareAndAdd(int index, String bdfName, String baName) {
@@ -452,7 +461,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         compareChanges[0] = Integer.toString(index);
         compareChanges[1] = bdfName;
         compareChanges[2] = baName;
-        if (!compareChanges[2].equals(compareChanges[1])) {
+        if (compareChanges[1] != null && compareChanges != null) {
+            if (!compareChanges[2].equals(compareChanges[1])) {
+                birthAlterationApprovalList.add(compareChanges);
+            }
+        }
+        if ((compareChanges[2] == null && compareChanges[1] != null) ||
+                (compareChanges[2] != null && compareChanges[1] == null)) {
             birthAlterationApprovalList.add(compareChanges);
         }
     }
@@ -460,28 +475,43 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String alterationApproval() {
         BirthAlteration ba = alterationService.getById(idUKey, user);
         boolean isAct27A = false;
+        int lengthOfBitSet;
         Hashtable approvalsBitSet = new Hashtable();
-        if (sectionOfAct == 2) {
-            isAct27A = true;
-            int check = 0;
-            for (int i = 1; i < WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A; i++) {
-                if (check < index.length) {
-                    if (i == index[check]) {
-                        //if a field is approved bit set to true
-                        approvalsBitSet.put(i, true);
-                        check++;
-                    } else {
-                        approvalsBitSet.put(i, false);
-                    }
+        switch (sectionOfAct) {
+            case 1:
+                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT27;
+                logger.debug("Change The alt27 bit set of the Birth Alteration idUKey :{}", idUKey);
+                break;
+            case 2:
+                isAct27A = true;
+                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A;
+                logger.debug("Change The alt27A bit set of the Birth Alteration idUKey :{}", idUKey);
+                break;
+            case 3:
+                isAct27A = false;
+                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1;
+                logger.debug("Change The alt52_1 bit set of the Birth Alteration idUKey :{}", idUKey);
+                break;
+
+        }
+        int check = 0;
+        for (int i = 1; i < WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A; i++) {
+            if (check < index.length) {
+                if (i == index[check]) {
+                    //if a field is approved bit set to true
+                    approvalsBitSet.put(i, true);
+                    check++;
                 } else {
                     approvalsBitSet.put(i, false);
                 }
+            } else {
+                approvalsBitSet.put(i, false);
             }
-            logger.debug("Change The alt27A bit set of the Birth Alteration idUKey :{}", idUKey);
         }
         logger.debug("length of the apprrovals list is  :{}", approvalsBitSet.size());
-        alterationService.approveBirthAlteration(ba, isAct27A, approvalsBitSet, user);
+        alterationService.approveBirthAlteration(ba, approvalsBitSet, user);
         ba = alterationService.getById(idUKey, user);
+        logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
         return SUCCESS;
     }
 

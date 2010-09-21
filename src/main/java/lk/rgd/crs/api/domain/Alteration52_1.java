@@ -75,9 +75,6 @@ public class Alteration52_1 {
     private String natureOfError;
 
     public MotherInfo getMother() {
-        if (mother == null) {
-            return new MotherInfo();
-        }
         return mother;
     }
 

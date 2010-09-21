@@ -47,6 +47,8 @@ public class WebConstants {
     public static final int BIRTH_ALTERATION_APPROVE_ALT27A = 19;
     public static final int BIRTH_ALTERATION_APPROVE_ALT52_1 = 18;
     public static final int BIRTH_ALTERATION_APPROVE_ALT27 = 2;
+    public static final boolean BIRTH_ALTERATION_APPROVE_TRUE = true;
+
 
     public static final String SESSION_UPDATED_USER = "updated_user";
 }
