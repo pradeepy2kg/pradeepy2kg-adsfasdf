@@ -136,13 +136,13 @@
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
-            Serial number
+            Court order number
         </td>
         <td style="text-align:center;"><s:label value="%{#request.adoption.courtOrderNumber}"
                                                 id="courtOrderNumber"/></td>
     </tr>
     <tr>
-        <td>විනිසුරු නම <br/>
+        <td>විනිසුරුගේ  නම <br/>
             Name of the Judge
         </td>
         <td style="text-align: center;"><s:label value="%{#request.adoption.judgeName}" id="judgeName"
@@ -232,7 +232,7 @@
         <tbody>
 
         <tr>
-            <td colspan="2">අයදුම් කරු <br/>
+            <td colspan="2">අයදුම්කරු <br/>
                 Applicant
             </td>
             <td>පියා   </br>
@@ -272,7 +272,7 @@
         </tr>
         <tr>
             <td colspan="6">
-                අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
+                අයදුම්කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
                 <br>
                 தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்
                 <br>
@@ -291,7 +291,7 @@
             </td>
         </tr>
         <td colspan="2">
-            අයදුම් කරුගේ නම
+            අයදුම්කරුගේ නම
             <br>
             Name of the Applicant
         </td>

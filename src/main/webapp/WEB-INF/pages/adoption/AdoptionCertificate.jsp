@@ -8,15 +8,16 @@
         }
 
         td {
-            font-size: 11pt;
+            font-size: 7pt;
         }
     }
+
     #adoption-certificate-form-outer .form-submit {
         margin: 5px 0 15px 0;
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-<s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do" >
+<s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do">
     <s:param name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
     <s:param name="pageNo" value="%{#request.pageNo}"/>
@@ -66,7 +67,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" width="100%" cellspacing="0" style="margin-top:10px;float:left;">
+<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <col width="150px">
     <col width="160px">
     <col width="100px">
@@ -75,7 +76,7 @@
     <col>
     <tbody>
     <tr>
-        <td width="250px" height="80px">දරුකමට හදාගැනීමේ උසාවි නියෝගය <br>
+        <td width="250px" height="80px" rowspan="2">දරුකමට හදාගැනීමේ උසාවි නියෝගය <br>
             in tamil <br>
             Adoption Order Issued by Court
         </td>
@@ -88,8 +89,7 @@
         </td>
     </tr>
     <tr>
-        <td height="80px" width="250px">
-        </td>
+        
         <td width="150px">නියෝග දිනය <br>
             in tamil <br>
             Order Date
@@ -187,93 +187,92 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" width="100%" cellspacing="0" style="margin-top:10px;float:left;>
-    <caption></caption>
-<col width="
-150px">
-<col width="215px">
-<col width="120px">
-<col>
-<tbody>
-<tr>
-    <td width="250px">ලියාපදිංචි කල ස්ථානය<br>
-        *in tamil <br>
-        Place if Registration
-    </td>
-    <td colspan="3">
-        <s:label value=""/>
-    </td>
-    <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
-    </td>
-    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
-</tr>
-<tr>
-    <td width="250px" height="120px">
-        සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
-        சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
-        Name, Signature and Designation of certifying officer
-    </td>
-    <td colspan="5" style="font-size:10pt"><s:label name=""
-                                                    value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.name}"/><br/>
-        <s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.roleId}"/></td>
-</tr>
-<tr>
-    <td width="250px" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
-    </td>
-    <td colspan="3"><s:label value=""/>
-    </td>
+<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+    <col width="250px">
+    <col width="215px">
+    <col width="120px">
+    <col>
+    <col>
+    <tbody>
+    <tr>
+        <td width="250px">ලියාපදිංචි කල ස්ථානය<br>
+            *in tamil <br>
+            Place if Registration
+        </td>
+        <td colspan="3">
+            <s:label value=""/>
+        </td>
+        <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
+        </td>
+        <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
+    </tr>
+    <tr>
+        <td width="250px" height="120px">
+            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
+            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
+            Name, Signature and Designation of certifying officer
+        </td>
+        <td colspan="5" style="font-size:10pt"><s:label name=""
+                                                        value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.name}"/><br/>
+            <s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.roleId}"/></td>
+    </tr>
+    <tr>
+        <td width="250px" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+        </td>
+        <td colspan="3"><s:label value=""/>
+        </td>
 
-    <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
-    </td>
-    <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
-    </td>
-</tr>
-</tbody>
+        <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
+        </td>
+        <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
 <s:if test="#request.adoption.birthCertificateNumber>0 || #request.adoption.birthRegistrationSerial>0">
-<table style="font-size:12pt;text-align:center;width:100%">
-    <tr></tr>
-    <tr>
-        <td>දැනට උප්පැන්න සහතිකයක් ඇත්නම් එහි විස්තර <br/>
-            Birth Certificate information (if available)
-        </td>
-    </tr>
-</table>
+    <table style="font-size:12pt;text-align:center;width:100%">
+        <tr></tr>
+        <tr>
+            <td>දැනට උප්පැන්න සහතිකයක් ඇත්නම් එහි විස්තර <br/>
+                Birth Certificate information (if available)
+            </td>
+        </tr>
+    </table>
 
-<table class="adoption-certificate-existing-certificate-info" cellpadding="0" cellspacing="0" style="width:100%">
-    <tr>
-        <td width="25%">දිස්ත්‍රික්ක <br/>
-            மாவட்டம் <br/>
-            District
-        </td>
-        <td width="25%"><s:label name="" value="%{birthDistrictName}"/></td>
-        <td width="25%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
-            பிரிவு <br/>
-            Divisional Secretariat
-        </td>
-        <td width="25%"><s:label name="" value="%{dsDivisionName}"/></td>
-    </tr>
-    <tr>
-        <td width="25%">ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
-            பிரிவு <br/>
-            Registration Division
-        </td>
-        <td width="25%"><s:label name="" value="%{birthDivisionName}"/></td>
-        <td>දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය<br/>
-            ** in Tamil **<br/>
-            The serial number of the existing Birth Certificate
-        </td>
-        <td width="25%">
-            <s:if test="#request.adoption.birthCertificateNumber>0">
-                <s:label name="" value="%{adoption.birthCertificateNumber}"/>
-            </s:if>
-            <s:elseif test="#request.adoption.birthRegistrationSerial>0">
-                <s:label name="" value="%{adoption.birthRegistrationSerial}"/>
-            </s:elseif>
-        </td>
-    </tr>
-</table>
+    <table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+        <tr>
+            <td width="25%">දිස්ත්‍රික්ක <br/>
+                மாவட்டம் <br/>
+                District
+            </td>
+            <td width="25%"><s:label name="" value="%{birthDistrictName}"/></td>
+            <td width="25%">ප්‍රාදේශීය ලේකම් කොට්ඨාශය<br/>
+                பிரிவு <br/>
+                Divisional Secretariat
+            </td>
+            <td width="25%"><s:label name="" value="%{dsDivisionName}"/></td>
+        </tr>
+        <tr>
+            <td width="25%">ලියාපදිංචි කිරීමේ කොට්ඨාශය<br/>
+                பிரிவு <br/>
+                Registration Division
+            </td>
+            <td width="25%"><s:label name="" value="%{birthDivisionName}"/></td>
+            <td>දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය<br/>
+                ** in Tamil **<br/>
+                The serial number of the existing Birth Certificate
+            </td>
+            <td width="25%">
+                <s:if test="#request.adoption.birthCertificateNumber>0">
+                    <s:label name="" value="%{adoption.birthCertificateNumber}"/>
+                </s:if>
+                <s:elseif test="#request.adoption.birthRegistrationSerial>0">
+                    <s:label name="" value="%{adoption.birthRegistrationSerial}"/>
+                </s:elseif>
+            </td>
+        </tr>
+    </table>
 </s:if>
 <table style="width:100%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
     <tr>
