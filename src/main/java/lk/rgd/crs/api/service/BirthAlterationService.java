@@ -52,14 +52,10 @@ public interface BirthAlterationService {
      * or alteration statement 52_1 by an ARG or higher authority
      *
      * @param ba                 the birth alteration to be approved
-     * @param isAlteration27A    the boolean if true it
-     *                           requested to approve filelds in alteration
-     *                           statement 27A if it is false requested to
-     *                           approve fields in alteration statement 52_1
      * @param fieldsToBeApproved the list of field indexes to be approved
      * @param user               the user initiating the action
      */
-    public void approveBirthAlteration(BirthAlteration ba, boolean isAlteration27A, Hashtable<Integer, Boolean> fieldsToBeApproved, User user);
+    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved, User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement

@@ -64,8 +64,9 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBulkOfAlterationByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.dsdivision").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
+        q.setParameter("status", BirthAlteration.State.PRINTED);
         return q.getResultList();
     }
 
@@ -75,9 +76,10 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public List<BirthAlteration> getBulkOfAlterationByBDDivision(BDDivision BDDivision, int pageNo, int noOfRows) {
         Query q = em.createNamedQuery("filter.alteration.by.bddivision").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
-        logger.debug("get Approval pending list from bdDivision Number is :{}",BDDivision.getDivisionId());
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        logger.debug("get Approval pending list from bdDivision Number is :{}", BDDivision.getDivisionId());
         q.setParameter("bdDivision", BDDivision);
+        q.setParameter("status", BirthAlteration.State.PRINTED);
         return q.getResultList();
     }
 }

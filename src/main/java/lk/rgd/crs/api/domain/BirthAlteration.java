@@ -16,19 +16,33 @@ import java.util.BitSet;
 @NamedQueries({
 
         @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision " +
+                "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision AND ba.status <> :status " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
-/*
-        @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.alt52_1.birthDivision = :bdDivision " +
-                "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),*/
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.approvalStatuses is null " +
+                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :status " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 
 })
 
 public class BirthAlteration {
+
+    public enum State {
+        /**
+         * 0 - A newly entered BDF - can be edited by DEO or ADR
+         */
+        DATA_ENTRY,
+        /**
+         * 1 - An ADR or higher approved ba
+         */
+        FULLY_APPROVED,
+        /**
+         * 2 - A BDF for which the parent confirmation form was printed
+         */
+        PRINTED,
+    }
+
+    @Enumerated
+    private State status;
     /**
      * Contains the approval bit set for each field.
      */
@@ -190,4 +204,13 @@ public class BirthAlteration {
     public void setApprovalStatuses(BitSet approvalStatuses) {
         this.approvalStatuses = approvalStatuses;
     }
+
+    public State getStatus() {
+        return status;
+    }
+
+    public void setStatus(State status) {
+        this.status = status;
+    }
+
 }

@@ -86,7 +86,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveBirthAlteration(BirthAlteration ba, boolean isAlteration27A, Hashtable<Integer, Boolean> fieldsToBeApproved, User user) {
+    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved, User user) {
         logger.debug("Attempt to approve birth alteration record : {} ", ba.getIdUKey());
         validateAccessOfUser(ba, user);
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
@@ -98,30 +98,15 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         }
 
         Enumeration<Integer> fieldList = fieldsToBeApproved.keys();
-        if (isAlteration27A) {
-            while (fieldList.hasMoreElements()) {
-                Integer aKey = fieldList.nextElement();
-                if (fieldsToBeApproved.get(aKey) == true) {
-                    if (ba.getApprovalStatuses().get(aKey) == false) {
-                        logger.debug("setting status as approval for the alteration statement 27A");
-                        ba.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A);
-                    } else {
-                        handleException("Cannot approve alteration according to the alteration statement 27A : " + ba.getIdUKey() +
-                                " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
-                    }
-                }
-            }
-        } else {
-            while (fieldList.hasMoreElements()) {
-                Integer aKey = fieldList.nextElement();
-                if (fieldsToBeApproved.get(aKey) == true) {
-                    if (ba.getApprovalStatuses().get(aKey) == false) {
-                        logger.debug("setting status as approval for the alteration statement 52_1");
-                        ba.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1);
-                    } else {
-                        handleException("Cannot approve alteration according to the alteration statement 52_1 : " + ba.getIdUKey() +
-                                " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
-                    }
+        while (fieldList.hasMoreElements()) {
+            Integer aKey = fieldList.nextElement();
+            if (fieldsToBeApproved.get(aKey) == true) {
+                if (ba.getApprovalStatuses().get(aKey) == false) {
+                    logger.debug("setting status as approval for the alteration statement");
+                    existing.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_TRUE);
+                } else {
+                    handleException("Cannot approve alteration according to the alteration statement  : " + ba.getIdUKey() +
+                            " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
                 }
             }
         }
