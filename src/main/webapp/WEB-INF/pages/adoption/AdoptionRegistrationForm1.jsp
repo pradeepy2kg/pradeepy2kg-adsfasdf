@@ -296,12 +296,12 @@ function enableSerialNumber(mode) {
     </tr>
     <tr>
         <td>නියෝග අංකය<br/>
-            Serial number
+            Court order number
         </td>
         <td style="text-align:center;"><s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber"/></td>
     </tr>
     <tr>
-        <td>විනිසුරු නම <br/>
+        <td>විනිසුරුගේ  නම <br/>
             Name of the Judge
         </td>
         <td style="text-align:center;"><s:textfield name="adoption.judgeName" id="judgeName"/></td>

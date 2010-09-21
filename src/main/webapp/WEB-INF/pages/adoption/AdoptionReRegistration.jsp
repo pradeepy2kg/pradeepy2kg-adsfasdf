@@ -13,7 +13,7 @@
         }
 
         td {
-            font-size: 8pt;
+            font-size: 9pt;
         }
     }
 
@@ -57,7 +57,8 @@
     <s:a href="%{markAsPrint}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>&nbsp;&nbsp;&nbsp;&nbsp;
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.label')}"/></s:a>
 </div>
-<div id="adoption-registration-form-outer">
+<div id="adoption-registration-form-outer" >
+<div id="page1" style="page-break-after:always;">
 <table class="adoption-reg-form-header-table">
     <tr>
         <td align="center" style="font-size:12pt">
@@ -76,7 +77,7 @@
     <tr height="50px" style="text-align:left;font-size:10pt">
         <td><s:label value="%{adoption.applicantName}"/></td>
     </tr>
-    <tr height="100px" style="text-align:left;font-size:10pt">
+    <tr height="30px" style="text-align:left;font-size:10pt">
         <td><s:label value="%{adoption.applicantAddress}"/></td>
     </tr>
     <tr>
@@ -105,7 +106,7 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>දරුකමට හදගේනීමේ උසාවි නියෝගය <br/>
+        <td>දරුකමට හදාගැනීමේ  උසාවි නියෝගය <br/>
             Particulars of Adoption Order
         </td>
     </tr>
@@ -127,12 +128,12 @@
     </tr>
     <tr>
         <td height="40px">නියෝග අංකය <br/>
-            Serial number
+            Court order number
         </td>
         <td><s:label name="" value="%{adoption.courtOrderNumber}"/>
     </tr>
     <tr>
-        <td height="100px">විනිසුරු නම <br/>
+        <td height="100px">විනිසුරුගේ  නම <br/>
             Name of the Judge
         </td>
         <td colspan="4"><s:label name="" value="%{adoption.judgeName}"/>
@@ -143,7 +144,7 @@
 <table>
     <tr>
         <td height="100px">
-            <%--Body of the letter--%>
+            Body of the letter
         </td>
     </tr>
     <tr>
@@ -155,11 +156,12 @@
         </td>
     </tr>
     <tr>
-        <td height="100px">
-            <%--Trailer of the letter--%>
+        <td height="20px">
+            Trailer of the letter
         </td>
     </tr>
 </table>
+</div>
 <table class="adoption-reg-form-header-table">
     <tr>
         <td>රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව <br/>
@@ -222,7 +224,7 @@
         <td></td>
     </tr>
     <tr>
-        <td colspan="3" height="40px">PIN අංකය හෝ NIC අංකය<br/>
+        <td colspan="3" height="40px">PIN අංකය NIC අංකය<br/>
             PIN or NIC
         </td>
         <td colspan="3"></td>
@@ -354,7 +356,6 @@
     </tr>
     </tbody>
 </table>
-
 </div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>

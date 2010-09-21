@@ -1,6 +1,6 @@
+<%-- @author Duminda Dharmakeerthi. --%>
 <%@ page import="java.util.Date" %>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
-<%-- @author Duminda Dharmakeerthi. --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">

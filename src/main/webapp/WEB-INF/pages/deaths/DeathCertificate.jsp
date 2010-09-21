@@ -143,7 +143,7 @@
     </tr>
     <tr>
         <td colspan="1">මරණය සිදුවූ ස්ථානය<br>*in tamil<br>Place of death</td>
-        <td colspan="7"><s:label name="" value="%{death.placeOfDeathst}"/>
+        <td colspan="7"><s:label name="" value="%{death.placeOfDeath}"/>
             <br><s:label name="" value="%{death.placeOfDeathInEnglish}"/></td>
     </tr>
     <tr>
