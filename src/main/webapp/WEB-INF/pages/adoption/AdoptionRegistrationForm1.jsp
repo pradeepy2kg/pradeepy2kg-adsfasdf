@@ -58,7 +58,7 @@ $(function() {
 $(function() {
     $('select#birthDistrictId').bind('change', function(evt1) {
         var id = $("select#birthDistrictId").attr("value");
-        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+        $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:3},
                 function(data) {
                     var options1 = '';
                     var ds = data.dsDivisionList;
@@ -595,8 +595,8 @@ function enableSerialNumber(mode) {
         <td colspan="1">දිස්ත්‍රික්කය <br/>
             District
         </td>
-        <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="birthDistrictId" cssStyle="width:280px;"/>
+        <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="%{birthDistrictId}"
+                                  cssStyle="width:280px;"/>
         </td>
     </tr>
     <tr>
@@ -604,7 +604,7 @@ function enableSerialNumber(mode) {
             Divisional Secretariat
         </td>
         <td colspan="5">
-            <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+            <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"
                       cssStyle="float:left;  width:280px;"/>
         </td>
     </tr>
