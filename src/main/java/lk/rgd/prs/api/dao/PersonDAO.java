@@ -1,5 +1,7 @@
 package lk.rgd.prs.api.dao;
 
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 
 import java.util.List;
@@ -22,6 +24,30 @@ public interface PersonDAO {
      * @param person the Person to be updated. Note, the PRS does not allow deletion of rows
      */
     public void updatePerson(Person person);
+
+    /**
+     * Add a Marriage to the PRS
+     * @param m the Marriage to be added
+     */
+    public void addMarriage(Marriage m);
+
+    /**
+     * Update a Marriage on the PRS
+     * @param m the Marriage to be updated
+     */
+    public void updateMarriage(Marriage m);
+
+    /**
+     * Add an Address to the PRS
+     * @param a the Address to be added
+     */
+    public void addAddress(Address a);
+
+    /**
+     * Update an Address to the PRS
+     * @param a the Address to be added
+     */
+    public void updateAddress(Address a);
 
     /**
      * Return the Person object for the person with the given unique key

@@ -80,6 +80,7 @@ public class UserLocation {
 
     public void setUser(User user) {
         this.user = user;
+        this.userId = user.getUserId();
     }
 
     public Location getLocation() {
@@ -88,6 +89,7 @@ public class UserLocation {
 
     public void setLocation(Location location) {
         this.location = location;
+        this.locationId = location.getLocationUKey();
     }
 
     public BaseLifeCycleInfo getLifeCycleInfo() {

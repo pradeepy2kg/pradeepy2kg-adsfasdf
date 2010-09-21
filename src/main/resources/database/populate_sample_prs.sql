@@ -7,11 +7,11 @@ INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishL
 INSERT INTO PRS.PERSON(civilStatus, dateOfBirth, dateOfDeath, fullNameInEnglishLanguage, fullNameInOfficialLanguage, gender, initialsInEnglish, initialsInOfficialLanguage, lastNameInEnglish, lastNameInOfficialLanguage, lifeStatus, nic, pin, placeOfBirth, preferredLanguage, lastAddressUKey, lastMarriageUKey)
   VALUES(NULL, '1981-03-21', NULL, 'KRISHANTHA SUBASINGHE', 'ක්‍රිෂාන්ත සුබසිංහ', 0, 'K.', 'ක්‍ර.', 'SUBASINGHE', 'සුබසිංහ', NULL, '813112362V', 813112362, 'මාතර', 'si', NULL, NULL)
 ;
-INSERT INTO PRS.ADDRESS (ADDRESSUKEY, LINE1, CITY, PERSONUKEY) VALUES(1, '65 C මල්වත්ත පාර','කොට්ටාව', 2)
+INSERT INTO PRS.ADDRESS (LINE1, CITY, PERSONUKEY) VALUES('65 C මල්වත්ත පාර','කොට්ටාව', 2)
 ;
 UPDATE PRS.PERSON SET lastAddressUKey = 1 WHERE personUKey = 2
 ;
-INSERT INTO PRS.ADDRESS (ADDRESSUKEY, LINE1, CITY, PERSONUKEY) VALUES(2, '32 වේවා පාර','කොට්ටාව', 3)
+INSERT INTO PRS.ADDRESS (LINE1, CITY, PERSONUKEY) VALUES('32 වේවා පාර','කොට්ටාව', 3)
 ;
 UPDATE PRS.PERSON SET lastAddressUKey = 2 WHERE personUKey = 3
 ;

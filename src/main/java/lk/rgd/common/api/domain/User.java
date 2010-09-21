@@ -149,7 +149,7 @@ public class User implements Serializable {
     /**
      * The Locations assigned to this user
      */
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserLocation> locations = new ArrayList<UserLocation>();
 
     @Column

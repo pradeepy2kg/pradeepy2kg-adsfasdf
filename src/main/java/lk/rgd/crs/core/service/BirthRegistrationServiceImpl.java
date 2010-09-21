@@ -1388,8 +1388,9 @@ public class BirthRegistrationServiceImpl implements
         // check mother and father
         ParentInfo parent = bdf.getParent();
         if (bdf.getParent() != null) {
-            //Person mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
-            //processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(), mother, bdf.getMarriage());
+            Person mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
+            processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(),
+                mother, bdf.getMarriage(), bdf.getInformant());
         }
 
         // generate a PIN number
@@ -1446,12 +1447,20 @@ public class BirthRegistrationServiceImpl implements
                 mother.setNic(motherNICorPIN);
                 mother.setStatus(Person.Status.UNVERIFIED);
                 mother.setLifeStatus(Person.LifeStatus.ALIVE);
+                mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
+
+                // add mother to PRS
+                ecivil.addPerson(mother, user);
 
                 if (parent.getMotherAddress() != null) {
-                    mother.specifyAddress(new Address(parent.getMotherAddress()));
+                    final Address address = new Address(parent.getMotherAddress());
+                    mother.specifyAddress(address);
+                    // save new address to PRS
+                    ecivil.addAddress(address, user);
+                    // update mother to reflect new address
+                    ecivil.updatePerson(mother, user);
                 }
 
-                ecivil.addPerson(mother, user);
                 logger.debug("Added an unverified record for the mother into the PRS : {}", mother.getPersonUKey());
             }
 
@@ -1464,7 +1473,7 @@ public class BirthRegistrationServiceImpl implements
     }
 
     private void processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
-        Person mother, MarriageInfo marriage) {
+        Person mother, MarriageInfo marriage, InformantInfo informant) {
 
         String fatherNICorPIN = parent.getFatherNICorPIN();
         if (fatherNICorPIN != null) {
@@ -1496,14 +1505,19 @@ public class BirthRegistrationServiceImpl implements
                 father.setStatus(Person.Status.UNVERIFIED);
                 father.setLifeStatus(Person.LifeStatus.ALIVE);
                 father.setNic(fatherNICorPIN);
+                father.setPlaceOfBirth(parent.getFatherPlaceOfBirth());
 
+                // add father to the PRS
                 ecivil.addPerson(father, user);
-                logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
-            }
 
-            // set father child relationship
-            if (father != null) {
-                person.setFather(father);
+                if (InformantInfo.InformantType.FATHER.equals(informant.getInformantType())) {
+                    final Address address = new Address(informant.getInformantAddress());
+                    father.specifyAddress(address);
+                    // add new address to the PRS
+                    ecivil.addAddress(address, user);
+                    // update father to reflect new address
+                    ecivil.updatePerson(father, user);
+                }
 
                 if (mother != null && marriage.getDateOfMarriage() != null) {
                     Marriage m = new Marriage();
@@ -1512,13 +1526,32 @@ public class BirthRegistrationServiceImpl implements
                     m.setDateOfMarriage(marriage.getDateOfMarriage());
                     m.setPlaceOfMarriage(marriage.getPlaceOfMarriage());
                     m.setState(Marriage.State.MARRIED);
+                    m.setPreferredLanguage(prefLanguage);
                     father.specifyMarriage(m);
                     mother.specifyMarriage(m);
 
-                    if (mother.getLastAddress() != null) {
-                        father.specifyAddress(mother.getLastAddress());
+                    // add marriage to the PRS
+                    ecivil.addMarriage(m, user);
+
+                    // if informant is not father, and we have mothers address, assume that as the
+                    // unverified address of father due to marriage
+                    if (!InformantInfo.InformantType.FATHER.equals(informant.getInformantType()) &&
+                        parent.getMotherAddress() != null) {
+                        final Address address = new Address(parent.getMotherAddress());
+                        father.specifyAddress(address);
+                        // add new address
+                        ecivil.addAddress(address, user);
+                        // update father to reflect new address
+                        ecivil.updatePerson(father, user);
                     }
                 }
+
+                logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
+            }
+
+            if (father != null) {
+                // set father child relationship
+                person.setFather(father);
             }
         }
     }

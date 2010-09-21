@@ -150,7 +150,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String deleteUser() {
         populate();
-        user = service.getUsersByID(userId);
+        user = service.getUserByID(userId);
         service.deleteUser(user, (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("Deleting  user {} is successoption body.full", user.getUserId());
         usersList = service.getAllUsers();
@@ -163,7 +163,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         populateDynamicLists("en");
         if (userId != null) {
-            user = service.getUsersByID(getUserId());
+            user = service.getUserByID(getUserId());
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
             currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
             logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());

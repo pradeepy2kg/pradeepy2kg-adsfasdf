@@ -7,6 +7,8 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.PRSRuntimeException;
 import lk.rgd.prs.api.dao.PersonDAO;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import lk.rgd.prs.api.service.PINGenerator;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -84,6 +86,66 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             logger.error("User : " + user.getUserId() + " is not allowed to lookup persons on the PRS by keys (uKey)");
             throw new PRSRuntimeException("User : " + user.getUserId() +
                 " is not allowed to lookup entries on the PRS by keys (uKey)", ErrorCodes.PRS_LOOKUP_BY_KEYS_DENIED);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addMarriage(Marriage marriage, User user) {
+
+        if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+            personDao.addMarriage(marriage);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to add marriages to the PRS");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to add entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateMarriage(Marriage marriage, User user) {
+
+        if (user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
+            personDao.addMarriage(marriage);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to update marriages to the PRS");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to update entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addAddress(Address address, User user) {
+
+        if (user.isAuthorized(Permission.PRS_ADD_PERSON)) {
+            personDao.addAddress(address);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to add addresses to the PRS");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to add entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateAddress(Address address, User user) {
+
+        if (user.isAuthorized(Permission.PRS_EDIT_PERSON)) {
+            personDao.updateAddress(address);
+        } else {
+            logger.error("User : " + user.getUserId() + " is not allowed to update addresses to the PRS");
+            throw new PRSRuntimeException("User : " + user.getUserId() +
+                " is not allowed to update entries to the PRS", ErrorCodes.PRS_ADD_RECORD_DENIED);
         }
     }
 

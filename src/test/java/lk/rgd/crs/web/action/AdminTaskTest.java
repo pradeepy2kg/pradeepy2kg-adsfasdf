@@ -205,7 +205,7 @@ public class AdminTaskTest extends CustomStrutsTestCase {
         initAndExucute("/management/eprInitUserCreation.do", session);
         session = userManagementAction.getSession();
         assertEquals("Action erros for Adoption Declaration ", 0, userManagementAction.getActionErrors().size());
-        assertNotNull("Added new user",userManager.getUsersByID("Malith"));
+        assertNotNull("Added new user",userManager.getUserByID("Malith"));
         assertNotNull("Added new user",userManager.getUsersByNameMatch("Malith"));
 
     }
