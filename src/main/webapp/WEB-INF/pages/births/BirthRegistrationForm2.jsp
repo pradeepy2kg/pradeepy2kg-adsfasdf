@@ -321,7 +321,7 @@ function commonTags() {
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="father_NIC_X" onclick="javascript:addXorV('father_pinOrNic','X','error9')">
             <br>
-            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN"/>
+            <s:textfield id="father_pinOrNic" name="parent.fatherNICorPIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;" id="father_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
@@ -355,7 +355,7 @@ function commonTags() {
             திகதி <br>Date of Birth</label></td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:180px;font-size:10px"/><br>
-            <s:textfield name="parent.fatherDOB" id="fatherDatePicker"/>
+            <s:textfield name="parent.fatherDOB" id="fatherDatePicker" maxLength="10"/>
         </td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                    value="#i+1"/>)උපන්
@@ -411,7 +411,7 @@ function commonTags() {
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="mother_NIC_X" onclick="javascript:addXorV('mother_pinOrNic','X','error9')">
             <br>
-            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN"/>
+            <s:textfield id="mother_pinOrNic" name="parent.motherNICorPIN" maxLength="10"/>
             <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
@@ -446,7 +446,7 @@ function commonTags() {
         <td colspan="3">
                 <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:140px;font-size:10px"/><br>
-                <s:textfield name="parent.motherDOB" id="motherDatePicker"/>
+                <s:textfield name="parent.motherDOB" id="motherDatePicker" maxLength="10"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
@@ -464,7 +464,7 @@ function commonTags() {
         </label>
         </td>
         <td class="passport">
-            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth" onfocus="motherAgeBirth();"/>
+            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth" onfocus="motherAgeBirth();" maxLength="2"/>
             <div id="motherAgeAtChildBirth" style="color:red;"/>
         </td>
 
@@ -538,7 +538,7 @@ function commonTags() {
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"/>
+            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;" maxLength="10"/>
         </td>
     </tr>
     <tr>
@@ -548,7 +548,7 @@ function commonTags() {
             தொடர்பு இலக்க தகவல் <br>Contact Details of the
             Mother</label></td>
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
-        <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo"/></td>
+        <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="15"/></td>
         <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
         <td colspan="3" class="passport"><s:textfield name="parent.motherEmail" id="motherEmail"
                                                       cssStyle="text-transform:none;"/></td>

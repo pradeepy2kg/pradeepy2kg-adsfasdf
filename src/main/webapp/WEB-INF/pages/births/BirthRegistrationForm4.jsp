@@ -153,7 +153,7 @@
                     <img src="<s:url value="/images/alphabet-X.gif" />"
                          id="notifying_authority_NIC_X" onclick="javascript:addXorV('notifyingAuthorityPIN','X','error5')">
                     <br>
-                    <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"/>
+                    <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN" maxLength="10"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
                 </td>
@@ -179,7 +179,7 @@
                 <td colspan="4">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:77%;font-size:10px"/><br>
                     <s:textfield name="notifyingAuthority.notifyingAuthoritySignDate" id="modifiedDatePicker"
-                                 cssStyle="margin-right:60px;"/>
+                                 cssStyle="margin-right:60px;" maxLength="10"/>
                 </td>
             </tr>
             </tbody>

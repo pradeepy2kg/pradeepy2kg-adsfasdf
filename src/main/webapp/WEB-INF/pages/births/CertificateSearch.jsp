@@ -168,7 +168,7 @@
                     <td>
                             <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                             <s:textfield id="dateOfSubmission"
-                                         name="certSearch.certificate.dateOfSubmission"></s:textfield>
+                                         name="certSearch.certificate.dateOfSubmission" maxLength="10"/>
                 </tr>
             </table>
         </td>
@@ -257,7 +257,7 @@
                 name="certSearch.search.gender" headerKey="0" headerValue="%{getText('select_gender.label')}"
                 cssStyle="width:190px; margin-left:5px;"/></td>
         <td><label>අවශ‍ය පිටපත් ගණන<br>* Tamil<br>No. of Copies required</label></td>
-        <td><s:textfield name="certSearch.certificate.noOfCopies" id="noOfCopies"/></td>
+        <td><s:textfield name="certSearch.certificate.noOfCopies" id="noOfCopies" maxLength="2"/></td>
     </tr>
     <tr>
         <td class="font-9">
@@ -304,7 +304,7 @@
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
-            <s:textfield id="dateOdEvent" name="certSearch.search.dateOfEvent"></s:textfield>
+            <s:textfield id="dateOdEvent" name="certSearch.search.dateOfEvent" maxLength="10"/>
         </td>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
@@ -326,7 +326,7 @@
                 <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
             </s:elseif>
         </td>
-        <td colspan="6"><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo"/></td>
+        <td colspan="6"><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
     </tr>
     <tr>
         <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's
@@ -359,14 +359,14 @@
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:80px;font-size:10px"/><br>
             <s:textfield id="datePicker" name="certSearch.search.certificateIssueDate"
-                         cssStyle="float:left;"></s:textfield>
+                         cssStyle="float:left;" maxLength="10"/>
         </td>
     </tr>
     <tr>
         <td class="font-9"><label>
             (8) මෙහි ඇලවූ මුද්දරවල වටිනාකම<br>*Tamil<br>Value of stamps affixed</label>
         </td>
-        <td colspan="3"><s:textfield name="certSearch.certificate.stampCharges" id="stampCharges"/></td>
+        <td colspan="3"><s:textfield name="certSearch.certificate.stampCharges" id="stampCharges" maxLength="5"/></td>
     </tr>
     </tbody>
 </table>

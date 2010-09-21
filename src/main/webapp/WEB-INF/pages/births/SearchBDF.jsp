@@ -104,7 +104,7 @@
                 <tr>
                     <td><s:label name="declarationSearialNumber"
                                  value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td><s:textfield name="serialNo" id="bdfSerialNoId1"/></td>
+                    <td><s:textfield name="serialNo" id="bdfSerialNoId1" maxLength="10"/></td>
                     <td><s:label name="district" value="%{getText('district.label')}"/></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"

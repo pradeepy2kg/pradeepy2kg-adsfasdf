@@ -150,16 +150,16 @@
             </td>
             <td></td>
             <td><s:label value="%{getText('serial.label')}"/></td>
-            <td><s:textfield value="" name="bdId" cssStyle="width:232px;" id="bdfSerialNoId"/></td>
+            <td><s:textfield value="" name="bdId" cssStyle="width:232px;" id="bdfSerialNoId" maxLength="10"/></td>
         </tr>
         <tr>
             <td align="left">
                 <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
-                <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px"/>
+                <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px" maxLength="10"/>
             </td>
             <td align="right">
                 <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
-                <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px"/>
+                <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px" maxLength="10"/>
             </td>
             <td></td>
             <td></td>

@@ -411,7 +411,7 @@ function initPage() {
             <td colspan="2">
                     <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
                     <s:textfield name="marriage.dateOfMarriage" id="marriageDatePicker"
-                                 cssStyle="float:left;margin-left:5px;"/>
+                                 cssStyle="float:left;margin-left:5px;" maxLength="10"/>
         </tr>
         <tr id="motherFatherSign">
             <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
@@ -464,7 +464,7 @@ function initPage() {
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="grandFather_NIC_X" onclick="javascript:addXorV('grandFatherNICorPIN','X','error20')">
                 <br>
-                <s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN"/>
+                <s:textfield id="grandFatherNICorPIN" name="grandFather.grandFatherNICorPIN" maxLength="10"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                      id="grandFather_lookup"/>
             </td>
@@ -478,7 +478,7 @@ function initPage() {
             <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
             <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br>
                 <s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"
-                             onclick="javascript:generateGrandFatherBirthYear('grandFatherNICorPIN','grandFatherBirthYear');"/>
+                             onclick="javascript:generateGrandFatherBirthYear('grandFatherNICorPIN','grandFatherBirthYear');" maxLength="4"/>
             </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace"
@@ -504,7 +504,7 @@ function initPage() {
                 <img src="<s:url value="/images/alphabet-X.gif" />"
                      id="greatGrandFather_NIC_X" onclick="javascript:addXorV('greatGrandFatherNICorPIN','X','error20')">
                 <br>
-                <s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN"/>
+                <s:textfield id="greatGrandFatherNICorPIN" name="grandFather.greatGrandFatherNICorPIN" maxLength="10"/>
                 <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                      id="greatGrandFather_lookup"/>
             </td>
@@ -518,7 +518,7 @@ function initPage() {
 
             <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
             <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield
-                    name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear"/></td>
+                    name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear" maxLength="4"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td><s:textfield name="grandFather.greatGrandFatherBirthPlace"
                              id="greatGrandFatherBirthPlace" cssStyle="width:93%;"/></td>
@@ -637,7 +637,7 @@ function initPage() {
             <img src="<s:url value="/images/alphabet-X.gif" />"
                  id="informant_NIC_X" onclick="javascript:addXorV('informantNICorPIN','X','error20')">
             <br>
-            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN"/>
+            <s:textfield name="informant.informantNICorPIN" id="informantNICorPIN" maxLength="10"/>
             <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                  id="informant_lookup"/>
         </td>
@@ -660,7 +660,7 @@ function initPage() {
         </td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
         <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"
-                         cssStyle="width:95%;"/></td>
+                         cssStyle="width:95%;" maxLength="15"/></td>
         <td><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
         <td><s:textfield name="informant.informantEmail" id="informantEmail"
                          cssStyle="width:95%;text-transform:none;"/></td>
@@ -670,7 +670,7 @@ function initPage() {
         <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
         <td colspan="4">
                 <s:label value="YYYY-MM-DD" cssStyle="float:right;margin-right:190px;font-size:10px"/><br>
-                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;"/>
+                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;" maxLength="10"/>
     </tr>
     </tbody>
 </table>
