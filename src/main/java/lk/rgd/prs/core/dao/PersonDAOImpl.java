@@ -2,6 +2,8 @@ package lk.rgd.prs.core.dao;
 
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.prs.api.dao.PersonDAO;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,26 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
     @Transactional(propagation = Propagation.MANDATORY)
     public void updatePerson(Person person) {
         em.merge(person);
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void addMarriage(Marriage m) {
+        em.persist(m);
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void updateMarriage(Marriage m) {
+        em.merge(m);
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void addAddress(Address a) {
+        em.persist(a);
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void updateAddress(Address a) {
+        em.merge(a);
     }
 
     /**
