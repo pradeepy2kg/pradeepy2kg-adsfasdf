@@ -135,10 +135,6 @@ function validate() {
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error3');
     }
-    domObject = document.getElementById("court");
-    if (isFieldEmpty(domObject)) {
-        isEmpty(domObject, "", 'error1');
-    }
     domObject = document.getElementById("applicantName");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error5');
@@ -643,7 +639,6 @@ function enableSerialNumber(mode) {
 </div>
 </s:form>
 <s:hidden id="error0" value="%{getText('er.label.receivedDate')}"/>
-<s:hidden id="error1" value="%{getText('er.label.court')}"/>
 <s:hidden id="error2" value="%{getText('er.label.orderIssuedDate')}"/>
 <s:hidden id="error3" value="%{getText('er.label.courtOrderNumber')}"/>
 <s:hidden id="error4" value="%{getText('er.label.judgeName')}"/>
