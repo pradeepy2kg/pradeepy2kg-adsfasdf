@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -127,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -457,7 +465,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td rowspan="6" ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
+    <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
         ස්ථානය<br>பிறந்த
         இடம்<br> Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
@@ -507,7 +515,7 @@ function initPage() {
 <s:if test="birthType.ordinal() != 0">
     <tr>
         <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-           නම සිංහල හෝ දෙමළ භාෂාවෙන් 
+            නම සිංහල හෝ දෙමළ භාෂාවෙන්
             <br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
@@ -573,7 +581,8 @@ function initPage() {
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label>
         </td>
-        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" cssStyle="width:95%;" maxLength="2"/></td>
+        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" cssStyle="width:95%;"
+                                     maxLength="2"/></td>
     </s:elseif>
 </tr>
 <tr>
