@@ -57,6 +57,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+    private Map<Integer, String> allDSDivisionList;
     private Map<Integer, String> courtList;
     private List<AdoptionOrder> adoptionApprovalAndPrintList;
     private Map<Integer, String> countryList;
@@ -151,7 +152,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (idUKey == 0) {
             adoption = new AdoptionOrder();
         }
-        populate();
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        populateBasicLists(language);
+        populateAllDSDivisionList();
         return SUCCESS;
     }
 
@@ -199,9 +202,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
             dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
-                    adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
+                adoption.getBirthDivisionId()).getDsDivision().getDsDivisionUKey(), language);
             birthDistrictName = districtDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
-                    adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
+                adoption.getBirthDivisionId()).getDistrict().getDistrictUKey(), language);
         }
         if (adoption.getApplicantCountryId() > 0) {
             applicantCountryName = countryDAO.getNameByPK(adoption.getApplicantCountryId(), language);
@@ -237,7 +240,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+                ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             return SUCCESS;
         }
     }
@@ -292,18 +295,21 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return "skip";
         }
         if ((adoption.getStatus() != AdoptionOrder.State.CERTIFICATE_ISSUE_REQUEST_CAPTURED) &&
-                (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
+            (adoption.getStatus() != AdoptionOrder.State.ADOPTION_CERTIFICATE_PRINTED)) {
             addActionError(getText("adoption.not.permited.operation"));
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             return ERROR;
         } else {
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+                ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             birthDivisionId = adoption.getBirthDivisionId();
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
-            BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
+            BirthDeclaration bdf = null;
+            if (adoption.getBirthCertificateNumber() > 0) {
+                bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
+            }
             String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             if (bdf != null) {
                 birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
@@ -591,7 +597,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         adoption = service.getById(idUKey, user);
         if (adoption != null) {
             courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+                ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
             if (adoption.getStatus().equals(AdoptionOrder.State.NOTICE_LETTER_PRINTED)) {
                 session.put(WebConstants.SESSION_ADOPTION_ORDER, adoption);
 
@@ -630,6 +636,29 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             }
         }
 
+        bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
+        if (birthDivisionId == 0) {
+            birthDivisionId = bdDivisionList.keySet().iterator().next();
+            logger.debug("first allowed BD Div in the list {} was set", birthDivisionId);
+        }
+    }
+
+    private void populateAllDSDivisionList() {
+        if (birthDistrictId == 0) {
+            if (!districtList.isEmpty()) {
+                birthDistrictId = districtList.keySet().iterator().next();
+                logger.debug("first allowed district in the list {} was set", birthDistrictId);
+            }
+        }
+
+        allDSDivisionList = dsDivisionDAO.getAllDSDivisionNames(birthDistrictId, language, user);
+
+        if (dsDivisionId == 0) {
+            if (!allDSDivisionList.isEmpty()) {
+                dsDivisionId = allDSDivisionList.keySet().iterator().next();
+                logger.debug("first allowed DS Div in the list {} was set", dsDivisionId);
+            }
+        }
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         if (birthDivisionId == 0) {
             birthDivisionId = bdDivisionList.keySet().iterator().next();
@@ -988,5 +1017,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setCourtName(String courtName) {
         this.courtName = courtName;
+    }
+
+    public Map<Integer, String> getAllDSDivisionList() {
+        return allDSDivisionList;
+    }
+
+    public void setAllDSDivisionList(Map<Integer, String> allDSDivisionList) {
+        this.allDSDivisionList = allDSDivisionList;
     }
 }
