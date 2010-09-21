@@ -138,19 +138,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>unknownMarriage0</td>
-	<td></td>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>place of marriage</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>motherSigned</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>fatherSigned</td>
-	<td></td>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2008-05-12</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -276,7 +271,7 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>3</td>
+	<td>4</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

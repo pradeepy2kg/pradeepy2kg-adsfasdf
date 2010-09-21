@@ -47,11 +47,7 @@
 	<td>receivedDatePicker</td>
 	<td>2010-09-12</td>
 </tr>
-<tr>
-	<td>type</td>
-	<td>court</td>
-	<td>colombo high court</td>
-</tr>
+
 <tr>
 	<td>click</td>
 	<td>orderIssuedDatePicker</td>
@@ -278,19 +274,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>unknownMarriage0</td>
-	<td></td>
+	<td>type</td>
+	<td>placeOfMarriage</td>
+	<td>place of marriage</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>motherSigned</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>fatherSigned</td>
-	<td></td>
+	<td>type</td>
+	<td>marriageDatePicker</td>
+	<td>2008-05-12</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -313,15 +304,11 @@
 	<td>Address</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>informDatePicker</td>
-	<td></td>
+	<td>2010-09-14</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=14</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-registration-form-3_0</td>
@@ -390,7 +377,7 @@
 <tr>
 	<td>type</td>
 	<td>SerialNo</td>
-	<td>5</td>
+	<td>6</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
