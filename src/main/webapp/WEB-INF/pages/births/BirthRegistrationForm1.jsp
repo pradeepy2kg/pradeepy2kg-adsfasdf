@@ -327,7 +327,7 @@ function initPage() {
                             <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
                         </s:if>
                         <s:else>
-                            <s:textfield name="register.bdfSerialNo" id="bdfSerialNo"/>
+                            <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
                         </s:else>
                     </td>
                 </tr>
@@ -344,8 +344,9 @@ function initPage() {
                     <td>
                         <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
                     </td>
-                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br><s:textfield
-                            name="register.dateOfRegistration" id="submitDatePicker"/></td>
+                    <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+                        <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
+                    </td>
                 </tr>
             </table>
         </td>
@@ -449,7 +450,7 @@ function initPage() {
         பிறந்த திகதி <br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
         <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
-        <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();"/>
+        <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();" maxLength="10"/>
     </td>
     <td colspan="4" style="border-left:none;">
         <div id="belatedError" style="color:red; font-size:11pt"/>
@@ -563,7 +564,7 @@ function initPage() {
             </td>
         </s:if>
         <td colspan="2"><s:textfield name="child.childBirthWeight" id="childBirthWeight"
-                                     cssStyle="width:95%;"/></td>
+                                     cssStyle="width:95%;" maxLength="6"/></td>
     </s:if>
     <s:elseif test="birthType.ordinal() == 0">
         <td colspan="2">
@@ -572,7 +573,7 @@ function initPage() {
                 <br>* In Tamil
                 <br>Number of weeks pregnant at the time of still-birth</label>
         </td>
-        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" cssStyle="width:95%;"/></td>
+        <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" cssStyle="width:95%;" maxLength="2"/></td>
     </s:elseif>
 </tr>
 <tr>
@@ -583,7 +584,7 @@ function initPage() {
             <br>பிறப்பு ஒழுங்கு
             <br>According to Live Birth Order, rank of the child?</label>
     </td>
-    <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank"/></td>
+    <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
     <td colspan="2" class="font-9">
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන්
             දරු උපතක් නම්, දරුවන් ගණන
@@ -591,7 +592,7 @@ function initPage() {
             <br>If multiple births, number of children</label>
     </td>
     <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"
-                                 cssStyle="width:95%;"/></td>
+                                 cssStyle="width:95%;" maxLength="2"/></td>
 </tr>
 </tbody>
 </table>
