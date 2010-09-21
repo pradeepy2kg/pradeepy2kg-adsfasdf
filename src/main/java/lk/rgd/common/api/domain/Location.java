@@ -41,7 +41,7 @@ public class Location implements Serializable {
     /**
      * The users assigned to this location
      */
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
     private List<UserLocation> users  = new ArrayList<UserLocation>();
 
     public int getLocationUKey() {

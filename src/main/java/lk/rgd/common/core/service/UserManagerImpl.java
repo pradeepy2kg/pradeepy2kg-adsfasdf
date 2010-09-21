@@ -137,6 +137,7 @@ public class UserManagerImpl implements UserManager {
                 locationDao.getLocation(userLocation.getLocationId()) == null) {
                 handleException("Non-existing User : " + userLocation.getUserId() +
                     " or location : " + userLocation.getLocationId(), ErrorCodes.INVALID_DATA);
+            } else {
                 userLocationDao.save(userLocation, adminUser);
             }
         }
@@ -235,7 +236,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public User getUsersByID(String userId) {
+    public User getUserByID(String userId) {
         return userDao.getUserByPK(userId);
     }
 

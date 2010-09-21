@@ -1,6 +1,7 @@
 package lk.rgd.prs.api.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MARRIAGE", schema = "PRS")
-public class Marriage {
+public class Marriage implements Serializable {
 
     /**
      * The possible MarriageLaw's
