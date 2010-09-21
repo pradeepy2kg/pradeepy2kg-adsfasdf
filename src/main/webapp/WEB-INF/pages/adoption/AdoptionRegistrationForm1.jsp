@@ -145,8 +145,8 @@ function validate() {
     }
     domObject = document.getElementById("applicantPin");
     if (!isFieldEmpty(domObject)) {
-         validatePINorNIC(domObject, 'error12', 'error13');
-    } 
+        validatePINorNIC(domObject, 'error12', 'error13');
+    }
     domObject = document.getElementById("childAgeYears");
     if (isFieldEmpty(domObject)) {
         isEmpty(domObject, "", 'error7');
@@ -229,15 +229,11 @@ function initPage() {
     document.getElementById('dsDivisionId').disabled = true;
     document.getElementById('birthDivisionId').disabled = true;
     document.getElementById('birthRegistrationSrialNum').disabled = true;
-    document.getElementById('availabeSerial').disabled = true;
-
+    //document.getElementById('availabeSerial').disabled = true;
 }
 
 function enableCertificateNumber(mode) {
     document.getElementById('birthCertificateNumber').disabled = mode;
-    if (!mode) {
-        enableSerialNumber(!mode)
-    }
 }
 
 function enableSerialNumber(mode) {
@@ -245,9 +241,6 @@ function enableSerialNumber(mode) {
     document.getElementById('dsDivisionId').disabled = mode;
     document.getElementById('birthDivisionId').disabled = mode;
     document.getElementById('birthRegistrationSrialNum').disabled = mode;
-    if (!mode) {
-        enableCertificateNumber(!mode);
-    }
 }
 </script>
 <div id="adoption-registration-form-outer">
@@ -289,7 +282,8 @@ function enableSerialNumber(mode) {
         <td>අධිකරණය<br/>
             Court
         </td>
-        <td style="text-align:center;" width="70"><s:select list="courtList" name="courtId" cssStyle="width:90%;margin-left:15px;"/>
+        <td style="text-align:center;" width="70"><s:select list="courtList" name="courtId"
+                                                            cssStyle="width:90%;margin-left:15px;"/>
     </tr>
     <tr>
         <td>නියෝගය නිකුත් කල දිනය <br/>
@@ -566,7 +560,7 @@ function enableSerialNumber(mode) {
         </td>
         <td colspan="1">නැත <br>Un-available</td>
         <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
-                                 onclick="enableCertificateNumber(true);enableSerialNumber(false)"/></td>
+                                 onclick="enableCertificateNumber(true);"/></td>
         </td>
         <td colspan="1" align="center"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
                                                     cssStyle="width:85%;"/></td>
@@ -584,9 +578,18 @@ function enableSerialNumber(mode) {
     <col/>
     <tbody>
     <tr>
-        <td colspan="6" style="text-align:center;">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
+        <td colspan="2">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
             Birth Registration acknowledgement slip
         </td>
+        <td> ඇත
+            <br>
+            Available
+        </td>
+        <td><s:radio list="#@java.util.HashMap@{'false':''}" id="availableSlip" name="availableSlip"
+                     onclick="enableSerialNumber(false)"/></td>
+        <td>නැත <br>Un-available</td>
+        <td><s:radio list="#@java.util.HashMap@{'false':''}" id="availabeSlip" name="availableSlip"
+                     onclick="enableSerialNumber(true)"/></td>
     </tr>
     <tr>
         <td colspan="1">දිස්ත්‍රික්කය <br/>
@@ -620,7 +623,7 @@ function enableSerialNumber(mode) {
             Serial Number
         </td>
 
-        <td colspan="1">
+        <td colspan="5">
             <s:textfield name="adoption.birthRegistrationSerial" id="birthRegistrationSrialNum"
                          cssStyle="width:280px;"/>
         </td>
