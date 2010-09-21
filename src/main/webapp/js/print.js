@@ -49,7 +49,7 @@ function printForm() {
 function installjsPrintSetup(){
     if(confirm("You don't have printer plugin.\nDo you want to install the Printer Plugin now?")){
         var xpi = new Object();
-        xpi['jsprintsetup'] = 'https://addons.mozilla.org/en-US/firefox/downloads/latest/8966/addon-8966-latest.xpi';
+        xpi['jsprintsetup'] = '/downloads/js_print_setup-0.8.2h-fx.xpi';
         InstallTrigger.install(xpi);
     }
 }

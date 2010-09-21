@@ -6,6 +6,7 @@ import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
+import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.BirthDeclarationDAO;
@@ -13,6 +14,8 @@ import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.InformantInfo;
 import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.prs.api.domain.Person;
+import lk.rgd.prs.api.service.PopulationRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,7 @@ public class BirthRegistrationServiceTest extends TestCase {
 
     protected final ApplicationContext ctx = UnitTestManager.ctx;
     protected final BirthRegistrationService birthRegSvc;
+    protected final PopulationRegistry eCivil;
     protected final BDDivisionDAO bdDivisionDAO;
     protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
@@ -49,6 +53,7 @@ public class BirthRegistrationServiceTest extends TestCase {
     public BirthRegistrationServiceTest() {
 
         birthRegSvc = (BirthRegistrationService) ctx.getBean("manageBirthService", BirthRegistrationService.class);
+        eCivil = (PopulationRegistry) ctx.getBean("ecivilService", PopulationRegistry.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
 
@@ -405,5 +410,182 @@ public class BirthRegistrationServiceTest extends TestCase {
         bdf.getNotifyingAuthority().setNotifyingAuthorityName("Name of the Notifying Authority");
         bdf.getNotifyingAuthority().setNotifyingAuthorityPIN("750010001");
         return bdf;
+    }
+
+    public void testPRSUpdatesFatherInformant() throws Exception {
+        Calendar dob = Calendar.getInstance();
+        // test saving of a minimal BDF for colombo by DEO
+        dob.add(Calendar.DATE, -3);
+
+        // add a record for testing
+        BirthDeclaration bdf1 = getMinimalBDF(2010106011, dob.getTime(), colomboBDDivision);
+        bdf1.getParent().setMotherFullName("Mother full name");
+        bdf1.getParent().setMotherDOB(DateTimeUtils.getDateFromISO8601String("1975-12-07"));
+        bdf1.getParent().setMotherAddress("Address of mother");
+        bdf1.getParent().setMotherNICorPIN("755011234V");
+        bdf1.getParent().setMotherPlaceOfBirth("Mother place of birth");
+        bdf1.getParent().setFatherFullName("Father full name");
+        bdf1.getParent().setFatherDOB(DateTimeUtils.getDateFromISO8601String("1975-07-29"));
+        bdf1.getParent().setFatherNICorPIN("752111430V");
+        bdf1.getParent().setFatherPlaceOfBirth("Father place of birth");
+
+        bdf1.getInformant().setInformantName("Father full name");
+        bdf1.getInformant().setInformantAddress("Address of father");
+        bdf1.getInformant().setInformantNICorPIN("752111430V");
+        bdf1.getInformant().setInformantType(InformantInfo.InformantType.FATHER);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
+
+        // now approve as ADR
+        birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
+
+        // DEO prints confirmation - mark confirmation as printed
+        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for updated status as printed
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
+
+        // capture confirmation by DEO without changes
+        bdf1.getConfirmant().setConfirmantFullName("Person confirming");
+        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
+
+        // reload again and check for update
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("Person confirming".toUpperCase(), bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf1.getRegister().getStatus());
+
+        Person mother = eCivil.findPersonByPINorNIC("755011234V", adrColomboColombo);
+        Assert.assertNotNull(mother);
+        Assert.assertEquals("MOTHER FULL NAME", mother.getFullNameInOfficialLanguage());
+        Assert.assertEquals("ADDRESS OF MOTHER", mother.getLastAddress().getLine1());
+        Assert.assertEquals(DateTimeUtils.getDateFromISO8601String("1975-12-07"), mother.getDateOfBirth());
+        Assert.assertEquals("MOTHER PLACE OF BIRTH", mother.getPlaceOfBirth());
+
+        Person father = eCivil.findPersonByPINorNIC("752111430V", adrColomboColombo);
+        Assert.assertNotNull(father);
+        Assert.assertEquals("FATHER FULL NAME", father.getFullNameInOfficialLanguage());
+        Assert.assertEquals("ADDRESS OF FATHER", father.getLastAddress().getLine1());
+        Assert.assertEquals(DateTimeUtils.getDateFromISO8601String("1975-07-29"), father.getDateOfBirth());
+        Assert.assertEquals("FATHER PLACE OF BIRTH", father.getPlaceOfBirth());
+    }
+
+    public void testPRSUpdatesDoNotTakeMothersAddressAsFathersIfUnmarried() throws Exception {
+        Calendar dob = Calendar.getInstance();
+        // test saving of a minimal BDF for colombo by DEO
+        dob.add(Calendar.DATE, -3);
+
+        // add a record for testing
+        BirthDeclaration bdf1 = getMinimalBDF(2010106012, dob.getTime(), colomboBDDivision);
+        bdf1.getParent().setMotherFullName("Mother full name");
+        bdf1.getParent().setMotherDOB(DateTimeUtils.getDateFromISO8601String("1975-12-07"));
+        bdf1.getParent().setMotherAddress("Address of mother");
+        bdf1.getParent().setMotherNICorPIN("755011235V");
+        bdf1.getParent().setMotherPlaceOfBirth("Mother place of birth");
+        bdf1.getParent().setFatherFullName("Father full name");
+        bdf1.getParent().setFatherDOB(DateTimeUtils.getDateFromISO8601String("1975-07-29"));
+        bdf1.getParent().setFatherNICorPIN("752111431V");
+        bdf1.getParent().setFatherPlaceOfBirth("Father place of birth");
+
+        bdf1.getInformant().setInformantName("Mother full name");
+        bdf1.getInformant().setInformantAddress("Address of mother");
+        bdf1.getInformant().setInformantNICorPIN("755011234V");
+        bdf1.getInformant().setInformantType(InformantInfo.InformantType.MOTHER);
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
+
+        // now approve as ADR
+        birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
+
+        // DEO prints confirmation - mark confirmation as printed
+        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for updated status as printed
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
+
+        // capture confirmation by DEO without changes
+        bdf1.getConfirmant().setConfirmantFullName("Person confirming");
+        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
+
+        // reload again and check for update
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("Person confirming".toUpperCase(), bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf1.getRegister().getStatus());
+
+        Person mother = eCivil.findPersonByPINorNIC("755011235V", adrColomboColombo);
+        Assert.assertNotNull(mother);
+        Assert.assertEquals("MOTHER FULL NAME", mother.getFullNameInOfficialLanguage());
+        Assert.assertEquals("ADDRESS OF MOTHER", mother.getLastAddress().getLine1());
+        Assert.assertEquals(DateTimeUtils.getDateFromISO8601String("1975-12-07"), mother.getDateOfBirth());
+        Assert.assertEquals("MOTHER PLACE OF BIRTH", mother.getPlaceOfBirth());
+
+        Person father = eCivil.findPersonByPINorNIC("752111431V", adrColomboColombo);
+        Assert.assertNotNull(father);
+        Assert.assertEquals("FATHER FULL NAME", father.getFullNameInOfficialLanguage());
+        Assert.assertNull(father.getLastAddress());
+        Assert.assertEquals(DateTimeUtils.getDateFromISO8601String("1975-07-29"), father.getDateOfBirth());
+        Assert.assertEquals("FATHER PLACE OF BIRTH", father.getPlaceOfBirth());
+    }
+
+    public void testPRSUpdatesMothersAddressAsFathersMarried() throws Exception {
+        Calendar dob = Calendar.getInstance();
+        // test saving of a minimal BDF for colombo by DEO
+        dob.add(Calendar.DATE, -3);
+
+        // add a record for testing
+        BirthDeclaration bdf1 = getMinimalBDF(2010106013, dob.getTime(), colomboBDDivision);
+        bdf1.getParent().setMotherFullName("Mother full name");
+        bdf1.getParent().setMotherDOB(DateTimeUtils.getDateFromISO8601String("1975-12-07"));
+        bdf1.getParent().setMotherAddress("Address of mother");
+        bdf1.getParent().setMotherNICorPIN("755011236V");
+        bdf1.getParent().setMotherPlaceOfBirth("Mother place of birth");
+        bdf1.getParent().setFatherFullName("Father full name");
+        bdf1.getParent().setFatherDOB(DateTimeUtils.getDateFromISO8601String("1975-07-29"));
+        bdf1.getParent().setFatherNICorPIN("752111432V");
+        bdf1.getParent().setFatherPlaceOfBirth("Father place of birth");
+
+        bdf1.getInformant().setInformantName("Mother full name");
+        bdf1.getInformant().setInformantAddress("Address of mother");
+        bdf1.getInformant().setInformantNICorPIN("755011234V");
+        bdf1.getInformant().setInformantType(InformantInfo.InformantType.MOTHER);
+
+        bdf1.getMarriage().setDateOfMarriage(DateTimeUtils.getDateFromISO8601String("2010-01-21"));
+        bdf1.getMarriage().setPlaceOfMarriage("Place of marriage");
+        birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
+
+        // now approve as ADR
+        birthRegSvc.approveLiveBirthDeclaration(bdf1.getIdUKey(), true, adrColomboColombo);
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.APPROVED, bdf1.getRegister().getStatus());
+
+        // DEO prints confirmation - mark confirmation as printed
+        birthRegSvc.markLiveBirthConfirmationAsPrinted(bdf1, deoColomboColombo);
+        // reload again and check for updated status as printed
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals(BirthDeclaration.State.CONFIRMATION_PRINTED, bdf1.getRegister().getStatus());
+
+        // capture confirmation by DEO without changes
+        bdf1.getConfirmant().setConfirmantFullName("Person confirming");
+        birthRegSvc.markLiveBirthDeclarationAsConfirmedWithoutChanges(bdf1, deoColomboColombo);
+
+        // reload again and check for update
+        bdf1 = birthRegSvc.getById(bdf1.getIdUKey(), deoColomboColombo);
+        Assert.assertEquals("Person confirming".toUpperCase(), bdf1.getConfirmant().getConfirmantFullName());
+        Assert.assertEquals(BirthDeclaration.State.ARCHIVED_CERT_GENERATED, bdf1.getRegister().getStatus());
+
+        Person mother = eCivil.findPersonByPINorNIC("755011236V", adrColomboColombo);
+        Assert.assertNotNull(mother);
+        Assert.assertEquals("MOTHER FULL NAME", mother.getFullNameInOfficialLanguage());
+        Assert.assertEquals("ADDRESS OF MOTHER", mother.getLastAddress().getLine1());
+        Assert.assertEquals(DateTimeUtils.getDateFromISO8601String("1975-12-07"), mother.getDateOfBirth());
+        Assert.assertEquals("MOTHER PLACE OF BIRTH", mother.getPlaceOfBirth());
+
+        Person father = eCivil.findPersonByPINorNIC("752111432V", adrColomboColombo);
+        Assert.assertNotNull(father);
+        Assert.assertEquals("FATHER FULL NAME", father.getFullNameInOfficialLanguage());
+        Assert.assertEquals("ADDRESS OF MOTHER", father.getLastAddress().getLine1());
+        Assert.assertEquals(DateTimeUtils.getDateFromISO8601String("1975-07-29"), father.getDateOfBirth());
+        Assert.assertEquals("FATHER PLACE OF BIRTH", father.getPlaceOfBirth());
     }
 }

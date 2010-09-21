@@ -3,6 +3,7 @@ package lk.rgd.prs.api.domain;
 import lk.rgd.common.api.domain.Country;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Set;
     @NamedQuery(name = "filter.by.pin", query = "SELECT p FROM Person p WHERE p.pin = :pin"),
     @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic")
 })
-public class Person {
+public class Person implements Serializable {
 
     /**
      * Record status
@@ -220,6 +221,7 @@ public class Person {
         }
         addresses.add(a);
         lastAddress = a;
+        a.setPerson(this);
     }
 
     //----------------------------------- getters and setters -----------------------------------

@@ -3,6 +3,7 @@ package lk.rgd.prs.api.domain;
 import lk.rgd.common.api.domain.Country;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,12 +11,13 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "ADDRESS", schema = "PRS")
-public class Address {
+public class Address implements Serializable {
 
     /**
      * A unique id for the address entry
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long addressUKey;
     /**
      * The person to whom this address belongs (Note: An address belongs to only one person)
@@ -61,6 +63,9 @@ public class Address {
     @OneToOne(optional = true)
     @JoinColumn(name = "countryId")
     private Country country;
+
+    public Address() {
+    }
 
     public Address(String line1) {
         this.line1 = line1;
@@ -142,14 +147,14 @@ public class Address {
         StringBuilder buffer = new StringBuilder();
         if ((line1 != null) && (!"".equals(line1))) {
             buffer.append(line1);
-            buffer.append(", " );
         }
         if ((line2 != null) && (!"".equals(line2))) {
-            buffer.append(line2);
             buffer.append(", " );
+            buffer.append(line2);
         }
 
         if ((city != null) && (!"".equals(city))) {
+            buffer.append(", " );
             buffer.append(city);
             // in the very likely case of postcode being absent,, we don't want to look silly by
             // printing a comma in the end.
@@ -159,9 +164,33 @@ public class Address {
         }
 
         if ((postcode != null) && (!"".equals(postcode))) {
+            buffer.append(", " );
             buffer.append(postcode);
         }
 
         return buffer.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Address address = (Address) o;
+
+        if (addressUKey != address.addressUKey) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (addressUKey ^ (addressUKey >>> 32));
     }
 }

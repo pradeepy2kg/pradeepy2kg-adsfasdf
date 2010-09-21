@@ -1,6 +1,8 @@
 package lk.rgd.prs.api.service;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.prs.api.domain.Address;
+import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 
 import java.util.List;
@@ -38,6 +40,34 @@ public interface PopulationRegistry {
      * @return the matching person
      */
     public Person getByUKey(long personUKey, User user);
+
+    /**
+     * Add a Marriage to the PRS
+     * @param m the Marriage to be added
+     * @param user the user performing this action
+     */
+    public void addMarriage(Marriage m, User user);
+
+    /**
+     * Update a Marriage to the PRS
+     * @param m the Marriage to be updated
+     * @param user the user performing this action
+     */
+    public void updateMarriage(Marriage m, User user);
+
+    /**
+     * Add an Address to the PRS
+     * @param a the Address to be added
+     * @param user the user performing this action
+     */
+    public void addAddress(Address a, User user);
+
+    /**
+     * Update an Address to the PRS
+     * @param a the Address to be updated
+     * @param user the user performing this action
+     */
+    public void updateAddress(Address a, User user);
 
     /**
      * Return the Person object for the person with the given PIN
