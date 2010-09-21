@@ -11,6 +11,7 @@ import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.Permission;
 
 import java.util.*;
@@ -83,10 +84,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
     private int birthDivisionId;
-    private int fatherCountry;
-    private int motherCountry;
-    private int fatherRace;
-    private int motherRace;
+    private int fatherCountryId;
+    private int motherCountryId;
+    private int fatherRaceId;
+    private int motherRaceId;
     private int dsDivisionId;
     private int sectionOfAct;
     private Long idUKey;
@@ -184,10 +185,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
                         alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
                 if (bdf.getParent().getMotherCountry() != null) {
-                    motherCountry = bdf.getParent().getMotherCountry().getCountryId();
+                    motherCountryId = bdf.getParent().getMotherCountry().getCountryId();
                 }
                 if (bdf.getParent().getMotherRace() != null) {
-                    motherRace = bdf.getParent().getMotherRace().getRaceId();
+                    motherRaceId = bdf.getParent().getMotherRace().getRaceId();
                 }
                 break;
             case 3:
@@ -200,10 +201,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 father.setFatherPlaceOfBirth(bdf.getParent().getFatherPlaceOfBirth());
                 father.setFatherRace(bdf.getParent().getFatherRace());
                 if (bdf.getParent().getFatherCountry() != null) {
-                    fatherCountry = bdf.getParent().getFatherCountry().getCountryId();
+                    fatherCountryId = bdf.getParent().getFatherCountry().getCountryId();
                 }
                 if (bdf.getParent().getFatherRace() != null) {
-                    fatherRace = bdf.getParent().getFatherRace().getRaceId();
+                    fatherRaceId = bdf.getParent().getFatherRace().getRaceId();
                 }
                 alt27A.setFather(father);
                 alt27A.setGrandFather(bdf.getGrandFather());
@@ -225,17 +226,26 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             case 1:
                 ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27));
                 break;
+            //case 2 is used to set alteration27A
             case 2:
-                alt52_1.setMother(null);
-                alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                if (birthDivisionId > 0) alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                if (motherCountryId > 0) alt52_1.getMother().setMotherCountry(countryDAO.getCountry(motherCountryId));
+                if (motherRaceId > 0) alt52_1.getMother().setMotherRace(raceDAO.getRace(motherRaceId));
+                ba.setAlt52_1(alt52_1);
+                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
+                break;
+            case 3:
+                // alt52_1.setBirthDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                logger.debug("father country id is :{}", fatherCountryId);
+                if (fatherCountryId > 0) {
+                    alt27A.getFather().setFatherCountry(countryDAO.getCountry(fatherCountryId));
+                }
+                if (fatherRaceId > 0) alt27A.getFather().setFatherRace(raceDAO.getRace(fatherRaceId));
+                ba.setAlt27A(alt27A);
                 ba.setAlt52_1(alt52_1);
                 ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A));
                 break;
-            //case 2 is used to set alteration27A
-            case 3:
-                ba.setAlt27A(alt27A);
-                ba.setApprovalStatuses(new BitSet(WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1));
-                break;
+
         }
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         ba.setBdId(idUKey);
@@ -302,7 +312,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt27 = ba.getAlt27();
         alt27A = ba.getAlt27A();
         alt52_1 = ba.getAlt52_1();
-
+        String language = bdf.getRegister().getPreferredLanguage();
         child = bdf.getChild();
 
         if (child.getChildFullNameEnglish().equals(alt27.getChildFullNameEnglish()) &&
@@ -321,19 +331,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (alt27A != null) {
             logger.debug("loading birth alteration record of alt27A of idUKey  :{}", ba.getIdUKey());
             sectionOfAct = 2;
-            changesOfAlt27A(bdf);
+            changesOfAlt27A(bdf, language);
         }
         if (alt52_1 != null) {
             logger.debug("loading birth alteration record of alt52_1 of idUKey  :{}", ba.getIdUKey());
             sectionOfAct = 3;
-            changesOfAlt52_1(bdf);
+            changesOfAlt52_1(bdf, language);
         }
         initPermission();
         populateBasicLists();
         return SUCCESS;
     }
 
-    private void changesOfAlt27A(BirthDeclaration bdf) {
+    private void changesOfAlt27A(BirthDeclaration bdf, String language) {
         father = alt27A.getFather();
         ParentInfo parent;
         parent = bdf.getParent();
@@ -361,24 +371,33 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareAndAdd(Alteration27A.FATHER_NIC_OR_PIN, parent.getFatherNICorPIN(), father.getFatherNICorPIN());
             compareAndAdd(Alteration27A.FATHER_BIRTH_YEAR, parent.getFatherDOB().toString(), father.getFatherDOB().toString());
             compareAndAdd(Alteration27A.FATHER_BIRTH_PLACE, parent.getFatherPlaceOfBirth(), father.getFatherPlaceOfBirth());
-            //if father country is not null in both ba and bdf
+            //if father country is not null in both ba and bd
             if (father.getFatherCountry() != null && parent.getFatherCountry() != null) {
-                compareAndAdd(Alteration27A.FATHER_COUNTRY, parent.getFatherCountry().getSiCountryName(), father.getFatherCountry().getSiCountryName());
+                compareAndAdd(Alteration27A.FATHER_COUNTRY, countryDAO.getNameByPK(parent.getFatherCountry().getCountryId(), language),
+                        countryDAO.getNameByPK(father.getFatherCountry().getCountryId(), language));
+                logger.debug("change the father country to :{}", countryDAO.getNameByPK(father.getFatherCountry().getCountryId(), language));
             }
             //if father country in not null in ba but null in bdf
             if (father.getFatherCountry() != null && parent.getFatherCountry() == null) {
-                compareAndAdd(Alteration27A.FATHER_COUNTRY, "", father.getFatherCountry().getSiCountryName());
+                compareAndAdd(Alteration27A.FATHER_COUNTRY, null, countryDAO.getNameByPK(father.getFatherCountry().getCountryId(), language));
 
             }
             //if father country in  null in ba but not null in bdf
             if (father.getFatherCountry() == null && parent.getFatherCountry() != null) {
-                compareAndAdd(Alteration27A.FATHER_COUNTRY, parent.getFatherCountry().getSiCountryName(), "");
+                compareAndAdd(Alteration27A.FATHER_COUNTRY, countryDAO.getNameByPK(parent.getFatherCountry().getCountryId(), language), "");
                 logger.debug("Delete the country of the {} child's father  :{}", bdf.getChild().getChildFullNameOfficialLang(),
                         parent.getFatherCountry().getSiCountryName());
             }
             compareAndAdd(Alteration27A.FATHER_PASSPORT, parent.getFatherPassportNo(), father.getFatherPassportNo());
             if (father.getFatherRace() != null && parent.getFatherRace() != null) {
-                compareAndAdd(Alteration27A.FATHER_RACE, father.getFatherRace().getEnRaceName(), parent.getFatherRace().getEnRaceName());
+                compareAndAdd(Alteration27A.FATHER_RACE, raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), language),
+                        raceDAO.getNameByPK(father.getFatherRace().getRaceId(), language));
+            }
+            if (father.getFatherRace() != null && parent.getFatherRace() == null) {
+                compareAndAdd(Alteration27A.FATHER_RACE, "", raceDAO.getNameByPK(father.getFatherRace().getRaceId(), language));
+            }
+            if (father.getFatherRace() == null && parent.getFatherRace() != null) {
+                compareAndAdd(Alteration27A.FATHER_RACE, raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), language), "");
             }
             logger.debug("Check and add to approval list all information of {} (Father) of idUKey :{}", father.getFatherFullName(), idUKey);
         }
@@ -402,7 +421,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     }
 
-    private void changesOfAlt52_1(BirthDeclaration bdf) {
+    private void changesOfAlt52_1(BirthDeclaration bdf, String language) {
         child = bdf.getChild();
         register = bdf.getRegister();
         if (alt52_1.getDateOfBirth() != null)
@@ -410,17 +429,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (alt52_1.getPlaceOfBirth() != null)
             compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
         compareAndAdd(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, alt52_1.getPlaceOfBirthEnglish(), child.getPlaceOfBirthEnglish());
+
         if (alt52_1.getBirthDivision() != null && register.getBirthDivision() != null)
-            compareAndAdd(Alteration52_1.BIRTH_DIVISION, alt52_1.getBirthDivision().getEnDivisionName(), register.getBirthDivision().getEnDivisionName());
-        if (alt52_1.getChildGender() > 0 && child.getChildGender() > 0)
-            compareAndAdd(Alteration52_1.GENDER, Integer.toString(alt52_1.getChildGender()), Integer.toString(child.getChildGender()));
-        if (alt52_1.getChildGender() > 0 && child.getChildGender() < 0) {
-            String[] compareChanges = new String[3];
-            compareChanges[0] = Integer.toString(Alteration52_1.GENDER);
-            compareChanges[1] = "";
-            compareChanges[2] = Integer.toString(alt52_1.getChildGender());
-            birthAlterationApprovalList.add(compareChanges);
-        }
+            compareAndAdd(Alteration52_1.BIRTH_DIVISION, bdDivisionDAO.getNameByPK(register.getBirthDivision().getBdDivisionUKey(), language),
+                    bdDivisionDAO.getNameByPK(alt52_1.getBirthDivision().getBdDivisionUKey(), language));
+
+        compareAndAdd(Alteration52_1.GENDER, GenderUtil.getGender(child.getChildGender(), language), GenderUtil.getGender(alt52_1.getChildGender(), language));
+
         MotherInfo mother = alt52_1.getMother();
         if (mother != null) {
             ParentInfo parent = bdf.getParent();
@@ -433,12 +448,24 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                         , countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), language),
                         countryDAO.getNameByPK(mother.getMotherCountry().getCountryId(), language));
             }
-            //todo if mother country is not null in bdf but null in ba
+            if (mother.getMotherCountry() == null && parent.getMotherCountry() != null) {
+                compareAndAdd(Alteration52_1.MOTHER_COUNTRY, countryDAO.getNameByPK(parent.getMotherCountry().getCountryId(), language), "");
+            }
+            if (mother.getMotherCountry() != null && parent.getMotherCountry() == null) {
+                compareAndAdd(Alteration52_1.MOTHER_COUNTRY, "", countryDAO.getNameByPK(mother.getMotherCountry().getCountryId(), language));
+            }
+
             compareAndAdd(Alteration52_1.MOTHER_PASSPORT, parent.getMotherPassportNo(), mother.getMotherPassportNo());
             //if mother race is not null in both bdf and ba
             if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
                 compareAndAdd(Alteration52_1.MOTHER_RACE, raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
                         raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
+            }
+            if (mother.getMotherRace() == null && parent.getMotherRace() != null) {
+                compareAndAdd(Alteration52_1.MOTHER_RACE, raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(), "");
+            }
+            if (mother.getMotherRace() != null && parent.getMotherRace() == null) {
+                compareAndAdd(Alteration52_1.MOTHER_RACE, "", raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
             }
             compareAndAdd(Alteration52_1.MOTHER_AGE_AT_BIRTH, parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
             compareAndAdd(Alteration52_1.MOTHER_ADDRESS, parent.getMotherAddress(), mother.getMotherAddress());
@@ -689,12 +716,20 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         return bdDivisionList;
     }
 
-    public int getFatherCountry() {
-        return fatherCountry;
+    public int getFatherCountryId() {
+        return fatherCountryId;
     }
 
-    public int getMotherCountry() {
-        return motherCountry;
+    public void setFatherCountryId(int fatherCountryId) {
+        this.fatherCountryId = fatherCountryId;
+    }
+
+    public void setMotherCountryId(int motherCountryId) {
+        this.motherCountryId = motherCountryId;
+    }
+
+    public int getMotherCountryId() {
+        return motherCountryId;
     }
 
     public Map<Integer, String> getDsDivisionList() {
@@ -718,12 +753,20 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.serialNo = serialNo;
     }
 
-    public int getFatherRace() {
-        return fatherRace;
+    public void setFatherRaceId(int fatherRaceId) {
+        this.fatherRaceId = fatherRaceId;
     }
 
-    public int getMotherRace() {
-        return motherRace;
+    public int getFatherRaceId() {
+        return fatherRaceId;
+    }
+
+    public void setMotherRaceId(int motherRaceId) {
+        this.motherRaceId = motherRaceId;
+    }
+
+    public int getMotherRaceId() {
+        return motherRaceId;
     }
 
     public long getBdId() {

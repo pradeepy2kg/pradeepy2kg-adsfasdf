@@ -868,7 +868,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <td colspan="2" rowspan="2"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
             </td>
             <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-            <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0" id="motherCountryId"
+            <td colspan="2"><s:select name="motherCountryId" list="countryList" headerKey="0" id="motherCountryId"
                                       headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
@@ -899,7 +899,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 இனம்<br>
                 Race
             </td>
-            <td colspan="2"><s:select list="raceList" name="motherRace" headerKey="0" id="motherRaceId"
+            <td colspan="2"><s:select list="raceList" name="motherRaceId" headerKey="0" id="motherRaceId"
                                       headerValue="%{getText('select_race.label')}"
                                       cssStyle="width:80%;"/></td>
         </tr>
@@ -1059,7 +1059,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 நாடு<br>
                 Country
             </td>
-            <td><s:select name="fatherCountry" list="countryList" headerKey="0" id="fatherCountryId"
+            <td><s:select name="fatherCountryId" list="countryList" headerKey="0" id="fatherCountryId"
                           headerValue="%{getText('select_country.label')}" cssStyle="width:80%;"/></td>
         </tr>
         <tr>
@@ -1086,7 +1086,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 இனம்<br>
                 Race
             </td>
-            <td><s:select list="raceList" name="fatherRace" headerKey="0" id="fatherRaceId"
+            <td><s:select list="raceList" name="fatherRaceId" headerKey="0" id="fatherRaceId"
                           headerValue="%{getText('select_race.label')}"
                           cssStyle="width:80%;"/></td>
         </tr>
