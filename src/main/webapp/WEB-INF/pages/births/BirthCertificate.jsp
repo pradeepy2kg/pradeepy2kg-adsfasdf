@@ -28,7 +28,7 @@
 <s:if test="directPrint">
     <s:url id="print" action="eprDirectPrintBirthCertificate.do">
         <s:param name="bdId" value="#request.bdId"/>
-    </s:url>
+    </s:url>                                                                                 
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
 <s:else>

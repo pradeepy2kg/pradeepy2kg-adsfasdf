@@ -2,13 +2,16 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
+    #adoption-certificate-form-outer table tr td {
+        padding: 0 5px;
+    }
     @media print {
         .form-submit {
             display: none;
         }
 
         td {
-            font-size: 7pt;
+            font-size: 12pt;
         }
     }
 
@@ -35,7 +38,7 @@
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
 
-<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+<div id="adoption-page" class="form-submit" style="margin:14px 0 0 10px; ">
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
@@ -57,7 +60,7 @@
         <td><s:label value="%{adoption.idUKey}"/></td>
     </tr>
     <tr>
-        <td align="center">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+        <td align="center" style="font-size:16pt">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             දරුකමට ගැනීම පිලිබඳ සහතිකය <br>
             பிறப்பு சான்றிதழ்﻿ <br>
             CERTIFICATE OF ADOPTION
@@ -76,7 +79,8 @@
     <col>
     <tbody>
     <tr>
-        <td width="250px" height="80px" rowspan="2">දරුකමට හදාගැනීමේ උසාවි නියෝගය <br>
+        <td width="250px" height="80px" rowspan="2">
+            දරුකමට හදාගැනීමේ උසාවි නියෝගය <br>
             in tamil <br>
             Adoption Order Issued by Court
         </td>
@@ -90,7 +94,8 @@
     </tr>
     <tr>
         
-        <td width="150px">නියෝග දිනය <br>
+        <td width="150px">
+            නියෝග දිනය <br>
             in tamil <br>
             Order Date
         </td>
@@ -98,7 +103,8 @@
             <s:label value="%{adoption.orderIssuedDate}"/>
         </td>
 
-        <td>නියෝග අංකය <br>
+        <td>
+            නියෝග අංකය <br>
             in tamil <br>
             Order Number
         </td>
@@ -146,7 +152,7 @@
         </td>
     </tr>
     <tr>
-        <td height="70px" width="250px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික
+        <td height="70px" width="250px">පියාගේ අනන්‍යතා අංකය / ජාතික
             හැඳුනුම්පත් අංකය <br>
             தந்தையின் அடையாள எண் <br>
             Father's PIN / NIC
@@ -171,7 +177,7 @@
         </td>
     </tr>
     <tr>
-        <td height="70px" width="250px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය <br>
+        <td height="70px" width="250px">ම‌වගේ අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය <br>
             தந்தையின் அடையாள எண் <br>
             Mother's PIN / NIC
         </td>

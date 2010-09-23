@@ -39,7 +39,7 @@
         position: absolute;
         width: 140px;
         height: 26px;
-        margin: 466px 0px 0px 389px;
+        margin: 455px 0px 0px 389px;
         padding-top: 15px;
     }
 
