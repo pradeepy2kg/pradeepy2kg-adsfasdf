@@ -33,6 +33,7 @@ public class Marriage implements Serializable {
      * The unique Marriage Identification Number
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long marriageUKey;
     /**
      * The preferred language of for the record
@@ -76,10 +77,6 @@ public class Marriage implements Serializable {
 
     public long getMarriageUKey() {
         return marriageUKey;
-    }
-
-    public void setMarriageUKey(long marriageUKey) {
-        this.marriageUKey = marriageUKey;
     }
 
     public String getPreferredLanguage() {

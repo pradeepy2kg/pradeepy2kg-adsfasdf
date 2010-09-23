@@ -60,7 +60,8 @@
         <td><s:label value="%{adoption.idUKey}"/></td>
     </tr>
     <tr>
-        <td align="center" style="font-size:16pt">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+        <td align="center" style="font-size:16pt">
+            ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             දරුකමට ගැනීම පිලිබඳ සහතිකය <br>
             பிறப்பு சான்றிதழ்﻿ <br>
             CERTIFICATE OF ADOPTION
