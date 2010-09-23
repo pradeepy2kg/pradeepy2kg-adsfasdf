@@ -898,7 +898,7 @@ public class BirthRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRED)
     public void markBelatedBirthCertificateAsPrinted(BirthDeclaration bdf, User user) {
 
-        validateBirthType(bdf, BirthDeclaration.BirthType.LIVE);
+        validateBirthType(bdf, BirthDeclaration.BirthType.BELATED);
         logger.debug("Request to mark as Birth certificate printed for belated record : {}", bdf.getIdUKey());
 
         // load the existing record
