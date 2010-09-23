@@ -26,7 +26,7 @@
 
 function setUpPrintHtml() {
     print();
-    history.previous();
+    document.refresh();
 }
 var TableToolsInit = {
     "oFeatures": {
@@ -128,6 +128,7 @@ var TableToolsInit = {
             nButton.style.height = _oSettings.iButtonHeight + 'px';
             nButton.style.width = _oSettings.iButtonWidth + 'px';
             nButton.className = sBaseClass;
+            fnGlue(clip, nButton, "ToolTables_CSV_" + _iId, "Save as CSV");
             _nTools.appendChild(nButton);
 
             var clip = new ZeroClipboard.Client();
@@ -146,8 +147,6 @@ var TableToolsInit = {
             clip.addEventListener('mouseDown', function(client) {
                 clip.setText(fnGetDataTablesData(","));
             });
-
-            fnGlue(clip, nButton, "ToolTables_CSV_" + _iId, "Save as CSV");
         }
 
 
@@ -165,8 +164,8 @@ var TableToolsInit = {
             nButton.style.height = _oSettings.iButtonHeight + 'px';
             nButton.style.width = _oSettings.iButtonWidth + 'px';
             nButton.className = sBaseClass;
+            fnGlue(clip, nButton, "ToolTables_XLS_" + _iId, "Save for Excel");
             _nTools.appendChild(nButton);
-
             var clip = new ZeroClipboard.Client();
             clip.setHandCursor(true);
             clip.setAction('save');
@@ -183,8 +182,7 @@ var TableToolsInit = {
             clip.addEventListener('mouseDown', function(client) {
                 clip.setText(fnGetDataTablesData("\t"));
             });
-
-            fnGlue(clip, nButton, "ToolTables_XLS_" + _iId, "Save for Excel");
+            //todo
         }
 
 
@@ -202,6 +200,7 @@ var TableToolsInit = {
             nButton.style.height = _oSettings.iButtonHeight + 'px';
             nButton.style.width = _oSettings.iButtonWidth + 'px';
             nButton.className = sBaseClass;
+            fnGlue(clip, nButton, "ToolTables_Copy_" + _iId, "Copy to clipboard");
             _nTools.appendChild(nButton);
 
             var clip = new ZeroClipboard.Client();
@@ -225,7 +224,6 @@ var TableToolsInit = {
                 alert('Copied ' + (aData.length - 2) + ' rows to the clipboard');
             });
 
-            fnGlue(clip, nButton, "ToolTables_Copy_" + _iId, "Copy to clipboard");
         }
 
 
@@ -308,7 +306,7 @@ var TableToolsInit = {
                 _iPrintScroll = $(window).scrollTop();
                 window.scrollTo(0, 0);
 
-                $(document).unbind("keypress", null, fnPrintEnd);
+                $(document).bind("keypress", null, fnPrintEnd);
 
                 /*                setTimeout(function() {
                  $(nInfo).fadeOut("normal", function() {
