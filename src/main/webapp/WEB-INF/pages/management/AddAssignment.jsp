@@ -60,7 +60,7 @@
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
