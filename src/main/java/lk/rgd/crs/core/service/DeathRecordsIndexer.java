@@ -1,27 +1,27 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.ErrorCodes;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.core.index.SolrIndexManager;
-import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.DateTimeUtils;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.DeathRegisterDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.ErrorCodes;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This is the bridge class that exposes the Solr indexing to the rest of the application

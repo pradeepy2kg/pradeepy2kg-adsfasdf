@@ -17,6 +17,8 @@
 <s:hidden id="error8" value="%{getText('stampCharges.label')}"/>
 <s:hidden id="error9" value="%{getText('noOfCopies.label')}"/>
 <s:hidden id="error10" value="%{getText('certificateIssuDate.label')}"/>
+<s:hidden id="error11" value="%{getText('enter.noOfCopies.label')}"/>
+<s:hidden id="error12" value="%{getText('enter.searchFullNameOfficialLang.label')}"/>
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
 <script>
 
@@ -99,10 +101,17 @@
         if (isFieldEmpty(domObject))
             isEmpty(domObject, '', 'error6');
 
+        domObject = document.getElementById('searchFullNameOfficialLang');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, '', 'error12');
+
         // validate number of copies needed
         domObject = document.getElementById('noOfCopies');
-        if (!isFieldEmpty(domObject))
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, '', 'error11');
+        } else {
             isNumeric(domObject.value, 'error1', 'error9');
+        }
 
         // validate certificate date of issue
         domObject = document.getElementById('datePicker');
@@ -135,7 +144,7 @@
     <tr>
             <%--<td width="300px"></td>--%>
         <td align="center" style="font-size:12pt; width:180px">
-            <img src="<s:url value="/images/official-logo.png"></s:url>" alt=""/><br> 
+            <img src="<s:url value="/images/official-logo.png"></s:url>" alt=""/><br>
         </td>
         <td align="center" style="font-size:12pt;">
             <s:if test="certificateType.ordinal() == 0">
