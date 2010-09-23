@@ -51,7 +51,7 @@ body {
     float: left;
     margin-top: 2px;
     font-size: 10pt;
-    background:url(../images/title-bg-1.png) repeat-x;
+    background: url(../images/title-bg-1.png) repeat-x;
 }
 
 #user-language {
@@ -73,7 +73,7 @@ body {
 /* Styles for the Login Page */
 #login-form {
     width: 40%;
-    height: 150px;
+    height: 160px;
     margin: 16% auto;
     float: none;
     padding: 5px;
@@ -136,6 +136,18 @@ body {
     background: url(../images/button_bg_hover_2.png) no-repeat;
 }
 
+.login-table {
+    width: 100%;
+}
+
+.login-table td {
+    width: 50%
+}
+
+.login-table input {
+    width: 100%
+}
+
 /* Styles for the Main-Menu */
 
 #main-menu a {
@@ -174,7 +186,7 @@ body {
     .menu a:focus,
     .menu a:active {
     color: black;
-    border-left:5px solid #9933ff;
+    border-left: 5px solid #9933ff;
 }
 
 .menu ul li {
@@ -191,12 +203,12 @@ body {
     display: none;
 }
 
-#home-page-outer{
-    padding:10px;
-    text-align:center;
+#home-page-outer {
+    padding: 10px;
+    text-align: center;
 }
 
-#home-page-outer img{
-    margin:auto;
-    clear:both;
+#home-page-outer img {
+    margin: auto;
+    clear: both;
 }

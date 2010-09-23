@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/ecivil/css/layout.css"/>
     <style type="text/css">
         html {
-            background: /ecivil/images/body-bg1.png repeat;
+            background: / ecivil / images / body-bg1 . png repeat;
         }
 
         body {
@@ -38,11 +38,21 @@
         <div id="login-form-title">user login</div>
         <div id="login-form-body">
             <s:form action="/eprLogin.do" method="POST" name="eprLogin">
-                <s:label value="User Name: "></s:label>
-                <s:textfield name="userName"></s:textfield>
-                <s:label value="Password: "></s:label>
-                <s:password name="password"></s:password>
-                <div><s:submit value="login"></s:submit></div>
+                <table class="login-table">
+                    <tr>
+                        <td style="width:50%"><s:label value="User Name: "/></td>
+                        <td style="width:50%"><s:textfield name="userName" cssStyle="width:95%"/></td>
+                    </tr>
+                    <tr>
+                        <td><s:label value="Password: "/></td>
+                        <td><s:password name="password" cssStyle="width:95%"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div><s:submit value="login"/></div>
+                        </td>
+                    </tr>
+                </table>
             </s:form>
         </div>
     </div>
