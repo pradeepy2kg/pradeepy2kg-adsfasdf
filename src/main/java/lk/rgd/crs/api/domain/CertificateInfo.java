@@ -60,6 +60,12 @@ public class CertificateInfo {
     private Float stampCharges;
 
     /**
+     * @see lk.rgd.crs.api.domain.CertificateSearch.CertificateType
+     */
+    @Enumerated
+    private CertificateSearch.CertificateType certificateType;
+
+    /**
      * This is the user performing the certificate search
      */
     @OneToOne
@@ -143,5 +149,13 @@ public class CertificateInfo {
 
     public void setSearchPerformDate(Date searchPerformDate) {
         this.searchPerformDate = searchPerformDate;
+    }
+
+    public CertificateSearch.CertificateType getCertificateType() {
+        return certificateType;
+    }
+
+    public void setCertificateType(CertificateSearch.CertificateType certificateType) {
+        this.certificateType = certificateType;
     }
 }

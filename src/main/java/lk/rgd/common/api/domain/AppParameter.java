@@ -25,7 +25,7 @@ public class AppParameter implements Serializable {
     /** The parameter key that holds the number of days for a birth to be considered as a belated registration */
     public static final String CRS_BELATED_MAX_DAYS = "crs.birth.belated_reg_days";
     /** The number of records returned for a standard BC search*/
-    public static final String CRS_BIRTH_CERT_SEARCH_LIMIT = "crs.birth.certificate.search.record.limit";
+    public static final String CRS_CERTIFICATE_SEARCH_LIMIT = "crs.certificate.search.record.limit";
     /** The parameter key that holds the number of days until a password expires */
     public static final String PASSWORD_EXPIRY_DAYS = "rgd.password_expiry_days";
 

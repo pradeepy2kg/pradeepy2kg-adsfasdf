@@ -8,6 +8,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.CertificateSearch;
+import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.CertificateSearchService;
 import lk.rgd.crs.web.WebConstants;
@@ -36,7 +37,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
-    private List<BirthDeclaration> searchResultList;
+    private List searchResultList;
     private Map session;
     private User user;
     private BirthDeclaration bdf;
@@ -154,20 +155,29 @@ public class SearchAction extends ActionSupport implements SessionAware {
      *
      * @return
      */
-    public String birthCertificateSearch() {
+    public String certificateSearch() {
         logger.debug("{} certificate search: Page {}", certificateType, pageNo);
-        // TODO Still implementing
         if (pageNo == 1) {
             try {
                 certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                // TODO if entering application is a duplicate have to give an action error
+                certSearch.getCertificate().setCertificateType(certificateType);
+
+                // validate duplicate application number entering
                 boolean validNo = certificateSearchService.isValidCertificateSearchApplicationNo(
                     certSearch.getCertificate().getDsDivision(), certSearch.getCertificate().getApplicationNo());
+
                 if (!validNo) {
                     addFieldError("duplicateApplicationNoError", getText("duplicateApplicationNo.label"));
                     pageNo = 0;
                 } else {
-                    searchResultList = certificateSearchService.performBirthCertificateSearch(certSearch, user);
+                    if (certificateType == CertificateSearch.CertificateType.BIRTH) {
+                        searchResultList = certificateSearchService.performBirthCertificateSearch(certSearch, user);
+                    } else if (certificateType == CertificateSearch.CertificateType.DEATH) {
+                        searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user);
+                    }
+                }
+                if (searchResultList.size() == 0) {
+                    addActionMessage(getText("noitemMsg.label"));
                 }
 
             } catch (CRSRuntimeException e) {
@@ -181,6 +191,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
         }
         populate();
         return "page" + pageNo;
+    }
+
+    public String markSearchCertificate() {
+        // TODO if needed info related to certificate searching
+        return SUCCESS;
     }
 
     public long getSerialNo() {

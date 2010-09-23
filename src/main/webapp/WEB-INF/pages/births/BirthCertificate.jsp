@@ -32,20 +32,22 @@
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
 <s:else>
-    <%--TODO remove unused parameters--%>
-    <%--<s:if test="#request.certificateSearch">--%>
-
-    <%--</s:if>--%>
-    <%--<s:else>--%>
-    <s:url id="print" action="eprMarkCertificateAsPrinted.do">
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="bdId" value="%{#request.bdId}"/>
-        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
-        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-        <s:param name="printed" value="#request.printed"/>
-        <s:param name="printStart" value="#request.printStart"/>
-    </s:url>
+    <s:if test="#request.certificateSearch">
+        <s:url id="print" action="eprMarkBirthCertificateSearch.do">
+            <s:param name="idUKey" value="#request.idUKey"/>
+        </s:url>
+    </s:if>
+    <s:else>
+        <s:url id="print" action="eprMarkCertificateAsPrinted.do">
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="bdId" value="%{#request.bdId}"/>
+            <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
+            <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
+            <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+            <s:param name="printed" value="#request.printed"/>
+            <s:param name="printStart" value="#request.printStart"/>
+        </s:url>
+    </s:else>
     <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
@@ -54,7 +56,6 @@
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
-    <%--<s:else>--%>
 </s:else>
 
 <s:if test="#request.allowPrintCertificate">
@@ -105,7 +106,7 @@
     </tbody>
 </table>
 
-<table  border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="135px">
     <col>
     <col width="145px">
@@ -304,11 +305,11 @@
     </tbody>
 </table>
 
-<p style="font-size:5pt">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+<p style="font-size:5pt">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
+    විසින් නිකුත් කරන
     ලදි.<br>
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
     Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
-
 
 
 <s:if test="#request.allowPrintCertificate">

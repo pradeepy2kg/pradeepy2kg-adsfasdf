@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.domain;
 
 import lk.rgd.crs.web.util.WebUtils;
+import lk.rgd.common.api.domain.District;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,9 +17,6 @@ public class DeathInfo implements Serializable {
 
     @Column(nullable = false)
     private long deathSerialNo;
-
-    @Column(nullable = true)
-    private long deathCertificateNo;
 
     @Column(nullable = false, length = 255)
     private String placeOfDeath;
@@ -94,14 +92,6 @@ public class DeathInfo implements Serializable {
 
     public void setDeathSerialNo(long deathSerialNo) {
         this.deathSerialNo = deathSerialNo;
-    }
-
-    public long getDeathCertificateNo() {
-        return deathCertificateNo;
-    }
-
-    public void setDeathCertificateNo(long deathCertificateNo) {
-        this.deathCertificateNo = deathCertificateNo;
     }
 
     public String getPlaceOfDeath() {
@@ -214,5 +204,9 @@ public class DeathInfo implements Serializable {
 
     public void setReasonForLateRegistration(String reasonForLateRegistration) {
         this.reasonForLateRegistration = WebUtils.filterBlanks(reasonForLateRegistration);
+    }
+
+    public District getDeathDistrict() {
+        return deathDivision.getDistrict();
     }
 }

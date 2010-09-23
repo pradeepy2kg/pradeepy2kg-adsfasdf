@@ -520,7 +520,7 @@ function initPage() {
                 <s:textfield name="death.deathSerialNo" id="deathSerialNo" readonly="true"/>
             </s:if>
             <s:else>
-                <s:textfield name="death.deathSerialNo" id="deathSerialNo"/>
+                <s:textfield name="death.deathSerialNo" id="deathSerialNo" maxLength="10"/>
             </s:else>
         </td>
     </tr>

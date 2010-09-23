@@ -45,7 +45,7 @@ public class ServiceAuditor implements MethodInterceptor {
 
         xstream.alias("adoptionOrder", AdoptionOrder.class);
         xstream.alias("assignment", Assignment.class);
-        xstream.alias("birthCertificateSearch", CertificateSearch.class);
+        xstream.alias("certificateSearch", CertificateSearch.class);
         xstream.alias("birthDeclatation", BirthDeclaration.class);
         xstream.alias("deathRegister", DeathRegister.class);
         xstream.alias("registrar", Registrar.class);

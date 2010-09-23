@@ -41,6 +41,7 @@ public class BirthRecordsIndexer {
     private static final String QUOTE = "\"";
     private static final String QUOTE_TILDE_3 = "\"~3";
     private static final String QUOTE_TILDE_12 = "\"~12";
+    private static final String AND = " AND ";
     private static final String FIELD_CHILD_FULL_NAME_ENGLISH = "childFullNameEnglish";
     private static final String FIELD_CHILD_FULL_NAME_OFFICIAL_LANG = "childFullNameOfficialLang";
     private static final String FIELD_DATE_OF_BIRTH = "dateOfBirth";
@@ -50,6 +51,7 @@ public class BirthRecordsIndexer {
     private static final String FIELD_BIRTH_DIVISION = "birthDivision";
     private static final String FIELD_BIRTH_DISTRICT = "birthDistrict";
     private static final String FIELD_BDF_SERIAL_NO = "bdfSerialNo";
+    private static final String FIELD_BDF_STATE = "status";
     private static final String FIELD_DATE_OF_REGISTRATION = "dateOfRegistration";
     private static final String FIELD_PIN = "pin";
     private static final String FIELD_MOTHER_FULL_NAME = "motherFullName";
@@ -158,9 +160,17 @@ public class BirthRecordsIndexer {
         sb.append(GenderUtil.getGenderString(search.getGender()));
         sb.append(QUOTE);
 
+        // state of a Birth Declaration
+        sb.append(AND);
+        sb.append(FIELD_BDF_STATE);
+        sb.append(COLON);
+        sb.append(QUOTE);
+        sb.append(search.getSearchRecordStatus());
+        sb.append(QUOTE);
+
         // date of birth
         if (search.getDateOfEvent() != null) {
-            sb.append(" AND ");
+            sb.append(AND);
             sb.append(FIELD_DATE_OF_BIRTH);
             sb.append(COLON);
             sb.append(QUOTE);
@@ -168,9 +178,9 @@ public class BirthRecordsIndexer {
             sb.append(QUOTE);
         }
 
-        // date of birth
+        // date of birth registration
         if (search.getCertificateIssueDate() != null) {
-            sb.append(" AND ");
+            sb.append(AND);
             sb.append(FIELD_DATE_OF_REGISTRATION);
             sb.append(COLON);
             sb.append(QUOTE);
@@ -180,7 +190,7 @@ public class BirthRecordsIndexer {
 
         logger.debug("Solr query : " + sb.toString());
 
-        query.setRows(appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CERT_SEARCH_LIMIT));
+        query.setRows(appParametersDAO.getIntParameter(AppParameter.CRS_CERTIFICATE_SEARCH_LIMIT));
         query.setQuery(sb.toString());
 
         List<BirthDeclaration> bdfList = new ArrayList<BirthDeclaration>();
@@ -225,22 +235,24 @@ public class BirthRecordsIndexer {
         int count = 0;
         try {
             for (BirthDeclaration bdf : bdfList) {
-                addRecord(bdf);
-                count++;
+                if (bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED) {
+                    addRecord(bdf);
+                    count++;
+                }
             }
 
             solrIndexManager.getBirthServer().optimize();
             solrIndexManager.getBirthServer().commit();
 
-            logger.debug("Successfully indexed : " + count + " documents..");
+            logger.debug("Successfully indexed : " + count + " birth documents..");
 
             // TODO we do not print the stack trace for now..
         } catch (SolrServerException e) {
-            logger.error("Error from Solr server during re-indexing");
+            logger.error("Error from Solr server during re-indexing", e);
         } catch (IOException e) {
-            logger.error("IO Exception encountered during re-indexing");
+            logger.error("IO Exception encountered during re-indexing", e);
         } catch (Exception e) {
-            logger.error("Unexpected Exception encountered during re-indexing");
+            logger.error("Unexpected Exception encountered during re-indexing", e);
         }
     }
 
@@ -251,6 +263,7 @@ public class BirthRecordsIndexer {
         // add registration info
         BirthRegisterInfo regInfo = bdf.getRegister();
         d.addField(FIELD_BDF_SERIAL_NO, regInfo.getBdfSerialNo());
+        d.addField(FIELD_BDF_STATE, regInfo.getStatus().toString());
         d.addField(FIELD_DATE_OF_REGISTRATION, regInfo.getDateOfRegistration());
         //d.addField("comments", regInfo.getComments());
         //d.addField("originalBCDateOfIssue", regInfo.getOriginalBCDateOfIssue());

@@ -372,28 +372,39 @@ any data added to them will be ignored outright.  -->
 
     <fields>
 
-        <field name="idUKey" type="string" indexed="true" stored="true" required="true"/>
-        <field name="bdfSerialNo" type="slong" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathUKey" type="string" indexed="true" stored="true" required="true"/>
+        <field name="deathSerialNo" type="slong" indexed="true" stored="true" omitNorms="true"/>
         <field name="dateOfRegistration" type="pdate" indexed="true" stored="true" omitNorms="true"/>
         <field name="status" type="string" indexed="true" stored="true" omitNorms="true"/>
 
-        <field name="birthDistrict" type="string" indexed="true" stored="true" omitNorms="true"/>
-        <field name="birthDivision" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="causeOfDeath" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="placeOfDeath" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="dateOfDeath" type="tdate" indexed="true" stored="true" omitNorms="true"/>
+        <field name="placeOfBurial" type="string" indexed="true" stored="true" omitNorms="true"/>
 
-        <field name="childFullNameEnglish" type="textgen" indexed="true" stored="true"/>
-        <field name="childFullNameOfficialLang" type="textgen" indexed="true" stored="true"/>
-        <field name="dateOfBirth" type="tdate" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathPersonPINorNIC" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathPersonPassportNo" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathPersonAge" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathPersonGender" type="string" indexed="true" stored="true" omitNorms="true"/>
 
-        <field name="birthAtHospital" type="boolean" indexed="true" stored="true" omitNorms="true"/>
-        <field name="childGender" type="string" indexed="true" stored="true" omitNorms="true"/>
-        <field name="pin" type="string" indexed="true" stored="true" omitNorms="true"/>
-        <field name="placeOfBirth" type="textgen" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathPersonNameInEnglish" type="textgen" indexed="true" stored="true"/>
+        <field name="deathPersonNameOfficialLang" type="textgen" indexed="true" stored="true"/>
+        <field name="deathPersonPermanentAddress" type="string" indexed="true" stored="true" omitNorms="true"/>
 
-        <dynamicField name="mother*" type="textgen" indexed="true" stored="true"/>
-        <dynamicField name="father*" type="textgen" indexed="true" stored="true"/>
-        <dynamicField name="informant*" type="textgen" indexed="true" stored="true"/>
-        <dynamicField name="grand*" type="textgen" indexed="true" stored="true"/>
-        <dynamicField name="great*" type="textgen" indexed="true" stored="true"/>
+        <field name="deathDistrict" type="string" indexed="true" stored="true" omitNorms="true"/>
+        <field name="deathDivision" type="string" indexed="true" stored="true" omitNorms="true"/>
+
+        <dynamicField name="deathPersonFather*" type="textgen" indexed="true" stored="true"/>
+        <dynamicField name="deathPersonMother*" type="textgen" indexed="true" stored="true"/>
+        <dynamicField name="declarant*" type="textgen" indexed="true" stored="true"/>
+
+        <!--<field name="birthAtHospital" type="boolean" indexed="true" stored="true" omitNorms="true"/>-->
+        <!--<field name="pin" type="string" indexed="true" stored="true" omitNorms="true"/>-->
+        <!--<field name="placeOfBirth" type="textgen" indexed="true" stored="true" omitNorms="true"/>-->
+
+        <!--<dynamicField name="father*" type="textgen" indexed="true" stored="true"/>-->
+        <!--<dynamicField name="grand*" type="textgen" indexed="true" stored="true"/>-->
+        <!--<dynamicField name="great*" type="textgen" indexed="true" stored="true"/>-->
 
 
         <!-- Valid attributes for fields:
@@ -515,7 +526,7 @@ any data added to them will be ignored outright.  -->
     <!-- Field to use to determine and enforce document uniqueness.
        Unless this field is marked with required="false", it will be a required field
     -->
-    <uniqueKey>idUKey</uniqueKey>
+    <uniqueKey>deathUKey</uniqueKey>
 
     <!-- field for the QueryParser to use when an explicit fieldname is absent -->
     <defaultSearchField>text</defaultSearchField>

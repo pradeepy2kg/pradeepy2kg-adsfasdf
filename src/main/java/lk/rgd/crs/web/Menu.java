@@ -77,12 +77,13 @@ public class Menu {
         preferanceLink.put("eprUserPreferencesAction.do", new Link(null, "/ecivil/preferences/", "eprUserPreferencesAction.do", Permission.USER_PREFERENCES));
 
         //search links
-        /*todo*/
         searchLink.put("eprSearchPageLoad.do", new Link("search.label", "/ecivil/births/", "eprSearchPageLoad.do", Permission.SEARCH_BDF));
         searchLink.put("eprBirthCertificateSearch.do", new Link("birth_certificate_search.label", "/ecivil/births/", "eprBirthCertificateSearch.do", Permission.SEARCH_BDF));
-        searchLink.put("eprDeathCertificateSearch.do", new Link("death_certificate_search.label", "/ecivil/births/", "eprDeathCertificateSearch.do", Permission.SEARCH_BDF));
+        searchLink.put("eprDeathCertificateSearch.do", new Link("death_certificate_search.label", "/ecivil/deaths/", "eprDeathCertificateSearch.do", Permission.SEARCH_DDF));
         searchLink.put("eprBirthsAdvancedSearch.do", new Link("birth.advanceSearch.label", "/ecivil/births/", "eprBirthsAdvancedSearch.do", Permission.SEARCH_BDF));
 
+        searchLink.put("eprMarkBirthCertificateSearch.do", new Link(null, "/ecivil/births/", "eprMarkBirthCertificateSearch.do", Permission.PRINT_BDF));
+        searchLink.put("eprMarkDeathCertificateSearch.do", new Link(null, "/ecivil/deaths/", "eprMarkDeathCertificateSearch.do", Permission.PRINT_DDF));
 
         // PRS
         prsLink.put("eprPRSAdvancedSearch.do", new Link("prs.advanceSearch.label", "/ecivil/prs/", "eprPRSAdvancedSearch.do", Permission.SEARCH_PRS));

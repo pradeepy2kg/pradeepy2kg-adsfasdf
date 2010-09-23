@@ -48,6 +48,13 @@ public interface DeathRegisterDAO {
     public void deleteDeathRegistration(DeathRegister dr, User user);
 
     /**
+     * Return all records - for indexing only
+     *
+     * @return all records
+     */
+    public List<DeathRegister> findAll();
+
+    /**
      * Get the list of death registrations for a given state based on given death division
      *
      * @param deathDivision the death division
@@ -89,7 +96,7 @@ public interface DeathRegisterDAO {
      * @return the death registration results
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-                                                                       Date startDate, Date endDate, int pageNo, int noOfRows);
+        Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Get the list of death registrations for a given state based on given dsDivision
