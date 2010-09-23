@@ -5646,8 +5646,18 @@
                     <td></td>
                 </tr>
                 <tr>
+                    <td>click</td>
+                    <td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>clickAndWait</td>
-                    <td>link=තහවුර මුද්‍රණය</td>
+                    <td>eprDirectApproveIgnoreWarning_approve</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -5663,7 +5673,7 @@
                 <tr>
                     <td>type</td>
                     <td>SerialNo</td>
-                    <td>1</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
@@ -5682,13 +5692,18 @@
                 </tr>
                 <tr>
                     <td>click</td>
-                    <td>birth-confirmation-form3_confirmantRadioMOTHER</td>
+                    <td>birth-confirmation-form3_confirmantRadioFATHER</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>click</td>
+                    <td>datePicker</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>type</td>
                     <td>datePicker</td>
-                    <td>2010-09-14</td>
+                    <td>2010-09-23</td>
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
@@ -5697,12 +5712,7 @@
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
-                    <td>print_birthcertificate.label</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
+                    <td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -5710,7 +5720,6 @@
                     <td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
                     <td></td>
                 </tr>
-
 
             </tbody>
         </table>

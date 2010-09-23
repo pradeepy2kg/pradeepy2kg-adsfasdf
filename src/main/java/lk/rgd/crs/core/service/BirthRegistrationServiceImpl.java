@@ -1532,6 +1532,8 @@ public class BirthRegistrationServiceImpl implements
 
                     // add marriage to the PRS
                     ecivil.addMarriage(m, user);
+                    ecivil.updatePerson(mother, user);
+                    ecivil.updatePerson(father, user);
 
                     // if informant is not father, and we have mothers address, assume that as the
                     // unverified address of father due to marriage

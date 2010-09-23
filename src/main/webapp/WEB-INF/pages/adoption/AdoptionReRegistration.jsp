@@ -113,7 +113,8 @@
     </tr>
 </table>
 
-<table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
+<table cellspacing="0" cellpadding="0" border="1"  width="100%"
+       style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <tr>
         <td width="330px" height="40px">අධිකරණය <br/>
             Court
