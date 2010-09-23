@@ -944,15 +944,14 @@
                 method="filter">
             <result type="tiles" name="success">epr.birthAlterationPendingApproval</result>
         </action>
-
-        <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
-                method="approveInit">
-            <result type="tiles" name="success">epr.birthAlterationApproval</result>
-        </action>
         <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="alterationApproval">
             <result type="tiles" name="success">epr.home</result>
         </action>
 
+        <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="approveInit">
+            <result type="tiles" name="success">epr.birthAlterationApproval</result>
+        </action>
     </package>
 </struts>

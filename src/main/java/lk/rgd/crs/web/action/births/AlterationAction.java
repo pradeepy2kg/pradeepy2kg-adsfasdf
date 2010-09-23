@@ -52,6 +52,9 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Date dateReceived;
     private Long alterationSerialNo;
     private int[] index;
+    private BitSet indexCheck;
+    private HashMap approveStatus = new HashMap();
+    private int numberOfAppPending;
 
     private ChildInfo child;
     private FatherInfo father;
@@ -71,16 +74,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private String dsDivisionName;
     private String bdDivisionName;
 
-    /*boolean values to    */
-    private boolean editChildInfo;
-    private boolean editMotherInfo;
-    private boolean editInformantInfo;
-    private boolean editFatherInfo;
-    private boolean editMarriageInfo;
-    private boolean editMothersNameAfterMarriageInfo;
-    private boolean editGrandFatherInfo;
-
-
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
     private int birthDivisionId;
@@ -96,6 +89,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private boolean nextFlag;
     private boolean previousFlag;
     private List<BirthAlteration> birthAlterationPendingApprovalList;
+
 
     private String language;
 
@@ -307,8 +301,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
      */
     public String approveInit() {
         //todo has to be implemented
+        numberOfAppPending = 0;
         BirthDeclaration bdf = service.getById(bdId, user);
         BirthAlteration ba = alterationService.getById(idUKey, user);
+        indexCheck = ba.getApprovalStatuses();
         alt27 = ba.getAlt27();
         alt27A = ba.getAlt27A();
         alt52_1 = ba.getAlt52_1();
@@ -488,21 +484,25 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         compareChanges[0] = Integer.toString(index);
         compareChanges[1] = bdfName;
         compareChanges[2] = baName;
-        if (compareChanges[1] != null && compareChanges != null) {
-            if (!compareChanges[2].equals(compareChanges[1])) {
-                birthAlterationApprovalList.add(compareChanges);
+        boolean checkApp = true;
+        if (!(indexCheck.get(index))) {
+            if (compareChanges[1] != null && compareChanges != null) {
+                if (!compareChanges[2].equals(compareChanges[1])) {
+                    birthAlterationApprovalList.add(compareChanges);
+                    numberOfAppPending++;
+                }
             }
-        }
-        if ((compareChanges[2] == null && compareChanges[1] != null) ||
-                (compareChanges[2] != null && compareChanges[1] == null)) {
-            birthAlterationApprovalList.add(compareChanges);
+            if ((compareChanges[2] == null && compareChanges[1] != null) ||
+                    (compareChanges[2] != null && compareChanges[1] == null)) {
+                birthAlterationApprovalList.add(compareChanges);
+                numberOfAppPending++;
+            }
         }
     }
 
     public String alterationApproval() {
         BirthAlteration ba = alterationService.getById(idUKey, user);
-        boolean isAct27A = false;
-        int lengthOfBitSet;
+        int lengthOfBitSet = 0;
         Hashtable approvalsBitSet = new Hashtable();
         switch (sectionOfAct) {
             case 1:
@@ -510,19 +510,17 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 logger.debug("Change The alt27 bit set of the Birth Alteration idUKey :{}", idUKey);
                 break;
             case 2:
-                isAct27A = true;
                 lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A;
                 logger.debug("Change The alt27A bit set of the Birth Alteration idUKey :{}", idUKey);
                 break;
             case 3:
-                isAct27A = false;
-                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1;
+                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A;
                 logger.debug("Change The alt52_1 bit set of the Birth Alteration idUKey :{}", idUKey);
                 break;
 
         }
         int check = 0;
-        for (int i = 1; i < WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A; i++) {
+        for (int i = 1; i < lengthOfBitSet; i++) {
             if (check < index.length) {
                 if (i == index[check]) {
                     //if a field is approved bit set to true
@@ -535,8 +533,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 approvalsBitSet.put(i, false);
             }
         }
+        boolean appStatus = false;
+        if (index.length == numberOfAppPending) {
+            appStatus = true;
+            logger.debug("The Alteration of {} child is fully approved ",ba.getAlt27().getChildFullNameOfficialLang());
+        }
         logger.debug("length of the apprrovals list is  :{}", approvalsBitSet.size());
-        alterationService.approveBirthAlteration(ba, approvalsBitSet, user);
+        alterationService.approveBirthAlteration(ba, approvalsBitSet, appStatus, user);
         ba = alterationService.getById(idUKey, user);
         logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
         return SUCCESS;
@@ -967,62 +970,6 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         this.alterationSerialNo = alterationSerialNo;
     }
 
-    public boolean isEditChildInfo() {
-        return editChildInfo;
-    }
-
-    public void setEditChildInfo(boolean editChildInfo) {
-        this.editChildInfo = editChildInfo;
-    }
-
-    public boolean isEditMotherInfo() {
-        return editMotherInfo;
-    }
-
-    public void setEditMotherInfo(boolean editMotherInfo) {
-        this.editMotherInfo = editMotherInfo;
-    }
-
-    public boolean isEditInformantInfo() {
-        return editInformantInfo;
-    }
-
-    public void setEditInformantInfo(boolean editInformantInfo) {
-        this.editInformantInfo = editInformantInfo;
-    }
-
-    public boolean isEditFatherInfo() {
-        return editFatherInfo;
-    }
-
-    public void setEditFatherInfo(boolean editFatherInfo) {
-        this.editFatherInfo = editFatherInfo;
-    }
-
-    public boolean isEditMarriageInfo() {
-        return editMarriageInfo;
-    }
-
-    public void setEditMarriageInfo(boolean editMarriageInfo) {
-        this.editMarriageInfo = editMarriageInfo;
-    }
-
-    public boolean isEditMothersNameAfterMarriageInfo() {
-        return editMothersNameAfterMarriageInfo;
-    }
-
-    public void setEditMothersNameAfterMarriageInfo(boolean editMothersNameAfterMarriageInfo) {
-        this.editMothersNameAfterMarriageInfo = editMothersNameAfterMarriageInfo;
-    }
-
-    public boolean isEditGrandFatherInfo() {
-        return editGrandFatherInfo;
-    }
-
-    public void setEditGrandFatherInfo(boolean editGrandFatherInfo) {
-        this.editGrandFatherInfo = editGrandFatherInfo;
-    }
-
     public ChildInfo getChild() {
         return child;
     }
@@ -1101,5 +1048,29 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setIndex(int[] index) {
         this.index = index;
+    }
+
+    public BitSet getIndexCheck() {
+        return indexCheck;
+    }
+
+    public void setIndexCheck(BitSet indexCheck) {
+        this.indexCheck = indexCheck;
+    }
+
+    public HashMap getApproveStatus() {
+        return approveStatus;
+    }
+
+    public void setApproveStatus(HashMap approveStatus) {
+        this.approveStatus = approveStatus;
+    }
+
+    public int getNumberOfAppPending() {
+        return numberOfAppPending;
+    }
+
+    public void setNumberOfAppPending(int numberOfAppPending) {
+        this.numberOfAppPending = numberOfAppPending;
     }
 }

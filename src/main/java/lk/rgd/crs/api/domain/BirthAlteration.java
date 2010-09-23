@@ -16,10 +16,10 @@ import java.util.BitSet;
 @NamedQueries({
 
         @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision AND ba.status <> :status " +
+                "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
-                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :status " +
+                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc")
 
 })

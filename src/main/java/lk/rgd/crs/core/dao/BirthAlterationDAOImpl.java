@@ -66,7 +66,8 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         Query q = em.createNamedQuery("filter.alteration.by.dsdivision").
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         q.setParameter("dsDivision", dsDivision);
-        q.setParameter("status", BirthAlteration.State.PRINTED);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
         return q.getResultList();
     }
 
@@ -79,7 +80,8 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
                 setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         logger.debug("get Approval pending list from bdDivision Number is :{}", BDDivision.getDivisionId());
         q.setParameter("bdDivision", BDDivision);
-        q.setParameter("status", BirthAlteration.State.PRINTED);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
         return q.getResultList();
     }
 }

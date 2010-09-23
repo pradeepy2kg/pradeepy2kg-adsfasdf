@@ -54,8 +54,9 @@ public interface BirthAlterationService {
      * @param ba                 the birth alteration to be approved
      * @param fieldsToBeApproved the list of field indexes to be approved
      * @param user               the user initiating the action
+     * @param appStatus          the alteration fully approved or not
      */
-    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved, User user);
+    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved,boolean appStatus,User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
