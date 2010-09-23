@@ -15,6 +15,7 @@ echo "Deploying updates .."
 cp /data/code/popreg/target/ecivil.war /data/tomcat6/webapps/ecivil.war
 rm -rf /data/tomcat6/work/Catalina/localhost/
 rm -rf /data/tomcat6/webapps/ecivil
+rm -rf /data/tomcat6/logs/*
 
 #sleep 2
 #echo "Starting Tomcat .."
