@@ -221,19 +221,19 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         switch (pageNo) {
             case 1:
                 dataManagementService.activateDistrict(UserDistrictId, currentUser);
-                logger.debug("Id of Active District ({}) is    :{}", district.getEnDistrictName(), district.getDistrictId());
+                logger.debug("Id of Active District ({}) is    :{}", districtDAO.getDistrict(UserDistrictId).getEnDistrictName(), UserDistrictId);
                 break;
             case 2:
                 dataManagementService.activateDSDivision(dsDivisionId, currentUser);
-                logger.debug("Id of Active Ds Division ({}) is    :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                logger.debug("Id of Active Ds Division ({}) is    :{}", dsDivisionDAO.getDSDivisionByPK(dsDivisionId).getEnDivisionName(), dsDivisionId);
                 break;
             case 3:
                 dataManagementService.activateBDDivision(divisionId, currentUser);
-                logger.debug("Id of Active Division ({}) is    :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                logger.debug("Id of Active Division ({}) is    :{}", bdDivisionDAO.getBDDivisionByPK(divisionId).getEnDivisionName(), divisionId);
                 break;
             case 4:
                 dataManagementService.activateMRDivision(mrdivisionId, currentUser);
-                logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+                logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
                 break;
 
         }
@@ -245,19 +245,19 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         switch (pageNo) {
             case 1:
                 dataManagementService.inactivateDistrict(UserDistrictId, currentUser);
-                logger.debug("Id of Inactive District ({}) is    :{}", district.getEnDistrictName(), district.getDistrictId());
+                logger.debug("Id of Inactive District ({}) is    :{}", districtDAO.getDistrict(UserDistrictId).getEnDistrictName(), UserDistrictId);
                 break;
             case 2:
                 dataManagementService.inactivateDSDivision(dsDivisionId, currentUser);
-                logger.debug("Id of Inactive Ds Division ({}) is    :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                logger.debug("Id of Inactive Ds Division ({}) is    :{}", dsDivisionDAO.getDSDivisionByPK(dsDivisionId).getEnDivisionName(), dsDivisionId);
                 break;
             case 3:
                 dataManagementService.inactivateBDDivision(divisionId, currentUser);
-                logger.debug("Id of Inactive Division ({}) is    :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                logger.debug("Id of Inactive Division ({}) is    :{}", bdDivisionDAO.getBDDivisionByPK(divisionId).getEnDivisionName(), divisionId);
                 break;
             case 4:
                 dataManagementService.inactivateMRDivision(mrdivisionId, currentUser);
-                logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+                logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
                 break;
 
         }
