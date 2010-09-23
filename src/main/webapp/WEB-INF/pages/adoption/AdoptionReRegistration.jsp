@@ -13,7 +13,7 @@
         }
 
         td {
-            font-size: 9pt;
+            font-size: 10pt;
         }
     }
 
@@ -106,7 +106,8 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>දරුකමට හදාගැනීමේ  උසාවි නියෝගය <br/>
+        <td>
+            දරුකමට හදාගැනීමේ  උසාවි නියෝගය <br/>
             Particulars of Adoption Order
         </td>
     </tr>
@@ -120,14 +121,16 @@
         <td><s:label name="courtName" /></td>
     </tr>
     <tr>
-        <td height="40px">නියෝගය නිකුත් කල දිනය <br/>
+        <td height="40px">
+            නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
         <td><s:label name="" value="%{adoption.orderIssuedDate}"/>
         </td>
     </tr>
     <tr>
-        <td height="40px">නියෝග අංකය <br/>
+        <td height="40px">
+            නියෝග අංකය <br/>
             Court order number
         </td>
         <td><s:label name="" value="%{adoption.courtOrderNumber}"/>
@@ -200,7 +203,7 @@
 </table>
 
 
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
+<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="110px"/>
     <col width="110px"/>
@@ -269,7 +272,7 @@
 </table>
 
 
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
+<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327px"/>
     <col/>
@@ -301,13 +304,14 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>අධිකරණ නියෝගය පිලිබඳ විස්තර<br/>
+        <td>
+            අධිකරණ නියෝගය පිලිබඳ විස්තර<br/>
             Information about the Adoption Order
         </td>
     </tr>
 </table>
 
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
+<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327"/>
     <col/>
@@ -319,11 +323,13 @@
         <td colspan="3"><s:label name="courtName"/></td>
     </tr>
     <tr>
-        <td height="40px">නියෝගය නිකුත් කල දිනය <br/>
+        <td height="40px">
+            නියෝගය නිකුත් කල දිනය <br/>
             Issued Date
         </td>
         <td><s:label name="" value="%{adoption.orderIssuedDate}"/></td>
-        <td width="250px">නියෝග අංකය <br/>
+        <td width="250px">
+            නියෝග අංකය <br/>
             Serial number
         </td>
         <td width="250px"><s:label name="" value="%{adoption.courtOrderNumber}"/></td>
@@ -339,7 +345,7 @@
     </tr>
 </table>
 
-<table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="0">
+<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <caption></caption>
     <col width="327"/>
     <col/>
