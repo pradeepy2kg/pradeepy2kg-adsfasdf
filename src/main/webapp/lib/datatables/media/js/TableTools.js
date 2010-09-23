@@ -22,11 +22,13 @@
  */
 
 /*todo amith */
-//including another java scripts file
+var nInfo = document.createElement("div");
 
 function setUpPrintHtml() {
+    //remove nInfo
+    document.body.removeChild(nInfo);
     print();
-    document.refresh();
+    history.go(0)
 }
 var TableToolsInit = {
     "oFeatures": {
@@ -279,7 +281,6 @@ var TableToolsInit = {
                 }
 
                 /* Add a node telling the user what is going on */
-                var nInfo = document.createElement("div");
                 nInfo.className = "TableTools_PrintInfo";
                 nInfo.innerHTML = "<h6>Print view</h6><p>Please click print button to print document " +
                                   " <br><input type='submit' value='print' onclick='setUpPrintHtml()'/>";
