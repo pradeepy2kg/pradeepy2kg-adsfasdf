@@ -8,7 +8,6 @@ import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.CertificateSearch;
-import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.CertificateSearchService;
 import lk.rgd.crs.web.WebConstants;
