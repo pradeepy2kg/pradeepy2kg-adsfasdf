@@ -138,9 +138,6 @@
     }
 
     function initPage() {
-        disableOk(true);
-        /*var element = document.getElementById('searchOk').style;
-         element.display = 'none';*/
         var domObject = document.getElementById('SerialNo');
         if (domObject.value.trim() == 0) {
             domObject.value = null;
@@ -194,10 +191,10 @@
 
                         <s:hidden name="pageNo" value="2"/>
                         <s:hidden name="bdId" value="%{#request.bdId}"/>
-                        <td align="left" class="button"><s:submit id="searchOk" name="searchOk"
-                                                                  value="%{getText('skip.label')}"
-                                                                  cssStyle="margin-right:8px;"/></td>
-
+                        <td align="left" class="button">
+                            <s:submit id="searchOk" name="searchOk" value="%{getText('skip.label')}"
+                                                                  cssStyle="margin-right:8px;"/>
+                        </td>
                     </tr>
                 </table>
                 </s:if>
