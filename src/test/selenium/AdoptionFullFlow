@@ -128,16 +128,7 @@
 	<td>childNewName</td>
 	<td>new name</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>//input[@id='availabefalse' and @name='available' and @value='false' and @type='radio' and @onclick='enableCertificateNumber(true);enableSerialNumber(false)']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>birthRegistrationSrialNum</td>
-	<td>1</td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>_0</td>
