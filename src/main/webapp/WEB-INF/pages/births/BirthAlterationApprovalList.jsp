@@ -113,7 +113,7 @@
         <s:iterator status="approvalStatus" value="birthAlterationPendingApprovalList" id="approvalList">
             <%--todo has to be completed--%>
             <tr>
-                <td><s:property value="alt52_1.birthDivision.bdDivisionUKey"/></td>
+                <td><s:property value="#approvalStatus.index"/></td>
                 <td><s:property value="alt27.childFullNameOfficialLang"/></td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration">

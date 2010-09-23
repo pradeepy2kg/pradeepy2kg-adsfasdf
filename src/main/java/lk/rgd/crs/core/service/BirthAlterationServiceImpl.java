@@ -86,7 +86,8 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved, User user) {
+    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved,
+                                       boolean appStatus,User user) {
         logger.debug("Attempt to approve birth alteration record : {} ", ba.getIdUKey());
         validateAccessOfUser(ba, user);
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
@@ -101,14 +102,17 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
         while (fieldList.hasMoreElements()) {
             Integer aKey = fieldList.nextElement();
             if (fieldsToBeApproved.get(aKey) == true) {
-                if (ba.getApprovalStatuses().get(aKey) == false) {
-                    logger.debug("setting status as approval for the alteration statement");
-                    existing.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_TRUE);
-                } else {
-                    handleException("Cannot approve alteration according to the alteration statement  : " + ba.getIdUKey() +
-                            " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
-                }
+                logger.debug("setting status as approval for the alteration statement");
+                existing.getApprovalStatuses().set(aKey, WebConstants.BIRTH_ALTERATION_APPROVE_TRUE);
+
             }
+            /*else {
+                handleException("Cannot approve alteration according to the alteration statement  : " + ba.getIdUKey() +
+                        " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
+            }*/
+        }
+        if(appStatus){
+            existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
         }
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
         existing.getLifeCycleInfo().setApprovalOrRejectUser(user);
