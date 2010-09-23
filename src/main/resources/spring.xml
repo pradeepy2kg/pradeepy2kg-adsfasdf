@@ -187,8 +187,10 @@
         <property name="target">
             <bean class="lk.rgd.crs.core.service.CertificateSearchServiceImpl">
                 <constructor-arg ref="birthDeclarationDAOImpl"/>
+                <constructor-arg ref="deathRegisterDAOImpl"/>
                 <constructor-arg ref="certSearchDAOImpl"/>
                 <constructor-arg ref="birthRecordsIndexer"/>
+                <constructor-arg ref="deathRecordsIndexer"/>
             </bean>
         </property>
         <property name="interceptorNames">
@@ -222,10 +224,16 @@
     <bean id="solrIndexManager" class="lk.rgd.common.core.index.SolrIndexManager">
         <constructor-arg value="http://localhost:9443/solr/births"/>
         <constructor-arg value="http://localhost:9443/solr/prs"/>
+        <constructor-arg value="http://localhost:9443/solr/deaths"/>
     </bean>
     <bean id="birthRecordsIndexer" class="lk.rgd.crs.core.service.BirthRecordsIndexer">
         <constructor-arg ref="solrIndexManager"/>
         <constructor-arg ref="birthDeclarationDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+    </bean>
+    <bean id="deathRecordsIndexer" class="lk.rgd.crs.core.service.DeathRecordsIndexer">
+        <constructor-arg ref="solrIndexManager"/>
+        <constructor-arg ref="deathRegisterDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 

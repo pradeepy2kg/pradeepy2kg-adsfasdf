@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
+import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.Embeddable;
@@ -169,5 +170,17 @@ public class DeathPersonInfo implements Serializable {
         this.deathPersonMotherFullName = WebUtils.filterBlanksAndToUpper(deathPersonMotherFullName);
     }
 
-
+    /**
+     * Returns the full name in the official language, limited to the maxLength.
+     *
+     * @param maxLength the maximum length of the name to return
+     * @return length limited name in the official language
+     */
+    public String getDeathPersonNameOfficialLangToLength(int maxLength) {
+        if (deathPersonNameOfficialLang != null && deathPersonNameOfficialLang.length() > maxLength) {
+            return "..." + deathPersonNameOfficialLang.substring(deathPersonNameOfficialLang.length() - maxLength + 3,
+                deathPersonNameOfficialLang.length());
+        }
+        return deathPersonNameOfficialLang;
+    }
 }

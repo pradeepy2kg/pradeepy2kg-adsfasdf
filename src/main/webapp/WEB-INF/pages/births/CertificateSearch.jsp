@@ -116,9 +116,16 @@
         else
             validateNumber(domObject.value, 'error1', 'error8');
     }
-
 </script>
-<s:form action="eprBirthCertificateSearch.do" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
+<s:if test="certificateType.ordinal() == 0">
+    <s:url id="certificateSearch" value="eprBirthCertificateSearch.do"/>
+</s:if>
+<s:elseif test="certificateType.ordinal() == 1">
+    <s:url id="certificateSearch" value="eprDeathCertificateSearch.do"/>
+</s:elseif>
+
+
+<s:form action="%{certificateSearch}" name="birthCertificateSearchForm" id="birth-certificate-search-form-1"
         method="POST" onsubmit="javascript:return validate()">
 <table style="font-size:9pt">
     <caption></caption>
@@ -128,7 +135,7 @@
     <tr>
             <%--<td width="300px"></td>--%>
         <td align="center" style="font-size:12pt; width:180px">
-            <img src="<s:url value="/images/official-logo.png"></s:url>" alt=""/><br>
+            <img src="<s:url value="/images/official-logo.png"></s:url>" alt=""/><br> 
         </td>
         <td align="center" style="font-size:12pt;">
             <s:if test="certificateType.ordinal() == 0">
@@ -375,5 +382,10 @@
 <div class="form-submit">
     <s:submit value="%{getText('bdfSearch.button')}" cssStyle="margin-top:10px;"/>
 </div>
+<%--<s:if test="certificateType.ordinal() == 0">--%>
 </s:form>
+<%--</s:if>--%>
+<%--<s:elseif test="certificateType.ordinal() == 1">--%>
+<%--</s:form>--%>
+<%--</s:elseif>--%>
 </div>

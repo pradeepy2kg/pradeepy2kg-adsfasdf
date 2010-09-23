@@ -2,10 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.crs.web.util.WebUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -32,6 +29,9 @@ public class SearchInfo {
      */
     @Column(nullable = true)
     private int gender;
+
+    @Transient
+    private String searchRecordStatus;
 
     /**
      * This is applicable for death certificate search (cause of death in death certificate search form)
@@ -198,5 +198,13 @@ public class SearchInfo {
 
     public void setCertificateIssueDate(Date certificateIssueDate) {
         this.certificateIssueDate = certificateIssueDate;
+    }
+
+    public String getSearchRecordStatus() {
+        return searchRecordStatus;
+    }
+
+    public void setSearchRecordStatus(String searchRecordStatus) {
+        this.searchRecordStatus = searchRecordStatus;
     }
 }

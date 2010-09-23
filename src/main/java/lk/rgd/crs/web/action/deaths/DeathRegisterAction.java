@@ -100,7 +100,7 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
     private boolean allowPrintCertificate;
     private boolean directPrint;
     private boolean addNewMode;
-
+    private boolean certificateSearch;
 
     public DeathRegisterAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
         CountryDAO countryDAO, DeathRegistrationService deathRegistrationService,
@@ -429,9 +429,11 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
             }
             noOfRows = appParametersDAO.getIntParameter(DEATH_APPROVAL_AND_PRINT_ROWS_PER_PAGE);
             if (deathDivisionId != 0) {
-                deathApprovalAndPrintList = service.getPaginatedListForAll(bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
+                deathApprovalAndPrintList = service.getPaginatedListForAll(
+                    bdDivisionDAO.getBDDivisionByPK(deathDivisionId), pageNo, noOfRows, user);
             } else {
-                deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+                deathApprovalAndPrintList = service.getPaginatedListForAllByDSDivision(
+                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
             }
         }
         initPermissionForApprovalAndPrint();
@@ -1109,5 +1111,13 @@ public class DeathRegisterAction extends ActionSupport implements SessionAware {
 
     public void setIgnoreWarning(boolean ignoreWarning) {
         this.ignoreWarning = ignoreWarning;
+    }
+
+    public boolean isCertificateSearch() {
+        return certificateSearch;
+    }
+
+    public void setCertificateSearch(boolean certificateSearch) {
+        this.certificateSearch = certificateSearch;
     }
 }

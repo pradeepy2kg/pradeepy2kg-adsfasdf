@@ -14,13 +14,16 @@ public class SolrIndexManager {
     private static final Logger logger = LoggerFactory.getLogger(SolrIndexManager.class);
 
     private SolrServer birthServer;
+    private SolrServer deathServer;
     private SolrServer prsServer;
     private String solrBirthURL;
+    private String solrDeathURL;
     private String solrPRSURL;
 
-    public SolrIndexManager(String solrBirthURL, String solrPRSURL) {
+    public SolrIndexManager(String solrBirthURL, String solrPRSURL, String solrDeathURL) {
         this.solrBirthURL = solrBirthURL;
-        this.solrPRSURL =  solrPRSURL;
+        this.solrPRSURL = solrPRSURL;
+        this.solrDeathURL = solrDeathURL;
     }
 
     private synchronized void connect() {
@@ -29,11 +32,17 @@ public class SolrIndexManager {
 
         try {
             birthServer = new CommonsHttpSolrServer(solrBirthURL);
-            prsServer   = new CommonsHttpSolrServer(solrPRSURL);
+            deathServer = new CommonsHttpSolrServer(solrDeathURL);
+            prsServer = new CommonsHttpSolrServer(solrPRSURL);
 
             SolrPingResponse pingResponse = birthServer.ping();
             if (pingResponse.getStatus() == 0) {
                 logger.info("Successfully connected to Birth Registration Solr instance at : " + solrBirthURL);
+            }
+
+            pingResponse = deathServer.ping();
+            if (pingResponse.getStatus() == 0) {
+                logger.info("Successfully connected to Death Registration Solr instance at : " + solrDeathURL);
             }
 
             pingResponse = prsServer.ping();
@@ -42,8 +51,10 @@ public class SolrIndexManager {
             }
 
         } catch (Exception e) {
-            logger.error("Failed to connect to : " + solrBirthURL + " or : " + solrPRSURL + " - " + e.getMessage());
+            logger.error("Failed to connect to : " + solrBirthURL + " or : " + solrDeathURL + " or : " + solrPRSURL +
+                " - " + e.getMessage());
             birthServer = null;
+            deathServer = null;
             prsServer = null;
         }
     }
@@ -53,6 +64,13 @@ public class SolrIndexManager {
             connect();
         }
         return birthServer;
+    }
+
+    public SolrServer getDeathServer() {
+        if (deathServer == null) {
+            connect();
+        }
+        return deathServer;
     }
 
     public SolrServer getPRSServer() {

@@ -14,30 +14,31 @@ import java.util.Date;
 @Table(name = "DEATH_REGISTER", schema = "CRS")
 
 @NamedQueries({
-        @NamedQuery(name = "death.register.filter.by.and.deathDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision = :deathDivision " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "death.register.filter.by.and.deathDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision = :deathDivision " + "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
-                "deathRegister.death.deathDivision = :deathDivision"),
+    @NamedQuery(name = "get.all.deaths.by.deathDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.death.deathDivision = :deathDivision"),
 
-        @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
-                "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"),
+    @NamedQuery(name = "get.active.by.bddivision.and.deathSerialNo", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathSerialNo = :deathSerialNo AND deathRegister.death.deathDivision = :deathDivision " +
+        "AND deathRegister.lifeCycleInfo.activeRecord IS TRUE"),
 
-        @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
-                "ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "get.by.division.register.date", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.death.deathDivision = :deathDivision AND (deathRegister.death.dateOfRegistration BETWEEN :startDate AND :endDate) " +
+        "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
-                "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision.dsDivision = :dsDivision " +
-                "ORDER BY deathRegister.death.dateOfRegistration desc"),
+    @NamedQuery(name = "death.register.filter.by.and.dsDivision.status.paginated", query = "SELECT deathRegister FROM DeathRegister deathRegister " +
+        "WHERE deathRegister.status = :status AND deathRegister.death.deathDivision.dsDivision = :dsDivision " +
+        "ORDER BY deathRegister.death.dateOfRegistration desc"),
 
-        @NamedQuery(name = "get.all.deaths.by.dsDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
-                "deathRegister.death.deathDivision.dsDivision = :dsDivision"),
+    @NamedQuery(name = "get.all.deaths.by.dsDivision", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.death.deathDivision.dsDivision = :dsDivision"),
 
-        @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
-                "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC")
+    @NamedQuery(name = "get.all.deaths.by.deathPersonPIN", query = "SELECT deathRegister FROM DeathRegister deathRegister WHERE " +
+        "deathRegister.deathPerson.deathPersonPINorNIC = :pinOrNIC"),
 
+    @NamedQuery(name = "findAllDeaths", query = "SELECT ddf FROM DeathRegister ddf")
 })
 public class DeathRegister implements Serializable {
     public CRSLifeCycleInfo getLifeCycleInfo() {

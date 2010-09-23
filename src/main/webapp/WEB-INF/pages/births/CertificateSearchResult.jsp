@@ -25,7 +25,6 @@
 <div>
     <s:actionerror/>
 </div>
-
 <div>
     <s:if test="searchResultList.size > 0">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
@@ -42,47 +41,86 @@
                 </tr>
                 </thead>
                 <tbody>
-                <s:iterator status="searchStatus" value="searchResultList" id="searchId">
-                    <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                        <td><s:property value="idUKey"/></td>
-                        <td><s:property value="register.bdfSerialNo"/></td>
-                        <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
-                        <td align="center">
-                            <s:if test="child.childGender == 0">
-                                <s:label value="%{getText('male.label')}"/>
-                            </s:if>
-                            <s:elseif test="child.childGender == 1">
-                                <s:label value="%{getText('female.label')}"/>
-                            </s:elseif>
-                            <s:elseif test="child.childGender == 2">
-                                <s:label value="%{getText('unknown.label')}"/>
-                            </s:elseif>
+                <s:if test="#request.certificateType.ordinal() == 0">
+                    <s:iterator status="searchStatus" value="searchResultList" id="searchId">
+                        <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                            <td><s:property value="idUKey"/></td>
+                            <td><s:property value="register.bdfSerialNo"/></td>
+                            <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                            <td align="center">
+                                <s:if test="child.childGender == 0">
+                                    <s:label value="%{getText('male.label')}"/>
+                                </s:if>
+                                <s:elseif test="child.childGender == 1">
+                                    <s:label value="%{getText('female.label')}"/>
+                                </s:elseif>
+                                <s:elseif test="child.childGender == 2">
+                                    <s:label value="%{getText('unknown.label')}"/>
+                                </s:elseif>
 
-                        <td align="center">
-                            <s:if test="register.birthType.ordinal() != 0">
-                                <s:label value="%{getText('yes.label')}"/>
-                            </s:if>
-                            <s:elseif test="register.birthType.ordinal() == 0">
-                                <s:label value="%{getText('no.label')}"/>
-                            </s:elseif>
-                        </td>
-                        <td align="center">
-                            <s:url id="cetificatePrintUrl" action="eprBirthCertificate">
-                                <s:param name="bdId" value="idUKey"/>
-                                <%--TODO remove following by chathuranga--%>
-                                <s:param name="certificateSearch" value="true"/>
-                            </s:url>
-                            <s:a href="%{cetificatePrintUrl}">
-                                <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
-                            </s:a>
-                        </td>
-                    </tr>
-                </s:iterator>
+                            <td align="center">
+                                <s:if test="register.birthType.ordinal() != 0">
+                                    <s:label value="%{getText('yes.label')}"/>
+                                </s:if>
+                                <s:elseif test="register.birthType.ordinal() == 0">
+                                    <s:label value="%{getText('no.label')}"/>
+                                </s:elseif>
+                            </td>
+                            <td align="center">
+                                <s:url id="cetificatePrintUrl" action="eprBirthCertificate.do">
+                                    <s:param name="bdId" value="idUKey"/>
+                                    <s:param name="certificateSearch" value="true"/>
+                                </s:url>
+                                <s:a href="%{cetificatePrintUrl}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                                </s:a>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                </s:if>
+                <s:elseif test="#request.certificateType.ordinal() == 1">
+                    <s:iterator status="searchStatus" value="searchResultList" id="searchId">
+                        <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
+                            <td><s:property value="idUKey"/></td>
+                            <td><s:property value="death.deathSerialNo"/></td>
+                            <td><s:property value="%{deathPerson.getDeathPersonNameOfficialLangToLength(50)}"/></td>
+                            <td align="center">
+                                <s:if test="deathPerson.deathPersonGender == 0">
+                                    <s:label value="%{getText('male.label')}"/>
+                                </s:if>
+                                <s:elseif test="child.childGender == 1">
+                                    <s:label value="%{getText('female.label')}"/>
+                                </s:elseif>
+                                <s:elseif test="child.childGender == 2">
+                                    <s:label value="%{getText('unknown.label')}"/>
+                                </s:elseif>
+
+                            <td align="center">
+                                <s:if test="register.birthType.ordinal() != 0">
+                                    <s:label value="%{getText('yes.label')}"/>
+                                </s:if>
+                                <s:elseif test="register.birthType.ordinal() == 0">
+                                    <s:label value="%{getText('no.label')}"/>
+                                </s:elseif>
+                            </td>
+                            <td align="center">
+                                <s:url id="cetificatePrintUrl" action="eprDeathCertificate.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                    <s:param name="certificateSearch" value="true"/>
+                                </s:url>
+                                <s:a href="%{cetificatePrintUrl}">
+                                    <img src="<s:url value='/images/print_icon.gif'/>" border="none" height="25"/>
+                                </s:a>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                </s:elseif>
                 </tbody>
             </table>
         </fieldset>
     </s:if>
-    <s:else>
+    <%--TODO by chathuranga--%>
+    <%--<s:else>--%>
         <s:actionmessage cssClass="alreadyPrinted"/>
-    </s:else>
+    <%--</s:else>--%>
 </div>
