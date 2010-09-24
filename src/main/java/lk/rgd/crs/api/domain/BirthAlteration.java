@@ -15,8 +15,8 @@ import java.util.BitSet;
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
 
-        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba " +
-                "WHERE ba.alt52_1.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
+        @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba , BirthDeclaration bdf " +
+                "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
         @NamedQuery(name = "filter.alteration.by.bddivision", query = "SELECT ba FROM BirthAlteration ba,BirthDeclaration bdf " +
                 "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision = :bdDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
@@ -32,8 +32,12 @@ public class BirthAlteration {
          */
         DATA_ENTRY,
         /**
-         * 1 - An ADR or higher approved ba
+         * 1 - An ADR or higher partialy approved ba
          */
+        PARTIALY_APPROVED,
+        /*
+        * 2 - An ADR or higher fully approved ba
+        * */
         FULLY_APPROVED,
         /**
          * 2 - A BDF for which the parent confirmation form was printed

@@ -153,6 +153,7 @@ public class Menu {
         adrBirthLink.put("eprDirectApproveIgnoreWarning.do", new Link(null, "/ecivil/births/", "eprDirectApproveIgnoreWarning.do", Permission.APPROVE_BDF));
         adrBirthLink.put("ConfirmationDirectApprovalIngoreWarning.do", new Link(null, "/ecivil/births/", "ConfirmationDirectApprovalIngoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
         adrBirthLink.put("eprApproveAlteration.do", new Link(null, "/ecivil/births/", "eprApproveAlteration.do", Permission.APPROVE_BDF));
+        adrBirthLink.put("eprRejectSelectedAlteration.do", new Link(null, "/ecivil/births/", "eprRejectSelectedAlteration", Permission.APPROVE_BDF));
 
         //Birth for ARG
         argBirthLink.putAll(adrBirthLink);

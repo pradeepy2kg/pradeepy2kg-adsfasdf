@@ -11,18 +11,6 @@
 <script type="text/javascript" src="../js/validate.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#approval-list-table').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
-        });
-    });
 
 
     $(function() {
@@ -60,24 +48,38 @@
         })
     });
 
+    
+    $(document).ready(function() {
+        $('#approval-list-table').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
+    });
+
+
 
 </script>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror/>
-<table cellpadding="5" cellspacing="0">
+<table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%">
     <s:form action="eprFilterAlteration" method="post">
 
         <tbody>
         <tr>
-            <td><s:label name="district" value="%{getText('district.label')}"/></td>
-            <td>
+            <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"/></td>
+            <td style="width:25%">
                 <s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="birthDistrictId"
                           cssStyle="width:240px;"/>
             </td>
-            <td></td>
-            <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-            <td>
+            <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+            <td style="width:25%">
                 <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                           cssStyle="float:left;  width:240px;"/>
             </td>
@@ -89,7 +91,8 @@
                           headerValue="%{getText('all.divisions.label')}" headerKey="0"
                           cssStyle=" width:240px;float:left;"/>
             </td>
-            <td class="button" align="left"><s:submit name="refresh" value="%{getText('refresh.label')}"/></td>
+            <td></td>
+            <td class="button"><s:submit name="refresh" value="%{getText('refresh.label')}" cssStyle="float:right;"/></td>
         </tr>
         </tbody>
     </s:form>
@@ -133,7 +136,7 @@
                 </td>
                 <td align="center">
                     <s:if test="#request.allowApproveAlteration">
-                        <s:url id="rejectSelected" action="#">
+                        <s:url id="rejectSelected" action="eprRejectSelectedAlteration.do">
                             <s:param name="idUKey" value="idUKey"/>
                             <s:param name="bdId" value="bdId"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>

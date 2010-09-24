@@ -312,6 +312,7 @@
         <constructor-arg ref="roleDAOImpl"/>
         <constructor-arg ref="userManagerService"/>
         <constructor-arg ref="masterDataManagementService"/>
+        <constructor-arg ref="courtDAOImpl"/>
     </bean>
 
     <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarsManagmentAction">

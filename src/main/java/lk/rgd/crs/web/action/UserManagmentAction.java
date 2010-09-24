@@ -15,8 +15,10 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.dao.CourtDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.Court;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 
 
@@ -42,6 +44,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private List<DSDivision> dsDivisionNameList;
     private List<BDDivision> bdDivisionNameList;
     private List<MRDivision> mrDivisionNameList;
+    private List<Court> courtNameList;
     private String nameOfUser;
     private String userId;
     private String userName;
@@ -67,6 +70,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
+    private final CourtDAO courtDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -86,7 +90,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return roleId;
     }
 
-    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service,
+    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service,CourtDAO courtDAO,
                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -95,6 +99,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dataManagementService = dataManagementService;
         this.mrDivisionDAO = mrDivisionDAO;
+        this.courtDAO=courtDAO;
     }
 
     public String creatUser() {
@@ -213,6 +218,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 mrDivisionNameList = mrDivisionDAO.findAll();
                 mrDivision = null;
+                break;
+             case 5:
                 break;
         }
     }
@@ -662,4 +669,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     public void setCurrentDistrictList(Map<Integer, String> currentDistrictList) {
         this.currentDistrictList = currentDistrictList;
     }
+
+    public List<Court> getCourtNameList() {
+        return courtNameList;
+    }
+
+    public void setCourtNameList(List<Court> courtNameList) {
+        this.courtNameList = courtNameList;
+    }
+
 }

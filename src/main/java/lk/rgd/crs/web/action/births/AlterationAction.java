@@ -262,7 +262,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         populateDistrictAndDSDivision();
         bdDivisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionId, language, user);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
-        setPageNo(1);
+        pageNo = 1;
         /* birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
      dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);*/
         initPermission();
@@ -402,16 +402,23 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (marriage != null) {
             compareAndAdd(Alteration27A.WERE_PARENTS_MARRIED, marriageOriginal.getParentsMarried().toString(), marriage.getParentsMarried().toString());
             compareAndAdd(Alteration27A.PLACE_OF_MARRIAGE, marriageOriginal.getPlaceOfMarriage(), marriage.getPlaceOfMarriage());
-            compareAndAdd(Alteration27A.DATE_OF_MARRIAGE, marriageOriginal.getDateOfMarriage().toString(), marriage.getDateOfMarriage().toString());
+            String originalMarriageDate = null;
+            String marriageDate = null;
+            if (marriageOriginal.getDateOfMarriage() != null)
+                originalMarriageDate = marriageOriginal.getDateOfMarriage().toString();
+            if (marriage.getDateOfMarriage() != null)
+                marriageDate = marriageOriginal.getDateOfMarriage().toString();
+            compareAndAdd(Alteration27A.DATE_OF_MARRIAGE, originalMarriageDate, marriageDate);
             logger.debug("Check and add to all field of Marriage to approval list of idUKey :{}", idUKey);
 
         }
         if (alt27A.getMothersNameAfterMarriage() != null) {
             compareChanges = new String[3];
             compareChanges[0] = Integer.toString(Alteration27A.MOTHER_NAME_AFTER_MARRIAGE);
-            compareChanges[0] = parent.getMotherFullName();
+            compareChanges[1] = parent.getMotherFullName();
             compareChanges[2] = alt27A.getMothersNameAfterMarriage();
             birthAlterationApprovalList.add(compareChanges);
+            numberOfAppPending ++;
             logger.debug("Check {} mother name after Marriage if idUKey :{}", compareChanges[0], idUKey);
         }
 
@@ -422,8 +429,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         register = bdf.getRegister();
         if (alt52_1.getDateOfBirth() != null)
             compareAndAdd(Alteration52_1.DATE_OF_BIRTH, alt52_1.getDateOfBirth().toString(), child.getDateOfBirth().toString());
-        if (alt52_1.getPlaceOfBirth() != null)
-            compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
+        compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
         compareAndAdd(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, alt52_1.getPlaceOfBirthEnglish(), child.getPlaceOfBirthEnglish());
 
         if (alt52_1.getBirthDivision() != null && register.getBirthDivision() != null)
@@ -514,15 +520,16 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 logger.debug("Change The alt27A bit set of the Birth Alteration idUKey :{}", idUKey);
                 break;
             case 3:
-                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT27A;
+                lengthOfBitSet = WebConstants.BIRTH_ALTERATION_APPROVE_ALT52_1;
                 logger.debug("Change The alt52_1 bit set of the Birth Alteration idUKey :{}", idUKey);
                 break;
 
         }
         int check = 0;
-        for (int i = 1; i < lengthOfBitSet; i++) {
+        for (int i =0; i < lengthOfBitSet+1; i++) {
             if (check < index.length) {
                 if (i == index[check]) {
+                    logger.debug("index {}  is :{}",i,index[check]);
                     //if a field is approved bit set to true
                     approvalsBitSet.put(i, true);
                     check++;
@@ -536,7 +543,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         boolean appStatus = false;
         if (index.length == numberOfAppPending) {
             appStatus = true;
-            logger.debug("The Alteration of {} child is fully approved ",ba.getAlt27().getChildFullNameOfficialLang());
+            logger.debug("The Alteration of {} child is fully approved ", ba.getAlt27().getChildFullNameOfficialLang());
         }
         logger.debug("length of the apprrovals list is  :{}", approvalsBitSet.size());
         alterationService.approveBirthAlteration(ba, approvalsBitSet, appStatus, user);
@@ -547,6 +554,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     private void initPermission() {
         setAllowApproveAlteration(user.isAuthorized(Permission.APPROVE_BIRTH_ALTERATION));
+    }
+
+    public String rejectAlteration() {
+        BirthAlteration ba = alterationService.getById(idUKey, user);
+        ba.setStatus(BirthAlteration.State.PRINTED);
+        alterationService.updateBirthAlteration(ba, user);
+        return SUCCESS;
     }
 
     /**
