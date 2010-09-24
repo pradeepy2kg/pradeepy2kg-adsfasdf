@@ -66,7 +66,7 @@
             </tr>
             </tbody>
         </table>
-        
+
         <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
                class="font-9">
             <col width="150px"/>
@@ -75,7 +75,16 @@
             <col/>
             <tbody>
             <tr class="form-sub-title">
-                <td colspan="4">තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority</td>
+                <td colspan="4">
+                    <s:if test="#session.deathRegister.deathType.ordinal() == 0 || #session.deathRegister.deathType.ordinal() == 1">
+                    තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority
+                </td>
+                </s:if>
+                <s:elseif test="#session.deathRegister.deathType.ordinal() == 2 || #session.deathRegister.deathType.ordinal() == 3">
+                    දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල් <br/>
+                    அதிகாரியிடம் தெரிவித்தல் <br/>
+                    District Registrar / Registrar General
+                </s:elseif>
             </tr>
             <tr>
                 <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /

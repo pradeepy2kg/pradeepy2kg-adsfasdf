@@ -10,12 +10,14 @@
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
     @import "../lib/datatables/media/css/TableTools.css";
+    @import "../lib/datatables/media/css/ColVis.css";
     @import "../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css";
 </style>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ZeroClipboard.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/TableTools.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ColVis.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <script>
@@ -30,10 +32,32 @@
             "bAutoWidth": false,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers"   ,
-            "sDom": 'T<"clear">lfrtip'
-
-            /* ,
-             "sDom": 'T<"clear"><"fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"lfr>t<"fg-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip>'
+            "sDom": 'T,C,H<"clear">lftipr'
+            /**
+             * plugin and short key
+             * TableTools T
+             * Colvis C (show hide colloum)
+             */
+            /*
+             * Variable: sDom
+             * Purpose:  Dictate the positioning that the created elements will take
+             * Scope:    jQuery.dataTable.classSettings
+             * Notes:
+             *   The following options are allowed:
+             *     'l' - Length changing
+             *     'f' - Filtering input
+             *     't' - The table!
+             *     'i' - Information
+             *     'p' - Pagination
+             *     'r' - pRocessing
+             *   The following constants are allowed:
+             *     'H' - jQueryUI theme "header" classes
+             *     'F' - jQueryUI theme "footer" classes
+             *   The following syntax is expected:
+             *     '<' and '>' - div elements
+             *     '<"class" and '>' - div with a class
+             *   Examples:
+             *     '<"wrapper"flipt>', '<lf<t>ip>'
              */
         });
     });

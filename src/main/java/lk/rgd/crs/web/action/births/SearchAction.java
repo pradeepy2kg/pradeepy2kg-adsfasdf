@@ -158,8 +158,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("{} certificate search: Page {}", certificateType, pageNo);
         if (pageNo == 1) {
             try {
+                // setting Certificate type, DSdivision and BDDivision to Certificate Search 
                 certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                 certSearch.getCertificate().setCertificateType(certificateType);
+                if (birthDivisionId != 0 && certSearch.getSearch().getSearchSerialNo() != null) {
+                    certSearch.getSearch().setBdDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                }
 
                 // validate duplicate application number entering
                 boolean validNo = certificateSearchService.isValidCertificateSearchApplicationNo(
@@ -174,11 +178,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
                     } else if (certificateType == CertificateSearch.CertificateType.DEATH) {
                         searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user);
                     }
+                    logger.debug("Certificate search result size : {}", searchResultList.size());
+                    if (searchResultList.size() == 0) {
+                        addActionMessage(getText("noitemMsg.label"));
+                    }
                 }
-                if (searchResultList.size() == 0) {
-                    addActionMessage(getText("noitemMsg.label"));
-                }
-
             } catch (CRSRuntimeException e) {
                 logger.error("inside birthCertificateSearch()", e);
                 addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + certSearch.getCertificate().getApplicationNo() +

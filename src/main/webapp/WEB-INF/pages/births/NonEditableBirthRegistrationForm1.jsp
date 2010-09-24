@@ -276,13 +276,6 @@
     <s:set name="lang" value="%{#session.birthRegister.register.preferredLanguage}"/>
     <td colspan="6"><s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/></td>
 </tr>
-    <%--</tbody>--%>
-    <%--</table>--%>
-    <%--<table class="table_reg_page_01" cellpadding="0" cellspacing="0">--%>
-    <%--<col width="270px">--%>
-    <%--<col width="250px">--%>
-    <%--<col width="250px">--%>
-    <%--<col width="200px">--%>
 <tr>
     <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ස්ත්‍රී පුරුෂ භාවය<br>
         பால் <br>Gender of the child</label></td>
