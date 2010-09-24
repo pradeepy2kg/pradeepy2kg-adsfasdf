@@ -60,7 +60,7 @@
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:5},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -180,9 +180,6 @@
                     <s:property value="%{getText('label.dsDivision')}"/>
                 </td>
                 <td>
-                    <s:if test="assignment != null">
-                        <s:property value="assignment"
-                    </s:if>
                     <s:select id="dsDivisionId" name="dsDivisionId"
                               list="dsDivisionList"
                               value="%{dsDivisionId}"
