@@ -174,11 +174,11 @@ public class SearchAction extends ActionSupport implements SessionAware {
                     } else if (certificateType == CertificateSearch.CertificateType.DEATH) {
                         searchResultList = certificateSearchService.performDeathCertificateSearch(certSearch, user);
                     }
+                    logger.debug("Certificate search result size : {}", searchResultList.size());
+                    if (searchResultList.size() == 0) {
+                        addActionMessage(getText("noitemMsg.label"));
+                    }
                 }
-                if (searchResultList.size() == 0) {
-                    addActionMessage(getText("noitemMsg.label"));
-                }
-
             } catch (CRSRuntimeException e) {
                 logger.error("inside birthCertificateSearch()", e);
                 addActionError(getText("CertSearch.error." + e.getErrorCode()) + "\n" + certSearch.getCertificate().getApplicationNo() +
