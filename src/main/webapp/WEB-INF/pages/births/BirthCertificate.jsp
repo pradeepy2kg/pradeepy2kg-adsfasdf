@@ -14,7 +14,7 @@
         }
 
         td {
-            font-size: 7pt;
+            font-size: 12pt;
         }
     }
 
@@ -80,7 +80,7 @@
         <td rowspan="3"></td>
         <td rowspan="2" align="center">
             <img src="<s:url value="../images/official-logo.png" />"
-                 style="display: block; text-align: center;" width="70" height="90">
+                 style="display: block; text-align: center;" width="100" height="120">
         </td>
         <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
         </td>
@@ -89,7 +89,7 @@
         <td><s:label name="bdId"/></td>
     </tr>
     <tr>
-        <td align="center" style="font-size:8.5pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
+        <td align="center" style="font-size:15pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             <s:if test="birthType.ordinal() != 0">
                 උප්පැන්න සහතිකය<br>
                 பிறப்பு சான்றிதழ்﻿<br>
@@ -201,7 +201,7 @@
         </tr>
     </s:else>
     <tr>
-        <td height="50px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
+        <td height="70px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
         </td>
         <td colspan="2">
             <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}"/><br>
@@ -214,29 +214,29 @@
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td height="70px">නම <br>பெயர் <br>Name
+            <td height="120px">නම <br>பெயர் <br>Name
             </td>
-            <td colspan="5" class="bc-name" style="font-size:8pt">
+            <td colspan="5" class="bc-name" style="font-size:14pt">
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </td>
         </tr>
         <tr>
-            <td height="70px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
+            <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
-            <td colspan="5" class="bc-name" style="font-size:8pt">
+            <td colspan="5" class="bc-name" style="font-size:14pt">
                 <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             </td>
         </tr>
     </s:if>
     <tr>
-        <td height="60px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:8pt">
+        <td colspan="5" class="bc-name" style="font-size:14pt">
             <s:label name="" value="%{#request.parent.fatherFullName}"/>
         </td>
     </tr>
     <tr>
-        <td height="40px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+        <td height="50px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
             தந்தையின் அடையாள எண் <br>
             Father's PIN / NIC
 
@@ -250,16 +250,16 @@
     </tr>
 
     <tr>
-        <td height="60px">මවගේ සම්පූර්ණ නම
+        <td height="100px">මවගේ සම්පූර්ණ නම
             <br> தாயின் முழுப் பெயர்
             <br> Mother's Full Name
         </td>
-        <td colspan="5" class="bc-name" style="font-size:8pt">
+        <td colspan="5" class="bc-name" style="font-size:14pt">
             <s:label name="" value="%{#request.parent.motherFullName}"/>
         </td>
     </tr>
     <tr>
-        <td height="40px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+        <td height="50px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
             தாயின் அடையாள எண் <br>
             Mother's PIN / NIC
         </td>
@@ -289,15 +289,15 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="70px">
+        <td colspan="2" height="100px">
             සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" style="font-size:8pt"><s:label value="%{#request.register.confirmantFullName}"/></td>
+        <td colspan="2" style="font-size:12pt"><s:label value="%{#request.register.confirmantFullName}"/></td>
     </tr>
     <tr>
-        <td colspan="2" height="20px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+        <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
         </td>
         <%--TODO--%>
         <td colspan="2"><s:label value="%{#request.register.originalBCPlaceOfIssuePrint}"/></td>
@@ -305,7 +305,7 @@
     </tbody>
 </table>
 
-<p style="font-size:5pt">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
+<p style="font-size:9pt">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
     විසින් නිකුත් කරන
     ලදි.<br>
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
