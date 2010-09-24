@@ -63,6 +63,8 @@
         errormsg = "";
         return returnval;
     }
+
+    function initPage(){}
 </script>
 
 <div id="birth-confirmation-form-outer">

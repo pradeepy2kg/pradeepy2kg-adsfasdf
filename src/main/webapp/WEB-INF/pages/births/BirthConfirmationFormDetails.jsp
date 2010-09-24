@@ -4,6 +4,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <s:if test="#request.warnings.size>0">
 
@@ -52,7 +55,7 @@
             <s:param name="bdId" value="#request.bdId"/>
             <s:param name="directPrint" value="true"/>
         </s:url>
-        <s:url id="mainUrl" action="eprHome.do"/>
+        <s:url id="mainUrl" action="eprBirthRegistrationHome.do"/>
         <table align="center">
             <tr>
                 <td><s:a href="%{mainUrl}"><s:label value="%{getText('goToMain_link.label')}"/></s:a></td>

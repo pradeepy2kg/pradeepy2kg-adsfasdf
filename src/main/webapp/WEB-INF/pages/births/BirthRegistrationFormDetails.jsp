@@ -28,7 +28,7 @@
             <s:param name="bdId" value="#request.bdId"/>
             <s:param name="directPrint" value="true"/>
         </s:url>
-        <s:url id="mainUrl" action="eprHome.do"/>
+        <s:url id="mainUrl" action="eprBirthRegistrationHome.do"/>
 
         <s:if test="#request.warnings.size>0">
 
