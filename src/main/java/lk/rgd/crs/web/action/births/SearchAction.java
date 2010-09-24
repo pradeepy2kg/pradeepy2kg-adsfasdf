@@ -158,8 +158,12 @@ public class SearchAction extends ActionSupport implements SessionAware {
         logger.debug("{} certificate search: Page {}", certificateType, pageNo);
         if (pageNo == 1) {
             try {
+                // setting Certificate type, DSdivision and BDDivision to Certificate Search 
                 certSearch.getCertificate().setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
                 certSearch.getCertificate().setCertificateType(certificateType);
+                if (birthDivisionId != 0 && certSearch.getSearch().getSearchSerialNo() != null) {
+                    certSearch.getSearch().setBdDivision(bdDivisionDAO.getBDDivisionByPK(birthDivisionId));
+                }
 
                 // validate duplicate application number entering
                 boolean validNo = certificateSearchService.isValidCertificateSearchApplicationNo(
