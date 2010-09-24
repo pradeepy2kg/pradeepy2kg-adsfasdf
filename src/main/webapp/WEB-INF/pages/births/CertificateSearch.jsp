@@ -19,6 +19,9 @@
 <s:hidden id="error10" value="%{getText('certificateIssuDate.label')}"/>
 <s:hidden id="error11" value="%{getText('enter.noOfCopies.label')}"/>
 <s:hidden id="error12" value="%{getText('enter.searchFullNameOfficialLang.label')}"/>
+<s:hidden id="error13" value="%{getText('serial.label')}"/>
+<s:hidden id="error14" value="%{getText('enter.registrationDivision.label')}"/>
+<s:hidden id="error15" value="%{getText('enter.serialNo.label')}"/>
 <div class="birth-certificate-search-form-outer" id="birth-certificate-search-form-outer">
 <script>
 
@@ -46,11 +49,11 @@
             endDate:'2020-12-31'
         });
     });
-    // mode 1 = passing District, will return DS list
+
     $(function() {
         $('select#districtId').bind('change', function(evt1) {
             var id = $("select#districtId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:1},
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
                     function(data) {
                         var options1 = '';
                         var ds = data.dsDivisionList;
@@ -58,11 +61,34 @@
                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
                         $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        options2 += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options2);
                     });
         });
-    })
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        options += '<option value="' + 0 + '">' + <s:label value="%{getText('select.registrationDivision.label')}"/> + '</option>';
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#birthDivisionId").html(options);
+                    });
+        });
+    });
 
     var errormsg = "";
+
     function validate() {
         var domObject;
         var returnval = true;
@@ -113,6 +139,23 @@
             isNumeric(domObject.value, 'error1', 'error9');
         }
 
+        // validate declaration serial no and BDDivision
+        domObject = document.getElementById('searchSerialNo');
+        if (!isFieldEmpty(domObject)) {
+            validateSerialNo(domObject, 'error1', 'error13');
+            domObject = document.getElementById('birthDivisionId');
+            if (domObject.value == 0) {
+                errormsg = errormsg + "\n" + document.getElementById('error14').value;
+            }
+        }
+        domObject = document.getElementById('birthDivisionId');
+        if (domObject.value != 0) {
+            domObject = document.getElementById('searchSerialNo');
+            if (isFieldEmpty(domObject)) {
+                isEmpty(domObject, '', 'error15');
+            }
+        }
+
         // validate certificate date of issue
         domObject = document.getElementById('datePicker');
         if (!isFieldEmpty(domObject))
@@ -124,6 +167,9 @@
             isEmpty(domObject, '', 'error7');
         else
             validateNumber(domObject.value, 'error1', 'error8');
+    }
+
+    function initPage() {
     }
 </script>
 <s:if test="certificateType.ordinal() == 0">
@@ -182,7 +228,7 @@
                         <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
                     </td>
                     <td>
-                            <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
+                            <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
                             <s:textfield id="dateOfSubmission"
                                          name="certSearch.certificate.dateOfSubmission" maxLength="10"/>
                 </tr>
@@ -334,17 +380,6 @@
                          cssStyle="text-transform:uppercase;"/></td>
     </tr>
     <tr>
-        <td class="font-9">
-            <s:if test="certificateType.ordinal() == 0">
-                <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
-            </s:if>
-            <s:elseif test="certificateType.ordinal() == 1">
-                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
-            </s:elseif>
-        </td>
-        <td colspan="6"><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
-    </tr>
-    <tr>
         <td class="font-9" rowspan="2"><label>(6) රෙජිසිට්‍රර්ගේ කොට්ඨාශය<br>*Tamil<br>Registrar's
             Division</label></td>
         <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
@@ -363,6 +398,24 @@
     <tr>
         <td class="font-9">
             <s:if test="certificateType.ordinal() == 0">
+                <label>උපත් ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
+            </s:if>
+            <s:elseif test="certificateType.ordinal() == 1">
+                <label>මරණ ප්‍රකාශනයේ අනුක්‍රමික අංකය<br>*Tamil<br>Birth Declaration Serial Number</label>
+            </s:elseif>
+        </td>
+        <td><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
+        <td>
+            <label>ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>பிரிவு /<br/>Registration Division</label>
+        </td>
+        <td><s:select id="birthDivisionId" name="birthDivisionId" list="bdDivisionList"
+                      headerKey="0" headerValue="%{getText('select.registrationDivision.label')}"
+                      cssStyle="float:left;  width:240px; margin:2px 5px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="font-9">
+            <s:if test="certificateType.ordinal() == 0">
                 <label>(7) උප්පැන්න සහතිකයේ අංකය<br>*Tamil<br>Birth Certificate Number</label>
             </s:if>
             <s:elseif test="certificateType.ordinal() == 1">
@@ -373,7 +426,7 @@
         <td class="font-9" width="150px">
             <label>නිකුත් කළ දිනය<br>* Tamil<br>Date of Issue</label></td>
         <td>
-            <s:label value="YYYY-MM-DD" cssStyle="margin-left:80px;font-size:10px"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
             <s:textfield id="datePicker" name="certSearch.search.certificateIssueDate"
                          cssStyle="float:left;" maxLength="10"/>
         </td>
@@ -391,10 +444,5 @@
 <div class="form-submit">
     <s:submit value="%{getText('bdfSearch.button')}" cssStyle="margin-top:10px;"/>
 </div>
-<%--<s:if test="certificateType.ordinal() == 0">--%>
 </s:form>
-<%--</s:if>--%>
-<%--<s:elseif test="certificateType.ordinal() == 1">--%>
-<%--</s:form>--%>
-<%--</s:elseif>--%>
 </div>

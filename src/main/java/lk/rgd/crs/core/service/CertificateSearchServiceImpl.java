@@ -82,13 +82,31 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
         }
 
         if (existing == null) {
+
+            // add exact match using Birth Declaration idUKey
             if (search.getCertificateNo() != null) {
                 logger.debug("Search narrowed against Birth certificate IDUKey : {}", search.getCertificateNo());
                 exactRecord = birthDeclarationDAO.getById(search.getCertificateNo());
                 if (exactRecord != null) {
                     final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
                     if (BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
-                        results = new ArrayList<BirthDeclaration>();
+                        results.add(exactRecord);
+                    } else {
+                        handleException("The birth declaration state is invalid for IDUKey : " +
+                            search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
+                    }
+                }
+            }
+
+            // add exact match using Birth Declaration serial no and BDDivision
+            if (exactRecord == null && search.getSearchSerialNo() != null && search.getBdDivision() != null) {
+                logger.debug("Search narrowed against Birth declaration Serail No : {} and BDDivision : {}",
+                    search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
+                exactRecord = birthDeclarationDAO.getActiveRecordByBDDivisionAndSerialNo(
+                    search.getBdDivision(), search.getSearchSerialNo());
+                if (exactRecord != null) {
+                    final BirthDeclaration.State currentState = exactRecord.getRegister().getStatus();
+                    if (BirthDeclaration.State.ARCHIVED_CERT_PRINTED == currentState) {
                         results.add(exactRecord);
                     } else {
                         handleException("The birth declaration state is invalid for IDUKey : " +
@@ -143,13 +161,31 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
         }
 
         if (existing == null) {
+
+            // add exact match using Death Register idUKey
             if (search.getCertificateNo() != null) {
                 logger.debug("Search narrowed against Death certificate IDUKey : {}", search.getCertificateNo());
                 exactRecord = deathRegisterDAO.getById(search.getCertificateNo());
                 if (exactRecord != null) {
                     final DeathRegister.State currentState = exactRecord.getStatus();
                     if (DeathRegister.State.DEATH_CERTIFICATE_PRINTED == currentState) {
-                        results = new ArrayList<DeathRegister>();
+                        results.add(exactRecord);
+                    } else {
+                        handleException("The death declaration state is invalid for IDUKey : " +
+                            search.getCertificateNo() + " " + currentState, ErrorCodes.INVALID_DATA);
+                    }
+                }
+            }
+
+            // add exact match using Death Register serial no and BDDivision
+            if (exactRecord == null && search.getSearchSerialNo() != null && search.getBdDivision() != null) {
+                logger.debug("Search narrowed against Death declaration Serail No : {} and BDDivision : {}",
+                    search.getSearchSerialNo(), search.getBdDivision().getBdDivisionUKey());
+                exactRecord = deathRegisterDAO.getActiveRecordByBDDivisionAndDeathSerialNo(
+                    search.getBdDivision(), search.getSearchSerialNo());
+                if (exactRecord != null) {
+                    final DeathRegister.State currentState = exactRecord.getStatus();
+                    if (DeathRegister.State.DEATH_CERTIFICATE_PRINTED == currentState) {
                         results.add(exactRecord);
                     } else {
                         handleException("The death declaration state is invalid for IDUKey : " +
@@ -178,7 +214,7 @@ public class CertificateSearchServiceImpl implements CertificateSearchService {
             handleException("The death certificate search DS Division/Application number is a duplicate : " +
                 certificate.getDsDivision().getDsDivisionUKey() + " " + certificate.getApplicationNo(), ErrorCodes.INVALID_DATA);
         }
-        
+
         return results;
     }
 

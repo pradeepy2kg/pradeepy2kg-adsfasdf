@@ -14,13 +14,16 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "bSort": false,
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers"
         });
     });
+
+    function initPage() {
+    }
 </script>
 <div>
     <s:actionerror/>
@@ -132,8 +135,5 @@
             </table>
         </fieldset>
     </s:if>
-    <%--TODO by chathuranga--%>
-    <%--<s:else>--%>
     <s:actionmessage cssClass="alreadyPrinted"/>
-    <%--</s:else>--%>
 </div>
