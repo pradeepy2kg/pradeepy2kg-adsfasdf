@@ -81,7 +81,15 @@ public class SearchInfo {
      * This is the searching events declaration serial number - e.g. for births - birth declaration serial number etc.
      */
     @Column(nullable = true, length = 10)
-    private String searchSerialNo;
+    private Long searchSerialNo;
+
+    /**
+     * This is the registration division associated with serial no where life events registered
+     * e.g. for births - birth registration division
+     */
+    @ManyToOne
+    @JoinColumn(name = "bdDivisionUKey", nullable = true)
+    private BDDivision bdDivision;
 
     /**
      * This is the number of the searching certificate - e.g. Birth certificate number, Death certificate number etc.
@@ -176,12 +184,12 @@ public class SearchInfo {
         this.searchPINorNIC = WebUtils.filterBlanksAndToUpper(searchPINorNIC);
     }
 
-    public String getSearchSerialNo() {
+    public Long getSearchSerialNo() {
         return searchSerialNo;
     }
 
-    public void setSearchSerialNo(String searchSerialNo) {
-        this.searchSerialNo = WebUtils.filterBlanksAndToUpper(searchSerialNo);
+    public void setSearchSerialNo(Long searchSerialNo) {
+        this.searchSerialNo = searchSerialNo;
     }
 
     public Long getCertificateNo() {
@@ -206,5 +214,13 @@ public class SearchInfo {
 
     public void setSearchRecordStatus(String searchRecordStatus) {
         this.searchRecordStatus = searchRecordStatus;
+    }
+
+    public BDDivision getBdDivision() {
+        return bdDivision;
+    }
+
+    public void setBdDivision(BDDivision bdDivision) {
+        this.bdDivision = bdDivision;
     }
 }

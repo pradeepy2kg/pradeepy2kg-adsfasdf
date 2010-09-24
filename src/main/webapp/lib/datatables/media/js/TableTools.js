@@ -32,9 +32,9 @@ function setUpPrintHtml() {
 }
 var TableToolsInit = {
     "oFeatures": {
-        "bCsv": true,
+        "bCsv": false,
         "bXls": true,
-        "bCopy": true,
+        "bCopy": false,
         "bPrint": true
     },
     "sPrintMessage": "",
@@ -285,12 +285,6 @@ var TableToolsInit = {
                 nInfo.innerHTML = "<h6>Print view</h6><p>Please click print button to print document " +
                                   " <br><input type='submit' value='print' onclick='setUpPrintHtml()'/>";
 
-                /*                //changes done by amith
-                 var printButton = document.createElement("button");
-                 printButton.onclick(print());
-                 //refresh page
-                 document.refresh();
-                 //changes for printing page finish*/
 
                 document.body.appendChild(nInfo);
 
