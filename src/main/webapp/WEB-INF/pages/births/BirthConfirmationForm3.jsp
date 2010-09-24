@@ -45,9 +45,7 @@
 
         // validate confirmant PIN or NIC
         domObject = document.getElementById('confirmantNICorPIN');
-        if (isFieldEmpty(domObject))
-            isEmpty(domObject, '', 'error2')
-        else
+        if (!isFieldEmpty(domObject))
             validatePINorNIC(domObject, 'invalid', 'confirmantPINorNIC');
 
         // validate confirmant full name
@@ -83,6 +81,8 @@
         if (!(inf1 || inf2 || inf3))
             errormsg = errormsg + "\n" + document.getElementById('error1').value;
     }
+
+    function initPage(){}
 </script>
 
 <div id="birth-confirmation-form-outer">
