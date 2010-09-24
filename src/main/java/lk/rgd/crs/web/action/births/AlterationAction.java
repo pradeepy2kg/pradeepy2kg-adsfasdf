@@ -49,6 +49,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private Alteration27A alt27A;
     private Alteration52_1 alt52_1;
     private DeclarantInfo declarant;
+    private ParentInfo parent;
     private Date dateReceived;
     private Long alterationSerialNo;
     private int[] index;
@@ -73,6 +74,12 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private String districtName;
     private String dsDivisionName;
     private String bdDivisionName;
+
+    private boolean bcOfFather;
+    private boolean bcOfMother;
+    private boolean mcOfParents;
+    private String otherDocuments;
+    private String comments;
 
     /* helper fields to capture input from pages, they will then be processed before populating the bean */
     private int birthDistrictId;
@@ -158,6 +165,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt52_1 = new Alteration52_1();
         alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
         alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
+        parent = bdf.getParent();
         switch (sectionOfAct) {
             //set alt52_1
             case 2:
@@ -241,6 +249,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                 break;
 
         }
+        ba.setBcOfFather(bcOfFather);
+        ba.setBcOfMother(bcOfMother);
+        ba.setMcOfParents(mcOfParents);
+        ba.setComments(comments);
+        ba.setOtherDocuments(otherDocuments);
         ba.setStatus(BirthAlteration.State.DATA_ENTRY);
         ba.setBdId(idUKey);
         ba.setDeclarant(declarant);
@@ -418,7 +431,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareChanges[1] = parent.getMotherFullName();
             compareChanges[2] = alt27A.getMothersNameAfterMarriage();
             birthAlterationApprovalList.add(compareChanges);
-            numberOfAppPending ++;
+            numberOfAppPending++;
             logger.debug("Check {} mother name after Marriage if idUKey :{}", compareChanges[0], idUKey);
         }
 
@@ -526,10 +539,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
         }
         int check = 0;
-        for (int i =0; i < lengthOfBitSet+1; i++) {
+        for (int i = 0; i < lengthOfBitSet + 1; i++) {
             if (check < index.length) {
                 if (i == index[check]) {
-                    logger.debug("index {}  is :{}",i,index[check]);
+                    logger.debug("index {}  is :{}", i, index[check]);
                     //if a field is approved bit set to true
                     approvalsBitSet.put(i, true);
                     check++;
@@ -1086,5 +1099,53 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setNumberOfAppPending(int numberOfAppPending) {
         this.numberOfAppPending = numberOfAppPending;
+    }
+
+    public ParentInfo getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentInfo parent) {
+        this.parent = parent;
+    }
+
+    public boolean isBcOfFather() {
+        return bcOfFather;
+    }
+
+    public void setBcOfFather(boolean bcOfFather) {
+        this.bcOfFather = bcOfFather;
+    }
+
+    public boolean isBcOfMother() {
+        return bcOfMother;
+    }
+
+    public void setBcOfMother(boolean bcOfMother) {
+        this.bcOfMother = bcOfMother;
+    }
+
+    public boolean isMcOfParents() {
+        return mcOfParents;
+    }
+
+    public void setMcOfParents(boolean mcOfParents) {
+        this.mcOfParents = mcOfParents;
+    }
+
+    public String getOtherDocuments() {
+        return otherDocuments;
+    }
+
+    public void setOtherDocuments(String otherDocuments) {
+        this.otherDocuments = otherDocuments;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

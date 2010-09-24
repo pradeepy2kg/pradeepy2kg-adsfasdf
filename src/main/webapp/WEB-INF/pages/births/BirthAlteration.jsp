@@ -201,8 +201,7 @@ function initPage() {
         idNames = new Array('header-info', 'error-explanation-info');
     }
     if (sectionOfAct == 2) {
-        idNames = new Array('errors-info', 'header-info', 'mother-info', 'informant-info',
-                'error-explanation-info');
+        idNames = new Array('errors-info', 'header-info', 'mother-info', 'informant-info', 'error-explanation-info');
         checkIdNames = new Array('errors-info-check', 'mother-info-check', 'informant-info-check');
         fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
                 'placeOfBirth', 'placeOfBirthEnglish', 'childGender', 'mother_pinOrNic', 'motherCountryId', 'motherPassportNoId', 'motherFullNameId',
@@ -435,6 +434,30 @@ function validateBirthYear(domElement, errorText, errorCode) {
         }
         errormsg = "";
         return returnval;
+    }
+
+    function setDeclarantPerson(id) {
+        var NICorPIN;
+        var name;
+        var address;
+        if (id == 1) {
+            NICorPIN = document.getElementById("motherNICorPIN").value;
+            name = document.getElementById("motherName").value;
+            address = document.getElementById("motherAddress").value;
+        }
+        if (id == 2) {
+            NICorPIN = document.getElementById("fatherNICorPIN").value;
+            name = document.getElementById("fatherName").value;
+            address="";
+        }
+        if(id==3){
+            NICorPIN="";
+            name="";
+            address="";
+        }
+        document.getElementById("Declarant_pinOrNic").value = NICorPIN;
+        document.getElementById("declarantName").value = name;
+        document.getElementById("declarantAddress").value = address;
     }
 </script>
 <s:if test="pageNo==0">
@@ -1287,8 +1310,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </div>
 </div>
 </s:if>
-<div id="actNumber4">
-    <div id="error-explanation-info">
+<s:if test="(sectionOfAct != 1)">
+    <div id="actNumber4">
         <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
                cellspacing="0">
             <tr>
@@ -1300,16 +1323,51 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     <div class="birth-alteration-maximize-icon" id="error-explanation-info-max"></div>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <s:textarea cssStyle="height:150px;"/>
-                </td>
-            </tr>
         </table>
+        <div id="error-explanation-info">
+            <table class="birth-alteration-table-style02" style=" margin-top:0px;width:100%;border-top:none;"
+                   cellpadding="0"
+                   cellspacing="0">
+                <tr>
+                    <td>
+                        <s:textarea name="comments" cssStyle="height:150px;"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
-
-
+    <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0"
+           cellspacing="0">
+        <tr>
+            <td colspan="2" style="text-align:center;font-size:12pt">
+                ප්‍රකාශය සනාත කිරීමට ඇති ලේඛනගත හෝ වෙනත් සාක්ෂිවල ස්වභාවය<br>
+                தாத்தாவின் / பாட்டனின் விபரங்கள் <br>
+                Nature of documentary or other evidence in support of the declaration
+            </td>
+        </tr>
+        <tr>
+            <td style="width:5%"><s:checkbox name="bcOfFather"/></td>
+            <td style="width:90%"><s:label
+                    value=" පියාගේ උප්පැන්න සහතිකය  / in Tamil / Fathers Birth Certificate"
+                    cssStyle="margin-left:5px;"/></td>
+        </tr>
+        <tr>
+            <td style="width:5%"><s:checkbox name="bcOfMother"/></td>
+            <td style="width:90%"><s:label
+                    value="මවගේ උප්පැන්න සහතිකය / in Tamil / Mothers Birth Certificate"
+                    cssStyle="margin-left:5px;"/></td>
+        </tr>
+        <tr>
+            <td style="width:5%"><s:checkbox name="mcOfParents"/></td>
+            <td style="width:90%"><s:label
+                    value=" මව්පියන්ගේ විවාහ සහතිකය / in Tamil / Parents Marriage Certificate"
+                    cssStyle="margin-left:5px;"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><s:textarea name="otherDocuments"/></td>
+        </tr>
+    </table>
+</s:if>
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
     <caption></caption>
     <col style="width:250px;"/>
@@ -1336,7 +1394,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                     <td style="width:25%;border:none;">
                         <s:radio id="declarantType" name="declarant.declarantType"
-                                 list="#@java.util.HashMap@{'FATHER':''}"/></td>
+                                 list="#@java.util.HashMap@{'MOTHER':''}"
+                                 onchange="javascript:setDeclarantPerson(1)"/></td>
             </table>
         </td>
         <td>
@@ -1346,7 +1405,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                     <td style="width:25%;border:none;">
                         <s:radio id="declarantType" name="declarant.declarantType"
-                                 list="#@java.util.HashMap@{'MOTHER':''}"/></td>
+                                 list="#@java.util.HashMap@{'FATHER':''}" onchange="javascript:setDeclarantPerson(2)"/></td>
             </table>
 
         </td>
@@ -1357,7 +1416,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                     <td style="width:25%;border:none;">
                         <s:radio id="declarantType" name="declarant.declarantType"
-                                 list="#@java.util.HashMap@{'OTHER':''}"/></td>
+                                 list="#@java.util.HashMap@{'OTHER':''}" onchange="javascript:setDeclarantPerson(3) "/></td>
             </table>
         </td>
         <td>
@@ -1367,7 +1426,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                     </td>
                     <td style="width:25%;border:none;">
                         <s:radio id="declarantType" name="declarant.declarantType"
-                                 list="#@java.util.HashMap@{'RELATIVE':''}"/></td>
+                                 list="#@java.util.HashMap@{'RELATIVE':''}" onchange="javascript:setDeclarantPerson(3)"/></td>
             </table>
         </td>
     </tr>
@@ -1390,7 +1449,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             தபால் முகவரி<br>
             Postal Address
         </td>
-        <td colspan="4"><s:textarea id="" name="declarant.declarantAddress"/></td>
+        <td colspan="4"><s:textarea id="declarantAddress" name="declarant.declarantAddress"/></td>
     </tr>
     </tbody>
 </table>
@@ -1437,7 +1496,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:hidden name="idUKey"/>
 <s:hidden name="sectionOfAct"/>
 <div class="form-submit">
-<s:submit value="%{getText('submit.label')}"/>
+<s:submit value="%{getText('save.label')}"/>
 </s:form>
 </div>
 </s:if>
@@ -1479,3 +1538,9 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:hidden id="searchCertificateError1" value="%{getText('certificateNumber.lable')}"/>
 <s:hidden id="searchCertificateError2" value="%{getText('idNumber.lable')}"/>
 <s:hidden id="searchCertificateError2" value="%{getText('searchDeclarationSearial.label')}"/>
+
+<s:hidden id="fatherName" value="%{#request.parent.fatherFullName}"/>
+<s:hidden id="fatherNICorPIN" value="%{#request.parent.fatherNICorPIN}"/>
+<s:hidden id="motherName" value="%{#request.parent.motherFullName}"/>
+<s:hidden id="motherAddress" value="%{#request.parent.motherAddress}"/>
+<s:hidden id="motherNICorPIN" value="%{#request.parent.motherNICorPIN}"/>

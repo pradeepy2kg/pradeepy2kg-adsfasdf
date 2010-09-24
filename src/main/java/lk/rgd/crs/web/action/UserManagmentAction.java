@@ -11,6 +11,7 @@ import java.util.*;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -45,6 +46,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private List<BDDivision> bdDivisionNameList;
     private List<MRDivision> mrDivisionNameList;
     private List<Court> courtNameList;
+    private List<Location> locationNameList;
     private String nameOfUser;
     private String userId;
     private String userName;
@@ -53,6 +55,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int dsDivisionId;
     private int divisionId;
     private int mrdivisionId;
+    private int courtId;
+    private int locationId;
 
     private String districtEn;
     private String dsDivisionEn;
@@ -62,6 +66,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private DSDivision dsDivision;
     private District district;
     private MRDivision mrDivision;
+    private Court court;
+
+
+    private Location location;
 
 
     private String roleId;
@@ -71,6 +79,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
     private final CourtDAO courtDAO;
+    private LocationDAO locationDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -90,8 +99,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         return roleId;
     }
 
-    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service,CourtDAO courtDAO,
-                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO) {
+    public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
+                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -99,7 +108,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dataManagementService = dataManagementService;
         this.mrDivisionDAO = mrDivisionDAO;
-        this.courtDAO=courtDAO;
+        this.courtDAO = courtDAO;
+        this.locationDAO = locationDAO;
     }
 
     public String creatUser() {
@@ -219,8 +229,17 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 mrDivisionNameList = mrDivisionDAO.findAll();
                 mrDivision = null;
                 break;
-             case 5:
+            case 5:
+                courtNameList = courtDAO.findAll();
+                court = null;
                 break;
+            case 6:
+                locationNameList = locationDAO.getAllLocations(true);
+                logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
+                location = null;
+                break;
+
+
         }
     }
 
@@ -241,6 +260,14 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             case 4:
                 dataManagementService.activateMRDivision(mrdivisionId, currentUser);
                 logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
+                break;
+            case 5:
+                dataManagementService.inactivateLocation(courtId, currentUser);
+                logger.debug("Id of the Active Court ({}) is  :{}", courtDAO.getNameByPK(courtId, "en"), courtId);
+                break;
+            case 6:
+                dataManagementService.activateLocation(locationId, currentUser);
+                logger.debug("Id of the Active location( {} ) is  :{}", locationDAO.getLocation(locationId).getEnLocationName(), locationId);
                 break;
 
         }
@@ -265,6 +292,14 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             case 4:
                 dataManagementService.inactivateMRDivision(mrdivisionId, currentUser);
                 logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
+                break;
+            case 5:
+                dataManagementService.inactivateLocation(courtId, currentUser);
+                logger.debug("Id of the Inactive Court ({}) is   :{}", courtDAO.getNameByPK(courtId, "en"), courtId);
+                break;
+            case 6:
+                dataManagementService.inactivateLocation(locationId, currentUser);
+                logger.debug("Id of the Inactive location( {} ) is  :{}", locationDAO.getLocation(locationId).getEnLocationName(), locationId);
                 break;
 
         }
@@ -302,6 +337,18 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
                 msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
                 break;
+            case 5:
+                break;
+            case 6:
+                logger.debug("English :{}", location.getEnLocationName());
+                logger.debug("Sinhala :{}", location.getSiLocationName());
+                logger.debug("Tamil :{}", location.getTaLocationName());
+                logger.debug("code :{}", location.getLocationCode());
+                dataManagementService.addLocation(location, currentUser);
+                logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
+                msg = "New Location Was Added  :" + location.getEnLocationName();
+
+
         }
         setDivisionList();
         return SUCCESS;
@@ -676,6 +723,46 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setCourtNameList(List<Court> courtNameList) {
         this.courtNameList = courtNameList;
+    }
+
+    public Court getCourt() {
+        return court;
+    }
+
+    public void setCourt(Court court) {
+        this.court = court;
+    }
+
+    public int getCourtId() {
+        return courtId;
+    }
+
+    public void setCourtId(int courtId) {
+        this.courtId = courtId;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+    public List<Location> getLocationNameList() {
+        return locationNameList;
+    }
+
+    public void setLocationNameList(List<Location> locationNameList) {
+        this.locationNameList = locationNameList;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 }

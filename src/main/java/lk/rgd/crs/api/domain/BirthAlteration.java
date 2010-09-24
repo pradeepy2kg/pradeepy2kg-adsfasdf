@@ -25,6 +25,13 @@ import java.util.BitSet;
 })
 
 public class BirthAlteration {
+    public String getOtherDocuments() {
+        return otherDocuments;
+    }
+
+    public void setOtherDocuments(String otherDocuments) {
+        this.otherDocuments = otherDocuments;
+    }
 
     public enum State {
         /**
@@ -40,9 +47,14 @@ public class BirthAlteration {
         * */
         FULLY_APPROVED,
         /**
-         * 2 - A BDF for which the parent confirmation form was printed
+         * 3 - A BDF for which the parent confirmation form was printed
          */
         PRINTED,
+        /**
+         * 4 - A BDF for which the parent confirmation form was printed
+         */
+        REJECT,
+
     }
 
     @Enumerated
@@ -93,6 +105,10 @@ public class BirthAlteration {
 
     @Column
     private boolean mcOfParents;
+    @Column
+    private String otherDocuments;
+    @Column
+    private String comments;
 
     @Column
     private float stampFee;
@@ -217,4 +233,11 @@ public class BirthAlteration {
         this.status = status;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }
