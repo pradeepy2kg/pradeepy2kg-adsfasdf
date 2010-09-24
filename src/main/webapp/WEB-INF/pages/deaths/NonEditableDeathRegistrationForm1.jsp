@@ -27,9 +27,17 @@
         </td>
     </tr>
     <tr>
-        <td align="center" class="font-12">මරණ ප්‍රකාශයක් (30 වෙනි වගන්තිය)<br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான
-            விபரங்கள் <br>Declaration
-            of Death (Under Section 30)
+        <td align="center" class="font-12">
+            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+                ප්‍රකාශයක් [30, 39(1), 41(1) (උ) වගන්ති] - සාමාන්‍ය මරණ හා හදිසි මරණ <br/>
+                ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
+                Declaration of Death [Sections 30, 39(1) and 41(1)(e)] – Normal Death or Sudden Death
+            </s:if>
+            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+                මරණ ප්‍රකාශයක් [36වෙනි වගන්තිය] - කාලය ඉකුත් වූ මරණ ලියාපදිංචි කිරීම හෝ නැතිවුණු පුද්ගලයෙකුගේ මරණ <br/>
+                ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள் <br/>
+                Declaration of Death [Section 36] – Late registration or Death of missing person
+            </s:elseif>
         </td>
         <td style="border:1px solid #000;">ලියාපදිංචි කල දිනය<br>பிறப்பைப் பதிவு திகதி <br>Date of Registration
         </td>
@@ -40,20 +48,50 @@
     </tr>
     <tr>
         <td colspan="4" class="font-9" style="text-align:justify;">
-            ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත
-            සිවිල්
-            ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
-            <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-            சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-            <br>Should be perfected by the declarant and the duly completed form should be forwarded to the
-            Registrar of Deaths of the division where the death has occurred. The death will be registered in
-            the
-            Civil Registration System based on the information provided in this form.
+            <s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+                ප්‍රකාශකයා විසින් මරණය සිදු වූ කොට්ටාශයේ මරණ රෙජිස්ට්‍රාර් තැන වෙත ලබා දිය යුතුය. මෙම තොරතුරු මත
+                සිවිල්
+                ලියාපදිංචි කිරිමේ පද්ධතියේ මරණය ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the declarant and the duly completed form should be forwarded to the
+                Registrar of Deaths of the division where the death has occurred. The death will be registered in
+                the
+                Civil Registration System based on the information provided in this form.
+            </s:if>
+            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+                ලියාපදිංචි නොකරන ලද මරණයක් සම්බන්ධයෙන් මෙහි පහත ප්‍රකාශ කරනු ලබන විස්තර මගේ දැනීමේ හා විශ්වාසයේ ප
+                ්‍රකාර සැබෑ බව හා නිවැරදි බවද, මරණය සිදුවී, නැතහොත් ගෘහයක් හෝ ගොඩනැගිල්ලක් නොවන ස්ථානයක තිබී මෘතශරීරය
+                සම්බවී,
+                මාස තුඅනක් ඇතුලත දී මරණය ලියාපදිංචි කිරීමට නොහැකි වුයේ මෙහි පහත සඳහන් කාරණය හේතු කොටගෙන බවද
+                , ..... පදිංචි .... වන මම ගාම්භීරතා පුර්වකාවද, අවංක ලෙසද, සැබෑ ලෙසද, මෙයින් ප්‍රකාශ කරමි. <br/>
+
+                in tamil line 1
+                in tamil line 2
+                in tamil line 3 <br/>
+
+                I …. of …. solemnly, sincerely, and truly declare that the particulars stated below relating to an
+                unregistered death, are true and correct to the best of my knowledge and belief, and that the death has not
+                been registered within three months from its occurrence or from the finding of the corpse in a place other
+                than a house or a building, for this reason.
+            </s:elseif>
         </td>
     </tr>
     </tbody>
 </table>
-
+<s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+    <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
+        <tr>
+            <td width="150px">(1)මරණය ලියාපදිංචි කිරීම ප්‍රමාද වීමට කාරණය <br/>
+                in tamil <br/>
+                Reason for the late registration of the death
+            </td>
+            <td>
+                <s:label value="%{#session.deathRegister.death.reasonForLateRegistration}"/>
+            </td>
+        </tr>
+    </table>
+</s:if>
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;" class="font-9">
     <col width="150px"/>
     <col width="100px"/>
@@ -201,6 +239,28 @@
     <tr>
         <td colspan="1">ආදාහන හෝ භූමදාන ස්ථානය<br>*in tamil<br>Place of burial or cremation</td>
         <td colspan="8"><s:label value="%{#session.deathRegister.death.placeOfBurial}"/></td>
+    </tr>
+    <s:if test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+        <tr>
+            <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)වෙනත් තොරතුරු <br/>
+                in tamil <br/>
+                Any other information
+            </td>
+            <td colspan="8">
+                <s:label value="%{#session.deathRegister.death.anyOtherInformation}"/>
+            </td>
+        </tr>
+    </s:if>
+    <tr>
+        <td colspan="2"><label>
+            මරණ
+            සහතිකය නිකුත් කල යුතු භාෂාව <br>*in tamil<br>Preferred
+            Language for
+            Death Certificate </label></td>
+        <td colspan="7">
+            <s:set name="lang" value="%{#session.deathRegister.death.preferredLanguage}"/>
+            <s:label value="%{getText(#lang)}" cssStyle="float:left;  width:240px;"/>
+        </td>
     </tr>
     </tbody>
 </table>
