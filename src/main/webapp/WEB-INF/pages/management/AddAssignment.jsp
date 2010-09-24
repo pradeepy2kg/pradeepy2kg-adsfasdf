@@ -70,7 +70,7 @@
                         $("select#dsDivisionId").html(options1);
 
                         var options2 = '';
-                        var bd = data.divisionList;
+                        var bd = data.bdDivisionList;
                         for (var j = 0; j < bd.length; j++) {
                             options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
                         }
@@ -83,7 +83,7 @@
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
                     function(data) {
                         var options = '';
-                        var bd = data.divisionList;
+                        var bd = data.bdDivisionList;
                         for (var i = 0; i < bd.length; i++) {
                             options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
                         }
@@ -179,7 +179,11 @@
                 <td width="200px">
                     <s:property value="%{getText('label.dsDivision')}"/>
                 </td>
-                <td><s:select id="dsDivisionId" name="dsDivisionId"
+                <td>
+                    <s:if test="assignment != null">
+                        <s:property value="assignment"
+                    </s:if>
+                    <s:select id="dsDivisionId" name="dsDivisionId"
                               list="dsDivisionList"
                               value="%{dsDivisionId}"
                               cssStyle="float:left;  width:240px;"/></td>

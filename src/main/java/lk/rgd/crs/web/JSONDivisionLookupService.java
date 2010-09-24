@@ -74,7 +74,7 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("districtList", getAllDisList(lang, user));
             } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
-                List ds = getDSDivisions(lang, divisionId, user);
+                List ds = getAllDSDivisions(lang, divisionId, user);
                 int dsDivisionId = ((SelectOption) ds.get(0)).getOptionValue();
                 List bd = getBDDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
