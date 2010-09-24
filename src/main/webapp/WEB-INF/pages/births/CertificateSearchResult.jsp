@@ -36,7 +36,14 @@
                     <th width="80px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                     <th><s:label name="childNamelbl" value="%{getText('childName.label')}"/></th>
                     <th width="50px"><s:label name="childGenderlbl" value="%{getText('childGender.label')}"/></th>
-                    <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
+                    <th width="40px">
+                        <s:if test="#request.certificateType.ordinal() == 0">
+                            <s:label name="live" value="%{getText('live.label')}"/>
+                        </s:if>
+                        <s:elseif test="#request.certificateType.ordinal() == 1">
+                            <s:label name="deathType" value="%{getText('death.label')}"/>
+                        </s:elseif>
+                    </th>
                     <th width="20px"></th>
                 </tr>
                 </thead>
@@ -88,19 +95,25 @@
                                 <s:if test="deathPerson.deathPersonGender == 0">
                                     <s:label value="%{getText('male.label')}"/>
                                 </s:if>
-                                <s:elseif test="child.childGender == 1">
+                                <s:elseif test="deathPerson.deathPersonGender == 1">
                                     <s:label value="%{getText('female.label')}"/>
                                 </s:elseif>
-                                <s:elseif test="child.childGender == 2">
+                                <s:elseif test="deathPerson.deathPersonGender == 2">
                                     <s:label value="%{getText('unknown.label')}"/>
                                 </s:elseif>
 
                             <td align="center">
-                                <s:if test="register.birthType.ordinal() != 0">
-                                    <s:label value="%{getText('yes.label')}"/>
+                                <s:if test="deathType.ordinal() == 0">
+                                    <s:label value="%{getText('normalDeath.label')}"/>
                                 </s:if>
-                                <s:elseif test="register.birthType.ordinal() == 0">
-                                    <s:label value="%{getText('no.label')}"/>
+                                <s:elseif test="deathType.ordinal() == 1">
+                                    <s:label value="%{getText('suddenDeath.label')}"/>
+                                </s:elseif>
+                                <s:elseif test="deathType.ordinal() == 2">
+                                    <s:label value="%{getText('lateDeath.label')}"/>
+                                </s:elseif>
+                                <s:elseif test="deathType.ordinal() == 3">
+                                    <s:label value="%{getText('missingDeath.label')}"/>
                                 </s:elseif>
                             </td>
                             <td align="center">
@@ -121,6 +134,6 @@
     </s:if>
     <%--TODO by chathuranga--%>
     <%--<s:else>--%>
-        <s:actionmessage cssClass="alreadyPrinted"/>
+    <s:actionmessage cssClass="alreadyPrinted"/>
     <%--</s:else>--%>
 </div>
