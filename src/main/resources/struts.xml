@@ -967,5 +967,9 @@
                 method="approveInit">
             <result type="tiles" name="success">epr.birthAlterationApproval</result>
         </action>
+        <action name="eprRejectSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
+                method="rejectAlteration">
+            <result type="tiles" name="success">epr.home</result>
+        </action>
     </package>
 </struts>

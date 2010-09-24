@@ -121,7 +121,7 @@
 </script>
 
 <div id="add-inactive-divisions-outer">
-<s:if test="!(pageNo == 1 || pageNo==2 || pageNo == 3 || pageNo==4)">
+<s:if test="!(pageNo == 1 || pageNo==2 || pageNo == 3 || pageNo==4 || pageNo==5)">
     <fieldset style="border:3px solid #c3dcee;margin-left:2em;float:left;width:46%;height:15.4em">
 
         <s:form name="editDsDivisions" action="eprInitDivisionList.do" method="POST">
@@ -288,8 +288,31 @@
                 </tr>
             </table>
         </s:form>
-
     </fieldset>
+     <s:form name="editDivisions" action="eprInitCourtList.do" method="POST">
+    <fieldset style="border:3px solid #c3dcee;margin-top:2.5em;width:46%;margin-left:2em;">
+        <table style="border:none;margin-top:15px;text-align:center;margin-bottom:10px;" align="center">
+            <tr>
+                <td style="font-size:13pt;">Add And Inactive Court</td>
+            </tr>
+            <tr>
+                <td style="font-size:10pt;text-align:left;">
+                    * Add New Court <br>
+                    * Active Court <br>
+                    * Inactive Court
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-submit">
+                        <s:hidden name="pageNo" value="5"/>
+                        <s:submit value="District List" cssStyle="margin-top:10px;font-size:10pt;"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    </s:form>
 </s:if>
 <s:if test="!(pageNo == 0)">
     <fieldset style="border:3px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:2.5em;width:80%">
@@ -301,7 +324,7 @@
         <s:form name="editDivisions" action="eprAddDivisionsAndDsDivisions.do" method="POST"
                 onsubmit="javascript:return validate()">
             <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:15px">
-                <s:if test="!(pageNo==1)">
+                <s:if test="!((pageNo==1) ||(pageNo==5))">
                     <tr>
                         <td colspan="2">District</td>
                         <s:textfield name="UserDistrictId" cssStyle="visibility:hidden;"/>
@@ -322,6 +345,7 @@
                         <s:if test="pageNo==2"><s:textfield name="dsDivision.divisionId" id="id"/> </s:if>
                         <s:if test="pageNo==3"><s:textfield name="bdDivision.divisionId" id="id"/></s:if>
                         <s:if test="pageNo==4"><s:textfield name="mrDivision.divisionId" id="id"/></s:if>
+                        <s:if test="pageNo==5"><s:textfield name="mrDivision.divisionId" id="id"/></s:if>
                     </td>
                 </tr>
                 <tr>
@@ -330,6 +354,7 @@
                         <s:if test="pageNo==2">Divisional Secretariat</s:if>
                         <s:if test="pageNo==3">Registration Division</s:if>
                         <s:if test="pageNo==4">Marriage Division</s:if>
+                        <s:if test="pageNo==5">Marriage Division</s:if>
                     </td>
                     <td>Name in English</td>
                     <td>
@@ -337,6 +362,7 @@
                         <s:if test="pageNo==2"><s:textfield name="dsDivision.enDivisionName" id="enName"/></s:if>
                         <s:if test="pageNo==3"><s:textfield name="bdDivision.enDivisionName" id="enName"/></s:if>
                         <s:if test="pageNo==4"><s:textfield name="mrDivision.enDivisionName" id="enName"/></s:if>
+                        <s:if test="pageNo==5"><s:textfield name="mrDivision.enDivisionName" id="enName"/></s:if>
                     </td>
                 </tr>
                 <tr>
@@ -346,6 +372,7 @@
                         <s:if test="pageNo==2"><s:textfield name="dsDivision.siDivisionName" id="siName"/></s:if>
                         <s:if test="pageNo==3"><s:textfield name="bdDivision.siDivisionName" id="siName"/></s:if>
                         <s:if test="pageNo==4"><s:textfield name="mrDivision.siDivisionName" id="siName"/></s:if>
+                        <s:if test="pageNo==5"><s:textfield name="mrDivision.siDivisionName" id="siName"/></s:if>
                     </td>
                 </tr>
                 <tr>
@@ -355,6 +382,7 @@
                         <s:if test="pageNo==2"><s:textfield name="dsDivision.taDivisionName" id="taName"/></s:if>
                         <s:if test="pageNo==3"><s:textfield name="bdDivision.taDivisionName" id="taName"/></s:if>
                         <s:if test="pageNo==4"><s:textfield name="mrDivision.taDivisionName" id="taName"/></s:if>
+                        <s:if test="pageNo==5"><s:textfield name="mrDivision.taDivisionName" id="taName"/></s:if>
                     </td>
                 </tr>
             </table>
@@ -364,6 +392,7 @@
             <s:if test="pageNo==2"><s:hidden name="pageNo" value="2"/><s:hidden id="checkPage" value="2"/></s:if>
             <s:if test="pageNo==3"><s:hidden name="pageNo" value="3"/><s:hidden id="checkPage" value="3"/></s:if>
             <s:if test="pageNo==4"><s:hidden name="pageNo" value="4"/><s:hidden id="checkPage" value="4"/></s:if>
+            <s:if test="pageNo==5"><s:hidden name="pageNo" value="5"/><s:hidden id="checkPage" value="5"/></s:if>
             <div class="form-submit">
                 <s:submit value="ADD" cssStyle="margin-top:10px;" name="button"/>
             </div>
@@ -394,6 +423,7 @@
                 <s:if test="pageNo==2"> <s:set name="List" value="dsDivisionNameList"/></s:if>
                 <s:if test="pageNo==3"> <s:set name="List" value="bdDivisionNameList"/></s:if>
                 <s:if test="pageNo==4"> <s:set name="List" value="mrDivisionNameList"/></s:if>
+                <s:if test="pageNo==5"> <s:set name="List" value="mrDivisionNameList"/></s:if>
                 <s:iterator status="divisionListStatus" value="List">
                     <tr>
                         <td><s:property value="%{#divisionListStatus.count}"/></td>
@@ -438,6 +468,16 @@
                             </s:url>
                         </s:if>
                         <s:if test="pageNo==4">
+                            <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
+                                <s:param name="pageNo" value="pageNo"/>
+                                <s:param name="UserDistrictId" value="dsDivisionUKey"/>
+                            </s:url>
+                            <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
+                                <s:param name="pageNo" value="pageNo"/>
+                                <s:param name="dsDivisionId" value="dsDivisionUKey"/>
+                            </s:url>
+                        </s:if>
+                        <s:if test="pageNo==5">
                             <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
                                 <s:param name="pageNo" value="pageNo"/>
                                 <s:param name="UserDistrictId" value="dsDivisionUKey"/>
