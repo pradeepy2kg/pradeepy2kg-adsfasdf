@@ -531,7 +531,7 @@ function commonTags() {
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)රෝහලට
             ඇතුලත් කිරිමේ අංකය<br>*in
             tamil<br>Hospital Admission Number</label></td>
-        <td colspan="2" class="passport"><s:textfield name="parent.motherAdmissionNo"/></td>
+        <td colspan="2" class="passport"><s:textfield name="parent.motherAdmissionNo" maxLength="15"/></td>
         <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                    value="#i+1"/>
             )රෝහලට ඇතුලත් කිරිමේ

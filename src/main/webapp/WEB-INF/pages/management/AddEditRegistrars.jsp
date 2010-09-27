@@ -237,7 +237,7 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.full.name.english')}"/></td>
-                <td align="left"><s:textfield id="registrarNameInEnglish" cssStyle="width:100%"
+                <td align="left"><s:tBextfield id="registrarNameInEnglish" cssStyle="width:100%"
                                               name="registrar.fullNameInEnglishLanguage"/></td>
             </tr>
             <tr>
