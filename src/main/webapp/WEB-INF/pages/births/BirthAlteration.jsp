@@ -176,6 +176,7 @@ function minimize(id) {
     document.getElementById(id + "-min").style.display = 'none';
     document.getElementById(id + "-max").style.display = 'block';
     document.getElementById(id + "-check").style.display = 'none';
+    document.getElementById(id + "-check-lable").style.display = 'none';
 
 }
 
@@ -184,6 +185,7 @@ function maximize(id, click) {
     document.getElementById(id + "-max").style.display = 'none';
     document.getElementById(id + "-min").style.display = 'block';
     document.getElementById(id + "-check").style.display = 'block';
+    document.getElementById(id + "-check-lable").style.display = 'block';
 
 }
 function enableFields(fieldIds) {
@@ -228,6 +230,7 @@ function initPage() {
     if (!(sectionOfAct == 1)) {
         for (var i = 0; i < checkIdNames.length; i++) {
             document.getElementById(checkIdNames[i]).style.display = 'none';
+            document.getElementById(checkIdNames[i]+"-lable").style.display = 'none';
         }
         for (var i = 0; i < fieldIds.length; i++) {
             document.getElementById(fieldIds[i]).disabled = true;
@@ -429,7 +432,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             text++;
         }
         if (text != 1) {
-            alert(document.getElementById("comError5").value) ;
+            alert(document.getElementById("comError5").value);
             return false;
         }
         if (errormsg != "") {
@@ -475,6 +478,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
             domobject.value = new Date().getFullYear() + "0";
         }
     }
+    function isNumberKey(evt)
+    {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
 </script>
 <s:if test="pageNo==0">
     <div id="birth-confirmation-search">
@@ -499,7 +511,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <tr>
                     <td width="200px"><s:label name="confirmationSearch"
                                                value="%{getText('certificateNumber.lable')}"/></td>
-                    <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch"/></td>
+                    <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
+                                                   onkeypress="return isNumberKey(event)"/></td>
                 </tr>
             </table>
         </fieldset>
@@ -512,7 +525,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <tr>
                     <td width="200px"><s:label name="confirmationSearch"
                                                value="%{getText('idNumber.lable')}"/></td>
-                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch"/></td>
+                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
 
                 </tr>
             </table>
@@ -532,7 +545,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 <tbody>
                 <tr>
                     <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value=""/></td>
+                    <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value="" maxLength="10"
+                                     onkeypress="return isNumberKey(event)"/></td>
                     <td><s:label value="%{getText('district.label')}"/></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
@@ -585,7 +599,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <s:label value=" தொடர் இலக்கம் "/><br>
                         <s:label value=" Serial Number"/>
                     </td>
-                    <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"/></td>
+                    <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
+                                                 onkeypress="return isNumberKey(event)"/></td>
                 </tr>
                 <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>
@@ -750,14 +765,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
-        <td style="font-size:11pt;text-align:center;width:90%;border-right:none" colspan="6">ළම‌යාගේ විස්තර <br>
+        <td style="width:25%;border-right:none;"></td>
+        <td style="font-size:11pt;text-align:center;width:50%;border-right:none" colspan="6">ළම‌යාගේ විස්තර <br>
             பிள்ளை பற்றிய தகவல் <br>
             Child's Information
         </td>
-        <td style="border-right:none">
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="errors-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:3%">
             <s:checkbox id="errors-info-check" name="editChildInfo" cssStyle="float:right;"/>
         </td>
-        <td>
+        <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="errors-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="errors-info-max">[+]</div>
         </td>
@@ -847,14 +867,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </div>
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="9" style="text-align:center;font-size:11pt ;width:90%;border-right:none"> මවගේ විස්තර <br>தாய்
+        <td style="border-right:none;width:25%"></td>
+        <td colspan="9" style="text-align:center;font-size:11pt ;width:50%;border-right:none"> මවගේ විස්තර <br>தாய்
             பற்றிய தகவல் <br>Details of the
             Mother
         </td>
-        <td style="border-right:none">
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="mother-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:3%">
             <s:checkbox id="mother-info-check" name="editMotherInfo" cssStyle="float:right;"/>
         </td>
-        <td>
+        <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="mother-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="mother-info-max">[+]</div>
         </td>
@@ -949,15 +974,20 @@ function validateBirthYear(domElement, errorText, errorCode) {
     <col width="250px;"/>
     <tbody>
     <tr>
-        <td colspan="4" style="text-align:center;font-size:11pt; width:90%;border-right:none;">දැනුම් දෙන්නාගේ
+        <td style="width:25%;border-right:none;"></td>
+        <td colspan="4" style="text-align:center;font-size:11pt; width:50%;border-right:none;">දැනුම් දෙන්නාගේ
             විස්තර<br>
             அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>
             Details of the Informant
         </td>
-        <td style="border-right:none">
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="informant-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:3%">
             <s:checkbox id="informant-info-check" name="editInformantInfo" cssStyle="float:right;"/>
         </td>
-        <td>
+        <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="informant-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="informant-info-max">[+]</div>
         </td>
@@ -1042,16 +1072,21 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:textarea name="alt27.childFullNameOfficialLang" cssStyle="visibility:hidden;"/>
 <s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
 
-<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
+<table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="5" style="width:90%;text-align:center;font-size:12pt;border-right:none;">පියාගේ විස්තර<br>
+        <td style="width:25%;border-right:none;"></td>
+        <td colspan="5" style="width:50%;text-align:center;font-size:12pt;border-right:none;">පියාගේ විස්තර<br>
             தந்தை பற்றிய தகவல்<br>
             Details of the Father
         </td>
-        <td style="border-right:none">
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="father-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="width:3%;border-right:none;">
             <s:checkbox id="father-info-check" name="editFatherInfo" cssStyle="float:right;"/>
         </td>
-        <td>
+        <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="father-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="father-info-max">[+]</div>
         </td>
@@ -1126,14 +1161,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
 
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="4" style="width:90%;text-align:center;font-size:11pt;border-right:none;">විවාහයේ විස්තර වෙනස් කිරීම<br>
+        <td style="width:25%;border-right:none"></td>
+        <td colspan="4" style="width:50%;text-align:center;font-size:11pt;border-right:none;">විවාහයේ විස්තර වෙනස් කිරීම<br>
             திருமணத்தின் விபரங்கள் <br>
             Changing of Details of the Marriage
         </td>
-        <td style="border-right:none">
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="marriage-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:2%">
             <s:checkbox id="marriage-info-check" name="editMarriageInfo" cssStyle="float:right;"/>
         </td>
-        <td>
+        <td style="width:2%;">
             <div class="birth-alteration-minimize-icon" id="marriage-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="marriage-info-max">[+]</div>
         </td>
@@ -1196,15 +1236,20 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0"
        cellspacing="0">
     <tr>
-        <td colspan="2" style="text-align:center;font-size:11pt;border-right:none;width:90%;">
+        <td style="width:25%; border-right:none"></td>
+        <td colspan="2" style="text-align:center;font-size:11pt;border-right:none;width:50%;">
             විවාහයෙන් පසු මවගේ නම වෙනස් කිරීම<br>
             தாத்தாவின பாட்டனின் விபரங்கள் <br>
             Change of Mothers name after marriage
         </td>
-        <td style="border-right:none"><s:checkbox id="mother-after-marriage-info-check"
+      <td style="width:20%;text-align:right;border-right:none">
+            <div id="mother-after-marriage-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:2%"><s:checkbox id="mother-after-marriage-info-check"
                                                   name="editMothersNameAfterMarriageInfo"
                                                   cssStyle="float:right;"/></td>
-        <td>
+        <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="mother-after-marriage-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="mother-after-marriage-info-max">[+]</div>
 
@@ -1228,15 +1273,20 @@ function validateBirthYear(domElement, errorText, errorCode) {
 
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
-        <td colspan="8" style="width:90%;text-align:center;font-size:11pt;border-right:none;">මුත්තා / මී මුත්තා ගේ
+        <td style="width:25%; border-right:none"></td>
+        <td colspan="8" style="width:50%;text-align:center;font-size:11pt;border-right:none;">මුත්තා / මී මුත්තා ගේ
             විස්තර වෙනස් කිරීම<br>
             தாத்தாவின் / பாட்டனின் விபரங்கள் <br>
             Changing of the Details of the Grand Father / Great Grand Father
         </td>
-        <td style="border-right:none;">
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="grandFather-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:3%">
             <s:checkbox id="grandFather-info-check" name="editGrandFatherInfo"/>
         </td>
-        <td>
+        <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="grandFather-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="grandFather-info-max">[+]</div>
         </td>
