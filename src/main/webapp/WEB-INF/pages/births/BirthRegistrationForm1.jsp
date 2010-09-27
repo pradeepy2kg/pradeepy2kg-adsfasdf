@@ -510,7 +510,7 @@ function initPage() {
 </tr>
 <tr>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"/></td>
+    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;" maxLength="255"/></td>
 </tr>
 <tr>
     <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
