@@ -78,7 +78,6 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     private Date permanentDate;
     private Date terminationDate;
 
-
     public RegistrarsManagmentAction(DistrictDAO districtDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO, RegistrarManagementService service, MRDivisionDAO mrDivisionDAO) {
         this.districtDAO = districtDAO;
         this.bdDivisionDAO = bdDivisionDAO;
