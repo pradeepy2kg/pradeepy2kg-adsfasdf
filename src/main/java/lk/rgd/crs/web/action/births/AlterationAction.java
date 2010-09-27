@@ -123,18 +123,12 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String birthAlterationSearch() {
         BirthDeclaration bdf = new BirthDeclaration();
         populateBasicLists();
-        switch (pageNo) {
-            case 1:
-                bdf = service.getById(idUKey, user);
-                break;
-            case 2:
-                bdf = service.getByPINorNIC(nicOrPin, user);
-                break;
-            case 3:
-                bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
-                        serialNo, user);
-                break;
-        }
+        if (idUKey != null) bdf = service.getById(idUKey, user);
+        if (nicOrPin != null) bdf = service.getByPINorNIC(nicOrPin, user);
+        if (birthDivisionId != 0 && serialNo != 0)
+            bdf = service.getActiveRecordByBDDivisionAndSerialNo(bdDivisionDAO.getBDDivisionByPK(birthDivisionId),
+                    serialNo, user);
+
         try {
             idUKey = bdf.getIdUKey();
             nicOrPin = bdf.getChild().getPin();
@@ -166,23 +160,24 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alt27.setChildFullNameOfficialLang(bdf.getChild().getChildFullNameOfficialLang());
         alt27.setChildFullNameEnglish(bdf.getChild().getChildFullNameEnglish());
         parent = bdf.getParent();
+        child = bdf.getChild();
         switch (sectionOfAct) {
             //set alt52_1
             case 2:
                 InformantInfo bdfInformant = bdf.getInformant();
                 alt52_1.setInformant(new AlterationInformatInfo(bdfInformant.getInformantType(),
                         bdfInformant.getInformantName(), bdfInformant.getInformantNICorPIN(), bdfInformant.getInformantAddress()));
-                alt52_1.setChildGender(bdf.getChild().getChildGender());
-                alt52_1.setDateOfBirth(bdf.getChild().getDateOfBirth());
-                alt52_1.setPlaceOfBirth(bdf.getChild().getPlaceOfBirth());
-                alt52_1.setPlaceOfBirthEnglish(bdf.getChild().getPlaceOfBirthEnglish());
+                alt52_1.setChildGender(child.getChildGender());
+                alt52_1.setDateOfBirth(child.getDateOfBirth());
+                alt52_1.setPlaceOfBirth(child.getPlaceOfBirth());
+                alt52_1.setPlaceOfBirthEnglish(child.getPlaceOfBirthEnglish());
                 MotherInfo mother = new MotherInfo();
-                mother.setMotherAddress(bdf.getParent().getMotherAddress());
-                mother.setMotherAgeAtBirth(bdf.getParent().getMotherAgeAtBirth());
-                mother.setMotherDOB(bdf.getParent().getMotherDOB());
-                mother.setMotherFullName(bdf.getParent().getMotherFullName());
-                mother.setMotherNICorPIN(bdf.getParent().getMotherNICorPIN());
-                mother.setMotherPassportNo(bdf.getParent().getMotherPassportNo());
+                mother.setMotherAddress(parent.getMotherAddress());
+                mother.setMotherAgeAtBirth(parent.getMotherAgeAtBirth());
+                mother.setMotherDOB(parent.getMotherDOB());
+                mother.setMotherFullName(parent.getMotherFullName());
+                mother.setMotherNICorPIN(parent.getMotherNICorPIN());
+                mother.setMotherPassportNo(parent.getMotherPassportNo());
                 alt52_1.setMother(mother);
                 logger.debug("Loaded  Mother NIC or PIN Number of the {} is :{} ",
                         alt52_1.getMother().getMotherFullName(), alt52_1.getMother().getMotherNICorPIN());
@@ -196,17 +191,17 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             case 3:
                 //set alt27A
                 FatherInfo father = new FatherInfo();
-                father.setFatherDOB(bdf.getParent().getFatherDOB());
-                father.setFatherFullName(bdf.getParent().getFatherFullName());
-                father.setFatherNICorPIN(bdf.getParent().getFatherNICorPIN());
-                father.setFatherPassportNo(bdf.getParent().getFatherPassportNo());
-                father.setFatherPlaceOfBirth(bdf.getParent().getFatherPlaceOfBirth());
-                father.setFatherRace(bdf.getParent().getFatherRace());
-                if (bdf.getParent().getFatherCountry() != null) {
-                    fatherCountryId = bdf.getParent().getFatherCountry().getCountryId();
+                father.setFatherDOB(parent.getFatherDOB());
+                father.setFatherFullName(parent.getFatherFullName());
+                father.setFatherNICorPIN(parent.getFatherNICorPIN());
+                father.setFatherPassportNo(parent.getFatherPassportNo());
+                father.setFatherPlaceOfBirth(parent.getFatherPlaceOfBirth());
+                father.setFatherRace(parent.getFatherRace());
+                if (parent.getFatherCountry() != null) {
+                    fatherCountryId = parent.getFatherCountry().getCountryId();
                 }
-                if (bdf.getParent().getFatherRace() != null) {
-                    fatherRaceId = bdf.getParent().getFatherRace().getRaceId();
+                if (parent.getFatherRace() != null) {
+                    fatherRaceId = parent.getFatherRace().getRaceId();
                 }
                 alt27A.setFather(father);
                 alt27A.setGrandFather(bdf.getGrandFather());
@@ -417,10 +412,12 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareAndAdd(Alteration27A.PLACE_OF_MARRIAGE, marriageOriginal.getPlaceOfMarriage(), marriage.getPlaceOfMarriage());
             String originalMarriageDate = null;
             String marriageDate = null;
-            if (marriageOriginal.getDateOfMarriage() != null)
+            if (marriageOriginal.getDateOfMarriage() != null) {
                 originalMarriageDate = marriageOriginal.getDateOfMarriage().toString();
-            if (marriage.getDateOfMarriage() != null)
-                marriageDate = marriageOriginal.getDateOfMarriage().toString();
+            }
+            if (marriage.getDateOfMarriage() != null){
+                marriageDate = marriage.getDateOfMarriage().toString();
+            }
             compareAndAdd(Alteration27A.DATE_OF_MARRIAGE, originalMarriageDate, marriageDate);
             logger.debug("Check and add to all field of Marriage to approval list of idUKey :{}", idUKey);
 
@@ -571,7 +568,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public String rejectAlteration() {
         BirthAlteration ba = alterationService.getById(idUKey, user);
-        ba.setStatus(BirthAlteration.State.PRINTED);
+        ba.setStatus(BirthAlteration.State.REJECT);
         alterationService.updateBirthAlteration(ba, user);
         return SUCCESS;
     }

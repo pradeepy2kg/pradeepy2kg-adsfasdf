@@ -68,24 +68,25 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror/>
-<table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%">
+<table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
     <s:form action="eprFilterAlteration" method="post">
 
         <tbody>
         <tr>
-            <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"/></td>
+            <td style="width:25%"><s:label name="district" value="%{getText('district.label')}" cssStyle="margin-left:10px;"/></td>
             <td style="width:25%">
                 <s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="birthDistrictId"
                           cssStyle="width:240px;"/>
             </td>
-            <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+            <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
+                                           cssStyle="margin-left:10px;"/></td>
             <td style="width:25%">
                 <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                           cssStyle="float:left;  width:240px;"/>
             </td>
         </tr>
         <tr>
-            <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+            <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}" cssStyle="margin-left:10px;"/></td>
             <td>
                 <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}" list="bdDivisionList"
                           headerValue="%{getText('all.divisions.label')}" headerKey="0"
@@ -101,14 +102,17 @@
 
 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
     <legend></legend>
+    <s:if test="birthAlterationPendingApprovalList.size==0">
+        <s:label value="%{getText('no.items.found.lable')}" cssStyle="color:red;margin-left:30px;"/>
+    </s:if>
     <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <s:if test="birthAlterationPendingApprovalList.size>0">
             <thead>
             <tr>
                 <th width="20px"></th>
-                <th width="650px"><s:label value="%{getText('name.label')}"/></th>
-                <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
-                <th width="100px"><s:label value="%{getText('reject.label')}"/></th>
+                <th width="650px"><s:label value="%{getText('child.name.lable')}"/></th>
+                <th width="100px"></th>
+                <th width="100px"></th>
             </tr>
             </thead>
         </s:if>

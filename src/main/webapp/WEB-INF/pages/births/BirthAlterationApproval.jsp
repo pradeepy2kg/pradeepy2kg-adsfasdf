@@ -28,9 +28,8 @@
     <table class="alteration-approval-list-table" width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td style="width:10%"></td>
-            <td style="width:40%;font-size:12pt; text-align:center;"><s:label value="Birth Name"/></td>
-            <td style="width:40%;font-size:12pt; text-align:center;"><s:label
-                    value="%{getText('name.label')}"/></td>
+            <td style="width:40%;font-size:12pt; text-align:center;"><s:label value="%{getText('approval.table.row1.title')}"/></td>
+            <td style="width:40%;font-size:12pt; text-align:center;"><s:label value="%{getText('approval.table.row2.title')}"/></td>
             <td style="width:10%;font-size:12pt; text-align:center;"><s:label
                     value="%{getText('approve.label')}"/></td>
         </tr>
@@ -59,7 +58,7 @@
     <s:hidden name="numberOfAppPending"/>
     <s:hidden name="idUKey"/>
     <div class="form-submit">
-        <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;"/>
+        <s:submit value="%{getText('submit.label')}" cssStyle="margin-top:10px;margin-right:25px"/>
     </div>
 </s:form>
 <s:hidden name="indexCheck"/>
