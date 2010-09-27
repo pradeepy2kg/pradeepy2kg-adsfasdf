@@ -219,12 +219,20 @@ function stillBirthCommonTags(check) {
     domObject = document.getElementById('childRank');
     if (!check.checked) {
         isEmpty(domObject, "", 'error5')
+        if (domObject.value < 1 && !isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById('childRankGTZero').value;
+        }
     }
     isNumeric(domObject.value, 'error13', 'error24')
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
     isNumeric(domObject.value, 'error13', 'error25')
+    if (!check.checked) {
+        if (domObject.value < 2 && !isFieldEmpty(domObject)) {
+            errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById('numChildGTOne').value;
+        }
+    }
 }
 
 function liveBirthCommonTags(check) {
@@ -250,7 +258,7 @@ function liveBirthCommonTags(check) {
     domObject = document.getElementById('childRank');
     if (!check.checked) {
         isEmpty(domObject, "", 'error5')
-        if (domObject.value < 1) {
+        if (domObject.value < 1 && !isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById('childRankGTZero').value;
         }
     }
@@ -260,7 +268,7 @@ function liveBirthCommonTags(check) {
     domObject = document.getElementById('numberOfChildrenBorn');
     isNumeric(domObject.value, 'error13', 'error25')
     if (!check.checked) {
-        if (domObject.value < 2) {
+        if (domObject.value < 2 && !isFieldEmpty(domObject)) {
             errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById('numChildGTOne').value;
         }
     }
