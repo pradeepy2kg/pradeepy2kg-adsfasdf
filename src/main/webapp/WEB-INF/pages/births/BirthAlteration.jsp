@@ -584,8 +584,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <table class="birth-alteration-table-style01" style="width:1030px;">
     <tr>
         <td width="30%"></td>
-        <td width="35%" style="text-align:center;"><img src="<s:url value="/images/official-logo.png"/>"
-                                                        alt=""/></td>
+        <td width="35%" style="text-align:center;"></td>
         <td width="35%">
             <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
                 <tr>
@@ -657,7 +656,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </tr>
         <tr>
             <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
-                <s:label value="ෙනස් කලයුතු උප්පැන්න සහතිකය පිලිබඳ විස්තර"/> <br>
+                <s:label value="වෙනස් කලයුතු උප්පැන්න සහතිකය පිලිබඳ විස්තර"/> <br>
                 <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
                 <s:label value="Particulars of the Birth Certificate to amend"/>
             </td>
@@ -907,7 +906,6 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td colspan="2" rowspan="2" class="find-person">
                 <s:textfield id="mother_pinOrNic" name="alt52_1.mother.motherNICorPIN" cssStyle="width:80%;"/>
-                <img src="<s:url value="/images/search-mother.png"/>" style="vertical-align:middle;" id="mother_lookup">
             </td>
             <td colspan="2" rowspan="2"><s:label value="විදේශිකය‍කු නම්"/><br><s:label value="வெளிநாட்டவர் எனின் "/><br><s:label
                     value="If foreigner"/>
@@ -1323,12 +1321,14 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்<br>
                 PIN / NIC Number (if available)
             </td>
-            <td><s:textfield id="grandFather_pinOrNic" name="alt27A.grandFather.grandFatherNICorPIN"/></td>
+            <td><s:textfield id="grandFather_pinOrNic" name="alt27A.grandFather.grandFatherNICorPIN"
+                    maxLength="10"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield id="grandFatherBirthYear" name="alt27A.grandFather.grandFatherBirthYear"/></td>
+            <td><s:textfield id="grandFatherBirthYear" name="alt27A.grandFather.grandFatherBirthYear" maxLength="4"
+                    onkeypress="return isNumberKey(event)"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
@@ -1356,12 +1356,13 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்<br>
                 PIN / NIC Number (if available)
             </td>
-            <td><s:textfield id="grandGrandFather_pinOrNic" name="alt27A.grandFather.greatGrandFatherNICorPIN"/></td>
+            <td><s:textfield id="grandGrandFather_pinOrNic" name="alt27A.grandFather.greatGrandFatherNICorPIN" maxLength="10"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield id="grandGrandFatherBirthYear" name="alt27A.grandFather.greatGrandFatherBirthYear"/></td>
+            <td><s:textfield id="grandGrandFatherBirthYear" name="alt27A.grandFather.greatGrandFatherBirthYear" maxLength="4"
+                    onkeypress="return isNumberKey(event)"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
@@ -1502,7 +1503,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             தகவல் கொடுப்பவரின் தனிநபர் அடையாள எண் / அடையாள அட்டை இல. <br>
             PIN / NIC of the declarant
         </td>
-        <td colspan="2"><s:textfield id="Declarant_pinOrNic" name="declarant.declarantNICorPIN"/>
+        <td colspan="2"><s:textfield id="Declarant_pinOrNic" name="declarant.declarantNICorPIN" maxLength="10"/>
         </td>
     </tr>
     <tr>
