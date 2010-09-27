@@ -102,8 +102,13 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
-    };
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
+    }
+
+    ;
 
     $('img#place').bind('click', function(evt4) {
         var id = $("input#placeOfBirth").attr("value");
@@ -127,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -242,12 +250,20 @@ function liveBirthCommonTags(check) {
     domObject = document.getElementById('childRank');
     if (!check.checked) {
         isEmpty(domObject, "", 'error5')
+        if (domObject.value < 1) {
+            errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById('childRankGTZero').value;
+        }
     }
     isNumeric(domObject.value, 'error13', 'error24')
 
     // number of child
     domObject = document.getElementById('numberOfChildrenBorn');
     isNumeric(domObject.value, 'error13', 'error25')
+    if (!check.checked) {
+        if (domObject.value < 2) {
+            errormsg = errormsg + "\n" + document.getElementById('error13').value + " : " + document.getElementById('numChildGTOne').value;
+        }
+    }
 }
 
 //check live birth is a belated birth gives warnings
@@ -640,5 +656,7 @@ function initPage() {
 <s:hidden id="error26" value="%{getText('p1.weeksPregnant.text')}"/>
 <s:hidden id="dob" value="%{getText('p1.dob')}"/>
 <s:hidden id="submitDate" value="%{getText('p1.submit.date')}"/>
+<s:hidden id="numChildGTOne" value="%{getText('p1.num.child.gt.one')}"/>
+<s:hidden id="childRankGTZero" value="%{getText('p1.child.rank.gt.zero')}"/>
 
 </div>
