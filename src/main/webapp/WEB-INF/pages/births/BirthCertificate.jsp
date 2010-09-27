@@ -14,7 +14,7 @@
         }
 
         td {
-            font-size: 12pt;
+            font-size: 7.5pt;
         }
     }
 
