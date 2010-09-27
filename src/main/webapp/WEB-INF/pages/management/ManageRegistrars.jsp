@@ -112,7 +112,7 @@
             <%--    <legend><s:property value="%{getText('filter.dsDivisions')}"/></legend>--%>
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
-            <col width="200px">
+            <col width="218px">
             <col width="500px">
             <col width="200px">
             <col width="500px">

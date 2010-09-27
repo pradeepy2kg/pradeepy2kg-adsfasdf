@@ -216,6 +216,11 @@
         font-size: 30px;
         cursor: default;
     }
+
+    #addText {
+        text-decoration: none;
+        a: hover(black);
+    }
 </style>
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend align="right"><s:property value="%{getText('registrar.basic.info')}"/></legend>
@@ -360,7 +365,7 @@
             <s:param value="%{registrar.pin}" name="registrarPin"></s:param>
             <s:param value="3" name="directAssigment"></s:param>
         </s:url>
-        <s:a href="%{x}"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
+        <s:a href="%{x}" id="addText"><s:property value="%{getText('assignment.add.new.assignment')}"/></s:a>
     </div>
 </fieldset>
 
