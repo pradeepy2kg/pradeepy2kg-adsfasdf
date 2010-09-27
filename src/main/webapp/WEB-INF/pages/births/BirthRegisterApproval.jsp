@@ -272,10 +272,14 @@
         <s:iterator status="approvalStatus" value="approvalPendingList" id="approvalList">
             <tr>
                     <%--<td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
-                <td><s:checkbox name="index"
+                <td>
+                    <s:if test="register.birthType.ordinal() != 3">
+                    <s:checkbox name="index"
                                 onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
                                 title="%{getText('select.label')}" value="%{#index}"
-                                fieldValue="%{#approvalList.idUKey}"/></td>
+                                fieldValue="%{#approvalList.idUKey}"/>
+                    </s:if>
+                </td>
                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
                 <td><s:property value="%{child.getChildFullNameOfficialLangToLength(30)}"/></td>
