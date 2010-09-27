@@ -97,7 +97,7 @@
 <script type="text/javascript">
     document.getElementById("birth_register_approval.label").style.color = "red";
     document.getElementById("birth_confirmation_approval.label").style.color = "red";
-    document.getElementById("birth_register_belated_approval.label").style.color = "red";
+    document.getElementById("birth_register_belated_approval.label").style.color = "green";
     document.getElementById("death_approve_print_list.label").style.color = "red";
     document.getElementById("adoption_approval_and_print.lable").style.color = "green";
 </script>

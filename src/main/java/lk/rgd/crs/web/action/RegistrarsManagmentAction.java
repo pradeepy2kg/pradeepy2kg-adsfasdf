@@ -159,12 +159,14 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             List<Registrar> exsistingregistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
             if (exsistingregistrarsList.size() > 1) { //there is a lready one before
                 addActionError(getText("error.registrar.already.exsists"));
+                 return "error";
             } else {
                 try {
                     service.addRegistrar(registrar, user);
                     session.put(WebConstants.SESSION_EXSISTING_REGISTRAR, registrar);
                 } catch (Exception e) {
                     addActionError("error.registrar.add");
+                    return "error";
                 }
             }
         } else {
