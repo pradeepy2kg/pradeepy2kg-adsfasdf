@@ -1040,7 +1040,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
 <table class="birth-alteration-table-style01" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
-        <td style="text-align:center;font-size:11pt"> උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)<br>
+        <td style="text-align:center;font-size:11pt"> උප්පැන්න සහතිකයක තොරතුරු සංශෝධනය කිරීම (27 A වගන්තිය)<br>
             தந்தை பற்றிய தகவல்<br>
             Amendment of Birth Registration Entry (Section 27 A)
         </td>
