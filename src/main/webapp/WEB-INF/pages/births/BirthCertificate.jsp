@@ -1,6 +1,6 @@
 <%-- @author Duminda Dharmakeerthi. --%>
-<%@ page import="java.util.Date" %>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
@@ -12,10 +12,6 @@
         .form-submit {
             display: none;
         }
-
-        /*td {*/
-            /*font-size: 7.5pt;*/
-        /*}*/
     }
 
     #birth-certificate-outer .form-submit {
@@ -24,14 +20,15 @@
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
-    function initPage(){}
+    function initPage() {
+    }
 </script>
 
 <div id="birth-certificate-outer">
 <s:if test="directPrint">
     <s:url id="print" action="eprDirectPrintBirthCertificate.do">
         <s:param name="bdId" value="#request.bdId"/>
-    </s:url>                                                                                 
+    </s:url>
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
 <s:else>
@@ -74,10 +71,10 @@
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 
-<table style="width: 100%; border:none; border-collapse:collapse; ">
-    <col width="200px">
+<table style="width: 100%; border:none; border-collapse:collapse;">
+    <col width="300px">
     <col width="400px">
-    <col width="200px">
+    <col width="340px">
     <tbody>
     <tr>
         <td rowspan="3"></td>
@@ -85,12 +82,20 @@
             <img src="<s:url value="../images/official-logo.png" />"
                  style="display: block; text-align: center;" width="100" height="120">
         </td>
-        <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
+        <td>
+            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;">
+                <tr>
+                    <td height="60px">ලියාපදිංචි කිරීමේ අංකය<br>பதிவு இலக்கம்<br>Registration Number</td>
+                    <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
+                </tr>
+                <tr>
+                    <td align="center" height="40px"><s:label name="register.bdfSerialNo"/></td>
+                    <td align="center"><s:label name="bdId"/></td>
+                </tr>
+            </table>
         </td>
     </tr>
-    <tr>
-        <td><s:label name="bdId"/></td>
-    </tr>
+    <tr></tr>
     <tr>
         <td align="center" style="font-size:15pt;">ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA <br>
             <s:if test="birthType.ordinal() != 0">
@@ -100,7 +105,7 @@
             </s:if>
             <s:else>
                 මළ උප්පැන්න සහතිකය<br>
-                * In Tamil<br>
+                சாப்பிள்னள பிறப்பு சான்றிதழ்﻿<br>
                 STILL BIRTH CERTIFICATE
             </s:else>
         </td>
@@ -110,49 +115,55 @@
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="135px">
-    <col>
-    <col width="145px">
-    <col>
+    <col width="185px">
+    <col width="230px">
+    <col width="180px">
+    <col width="235px">
+    <col width="200px">
     <tbody>
     <tr>
-        <td width="175px" height="60px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District
+        <td height="70px">දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
+        <td>
+            <s:label name="" value="%{childDistrict}" cssStyle="font-size:11pt;"/><br/>
+            <s:label name="" value="%{childDistrictEn}"/>
         </td>
-        <td width="300px"><s:label name="" value="%{childDistrict}"/><br/>
-            <s:label name="" value="%{childDistrictEn}"/></td>
-        <td width="200px">ප්‍රාදේශීය ලේකම් කොට්ඨාශය
-            <br> பிரிவு
+        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය
+            <br> பிரதேச செயளாளா் பிரிவு
             <br> Divisional Secretariat
         </td>
-        <td width="200px"><s:label name="" value="%{childDsDivision}"/><br/>
-            <s:label name="" value="%{childDsDivisionEn}"/></td>
+        <td colspan="2">
+            <s:label name="" value="%{childDsDivision}" cssStyle="font-size:11pt;"/><br/>
+            <s:label name="" value="%{childDsDivisionEn}"/>
+        </td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td width="200px" height="70px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                <br>பிரிவு
+            <td height="70px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+                <br>பதிவுப் பிரிவு
                 <br>Registration Division
             </td>
-            <td>
-                <s:label name="" value="%{#request.register.bdDivisionPrint}"/><br>
+            <td colspan="2">
+                <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
                 <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
             </td>
-            <td>මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
-                <br>நிறைவேற்றிய மாற்றங்கள்
+            <td style="font-size:9pt;">මුල් ලියාපදිංචියෙන් පසු වෙනස්කම්
+                <br>முதல் பதிவின் பின் நிறைவேற்றிய மாற்றங்கள்
                 <br>Changes After First Registration
             </td>
-                <%--TODO fill variable--%>
-            <td><s:label name="" value="%{}"/></td>
+            <td style="font-size:9pt;">ඔව් - "**" ලකුණින් පෙන්වා ඈත<br>
+                ஆம் - "**" குறியீட்டில் குறிப்பிடப்பட்டுள்ளது <br>
+                Yes - marked with "**"
+            </td>
         </tr>
     </s:if>
     <s:else>
         <tr>
-            <td height="90px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
-                <br>பிரிவு
+            <td height="70px">ලියාපදිංචි කිරීමේ කොට්ඨාශය
+                <br>பதிவுப் பிரிவு
                 <br>Registration Division
             </td>
-            <td colspan="3">
-                <s:label name="" value="%{#request.register.bdDivisionPrint}"/><br>
+            <td colspan="4">
+                <s:label name="" value="%{#request.register.bdDivisionPrint}" cssStyle="font-size:11pt;"/><br>
                 <s:label name="" value="%{#request.register.birthDivision.enDivisionName}"/>
             </td>
         </tr>
@@ -161,63 +172,64 @@
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="152px">
-    <col width="160px">
-    <col width="100px">
+    <col width="185px">
+    <col width="230px">
+    <col width="150px">
     <col width="130px">
-    <col width="100px">
-    <col>
+    <col width="135px">
+    <col width="200px">
     <tbody>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td height="60px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number (PIN)
+            <td height="60px">අනන්‍යතා අංකය<br>தனிநபர்அடையாள எண் <br>Identification Number</td>
+            <td align="center" style="font-size:14pt;"><s:label name="" value="%{#request.child.pin}"/></td>
+            <td>උපන් දිනය <br>பிறந்த திகதி<br>Date of birth</td>
+            <td>
+                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/><br>
+                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
             </td>
-            <td><s:label name="" value="%{#request.child.pin}"/></td>
-            <td width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
-            </td>
-            <td width="150px"><s:label name="" value="%{#request.child.childDateOfBirthForPrint}"/></td>
-            <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
-            </td>
+            <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
             <td width="150px">
-                <s:label name="" value="%{gender}"/><br/>
+                <s:label name="" value="%{gender}" cssStyle="font-size:11pt;"/><br/>
                 <s:label name="" value="%{genderEn}"/>
             </td>
         </tr>
     </s:if>
     <s:else>
         <tr>
-            <td height="60px" width="100px">උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
+            <td height="60px" width="100px">උපන් දිනය <br>பிறந்த திகதி<br>Date of birth</td>
+            <td>
+                <s:label name="" value="%{#request.child.childDateOfBirthForPrint}" cssStyle="font-size:12pt;"/>
+                <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
             </td>
-            <td><s:label name="" value="%{#request.child.childDateOfBirthForPrint}"/></td>
-            <td>ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
-            </td>
+            <td>ස්ත්‍රී පුරුෂ භාවය<br>பால்<br>Gender</td>
             <td width="100px">
-
-                <s:label name="" value="%{gender}"/><br/>
+                <s:label name="" value="%{gender}" cssStyle="font-size:11pt;"/><br/>
                 <s:label name="" value="%{genderEn}"/>
             </td>
             <td width="350px">දරුවා මැරී උපදින විට ගර්භයට සති කීයක් ගත වී තිබුනේද යන්න
-                <br>* In Tamil
+                <br>பிள்ளை இறந்து பிறந்த பொழுது கா்ப்பத்திற்கு எத்தனை கிழமை
                 <br>Number of weeks pregnant at the time of still-birth
             </td>
             <td><s:label name="" value="%{#request.child.weeksPregnant}"/></td>
         </tr>
     </s:else>
     <tr>
-        <td height="70px">උපන් ස්ථානය <br>பிறந்த இடம் <br>Place of birth
+        <td height="70px">උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
         </td>
         <td colspan="2">
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}"/><br>
-            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"/>
+            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:14pt;"/><br>
+            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
+                     cssStyle="font-size:12pt;"/>
         </td>
-        <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா? <br>Were Parents Married?
+        <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
         </td>
-        <td><s:label name="" value="%{marriedStatus}"/><br>
+        <td><s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
             <s:label name="" value="%{marriedStatusEn}"/></td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr>
-            <td height="120px">නම <br>பெயர் <br>Name
+            <td height="120px">නම <br>பெயர்<br>Name
             </td>
             <td colspan="5" class="bc-name" style="font-size:14pt">
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
@@ -226,30 +238,29 @@
         <tr>
             <td height="110px">නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
-            <td colspan="5" class="bc-name" style="font-size:14pt">
+            <td colspan="5" class="bc-name" style="font-size:12pt">
                 <s:label name="" cssStyle="text-transform: uppercase;" value="%{#request.child.childFullNameEnglish}"/>
             </td>
         </tr>
     </s:if>
     <tr>
-        <td height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
+        <td height="100px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர்<br> Father's Full Name
         </td>
         <td colspan="5" class="bc-name" style="font-size:14pt">
             <s:label name="" value="%{#request.parent.fatherFullName}"/>
         </td>
     </tr>
     <tr>
-        <td height="50px">පියාගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
-            தந்தையின் அடையாள எண் <br>
-            Father's PIN / NIC
-
+        <td height="50px">පියාගේ අනන්‍යතා අංකය<br>
+            தந்தையின் அடையாள எண்<br>
+            Father's Identification No.
         </td>
-        <td><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
-        <td>පියාගේ ජාතිය<br>தந்தையின் இனம் <br> Father's Race
+        <td align="center"><s:label name="" value="%{#request.parent.fatherNICorPIN}"/></td>
+        <td>පියාගේ ජාතිය<br>தந்தையின் இனம்<br> Father's Race</td>
+        <td colspan="3">
+            <s:label name="" value="%{fatherRacePrint}" cssStyle="font-size:14pt;"/><br/>
+            <s:label name="" value="%{fatherRacePrintEn}" cssStyle="font-size:12pt;"/>
         </td>
-        <td colspan="3"><s:label name="" value="%{fatherRacePrint}"/><br/>
-            <s:label name="" value="%{fatherRacePrintEn}"/></td>
-
     </tr>
 
     <tr>
@@ -262,15 +273,17 @@
         </td>
     </tr>
     <tr>
-        <td height="50px">ම‌වගේ අනන්‍යතා අංකය හෝ ජාතික හැඳුනුම්පත් අංකය<br>
+        <td height="50px">ම‌වගේ අනන්‍යතා අංකය<br>
             தாயின் அடையாள எண் <br>
-            Mother's PIN / NIC
+            Mother's Identification No.
         </td>
-        <td><s:label name="" value="%{#request.parent.motherNICorPIN}"/></td>
-        <td>මවගේ ජාතිය<br>தாயின் இனம் <br> Mother's Race
+        <td align="center"><s:label name="" value="%{#request.parent.motherNICorPIN}"/></td>
+        <td>මවගේ ජාතිය<br>தாயின் இனம்<br> Mother's Race
         </td>
-        <td colspan="3"><s:label name="" value="%{motherRacePrint}"/><br/>
-            <s:label name="" value="%{motherRacePrintEn}"/></td>
+        <td colspan="3">
+            <s:label name="" value="%{motherRacePrint}" cssStyle="font-size:14pt;"/><br/>
+            <s:label name="" value="%{motherRacePrintEn}" cssStyle="font-size:12pt;"/>
+        </td>
     </tr>
 
     </tbody>
@@ -278,42 +291,47 @@
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="185px">
-    <col width="194px">
-    <col width="136px">
-    <col>
+    <col width="230px">
+    <col width="150px">
+    <col width="465px">
     <tbody>
     <tr>
-        <td height="50px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
+        <td height="50px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி<br> Date of Registration</td>
+        <td>
+            <s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
-        <td><s:label name="" value="%{#request.register.dateOfRegistrationForPrint}"/></td>
-        <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
+        <td>නිකුත් කළ දිනය<br>வழங்கிய திகதி<br> Date of Issue
         </td>
-        <td><%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+        <td>
+            <%= DateTimeUtils.getISO8601FormattedString(new Date()) %><br>
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:8pt;"/>
         </td>
     </tr>
     <tr>
         <td colspan="2" height="100px">
-            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
+            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන<br>
             சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
             Name, Signature and Designation of certifying officer
         </td>
-        <td colspan="2" style="font-size:12pt"><s:label value="%{#request.register.confirmantFullName}"/></td>
+        <td colspan="2" style="font-size:12pt">
+            <s:label value="%{#request.register.confirmantFullName}"/>
+        </td>
     </tr>
     <tr>
-        <td colspan="2" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+        <td colspan="2" height="50px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
-        <%--TODO--%>
         <td colspan="2"><s:label value="%{#request.register.originalBCPlaceOfIssuePrint}"/></td>
     </tr>
     </tbody>
 </table>
 
-<p style="font-size:9pt">උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
-    විසින් නිකුත් කරන
-    ලදි.<br>
-    பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்ப்புடி பதிவாளர் நாயகத் திணைக்களத்தினால் வழங்கப்பட்டது <br>
-    Issued by Registrar General's Department according to Birth and Death Registration Act (110 Authority)</p>
-
+<p style="font-size:9pt">
+    උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
+    ලදි,<br>
+    பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்(110 ஆம் அத்தியாயத்தின்) கீழ் பதிவாளர் நாயகம் திணைக்களத்தினால் வழங்கப்பட்டது<br>
+    Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
+</p>
 
 <s:if test="#request.allowPrintCertificate">
     <div class="form-submit" style="margin:15px 0 0 10px; ">
@@ -327,6 +345,5 @@
 <div class="form-submit" style="margin-top:15px;">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
-<%--</s:form>--%>
 </div>
 <%-- Styling Completed --%>
