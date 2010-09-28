@@ -14,7 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "LOCATIONS", schema = "COMMON")
 @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
-        "WHERE l.lifeCycleInfo.active = :active " +
         "ORDER BY l.enLocationName desc")
 public class Location implements Serializable {
     

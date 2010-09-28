@@ -36,6 +36,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private User user;
     private User currentUser;
     private int pageNo;
+    private int pageType;
     private String divisions = new String();
     private String button;
     private int[] assignedDistricts;
@@ -57,6 +58,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private int mrdivisionId;
     private int courtId;
     private int locationId;
+    private boolean nextFlag;
+    private boolean previousFlag;
+    private int noOfRows;
 
     private String districtEn;
     private String dsDivisionEn;
@@ -79,7 +83,9 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final MRDivisionDAO mrDivisionDAO;
     private final CourtDAO courtDAO;
-    private LocationDAO locationDAO;
+    private final LocationDAO locationDAO;
+    private final AppParametersDAO appParametersDAO;
+    private static final String BA_ROWS_PER_PAGE = "crs.br_rows_per_page";
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> divisionList;
@@ -100,7 +106,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
-                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO) {
+                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
+                               AppParametersDAO appParametersDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -110,6 +117,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.mrDivisionDAO = mrDivisionDAO;
         this.courtDAO = courtDAO;
         this.locationDAO = locationDAO;
+        this.appParametersDAO = appParametersDAO;
     }
 
     public String creatUser() {
@@ -207,7 +215,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public void setDivisionList() {
-        switch (pageNo) {
+        switch (pageType) {
             case 1:
                 districtNameList = districtDAO.findAll();
                 district = null;
@@ -231,10 +239,11 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
             case 5:
                 courtNameList = courtDAO.findAll();
+                logger.debug("Size of the loaded Court list is :{}", courtNameList.size());
                 court = null;
                 break;
             case 6:
-                locationNameList = locationDAO.getAllLocations(true);
+                locationNameList = locationDAO.getAllLocations();
                 logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
                 location = null;
                 break;
@@ -244,7 +253,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String initActive() {
-        switch (pageNo) {
+        switch (pageType) {
             case 1:
                 dataManagementService.activateDistrict(UserDistrictId, currentUser);
                 logger.debug("Id of Active District ({}) is    :{}", districtDAO.getDistrict(UserDistrictId).getEnDistrictName(), UserDistrictId);
@@ -262,7 +271,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 logger.debug("Id of Active MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
                 break;
             case 5:
-                dataManagementService.inactivateLocation(courtId, currentUser);
+                dataManagementService.activateCourt(courtId, currentUser);
                 logger.debug("Id of the Active Court ({}) is  :{}", courtDAO.getNameByPK(courtId, "en"), courtId);
                 break;
             case 6:
@@ -276,7 +285,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String initInactive() {
-        switch (pageNo) {
+        switch (pageType) {
             case 1:
                 dataManagementService.inactivateDistrict(UserDistrictId, currentUser);
                 logger.debug("Id of Inactive District ({}) is    :{}", districtDAO.getDistrict(UserDistrictId).getEnDistrictName(), UserDistrictId);
@@ -294,7 +303,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 logger.debug("Id of Inactive MRDivision ({}) is    :{}", mrDivisionDAO.getMRDivisionByPK(mrdivisionId).getEnDivisionName(), mrdivisionId);
                 break;
             case 5:
-                dataManagementService.inactivateLocation(courtId, currentUser);
+                dataManagementService.inactivateCourt(courtId, currentUser);
                 logger.debug("Id of the Inactive Court ({}) is   :{}", courtDAO.getNameByPK(courtId, "en"), courtId);
                 break;
             case 6:
@@ -309,7 +318,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
 
     public String addDivisionsAndDsDivisions() {
-        switch (pageNo) {
+        switch (pageType) {
             case 1:
                 district.setActive(true);
                 dataManagementService.addDistrict(district, currentUser);
@@ -338,12 +347,11 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
                 break;
             case 5:
+                dataManagementService.addCourt(court, currentUser);
+                logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
+                msg = "New Court Was Added  :" + court.getEnCourtName();
                 break;
             case 6:
-                logger.debug("English :{}", location.getEnLocationName());
-                logger.debug("Sinhala :{}", location.getSiLocationName());
-                logger.debug("Tamil :{}", location.getTaLocationName());
-                logger.debug("code :{}", location.getLocationCode());
                 dataManagementService.addLocation(location, currentUser);
                 logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
                 msg = "New Location Was Added  :" + location.getEnLocationName();
@@ -353,7 +361,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         setDivisionList();
         return SUCCESS;
     }
-
     public String selectUsers() {
         populate();
         int pageNo = 1;
@@ -765,4 +772,35 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.location = location;
     }
 
+    public boolean isNextFlag() {
+        return nextFlag;
+    }
+
+    public void setNextFlag(boolean nextFlag) {
+        this.nextFlag = nextFlag;
+    }
+
+    public boolean isPreviousFlag() {
+        return previousFlag;
+    }
+
+    public void setPreviousFlag(boolean previousFlag) {
+        this.previousFlag = previousFlag;
+    }
+
+    public int getNoOfRows() {
+        return noOfRows;
+    }
+
+    public void setNoOfRows(int noOfRows) {
+        this.noOfRows = noOfRows;
+    }
+
+    public int getPageType() {
+        return pageType;
+    }
+
+    public void setPageType(int pageType) {
+        this.pageType = pageType;
+    }
 }

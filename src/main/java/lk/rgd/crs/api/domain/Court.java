@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "COURTS", schema = "CRS")
+@NamedQuery(name = "findAllCourts", query = "SELECT c FROM Court c " +
+        "ORDER BY c.enCourtName desc")
 public class Court implements Serializable {
 
     /**
@@ -18,6 +20,9 @@ public class Court implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courtUKey;
+
+    @Column(nullable = false, columnDefinition = "integer default 1")
+    private boolean active = true;
 
     @Column(nullable = false)
     private int courtId;
@@ -59,5 +64,13 @@ public class Court implements Serializable {
 
     public void setTaCourtName(String taCourtName) {
         this.taCourtName = taCourtName;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
