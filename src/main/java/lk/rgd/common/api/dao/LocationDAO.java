@@ -33,8 +33,7 @@ public interface LocationDAO {
 
     /**
      * Return all Locations that are active or inactive
-     * @param active flag to filter locations
      * @return filtered list of Locations
      */
-    public List<Location> getAllLocations(boolean active);
+    public List<Location> getAllLocations();
 }

@@ -49,9 +49,8 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<Location> getAllLocations(boolean active) {
+    public List<Location> getAllLocations() {
         Query q = em.createNamedQuery("getAllLocations");
-        q.setParameter("active", active);
         return q.getResultList();
 
     }

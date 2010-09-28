@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.domain.Court;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,5 +120,25 @@ public interface MasterDataManagementService {
      * @param locationUKey the location to mark as inactive
      * @param user user invoking the action
      */
-    public void inactivateLocation(int locationUKey, User user);    
+    public void inactivateLocation(int locationUKey, User user);
+
+        /**
+     * Add a new Court as active
+     * @param court the new court, the name of the court in all three languages must be filled
+     * @param user user invoking the action
+     */
+    public void addCourt(Court court, User user);
+    /**
+     * Mark a Court as active
+     * @param courtUKey the court to mark as active
+     * @param user user invoking the action
+     */
+    public void activateCourt(int courtUKey, User user);
+
+    /**
+     * Mark a court as inactive
+     * @param courtUKey the court to mark as inactive
+     * @param user user invoking the action
+     */
+    public void inactivateCourt(int courtUKey, User user);
 }
