@@ -57,35 +57,34 @@
 
     });
 
-
     function validate() {
         var errormsg = "";
         var domObject;
         domObject = document.getElementById("checkUserId");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The User Id  \n";
+            errormsg = errormsg + document.getElementById("error1").value+"\n";
         }
         domObject = document.getElementById("userName");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The User Name \n";
+            errormsg = errormsg + document.getElementById("error2").value+"\n";
         }
         domObject = document.getElementById("userPin");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Enter The User Pin \n";
+            errormsg = errormsg + document.getElementById("error3").value+"\n";
         }
         else {
             var reg = /^([0-9]*)$/;
             if (reg.test(domObject.value.trim()) == false) {
-                errormsg = errormsg + "User Pin is Invalid \n";
+                errormsg = errormsg + document.getElementById("error4").value+"\n";
             }
         }
         domObject = document.getElementById("districtId");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Select Assigned Districts\n";
+            errormsg = errormsg + document.getElementById("error5").value+"\n";
         }
         domObject = document.getElementById("divisionId");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + "Plese Select Assigned D.S. Divisions \n";
+            errormsg = errormsg + document.getElementById("error6").value+"\n";
         }
 
         if (errormsg != "") {
@@ -220,6 +219,13 @@
         </table>
     </fieldset>
     <s:hidden id="buttonName" value="%{getText('assigned_ds_divisions.label')}"/>
-    </s:form>
+    <s:hidden id="error1" value="%{getText('user.id.label')}"/>
+    <s:hidden id="error2" value="%{getText('user.name.label')}"/>
+    <s:hidden id="error3" value="%{getText('user.PIN.label')}"/>
+    <s:hidden id="error4" value="%{getText('user.PIN.invalid')}"/>
+    <s:hidden id="error5" value="%{getText('user.district')}"/>
+    <s:hidden id="error6" value="%{getText('user.divisions')}"/>
+
+     </s:form>
 </div>
 

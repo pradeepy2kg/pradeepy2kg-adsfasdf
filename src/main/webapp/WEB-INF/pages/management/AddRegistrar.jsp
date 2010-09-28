@@ -43,27 +43,42 @@
         var check = document.getElementById('skipValidationId');
         var returnval = true;
 
-        //valdiate numbers
-        if ((check.checked && !isFieldEmpty(pin)) || (!check.checked)) {
-            isNumeric(pin.value, "invalideData", "pin")
+        if (!check.checked) {
+            if (isFieldEmpty(pin)) {
+                isEmpty(pin,document.getElementById('emptry').value, "pin")
+            }
+            if (isFieldEmpty(nic)) {
+                isEmpty(nic,document.getElementById('emptry').value, "nic")
+            }
+            if (isFieldEmpty(phone)) {
+                isEmpty(phone,document.getElementById('emptry').value, "phone")
+            }
+            if (isFieldEmpty(email)) {
+                isEmpty(email,document.getElementById('emptry').value, "email")
+            }
+        }
+        if (!isFieldEmpty(pin) && isInteger(pin)) {
             //validate PIN or NIC
             validatePINorNIC(pin, "invalideData", "pin")
         }
-        if ((check.checked && !isFieldEmpty(nic)) || (!check.checked)) {
+        if (!isFieldEmpty(nic)) {
             validatePINorNIC(nic, "invalideData", "nic")
         }
-        if ((check.checked && !isFieldEmpty(phone)) || (!check.checked)) {
+        if (!isFieldEmpty(phone)) {
             //validate phone number
             validatePhoneNo(phone, "invalideData", "phone")
         }
-        if ((check.checked && !isFieldEmpty(email)) || (!check.checked)) {
+        if (!isFieldEmpty(email)) {
             //validate email
             validateEmail(email, "invalideData", "email")
         }
         /*        //validate date of birth
          isDate(dob, "invalideData", "email")*/
         /*todo validate compulsory fields*/
-        isEmpty(nameOfficialLang, "nameOfficial", "cannotNull")
+        isEmpty(nameOfficialLang, document.getElementById('nameOfficialError').value, "cannotNull")
+        isEmpty(nameEnglish, document.getElementById('nameEnglishError').value, "cannotNull")
+        isEmpty(address, document.getElementById('addressError').value, "cannotNull")
+        isEmpty(pin, document.getElementById('pin').value, "cannotNull")
 
         if (errormsg != "") {
             alert(errormsg);
@@ -151,7 +166,7 @@
                                                                                      name="skipValidationName"/></td>
             <td align="right">
                 <div id="addNew_button" class="button">
-                    <s:submit name="refresh" value="%{getText(label.add.registrar)}"/>
+                    <s:submit name="refresh" value="%{getText('label.add.registrar')}"/>
                 </div>
             </td>
         </tr>
@@ -166,7 +181,9 @@
 <s:hidden id="pin" value="%{getText('filed.pin')}"/>
 <s:hidden id="nic" value="%{getText('field.nic')}"/>
 <s:hidden id="dob" value="%{getText('field.dob')}"/>
-<s:hidden id="address" value="%{getText('field.address')}"/>
+<s:hidden id="addressError" value="%{getText('field.address')}"/>
 <s:hidden id="phone" value="%{getText('field.phone')}"/>
 <s:hidden id="email" value="%{getText('field.email')}"/>
-<s:hidden id="nameOfficial" value="%{getText('field.nameOfficial')}"/>
+<s:hidden id="nameOfficialError" value="%{getText('field.nameOfficial')}"/>
+<s:hidden id="nameEnglishError" value="%{getText('field.nameEnglish')}"/>
+<s:hidden id="emptry" value="%{getText('field.emptry')}"/>
