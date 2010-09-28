@@ -130,6 +130,18 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     return "invalidBirthCertificateNumber";
                 }
             }
+            //check applicant type
+            if (adoption.isApplicantMother()) {
+                //check wife details are already filled if so give action error
+                if (adoption.getWifeName() != null || adoption.getWifePassport() != null
+                        || adoption.getWifePINorNIC() != null) {
+                    addActionError(getText("er.if.applicant.type.mother.wife.detail.null"));
+                    populate();
+                    populateBasicLists(language);
+                    populateAllDSDivisionList();
+                    return "invalidBirthCertificateNumber";
+                }
+            }
             service.updateAdoptionOrder(adoption, user);
         } else {
             birthCertificateNo = adoption.getBirthCertificateNumber();
@@ -139,6 +151,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 if (bdf == null) {
                     addActionError(getText("er.invalid.birth.certificate.number"));
                     populate();
+                    populateBasicLists(language);
+                    populateAllDSDivisionList();
                     return "invalidBirthCertificateNumber";
                 }
             }
@@ -155,7 +169,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         if (idUKey == 0) {
             adoption = new AdoptionOrder();
         }
-        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+
         populateBasicLists(language);
         populateAllDSDivisionList();
         return SUCCESS;
@@ -181,10 +195,16 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionError(getText("adoption.error.editNotAllowed"));
             return ERROR;
         }
-        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+                // todo remove
+        // language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populate();
         populateAllDSDivisionList();
         return SUCCESS;
+    }
+
+    private boolean isApplicantMother(AdoptionOrder adoption) {
+
+        return false;
     }
 
     /**
@@ -202,7 +222,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             populateApprovalAndPrintList();
             return "skip";
         }
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+                // todo remove
+        // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);
             dsDivisionName = dsDivisionDAO.getNameByPK(bdDivisionDAO.getBDDivisionByPK(
@@ -319,7 +340,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             if (adoption.getBirthCertificateNumber() > 0) {
                 bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
             }
-            String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+            // todo remove
+            //  String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             if (bdf != null) {
                 birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
                 birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();
@@ -596,7 +618,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     }
 
     private void populate() {
-        String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+        // todo remove
+        // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populateBasicLists(language);
         populateDynamicLists(language);
     }
@@ -740,6 +763,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         logger.debug("Set session {}", map);
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         logger.debug("setting User: {}", user.getUserName());
     }
 
