@@ -12,7 +12,7 @@
     <s:set name="row" value="1"/>
 </s:if>
 <s:elseif test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
-    <%--live birth--%>                        ce
+    <%--live birth--%>                        
     <s:set name="row" value="1"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
@@ -366,7 +366,7 @@ function initPage() {
                 </tr>
                 <tr>
                     <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>* In Tamil<br>Submitted Date</span></label>
+                        <label><span class="font-8">භාරගත්  දිනය<br>பெறப்பட்ட திகதி <br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                         <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
@@ -521,7 +521,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>In Tamil <br>Did the birth occur at a hospital?</label></td>
+    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்திய சாலையிலா?<br>Did the birth occur at a hospital?</label></td>
     <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
     <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
                                 value="true"/></td>
