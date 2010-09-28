@@ -181,8 +181,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionError(getText("adoption.error.editNotAllowed"));
             return ERROR;
         }
-
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populate();
+        populateAllDSDivisionList();
         return SUCCESS;
     }
 
@@ -614,6 +615,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     addActionError(getText("er.label.notice.not.printed.cannot_capture_data"));
                 }
                 adoption = null;
+                //todo amith
                 addActionError(getText("er.label.invalid.data"));
             }
         } else {

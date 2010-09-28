@@ -579,6 +579,7 @@ function enableSerialNumber(mode) {
         </td>
     </tr>
 </table>
+
 <table class="adoption-reg-form-02-table01" cellspacing="0" cellpadding="2">
     <caption></caption>
     <col width="320px"/>
