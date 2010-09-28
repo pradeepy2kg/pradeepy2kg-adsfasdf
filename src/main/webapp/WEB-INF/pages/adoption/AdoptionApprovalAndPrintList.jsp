@@ -84,15 +84,26 @@
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
 <thead>
 <tr>
-    <th><s:label name="serial" value="%{getText('adoption_serial.label')}"/></th>
-    <th><s:label name="name" value="%{getText('name.label')}"/></th>
-    <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
-    <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
-    <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
-    <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
-    <th><s:label name="delete" value="%{getText('view.label')}"/></th>
-    <th><s:label name="delete" value="%{getText('printNotice.label')}"/></th>
-    <th><s:label name="delete" value="%{getText('printCertificete.label')}"/></th>
+    <%--    <th><s:label name="serial" value="%{getText('adoption_serial.label')}"/></th>
+  <th><s:label name="name" value="%{getText('name.label')}"/></th>
+  <th><s:label name="edit" value="%{getText('edit.label')}"/></th>
+  <th><s:label name="approve" value="%{getText('approve.label')}"/></th>
+  <th><s:label name="reject" value="%{getText('reject.label')}"/></th>
+  <th><s:label name="delete" value="%{getText('delete.label')}"/></th>
+  <th><s:label name="delete" value="%{getText('view.label')}"/></th>
+  <th><s:label name="delete" value="%{getText('printNotice.label')}"/></th>
+  <th><s:label name="delete" value="%{getText('printCertificete.label')}"/></th>
+  <th><s:label name="delete" value="%{getText('ReRegistration.label')}"/></th>--%>
+
+    <th width="100px"><s:label name="serial" value="%{getText('adoption_serial.label')}"/></th>
+    <th width="800px"><s:label name="name" value="%{getText('name.label')}"/></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
     <th><s:label name="delete" value="%{getText('ReRegistration.label')}"/></th>
 </tr>
 </thead>
