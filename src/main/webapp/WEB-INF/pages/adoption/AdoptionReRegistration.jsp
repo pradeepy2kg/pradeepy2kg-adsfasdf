@@ -81,7 +81,7 @@
         <td><s:label value="%{adoption.applicantAddress}"/></td>
     </tr>
     <tr>
-        <td>දරුකමට හදාගත් ළමයෙකුගේ උපත නැවත ලියාපදිංචි කිරීම<br/>
+        <td style="font-size:12pt;">දරුකමට හදාගත් ළමයෙකුගේ උපත නැවත ලියාපදිංචි කිරීම<br/>
             Re-registration of the birth of an Adopted Child
         </td>
     </tr>
@@ -106,7 +106,7 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>
+        <td style="font-size:12pt;">
             දරුකමට හදාගැනීමේ  උසාවි නියෝගය <br/>
             Particulars of Adoption Order
         </td>

@@ -3,7 +3,7 @@
     body {
         background-color: white !important;
         font-family: BhashitaComplex, verdana, arial, sans-serif;
-        font-size: 12pt;
+        font-size: 10pt;
     }
 
     * {
@@ -42,17 +42,21 @@
 
     textarea {
         color: black;
-        font-size: 12pt;
+        font-size: 10pt;
     }
 
-    .page_break {
-
+    .page-break {
+        display:block;
         page-break-before: always;
     }
 
     .form-submit {
         display: none
     }
+/*
+    .print-font-size {
+        font-size: 5pt;
+    }*/
 }
 
 /*@media print {*/

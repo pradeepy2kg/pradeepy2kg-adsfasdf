@@ -1491,7 +1491,7 @@
 
 /* Styles for the Birth Certificate begins here. */
 #birth-certificate-outer {
-    width: auto;
+    width: 1030px;
     height: auto;
     padding: 10px;
     background: #fff;
@@ -1519,6 +1519,96 @@
 }
 
 #birth-certificate-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/*Styles for Adoption Re-registration*/
+#adoption-registration-form-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#adoption-registration-form-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#adoption-registration-form-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#adoption-registration-form-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/*Styles for Adoption Certificate*/
+#adoption-certificate-form-outer {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#adoption-certificate-form-outer table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#adoption-certificate-form-outer p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#adoption-certificate-form-outer .table-with-border {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+/*Styles for Birth Confirmation Page*/
+#birth-confirmation-print-form-outer-page {
+    width: 1030px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 9pt;
+    font-family: Bhashitha2, Bhashitha2San;
+}
+
+#birth-confirmation-print-form-outer-page table {
+    font-size: 10pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    margin-bottom: 10px;
+}
+
+#birth-confirmation-print-form-outer-page p {
+    font-size: 8pt;
+    font-family: Bhashitha2, Bhashitha2San;
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 0;
+}
+
+#birth-confirmation-print-form-outer-page .table-with-border {
     width: 100%;
     border: 1px solid #000;
     border-collapse: collapse;
