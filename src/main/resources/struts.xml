@@ -936,7 +936,7 @@
 
         <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="birthAlteration">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
 
         <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
@@ -960,7 +960,7 @@
         </action>
         <action name="eprApproveAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="alterationApproval">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
 
         <action name="eprApproveSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
@@ -969,7 +969,7 @@
         </action>
         <action name="eprRejectSelectedAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="rejectAlteration">
-            <result type="tiles" name="success">epr.home</result>
+            <result type="tiles" name="success">epr.birthAlterationResult</result>
         </action>
     </package>
 </struts>

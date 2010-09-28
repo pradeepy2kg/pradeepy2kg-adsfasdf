@@ -711,34 +711,12 @@ function validateBirthYear(domElement, errorText, errorCode) {
     </table>
 </div>
 <s:if test="sectionOfAct==1">
-    <div id="actNumber1">
-        <table class="birth-alteration-table-style01" style="width:100%">
-            <tr>
-                <td colspan="2" style="text-align:center;font-size:11pt;border-bottom:none;">නම ඇතුලත් කිරීම හෝ වෙනස්
-                    කිරීම
-                    (27
-                    වගන්තිය) <br>
-                    தந்தை பற்றிய தகவல் <br>
-                    Insertion or Alteration of the Name (Section 27)
-                </td>
-            </tr>
-        </table>
+    <div id="actNumber1" style="margin-top:10px">
         <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
             <caption></caption>
             <col width="250px"/>
             <col width="760px"/>
             <tbody>
-            <tr>
-                <td colspan="2" style="text-align:center;">මෙම වගන්තිය යටතේ මව්පියන් හෝ භාරකරු හට අවුරුදු 21 කට අඩු
-                    දරුවකුගේ නම වෙනස් කිරීමට ඉල්ලීම් කල හැක. අවු
-                    රුදු 21 කට වැඩි පුද්ගලයෙකුගේ නම වෙනස් කිරීමට ඔහු විසින් ඉල්ලුම් පත්‍රයක් ඉදිරිපත් කල හැක. <br>
-                    தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை பற்றிய தகவல் தந்தை
-                    பற்றிய தகவல் தந்தை பற்றிய தகவல் <br>
-                    Under this section the name change of a child under 21 years could be requested by his parents or
-                    the
-                    guardian. A person over 21 years in age could request for a name change on his own.
-                </td>
-            </tr>
             <tr>
                 <td>නම රාජ්‍ය භාෂාවෙන්
                     (සිංහල / දෙමළ) <br>

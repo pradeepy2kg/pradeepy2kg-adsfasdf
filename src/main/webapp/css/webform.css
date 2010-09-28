@@ -1780,6 +1780,10 @@ birth-alteration-table-style01 td{border:none;}
 .alteration-approval-list-table{width:98%;border-top:1px solid #000;border-left:1px solid #000;}
 .alteration-approval-list-table td{border-right:1px solid #000;border-bottom:1px solid #000;height:40px;}
 
+#birth-alteration-result-outer {width:1030px;}
+#birth-alteration-result-outer table{width:80%;margin-left:100px;margin-top:25px;}
+
+
 
 
 

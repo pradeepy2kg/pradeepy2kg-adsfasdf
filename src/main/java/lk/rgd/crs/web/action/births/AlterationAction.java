@@ -256,6 +256,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba.setAlterationSerialNo(alterationSerialNo);
         alterationService.addBirthAlteration(ba, user);
         logger.debug("Add a new Birth Alteration with Alteration Serial No  :{}", alterationSerialNo);
+        idUKey = ba.getIdUKey();
+        bdId = ba.getBdId();
+        pageNo = 1;
+        initPermission();
         return SUCCESS;
     }
 
@@ -358,14 +362,25 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareAndAdd(Alteration27A.GRAND_FATHER_FULLNAME, grandFatherOriginal.getGrandFatherFullName(), grandFather.getGrandFatherFullName());
             compareAndAdd(Alteration27A.GRAND_FATHER_NIC_OR_PIN,
                     grandFatherOriginal.getGrandFatherNICorPIN(), grandFather.getGrandFatherNICorPIN());
-            compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_YEAR, grandFatherOriginal.getGrandFatherBirthYear().toString(), grandFather.getGrandFatherBirthYear().toString());
+            String grandFatherDOBinBA = null;
+            String grandFatherDOBinBDF = null;
+            if (grandFatherOriginal.getGrandFatherBirthYear() != null)
+                grandFatherDOBinBDF = grandFatherOriginal.getGrandFatherBirthYear().toString();
+            if (grandFather.getGrandFatherBirthYear() != null)
+                grandFatherDOBinBA = grandFather.getGrandFatherBirthYear().toString();
+            compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_YEAR, grandFatherDOBinBDF, grandFatherDOBinBA);
             compareAndAdd(Alteration27A.GRAND_FATHER_BIRTH_PLACE, grandFatherOriginal.getGrandFatherBirthPlace(), grandFather.getGrandFatherBirthPlace());
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_FULLNAME,
                     grandFatherOriginal.getGreatGrandFatherFullName(), grandFather.getGreatGrandFatherFullName());
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_NIC_OR_PIN,
                     grandFatherOriginal.getGreatGrandFatherNICorPIN(), grandFather.getGreatGrandFatherNICorPIN());
-            compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR,
-                    grandFatherOriginal.getGreatGrandFatherBirthYear().toString(), grandFather.getGreatGrandFatherBirthYear().toString());
+            String grandGrandFatherDOBinBA = null;
+            String grandGrandFatherDOBinBDF = null;
+            if (grandFatherOriginal.getGreatGrandFatherBirthYear() != null)
+                grandGrandFatherDOBinBDF = grandFatherOriginal.getGreatGrandFatherBirthYear().toString();
+            if (grandFather.getGreatGrandFatherBirthYear() != null)
+                grandGrandFatherDOBinBA = grandFather.getGreatGrandFatherBirthYear().toString();
+            compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_YEAR, grandGrandFatherDOBinBDF, grandGrandFatherDOBinBA);
             compareAndAdd(Alteration27A.GREAT_GRAND_FATHER_BIRTH_PLACE, grandFatherOriginal.getGreatGrandFatherBirthPlace(), grandFather.getGreatGrandFatherBirthPlace());
             logger.debug("Check and add to approval list all information of {} (GrandFather) of idUKey :{}", grandFather.getGrandFatherFullName(), idUKey);
 
@@ -373,7 +388,12 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         if (father != null) {
             compareAndAdd(Alteration27A.FATHER_FULLNAME, parent.getFatherFullName(), father.getFatherFullName());
             compareAndAdd(Alteration27A.FATHER_NIC_OR_PIN, parent.getFatherNICorPIN(), father.getFatherNICorPIN());
-            compareAndAdd(Alteration27A.FATHER_BIRTH_YEAR, parent.getFatherDOB().toString(), father.getFatherDOB().toString());
+            String fatherDOBinBA = null;
+            String fatherDOBinBDF = null;
+            if (parent.getFatherDOB() != null) fatherDOBinBDF = parent.getFatherDOB().toString();
+            if (father.getFatherDOB() != null) fatherDOBinBA = father.getFatherDOB().toString();
+
+            compareAndAdd(Alteration27A.FATHER_BIRTH_YEAR, fatherDOBinBDF, fatherDOBinBA);
             compareAndAdd(Alteration27A.FATHER_BIRTH_PLACE, parent.getFatherPlaceOfBirth(), father.getFatherPlaceOfBirth());
             //if father country is not null in both ba and bd
             if (father.getFatherCountry() != null && parent.getFatherCountry() != null) {
@@ -415,7 +435,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             if (marriageOriginal.getDateOfMarriage() != null) {
                 originalMarriageDate = marriageOriginal.getDateOfMarriage().toString();
             }
-            if (marriage.getDateOfMarriage() != null){
+            if (marriage.getDateOfMarriage() != null) {
                 marriageDate = marriage.getDateOfMarriage().toString();
             }
             compareAndAdd(Alteration27A.DATE_OF_MARRIAGE, originalMarriageDate, marriageDate);
@@ -469,7 +489,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
             compareAndAdd(Alteration52_1.MOTHER_PASSPORT, parent.getMotherPassportNo(), mother.getMotherPassportNo());
             //if mother race is not null in both bdf and ba
-            if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
+            /* if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
                 compareAndAdd(Alteration52_1.MOTHER_RACE, raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
                         raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
             }
@@ -478,7 +498,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             }
             if (mother.getMotherRace() != null && parent.getMotherRace() == null) {
                 compareAndAdd(Alteration52_1.MOTHER_RACE, "", raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
-            }
+            }*/
             compareAndAdd(Alteration52_1.MOTHER_AGE_AT_BIRTH, parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
             compareAndAdd(Alteration52_1.MOTHER_ADDRESS, parent.getMotherAddress(), mother.getMotherAddress());
         }
@@ -498,8 +518,14 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private void compareAndAdd(int index, String bdfName, String baName) {
         String[] compareChanges = new String[3];
         compareChanges[0] = Integer.toString(index);
-        compareChanges[1] = bdfName;
-        compareChanges[2] = baName;
+        if (bdfName != null) {
+            if (bdfName.trim().length() == 0) compareChanges[1] = null;
+            else compareChanges[1] = bdfName.trim();
+        } else compareChanges[1] = null;
+        if (baName != null) {
+            if (baName.trim().length() == 0) compareChanges[2] = null;
+            else compareChanges[2] = baName.trim();
+        } else compareChanges[2] = null;
         boolean checkApp = true;
         if (!(indexCheck.get(index))) {
             if (compareChanges[1] != null && compareChanges != null) {
@@ -508,8 +534,8 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     numberOfAppPending++;
                 }
             }
-            if ((compareChanges[2] == null && compareChanges[1] != null) ||
-                    (compareChanges[2] != null && compareChanges[1] == null)) {
+            if ((compareChanges[2] == null && compareChanges[1] != null) || (compareChanges[2] != null && compareChanges[1] == null)) {
+                logger.debug("value :{}", compareChanges[0]);
                 birthAlterationApprovalList.add(compareChanges);
                 numberOfAppPending++;
             }
@@ -559,6 +585,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alterationService.approveBirthAlteration(ba, approvalsBitSet, appStatus, user);
         ba = alterationService.getById(idUKey, user);
         logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
+        pageNo = 2;
         return SUCCESS;
     }
 
