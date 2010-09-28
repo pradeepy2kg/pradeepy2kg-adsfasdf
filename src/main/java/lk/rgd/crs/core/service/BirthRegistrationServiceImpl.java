@@ -1475,9 +1475,12 @@ public class BirthRegistrationServiceImpl implements
     private void processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
         Person mother, MarriageInfo marriage, InformantInfo informant) {
 
+        logger.debug("Processing details of father to the PRS");
+        Person father = null;
+
+        // try to lookup the father from verified and semi-verified records list
         String fatherNICorPIN = parent.getFatherNICorPIN();
         if (fatherNICorPIN != null) {
-            Person father = null;
             try {
                 long pin = Long.parseLong(fatherNICorPIN);
                 father = ecivil.findPersonByPIN(pin, user);
@@ -1494,67 +1497,80 @@ public class BirthRegistrationServiceImpl implements
                     logger.debug("Could not locate a unique father record using : {}", fatherNICorPIN);
                 }
             }
+        }
 
-            // if we couldn't locate the father, add an unverified record to the PRS
-            if (father == null && parent.getFatherFullName() != null) {
-                father = new Person();
-                father.setFullNameInOfficialLanguage(parent.getFatherFullName());
-                father.setDateOfBirth(parent.getFatherDOB());
-                father.setGender(AppConstants.Gender.MALE.ordinal());
-                father.setPreferredLanguage(prefLanguage);
-                father.setStatus(Person.Status.UNVERIFIED);
-                father.setLifeStatus(Person.LifeStatus.ALIVE);
+        // if we fail to locate the farther in PRS by PIN or NIC, look at unverified records using DOB, and name
+        if (father == null) {
+            // TODO
+            logger.debug("Couldn't locate a verified or semi-verified record for the father from the PRS");
+        }
+
+        // if we couldn't locate the father, add a semi_verified or an unverified record to the PRS
+        if (father == null && parent.getFatherFullName() != null) {
+            father = new Person();
+            father.setFullNameInOfficialLanguage(parent.getFatherFullName());
+            father.setDateOfBirth(parent.getFatherDOB());
+            father.setGender(AppConstants.Gender.MALE.ordinal());
+            father.setPreferredLanguage(prefLanguage);
+            father.setLifeStatus(Person.LifeStatus.ALIVE);
+            if (fatherNICorPIN != null) {
                 father.setNic(fatherNICorPIN);
-                father.setPlaceOfBirth(parent.getFatherPlaceOfBirth());
+                father.setStatus(Person.Status.SEMI_VERIFIED);
+            } else {
+                father.setStatus(Person.Status.UNVERIFIED);
+            }
+            father.setPlaceOfBirth(parent.getFatherPlaceOfBirth());
 
-                // add father to the PRS
-                ecivil.addPerson(father, user);
+            // add father to the PRS
+            ecivil.addPerson(father, user);
 
-                if (InformantInfo.InformantType.FATHER.equals(informant.getInformantType())) {
-                    final Address address = new Address(informant.getInformantAddress());
+            // locate address of father if he is the informant
+            if (InformantInfo.InformantType.FATHER.equals(informant.getInformantType())) {
+                final Address address = new Address(informant.getInformantAddress());
+                father.specifyAddress(address);
+                // add new address to the PRS
+                ecivil.addAddress(address, user);
+                // update father to reflect new address
+                ecivil.updatePerson(father, user);
+            }
+
+            // set father as married to mother if marriage exists
+            if (mother != null && marriage.getDateOfMarriage() != null) {
+                Marriage m = new Marriage();
+                m.setBride(mother);
+                m.setGroom(father);
+                m.setDateOfMarriage(marriage.getDateOfMarriage());
+                m.setPlaceOfMarriage(marriage.getPlaceOfMarriage());
+                m.setState(Marriage.State.MARRIED);
+                m.setPreferredLanguage(prefLanguage);
+                father.specifyMarriage(m);
+                mother.specifyMarriage(m);
+
+                // add marriage to the PRS
+                ecivil.addMarriage(m, user);
+                ecivil.updatePerson(mother, user);
+                ecivil.updatePerson(father, user);
+
+
+                // if informant is not father, and we have mothers address, assume that as the
+                // unverified address of father due to marriage
+                if (!InformantInfo.InformantType.FATHER.equals(informant.getInformantType()) &&
+                    parent.getMotherAddress() != null) {
+                    final Address address = new Address(parent.getMotherAddress());
                     father.specifyAddress(address);
-                    // add new address to the PRS
+                    // add new address
                     ecivil.addAddress(address, user);
                     // update father to reflect new address
                     ecivil.updatePerson(father, user);
                 }
-
-                if (mother != null && marriage.getDateOfMarriage() != null) {
-                    Marriage m = new Marriage();
-                    m.setBride(mother);
-                    m.setGroom(father);
-                    m.setDateOfMarriage(marriage.getDateOfMarriage());
-                    m.setPlaceOfMarriage(marriage.getPlaceOfMarriage());
-                    m.setState(Marriage.State.MARRIED);
-                    m.setPreferredLanguage(prefLanguage);
-                    father.specifyMarriage(m);
-                    mother.specifyMarriage(m);
-
-                    // add marriage to the PRS
-                    ecivil.addMarriage(m, user);
-                    ecivil.updatePerson(mother, user);
-                    ecivil.updatePerson(father, user);
-
-                    // if informant is not father, and we have mothers address, assume that as the
-                    // unverified address of father due to marriage
-                    if (!InformantInfo.InformantType.FATHER.equals(informant.getInformantType()) &&
-                        parent.getMotherAddress() != null) {
-                        final Address address = new Address(parent.getMotherAddress());
-                        father.specifyAddress(address);
-                        // add new address
-                        ecivil.addAddress(address, user);
-                        // update father to reflect new address
-                        ecivil.updatePerson(father, user);
-                    }
-                }
-
-                logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
             }
 
-            if (father != null) {
-                // set father child relationship
-                person.setFather(father);
-            }
+            logger.debug("Added an unverified record for the father into the PRS : {}", father.getPersonUKey());
+        }
+
+        if (father != null) {
+            // set father child relationship
+            person.setFather(father);
         }
     }
 

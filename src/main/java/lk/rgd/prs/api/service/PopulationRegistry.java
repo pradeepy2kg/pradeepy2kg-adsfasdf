@@ -5,6 +5,7 @@ import lk.rgd.prs.api.domain.Address;
 import lk.rgd.prs.api.domain.Marriage;
 import lk.rgd.prs.api.domain.Person;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -95,6 +96,15 @@ public interface PopulationRegistry {
      * @param user the user performing this action
      * @return the matching person
      */
-    public Person findPersonByPINorNIC(String pinOrNic, User user) ;
+    public Person findPersonByPINorNIC(String pinOrNic, User user);
+
+    /**
+     * Find possible person matches
+     * @param dob date of birth
+     * @param gender the gender of the person (@see Gender)
+     * @param name name of person
+     * @return the list of possible matches if found
+     */
+    public List<Person> findPersonsByDOBGenderAndName(Date dob, int gender, String name);
 
 }

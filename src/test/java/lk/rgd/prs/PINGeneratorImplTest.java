@@ -54,9 +54,9 @@ public class PINGeneratorImplTest extends TestCase {
         // generate a PIN for a birth in 2110's
         try {
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.YEAR, +100);
+            cal.add(Calendar.YEAR, + 1000);
             int pin = pinGenerator.generatePINNumber(cal.getTime(), true);
-            fail("Should only generate PINs for 1900 to 2099");
+            fail("Should only generate PINs for 1900 to 2999");
         } catch (Exception expected) {}
 
         // generate a PIN for a birth in 1900's
