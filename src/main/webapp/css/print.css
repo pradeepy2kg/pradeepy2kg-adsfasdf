@@ -3,7 +3,8 @@
     body {
         background-color: white !important;
         font-family: BhashitaComplex, verdana, arial, sans-serif;
-        font-size: 10pt;
+        
+        /*font-size: 10pt;        */
     }
 
     * {
@@ -53,12 +54,7 @@
     .form-submit {
         display: none
     }
-/*
-    .print-font-size {
-        font-size: 5pt;
-    }*/
 }
-
 /*@media print {*/
 
 /*div.header {*/
