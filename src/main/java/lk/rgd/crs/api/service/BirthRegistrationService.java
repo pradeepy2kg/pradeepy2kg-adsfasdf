@@ -291,6 +291,15 @@ public interface BirthRegistrationService {
     public BirthDeclaration getById(long bdId, User user);
 
     /**
+     * Returns the Birth Declaration object with all relatinships for a given Id
+     *
+     * @param bdId Birth Declarion Id for the given declaration
+     * @param user the user making the request
+     * @return the BDF if found, and the user has access to the record
+     */
+    public BirthDeclaration getWithRelationshipsById(long bdId, User user);
+
+    /**
      * Returns the active Birth Declaration record for a given bdf serialNo under a selected BD Division
      *
      * @param bdDivision the Birth Death declaration division
@@ -383,7 +392,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of approval pending Belated BirthDeclarations for selected BD Division and selected range of
@@ -399,7 +408,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getBelatedDeclarationPendingByBDDivisionAndRegisterDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                               Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -415,7 +424,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByBDDivisionStatusAndConfirmationReceiveDateRange(BDDivision birthDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a list of BirthDeclaration objects for a given birthDivision
@@ -480,7 +489,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of approval pending Belated BirthDeclarations for selected DS Division and selected range
@@ -496,7 +505,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getBelatedDeclarationPendingByDSDivisionAndRegisterDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                               Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Returns a limited set of BirthDeclarations for which confirmation changes captured are awaiting approval
@@ -524,7 +533,7 @@ public interface BirthRegistrationService {
      * @return the birth declaration results
      */
     public List<BirthDeclaration> getByDSDivisionStatusAndConfirmationReceiveDateRange(DSDivision dsDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows, User user);
+                                                                                       Date startDate, Date endDate, int pageNo, int noOfRows, User user);
 
     /**
      * Get the list of BDFs for which the Confirmation form should be printed
