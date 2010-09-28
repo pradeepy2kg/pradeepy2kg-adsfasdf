@@ -125,12 +125,12 @@
             තොරතුරු නිවැරදි බවට සහතික කර උපත ලියාපදිංචි කරනු ලැබේ.<br><br>
 
             பிறப்பை பதிவு செய்வதற்காக தங்களால் சமர்ப்பிக்கப்பட்ட "பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும்
-            படவத்தின்படியே இப்படிவம் தயாரிக்கப்பட்டுள்ளது. அதில் தரப்பட்டுள்ள தகவல்கள் ‘சிவில்
-            பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டுள்ளது. அவ்வாறு உள்ளடக்கப்பட்டுள்ள பின்வரும் தகவல்களில்
-            ஏதாவது பிழைகள் இருப்பின் அது திருத்தப்பட வேண்டுமாயின், அது தொடர்பான விபரங்களை
-            உரிய இடங்களில் குறிப்பிட்டு 14 நாட்களுக்குள் எனக்கு கிடைக்கக் சுடியதாக அனுப்பி வைக்கவும்.
-            உரிய காலத்துள் இப்படிவம் எனக்கு கிடைக்காதுவிடின், ‘சிவில் பதிவு அமைப்பில்’
-            உள்ளடக்கப்பட்ட விபரம் சரியானதெனக் கருதி பிறப்புப் பதிவு செய்யப்படும்.<br><br>
+            பlடிவத்தின்படியே இப்படிவம்
+            தயாரிக்கப்பட்டுள்ளது. அதில் தரப்பட்டுள்ள தகவல்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டுள்ளது.
+            அவ்வாறு உள்ளடக்கப்பட்டுள்ள பின்வரும் தகவல்களில் ஏதாவது பிழைகள் இருப்பின் அது திருத்தப்பட
+            வேண்டுமாயின், அது தொடர்பான விபரங்களை உரிய இடங்களில் குறிப்பிட்டு 14 நாட்களுக்குள் எனக்கு
+            கிடைக்கக்கூடியதாக அனுப்பி வைக்கவும். உரியக்காலத்துக்குள் இப்படிவம் எனக்கு கிடைக்காதுவிடின், ‘
+            சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்ட விபரம் சரியானதெனக் கருதி பிறப்புப் பதிவு செய்யப்படும்.<br><br>
 
             Particulars appearing in this form are based on the information provided by you
             in the ‘Particulars for Registration of a Birth’ form. These particulars
@@ -157,7 +157,7 @@
         <td colspan="2">සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ
             අනුක්‍රමික අංකය
             හා දිනය
-            <br>பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
+            <br>"பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
         <td width="200px"><s:textfield cssClass="disable" disabled="true" name="register.bdfSerialNo"/>
@@ -167,7 +167,7 @@
         <td style="text-align:center">2</td>
         <td colspan="2"><label>
             යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත දැනුම් දිය යුතු අවසන් දිනය <br>
-            மாற்றங்கள் பதிவாளர் அதிகாரியின் அலுவலகத்தை அடைய வேண்டிய இறுதித் திகதி <br>
+            ஏதாவது மாற்றங்கள் செய்யவேண்டியிருப்பின் பதிவாளர் அதிபதிக்கு தெரிவிக்க வேண்டிய இறுதித் திகதி<br>
             Last date by which changes should be received by the registrar generals office
         </label></td>
         <td><s:textfield cssClass="disable" disabled="true" name="register.lastDayForConfirmation"/></td>
@@ -176,7 +176,7 @@
         <td style="text-align:center">3</td>
         <td>
             ආපසු එවිය යුතු ලිපිනය <br>
-            மாற்றங்கள்.. <br>
+            திருப்பி அனுப்ப வேண்டிய முகவரி<br>
             Address to post any changes
         </td>
         <td colspan="2">&nbsp;</td>
@@ -199,38 +199,38 @@
 
 <table class="table_con_page_01" width="100%" cellspacing="0" style="margin-top:10px;float:left;">
     <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
+    <col width="20px"/>
+    <col width="230px"/>
+    <col width="50px"/>
+    <col width="60px"/>
+    <col width="50px"/>
+    <col width="50px"/>
+    <col width="50px"/>
+    <col width="50px"/>
     <col/>
     <tbody>
 
     <tr>
-        <td colspan="2"><label>විස්තර <br>விபரங்கள் <br>Particulars </label></td>
-        <td colspan="6"><label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ දැනට අඩංගු විස්තර <br>சிவில் பதிவு அமைப்பில்
-            உள்ளடக்கப்பட்டுள்ள
-            விபரம<br>Information included in Civil Registration System </label></td>
+        <td colspan="2"><label>විස්තර <br>விபரங்கள்<br>Particulars </label></td>
+        <td colspan="6"><label>දැනට අඩංගු විස්තර
+            <br>தற்போதய தகவல்
+            <br>Current Information </label></td>
         <td class="cell_02" colspan="11"><label>
-            ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම් .
-            <br>புதியசிவில் பதிவ..ண்டிய விப...
+            ඇතුලත් කරඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම්
+            <br>புதிய விபரங்களை இடுக அல்லது இருக்கும் விபரத்தை திருத்துக
             <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
         <td class="cell_011">4</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
         <td><label>අවුරුද්ද <br>இயர் <br>Year</label></td>
-        <td width="60px"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
+        <td width="40px"><s:textfield value="%{child.dateOfBirth.year+1900}" cssClass="disable" disabled="true"
                                       size="4"/></td>
         <td><label>මාසය<br>மாதம்<br>Month</label></td>
-        <td width="60px"><s:textfield value="%{child.dateOfBirth.month+1}" cssClass="disable" disabled="true"
+        <td width="40px"><s:textfield value="%{child.dateOfBirth.month+1}" cssClass="disable" disabled="true"
                                       size="4"/></td>
         <td><label>දිනය<br>திகதி<br>Day</label></td>
-        <td width="60px"><s:textfield value="%{child.dateOfBirth.date}" cssClass="disable" disabled="true"
+        <td width="40px"><s:textfield value="%{child.dateOfBirth.date}" cssClass="disable" disabled="true"
                                       size="4"/></td>
         <td colspan="6"><label>අවුරුද්ද <br>இயர் <br>Year</label></td>
         <td width="60px">&nbsp;</td>
@@ -242,7 +242,7 @@
     </tr>
     <tr>
         <td class="cell_011">5</td>
-        <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
+        <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்<br>Gender</label></td>
         <td colspan="6"><s:if test="child.childGender == 0">
             <s:textfield value="%{getText('male.label')}" cssClass="disable" disabled="true"/>
         </s:if>
@@ -257,20 +257,25 @@
 
     <tr>
         <td rowspan="4" style="text-align:center;"> 6</td>
-        <td height="40px"><label>දිස්ත්‍රික්කය <br>மாவட்டம் <br>District</label></td>
+        <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் <br>District of Birth</label></td>
         <td colspan="6"><s:textfield value="%{getDsDivisionList().get(dsDivisionId)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11">&nbsp;</td>
     </tr>
 
     <tr>
-        <td height="40px"><label>කොට්ඨාශය<br>பிரிவு <br>Registration Division</label></td>
-        <td colspan="6" class="print-font-size"><s:textfield value="%{getBdDivisionList().get(birthDivisionId)}" cssClass="disable"
-                                     disabled="true"/></td>
+        <td height="40px"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
+            பிரதேச செயலாளா் பிரிவு <br>
+            Divisional Secretariat</label></td>
+        <td colspan="6" class="print-font-size"><s:textfield value="%{getBdDivisionList().get(birthDivisionId)}"
+                                                             cssClass="disable"
+                                                             disabled="true"/></td>
         <td colspan="11">&nbsp;</td>
     </tr>
     <tr>
-        <td height="40px"><label>ස්ථානය <br>பிறந்த இடம் <br>Place</label></td>
+        <td height="40px"><label>උපන් ස්ථානය
+            <br>பிறந்த இடம்
+            <br>Place of Birth</label></td>
         <td colspan="6"><s:textfield name="child.placeOfBirth" cssClass="disable" disabled="true" size="30"/></td>
         <td colspan="11">&nbsp;</td>
     </tr>
@@ -282,13 +287,13 @@
     </tr>
     <tr>
         <td class="cell_011">7</td>
-        <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
+        <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்தையின் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="11">&nbsp;</td>
     </tr>
     <tr>
         <td class="cell_011">8</td>
-        <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
+        <td><label>පියාගේ ජාතිය <br>தந்தையின் இனம்<br>Father's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="11">&nbsp;</td>
@@ -297,7 +302,7 @@
 
     <tr>
         <td class="cell_011">9</td>
-        <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
+        <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் அடையாள எண் <br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" cssClass="disable" disabled="true"/></td>
         <td colspan="11">&nbsp;</td>
     </tr>
@@ -311,7 +316,7 @@
 
     <tr>
         <td class="cell_011">11</td>
-        <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
+        <td><label>මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?</label></td>
         <td colspan="6"><s:textfield cssClass="disable" disabled="true" name="marriage.parentsMarried"
                                      value="%{getText('married.status.'+marriage.parentsMarried)}"/></td>
         <td colspan="11">&nbsp;</td>
@@ -324,13 +329,14 @@
 
 <%--</div>--%>
 <%--<div id="page2" style="page-break-after:always;">--%>
-<table border="0" style="width:100%;float:left;" >
+<table border="0" style="width:100%;float:left;">
     <caption></caption>
     <col/>
     <tbody>
     <tr>
         <td colspan="3" style="text-align:center;font-size:12pt;">
-            <label><br>නම්වල අක්ෂර දෝශ වෙනස් වීම් ඇතුලත් කිරීම/ பெயரிலுள்ள மாற்றங்கள்/ Changes in Names</label>
+            <label><br>නම්වල අක්ෂර දෝශ වෙනස් වීම් ඇතුලත් කිරීම/பெயரிலுள்ள மாற்றங்கள்/ Correction of errors in
+                Names</label>
         </td>
     </tr>
     </tbody>
@@ -344,8 +350,8 @@
     <tbody>
     <tr>
         <td class="cell_001">12</td>
-        <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ) <br>பிறப்பு அத்... (சிங்களம் /
-            தமிழ்)
+        <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>குழந்தையின் பெயர் அதிகார மொழிகளில் (சிங்களம்/தமிழ்)
             <br>Childs name in the official languages (Sinhala / Tamil)</label>
 
             <p></p></td>
@@ -385,7 +391,7 @@
         <td class="cell_001">13</td>
         <td width="200px"><p></p>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
-                <br>பிறப்பு ...
+                <br>குழந்தையின் பெயர் ஆங்கிலத்தில்
                 <br>Childs name in English
             </label>
 
@@ -428,8 +434,8 @@
     <tr>
         <td class="cell_001">14</td>
         <td width="200px"><p></p><label>පියාගේ සම්පුර්ණ නම
-            <br>தந்நையின் முழுப் பெயர
-            ்<br>Father's Full Name</label>
+            <br>தந்தையின் முழுப் பெயர்
+            <br>Father's Full Name</label>
 
             <p></p>
         </td>
@@ -468,8 +474,8 @@
     <tr>
         <td class="cell_001">15</td>
         <td width="200px"><p></p><label>මවගේ සම්පූර්ණ නම
-            <br>தாயின் முழுப் பெயர
-            ்<br>Mother's Full Name</label>
+            <br>தாயின் முழுப் பெயர்
+            <br>Mother's Full Name</label>
 
             <p></p>
         </td>
@@ -512,7 +518,7 @@
                 <p></p>
                 <label>
                     උපත තහවුරු කරන්නාගේ විස්තර
-                    <br>பிறப்பு  விபரங்களை  உறுதிப்படுத்துபவரின்   விபரங்கள்
+                    <br>பிறப்பு விபரங்களை உறுதிப்படுத்துபவரின் விபரங்கள்
                     <br>Person confirming the birth details
                 </label>
 
@@ -549,17 +555,17 @@
         </tr>
         <tr>
             <td height="80px" style="text-align:center">17</td>
-            <td colspan="4">
+            <td >
                 <p></p>
                 <label>
-                    උපත තහවුරු කරන්නාගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය
-                    <br>பிறப்​பை உறுதிப்படுத்துபவரின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை எண்
-                    <br>PIN / NIC of person confirming the birth details
+                    අනන්‍යතා අංකය
+                    <br>அடையாள எண்
+                    <br>Identification number
                 </label>
 
                 <p></p>
             </td>
-            <td colspan="3" width="350px">&nbsp;</td>
+            <td colspan="7" width="350px">&nbsp;</td>
         </tr>
 
         <tr>
@@ -568,7 +574,7 @@
                 <p></p>
                 <label>
                     උපත තහවුරු කරන්නාගේ සම්පූර්ණ නම
-                    <br>பிறப்​பை உறுதிப்படுத்துபவரின் முழுப் பெயர்
+                    <br>பிறப்பை உறுதிப்படுத்துபவரின் முழுப் பெயர் 
                     <br>Full Name of the person confirming the birth details
                 </label>
 
@@ -593,8 +599,8 @@
         <tr>
             <td rowspan="2" class="cell_001">19</td>
             <td rowspan="2">
-                <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි
-                    <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன்.
+                <label> ඉහත සදහන් තොරතුරු නිවැරදි බව සහතික කරමි ./
+                    <br>மேற்குறிப்பிட்ட விபரங்கள் சரியானவை என இத்தால் உறுதிப்படுத்துகிறேன். /
                     <br>I hereby certify that the above information are correct
                 </label>
             </td>
@@ -642,10 +648,10 @@
         <td colspan="2" rowspan="2">
             <p></p>
             <label>ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
-                (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)<br>
-                மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப்
-                பதிவாளர்)<br>
-                Above information has been entered into the Civil Registration System.
+                (දිස්ත්‍රික් රෙජිස්ත්‍රාර් / අතිරේක දිස්ත්‍රික් රෙජිස්ත්‍රාර්)
+                <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன
+                (மாவட்டப் பதிவாளா் / மேலதிக மாவட்டப் பதிவாளர்)
+                <br>Above information has been entered into the Civil Registration System.
                 (District Registrar / Additional District Registrar)</label>
 
             <p></p>
@@ -655,7 +661,7 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-        <td><label>අත්සන<br>
+        <td><label>අත්සන සහ නිල මුද්‍රාව<br>
             கையொப்பம்<br>
             Signature</label>
         </td>
