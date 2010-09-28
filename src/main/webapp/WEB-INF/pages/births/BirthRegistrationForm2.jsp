@@ -458,7 +458,7 @@ function commonTags() {
             <s:else>
                 (<s:property value="#row"/><s:set name="row"
                                                   value="#row+1"/><s:set name="i"
-                                                                         value="#i+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br> * Tamil<br>Mother's Age
+                                                                         value="#i+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
                 as at the date of still-birth of child
             </s:else>
         </label>

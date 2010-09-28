@@ -145,24 +145,25 @@
         <col/>
         <tbody>
         <tr>
-            <td colspan="5" style="text-align:center;font-size:12pt"> *in Sinhala<br>*in Tamil<br>Details of the
+            <td colspan="5" style="text-align:center;font-size:12pt">විවාහයේ විස්තර<br>திருமணத்தின் விபரங்கள் <br>Details of the
                 Marriage
             </td>
         </tr>
         <tr>
             <td class="font-9" colspan="3">
-                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?<br>* Tamil <br>Were
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?
+                    <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா? <br>Were
                     Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
                 <s:if test="session.birthRegister.marriage.parentsMarried == 1"> <s:label
                         value="%{getText('radio_married_yes.label')}"/> </s:if>
-                <label> ඔවි/*in tamil / Yes</label>
+                <label> ඔවි/ஆம்/ Yes</label>
             </td>
             <td class="font-9" colspan="1">
                 <s:if test="session.birthRegister.marriage.parentsMarried == 2"> <s:label
                         value="%{getText('radio_married_no.label')}"/> </s:if>
-                <label> නැත / *in tamil / No</label>
+                <label> නැත / இல்லை / No</label>
             </td>
         </tr>
         </tbody>
@@ -206,7 +207,7 @@
 
         <s:else>
             <td colspan="2">
-                <label>නෑයන් <br> * In Tamil <br>Relative</label>
+                <label>නෑයන් <br> பாதுகாவலர் <br>Relative</label>
             </td>
         </s:else>
     </tr>
@@ -239,7 +240,7 @@
 
     </tr>
     <tr>
-        <td colspan="1"><label>දිනය <br>*in tamil<br>Date</label></td>
+        <td colspan="1"><label>දිනය <br>திகதி <br>Date</label></td>
         <td colspan="3"><s:label value="%{#session.birthRegister.informant.informantSignDate}"/></td>
     </tr>
     </tbody>

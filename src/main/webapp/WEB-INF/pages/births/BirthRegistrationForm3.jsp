@@ -376,19 +376,19 @@ function initPage() {
                     <col width="20px" align="right"/>
                     <tbody>
                     <tr>
-                        <td><label>ඔව්<br>*in tamil<br>Yes</label></td>
+                        <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
                                      onclick="disableMarriage(false);disableSigns(true)"/>
                         </td>
                     </tr>
                     <tr>
-                        <td><label>නැත<br>*in tamil<br>No</label></td>
+                        <td><label>නැත<br>இல்லை<br>No</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
                                      onclick="disableMarriage(true);disableSigns(false)"/>
                         </td>
                     </tr>
                     <tr>
-                        <td><label>නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
+                        <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"
                                      onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
@@ -544,16 +544,16 @@ function initPage() {
         </tr>
         <tr>
             <td class="font-9" colspan="3">
-                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?<br>* Tamil <br>Were
-                    Parents Married ?</label>
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?<br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?
+                    <br>Were Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
                 <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"/>
-                <label> ඔවි/*in tamil / Yes</label>
+                <label> ඔවි/ஆம்/ Yes</label>
             </td>
             <td class="font-9" colspan="1">
                 <s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"/>
-                <label> නැත / *in tamil / No</label>
+                <label> නැත / இல்லை / No</label>
             </td>
         </tr>
         </tbody>
@@ -614,7 +614,7 @@ function initPage() {
                                      onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
                     </s:if>
                     <s:else>
-                        <td><label>නෑයන් <br> * In Tamil <br>Relative</label></td>
+                        <td><label>නෑයන් <br> பாதுகாவலர்<br>Relative</label></td>
                         <td align="center" width="150px">
                             <s:radio id="informantType" name="informant.informantType"
                                      list="#@java.util.HashMap@{'RELATIVE':''}"
@@ -656,7 +656,7 @@ function initPage() {
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර
-            <br>* In Tamil<br>Contact Details</label>
+            <br>தொடா்பு விபரம்<br>Contact Details</label>
         </td>
         <td><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
         <td><s:textfield name="informant.informantPhoneNo" id="informantPhoneNo"

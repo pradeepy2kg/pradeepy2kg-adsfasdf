@@ -108,7 +108,7 @@
 
             <tr>
                 <td width="40px">29</td>
-                <td colspan="1"><label>තහවුරු කරන්නේ කවුරුන් විසින් ද? <br>*in tamil<br>Person
+                <td colspan="1"><label>තහවුරු කරන්නේ කවුරුන් විසින් ද? <br>பிறப்பினை உறுதிப்படுத்துவது யாரால்?<br>Person
                     Confirming Information</label></td>
                 <td>
                     <table class="sub_table">

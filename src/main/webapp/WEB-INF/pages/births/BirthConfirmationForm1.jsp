@@ -413,19 +413,21 @@
                 <col width="150px"/>
                 <col/>
                 <tr>
-                    <td><label id="yes" class="label">ඔව්<br>*in tamil<br>Yes</label></td>
+                    <td><label id="yes" class="label">ඔව්<br>ஆம்<br>Yes</label></td>
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
                                  value="1"/>
                     </td>
-                    <td><label class="label">නැත<br>*in tamil<br>No</label></td>
+                    <td><label class="label">නැත<br>இல்லை<br>No</label></td>
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried"
                                  list="#@java.util.HashMap@{'2':''}"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="label">නැත - පසුව විවාහවී ඇත<br>*in tamil<br>No but since married</label></td>
+                    <td><label class="label">නැත - පසුව විවාහවී ඇත<br>
+                        இல்லை, பின் விவாகமாணவா்கள்<br>
+                        No but since married</label></td>
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried"
                                  list="#@java.util.HashMap@{'3':''}"/>
