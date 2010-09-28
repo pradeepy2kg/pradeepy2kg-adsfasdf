@@ -14,6 +14,7 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.CourtDAO;
@@ -83,7 +84,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String certificateApplicantAddress;
     private String certificateApplicantPINorNIC;
     private String certificateApplicantName;
+    private String placeOfIssue;
     private AdoptionOrder.ApplicantType certificateApplicantType;
+
 
     private boolean alreadyPrinted;
     private int noOfRows;
@@ -288,7 +291,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
      * @return
      */
     public String loadAdoptionCertificate() {
-        adoption = service.getById(idUKey, user);
+        adoption = service.getWithRelationshipsById(idUKey, user);
         if (adoption == null) {
             addActionError(getText("er.invalid.Entry"));
             populateApprovalAndPrintList();
@@ -306,6 +309,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             birthDivisionId = adoption.getBirthDivisionId();
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
+            //place of issue in prefered language
+            User issuedUser = adoption.getLifeCycleInfo().getApprovalOrRejectUser();
+            //certifacate preferd language
+            String lang = adoption.getLanguageToTransliterate();
+            placeOfIssue = dsDivisionDAO.getNameByPK(issuedUser.getPrefBDDSDivision().getDsDivisionUKey(), lang);
             BirthDeclaration bdf = null;
             if (adoption.getBirthCertificateNumber() > 0) {
                 bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
@@ -1025,5 +1033,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
 
     public void setAllDSDivisionList(Map<Integer, String> allDSDivisionList) {
         this.allDSDivisionList = allDSDivisionList;
+    }
+
+    public String getPlaceOfIssue() {
+        return placeOfIssue;
+    }
+
+    public void setPlaceOfIssue(String placeOfIssue) {
+        this.placeOfIssue = placeOfIssue;
     }
 }
