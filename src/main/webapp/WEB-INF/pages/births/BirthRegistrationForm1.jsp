@@ -12,7 +12,7 @@
     <s:set name="row" value="1"/>
 </s:if>
 <s:elseif test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
-    <%--live birth--%>                        
+    <%--live birth--%>
     <s:set name="row" value="1"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">
@@ -329,12 +329,12 @@ function initPage() {
             <s:elseif test="birthType.ordinal() == 0">
                 <label>
                     මළ උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>* In Tamil
+                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான  விபரங்கள்
                     <br>Particulars for Registration of a Still Birth</label>
             </s:elseif>
             <s:elseif test="birthType.ordinal() == 2">
                 දරුකමට හදාගත් ළමයකුගේ උප්පැන්නය නැවත ලියාපදිංචි කිරීම
-                <br>* In Tamil
+                <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான  விபரங்கள் 
                 <br>Re-registration of the Birth of an Adopted Child
             </s:elseif>
         </td>
@@ -392,18 +392,17 @@ function initPage() {
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
                 තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මළ උපත ලියාපදිංචි කරනු ලැබේ.
-                <br>* In Tamil
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
+                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
                 <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
                 forwarded
                 to the Notifying Authority. The still birth will be registered in the Civil Registration System based on the
                 information provided in this form.
             </s:elseif>
             <s:elseif test="birthType.ordinal() == 2">
-                * In Sinhala
-                <br>* In Tamil
-                <br>Should be perfected by the adopting parents, and the duly completed form should be forwarded
-                to the Assistant Registrar General in charge of the zone where the birth of the child occured; or to the
-                head office of the Registrar Generals Department in Colombo. The birth will be re-registered in the
+                දරුකමට හදාගන්න දෙමව්පියන් විසින් සම්පුර්ණ කර, දරුවා උපත ලැබූ දිස්ත්‍රික්කය අයත් සහකාර රෙජිස්ට්‍රාර් ජනරාල් වෙත හෝ කොළඹ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුවේ ප්‍රධාන කාර්යාලය වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත නැවත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the adopting parents, and the duly completed form should be forwarded to the Assistant Registrar General in charge of the zone where the birth of the child occurred; or to the head office of the Registrar Generals Department in Colombo. The birth will be re-registered in the
                 Civil Registration System based on the information provided in this form.
             </s:elseif>
         </td>
@@ -427,7 +426,7 @@ function initPage() {
     <td class="font-9" colspan="8" style="text-align:center;">
         <s:if test="birthType.ordinal() == 0">
             මළ උපත පිලිබඳ විස්තර
-            <br>* In Tamil
+            <br>பிள்ளை பற்றிய தகவல்
             <br>Still-birth Information
         </s:if>
         <s:else>
@@ -510,7 +509,8 @@ function initPage() {
 </tr>
 <tr>
     <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
-    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;" maxLength="255"/></td>
+    <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"
+                                 maxLength="255"/></td>
 </tr>
 <tr>
     <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
@@ -521,11 +521,12 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்திய சாலையிலா?<br>Did the birth occur at a hospital?</label></td>
-    <td colspan="1"><label>ඔව් / *in Tamil / Yes </label></td>
+    <td colspan="3"><label>උපත සිදුවුයේ රෝහලකද? <br>பிறப்பு நிகழ்ந்தது வைத்திய சாலையிலா?<br>Did the birth occur at a
+        hospital?</label></td>
+    <td colspan="1"><label>ඔව් / ஆம் / Yes </label></td>
     <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'true':''}"
                                 value="true"/></td>
-    <td><label>නැත / *in Tamil / No</label></td>
+    <td><label>නැත / இல்லை / No</label></td>
     <td align="center"><s:radio name="child.birthAtHospital" list="#@java.util.HashMap@{'false':''}"/></td>
 </tr>
 <s:if test="birthType.ordinal() != 0">
@@ -594,7 +595,7 @@ function initPage() {
         <td colspan="2">
             <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
                 දරුවා මැරී උපදින විට ගර්භයට සති කීයක් වී තිබුනේද යන්න
-                <br>* In Tamil
+                <br>பிள்ளை இறந்து பிறந்த பொழுது கா்ப்பத்திற்கு எத்தனை கிழமை
                 <br>Number of weeks pregnant at the time of still-birth</label>
         </td>
         <td colspan="2"><s:textfield name="child.weeksPregnant" id="weeksPregnant" cssStyle="width:95%;"

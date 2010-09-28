@@ -511,7 +511,8 @@
             <td colspan="3" style="text-align:center;font-size:12pt">
                 <p></p>
                 <label>
-                    උපත තහවුරු කරන්නාගේ විස්තර <br>* in Tamil
+                    උපත තහවුරු කරන්නාගේ විස්තර
+                    <br>பிறப்பு  விபரங்களை  உறுதிப்படுத்துபவரின்   விபரங்கள்
                     <br>Person confirming the birth details
                 </label>
 
@@ -536,14 +537,14 @@
         <tr>
             <td height="80px" style="text-align:center">16</td>
             <td> උපත තහවුරු කරන්නේ කවුරුන් විසින්ද?<br>
-                *in tamil* <br>
+                பிறப்பினை உறுதிப்படுத்துவது யாரால்?<br>
                 Person confirming the details
             </td>
-            <td>මව<br>*in tamin <br> Mother</td>
+            <td>මව<br>தாய்<br> Mother</td>
             <td>&nbsp;</td>
-            <td>පියා <br>*in tamil<br>Father</td>
+            <td>පියා <br>தந்தை<br>Father</td>
             <td>&nbsp;</td>
-            <td>භාරකරු <br>*in tamil<br>Guardian</td>
+            <td>භාරකරු <br>பாதுகாவலா்<br>Guardian</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -675,7 +676,7 @@
         <td colspan="2" width="600px" height="100px"
             style="text-align:center;margin-left:auto;margin-right:auto;font-size:12pt">
             <label>රාජ්‍ය සේවය පිණිසයි<br>
-                / *in Tamil * <br>
+                / அரச பணி <br>
                 / On State Service<br>
             </label></td>
         <td rowspan="8" width="200px"></td>

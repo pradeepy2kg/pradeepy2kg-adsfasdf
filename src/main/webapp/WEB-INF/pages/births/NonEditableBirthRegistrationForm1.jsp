@@ -50,7 +50,7 @@
             <s:else>
                 <label>
                     මළ උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>* In Tamil
+                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Still Birth</label>
             </s:else>
         </td>
@@ -65,7 +65,9 @@
             <table class="table_reg_datePicker_page_01">
                 <tr>
                     <td>
-                        <label><span class="font-8">යොමුකළ දිනය<br>* In Tamil<br>Submitted Date</span></label>
+                        <label><span class="font-8">භාරගත් දිනය
+                            <br>பெறப்பட்ட திகதி 
+                            <br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="%{#session.birthRegister.register.dateOfRegistration}"/>
                     </td>
@@ -90,15 +92,16 @@
                 දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
                 යුතුය. මෙම
                 තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මළ උපත ලියාපදිංචි කරනු ලැබේ.
-                <br>* In Tamil
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம் சமா்ப்பித்தல் வேண்டும். இ
+                த்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
                 <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
                 forwarded
                 to the Notifying Authority. The still birth will be registered in the Civil Registration System based on the
                 information provided in this form.
             </s:elseif>
             <s:elseif test="birthType.ordinal() == 2">
-                * In Sinhala
-                <br>* In Tamil
+                දරුකමට හදාගන්න දෙමව්පියන් විසින් සම්පුර්ණ කර, දරුවා උපත ලැබූ දිස්ත්‍රික්කය අයත් සහකාර රෙජිස්ට්‍රාර් ජනරාල් වෙත හෝ කොළඹ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුවේ ප්‍රධාන කාර්යාලය වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත නැවත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம் சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
                 <br>Should be perfected by the adopting parents, and the duly completed form should be forwarded
                 to the Assistant Registrar General in charge of the zone where the birth of the child occured; or to the
                 head office of the Registrar Generals Department in Colombo. The birth will be re-registered in the
@@ -126,7 +129,7 @@
     <td class="font-9" colspan="8" style="text-align:center;">
         <s:if test="birthType.ordinal() == 0">
             මළ උපත පිලිබඳ විස්තර
-            <br>* In Tamil
+            <br>பிள்ளை பற்றிய தகவல்
             <br>Still-birth Information
         </s:if>
         <s:else>
@@ -215,7 +218,7 @@
     </td>
 </tr>
 <tr>
-    <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
+    <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>பதிவுப் பிரிவு / /<br>Registration Division</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:if test="#userPreferedLang == 'si'">
             <s:label value="%{#session.birthRegister.register.birthDivision.siDivisionName}"/>
@@ -234,12 +237,17 @@
                              cssStyle="width:97.6%;"/></td>
 </tr>
 <tr>
-    <td><label>*in sinhala/ *in tamil/ Place in English</label></td>
+    <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>
+        இங்கிலீஷ் <br>
+        In English</label></td>
     <td colspan="6"><s:label value="%{#session.birthRegister.child.placeOfBirthEnglish}"
                              id="placeOfBirthEnglish" cssStyle="width:97.6%;"/></td>
 </tr>
 <tr>
-    <td colspan="3"><label> *in Sinhala/*in Tamil/In a Hospital</label></td>
+    <td colspan="3"><label> උපත සිදුවුයේ රෝහලකද?
+        <br> பிறப்பு நிகழ்ந்தது வைத்திய சாலையிலா?
+        <br> Did the birth occur at a hospital?
+    </label></td>
 
     <td width="150px" colspan="4">
         <s:if test="session.birthRegister.child.birthAtHospital ==true">
@@ -304,7 +312,7 @@
     <s:elseif test="birthType.ordinal() == 0">
         <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) දරැවා මැරී උපදින විට ගර්භයට සති
             කීයක් වී තිබුනේද යන්න
-            <br>* In Tamil
+            <br>பிள்ளை இறந்து பிறந்த பொழுது கா்ப்பத்திற்கு எத்தனை கிழமை
             <br>Number of weeks pregnant at the time of still-birth</label></td>
         <td><s:label value="%{#session.birthRegister.child.weeksPregnant}" cssStyle="width:95%;"/></td>
     </s:elseif>

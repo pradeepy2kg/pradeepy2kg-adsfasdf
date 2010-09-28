@@ -49,7 +49,7 @@
         <table class="table_reg_page_04" width="100%" cellspacing="0" style="border-top:none;">
             <tbody>
             <tr>
-                <td width="200px"><label>දිනය <br>*in tamil <br>Date</label></td>
+                <td width="200px"><label>දිනය <br>திகதி <br>Date</label></td>
                 <td colspan="4"><s:label
                         value="%{#session.birthRegister.notifyingAuthority.notifyingAuthoritySignDate}"/></td>
             </tr>
