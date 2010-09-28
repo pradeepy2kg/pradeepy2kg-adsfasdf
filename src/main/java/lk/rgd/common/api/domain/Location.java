@@ -38,6 +38,18 @@ public class Location implements Serializable {
     @Column(nullable = false, length = 120, unique = true, updatable = false)
     private String taLocationName;
 
+    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    private String siLocationMailingAddress;
+    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    private String enLocationMailingAddress;
+    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    private String taLocationMailingAddress;
+
+    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    private String sienLocationSignature;
+    @Column(nullable = true, length = 120, unique = true, updatable = false)
+    private String taenLocationSignature;
+
     /**
      * The users assigned to this location
      */
@@ -94,5 +106,45 @@ public class Location implements Serializable {
 
     public void setUsers(List<UserLocation> users) {
         this.users = users;
+    }
+
+    public String getSiLocationMailingAddress() {
+        return siLocationMailingAddress;
+    }
+
+    public void setSiLocationMailingAddress(String siLocationMailingAddress) {
+        this.siLocationMailingAddress = siLocationMailingAddress;
+    }
+
+    public String getEnLocationMailingAddress() {
+        return enLocationMailingAddress;
+    }
+
+    public void setEnLocationMailingAddress(String enLocationMailingAddress) {
+        this.enLocationMailingAddress = enLocationMailingAddress;
+    }
+
+    public String getTaLocationMailingAddress() {
+        return taLocationMailingAddress;
+    }
+
+    public void setTaLocationMailingAddress(String taLocationMailingAddress) {
+        this.taLocationMailingAddress = taLocationMailingAddress;
+    }
+
+    public String getSienLocationSignature() {
+        return sienLocationSignature;
+    }
+
+    public void setSienLocationSignature(String sienLocationSignature) {
+        this.sienLocationSignature = sienLocationSignature;
+    }
+
+    public String getTaenLocationSignature() {
+        return taenLocationSignature;
+    }
+
+    public void setTaenLocationSignature(String taenLocationSignature) {
+        this.taenLocationSignature = taenLocationSignature;
     }
 }
