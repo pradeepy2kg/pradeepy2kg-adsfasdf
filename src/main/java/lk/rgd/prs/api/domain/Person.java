@@ -99,7 +99,7 @@ public class Person implements Serializable {
     /**
      * The initials in the official language
      */
-    @Column(nullable = true, length = 60)
+    @Column(nullable = true, length = 90)
     private String initialsInOfficialLanguage;
     /**
      * The last name in English
@@ -114,7 +114,7 @@ public class Person implements Serializable {
     /**
      * The initials in English
      */
-    @Column(nullable = true, length = 60)
+    @Column(nullable = true, length = 90)
     private String initialsInEnglish;
     /**
      * The last name in English
