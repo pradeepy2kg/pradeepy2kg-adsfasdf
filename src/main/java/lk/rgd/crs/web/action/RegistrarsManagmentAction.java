@@ -159,7 +159,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
             List<Registrar> exsistingregistrarsList = service.getRegistrarByPin(registrar.getPin(), user);
             if (exsistingregistrarsList.size() > 1) { //there is a lready one before
                 addActionError(getText("error.registrar.already.exsists"));
-                 return "error";
+                return "error";
             } else {
                 try {
                     service.addRegistrar(registrar, user);
@@ -183,6 +183,8 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                 if (registrarPin > 0) {
                     reg = service.getRegistrarByPin(registrarPin, user).get(0);
                 }
+/*
+//todo remove
                 if (reg == null) {
                     //subbmitting without searching for a registrar
                     addActionError("serach.registrar.first");
@@ -190,6 +192,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
                     assignment = null;
                     return SUCCESS;
                 }
+*/
 
                 assignment.setRegistrar(reg);
                 //setting correct divisiontype
