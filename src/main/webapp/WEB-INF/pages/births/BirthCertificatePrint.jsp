@@ -58,6 +58,7 @@
         })
     });
 
+    function initPage(){}
 
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
@@ -145,7 +146,7 @@
                                             fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
                             <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
-                            <td><s:property value="child.getChildFullNameOfficialLangToLength(50)"/></td>
+                            <td><s:property value="child.getChildFullNameOfficialLangToLength(60)"/></td>
                             <td align="center"><s:property value="register.dateOfRegistration"/></td>
                             <td align="center">
                                 <s:if test="register.birthType.ordinal() != 0">
