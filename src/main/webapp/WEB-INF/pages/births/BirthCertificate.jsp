@@ -13,9 +13,9 @@
             display: none;
         }
 
-        td {
-            font-size: 7.5pt;
-        }
+        /*td {*/
+            /*font-size: 7.5pt;*/
+        /*}*/
     }
 
     #birth-certificate-outer .form-submit {
@@ -23,6 +23,9 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="text/javascript">
+    function initPage(){}
+</script>
 
 <div id="birth-certificate-outer">
 <s:if test="directPrint">
@@ -158,7 +161,7 @@
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="150px">
+    <col width="152px">
     <col width="160px">
     <col width="100px">
     <col width="130px">
@@ -274,9 +277,9 @@
 </table>
 
 <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
-    <col width="195px">
-    <col width="200px">
-    <col width="120px">
+    <col width="185px">
+    <col width="194px">
+    <col width="136px">
     <col>
     <tbody>
     <tr>

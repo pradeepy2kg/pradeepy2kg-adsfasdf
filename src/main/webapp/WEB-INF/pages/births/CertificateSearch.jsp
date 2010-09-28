@@ -405,7 +405,7 @@
             </s:elseif>
         </td>
         <td><s:textfield name="certSearch.search.searchSerialNo" id="searchSerialNo" maxLength="10"/></td>
-        <td>
+        <td width="180px">
             <label>ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>பிரிவு /<br/>Registration Division</label>
         </td>
         <td><s:select id="birthDivisionId" name="birthDivisionId" list="bdDivisionList"
