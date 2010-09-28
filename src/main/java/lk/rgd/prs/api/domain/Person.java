@@ -26,9 +26,9 @@ public class Person implements Serializable {
      * Unverified records may be inaccurate
      */
     public enum Status {
-        UNVERIFIED      /** 0 - Record may be inaccurate */
-        ,
-        VERIFIED        /** 1 - Record is confirmed to be accurate */
+        UNVERIFIED,      /** 0 - Record may be inaccurate - no PIN or NIC */
+        SEMI_VERIFIED, /** 0 - Record may be inaccurate - NIC is available */
+        VERIFIED         /** 1 - Record is confirmed to be accurate - PIN is available */
         }
 
     /**
@@ -76,6 +76,11 @@ public class Person implements Serializable {
      */
     @Column(nullable = true, length = 10)
     private String nic;
+    /**
+     * The temporary PIN assigned to an unverified or semi-verified record
+     */
+    @Column(unique = true, nullable = true)
+    private Long temporaryPin;
     /**
      * The current passport number
      */
@@ -423,5 +428,13 @@ public class Person implements Serializable {
 
     public void setFather(Person father) {
         this.father = father;
+    }
+
+    public Long getTemporaryPin() {
+        return temporaryPin;
+    }
+
+    public void setTemporaryPin(Long temporaryPin) {
+        this.temporaryPin = temporaryPin;
     }
 }

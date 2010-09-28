@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +51,10 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             if (person.getStatus() == Person.Status.VERIFIED) {
                 pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
                 person.setPin(pin);
+            } else if (person.getDateOfBirth() != null) {
+                pin = pinGenerator.generateTemporaryPINNumber(person.getDateOfBirth(), person.getGender() == 0);
+                person.setPin(pin);
+                person.setTemporaryPin(pin);
             }
             personDao.addPerson(person);
         } else {
@@ -201,6 +206,16 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             }
         }
         return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Auditable
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Person> findPersonsByDOBGenderAndName(Date dob, int gender, String name) {
+        // TODO
+        throw new UnsupportedOperationException("TODO method - asankha");
     }
 
     private boolean isBlankString(String s) {

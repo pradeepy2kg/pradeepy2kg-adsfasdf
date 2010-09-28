@@ -28,6 +28,17 @@ public class PINGeneratorImpl implements PINGenerator {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
+    public int generateTemporaryPINNumber(Date dob, boolean male) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dob);
+        cal.add(Calendar.YEAR, 700);
+        return generatePINNumber(cal.getTime(), male);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public int generatePINNumber(Date dob, boolean male) {
 
         logger.debug("Generating a PIN number for DOB : {}", dob);
@@ -38,13 +49,23 @@ public class PINGeneratorImpl implements PINGenerator {
         int dayOfYear = cal.get(Calendar.DAY_OF_YEAR); // returns the day of the year
 
         int dateOfBirth;
-        if (year >= 2000 && year < 2100) {
-            dateOfBirth = 100;
+        if (year < 1900 || year > 2900) {
+            logger.error("Unsupported century for year of birth : {}", year);
+            throw new IllegalArgumentException("Unsupported century for year of birth : " + year);
         } else if (year >= 1900 && year < 2000) {
             dateOfBirth = 0;
+        } else if (year < 2100) {
+            dateOfBirth = 100;
+        } else if (year < 2200) {
+            dateOfBirth = 200;
+        } else if (year < 2300) {
+            dateOfBirth = 300;
+        } else if (year < 2400) {
+            dateOfBirth = 400;
+        } else if (year < 2500) {
+            dateOfBirth = 500;
         } else {
-            logger.error("Unsupported century : {}", year);
-            throw new IllegalArgumentException("Unsupported century : " + year);
+            dateOfBirth = 600;
         }
 
         // get last two digits of the year

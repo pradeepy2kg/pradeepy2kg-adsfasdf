@@ -10,6 +10,13 @@ import java.util.Date;
  *  2 for births in 22nd century ( January 1st, 2101 TO December 31st, 2200)
  *  3 for births in 23rd century ( January 1st, 2201 TO December 31st, 2300)
  *  4 for births in 24th century ( January 1st, 2301 TO December 31st, 2400)
+ *  5 for births in 25th century ( January 1st, 2401 TO December 31st, 2500)
+ *  6 for births in 26th century ( January 1st, 2501 TO December 31st, 2600)
+ *
+ *  The last three are special cases to define temporary PIN numbers for the 20th, 21st and 22nd centuries
+ *  7 for temporary records with births in 20th century ( January 1st, 1901 TO December 31st, 2000)
+ *  8 for temporary records with births in 21th century ( January 1st, 2001 TO December 31st, 2100)
+ *  9 for temporary records with births in 22th century ( January 1st, 2101 TO December 31st, 2200)
  *
  * 2. NN - Year of birth
  *
@@ -23,11 +30,20 @@ import java.util.Date;
 public interface PINGenerator {
 
     /**
-     * Generate a new PIN number for the given date. Only supports years from 1900 to 2099 
+     * Generate a new PIN number for the given date
      *
      * @param dateOfBirth the date of birth
      * @param male true if the PIN is generated for a male, false for a female
      * @return the generated 10 digit PIN number
      */
     public int generatePINNumber(Date dateOfBirth,  boolean male);
+
+    /**
+     * Generate a temporary PIN number for the given date by changing the DOB = DOB + 700
+     *
+     * @param dateOfBirth the date of birth
+     * @param male true if the PIN is generated for a male, false for a female
+     * @return the generated 10 digit PIN number
+     */
+    public int generateTemporaryPINNumber(Date dateOfBirth,  boolean male);
 }
