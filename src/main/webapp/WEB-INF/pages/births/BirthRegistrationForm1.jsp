@@ -12,7 +12,7 @@
     <s:set name="row" value="1"/>
 </s:if>
 <s:elseif test="birthType.ordinal() == 1 || birthType.ordinal() == 3">
-    <%--live birth--%>
+    <%--live birth--%>                        ce
     <s:set name="row" value="1"/>
 </s:elseif>
 <s:elseif test="birthType.ordinal()==2">

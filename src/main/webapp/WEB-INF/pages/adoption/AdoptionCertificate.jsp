@@ -204,10 +204,10 @@
     <tr>
         <td width="250px">ලියාපදිංචි කල ස්ථානය<br>
             *in tamil <br>
-            Place if Registration
+            Place of Registration
         </td>
         <td colspan="3">
-            <s:label value=""/>
+            <s:property value="placeOfIssue"/>
         </td>
         <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
         </td>

@@ -178,6 +178,7 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
     public String assignmentAdd() {
         if (!editMode) {
             if (directAssigment == 2) {
+                //todo addAssignement fails
                 //gettting exsiting
                 Registrar reg = (Registrar) session.get(WebConstants.SESSION_EXSISTING_REGISTRAR);
                 if (registrarPin > 0) {
