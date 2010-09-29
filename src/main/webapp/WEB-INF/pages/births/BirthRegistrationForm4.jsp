@@ -40,21 +40,21 @@
                         $("textarea#notifyingAuthorityAddress").val(data1.lastAddress);
                     });
         });
-//        $('#notifying_authority_NIC_V').bind('click', function() {
-//            if ($('#notifyingAuthorityPIN').val().length == 9) {
-//            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "V");
-//            } else {
-//            alert(document.getElementById('error5').value);
-//        }
-//        });
-//
-//        $('#notifying_authority_NIC_X').bind('click', function() {
-//            if ($('#notifyingAuthorityPIN').val().length == 9) {
-//            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "X");
-//            } else {
-//            alert(document.getElementById('error5').value);
-//        }
-//        });
+        //        $('#notifying_authority_NIC_V').bind('click', function() {
+        //            if ($('#notifyingAuthorityPIN').val().length == 9) {
+        //            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "V");
+        //            } else {
+        //            alert(document.getElementById('error5').value);
+        //        }
+        //        });
+        //
+        //        $('#notifying_authority_NIC_X').bind('click', function() {
+        //            if ($('#notifyingAuthorityPIN').val().length == 9) {
+        //            $('#notifyingAuthorityPIN').val($("#notifyingAuthorityPIN").val() + "X");
+        //            } else {
+        //            alert(document.getElementById('error5').value);
+        //        }
+        //        });
     });
 
     var errormsg = "";
@@ -142,18 +142,20 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="4"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-                    පුද්ගල අනන්‍යතා
-                    අංකය / ජාතික හැඳුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
-                    அடையாள எண் / அடையாள
-                    அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
-                <td colspan="1" class="find-person" width="250px">
+                <td ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                    අනන්‍යතා අංකය
+                    <br>அடையாள எண்
+                    <br>Identification Number</label></td>
+                <td colspan="8" class="find-person" width="250px">
                     <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="notifying_authority_NIC_V" onclick="javascript:addXorV('notifyingAuthorityPIN','V','error5')">
+                         id="notifying_authority_NIC_V"
+                         onclick="javascript:addXorV('notifyingAuthorityPIN','V','error5')">
                     <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="notifying_authority_NIC_X" onclick="javascript:addXorV('notifyingAuthorityPIN','X','error5')">
+                         id="notifying_authority_NIC_X"
+                         onclick="javascript:addXorV('notifyingAuthorityPIN','X','error5')">
                     <br>
-                    <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN" maxLength="10"/>
+                    <s:textfield name="notifyingAuthority.notifyingAuthorityPIN" id="notifyingAuthorityPIN"
+                                 maxLength="10"/>
                     <img src="<s:url value="/images/search-father.png"/>" style="vertical-align:middle;"
                          id="notifier_lookup"/>
                 </td>

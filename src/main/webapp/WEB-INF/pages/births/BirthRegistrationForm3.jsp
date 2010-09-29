@@ -367,8 +367,9 @@ function initPage() {
             </td>
         </tr>
         <tr>
-            <td rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන් විවාහකද? <br>பெற்றோர்கள்
-                மணம் முடித்தவர்களா? <br>Were Parent's
+            <td rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන් විවාහකද?
+                <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?
+                <br>Were Parent's
                 Married?</label></td>
             <td rowspan="2">
                 <table class="sub_table" width="100%">
@@ -388,7 +389,8 @@ function initPage() {
                         </td>
                     </tr>
                     <tr>
-                        <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label></td>
+                        <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label>
+                        </td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"
                                      onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
@@ -414,12 +416,11 @@ function initPage() {
                                  cssStyle="float:left;margin-left:5px;" maxLength="10"/>
         </tr>
         <tr id="motherFatherSign">
-            <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)මව්පියන්
-                විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව
-                සහ
-                පියාගේ අත්සන් <br>பெற்றோர்
-                மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்<br>If
-                parents are not married, signatures of mother and father to include father's particulars</label></td>
+            <td colspan="3" rowspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+                මව්පියන් විවාහ වි නොමැති නම් පියාගේ තොරතුරු ඇතුලත් කර ගැනිම සදහා මව සහ පියාගේ අත්සන්
+                <br>பெற்றோர் மணம் செய்யாதிருப்பின், தகப்பனின் தகவல்கள் பதிவு செய்ய வேண்டுமெனின் பெற்றோரின் கையொப்பம்
+                <br> If parents are not married, signatures of mother and father to include father's particulars</label>
+            </td>
             <td><label>මවගේ අත්සන <br> தாயின் ஒப்பம் <br>Mother’s Signature</label></td>
             <td align="center"><s:checkbox name="marriage.motherSigned" id="motherSigned"/></td>
         </tr>
@@ -454,9 +455,9 @@ function initPage() {
         </tr>
         <tr>
             <td rowspan="3" style="width:75px" colspan="1"></td>
-            <td>අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-                அடையாள அட்டை
-                இலக்கம்<br>PIN / NIC Number
+            <td>අනන්‍යතා අංකය (තිබේ නම්)
+                <br>அடையாள எண் (இருக்குமாயின்)
+                <br>Identification Number (if available)
             </td>
             <td colspan="5" class="find-person">
                 <img src="<s:url value="/images/alphabet-V.gif" />"
@@ -475,10 +476,13 @@ function initPage() {
                                         id="grandFatherFullName" cssStyle="width:97%;"/></td>
         </tr>
         <tr>
-            <td><label>ඔහුගේ උපන් වර්ෂය <br>அவர் பிறந்த வருடம் <br>His Year of Birth</label></td>
+            <td><label>ඔහුගේ උපන් වර්ෂය
+                <br>அவர் பிறந்த வருடம்
+                <br>His Year of Birth</label></td>
             <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br>
                 <s:textfield id="grandFatherBirthYear" name="grandFather.grandFatherBirthYear"
-                             onclick="javascript:generateGrandFatherBirthYear('grandFatherNICorPIN','grandFatherBirthYear');" maxLength="4"/>
+                             onclick="javascript:generateGrandFatherBirthYear('grandFatherNICorPIN','grandFatherBirthYear');"
+                             maxLength="4"/>
             </td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
             <td colspan="3"><s:textfield name="grandFather.grandFatherBirthPlace"
@@ -494,9 +498,9 @@ function initPage() {
         </tr>
         <tr>
             <td rowspan="3" colspan="1"></td>
-            <td>අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-                அடையாள அட்டை
-                இலக்கம்<br>PIN / NIC Number
+            <td>අනන්‍යතා අංකය (තිබේ නම්)
+                <br>அடையாள எண் (இருக்குமாயின்)
+                <br>Identification Number (if available)
             </td>
             <td colspan="5" class="find-person">
                 <img src="<s:url value="/images/alphabet-V.gif" />"
@@ -516,7 +520,9 @@ function initPage() {
         </tr>
         <tr>
 
-            <td><label>උපන් වර්ෂය <br>பிறந்த வருடம் <br>Year of Birth</label></td>
+            <td><label>ඔහුගේ උපන් වර්ෂය
+                <br>அவர் பிறந்த வருடம்
+                <br>His Year of Birth</label></td>
             <td><s:label value="YYYY" cssStyle="margin-left:10px"/><br><s:textfield
                     name="grandFather.greatGrandFatherBirthYear" id="greatGrandFatherBirthYear" maxLength="4"/></td>
             <td><label>උපන් ස්ථානය <br>அவர் பிறந்த இடம் <br>Place Of Birth</label></td>
@@ -544,7 +550,8 @@ function initPage() {
         </tr>
         <tr>
             <td class="font-9" colspan="3">
-                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?<br>பெற்றோர்கள் திருமணம் முடித்தவர்களா?
+                <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?<br>பெற்றோர்கள்
+                    திருமணம் முடித்தவர்களா?
                     <br>Were Parents Married ?</label>
             </td>
             <td class="font-9" colspan="1">
@@ -626,12 +633,11 @@ function initPage() {
     </tr>
 
     <tr>
-        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
-            අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය<br>தகவல்
-            கொடுப்பவரின்
-            தனிநபர்
-            அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3" class="find-person">
+        <td ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            <br>අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification Number</label></td>
+        <td colspan="6" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="informant_NIC_V" onclick="javascript:addXorV('informantNICorPIN','V','error20')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
@@ -670,7 +676,8 @@ function initPage() {
         <td colspan="1"><label>දිනය <br>திகதி<br>Date</label></td>
         <td colspan="4">
                 <s:label value="YYYY-MM-DD" cssStyle="float:right;margin-right:190px;font-size:10px"/><br>
-                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;" maxLength="10"/>
+                <s:textfield name="informant.informantSignDate" id="informDatePicker" cssStyle="margin-right:70px;"
+                             maxLength="10"/>
     </tr>
     </tbody>
 </table>
