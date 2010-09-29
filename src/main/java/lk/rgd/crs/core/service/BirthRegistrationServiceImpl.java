@@ -1132,7 +1132,7 @@ public class BirthRegistrationServiceImpl implements
     /**
      * @inheritDoc
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.SUPPORTS)
     public BirthDeclaration getWithRelationshipsById(long bdId, User user) {
         logger.debug("Load birth declaration record : {}", bdId);
         BirthDeclaration bdf = birthDeclarationDAO.getById(bdId);
@@ -1140,6 +1140,7 @@ public class BirthRegistrationServiceImpl implements
         validateAccessOfUser(user, bdf);
         //trigger lazy loder handler by calling this lazy loading object
         bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName();
+        logger.debug(bdf.getLifeCycleInfo().getApprovalOrRejectUser().getUserName());
         return bdf;
     }
 

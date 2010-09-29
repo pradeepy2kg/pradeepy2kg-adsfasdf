@@ -673,11 +673,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 childDsDivisionEn = register.getDsDivision().getEnDivisionName();
                 fatherRacePrint = parent.getFatherRacePrint();
                 //setting transiant value place of isse for printing
-                User issuedUser = bdf.getLifeCycleInfo().getApprovalOrRejectUser();
-                //get certifacte prefered language
-                String lang = bdf.getRegister().getPreferredLanguage();
-                String place = dsDivisionDAO.getNameByPK(issuedUser.getPrefBDDSDivision().getDsDivisionUKey(), lang);
-                bdf.getRegister().setOriginalBCPlaceOfIssuePrint(place);
+//                User issuedUser = bdf.getLifeCycleInfo().getApprovalOrRejectUser();
+//                //get certifacte prefered language
+//                String lang = bdf.getRegister().getPreferredLanguage();
+//                String place = dsDivisionDAO.getNameByPK(issuedUser.getPrefBDDSDivision().getDsDivisionUKey(), lang);
+//                bdf.getRegister().setOriginalBCPlaceOfIssuePrint(place);
 
                 if (parent.getFatherRace() != null) {
                     fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);

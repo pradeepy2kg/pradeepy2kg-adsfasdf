@@ -230,6 +230,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationApproval.jsp"/>
         <put-attribute name="title" value="birth_alteration_pending_approval.label"/>
     </definition>
+    <definition name="epr.birthAlterationHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/births/BirthAlterationHome.jsp"/>
+        <put-attribute name="title" value="birth_alteration_home.title"/>
+    </definition>
 
     <!-- Death Registration Tiles -->
 
