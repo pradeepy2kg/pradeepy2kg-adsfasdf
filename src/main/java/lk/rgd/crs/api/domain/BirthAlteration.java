@@ -14,7 +14,12 @@ import java.util.BitSet;
 @Entity
 @Table(name = "ALT_BIRTH", schema = "CRS")
 @NamedQueries({
-
+        @NamedQuery(name = "get.active.ba.by.bddivision.in.bdf.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba, BirthDeclaration bdf " +
+                "WHERE bdf.register.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
+                "AND ba.lifeCycleInfo.activeRecord IS TRUE"),
+        @NamedQuery(name = "get.active.ba.by.bddivision.in.ba.and.alterationSerialNo", query = "SELECT ba FROM BirthAlteration ba " +
+                "WHERE ba.alt52_1.birthDivision = :bdDivision AND ba.alterationSerialNo = :alterationSerialNo " +
+                "AND ba.lifeCycleInfo.activeRecord IS TRUE"),
         @NamedQuery(name = "filter.alteration.by.dsdivision", query = "SELECT ba FROM BirthAlteration ba , BirthDeclaration bdf " +
                 "WHERE ba.bdId =bdf.idUKey AND bdf.register.birthDivision.dsDivision = :dsDivision AND ba.status <> :statusFullyApp AND ba.status <> :statusPrint " +
                 "ORDER BY ba.lifeCycleInfo.createdTimestamp desc"),
@@ -25,13 +30,7 @@ import java.util.BitSet;
 })
 
 public class BirthAlteration {
-    public String getOtherDocuments() {
-        return otherDocuments;
-    }
 
-    public void setOtherDocuments(String otherDocuments) {
-        this.otherDocuments = otherDocuments;
-    }
 
     public enum State {
         /**
@@ -239,5 +238,13 @@ public class BirthAlteration {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getOtherDocuments() {
+        return otherDocuments;
+    }
+
+    public void setOtherDocuments(String otherDocuments) {
+        this.otherDocuments = otherDocuments;
     }
 }

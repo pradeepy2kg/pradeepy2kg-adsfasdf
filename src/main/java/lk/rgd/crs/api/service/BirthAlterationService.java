@@ -81,4 +81,16 @@ public interface BirthAlterationService {
      * @return the birth alteration results
      */
     public List<BirthAlteration> getApprovalPendingByBDDivision(BDDivision bdDivision, int pageNo, int noOfRows, User user);
+
+
+    /**
+     * Returns the active Birth Declaration record for a given bdf serialNo under a selected BD Division
+     *
+     * @param bdDivision the Birth Death declaration division
+     * @param serialNo   serial number to check
+     * @param isAlt52_1  is alteration is in act 51_1 or not
+     * @param user       the user making the request
+     * @return true if the serial number is unique and not used at present
+     */
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user,boolean isAlt52_1);
 }

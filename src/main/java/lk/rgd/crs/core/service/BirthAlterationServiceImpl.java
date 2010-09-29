@@ -87,7 +87,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved,
-                                       boolean appStatus,User user) {
+                                       boolean appStatus, User user) {
         logger.debug("Attempt to approve birth alteration record : {} ", ba.getIdUKey());
         validateAccessOfUser(ba, user);
         BirthAlteration existing = birthAlterationDAO.getById(ba.getIdUKey());
@@ -111,7 +111,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
                         " Illegal state : Approved", ErrorCodes.ILLEGAL_STATE);
             }*/
         }
-        if(appStatus){
+        if (appStatus) {
             existing.setStatus(BirthAlteration.State.FULLY_APPROVED);
         }
         existing.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
@@ -230,6 +230,21 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                     dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo, User user,boolean isAlt52_1) {
+        logger.debug("Get active Birth Alteration record by BDDivision ID : {} and Serial No : {}", bdDivision.getBdDivisionUKey(), alterationSerialNo);
+
+        BirthAlteration ba = birthAlterationDAO.getActiveRecordByBDDivisionAndSerialNo(bdDivision,alterationSerialNo,isAlt52_1);
+        // does the user have access to the BA (i.e. check district and DS division)
+        //calling validate access iff ba is not null otherwise it throws null pointer exception
+        if (ba != null)
+            validateAccessOfUser(ba,user);
+        return ba;
     }
 
     private void handleException(String message, int code) {

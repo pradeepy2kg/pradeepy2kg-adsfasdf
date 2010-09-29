@@ -230,7 +230,7 @@ function initPage() {
     if (!(sectionOfAct == 1)) {
         for (var i = 0; i < checkIdNames.length; i++) {
             document.getElementById(checkIdNames[i]).style.display = 'none';
-            document.getElementById(checkIdNames[i]+"-lable").style.display = 'none';
+            document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
         }
         for (var i = 0; i < fieldIds.length; i++) {
             document.getElementById(fieldIds[i]).disabled = true;
@@ -488,7 +488,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
     }
 
 </script>
-<s:if test="pageNo==0">
+<s:if test="pageType==0">
     <div id="birth-confirmation-search">
     <s:actionerror cssClass="alreadyPrinted"/>
     <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2()">
@@ -578,14 +578,16 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </div>
     </s:form>
 </s:if>
-<s:if test="pageNo==1">
+<s:if test="pageType==1">
 <div id="birth-alteration-outer">
 <s:form action="eprBirthAlteration.do" onsubmit="javascript:return validate()">
 <table class="birth-alteration-table-style01" style="width:1030px;">
     <tr>
         <td width="30%"></td>
-        <td width="35%" style="text-align:center;"></td>
+        <td width="35%" style="text-align:center;"><img src="<s:url value="/images/official-logo.png"/>"
+                                                                    alt=""/></td>
         <td width="35%">
+            <s:fielderror name="duplicateSerialNumberError" cssStyle="color:red;font-size:10pt"/>
             <table class="birth-alteration-table-style02" cellspacing="0" style="float:right;width:100%">
                 <tr>
                     <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි / <br>
@@ -598,7 +600,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <s:label value=" தொடர் இலக்கம் "/><br>
                         <s:label value=" Serial Number"/>
                     </td>
-                    <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
+                    <td width="60%">
+                        <s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
                                                  onkeypress="return isNumberKey(event)"/></td>
                 </tr>
                 <tr>
@@ -676,41 +679,47 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 தனிநபர்அடையாள எண் <br>
                 Person Identification Number (PIN) stated in the Certificate
             </td>
-            <td><s:label name="nicOrPin"/></td>
+            <td><s:label  value="%{#request.nicOrPin}"/></td>
             <td>සහතික පත්‍රයේ අංකය <br>
                 சான்றிதழ் இல <br>
                 Certificate Number
             </td>
-            <td><s:label name="idUKey"/></td>
+            <td><s:label  name="idUKey"/></td>
         </tr>
         <tr>
             <td>දිස්ත්‍රික්කය <br>
                 மாவட்டம் <br>
                 District
             </td>
-            <td><s:label name="districtName"/></td>
+            <td><s:label value="%{#request.districtName}"/></td>
             <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
                 பிரிவு <br>
                 Divisional Secretariat
             </td>
-            <td colspan="2"><s:label name="dsDivisionName"/></td>
+            <td colspan="2"><s:label value="%{#request.dsDivisionName}"/></td>
         </tr>
         <tr>
             <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
                 பிரிவு <br>
                 Registration Division
             </td>
-            <td><s:label name="bdDivisionName"/></td>
+            <td><s:label value="%{#request.bdDivisionName}" /></td>
             <td>ලියාපදිංචි කිරීමේ අංකය <br>
                 சான்றிதழ் இல <br>
                 Registration Number
             </td>
-            <td colspan="2"><s:label name="serialNo"/></td>
+            <td colspan="2"><s:label value="%{#request.serialNo}"/></td>
         </tr>
         </tbody>
     </table>
+    <s:hidden name="nicOrPin"/>
+    <s:hidden name="districtName"/>
+    <s:hidden name="dsDivisionName"/>
+    <s:hidden name="bdDivisionName"/>
+    <s:hidden name="serialNo"/>
 </div>
 <s:if test="sectionOfAct==1">
+    <s:hidden name=" birthDivisionId"/>
     <div id="actNumber1" style="margin-top:10px">
         <table class="birth-alteration-table-style02" style="width:100%" cellpadding="0" cellspacing="0">
             <caption></caption>
@@ -738,8 +747,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
 </s:if>
 <s:if test="sectionOfAct==2">
 <div id="actNumber2">
-<s:textarea name="alt27.childFullNameOfficialLang" cssStyle="visibility:hidden;"/>
-<s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
+<s:hidden name="alt27.childFullNameOfficialLang"/>
+<s:hidden name="alt27.childFullNameEnglish"/>
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width:25%;border-right:none;"></td>
@@ -1047,7 +1056,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 <div id="actNumber3">
 <s:textarea name="alt27.childFullNameOfficialLang" cssStyle="visibility:hidden;"/>
 <s:textarea name="alt27.childFullNameEnglish" cssStyle="visibility:hidden;"/>
-
+<s:hidden name=" birthDivisionId"/>
 <table class="birth-alteration-table-style02" style=" margin-top:20px;width:100%;" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width:25%;border-right:none;"></td>
@@ -1218,13 +1227,13 @@ function validateBirthYear(domElement, errorText, errorCode) {
             தாத்தாவின பாட்டனின் விபரங்கள் <br>
             Change of Mothers name after marriage
         </td>
-      <td style="width:20%;text-align:right;border-right:none">
+        <td style="width:20%;text-align:right;border-right:none">
             <div id="mother-after-marriage-info-check-lable">
                 <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:2%"><s:checkbox id="mother-after-marriage-info-check"
-                                                  name="editMothersNameAfterMarriageInfo"
-                                                  cssStyle="float:right;"/></td>
+                                                           name="editMothersNameAfterMarriageInfo"
+                                                           cssStyle="float:right;"/></td>
         <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="mother-after-marriage-info-min">[-]</div>
             <div class="birth-alteration-maximize-icon" id="mother-after-marriage-info-max">[+]</div>
@@ -1300,13 +1309,13 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 PIN / NIC Number (if available)
             </td>
             <td><s:textfield id="grandFather_pinOrNic" name="alt27A.grandFather.grandFatherNICorPIN"
-                    maxLength="10"/></td>
+                             maxLength="10"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
             <td><s:textfield id="grandFatherBirthYear" name="alt27A.grandFather.grandFatherBirthYear" maxLength="4"
-                    onkeypress="return isNumberKey(event)"/></td>
+                             onkeypress="return isNumberKey(event)"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
@@ -1334,13 +1343,15 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம்<br>
                 PIN / NIC Number (if available)
             </td>
-            <td><s:textfield id="grandGrandFather_pinOrNic" name="alt27A.grandFather.greatGrandFatherNICorPIN" maxLength="10"/></td>
+            <td><s:textfield id="grandGrandFather_pinOrNic" name="alt27A.grandFather.greatGrandFatherNICorPIN"
+                             maxLength="10"/></td>
             <td>ඔහුගේ උපන් වර්ෂය<br>
                 அவர் பிறந்த வருடம்<br>
                 His Year of Birth
             </td>
-            <td><s:textfield id="grandGrandFatherBirthYear" name="alt27A.grandFather.greatGrandFatherBirthYear" maxLength="4"
-                    onkeypress="return isNumberKey(event)"/></td>
+            <td><s:textfield id="grandGrandFatherBirthYear" name="alt27A.grandFather.greatGrandFatherBirthYear"
+                             maxLength="4"
+                             onkeypress="return isNumberKey(event)"/></td>
             <td>උපන් ස්ථානය<br>
                 அவர் பிறந்த இடம்<br>
                 Place Of Birth
