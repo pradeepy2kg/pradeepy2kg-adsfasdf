@@ -196,15 +196,21 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>clickAndWait</td>
-                    <td>link=තහවුර මුද්‍රණය</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birthRegistration-page']/a/label</td>
-                    <td></td>
-                </tr>
+	<td>clickAndWait</td>
+	<td>birth_confirmation_print.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='eprBirthConfirmationBulkPrint_']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
+	<td></td>
+</tr>
+                
                 <tr>
                     <td>clickAndWait</td>
                     <td>birth_confirmation.label</td>
@@ -448,10 +454,10 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birthRegistration-page']/a/label</td>
-                    <td></td>
-                </tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
+	<td></td>
+</tr>
                 <tr>
                     <td>clickAndWait</td>
                     <td>birth_confirmation.label</td>
