@@ -120,6 +120,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    //load birth alteration home page
+    public String birthAlterationHome(){
+        return SUCCESS;
+    }
+
     public String birthAlterationSearch() {
         BirthDeclaration bdf = new BirthDeclaration();
         populateBasicLists();

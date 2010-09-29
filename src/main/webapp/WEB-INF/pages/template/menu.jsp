@@ -65,7 +65,7 @@
                 </s:if>
 
                 <s:if test="%{key == 'alteration'}">
-                    <s:a href="#">
+                    <s:a href="/ecivil/alteration/eprBirthAlterationHome.do">
                         <s:label value="%{getText('category_alteration')}"/>
                     </s:a>
                 </s:if>
