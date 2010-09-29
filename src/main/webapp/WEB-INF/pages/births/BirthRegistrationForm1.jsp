@@ -359,14 +359,14 @@ function initPage() {
 
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
+                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும் 
                         <br>For office use only
                         <hr>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>பெறப்பட்ட திகதி <br>Submitted Date</span></label>
+                        <label><span class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                         <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
@@ -453,12 +453,12 @@ function initPage() {
         <td colspan="6" class="table_reg_cell_01"><s:label value="%{#session.oldBdfForAdoption.districtName}"/></td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>* In Tamil<br>Divisional Secretariat</label></td>
+        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය<br>பிரதேச செயளாளா் பிரிவு <br>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.dsDivisionName}"/></td>
     </tr>
     <tr>
-        <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය<br>* In Tamil<br>Registration Division</label></td>
+        <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය<br>பதிவுப் பிரிவு<br>Registration Division</label></td>
         <td colspan="6" class="table_reg_cell_01"><s:label
                 value="%{#session.oldBdfForAdoption.bdDivisionName}"/></td>
     </tr>
@@ -470,7 +470,7 @@ function initPage() {
 <tr></tr>
 <tr style="border-left:1px solid #000000;">
     <td width="150px" align="left"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)උපන් දිනය<br>
-        பிறந்த திகதி <br>Date of Birth</label></td>
+        பிறந்த திகதி<br>Date of Birth</label></td>
     <td colspan="3" style="border-right:none;">
         <s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
         <s:textfield id="birthDatePicker" name="child.dateOfBirth" onchange="dateRange();" maxLength="10"/>
@@ -481,8 +481,9 @@ function initPage() {
 </tr>
 <tr>
     <td rowspan="6"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) උපන්
-        ස්ථානය<br>பிறந்த
-        இடம்<br> Place of Birth</label></td>
+        ස්ථානය
+        <br>பிறந்த இடம்
+        <br> Place of Birth</label></td>
     <td><label>දිස්ත්‍රික්කය மாவட்டம் District</label></td>
     <td colspan="6" class="table_reg_cell_01">
         <s:select id="districtId" name="birthDistrictId" list="districtList" value="birthDistrictId"
@@ -490,7 +491,7 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br/>பிரிவு / <br/>Divisional Secretariat</label></td>
+    <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br/>பிரதேச செயளாளா் பிரிவு/ <br/>Divisional Secretariat</label></td>
     <td colspan="6" class="table_reg_cell_01" id="table_reg_cell_01">
         <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                   cssStyle="float:left;  width:240px;"/>
@@ -499,7 +500,7 @@ function initPage() {
 <tr>
     <td><label>
         ලියාපදිංචි කිරීමේ කොට්ඨාශය /<br/>
-        பிரிவு /<br/>
+        பதிவுப் பிரிவு /<br/>
         Registration Division</label>
     </td>
     <td colspan="6">
@@ -508,12 +509,12 @@ function initPage() {
     </td>
 </tr>
 <tr>
-    <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம் தமிழ் <br>In Sinhala or Tamil</label></td>
+    <td><label>සිංහල හෝ දෙමළ භාෂාවෙන් <br>சிங்களம்அல்லது தமிழ் மொழியில்<br>In Sinhala or Tamil</label></td>
     <td colspan="6"><s:textfield name="child.placeOfBirth" id="placeOfBirth" cssStyle="width:97.6%;"
                                  maxLength="255"/></td>
 </tr>
 <tr>
-    <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>இங்கிலீஷ் <br>In English</label></td>
+    <td><label>ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கில மொழியில்<br>In English</label></td>
     <td colspan="6">
         <s:textfield name="child.placeOfBirthEnglish" id="placeOfBirthEnglish"
                      cssStyle="width:97.6%; text-transform:uppercase;"/>
@@ -532,8 +533,8 @@ function initPage() {
 <s:if test="birthType.ordinal() != 0">
     <tr>
         <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම සිංහල හෝ දෙමළ භාෂාවෙන්
-            <br>பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்)
+            නම රාජ්‍ය භාෂාවෙන්  (සිංහල / දෙමළ)
+            <br>பெயா் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
         <td colspan="7">
@@ -543,7 +544,7 @@ function initPage() {
     </tr>
     <tr>
         <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම ඉංග්‍රීසි භාෂාවෙන් <br>பிறப்பு அத்தாட்சி ….. <br>Name in English
+            නම ඉංග්‍රීසි භාෂාවෙන් <br>பெயா் ஆங்கில மொழியில்<br>Name in English
         </label></td>
         <td colspan="7">
             <s:textarea name="child.childFullNameEnglish" id="childFullNameEnglish"
@@ -607,14 +608,15 @@ function initPage() {
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි
             උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
             ද?
-            <br>பிறப்பு ஒழுங்கு
+            <br>பிறப்பு ஒழுங்கு 
             <br>According to Live Birth Order, rank of the child?</label>
     </td>
     <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
     <td colspan="2" class="font-9">
         <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නිවුන්
             දරු උපතක් නම්, දරුවන් ගණන
-            <br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்),<br> பிள்னளகளின் எண்ணிக்கை
+            <br>பல்வகைத்தன்மை (இரட்டையர்கள் எனின்),
+            <br> பிள்னளகளின் எண்ணிக்கை
             <br>If multiple births, number of children</label>
     </td>
     <td colspan="2"><s:textfield name="child.numberOfChildrenBorn" id="numberOfChildrenBorn"

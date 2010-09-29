@@ -311,10 +311,9 @@ function commonTags() {
     </tr>
     <tr>
         <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)අනන්‍යතා අංකය
-            / ජාතික හැඳුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-            அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</label></td>
+                name="i" value="#i+1"/>)අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>
+            Identification Number</label></td>
         <td rowspan="2" width="230px" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="father_NIC_V" onclick="javascript:addXorV('father_pinOrNic','V','error9')">
@@ -326,13 +325,13 @@ function commonTags() {
         </td>
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
-        <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
+        <td colspan="2"><label>රට<br>நாடு<br>Country</label></td>
         <td colspan="2"><s:select name="fatherCountry" list="countryList" headerKey="0"
                                   headerValue="%{getText('select_country.label')}" cssStyle="width:97%;"/>
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
         <td class="passport"><s:textfield name="parent.fatherPassportNo"/></td>
     </tr>
     </tbody>
@@ -342,8 +341,7 @@ function commonTags() {
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
                                                                                                      value="#i+1"/>)සම්පුර්ණ
-            නම<br>தந்தையின்
-            முழு பெயர்<br>Full Name</label></td>
+            නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
             <s:textarea name="parent.fatherFullName" id="fatherFullName" cssStyle="width:98%;"/>
         </td>
@@ -395,16 +393,15 @@ function commonTags() {
     <col/>
     <tbody>
     <tr>
-        <td colspan="9" style="text-align:center;font-size:12pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல் <br>Details of the
+        <td colspan="9" style="text-align:center;font-size:12pt"> මවගේ විස්තර <br>தாய் பற்றிய தகவல்<br>Details of the
             Mother
         </td>
     </tr>
     <tr>
         <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)අනන්‍යතා අංකය
-            / ජාතික හැඳුනුම්පත් අංකය<br>து தனிநபர் அடையாள எண் /தேசிய
-            அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</label></td>
+                name="i" value="#i+1"/>)අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>
+            Identification Number</label></td>
         <td colspan="2" rowspan="2" width="230px" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="mother_NIC_V" onclick="javascript:addXorV('mother_pinOrNic','V','error9')">
@@ -421,7 +418,7 @@ function commonTags() {
                                   headerValue="%{getText('select_country.label')}"/></td>
     </tr>
     <tr>
-        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு <br>Passport No.</label></td>
+        <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
         <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo"/></td>
     </tr>
     </tbody>
@@ -440,40 +437,41 @@ function commonTags() {
     </tr>
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i"
-                                                                                                     value="#i+1"/>)උපන්
-            දිනය <br>பிறந்த
-            திகதி <br>Date of Birth</label></td>
+                                                                                                     value="#i+1"/>)
+            උපන් දිනය
+            <br>பிறந்த திகதி
+            <br>Date of Birth</label></td>
         <td colspan="3">
-                <%--<s:textfield name="parent.motherDOB" id="motherDatePicker" onchange="javascript:motherage()"/>--%>
                 <s:label value="YYYY-MM-DD" cssStyle="margin-left:140px;font-size:10px"/><br>
                 <s:textfield name="parent.motherDOB" id="motherDatePicker" maxLength="10"/>
         <td colspan="3" width="100px"><label>
             <s:if test="%{#session.birthRegister.register.birthType.ordinal() != 0}">
                 (<s:property value="#row"/><s:set name="row"
                                                   value="#row+1"/><s:set name="i"
-                                                                         value="#i+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස<br> பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
-                as at
-                the date of birth of child
+                                                                         value="#i+1"/>) ළමයාගේ උපන් දිනට මවගේ වයස
+                <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது <br>Mother's Age as at the date of birth of child
             </s:if>
             <s:else>
                 (<s:property value="#row"/><s:set name="row"
                                                   value="#row+1"/><s:set name="i"
-                                                                         value="#i+1"/>) ළමයාගේ මළ උපන් දිනට මවගේ වයස<br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது<br>Mother's Age
+                                                                         value="#i+1"/>)
+                ළමයාගේ මළ උපන් දිනට මවගේ වයස
+                <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது
+                <br>Mother's Age
                 as at the date of still-birth of child
             </s:else>
         </label>
         </td>
         <td class="passport">
-            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth" onfocus="motherAgeBirth();" maxLength="2"/>
+            <s:textfield name="parent.motherAgeAtBirth" id="motherAgeAtBirth" onfocus="motherAgeBirth();"
+                         maxLength="2"/>
             <div id="motherAgeAtChildBirth" style="color:red;"/>
         </td>
 
     </tr>
     <tr style="border-bottom:none;">
         <td style="border-bottom:none;"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set
-                name="i" value="#i+1"/>)මවගේ ස්ථිර
-            ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent
-            Address of the Mother</label>
+                name="i" value="#i+1"/>)ස්ථිර ලිපිනය<br>தாயின் நிரந்தர வதிவிட முகவரி<br>Permanent Address</label>
         </td>
         <td colspan="8" style="border-bottom:none;">
             <s:textarea id="motherAddress" name="parent.motherAddress" cssStyle="width:98%;"/>
@@ -500,7 +498,7 @@ function commonTags() {
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>
-        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரிவு /Divisional Secretariat</label></td>
+        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரதேச செயளாளா் பிரிவு/Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_02">
             <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
                 <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
@@ -538,15 +536,15 @@ function commonTags() {
             දිනය<br>*in tamil<br>Hospital Admission Date</label></td>
         <td colspan="3">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
-            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;" maxLength="10"/>
+            <s:textfield name="parent.motherAdmissionDate" id="admitDatePicker" cssStyle="float:left;margin-left:5px;"
+                         maxLength="10"/>
         </td>
     </tr>
     <tr>
-        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)ම‌ව
-            සම්බන්ධ
-            කල හැකි තොරතුරු <br>தாயின்
-            தொடர்பு இலக்க தகவல் <br>Contact Details of the
-            Mother</label></td>
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/> <s:set name="i" value="#i+1"/>)
+            සම්බන්ධ කල හැකි තොරතුරු
+            <br>தாயினை தொடர்பு கொள்ளக்கூடிய தகவல்கள்
+            <br>Contact Details </label></td>
         <td colspan="1"><label>දුරකතනය <br> தொலைபேசி இலக்கம் <br> Telephone</label></td>
         <td colspan="1"><s:textfield id="motherPhoneNo" name="parent.motherPhoneNo" maxLength="15"/></td>
         <td colspan="2"><label>ඉ – තැපැල් <br> மின்னஞ்சல்<br>Email</label></td>
