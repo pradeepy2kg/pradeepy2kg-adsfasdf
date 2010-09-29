@@ -68,6 +68,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
 
     private int pageNo;
+    private int pageType;
     private int noOfRows;
     private long bdId;   // If present, it should be used to fetch a new BD instead of creating a new one (we are in edit mode)
     private Long nicOrPin;
@@ -135,6 +136,11 @@ public class AlterationAction extends ActionSupport implements SessionAware {
                     serialNo, user);
 
         try {
+            if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                addActionError(getText("cp1.error.entryNotPrinted"));
+                pageType = 0;
+                return SUCCESS;
+            }
             idUKey = bdf.getIdUKey();
             nicOrPin = bdf.getChild().getPin();
             serialNo = bdf.getRegister().getBdfSerialNo();
@@ -146,13 +152,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         catch (Exception e) {
             handleErrors(e);
             addActionError(getText("cp1.error.entryNotAvailable"));
-            pageNo = 0;
+            pageType = 0;
             return SUCCESS;
         }
         // check that birth Certificate is printed
 
         populateAlteration(bdf);
-        pageNo = 1;
+        pageType = 1;
         populateBasicLists();
         populateCountryRacesAndAllDSDivisions();
         return SUCCESS;
@@ -221,6 +227,18 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
 
     public String birthAlteration() {
+        boolean isAlt52_1;
+        if (sectionOfAct == 2) isAlt52_1 = true;
+        else isAlt52_1 = false;
+        BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
+                bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
+        int checkDuplicate = 0;
+        if (baCheck != null) {
+            logger.debug("Duplicate Alteration Serial Number is :{}", alterationSerialNo);
+            addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+            checkDuplicate = 1;
+
+        }
         BirthAlteration ba = new BirthAlteration();
         ba.setAlt27(alt27); /*Child's full name is save in any act*/
         switch (sectionOfAct) {
@@ -259,12 +277,19 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         ba.setDeclarant(declarant);
         ba.setDateReceived(dateReceived);
         ba.setAlterationSerialNo(alterationSerialNo);
-        alterationService.addBirthAlteration(ba, user);
-        logger.debug("Add a new Birth Alteration with Alteration Serial No  :{}", alterationSerialNo);
-        idUKey = ba.getIdUKey();
-        bdId = ba.getBdId();
-        pageNo = 1;
+        if (checkDuplicate == 0) {
+            alterationService.addBirthAlteration(ba, user);
+            logger.debug("Add a new Birth Alteration with Alteration Serial No  :{}", alterationSerialNo);
+            idUKey = ba.getIdUKey();
+            bdId = ba.getBdId();
+        }
+        pageType = 1;
         initPermission();
+        if (checkDuplicate == 1) {
+            populateBasicLists();
+            populateCountryRacesAndAllDSDivisions();
+            return ERROR;
+        }
         return SUCCESS;
     }
 
@@ -590,7 +615,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         alterationService.approveBirthAlteration(ba, approvalsBitSet, appStatus, user);
         ba = alterationService.getById(idUKey, user);
         logger.debug("New Bit Set After Approval  :{}", ba.getApprovalStatuses());
-        pageNo = 2;
+        pageType = 2;
         return SUCCESS;
     }
 
@@ -1176,5 +1201,13 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public int getPageType() {
+        return pageType;
+    }
+
+    public void setPageType(int pageType) {
+        this.pageType = pageType;
     }
 }

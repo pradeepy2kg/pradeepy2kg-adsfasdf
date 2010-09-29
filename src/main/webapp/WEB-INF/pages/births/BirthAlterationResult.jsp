@@ -5,7 +5,7 @@
     }
 </script>
 <div id="birth-alteration-result-outer">
-    <s:if test="pageNo==1">
+    <s:if test="pageType==1">
         <table align="center">
             <tr>
                 <td></td>
@@ -36,7 +36,7 @@
             </tr>
         </table>
     </s:if>
-    <s:if test="pageNo==2">
+    <s:if test="pageType==2">
         <table align="center">
             <tr>
                 <td></td>

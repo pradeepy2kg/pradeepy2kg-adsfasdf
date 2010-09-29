@@ -104,10 +104,10 @@ public interface BirthDeclarationDAO {
      * Get the active record by BD Division and Serial number
      *
      * @param bdDivision the Birth Death declaration division
-     * @param serialNo   the Serial No within the division
+     * @param alterationSerialNo   the Serial No within the division
      * @return the BDF marked as active, or null if none exist
      */
-    public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo);
+    public BirthDeclaration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo);
 
     /**
      * Returns a limited set of BirthDeclarations for a selected BD Division, selected range of registration dates in

@@ -129,7 +129,7 @@
                             <s:param name="bdId" value="bdId"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="pageType" value="%{#request.pageType}"/>
                             <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                             <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                             <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
@@ -145,7 +145,7 @@
                             <s:param name="bdId" value="bdId"/>
                             <s:param name="nextFlag" value="%{#request.nextFlag}"/>
                             <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                            <s:param name="pageNo" value="%{#request.pageNo}"/>
+                            <s:param name="pageType" value="%{#request.pageType}"/>
                             <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
                             <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
                             <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
@@ -166,7 +166,7 @@
     <s:url id="previousUrl" action="eprAlterationApprovalPrevious.do" encode="true">
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="pageType" value="%{#request.pageType}"/>
         <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
         <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
         <s:param name="dsDivisionId" value="#request.dsDivisionId"/>
@@ -176,7 +176,7 @@
     <s:url id="nextUrl" action="eprAlterationApprovalNext.do" encode="true">
         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
         <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
+        <s:param name="pageType" value="%{#request.pageType}"/>
         <s:param name="birthDistrictId" value="#request.birthDistrictId"/>
         <s:param name="birthDivisionId" value="#request.birthDivisionId"/>
         <s:param name="dsDivisionId" value="#request.dsDivisionId"/>

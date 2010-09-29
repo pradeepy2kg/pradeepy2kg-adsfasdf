@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 
@@ -83,5 +84,28 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
         q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
         return q.getResultList();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo, boolean isAlt52_1) {
+        Query q;
+        if (isAlt52_1) {
+            q = em.createNamedQuery("get.active.ba.by.bddivision.in.ba.and.alterationSerialNo");
+        } else {
+            q = em.createNamedQuery("get.active.ba.by.bddivision.in.bdf.and.alterationSerialNo");
+        }
+        q.setParameter("bdDivision", bdDivision);
+        q.setParameter("alterationSerialNo", alterationSerialNo);
+        try {
+            return (BirthAlteration) q.getSingleResult();
+        } catch (NoResultException e) {
+            logger.debug("No any duplication with Birth Alteration Serial number with :{}", alterationSerialNo);
+            return null;
+        }
+        // NonUniqueResultException should not occur since only one record for a serial number + BD division will be
+        // marked as active at any given point in time
     }
 }

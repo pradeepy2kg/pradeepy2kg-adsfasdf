@@ -63,4 +63,15 @@ public interface BirthAlterationDAO {
      * @return the birth alteration results
      */
     public List<BirthAlteration> getBulkOfAlterationByBDDivision(BDDivision BDDivision, int pageNo, int noOfRows);
+
+
+    /**
+     * Get the active record by BD Division and Serial number
+     *
+     * @param bdDivision the Birth Death declaration division
+     * @param alterationSerialNo   the Serial No within the division
+     * @param isAlt52_1  is alteration is in act 51_1 or not
+     * @return the BDF marked as active, or null if none exist
+     */
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo,boolean isAlt52_1);
 }

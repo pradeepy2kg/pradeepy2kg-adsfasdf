@@ -937,6 +937,7 @@
         <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="birthAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
+            <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
 
         <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
