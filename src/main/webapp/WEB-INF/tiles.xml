@@ -235,6 +235,17 @@
         <put-attribute name="title" value="birth_alteration_home.title"/>
     </definition>
 
+    <!--death alteration related tiles-->
+    <definition name="epr.deathAlterationSearchHome" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationSearch.jsp"/>
+        <put-attribute name="title" value="death.alteration.search.title"/>
+    </definition>
+
+    <definition name="epr.deathAlterationCapture" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlteration.jsp"/>
+        <put-attribute name="title" value="death.alteration.capture.title"/>
+    </definition>
+
     <!-- Death Registration Tiles -->
 
     <definition name="epr.deathHome" extends="epr.template">
