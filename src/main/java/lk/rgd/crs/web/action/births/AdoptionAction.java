@@ -47,34 +47,41 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private final AppParametersDAO appParametersDAO;
     private final BirthRegistrationService birthRegistrationService;
 
-    private int birthDistrictId;
-    private int birthDivisionId;
-    private int courtId;
-    private int dsDivisionId;
-    private String language;
-    private int currentStatus;
+    private AdoptionOrder adoption;
+    private User user;
+    private Map session;
+
     private AdoptionOrder.State state;
+    private AdoptionOrder.ApplicantType certificateApplicantType;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDSDivisionList;
     private Map<Integer, String> courtList;
-    private List<AdoptionOrder> adoptionApprovalAndPrintList;
     private Map<Integer, String> countryList;
-    private AdoptionOrder adoption;
-    private User user;
-    private Map session;
+    private List<AdoptionOrder> adoptionApprovalAndPrintList;
+
+    private int birthDistrictId;
+    private int birthDivisionId;
+    private int courtId;
+    private int dsDivisionId;
+    private int noOfRows;
+    private int currentStatus;
+    private int pageNo;
 
     private long idUKey;
     private long adoptionId;
-    private int pageNo;
-    private String courtOrderNo;
+
     private boolean allowEditAdoption;
     private boolean allowApproveAdoption;
     private boolean nextFlag;
     private boolean previousFlag;
+    private boolean alreadyPrinted;
+    private boolean approved;
+    private boolean printed;
 
+    private String courtOrderNo;
     private String dsDivisionName;
     private String birthDivisionName;
     private String applicantCountryName;
@@ -85,15 +92,9 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String certificateApplicantPINorNIC;
     private String certificateApplicantName;
     private String placeOfIssue;
-    private AdoptionOrder.ApplicantType certificateApplicantType;
-
-
-    private boolean alreadyPrinted;
-    private int noOfRows;
     private String genderEn;
     private String genderSi;
-    private boolean approved;
-    private boolean printed;
+    private String language;
 
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
@@ -116,6 +117,17 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
         long birthCertificateNo = 0;
+        //check applicant type
+        if (adoption.isApplicantMother()) {
+            //check wife details are already filled if so give action error
+            if (adoption.getWifeName() != null || adoption.getWifePassport() != null
+                    || adoption.getWifePINorNIC() != null) {
+                addActionError(getText("er.if.applicant.type.mother.wife.detail.null"));
+                basicLists();
+                return "invalidBirthCertificateNumber";
+            }
+        }
+
         if (idUKey > 0) {
             AdoptionOrder existingOrder = service.getById(idUKey, user);
             adoption.setIdUKey(idUKey);
@@ -130,18 +142,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     return "invalidBirthCertificateNumber";
                 }
             }
-            //check applicant type
-            if (adoption.isApplicantMother()) {
-                //check wife details are already filled if so give action error
-                if (adoption.getWifeName() != null || adoption.getWifePassport() != null
-                        || adoption.getWifePINorNIC() != null) {
-                    addActionError(getText("er.if.applicant.type.mother.wife.detail.null"));
-                    populate();
-                    populateBasicLists(language);
-                    populateAllDSDivisionList();
-                    return "invalidBirthCertificateNumber";
-                }
-            }
             service.updateAdoptionOrder(adoption, user);
         } else {
             birthCertificateNo = adoption.getBirthCertificateNumber();
@@ -150,9 +150,11 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 BirthDeclaration bdf = birthRegistrationService.getByIdForAdoptionLookup(birthCertificateNo, user);
                 if (bdf == null) {
                     addActionError(getText("er.invalid.birth.certificate.number"));
-                    populate();
+                    basicLists();
+                    //todo remove follow section
+/*                    populate();
                     populateBasicLists(language);
-                    populateAllDSDivisionList();
+                    populateAllDSDivisionList();*/
                     return "invalidBirthCertificateNumber";
                 }
             }
@@ -180,6 +182,12 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
         return SUCCESS;
     }
 
+    private void basicLists() {
+        populate();
+        populateBasicLists(language);
+        populateAllDSDivisionList();
+    }
+
     /**
      * responsible for loading the AdoptionOrder based
      * on requested idUKey. Error will be thrown if it
@@ -195,7 +203,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             addActionError(getText("adoption.error.editNotAllowed"));
             return ERROR;
         }
-                // todo remove
+        // todo remove
         // language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         populate();
         populateAllDSDivisionList();
@@ -222,7 +230,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             populateApprovalAndPrintList();
             return "skip";
         }
-                // todo remove
+        // todo remove
         // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
         if (adoption.getBirthDivisionId() > 0) {
             birthDivisionName = bdDivisionDAO.getNameByPK(adoption.getBirthDivisionId(), language);

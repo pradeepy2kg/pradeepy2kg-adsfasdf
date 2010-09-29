@@ -246,6 +246,12 @@ public class Menu {
         deoAlterationLink.put("eprBirthAlteration.do", new Link(null, "/ecivil/alteration/", "eprBirthAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
         deoAlterationLink.put("eprBirthAlterationSearch.do", new Link(null, "/ecivil/alteration/", "eprBirthAlterationSearch.do", Permission.EDIT_BIRTH_ALTERATION));
 
+        //todo complete
+        //links related to deo or above for death alteration
+        //every one has permission to add birth alteration has permiassion to add death alteration
+        deoAlterationLink.put("eprDeathAlterationSearchHome.do", new Link("death.registration.alteration", "/ecivil/alteration/", "eprDeathAlterationSearchHome.do", Permission.EDIT_BIRTH_ALTERATION));
+        deoAlterationLink.put("eprCaptureDeathAlteration.do", new Link(null, "/ecivil/alteration/", "eprCaptureDeathAlteration.do", Permission.EDIT_BIRTH_ALTERATION));
+
         // Birth Alteration for ADR
         adrAlterationLink.putAll(deoAlterationLink);
 

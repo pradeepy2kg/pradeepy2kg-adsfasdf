@@ -655,7 +655,7 @@
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="addOrEditAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
-            <result type="tiles" name="invalidBirthCertificateNumber">epr.AdoptionReg</result>
+            <result type="tiles" name="invalidBirthCertificateNumber">eprBirthAlterationInit</result>
         </action>
 
         <action name="eprAdoptionDirectApproval" class="lk.rgd.crs.web.action.births.AdoptionAction"
@@ -937,7 +937,6 @@
         <action name="eprBirthAlteration" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="birthAlteration">
             <result type="tiles" name="success">epr.birthAlterationResult</result>
-            <result type="tiles" name="error">epr.birthAlteration</result>
         </action>
 
         <action name="eprBirthAlterationPendingApproval" class="lk.rgd.crs.web.action.births.AlterationAction"
@@ -975,6 +974,16 @@
         <action name="eprBirthAlterationHome" class="lk.rgd.crs.web.action.births.AlterationAction"
                 method="birthAlterationHome">
             <result type="tiles" name="success">epr.birthAlterationHome</result>
+        </action>
+        <!--death alteration related actions-->
+        <action name="eprDeathAlterationSearchHome" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deathAlterationSearch">
+            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+        </action>
+
+        <action name="eprCaptureDeathAlteration" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="captureDeathAlterations">
+            <result type="tiles" name="success">epr.deathAlterationCapture</result>
         </action>
     </package>
 </struts>
