@@ -49,6 +49,18 @@ function validateSerialNo(domElement, errorText, errorCode) {
     }
 }
 
+function validatePassportNo(domElement, errorText, errorCode) {
+    with (domElement) {
+        var reg = /^([0-9a-zA-Z]{8,15})$/;
+        if (reg.test(value.trim()) == false) {
+            printMessage(errorText, errorCode);
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
 // validate telephone number
 function validatePhoneNo(domElement, errorText, errorCode) {
     with (domElement) {
