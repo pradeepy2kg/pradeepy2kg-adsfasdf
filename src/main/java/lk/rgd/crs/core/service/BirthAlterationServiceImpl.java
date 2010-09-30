@@ -1,7 +1,7 @@
 package lk.rgd.crs.core.service;
 
+import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.service.BirthAlterationService;
-import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.dao.BirthAlterationDAO;
 import lk.rgd.crs.CRSRuntimeException;
@@ -9,7 +9,6 @@ import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.service.UserManager;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,11 +27,11 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
 
     private static final Logger logger = LoggerFactory.getLogger(BirthAlterationServiceImpl.class);
     private final BirthAlterationDAO birthAlterationDAO;
-    private final BirthRegistrationService birthRegistrationService;
+    private final BirthDeclarationDAO birthDeclarationDAO;
 
-    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthRegistrationService birthRegistrationService) {
+    public BirthAlterationServiceImpl(BirthAlterationDAO birthAlterationDAO, BirthDeclarationDAO birthDeclarationDAO) {
         this.birthAlterationDAO = birthAlterationDAO;
-        this.birthRegistrationService = birthRegistrationService;
+        this.birthDeclarationDAO = birthDeclarationDAO;
     }
 
     /**
@@ -197,7 +196,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             BDDivision bdDivision = ba.getAlt52_1().getBirthDivision();
             validateAccessToBDDivision(user, bdDivision);
         } else {
-            BirthDeclaration bdf = birthRegistrationService.getById(ba.getBdId(), user);
+            BirthDeclaration bdf = birthDeclarationDAO.getById(ba.getBdId());
             validateAccessToBDDivision(user, bdf.getRegister().getBirthDivision());
         }
     }
