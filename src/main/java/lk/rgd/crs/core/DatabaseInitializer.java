@@ -295,6 +295,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
             bs.set(Permission.SERVICE_MASTER_DATA_MANAGEMENT);
             bs.set(Permission.USER_PREFERENCES);
             bs.set(Permission.REGISTRAR_MANAGEMENT);
+            bs.set(Permission.EVENTS_MANAGEMENT);
 
             adminRole.setPermBitSet(bs);
             roleDao.save(adminRole);

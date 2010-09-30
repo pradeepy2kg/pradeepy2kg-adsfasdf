@@ -16,16 +16,17 @@ public final class Permission {
     public static final int EDIT_DEATH = 11;
     public static final int PRINT_DEATH_CERTIFICATE = 12;
     public static final int REGISTRAR_MANAGEMENT = 13;
-    public static final int SERVICE_MASTER_DATA_MANAGEMENT = 14;
-    public static final int USER_PREFERENCES = 15;
-    public static final int SEARCH_PRS = 16;
-    public static final int SEARCH_BDF = 17;
-    public static final int EDIT_BDF_CONFIRMATION = 18;
-    public static final int APPROVE_BDF_BELATED = 19;
-    public static final int EDIT_BIRTH_ALTERATION = 20;
-    public static final int APPROVE_BIRTH_ALTERATION = 21;
-    public static final int SEARCH_DDF = 22;
-    public static final int PRINT_DDF = 23;
+    public static final int EVENTS_MANAGEMENT = 14;
+    public static final int SERVICE_MASTER_DATA_MANAGEMENT = 15;
+    public static final int USER_PREFERENCES = 16;
+    public static final int SEARCH_PRS = 17;
+    public static final int SEARCH_BDF = 18;
+    public static final int EDIT_BDF_CONFIRMATION = 19;
+    public static final int APPROVE_BDF_BELATED = 20;
+    public static final int EDIT_BIRTH_ALTERATION = 21;
+    public static final int APPROVE_BIRTH_ALTERATION = 22;
+    public static final int SEARCH_DDF = 23;
+    public static final int PRINT_DDF = 24;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;

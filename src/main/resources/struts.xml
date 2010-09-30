@@ -919,6 +919,10 @@
                 method="addDivisionsAndDsDivisions">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
+        <action name="eprInitEventsManagement" class="lk.rgd.crs.web.action.EventsManagementAction"
+                method="initEventsManagement">
+            <result type="tiles" name="success">epr.eventManagement</result>
+        </action>
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">

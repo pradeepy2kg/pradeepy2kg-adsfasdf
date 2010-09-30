@@ -263,8 +263,10 @@ function enableSerialNumber(mode) {
         <td width="450px"></td>
     </tr>
     <tr>
-        <td colspan="3" align="center">දරුකමට හදාගැනීමේ උසාවි නියෝගය (අංක 4 දරන ආකෘති පත්‍රය) <br/>
-            Adoption Order Issued by Court
+        <td colspan="3" align="center">
+            දරුකමට හදාගැනීමේ උසාවි නියෝගය ලියාපදිංචි කිරීම (අංක 4 දරන ආකෘති පත්‍රය)
+            <br>நீதிமன்ற மகவேற்புக் கட்டளையினை பதிவு செய்தல் ( 4 ஆம் இலக்க விண்ணப்ப படிவம்)
+            <br>Registration of an Adoption Order Issued by Court
         </td>
     </tr>
     </tbody>
@@ -272,45 +274,54 @@ function enableSerialNumber(mode) {
 
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
     <tr>
-        <td width="330px">නියෝගය ලැබුණු දිනය <br/>
-            Received Date
+        <td width="330px">
+            නියෝගය ලැබුණු දිනය
+            <br>கட்டளை பெறப்பட்ட திகதி
+            <br>Received Date
         </td>
-        <td >
+        <td>
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:5px;font-size:10px"/><br>
             <s:textfield id="receivedDatePicker" name="adoption.orderReceivedDate" cssStyle="width:200px"/>
         </td>
     </tr>
     <tr>
-        <td>අධිකරණය<br/>
-            Court
+        <td>අධිකරණය
+            <br>நீதிமன்றம்
+            <br>Court
         </td>
-        <td ><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;"/>
+        <td><s:select list="courtList" name="courtId" cssStyle="margin-left:5px;width:300px;"/>
     </tr>
     <tr>
-        <td>නියෝගය නිකුත් කල දිනය <br/>
-            Issued Date
+        <td>
+            නියෝගය නිකුත් කල දිනය
+            <br>கட்டளை வழங்கப்பட்ட திகதி
+            <br>Issued Date
         </td>
         <td>
             <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
-            <s:textfield id="orderIssuedDatePicker" name="adoption.orderIssuedDate" cssStyle="margin-left:5px;width:200px"/>
+            <s:textfield id="orderIssuedDatePicker" name="adoption.orderIssuedDate"
+                         cssStyle="margin-left:5px;width:200px"/>
         </td>
     </tr>
     <tr>
-        <td>නියෝග අංකය<br/>
-            Court order number
+        <td>
+            නියෝග අංකය
+            <br>கட்டளை இலக்கம்
+            <br>Serial number
         </td>
         <td><s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber" cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td>විනිසුරුගේ  නම <br/>
-            Name of the Judge
+        <td>
+            විනිසුරු නම
+            <br>நீதிபதியின் பெயா்
+            <br>Name of the Judge
         </td>
         <td><s:textfield name="adoption.judgeName" id="judgeName" cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>***in tamil***<br>Preferred
+        <td>සහතිකය නිකුත් කල යුතු භාෂාව <br>*in tamil<br>Preferred
             Language for
-            ******
         </td>
         <td style="text-align:left;" width="30px">
             <s:select list="#@java.util.HashMap@{'si':'සිංහල','ta':'Tamil'}"
@@ -321,8 +332,10 @@ function enableSerialNumber(mode) {
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>අයදුම් කරුගේ විස්තර <br/>
-            Applicants Details
+        <td>
+            අයදුම් කරුගේ විස්තර
+            <br>விண்ணப்பதரியின் விபரங்கள்
+            <br>Applicants Details
         </td>
     </tr>
 </table>
@@ -332,34 +345,41 @@ function enableSerialNumber(mode) {
     <col width="320px"/>
     <col width="175px"/>
     <col width="175px"/>
-    <col />
-    <col />
+    <col/>
+    <col/>
     <tbody>
     <tr>
-        <td>අයදුම් කරු <br/>
-            Applicant
+        <td>
+            අයදුම් කරු
+            <br>விண்ணப்பதாரி
+            <br>Applicant
         </td>
-        <td>පියා <br/>
-            Father
+        <td>
+            පියා
+            <br>தந்தை
+            <br>Father
         </td>
         <td>
             <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'false':''}"
                      id="adoptionApplicantFather"
                      onclick="disable(false)"/>
         </td>
-        <td>මව <br/>
-            Mother
+        <td>
+            මව
+            <br>தாய்
+            <br>Mother
         </td>
         <td>
             <s:radio name="adoption.applicantMother" list="#@java.util.HashMap@{'true':''}" onclick="disable(true);"/>
         </td>
     </tr>
     <tr>
-        <td colspan="3">අයදුම් කරුගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
-            தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
-            Applicant's PIN / NIC Number
+        <td>
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification No.
         </td>
-        <td colspan="2" align="left" class="find-person">
+        <td colspan="5" align="left" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="applicant_NIC_V" onclick="javascript:addXorV('applicantPin','V','error21')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
@@ -372,60 +392,71 @@ function enableSerialNumber(mode) {
                  style="vertical-align:middle; margin-left:10px;" id="adoption_applicant_lookup"></td>
     </tr>
     <tr>
-        <td>විදේශිකය‍කු නම් <br/>
-            வெளிநாட்டவர் <br/>
-            If a foreigner
+        <td>
+            විදේශිකය‍කු නම්
+            <br>வெளிநாட்டவர் எனின்,
+            <br>If a foreigner
         </td>
-        <td>රට <br/>
-            நாடு <br/>
-            Country
+        <td>
+            රට
+            <br>நாடு
+            <br>Country
         </td>
-        <td >
+        <td>
             <s:select name="adoption.applicantCountryId" list="countryList" headerKey="0" id="applicantCountryId"
                       headerValue="%{getText('adoption.select_country.label')}" cssStyle="width:150px"/>
         </td>
-        <td>ගමන් බලපත්‍ර අංකය <br/>
-            கடவுச் சீட்டு <br/>
-            Passport No.
+        <td>
+            ගමන් බලපත්‍ර අංකය
+            <br>கடவுச் சீட்டு
+            <br>Passport No.
         </td>
-        <td ><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber" cssStyle="width:90%"/></td>
+        <td><s:textfield name="adoption.applicantPassport" id="applcantPassportNumber" cssStyle="width:90%"/></td>
     </tr>
     <tr>
-        <td>නම <br/>
-            Name of the Applicant
+        <td>
+            අයදුම් කරුගේ නම
+            <br>விண்ணப்பதாரியின் பெயா்
+            <br>Name of the Applicant
         </td>
         <td colspan="4"><s:textarea id="applicantName" name="adoption.applicantName"/></td>
     </tr>
 
     <tr>
-        <td>ලිපිනය <br/>
-            Address
+        <td>
+            ලිපිනය
+            <br>முகவரி
+            <br>Address
         </td>
         <td colspan="4"><s:textarea name="adoption.applicantAddress"
-                                                   id="applicantAddress"/></td>
+                                    id="applicantAddress"/></td>
     </tr>
     </tbody>
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
         <td><br/>
-            අයදුම් කරු පියා නම් මවගේ විස්තර / If applicant is the father, Mother's details
+            අයදුම් කරු පියා නම් මවගේ විස්තර
+            <br> விண்ணப்பதாரி தந்தையாயின் தாயின் விபரங்கள்
+            <br>If applicant is the father,
+            Mother's details
         </td>
     </tr>
 </table>
 <table class="adoption-reg-form-01-table01" cellspacing="0" cellpadding="0">
-     <caption></caption>
+    <caption></caption>
     <col width="320px"/>
     <col width="175px"/>
     <col width="175px"/>
-    <col />
-    <col />
+    <col/>
+    <col/>
     <tr>
-        <td colspan="3" >මවගේ පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය <br/>
-            தாயின் தனிநபர் அடையாள எண் / தேசிய அடையாள அட்டை இலக்கம் <br/>
-            Wife's PIN / NIC Number
+        <td>
+            මවගේ අනන්‍යතා අංකය
+            <br>தாயின் அடையாள எண்
+            <br>Mothers Identification Number
         </td>
-        <td colspan="2" class="find-person">
+        <td colspan="5" class="find-person">
             <img src="<s:url value="/images/alphabet-V.gif" />"
                  id="wife_NIC_V" onclick="javascript:addXorV('wifePINorNIC','V','error21')">
             <img src="<s:url value="/images/alphabet-X.gif" />"
@@ -437,37 +468,41 @@ function enableSerialNumber(mode) {
                  style="vertical-align:middle; margin-left:10px;" id="mother_lookup"></td>
     </tr>
     <tr>
-        <td >විදේශිකය‍කු නම් <br/>
-            வெளிநாட்டவர் <br/>
+        <td>විදේශිකය‍කු නම් <br/>
+            வெளிநாட்டவர் எனின்<br/>
             If a foreigner
         </td>
-        <td >රට <br/>
+        <td>රට <br/>
             நாடு <br/>
             Country
         </td>
-        <td width="175px" >
+        <td width="175px">
             <s:select id="wifeCountryId" name="adoption.wifeCountryId" list="countryList" headerKey="0"
                       headerValue="%{getText('adoption.select_country.label')}" cssStyle="width:90%"/>
         </td>
-        <td >ගමන් බලපත්‍ර අංකය <br/>
+        <td>ගමන් බලපත්‍ර අංකය <br/>
             கடவுச் சீட்டு <br/>
             Passport No.
         </td>
-        <td >
+        <td>
             <s:textfield name="adoption.wifePassport" id="wifePassport" cssStyle="width:90%"> </s:textfield>
         </td>
     </tr>
     <tr>
-        <td> මවගේ නම <br/>
-            Name of Mother
+        <td>
+            මවගේ නම
+            <br>தாயின் பெயா்
+            <br>Name of Mother
         </td>
-        <td colspan="4" ><s:textarea name="adoption.wifeName" id="wifeName"/></td>
+        <td colspan="4"><s:textarea name="adoption.wifeName" id="wifeName"/></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>ළමයාගේ විස්තර <br/>
-            Child's Information
+        <td>
+            ළමයාගේ විස්තර
+            <br>பிள்ளையின் விபரங்கள்
+            <br>Child's Information
         </td>
     </tr>
 </table>
@@ -477,70 +512,91 @@ function enableSerialNumber(mode) {
     <col style="width:320px;"/>
     <col style="width:160px;"/>
     <col style="width:190px;"/>
-    <col />
-    <col />
+    <col/>
+    <col/>
     <tbody>
     <tr>
-        <td>පුද්ගල අනන්‍යතා අංකය (තිබේ නම්)<br/>
-            Personal Identification Number (if available)
+        <td>
+            අනන්‍යතා අංකය (තිබේ නම්)
+            <br>அடையாள எண் (இருந்தால்)
+            <br>Identification Number (if available)
         </td>
-        <td colspan="4"><s:textfield name="adoption.childPIN" id="childPIN" cssStyle="margin-left:5px;width:250px"/></td>
+        <td colspan="4"><s:textfield name="adoption.childPIN" id="childPIN"
+                                     cssStyle="margin-left:5px;width:250px"/></td>
     </tr>
     <tr>
-        <td>උපන් දිනය<br/>
-            Date of birth
+        <td>
+            උපන් දිනය
+            <br>பிறந்த திகதி
+            <br>Date of birth
         </td>
         <td colspan="2">
             <s:label value="YYYY-MM-DD" cssStyle="margin-left:10px;font-size:10px"/><br>
             <s:textfield id="bdayDatePicker" name="adoption.childBirthDate"
                          cssStyle="margin-left:5px;width:200px" onchange="calYearAndMonth()"/>
         </td>
-        <td>ස්ත්‍රී පුරුෂ භාවය<br/>
-            Gender
+        <td>
+            ස්ත්‍රී පුරුෂ භාවය
+            <br>பால்
+            <br>Gender
         </td>
-        <td ><s:select
+        <td><s:select
                 list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
                 name="adoption.childGender"
                 id="childGender"
                 cssStyle="width:150px; margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td>වයස <br/>
-            Age
+        <td>
+            වයස
+            <br>வயது
+            <br>Age
         </td>
-        <td>අවුරුදු <br/>
-            Years
+        <td>
+            අවුරුදු
+            <br>வருடங்கள்
+            <br>Years
         </td>
-        <td ><s:textfield name="adoption.childAgeYears" id="childAgeYears" cssStyle="width:87%"
-                                        onchange="validateNum(document.getElementById('childAgeYears').value)"/></td>
-        <td>මාස <br/>
-            Months
+        <td><s:textfield name="adoption.childAgeYears" id="childAgeYears" cssStyle="width:87%"
+                         onchange="validateNum(document.getElementById('childAgeYears').value)"/></td>
+        <td>
+            මාස
+            <br>மாதங்கள்
+            <br>Months
         </td>
-        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()" cssStyle="width:91%"
+        <td><s:textfield name="adoption.childAgeMonths" id="childAgeMonths" onclick="calYearAndMonth()"
+                         cssStyle="width:91%"
                          onchange="validateNum(document.getElementById('childAgeMonths').value)"/></td>
     </tr>
     <tr>
-        <td>දැනට පවතින නම <br/>
-            (නමක් දී ඇති නම්) <br/>
-            Existing Name <br/>
+        <td>
+            දැනට පවතින නම
+            (නමක් දී ඇති නම්)
+            <br>தற்போதைய பெயா்
+            (ஏற்கனவே பெயா் வழங்கப்பட்டிருந்தால்)
+            <br>Existing Name
             (if already given)
         </td>
-        <td colspan=" 4" ><s:textarea name="adoption.childExistingName"
-                                                    id="childExistingName" /></td>
+        <td colspan=" 4"><s:textarea name="adoption.childExistingName"
+                                     id="childExistingName"/></td>
     </tr>
     <tr>
-        <td>ලබා දෙන නම සිංහල හෝ දෙමළ භාෂාවෙන් <br/>
-            New name given in Official Language
+        <td>
+            ලබා දෙන නම රාජ්‍ය භාෂාවෙන්
+            <br>புதிய பெயா் அரச கரும மொழியில்
+            <br>New name given in Official Language
         </td>
-        <td colspan="4" ><s:textarea name="adoption.childNewName" id="childNewName" cssStyle="margin-left:5px"/></td>
+        <td colspan="4"><s:textarea name="adoption.childNewName" id="childNewName" cssStyle="margin-left:5px"/></td>
     </tr>
     </tbody>
 </table>
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>උපත දැනටත් ලියාපදිංචි කර උප්පැන්න සහතිකයක් නිකුත් කර ඇතිනම් <br/>
-            If the birth is already registered, and a Birth Certificate issued
+        <td>
+            උපත දැනටත් ලියාපදිංචි කර උප්පැන්න සහතිකයක් නිකුත් කර ඇතිනම්
+            <br>பிறப்பு பதியப்பட்டு பிறப்புச் சான்றிதழ் வழங்கப்பட்டிருந்தால்
+            <br>If the birth is already registered, and a Birth Certificate issued
         </td>
     </tr>
 </table>
@@ -552,30 +608,34 @@ function enableSerialNumber(mode) {
     <col width="50px">
     <col width="100px"/>
     <col width="50px">
-    <col />
+    <col/>
     <tr>
-        <td colspan="1">උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය <br/>
-            The serial number of the Birth Certificate
+        <td colspan="1">
+            උප්පැන්න සහතිකයේ අනුක්‍රමික අංකය
+            <br>பிறப்புச் சான்றிதழின் தொடா் இலக்கம்
+            <br>The serial number of the Birth Certificate
         </td>
         <td colspan="1">
             ඇත
             <br>
             Available
-        <td colspan="1" ><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
+        <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
                                  onclick="enableCertificateNumber(false)" cssStyle="margin-left:14px"/></td>
 
         </td>
         <td colspan="1">නැත <br>Un-available</td>
         <td colspan="1"><s:radio list="#@java.util.HashMap@{'false':''}" id="availabe" name="available"
-                                 onclick="enableCertificateNumber(true);"cssStyle="margin-left:14px"/></td>
+                                 onclick="enableCertificateNumber(true);" cssStyle="margin-left:14px"/></td>
         </td>
         <td colspan="1"><s:textfield name="adoption.birthCertificateNumber" id="birthCertificateNumber"
-                                                    /></td>
+                /></td>
     </tr>
 </table>
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>හෝ<br/>OR
+        <td>හෝ
+            / அல்லது
+            / OR
         </td>
     </tr>
 </table>
@@ -586,8 +646,10 @@ function enableSerialNumber(mode) {
     <col/>
     <tbody>
     <tr>
-        <td colspan="2">උපත ලියපදින්ච්චි කිරීමේ රිසීට් පතේ සටහන් <br/>
-            Birth Registration acknowledgement slip
+        <td colspan="2">
+            උපත ලියාපදිංචි කිරීමේ රිසීට් පතේ සටහන්
+            <br>பிறப்பு பதிவிற்கான பற்றுச்சீட்டின் குறிப்பு
+            <br>Birth Registration acknowledgment slip
         </td>
         <td> ඇත
             <br>
@@ -600,16 +662,21 @@ function enableSerialNumber(mode) {
                      onclick="enableSerialNumber(true)" cssStyle="margin-left:100px"/></td>
     </tr>
     <tr>
-        <td colspan="1">දිස්ත්‍රික්කය <br/>
-            District
+        <td colspan="1">
+            දිස්ත්‍රික්කය
+            <br>மாவட்டம்
+            <br>District
         </td>
-        <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="%{birthDistrictId}"
+        <td colspan="5"><s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                  value="%{birthDistrictId}"
                                   cssStyle="width:280px;margin-left:5px;"/>
         </td>
     </tr>
     <tr>
-        <td colspan="1">ප්‍රාදේශීය ලේකම් කොට්ටාශය <br/>
-            Divisional Secretariat
+        <td colspan="1">
+            ප්‍රාදේශීය ලේකම් කොට්ටාශය
+            <br>பிரதேச செயலாளா் பிரிவு
+            <br>Divisional Secretariat
         </td>
         <td colspan="5">
             <s:select id="dsDivisionId" name="dsDivisionId" list="allDSDivisionList" value="%{dsDivisionId}"
@@ -617,8 +684,10 @@ function enableSerialNumber(mode) {
         </td>
     </tr>
     <tr>
-        <td colspan="1">ලියාපදිංචි කිරීමේ කොට්ටාශය <br/>
-            Registration Division
+        <td colspan="1">
+            ලියාපදිංචි කිරීමේ කොට්ටාශය
+            <br>பதிவுப்பிரிவு
+            <br>Registration Division
         </td>
         <td colspan="5">
             <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
@@ -627,8 +696,10 @@ function enableSerialNumber(mode) {
         </td>
     </tr>
     <tr>
-        <td colspan="1">අනුක්‍රමික අංකය <br/>
-            Serial Number
+        <td colspan="1">
+            අනුක්‍රමික අංකය
+            <br>தொடா் இலக்கம்
+            <br>Serial Number
         </td>
 
         <td colspan="5">

@@ -5,6 +5,8 @@ import lk.rgd.common.api.domain.Event;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Id;
+
 /**
  * @author asankha
  */
@@ -17,5 +19,13 @@ public class EventDAOImpl extends BaseDAO implements EventDAO {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addEvent(Event e) {
         em.persist(e);
+    }
+
+    /**
+     *
+     */
+    public Event getEvent(long idUKey){
+        logger.debug("Get Event by IdUKey : {}", idUKey);
+        return em.find(Event.class, idUKey);   
     }
 }
