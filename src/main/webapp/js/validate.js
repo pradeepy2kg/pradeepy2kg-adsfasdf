@@ -2,7 +2,7 @@
 function isEmpty(domElement, errorMessage, errorCode) {
     with (domElement) {
         if (value == null || value.trim() == "") {
-            errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " : " + errorMessage;
+            errormsg = errormsg + "\n" + document.getElementById(errorCode).value + " " + errorMessage;
         }
     }
 }
