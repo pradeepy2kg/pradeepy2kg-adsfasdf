@@ -335,7 +335,10 @@
         <put-attribute name="body" value="/WEB-INF/pages/management/AddAssignment.jsp"/>
         <put-attribute name="title" value="assignment.add.title"/>
     </definition>
-
+    <definition name="epr.eventManagement" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/management/EventsManagement.jsp"/>
+        <put-attribute name="title" value="event.management.title"/>
+    </definition>
 
     <!--  User Preferences Tiles -->
     <definition name="epr.UserPreferences" extends="epr.template">

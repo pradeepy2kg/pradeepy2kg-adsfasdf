@@ -13,4 +13,10 @@ public interface EventDAO {
      * Add an event to the database
      */
     public void addEvent(Event e);
+
+    /**
+     * Get event from the database
+     *
+     */
+    public Event getEvent(long idUKey);
 }

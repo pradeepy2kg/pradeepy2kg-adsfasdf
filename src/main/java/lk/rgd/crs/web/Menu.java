@@ -67,6 +67,7 @@ public class Menu {
         adminLink.put("eprSearchRegistrarByPin.do", new Link(null, "/ecivil/management/", "eprSearchRegistrarByPin.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
+        adminLink.put("eprInitEventsManagement.do", new Link("eventManege.label", "/ecivil/management/", "eprInitEventsManagement.do", Permission.EVENTS_MANAGEMENT));
 
 
         //User Preferance
