@@ -40,6 +40,7 @@
     }
 
     .lable-adr {
+        font-size:9pt;
         position: absolute;
         width: 102px;
         text-align: center;
@@ -47,10 +48,32 @@
     }
 
     .lable-child-birth {
+        font-size:9pt;
         position: absolute;
         width: 300px;
         text-align: center;
         margin: 105px 0px 0px 130px;
+    }
+    .receive-birth-cetificate {
+        font-size:9pt;
+        position: absolute;
+        width: 300px;
+        text-align: center;
+        margin: 50px 0px 0px 280px;
+    }
+    .receive-new-birth-cetificate {
+        font-size:9pt;
+        position: absolute;
+        width: 100px;
+        text-align: center;
+        margin:355px 0px 0px 200px;
+    }
+    .request-ba {
+        font-size:9pt;
+        position: absolute;
+        width: 150px;
+        text-align: center;
+        margin:103px 0px 0px 570px;
     }
 </style>
 
@@ -68,4 +91,7 @@
 <%--div for lables--%>
 <div class="lable-adr"><s:label value="%{getText('data.approve')}/DR"/></div>
 <div class="lable-child-birth"><s:label value="%{getText('lb.birth.child')}"/></div>
+<div class="receive-birth-cetificate"><s:label value="%{getText('receive.birth.cetificate.lable')}"/></div>
+<div class="receive-new-birth-cetificate"><s:label value="%{getText('receive.new.birth.cetificate.lable')}"/></div>
+<div class="request-ba"><s:label value="%{getText('request.ba.lable')}"/></div>
 <div class="bg1"></div>

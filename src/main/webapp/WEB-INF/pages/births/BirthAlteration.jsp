@@ -294,7 +294,7 @@ function validate() {
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'comError3');
     else
-        validateSerialNo(domObject, "comError1", 'comError2');
+        //validateSerialNo(domObject, "comError1", 'comError2');
     domObject = document.getElementById('acceptanceDate');
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'childError3')
@@ -433,6 +433,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         }
         if (text != 1) {
             alert(document.getElementById("comError5").value);
+            errormsg = "";
             return false;
         }
         if (errormsg != "") {
@@ -495,7 +496,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
             <table class="search-option-table">
                 <tr>
-                    <td width="200px"><s:label value="%{getText('sectionOfTheAct.lable')}"/></td>
+                    <td width="135px"><s:label value="%{getText('sectionOfTheAct.lable')}"/></td>
                     <td width="200px"><s:select
                             list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
                             name="sectionOfAct" cssStyle="width:230px;"/></td>
@@ -509,7 +510,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </legend>
             <table class="search-option-table">
                 <tr>
-                    <td width="200px"><s:label name="confirmationSearch"
+                    <td width="135px"><s:label name="confirmationSearch"
                                                value="%{getText('certificateNumber.lable')}"/></td>
                     <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
                                                    onkeypress="return isNumberKey(event)"/></td>
@@ -523,7 +524,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </legend>
             <table class="search-option-table">
                 <tr>
-                    <td width="200px"><s:label name="confirmationSearch"
+                    <td width="135px"><s:label name="confirmationSearch"
                                                value="%{getText('idNumber.lable')}"/></td>
                     <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
 
