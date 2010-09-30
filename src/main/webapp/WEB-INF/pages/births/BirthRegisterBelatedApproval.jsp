@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -198,7 +199,11 @@
             <tr>
                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
-                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(34)}"/></td>
+                <td>
+                    <s:if test="child.childFullNameOfficialLang != null">
+                        <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 50)%>
+                    </s:if>
+                </td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
                     <s:if test="register.birthType.ordinal() != 0">

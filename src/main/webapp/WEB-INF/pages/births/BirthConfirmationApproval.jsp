@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -218,7 +219,12 @@
                     </td>
                     <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                     <td><s:property value="idUKey"/></td>
-                    <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                    <td>
+                        <s:if test="child.childFullNameOfficialLang != null">
+                            <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 40)%>
+                        </s:if>
+                        <%--<s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/>--%>
+                    </td>
                     <td><s:property value="confirmant.confirmationProcessedTimestamp"/></td>
                     <td align="center">
                         <s:if test="#request.allowEditBDF">
@@ -284,9 +290,10 @@
                     <s:label><s:checkbox
                             name="allCheck"
                             onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
-                                <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
+                        <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <s:label><span><s:label name="print_selected" value="%{getText('selected_all.label')}"/></span></s:label>
+                    <s:label><span><s:label name="print_selected"
+                                            value="%{getText('selected_all.label')}"/></span></s:label>
                     <s:hidden name="confirmationApprovalFlag" value="true"/>
                     <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                     <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>

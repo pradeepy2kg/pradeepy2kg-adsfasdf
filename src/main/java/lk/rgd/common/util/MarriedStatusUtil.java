@@ -18,21 +18,21 @@ public class MarriedStatusUtil {
                 case 0: return "නොදනී";
                 case 1: return "විවාහකයි";
                 case 2: return "අවිවාහකයි";
-                case 3: return "පසු විවාහයකි";
+                case 3: return "නැත, නමුත් පසුව විවාහවී ඇත";
             }
         } else if (AppConstants.TAMIL.equals(language)) {
             switch (code) {
                 case 0: return "Unknown in Tamil";
                 case 1: return "Married in Tamil";
                 case 2: return "Unmarried in Tamil";
-                case 3: return "Married Later in Tamil";
+                case 3: return "No, but since married Tamil";
             }
         } else if (AppConstants.ENGLISH.equals(language)) {
             switch (code) {
                 case 0: return "Unknown";
                 case 1: return "Married";
                 case 2: return "Unmarried";
-                case 3: return "Married Later";
+                case 3: return "No, but since married";
             }
         } else {
             logger.error("Invalid language : {}", language);

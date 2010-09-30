@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%--@author Chathuranga Withana--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -58,7 +59,8 @@
         })
     });
 
-    function initPage(){}
+    function initPage() {
+    }
 
 </script>
 <script type="text/javascript" src="<s:url value="/js/selectAll.js"/>"></script>
@@ -131,7 +133,7 @@
                         <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
                         <th width="90px"><s:label name="registered_date"
-                                                   value="%{getText('registered_date.label')}"/></th>
+                                                  value="%{getText('registered_date.label')}"/></th>
                         <th width="40px"><s:label name="live" value="%{getText('live.label')}"/></th>
                         <th width="20px"></th>
                     </tr>
@@ -146,7 +148,11 @@
                                             fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
                             <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
-                            <td><s:property value="child.getChildFullNameOfficialLangToLength(60)"/></td>
+                            <td>
+                                <s:if test="child.childFullNameOfficialLang != null">
+                                    <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 65)%>
+                                </s:if>
+                            </td>
                             <td align="center"><s:property value="register.dateOfRegistration"/></td>
                             <td align="center">
                                 <s:if test="register.birthType.ordinal() != 0">

@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <style type="text/css" title="currentStyle">
     @import "../lib/datatables/media/css/demo_page.css";
     @import "../lib/datatables/media/css/demo_table.css";
@@ -152,7 +153,7 @@
         // validate serial number
         domObject = document.getElementById('bdfSerialNoId');
         if (!isFieldEmpty(domObject))
-            validateSerialNo(domObject,'error1', 'error2');
+            validateSerialNo(domObject, 'error1', 'error2');
 
         // validate start and end date
         domObject = document.getElementById('searchStartDatePicker');
@@ -209,7 +210,8 @@
             </td>
             <td></td>
             <td><s:label value="%{getText('serial.label')}"/></td>
-            <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;" id="bdfSerialNoId" maxLength="10"/></td>
+            <td><s:textfield value="" name="bdfSerialNo" cssStyle="width:232px;" id="bdfSerialNoId"
+                             maxLength="10"/></td>
         </tr>
         <tr>
             <td align="left">
@@ -274,15 +276,19 @@
                     <%--<td><s:property value="%{#approvalStatus.count + recordCounter}"/></td>--%>
                 <td>
                     <s:if test="register.birthType.ordinal() != 3">
-                    <s:checkbox name="index"
-                                onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
-                                title="%{getText('select.label')}" value="%{#index}"
-                                fieldValue="%{#approvalList.idUKey}"/>
+                        <s:checkbox name="index"
+                                    onclick="javascript:selectall(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"
+                                    title="%{getText('select.label')}" value="%{#index}"
+                                    fieldValue="%{#approvalList.idUKey}"/>
                     </s:if>
                 </td>
                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                 <td><s:property value="register.bdfSerialNo"/></td>
-                <td><s:property value="%{child.getChildFullNameOfficialLangToLength(30)}"/></td>
+                <td>
+                    <s:if test="child.childFullNameOfficialLang != null">
+                        <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 40)%>
+                    </s:if>
+                </td>
                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                 <td align="center">
                     <s:if test="register.birthType.ordinal() != 0">
@@ -314,8 +320,9 @@
                     </s:url>
                     <td align="center">
                         <s:if test="register.birthType.ordinal() != 3">
-                        <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
-                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25" border="none"/></s:a>
+                            <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                     border="none"/></s:a>
                         </s:if>
                     </td>
                 </s:if>
@@ -333,9 +340,9 @@
                     </s:url>
                     <td align="center">
                         <s:if test="register.birthType.ordinal() != 3">
-                        <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
-                            <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
-                        </s:a>
+                            <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
+                                <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
+                            </s:a>
                         </s:if>
                     </td>
                 </s:if>
@@ -368,10 +375,11 @@
         <div class="form-submit">
             <s:if test="#request.counter>1">
                 <s:label><s:checkbox name="allCheck"
-                        onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
+                                     onclick="javascript:selectallMe(document.birth_register_approval_body,document.birth_register_approval_body.allCheck)"/>
                     <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                    <s:label><span><s:label name="print_selected" value="%{getText('selected_all.label')}"/></span></s:label>
+                <s:label><span><s:label name="print_selected"
+                                        value="%{getText('selected_all.label')}"/></span></s:label>
                 <s:hidden name="nextFlag" value="%{#request.nextFlag}"/>
                 <s:hidden name="previousFlag" value="%{#request.previousFlag}"/>
                 <s:hidden name="pageNo" value="%{#request.pageNo}"/>
