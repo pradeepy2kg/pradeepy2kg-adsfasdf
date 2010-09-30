@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%--@author Chathuranga Withana
 @author  amith jayasekara
 --%>
@@ -143,7 +144,11 @@
                                                 onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
                                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                                 <td align="center"><s:property value="register.bdfSerialNo"/></td>
-                                <td><s:property value="child.getChildFullNameOfficialLangToLength(50)"/></td>
+                                <td>
+                                    <s:if test="child.childFullNameOfficialLang != null">
+                                        <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 65)%>
+                                    </s:if>
+                                </td>
                                 <td align="center"><s:property value="register.dateOfRegistration"/></td>
                                 <td align="center">
                                     <s:url id="cetificatePrintUrl" action="eprBirthConfirmationPrintPage.do">

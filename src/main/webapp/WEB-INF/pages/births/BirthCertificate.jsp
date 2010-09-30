@@ -1,6 +1,7 @@
 <%-- @author Duminda Dharmakeerthi. --%>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="lk.rgd.common.util.MarriedStatusUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
@@ -119,8 +120,8 @@
     <col width="185px">
     <col width="230px">
     <col width="180px">
-    <col width="235px">
-    <col width="200px">
+    <col width="220px">
+    <col width="215px">
     <tbody>
     <tr height="80px">
         <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
@@ -177,8 +178,8 @@
     <col width="230px">
     <col width="155px">
     <col width="130px">
-    <col width="130px">
-    <col width="100px">
+    <col width="115px">
+    <col width="115px">
     <col width="100px">
     <tbody>
     <s:if test="birthType.ordinal() != 0">
@@ -227,8 +228,10 @@
         </td>
         <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
         </td>
-        <td colspan="2"><s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
-            <s:label name="" value="%{marriedStatusEn}"/></td>
+        <td colspan="2">
+            <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
+            <s:label name="" value="%{marriedStatusEn}"/>
+        </td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
         <tr height="150px">
@@ -324,7 +327,9 @@
     <tr>
         <td colspan="2" height="70px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
-        <td colspan="2"><s:label value="%{#request.register.originalBCPlaceOfIssuePrint}" cssStyle="font-size:11pt;"/></td>
+        <td colspan="2">
+            <s:label value="%{#request.register.originalBCPlaceOfIssuePrint}" cssStyle="font-size:11pt;"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -356,12 +361,14 @@
         <td rowspan="8" width="200px"></td>
     </tr>
     <tr>
-        <td><s:textarea name="informant.informantName" cssStyle="width:600px;font-size:12pt;" cssClass="disable"
-                        disabled="true"/></td>
+        <td>
+            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/>
+        </td>
     </tr>
     <tr>
-        <td><s:textarea name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;" cssClass="disable"
-                        disabled="true"/></td>
+        <td>
+            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2"><p></p></td>
