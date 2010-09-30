@@ -3,6 +3,7 @@ package lk.rgd.prs.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.api.Auditable;
+import lk.rgd.common.core.index.SolrIndexManager;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.prs.PRSRuntimeException;
@@ -17,8 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This is the main service interface for the PRS
@@ -33,10 +36,13 @@ public class PopulationRegistryImpl implements PopulationRegistry {
 
     private final PersonDAO personDao;
     private final PINGenerator pinGenerator;
+    private final SolrIndexManager solrIndexManager;
+    private final Random rand = new Random(System.currentTimeMillis());
 
-    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator) {
+    public PopulationRegistryImpl(PersonDAO personDao, PINGenerator pinGenerator, SolrIndexManager solrIndexManager) {
         this.personDao = personDao;
         this.pinGenerator = pinGenerator;
+        this.solrIndexManager = solrIndexManager;
     }
 
     /**
@@ -51,10 +57,20 @@ public class PopulationRegistryImpl implements PopulationRegistry {
             if (person.getStatus() == Person.Status.VERIFIED) {
                 pin = pinGenerator.generatePINNumber(person.getDateOfBirth(), person.getGender() == 0);
                 person.setPin(pin);
-            } else if (person.getDateOfBirth() != null) {
-                pin = pinGenerator.generateTemporaryPINNumber(person.getDateOfBirth(), person.getGender() == 0);
-                person.setPin(pin);
-                person.setTemporaryPin(pin);
+            } else if (person.getStatus() == Person.Status.SEMI_VERIFIED) {
+                // adds a semi-verified record
+            } else if (person.getStatus() == Person.Status.UNVERIFIED) {
+                // generate a temporary PIN number depending on the DOB or a random DOB
+                if (person.getDateOfBirth() != null) {
+                    pin = pinGenerator.generateTemporaryPINNumber(person.getDateOfBirth(), person.getGender() == 0);
+                    person.setPin(pin);
+                    person.setTemporaryPin(pin);
+                } else {
+                    // generate random DOB - but do not save it, just use it to generate a random PIN
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, 2800 + rand.nextInt(100));   // 2800 ~ 2899 which is the temporary range for unknown DOB
+                    cal.set(Calendar.DAY_OF_YEAR, rand.nextInt(364) + 1);
+                }
             }
             personDao.addPerson(person);
         } else {

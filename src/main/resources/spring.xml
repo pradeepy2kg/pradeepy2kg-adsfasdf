@@ -208,6 +208,7 @@
             <bean class="lk.rgd.prs.core.service.PopulationRegistryImpl">
                 <constructor-arg ref="personDAOImpl"/>
                 <constructor-arg ref="pinGeneratorService"/>
+                <constructor-arg ref="solrIndexManager"/>
             </bean>
         </property>
         <property name="interceptorNames">

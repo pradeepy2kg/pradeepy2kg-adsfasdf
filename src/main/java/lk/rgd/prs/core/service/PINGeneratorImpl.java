@@ -31,7 +31,7 @@ public class PINGeneratorImpl implements PINGenerator {
     public int generateTemporaryPINNumber(Date dob, boolean male) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dob);
-        cal.add(Calendar.YEAR, 700);
+        cal.add(Calendar.YEAR, 600);
         return generatePINNumber(cal.getTime(), male);
     }
 
