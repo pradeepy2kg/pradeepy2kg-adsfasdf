@@ -156,7 +156,7 @@
         <property name="target">
             <bean class="lk.rgd.crs.core.service.BirthAlterationServiceImpl">
                 <constructor-arg ref="birthAlterationDAOImpl"/>
-                <constructor-arg ref="manageBirthService"/>
+                <constructor-arg ref="birthDeclarationDAOImpl"/>
             </bean>
         </property>
         <property name="interceptorNames">
