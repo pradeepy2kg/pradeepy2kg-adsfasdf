@@ -16,7 +16,7 @@
         position: absolute;
         width: 135px;
         height: 39px;
-        margin: 148px 0px 0px 495px;
+        margin: 140px 0px 0px 495px;
     }
 
     .link-approval {
@@ -26,7 +26,7 @@
         position: absolute;
         width: 137px;
         height: 39px;
-        margin: 215px 0px 0px 493px;
+        margin: 207px 0px 0px 493px;
     }
 
     .link-print {
@@ -36,7 +36,7 @@
         position: absolute;
         width: 144px;
         height: 43px;
-        margin: 326px 0px 0px 490px;
+        margin: 293px 0px 0px 490px;
     }
 
     .lable-adr {
@@ -44,7 +44,7 @@
         position: absolute;
         width: 102px;
         text-align: center;
-        margin: 270px 0px 0px 660px;
+        margin: 253px 0px 0px 616px;
     }
 
     .lable-child-birth {
@@ -52,28 +52,28 @@
         position: absolute;
         width: 300px;
         text-align: center;
-        margin: 105px 0px 0px 130px;
+        margin: 109px 0px 0px 76px;
     }
     .receive-birth-cetificate {
         font-size:9pt;
         position: absolute;
         width: 300px;
         text-align: center;
-        margin: 50px 0px 0px 280px;
+        margin: 50px 0px 0px 250px;
     }
     .receive-new-birth-cetificate {
         font-size:9pt;
         position: absolute;
         width: 100px;
         text-align: center;
-        margin:355px 0px 0px 200px;
+        margin:320px 0px 0px 180px;
     }
     .request-ba {
         font-size:9pt;
         position: absolute;
         width: 150px;
         text-align: center;
-        margin:103px 0px 0px 570px;
+        margin:90px 0px 0px 562px;
     }
 </style>
 
