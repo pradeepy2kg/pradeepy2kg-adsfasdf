@@ -519,7 +519,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
             compareAndAdd(Alteration52_1.MOTHER_PASSPORT, parent.getMotherPassportNo(), mother.getMotherPassportNo());
             //if mother race is not null in both bdf and ba
-            /* if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
+             if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
                 compareAndAdd(Alteration52_1.MOTHER_RACE, raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
                         raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
             }
@@ -528,7 +528,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             }
             if (mother.getMotherRace() != null && parent.getMotherRace() == null) {
                 compareAndAdd(Alteration52_1.MOTHER_RACE, "", raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
-            }*/
+            }
             compareAndAdd(Alteration52_1.MOTHER_AGE_AT_BIRTH, parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
             compareAndAdd(Alteration52_1.MOTHER_ADDRESS, parent.getMotherAddress(), mother.getMotherAddress());
         }
