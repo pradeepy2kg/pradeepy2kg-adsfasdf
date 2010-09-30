@@ -68,6 +68,7 @@
     <bean id="birthAlterationDAOImpl" class="lk.rgd.crs.core.dao.BirthAlterationDAOImpl"/>
     <bean id="locationDAOImpl" class="lk.rgd.common.core.dao.LocationDAOImpl"/>
     <bean id="userLocationDAOImpl" class="lk.rgd.common.core.dao.UserLocationDAOImpl"/>
+    <bean id="deathAlterationDAOImpl" class="lk.rgd.crs.core.dao.DeathAlterationDAOImpl"/>
 
     <!--Utility singletons-->
     <bean id="birthDeclarationValidator" class="lk.rgd.crs.core.service.BirthDeclarationValidator">
@@ -157,6 +158,20 @@
             <bean class="lk.rgd.crs.core.service.BirthAlterationServiceImpl">
                 <constructor-arg ref="birthAlterationDAOImpl"/>
                 <constructor-arg ref="birthDeclarationDAOImpl"/>
+            </bean>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>serviceAuditor</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="deathAlterationService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="lk.rgd.crs.core.service.DeathAlterationServiceImpl">
+                <constructor-arg ref="deathAlterationDAOImpl"/>
+                <constructor-arg ref="deathRegisterService"/>
             </bean>
         </property>
         <property name="interceptorNames">
@@ -325,5 +340,10 @@
         <constructor-arg ref="dsDivisionDAOImpl"/>
         <constructor-arg ref="registrarManagmentService"/>
         <constructor-arg ref="mrDivisionDAOImpl"/>
+    </bean>
+
+    <bean id="deathAlterationAction" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction">
+        <constructor-arg ref="deathAlterationService"/>
+        <constructor-arg ref="deathRegisterService"/>
     </bean>
 </beans>

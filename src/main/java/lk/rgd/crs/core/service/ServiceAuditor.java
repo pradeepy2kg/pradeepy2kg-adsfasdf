@@ -49,7 +49,8 @@ public class ServiceAuditor implements MethodInterceptor {
         xstream.alias("birthDeclatation", BirthDeclaration.class);
         xstream.alias("deathRegister", DeathRegister.class);
         xstream.alias("registrar", Registrar.class);
-        xstream.alias("birthAlteration",BirthAlteration.class);
+        xstream.alias("birthAlteration", BirthAlteration.class);
+        xstream.alias("deathAlteration", DeathAlteration.class);
 
         // the service classes that need to be audited
         serviceClasses = new HashMap<Class, Class>();
@@ -58,7 +59,8 @@ public class ServiceAuditor implements MethodInterceptor {
         serviceClasses.put(AdoptionOrderService.class, AdoptionOrderServiceImpl.class);
         serviceClasses.put(MasterDataManagementService.class, MasterDataManagementServiceImpl.class);
         serviceClasses.put(PopulationRegistry.class, PopulationRegistryImpl.class);
-        serviceClasses.put(BirthAlterationService.class,BirthAlterationServiceImpl.class);
+        serviceClasses.put(BirthAlterationService.class, BirthAlterationServiceImpl.class);
+        serviceClasses.put(DeathAlterationService.class, DeathAlterationServiceImpl.class);
 
         // the domain objects to be debug audited
         debugClasses = new ArrayList<Class>();
@@ -69,11 +71,13 @@ public class ServiceAuditor implements MethodInterceptor {
         debugClasses.add(Registrar.class);
         debugClasses.add(CertificateSearch.class);
         debugClasses.add(BirthAlteration.class);
+        debugClasses.add(DeathAlteration.class);
     }
 
     /**
      * Intercepts the service level method call and captures debug information and saves error information
      * into the Event table within a new and separate transaction
+     *
      * @param methodInvocation not applicable for documentation
      * @return not applicable for documentation
      * @throws Throwable not applicable for documentation
@@ -90,16 +94,16 @@ public class ServiceAuditor implements MethodInterceptor {
         // Do we need to audit this call? If this a transactional service call we should
         if (serviceClass != null) {
             Transactional transactional = serviceClass.getMethod(
-                method.getName(), method.getParameterTypes()).getAnnotation(Transactional.class);
+                    method.getName(), method.getParameterTypes()).getAnnotation(Transactional.class);
 
             auditInvocation = (transactional != null && (
-                transactional.propagation().equals(Propagation.REQUIRED) ||
-                transactional.propagation().equals(Propagation.REQUIRES_NEW)));
+                    transactional.propagation().equals(Propagation.REQUIRED) ||
+                            transactional.propagation().equals(Propagation.REQUIRES_NEW)));
 
             // if not a transactional method, capture those marked auditable
             if (!auditInvocation) {
                 auditInvocation = serviceClass.getMethod(
-                    method.getName(), method.getParameterTypes()).getAnnotation(Auditable.class) != null;
+                        method.getName(), method.getParameterTypes()).getAnnotation(Auditable.class) != null;
             }
         }
 
@@ -121,7 +125,7 @@ public class ServiceAuditor implements MethodInterceptor {
         // execute the invoked method
         try {
             return methodInvocation.proceed();
-            
+
         } catch (Exception e) {
 
             // if we didn't plan to audit this call, but encountered an error, still we need to log an event
@@ -166,9 +170,10 @@ public class ServiceAuditor implements MethodInterceptor {
 
     /**
      * Process method parameters and extract User and set debug information into the passed event object
+     *
      * @param methodInvocation the method invocation
-     * @param debugInvocation true if method parameter debugging is required
-     * @param event the event to capture information into
+     * @param debugInvocation  true if method parameter debugging is required
+     * @param event            the event to capture information into
      */
     private void processMethodParameters(MethodInvocation methodInvocation, boolean debugInvocation, Event event) {
 
@@ -186,7 +191,7 @@ public class ServiceAuditor implements MethodInterceptor {
                 event.setUser((User) arg);
 
             } else if (debugInvocation && arg != null && debugClasses.contains(arg.getClass())) {
-                
+
                 // this is a class we are interested to debug
                 if (debugData == null) {
                     debugData = new StringBuilder(1024 * 10);
@@ -229,8 +234,8 @@ public class ServiceAuditor implements MethodInterceptor {
             event.setRecordId(((Registrar) obj).getRegistrarUKey());
         } else if (obj instanceof CertificateSearch) {
             event.setRecordId(((CertificateSearch) obj).getIdUKey());
-        } else if(obj instanceof BirthAlteration){
-            event.setRecordId(((BirthAlteration)obj).getIdUKey());
+        } else if (obj instanceof BirthAlteration) {
+            event.setRecordId(((BirthAlteration) obj).getIdUKey());
         }
     }
 }

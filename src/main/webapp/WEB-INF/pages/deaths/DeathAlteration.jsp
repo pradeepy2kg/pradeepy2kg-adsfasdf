@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div id="death-alteration-outer">
+<s:form method="post" action="eprCaptureDeathAlteration.do">
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
     <tr>
         <td width="30%"></td>
@@ -19,7 +20,7 @@
                         <s:label value=" Serial Number"/>
                     </td>
                     <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
-                                                 onkeypress="return isNumberKey(event)"/></td>
+                                                 /></td>
                 </tr>
                 <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>
@@ -89,12 +90,16 @@
             தனிநபர்அடையாள எண் <br>
             Person Identification Number (PIN) stated in the Certificate
         </td>
-        <td><s:label name="nicOrPin"/></td>
+        <td>
+             <s:property value="deathRegister.deathPerson.deathPersonPINorNIC"/>
+        </td>
         <td>සහතික පත්‍රයේ අංකය <br>
             சான்றிதழ் இல <br>
             Certificate Number
         </td>
-        <td><s:label name="idUKey"/></td>
+        <td>
+        <s:property value="deathRegister.idUKey"/>
+        </td>
     </tr>
     <tr>
         <td>දිස්ත්‍රික්කය <br>
@@ -554,4 +559,9 @@
     </tr>
     </tbody>
 </table>
+<div class="form-submit">
+    <s:submit value="%{getText('save.label')}"/>
+</div>
+<s:hidden name="pageNumber" value="1"/>
+</s:form>
 </div>

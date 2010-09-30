@@ -5,6 +5,7 @@
     #adoption-certificate-form-outer table tr td {
         padding: 0 5px;
     }
+
     @media print {
         .form-submit {
             display: none;
@@ -19,7 +20,7 @@
         margin: 5px 0 15px 0;
     }
 </style>
-<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="tex/javascript" src="<s:url value="/js/print.js"/>"></script>
 <s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do">
     <s:param name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -34,15 +35,25 @@
     <s:param name="pageNo" value="%{#request.pageNo}"/>
 </s:url>
 <div id="adoption-certificate-form-outer">
-<div class="form-submit">
-    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-</div>
 
-<div id="adoption-page" class="form-submit" style="margin:14px 0 0 10px; ">
+<%--<div class="form-submit" style="margin:15px 0 0 10px;>
+ <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+</div>--%>
+
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
-<table style="width: 100%; border:none; border-collapse:collapse; ">
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+</div>
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="#"><s:label value="%{getText('print.button')}" onclick="printPage()"/></s:a>
+</div>
+
+<table style=" width:
+100%; border:none; border-collapse:collapse; ">
     <col width="200px">
     <col width="400px">
     <col width="200px">
@@ -71,7 +82,7 @@
     </tbody>
 </table>
 
-<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <col width="150px">
     <col width="160px">
     <col width="100px">
@@ -94,7 +105,7 @@
         </td>
     </tr>
     <tr>
-        
+
         <td width="150px">
             නියෝග දිනය <br>
             in tamil <br>
@@ -194,7 +205,7 @@
     </tbody>
 </table>
 
-<table border="1"  width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
+<table border="1" width="100%" style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <col width="250px">
     <col width="215px">
     <col width="120px">
