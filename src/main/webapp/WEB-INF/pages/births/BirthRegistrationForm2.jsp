@@ -252,6 +252,24 @@ function commonTags() {
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'error2', 'error4');
 
+    // validate father passport number
+    domObject = document.getElementById('fatherPassportNo');
+    if (!isFieldEmpty(domObject)) {
+        if (validatePassportNo(domObject, 'error2', 'error12')) {
+            domObject = document.getElementById('fatherCountryId');
+            if (domObject.value == 0) {
+                errormsg = errormsg + "\n" + document.getElementById('error16').value;
+            }
+        }
+    }
+    domObject = document.getElementById('fatherCountryId');
+    if (domObject.value != 0) {
+        domObject = document.getElementById('fatherPassportNo');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, '', 'error14');
+        }
+    }
+
     // validate father date of birth
     domObject = document.getElementById('fatherDatePicker');
     if (!isFieldEmpty(domObject))
@@ -261,6 +279,24 @@ function commonTags() {
     domObject = document.getElementById('mother_pinOrNic');
     if (!isFieldEmpty(domObject))
         validatePINorNIC(domObject, 'error2', 'error5');
+
+    // validate mother passport number
+    domObject = document.getElementById('motherPassportNo');
+    if (!isFieldEmpty(domObject)) {
+        if (validatePassportNo(domObject, 'error2', 'error13')) {
+            domObject = document.getElementById('motherCountryId');
+            if (domObject.value == 0) {
+                errormsg = errormsg + "\n" + document.getElementById('error17').value;
+            }
+        }
+    }
+    domObject = document.getElementById('motherCountryId');
+    if (domObject.value != 0) {
+        domObject = document.getElementById('motherPassportNo');
+        if (isFieldEmpty(domObject)) {
+            isEmpty(domObject, '', 'error15');
+        }
+    }
 
     // validate mother date of birth
     domObject = document.getElementById('motherDatePicker');
@@ -326,13 +362,14 @@ function commonTags() {
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு<br>Country</label></td>
-        <td colspan="2"><s:select name="fatherCountry" list="countryList" headerKey="0"
-                                  headerValue="%{getText('select_country.label')}" cssStyle="width:97%;"/>
+        <td colspan="2">
+            <s:select id="fatherCountryId" name="fatherCountry" list="countryList" headerKey="0"
+                      headerValue="%{getText('select_country.label')}" cssStyle="width:97%;"/>
         </td>
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
-        <td class="passport"><s:textfield name="parent.fatherPassportNo"/></td>
+        <td class="passport"><s:textfield name="parent.fatherPassportNo" id="fatherPassportNo" maxLength="15"/></td>
     </tr>
     </tbody>
 </table>
@@ -414,12 +451,13 @@ function commonTags() {
         <td colspan="2" rowspan="2" width="120px"><label>විදේශිකය‍කු නම්<br>வெளிநாட்டவர் எனின் <br>If foreigner</label>
         </td>
         <td colspan="2"><label>රට<br>நாடு <br>Country</label></td>
-        <td colspan="2"><s:select name="motherCountry" list="countryList" headerKey="0"
+        <td colspan="2"><s:select id="motherCountryId" name="motherCountry" list="countryList" headerKey="0"
                                   headerValue="%{getText('select_country.label')}"/></td>
     </tr>
     <tr>
         <td colspan="2"><label>ගමන් බලපත්‍ර අංකය <br>கடவுச் சீட்டு இல.<br>Passport No.</label></td>
-        <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo"/></td>
+        <td colspan="2" class="passport"><s:textfield name="parent.motherPassportNo" id="motherPassportNo"
+                                                      maxLength="15"/></td>
     </tr>
     </tbody>
 </table>
@@ -498,7 +536,8 @@ function commonTags() {
     </tr>
     <tr>
         <td width="200px" style="border-top:none;"></td>
-        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரதேச செயளாளா் பிரிவு/Divisional Secretariat</label></td>
+        <td colspan="2"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /<br>பிரதேச செயளாளா் பிரிவு/<br>Divisional Secretariat</label>
+        </td>
         <td colspan="6" class="table_reg_cell_02">
             <s:if test="#parent.motherDSDivision.dsDivisionUKey > 0">
                 <s:select id="motherDSDivisionId" name="motherDSDivisionId" list="allDSDivisionList"
@@ -592,6 +631,12 @@ function commonTags() {
 <s:hidden id="error9" value="%{getText('NIC.error.add.VX')}"/>
 <s:hidden id="error10" value="%{getText('p2.NIC.error.format.father')}"/>
 <s:hidden id="error11" value="%{getText('p2.NIC.error.format.mother')}"/>
+<s:hidden id="error12" value="%{getText('fatherPassportNo.label')}"/>
+<s:hidden id="error13" value="%{getText('motherPassportNo.label')}"/>
+<s:hidden id="error14" value="%{getText('enter.fatherPassportNo.label')}"/>
+<s:hidden id="error15" value="%{getText('enter.motherPassportNo.label')}"/>
+<s:hidden id="error16" value="%{getText('enter.fatherCountry.label')}"/>
+<s:hidden id="error17" value="%{getText('enter.motherCountry.label')}"/>
 
 
 </div>
