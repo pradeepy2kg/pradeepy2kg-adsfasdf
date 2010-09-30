@@ -7,9 +7,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Locale;
 
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.api.service.DeathAlterationService;
+import lk.rgd.crs.api.service.DeathRegistrationService;
+import lk.rgd.crs.api.domain.DeathAlteration;
+import lk.rgd.crs.api.domain.DeathRegister;
 
 
 /**
@@ -20,6 +25,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private static final Logger logger = LoggerFactory.getLogger(DeathAlterationAction.class);
 
     private User user;
+    private DeathAlterationService deathAlterationService;
+    private DeathRegistrationService deathRegistrationService;
+    private DeathAlteration deathAlteration;
+    private DeathRegister deathRegister;
 
     private Map session;
     private Map<Integer, String> districtList;
@@ -28,6 +37,17 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     private int dsDivisionId;
     private int birthDivisionId;
+    private int pageNumber; //use to track alteration capture page load and add or edit
+
+    private long certificateNumber;
+    private long serialNumber;
+
+    private String language;
+
+    public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService) {
+        this.deathAlterationService = deathAlterationService;
+        this.deathRegistrationService = deathRegistrationService;
+    }
 
     /**
      * loading death alteration searching page
@@ -45,8 +65,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * @return success of alteration scuccess
      */
     public String captureDeathAlterations() {
-        return SUCCESS;
+        deathRegister = deathRegistrationService.getById(certificateNumber, user);
+        if (pageNumber > 0) {
+            deathAlterationService.addDeathAlteration(deathAlteration, user);
+            return SUCCESS;
+        }
+        return "pageload";
     }
+
 
     private void populatePrimaryLists() {
         //todo get original values
@@ -59,6 +85,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.session = map;
         user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         logger.debug("setting User: {}", user.getUserName());
+        language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
     }
 
     public Map getSession() {
@@ -103,5 +130,77 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setBirthDivisionId(int birthDivisionId) {
         this.birthDivisionId = birthDivisionId;
+    }
+
+    public DeathAlterationService getDeathAlterationService() {
+        return deathAlterationService;
+    }
+
+    public void setDeathAlterationService(DeathAlterationService deathAlterationService) {
+        this.deathAlterationService = deathAlterationService;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public DeathAlteration getDeathAlteration() {
+        return deathAlteration;
+    }
+
+    public void setDeathAlteration(DeathAlteration deathAlteration) {
+        this.deathAlteration = deathAlteration;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public long getCertificateNumber() {
+        return certificateNumber;
+    }
+
+    public void setCertificateNumber(long certificateNumber) {
+        this.certificateNumber = certificateNumber;
+    }
+
+    public long getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(long serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public DeathRegistrationService getDeathRegistrationService() {
+        return deathRegistrationService;
+    }
+
+    public void setDeathRegistrationService(DeathRegistrationService deathRegistrationService) {
+        this.deathRegistrationService = deathRegistrationService;
+    }
+
+    public DeathRegister getDeathRegister() {
+        return deathRegister;
+    }
+
+    public void setDeathRegister(DeathRegister deathRegister) {
+        this.deathRegister = deathRegister;
     }
 }

@@ -983,7 +983,13 @@
 
         <action name="eprCaptureDeathAlteration" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="captureDeathAlterations">
-            <result type="tiles" name="success">epr.deathAlterationCapture</result>
+            <result type="tiles" name="pageload">epr.deathAlterationCapture</result>
+            <result type="redirectAction" name="success">
+                <param name="actionName">
+                    eprDeathAlterationSearchHome
+                </param>
+            </result>
         </action>
+
     </package>
 </struts>

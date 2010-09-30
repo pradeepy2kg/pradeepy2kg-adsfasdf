@@ -29,7 +29,8 @@ import java.util.BitSet;
 
 })
 
-public class BirthAlteration {
+public class 
+        BirthAlteration {
 
 
     public enum State {

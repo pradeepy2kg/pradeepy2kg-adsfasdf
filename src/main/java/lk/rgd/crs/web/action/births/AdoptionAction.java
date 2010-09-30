@@ -95,7 +95,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderEn;
     private String genderSi;
     private String language;
-
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
                           BirthRegistrationService birthRegistrationService, CourtDAO courtDAO) {
@@ -158,7 +157,13 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                     return "invalidBirthCertificateNumber";
                 }
             }
-            service.addAdoptionOrder(adoption, user);
+            try {
+                service.addAdoptionOrder(adoption, user);
+            } catch (CRSRuntimeException e) {
+                addActionError("er.court.order.number.not.unique");
+                logger.error("error with adding adoption order :: court order number :{}", adoption.getCourtOrderNumber());
+                return "invalidBirthCertificateNumber";
+            }
             logger.debug("added an adoption successfully with idUKey : {}", adoption.getIdUKey());
             setIdUKey(adoption.getIdUKey());
             setAllowApproveAdoption(user.isAuthorized(Permission.APPROVE_ADOPTION));
@@ -334,22 +339,24 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             return ERROR;
         } else {
             logger.debug("Current state of adoption certificate : {}", adoption.getStatus());
-            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(),
-                    ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage());
+            String certificatePrifLang = adoption.getLanguageToTransliterate();
+            courtName = courtDAO.getNameByPK(adoption.getCourt().getCourtUKey(), certificatePrifLang);
             birthDivisionId = adoption.getBirthDivisionId();
             genderEn = GenderUtil.getGender(adoption.getChildGender(), AppConstants.ENGLISH);
             genderSi = GenderUtil.getGender(adoption.getChildGender(), AppConstants.SINHALA);
             //place of issue in prefered language
             User issuedUser = adoption.getLifeCycleInfo().getApprovalOrRejectUser();
+
             //certifacate preferd language
             String lang = adoption.getLanguageToTransliterate();
             placeOfIssue = dsDivisionDAO.getNameByPK(issuedUser.getPrefBDDSDivision().getDsDivisionUKey(), lang);
+
+
             BirthDeclaration bdf = null;
             if (adoption.getBirthCertificateNumber() > 0) {
                 bdf = birthRegistrationService.getByIdForAdoptionLookup(adoption.getBirthCertificateNumber(), user);
             }
-            // todo remove
-            //  String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+
             if (bdf != null) {
                 birthDistrictId = bdf.getRegister().getBirthDistrict().getDistrictUKey();
                 birthDivisionId = bdf.getRegister().getBirthDivision().getBdDivisionUKey();

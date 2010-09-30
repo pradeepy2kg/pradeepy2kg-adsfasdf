@@ -54,7 +54,7 @@
                     <s:label value="%{getText('label.certificate.number')}"/>
                 </td>
                 <td align="left">
-                    <s:textfield name="#" id="certificateNumber"/>
+                    <s:textfield name="certificateNumber" id="certificateNumber"/>
                 </td>
             </tr>
             </tbody>
@@ -126,7 +126,7 @@
                     <s:label value="%{getText('label.serialNumber')}"/>
                 </td>
                 <td>
-                    <s:textfield name="#" id="serialNumber" maxLength="10"/>
+                    <s:textfield name="serialNumber" id="serialNumber" maxLength="10"/>
                 </td>
             </tr>
         </table>

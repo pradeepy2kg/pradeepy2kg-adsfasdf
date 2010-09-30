@@ -196,6 +196,7 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
             BDDivision bdDivision = ba.getAlt52_1().getBirthDivision();
             validateAccessToBDDivision(user, bdDivision);
         } else {
+            //todo check this getting by idUKey is needed
             BirthDeclaration bdf = birthDeclarationDAO.getById(ba.getBdId());
             validateAccessToBDDivision(user, bdf.getRegister().getBirthDivision());
         }

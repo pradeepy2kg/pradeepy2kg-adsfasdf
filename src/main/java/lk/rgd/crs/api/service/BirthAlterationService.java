@@ -24,7 +24,7 @@ public interface BirthAlterationService {
     /**
      * Update a given birth alteration
      *
-     * @param ba   the birth alteration to be added
+     * @param ba   the birth alteration to be update
      * @param user the user initiating the action
      */
     public void updateBirthAlteration(BirthAlteration ba, User user);
