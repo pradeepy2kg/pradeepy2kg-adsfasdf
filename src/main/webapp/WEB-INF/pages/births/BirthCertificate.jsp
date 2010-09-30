@@ -231,14 +231,14 @@
             <s:label name="" value="%{marriedStatusEn}"/></td>
     </tr>
     <s:if test="birthType.ordinal() != 0">
-        <tr height="120px">
+        <tr height="150px">
             <td>නම <br>பெயர்<br>Name
             </td>
             <td colspan="6" class="bc-name" style="font-size:14pt">
                 <s:label name="" value="%{#request.child.childFullNameOfficialLang}"/>
             </td>
         </tr>
-        <tr height="110px">
+        <tr height="140px">
             <td>නම ඉංග්‍රීසි භාෂාවෙන් <br>ஆங்கிலத்தில் பெயர் <br> Name in English
             </td>
             <td colspan="6" class="bc-name" style="font-size:12pt">
@@ -328,7 +328,6 @@
     </tr>
     </tbody>
 </table>
-<br><br>
 
 <p style="font-size:9pt">
     උප්පැන්න හා මරණ ලියපදිංචි කිරිමේ පණත (110 අධිකාරය) යටතේ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව විසින් නිකුත් කරන
