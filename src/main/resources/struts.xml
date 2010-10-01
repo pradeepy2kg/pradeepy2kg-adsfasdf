@@ -923,6 +923,10 @@
                 method="initEventsManagement">
             <result type="tiles" name="success">epr.eventManagement</result>
         </action>
+        <action name="eprDebugDisplay" class="lk.rgd.crs.web.action.EventsManagementAction"
+                method="debugDisplay">
+            <result type="tiles" name="success">epr.debugManegement</result>
+        </action>
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">

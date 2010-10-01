@@ -8,6 +8,8 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.api.service.EventsMamagementService;
 
+import java.util.List;
+
 /**
  * Manage events.
  */
@@ -22,9 +24,13 @@ public class EventsManagementServiceImpl implements EventsMamagementService {
         this.eventDAO = eventDAO;
     }
 
-    public Event getEventsByIdUkey(long idUKey, User user) {
-
+    public List<Event> getEventsListByIdUKey(long idUKey, User user) {
+        return eventDAO.getEventsList(idUKey);
+    }
+    
+    public Event getEventByIdUKey(long idUKey, User user){
         return eventDAO.getEvent(idUKey);
     }
+
 
 }

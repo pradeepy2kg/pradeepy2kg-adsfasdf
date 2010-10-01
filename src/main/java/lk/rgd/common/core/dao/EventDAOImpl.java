@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Id;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  * @author asankha
@@ -24,8 +26,14 @@ public class EventDAOImpl extends BaseDAO implements EventDAO {
     /**
      *
      */
+    public List<Event> getEventsList(long idUKey) {
+        Query q = em.createNamedQuery("findAllEvents");
+        return q.getResultList();
+    }
+
     public Event getEvent(long idUKey){
         logger.debug("Get Event by IdUKey : {}", idUKey);
         return em.find(Event.class, idUKey);   
     }
+
 }
