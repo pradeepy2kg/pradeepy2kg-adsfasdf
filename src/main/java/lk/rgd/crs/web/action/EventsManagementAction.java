@@ -7,6 +7,7 @@ import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.service.EventsMamagementService;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -31,6 +32,7 @@ public class EventsManagementAction extends ActionSupport  {
     private String className;
     private String eventData;
     private String debug;
+    private List<Event> printList;
 
 
     public EventsManagementAction(EventDAO eventDAO,EventsMamagementService service) {
@@ -39,16 +41,12 @@ public class EventsManagementAction extends ActionSupport  {
     }
 
     public String initEventsManagement(){
-        event =service.getEventsByIdUkey(2,user);
-        timestamp= event.getTimestamp();
-        eventType=event.getEventType();
-        eventCode=event.getEventCode();
-        recordId=event.getRecordId();
-        methodName=event.getMethodName();
-        className=event.getClassName();
-        eventData=event.getEventData();
+        printList =service.getEventsListByIdUKey(idUKey,user);
+        return "success";
+    }
+    public String debugDisplay(){
+        event = service.getEventByIdUKey(idUKey,user);
         debug=event.getDebug();
-        user=event.getUser();
         return "success";
     }
 
@@ -149,5 +147,13 @@ public class EventsManagementAction extends ActionSupport  {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public List<Event> getPrintList() {
+        return printList;
+    }
+
+    public void setPrintList(List<Event> printList) {
+        this.printList = printList;
     }
 }

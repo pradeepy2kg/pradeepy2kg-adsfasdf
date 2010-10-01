@@ -10,6 +10,10 @@ import java.util.Date;
  * Events are persisted into an event database and audit/reporting results generated against them.
  * @author asankha
  */
+@NamedQueries({
+        @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event")
+})
+
 @Entity
 @Table(name = "EVENT", schema = "COMMON")
 public class Event implements Serializable {

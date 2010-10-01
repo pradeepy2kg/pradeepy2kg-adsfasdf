@@ -2,6 +2,8 @@ package lk.rgd.common.api.dao;
 
 import lk.rgd.common.api.domain.Event;
 
+import java.util.List;
+
 /**
  * The DAO to manage Events
  *
@@ -15,8 +17,13 @@ public interface EventDAO {
     public void addEvent(Event e);
 
     /**
-     * Get event from the database
+     * Get event list from the database
      *
      */
-    public Event getEvent(long idUKey);
+    public List<Event> getEventsList(long idUKey);
+
+    /**
+     * Get one event from the list
+     */
+    public Event getEvent(long idUKey) ;
 }
