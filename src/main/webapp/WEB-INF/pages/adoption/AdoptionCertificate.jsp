@@ -1,4 +1,5 @@
 <%@ page import="java.util.Date" %>
+<%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
@@ -323,6 +324,61 @@ Mother's Identification No.
         </td>
     </tr>
 </table>
+
+<div style="page-break-after:always;">
+</div>
+<hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
+
+<table border="0" cellspacing="0" width="100%">
+    <caption></caption>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
+    <tbody>
+    <tr>
+        <td rowspan="8" width="200px" height="350px"></td>
+        <td colspan="2" width="600px" height="100px"
+            style="text-align:center;margin-left:auto;margin-right:auto;font-size:16pt">
+            <label>රාජ්‍ය සේවය පිණිසයි / அரச பணி / On State Service</label>
+        </td>
+        <td rowspan="8" width="200px"></td>
+    </tr>
+    <tr>
+        <td>
+            <s:label name="informant.informantName" cssStyle="width:600px;font-size:12pt;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <s:label name="informant.informantAddress" cssStyle="width:600px;font-size:12pt;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+    <tr>
+        <td>
+            Printed On : <%= DateTimeUtils.getISO8601FormattedString(new Date()) %>
+        </td>
+
+        <td style="text-align:right;margin-left:auto;margin-right:0;">
+            <%--<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>--%>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<hr style="border-style:dashed ; float:left;width:100% ;margin-top:30px;"/>
+<br><br>
 
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
