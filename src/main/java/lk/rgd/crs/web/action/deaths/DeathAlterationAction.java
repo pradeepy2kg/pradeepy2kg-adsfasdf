@@ -8,13 +8,18 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Date;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.dao.DistrictDAO;
+import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.service.DeathAlterationService;
 import lk.rgd.crs.api.service.DeathRegistrationService;
-import lk.rgd.crs.api.domain.DeathAlteration;
-import lk.rgd.crs.api.domain.DeathRegister;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
 
 
 /**
@@ -27,13 +32,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private User user;
     private DeathAlterationService deathAlterationService;
     private DeathRegistrationService deathRegistrationService;
+    private DistrictDAO districtDAO;
+    private DSDivisionDAO dsDivisionDAO;
+    private BDDivisionDAO bdDivisionDAO;
     private DeathAlteration deathAlteration;
     private DeathRegister deathRegister;
+    private District deathDistrict;
 
     private Map session;
     private Map<Integer, String> districtList;
     private Map<Integer, String> dsDivisionList;
     private Map<Integer, String> bdDivisionList;
+    private Map<Integer, String> raceList;
+    private Map<Integer, String> countryList;
 
     private int dsDivisionId;
     private int birthDivisionId;
@@ -41,12 +52,21 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     private long certificateNumber;
     private long serialNumber;
+    private long alterationSerialNo;
+    private long deathId;
 
     private String language;
+    private String district;
+    private String dsDivision;
+    private String deathDivision;
 
-    public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService) {
+    public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService
+            , DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO) {
         this.deathAlterationService = deathAlterationService;
         this.deathRegistrationService = deathRegistrationService;
+        this.districtDAO = districtDAO;
+        this.dsDivisionDAO = dsDivisionDAO;
+        this.bdDivisionDAO = bdDivisionDAO;
     }
 
     /**
@@ -65,10 +85,31 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      * @return success of alteration scuccess
      */
     public String captureDeathAlterations() {
-        deathRegister = deathRegistrationService.getById(certificateNumber, user);
         if (pageNumber > 0) {
+            //     deathAlteration = new DeathAlteration();
+            //setting up alteration 52 act
+            deathAlteration.setAlterationSerialNo(alterationSerialNo);
+            deathAlteration.setDeathId(deathId);
+            //setting alterations done to declarant ,death and death person
+            deathAlteration.setDeclarant(deathRegister.getDeclarant());
+            deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
+
             deathAlterationService.addDeathAlteration(deathAlteration, user);
             return SUCCESS;
+        } else {
+
+            deathRegister = deathRegistrationService.getById(certificateNumber, user);
+            deathAlteration = new DeathAlteration();
+            if (deathRegister != null) {
+                populatePrimaryLists();
+                //setting up death district    ds and death division
+                district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
+                DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();
+                dsDivision = dsDivisionDAO.getNameByPK(division.getDsDivisionUKey(), language);
+                deathDivision = bdDivisionDAO.getNameByPK(deathRegister.getDeath().getDeathDivision().getBdDivisionUKey(), language);
+            } else {
+                addActionError("error.cannot.find.death.registration");
+            }
         }
         return "pageload";
     }
@@ -79,6 +120,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         districtList = new HashMap();
         dsDivisionList = new HashMap();
         bdDivisionList = new HashMap();
+        raceList = new HashMap();
+        countryList = new HashMap();
     }
 
     public void setSession(Map map) {
@@ -132,14 +175,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.birthDivisionId = birthDivisionId;
     }
 
-    public DeathAlterationService getDeathAlterationService() {
-        return deathAlterationService;
-    }
-
-    public void setDeathAlterationService(DeathAlterationService deathAlterationService) {
-        this.deathAlterationService = deathAlterationService;
-    }
-
     public User getUser() {
         return user;
     }
@@ -188,19 +223,75 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.serialNumber = serialNumber;
     }
 
-    public DeathRegistrationService getDeathRegistrationService() {
-        return deathRegistrationService;
-    }
-
-    public void setDeathRegistrationService(DeathRegistrationService deathRegistrationService) {
-        this.deathRegistrationService = deathRegistrationService;
-    }
-
     public DeathRegister getDeathRegister() {
         return deathRegister;
     }
 
     public void setDeathRegister(DeathRegister deathRegister) {
         this.deathRegister = deathRegister;
+    }
+
+    public District getDeathDistrict() {
+        return deathDistrict;
+    }
+
+    public void setDeathDistrict(District deathDistrict) {
+        this.deathDistrict = deathDistrict;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getDeathDivision() {
+        return deathDivision;
+    }
+
+    public void setDeathDivision(String deathDivision) {
+        this.deathDivision = deathDivision;
+    }
+
+    public String getDsDivision() {
+        return dsDivision;
+    }
+
+    public void setDsDivision(String dsDivision) {
+        this.dsDivision = dsDivision;
+    }
+
+    public Map<Integer, String> getRaceList() {
+        return raceList;
+    }
+
+    public void setRaceList(Map<Integer, String> raceList) {
+        this.raceList = raceList;
+    }
+
+    public long getAlterationSerialNo() {
+        return alterationSerialNo;
+    }
+
+    public void setAlterationSerialNo(long alterationSerialNo) {
+        this.alterationSerialNo = alterationSerialNo;
+    }
+
+    public Map<Integer, String> getCountryList() {
+        return countryList;
+    }
+
+    public void setCountryList(Map<Integer, String> countryList) {
+        this.countryList = countryList;
+    }
+
+    public long getDeathId() {
+        return deathId;
+    }
+
+    public void setDeathId(long deathId) {
+        this.deathId = deathId;
     }
 }

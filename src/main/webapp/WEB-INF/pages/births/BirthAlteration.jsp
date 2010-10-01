@@ -1467,7 +1467,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </td>
         <td>
             <table style="border:none;width:100%">
-                <tr>
+                <tr>                       D
                     <td style="width:75%;border:none"> භාරකරු<br> பாதுகாவலர் <br> Guardian
                     </td>
                     <td style="width:25%;border:none;">

@@ -35,8 +35,8 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
-//        logger.debug("adding a new death alteration : serial number : {}", da.getAlterationSerialNo());
-    //    validateAccessOfUser(da, user);
+        logger.debug("adding a new death alteration : serial number : {}", da.getAlterationSerialNo());
+        //  validateAccessOfUser(da, user);
         deathAlterationDAO.addBirthAlteration(da, user);
     }
 
@@ -62,13 +62,13 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     }
 
     private void validateAccessOfUser(DeathAlteration da, User user) {
-        if (da.getAlt52_1() != null) {
+/*        if (da.getAlt52_1() != null) {
             BDDivision bdDivision = da.getAlt52_1().getBirthDivision();
             validateAccessToBDDivision(user, bdDivision);
         } else {
             DeathRegister dr = deathRegistrationService.getById(da.getIdUKey(), user);
             validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
-        }
+        }*/
     }
 
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {

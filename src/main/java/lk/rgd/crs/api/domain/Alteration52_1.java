@@ -11,6 +11,7 @@ import java.util.BitSet;
  */
 @Embeddable
 public class Alteration52_1 {
+
     public static final int DATE_OF_BIRTH = 1;
     public static final int PLACE_OF_BIRTH = 2;
     public static final int PLACE_OF_BIRTH_ENGLISH = 3;
