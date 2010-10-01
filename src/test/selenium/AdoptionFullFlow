@@ -321,15 +321,11 @@
 	<td>na address</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>type</td>
 	<td>modifiedDatePicker</td>
-	<td></td>
+	<td>2010-09-14</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=14</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>birth-registration-form-4_0</td>

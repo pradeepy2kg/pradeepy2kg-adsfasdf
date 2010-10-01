@@ -20,7 +20,7 @@
         margin: 5px 0 15px 0;
     }
 </style>
-<script type="tex/javascript" src="<s:url value="/js/print.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <s:url id="print" action="eprMarkAdoptionCertificateAsPrinted.do">
     <s:param name="alreadyPrinted" value="%{#request.alreadyPrinted}"/>
     <s:param name="previousFlag" value="%{#request.previousFlag}"/>
@@ -36,20 +36,15 @@
 </s:url>
 <div id="adoption-certificate-form-outer">
 
-<%--<div class="form-submit" style="margin:15px 0 0 10px;>
- <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
-    <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
-</div>--%>
+<div class="form-submit">
+    <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+</div>
 
 <div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
 <div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
-</div>
-<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="#"><s:label value="%{getText('print.button')}" onclick="printPage()"/></s:a>
 </div>
 
 <table style=" width:
@@ -64,11 +59,18 @@
             <img src="<s:url value="../images/official-logo.png" />"
                  style="display: block; text-align: center;" width="80" height="100">
         </td>
-        <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number
+        <td>
+            <table border="1" style="width:100%;border:1px solid #000;border-collapse:collapse;">
+                <tr height="60px">
+                    <td>සහතික පත්‍රයේ අංකය <br>சான்றிதழ் இல <br>Certificate Number</td>
+                </tr>
+                <tr height="40px">
+                   <td><s:label value="%{adoption.idUKey}"/></td>
+                </tr>
+            </table>
         </td>
     </tr>
     <tr>
-        <td><s:label value="%{adoption.idUKey}"/></td>
     </tr>
     <tr>
         <td align="center" style="font-size:16pt">
@@ -92,13 +94,14 @@
     <tbody>
     <tr>
         <td width="250px" height="80px" rowspan="2">
-            දරුකමට හදාගැනීමේ උසාවි නියෝගය <br>
-            in tamil <br>
-            Adoption Order Issued by Court
+            දරුකමට හදාගැනීමේ නියෝගය
+            <br>மகவேற்புக் கட்டளை
+            <br>Adoption Order
         </td>
-        <td width="250px">නිකුත් කල අධිකරණය <br>
-            in tamil <br>
-            Court Issuing Order
+        <td width="250px">
+            නිකුත් කල අධිකරණය
+            <br>வழங்கிய நீதிமன்றம்
+            <br>Court Issuing order
         </td>
         <td colspan="5">
             <s:label name="courtName" cssStyle="margin-left:10px;"/>
@@ -108,7 +111,7 @@
 
         <td width="150px">
             නියෝග දිනය <br>
-            in tamil <br>
+            கட்டளை திகதி<br>
             Order Date
         </td>
         <td width="250px" colspan="2">
@@ -117,29 +120,13 @@
 
         <td>
             නියෝග අංකය <br>
-            in tamil <br>
+            கட்டளை இலக்கம் <br>
             Order Number
         </td>
         <td width="150px">
             <s:label value="%{adoption.courtOrderNumber}"/>
         </td>
     </tr>
-    <tr>
-        <td height="80px" width="250px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number
-            (PIN)
-        </td>
-        <td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>
-        <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
-        </td>
-        <td><s:label name="" value="%{adoption.childBirthDate}"/></td>
-        <td width="150px">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
-        </td>
-        <td width="150px">
-            <s:label name="" value="%{genderSi}"/> <br>
-            <s:label name="" value="%{genderEn}"/>
-        </td>
-    </tr>
-
 
     <tr>
         <td height="120px" width="250px">නම <br>பெயர் <br>Name
@@ -155,6 +142,23 @@
     </tr>
 
     <tr>
+        <%--<td height="80px" width="250px">පුද්ගල අනන්‍යතා අංකය <br>தனிநபர்அடையாள எண் <br>Person Identification Number--%>
+        <%--(PIN)--%>
+        <%--</td>--%>
+        <%--<td width="250px"><s:label name="" value="%{adoption.childPIN}"/></td>--%>
+        <td>උපන් දිනය <br>பிறந்த திகதி <br>Date of birth <br>YYYY-MM-DD
+        </td>
+        <td colspan="2"><s:label name="" value="%{adoption.childBirthDate}"/></td>
+        <td width="150px">ස්ත්‍රී පුරුෂ භාවය<br>பால் <br>Gender
+        </td>
+        <td width="150px" colspan="2">
+            <s:label name="" value="%{genderSi}"/> <br>
+            <s:label name="" value="%{genderEn}"/>
+        </td>
+    </tr>
+
+
+    <tr>
         <td height="120px" width="250px">පියාගේ සම්පුර්ණ නම<br>தந்தையின்முழுப் பெயர் <br> Father's Full Name
         </td>
         <td colspan="6" class="bc-name" style="font-size:12pt">
@@ -163,17 +167,16 @@
             </s:if>
         </td>
     </tr>
-    <tr>
-        <td height="70px" width="250px">පියාගේ අනන්‍යතා අංකය / ජාතික
-            හැඳුනුම්පත් අංකය <br>
-            தந்தையின் அடையாள எண் <br>
-            Father's PIN / NIC
-        </td>
-        <td colspan="5" width="250px">
-            <s:if test="#request.adoption.applicantMother==0">
-                <s:label name="" value="%{adoption.applicantPINorNIC}"/>
-            </s:if></td>
-    </tr>
+    <%--<tr>--%>
+    <%--<td height="70px" width="250px">පියාගේ සම්පුර්ණ නම
+தந்தையின்முழுப் பெயர்
+Father's Full Name
+    <%--</td>--%>
+    <%--<td colspan="5" width="250px">--%>
+    <%--<s:if test="#request.adoption.applicantMother==0">--%>
+    <%--<s:label name="" value="%{adoption.applicantPINorNIC}"/>--%>
+    <%--</s:if></td>--%>
+    <%--</tr>--%>
     <tr>
         <td height="120px" width="250px"> මවගේ සම්පූර්ණ නම <br>
             தாயின் முழுப் பெயர் <br>
@@ -188,20 +191,20 @@
             </s:else>
         </td>
     </tr>
-    <tr>
-        <td height="70px" width="250px">ම‌වගේ අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය <br>
-            தந்தையின் அடையாள எண் <br>
-            Mother's PIN / NIC
-        </td>
-        <td colspan="5">
-            <s:if test="#request.adoption.applicantMother==1">
-                <s:label name="" value="%{adoption.applicantPINorNIC}"/>
-            </s:if>
-            <s:else>
-                <s:label name="" value="%{adoption.wifePINorNIC}"/>
-            </s:else>
-        </td>
-    </tr>
+    <%--<tr>--%>
+    <%--<td height="70px" width="250px">ම‌වගේ අනන්‍යතා අංකය
+தாயின்  அடையாள எண்
+Mother's Identification No.
+    <%--</td>--%>
+    <%--<td colspan="5">--%>
+    <%--<s:if test="#request.adoption.applicantMother==1">--%>
+    <%--<s:label name="" value="%{adoption.applicantPINorNIC}"/>--%>
+    <%--</s:if>--%>
+    <%--<s:else>--%>
+    <%--<s:label name="" value="%{adoption.wifePINorNIC}"/>--%>
+    <%--</s:else>--%>
+    <%--</td>--%>
+    <%--</tr>--%>
     </tbody>
 </table>
 
@@ -213,34 +216,53 @@
     <col>
     <tbody>
     <tr>
-        <td width="250px">ලියාපදිංචි කල ස්ථානය<br>
-            *in tamil <br>
-            Place of Registration
+        <td width="250px">
+            ලියාපදිංචි කළ ස්ථානය
+            <br/>பதிவு செய்த இடம்
+            <br/>Place of Registration
         </td>
         <td colspan="3">
             <s:property value="placeOfIssue"/>
         </td>
-        <td height="70px" width="150px">ලියාපදිංචි කළ දිනය<br>பதிவு செய்யப்பட்ட திகதி <br> Date of Registration
+        <td height="70px" width="150px">
+            ලියාපදිංචි කළ දිනය
+            <br/> பதிவு செய்யப்பட்ட திகதி
+            <br/> Date of Registration
         </td>
         <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectTimestamp}"/></td>
     </tr>
     <tr>
         <td width="250px" height="120px">
-            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන <br>
-            சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்<br>
-            Name, Signature and Designation of certifying officer
+            සහතික කරනු ලබන නිලධාරියා ගේ නම, තනතුර සහ අත්සන
+            <br/> சான்றிதழ் அளிக்கும் அதிகாரியின் பெயர், பதவி, கையொப்பம்
+            <br/>Name, Signature and Designation of certifying officer
         </td>
         <td colspan="5" style="font-size:10pt"><s:label name=""
                                                         value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.name}"/><br/>
             <s:label name="" value="%{adoption.lifeCycleInfo.approvalOrRejectUser.role.roleId}"/></td>
     </tr>
     <tr>
-        <td width="250px" height="30px">නිකුත් කළ ස්ථානය / வழங்கிய இடம் / Place of Issue
+        <td width="250px" height="30px">
+            නිකුත් කළ ස්ථානය
+            <br/>வழங்கிய இடம்
+            <br/>Place of Issue
         </td>
-        <td colspan="3"><s:label value=""/>
+        <td colspan="3">
+            <s:if test="lang==si">
+                <s:label> රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව, බත්තරමුල්ල
+                    <br>Registrar General's Department, Battaramulla</s:label>
+            </s:if>
+            <s:elseif test="lang==ta">
+                <s:label>பதிவாளா் நாயகம் திணைக்களம், பத்தரமுல்லை
+                    <br>Registrar General's Department, Battaramulla</s:label>
+
+            </s:elseif>
         </td>
 
-        <td width="150px">නිකුත් කළ දිනය<br>வழங்கிய திகதி <br> Date of Issue
+        <td width="150px">
+            නිකුත් කළ දිනය
+            <br/>வழங்கிய திகதி
+            <br/>Date of Issue
         </td>
         <td width="150px"><s:label name="" value="%{adoption.lifeCycleInfo.lastUpdatedTimestamp}"/>
         </td>
@@ -295,21 +317,24 @@
 <table style="width:100%; border-left:none;font-size:10pt;text-align:center;margin-bottom:10px;">
     <tr>
         <td>
-            (1941 අංක 24 දරන දරුකමට ගැනීම පිලිබඳ ආඥාපනතේ 11 වෙනි වගන්තිය යටතේ නිකුත් කරන ලදී) <br>
-            in tamil <br>
-            (Issued under Section 11 of the Adoption of Children Ordinance, No. 24 of 1941)
+            (1941 අංක 24 දරන දරුකමට ගැනීම පිලිබඳ ආඥාපනතේ 11 වෙනි වගන්තිය යටතේ නිකුත් කරන ලදී)
+            <br>1941 ஆம ஆண்டு 24 ஆம் இலக்க மகவேற்புக்கட்டளைச்சட்டத்தின் 11 ஆம் பிரிவின் கீழ் வழங்கப்பட்டது
+            <br>(Issued under Section 11 of the Adoption of Children Ordinance, No. 24 of 1941)
         </td>
     </tr>
 </table>
-
 
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
 </div>
 
 <div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
-    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
+<div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
+    <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
+</div>
+
+
 </div>
 
