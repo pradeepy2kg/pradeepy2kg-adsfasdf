@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     private final Map<Integer, String> taDistricts = new TreeMap<Integer, String>();
 
     /**
-     * @inheritDoc
-     * This method is there for getting all the district names for a given district
+     * @inheritDoc This method is there for getting all the district names for a given district
      * Without restricting on user/role permissions. This is needed to capture mothers district in
      * Birth dicration data entry.
      */
@@ -64,7 +64,7 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
 
             for (Map.Entry<Integer, String> e : result.entrySet()) {
                 if (user.isAllowedAccessToBDDistrict(e.getKey())) {
-                   
+
                     filteredResult.put(e.getKey(), e.getValue());
                 }
             }
@@ -101,6 +101,17 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
 
     public District getDistrict(int id) {
         return districtsByPK.get(id);
+    }
+
+    public District getDistrictByCode(int districtId) {
+        Query q = em.createNamedQuery("get.district.by.code");
+        q.setParameter("districtId", districtId);
+        try {
+            return (District) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return null;
+        }
     }
 
     /**
@@ -148,12 +159,12 @@ public class DistrictDAOImpl extends BaseDAO implements DistrictDAO, Preloadable
     }
 
     private void updateCache(District d) {
-        final int districtId = d.
-            getDistrictId();
+        final int districtId = d.getDistrictId();
         final int districtUKey = d.getDistrictUKey();
         districtsByPK.put(districtUKey, d);
         siDistricts.put(districtUKey, districtId + SPACER + d.getSiDistrictName());
         enDistricts.put(districtUKey, districtId + SPACER + d.getEnDistrictName());
         taDistricts.put(districtUKey, districtId + SPACER + d.getTaDistrictName());
     }
+
 }

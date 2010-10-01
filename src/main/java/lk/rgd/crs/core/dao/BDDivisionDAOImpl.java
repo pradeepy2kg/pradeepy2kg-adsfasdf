@@ -5,6 +5,7 @@ import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.core.dao.PreloadableDAO;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +71,20 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         return em.find(BDDivision.class, bdDivision);
     }
 
+    @Override
+    public BDDivision getBDDivisionByCode(int bdDivisionId, DSDivision dsDivision) {
+        Query q = em.createNamedQuery("get.bdDivision.by.code");
+        q.setParameter("bdDivisionId", bdDivisionId);
+        q.setParameter("dsDivision", dsDivision);
+        try {
+            return (BDDivision) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            logger.debug("No id duplication of id :{}",bdDivisionId);
+            return null;
+        }
+    }
+
     /**
      * @inheritDoc
      */
@@ -112,9 +128,10 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
         logger.debug("Loaded : {} birth and death registration divisions from the database", results.size());
     }
 
+
     private void updateCache(BDDivision r) {
         final int dsDivisionUKey = r.getDsDivision().getDsDivisionUKey();
-        final int bdDivisionId   = r.getDivisionId();
+        final int bdDivisionId = r.getDivisionId();
         final int bdDivisionUKey = r.getBdDivisionUKey();
 
         bdDivisionsByPK.put(bdDivisionUKey, r);

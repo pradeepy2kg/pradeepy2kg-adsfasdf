@@ -382,15 +382,16 @@
 <fieldset style="border:3px solid #c3dcee;margin-left:6em;margin-right:20.5em;margin-top:2.5em;width:80%">
     <table style="border:none;font:12pt bold;" align="center">
         <tr>
-            <td><s:label name="msg"/></td>
+            <td><s:label name="msg"/>
+                <s:fielderror name="duplicateIdNumberError" cssStyle="color:red;font-size:10pt"/></td>
         </tr>
     </table>
     <s:form name="editDivisions" action="eprAddDivisionsAndDsDivisions.do" method="POST"
             onsubmit="javascript:return validate()">
-        <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:15px">
+        <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:15px;">
             <s:if test="!((pageType==1) ||(pageType==5) ||(pageType==6))">
                 <tr>
-                    <td colspan="2">District</td>
+                    <td colspan="2" headers="10px;">District</td>
                     <s:textfield name="UserDistrictId" cssStyle="visibility:hidden;"/>
                     <td><s:label name="" value="%{districtEn}" cssStyle=" margin-left:15px;"/></td>
                 </tr>

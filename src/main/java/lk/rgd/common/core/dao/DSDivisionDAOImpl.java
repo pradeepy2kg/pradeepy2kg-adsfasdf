@@ -6,10 +6,12 @@ import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.*;
 
 /**
@@ -163,6 +165,20 @@ public class DSDivisionDAOImpl extends BaseDAO implements DSDivisionDAO, Preload
         Query q = em.createNamedQuery("get.all.divisions.by.districtId");
         q.setParameter("districtUKey", districtUKey);
         return q.getResultList();
+    }
+
+    @Override
+    public DSDivision getDSDivisionByCode(int dsDivisionId, District district) {
+        Query q = em.createNamedQuery("get.dsDivision.by.code");
+        q.setParameter("dsDivisionId", dsDivisionId);
+        q.setParameter("district", district);
+        try {
+            return (DSDivision) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            logger.debug("No DS division id duplication of id :{}", dsDivisionId);
+            return null;
+        }
     }
 
 

@@ -16,7 +16,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "DISTRICTS", schema = "COMMON")
-@NamedQuery(name = "findAllDistricts", query = "SELECT d FROM District d")
+@NamedQueries({
+        @NamedQuery(name = "findAllDistricts", query = "SELECT d FROM District d"),
+
+        @NamedQuery(name = "get.district.by.code", query = "SELECT d FROM District d " + "WHERE d.districtId =:districtId")
+})
 public class District implements Serializable {
 
     /**
@@ -43,10 +47,11 @@ public class District implements Serializable {
      * A District maybe marked as inactive if one is split into two, or amalgamated to create a new one
      * The UI will only show Districts that are currently active for every data entry form
      */
-    @Column(name="active", columnDefinition="smallint not null default 1")
+    @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
-    public District() {}
+    public District() {
+    }
 
     public District(int districtId, String siDistrictName, String enDistrictName, String taDistrictName, boolean active) {
         this.districtId = districtId;

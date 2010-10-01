@@ -46,21 +46,32 @@ public interface DistrictDAO {
     public District getDistrict(int id);
 
     /**
+     * Return District by id
+     *
+     * @param districtId the District code
+     * @return the District
+     */
+    public District getDistrictByCode(int districtId);
+
+    /**
      * Update a district - ie only activate or inactivate
+     *
      * @param district the district updated
-     * @param user user performing the action
+     * @param user     user performing the action
      */
     public void update(District district, User user);
 
     /**
      * Add a district
+     *
      * @param district the district added
-     * @param user user performing the action
+     * @param user     user performing the action
      */
     public void add(District district, User user);
 
     /**
      * Return all Districts in the system
+     *
      * @return all Districts
      */
     public List<District> findAll();

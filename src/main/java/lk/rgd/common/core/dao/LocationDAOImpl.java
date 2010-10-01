@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 
@@ -53,5 +54,17 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO {
         Query q = em.createNamedQuery("getAllLocations");
         return q.getResultList();
 
+    }
+
+    @Override
+    public Location getLocationByCode(int locationCode) {
+        Query q = em.createNamedQuery("get.location.by.code");
+        q.setParameter("locationCode", locationCode);
+        try {
+            return (Location) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return null;
+        }
     }
 }

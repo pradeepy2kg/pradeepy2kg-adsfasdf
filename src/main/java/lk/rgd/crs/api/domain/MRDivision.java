@@ -16,9 +16,13 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "MR_DIVISIONS", schema = "CRS",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
-@NamedQuery(name = "findAllMRDivisions", query = "SELECT d FROM MRDivision d")
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
+@NamedQueries({
+        @NamedQuery(name = "findAllMRDivisions", query = "SELECT d FROM MRDivision d"),
+        @NamedQuery(name = "get.mrDivision.by.code", query = "SELECT d FROM MRDivision d " +
+                "WHERE d.divisionId=:mrDivisionId AND d.dsDivision=:dsDivision")
+})
 public class MRDivision implements Serializable {
 
     /**
@@ -56,7 +60,7 @@ public class MRDivision implements Serializable {
     }
 
     public MRDivision(DSDivision dsDivision, int divisionId,
-        String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
+                      String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
         this.dsDivision = dsDivision;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;

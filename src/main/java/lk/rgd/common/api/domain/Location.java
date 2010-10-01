@@ -8,15 +8,19 @@ import java.util.Set;
 
 /**
  * Represents a RGD office location
- * 
+ *
  * @author asankha
  */
 @Entity
 @Table(name = "LOCATIONS", schema = "COMMON")
-@NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
-        "ORDER BY l.enLocationName desc")
+@NamedQueries({
+        @NamedQuery(name = "getAllLocations", query = "SELECT l FROM Location l " +
+                "ORDER BY l.enLocationName desc"),
+        @NamedQuery(name = "get.location.by.code", query = "SELECT l FROM Location l " +
+                "WHERE l.locationCode=:locationCode")
+})
 public class Location implements Serializable {
-    
+
     /**
      * This is a system generated unique key
      */
@@ -53,7 +57,7 @@ public class Location implements Serializable {
      * The users assigned to this location
      */
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
-    private List<UserLocation> users  = new ArrayList<UserLocation>();
+    private List<UserLocation> users = new ArrayList<UserLocation>();
 
     public int getLocationUKey() {
         return locationUKey;
