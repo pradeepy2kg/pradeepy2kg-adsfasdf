@@ -14,7 +14,9 @@ import java.io.Serializable;
                 @UniqueConstraint(columnNames = {"districtUKey", "divisionId"})})
 @NamedQueries({
         @NamedQuery(name = "findAllDSDivisions", query = "SELECT d FROM DSDivision d"),
-        @NamedQuery(name = "get.all.divisions.by.districtId", query = "SELECT d FROM DSDivision d WHERE d.district.districtUKey = :districtUKey")}
+        @NamedQuery(name = "get.all.divisions.by.districtId", query = "SELECT d FROM DSDivision d WHERE d.district.districtUKey = :districtUKey"),
+        @NamedQuery(name = "get.dsDivision.by.code", query = "SELECT d FROM DSDivision d" +
+                " WHERE d.divisionId = :dsDivisionId AND d.district=:district")}
 )
 
 public class DSDivision implements Serializable {

@@ -189,7 +189,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             user = service.getUserByID(getUserId());
             currentDistrictList = convertDistricSetToMap(user.getAssignedBDDistricts());
             currentbdDivisionList = convertDivisionSetToMap(user.getAssignedBDDSDivisions());
-            roleId=user.getRole().getRoleId();
+            roleId = user.getRole().getRoleId();
             logger.info("current district list size  : {} for user : {}", currentDistrictList.size(), user.getUserName());
             logger.info("current division list size  : {} for user : {}", currentbdDivisionList.size(), user.getUserName());
             session.put(WebConstants.SESSION_UPDATED_USER, user);
@@ -211,42 +211,42 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public String initDivisionList() {
         populate();
-        setDivisionList();
+        setDivisionList(true);
         return SUCCESS;
     }
 
-    public void setDivisionList() {
+    public void setDivisionList(boolean setNull) {
         switch (pageType) {
             case 1:
                 districtNameList = districtDAO.findAll();
-                district = null;
+                if (setNull) district = null;
                 break;
             case 2:
                 districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
                 dsDivisionNameList = dsDivisionDAO.findAll();
-                dsDivision = null;
+                if (setNull) dsDivision = null;
                 break;
             case 3:
                 districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 bdDivisionNameList = bdDivisionDAO.findAll();
-                bdDivision = null;
+                if (setNull) bdDivision = null;
                 break;
             case 4:
                 districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
                 mrDivisionNameList = mrDivisionDAO.findAll();
-                mrDivision = null;
+                if (setNull) mrDivision = null;
                 break;
             case 5:
                 courtNameList = courtDAO.findAll();
                 logger.debug("Size of the loaded Court list is :{}", courtNameList.size());
-                court = null;
+                if (setNull) court = null;
                 break;
             case 6:
                 locationNameList = locationDAO.getAllLocations();
                 logger.debug("Size of the loaded Lacation List is :{}", locationNameList.size());
-                location = null;
+                if (setNull) location = null;
                 break;
 
 
@@ -281,7 +281,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
 
         }
-        setDivisionList();
+        setDivisionList(true);
         return SUCCESS;
     }
 
@@ -313,55 +313,106 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
 
         }
-        setDivisionList();
+        setDivisionList(true);
         return SUCCESS;
     }
 
 
     public String addDivisionsAndDsDivisions() {
+        int checkDuplicate = 0;
         switch (pageType) {
             case 1:
-                district.setActive(true);
-                dataManagementService.addDistrict(district, currentUser);
-                logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
-                msg = " New District Was Added  :" + district.getEnDistrictName();
+                District checkDistrit = districtDAO.getDistrictByCode(district.getDistrictId());
+                if (checkDistrit != null) {
+                    addFieldError("duplicateIdNumberError", "District Id Number Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate District code number is :", checkDistrit.getDistrictId());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    district.setActive(true);
+                    dataManagementService.addDistrict(district, currentUser);
+                    logger.debug("New Id of new District {} is   :{}", district.getEnDistrictName(), district.getDistrictId());
+                    msg = " New District Was Added  :" + district.getEnDistrictName();
+                }
                 break;
             case 2:
-                dsDivision.setDistrict(districtDAO.getDistrict(UserDistrictId));
-                dsDivision.setActive(true);
-                dataManagementService.addDSDivision(dsDivision, currentUser);
-                logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
-                msg = "New DSDivision Was Added :" + dsDivision.getEnDivisionName();
+                DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
+                        districtDAO.getDistrict(UserDistrictId));
+                if (checkDSDivision != null) {
+                    addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    dsDivision.setDistrict(districtDAO.getDistrict(UserDistrictId));
+                    dsDivision.setActive(true);
+                    dataManagementService.addDSDivision(dsDivision, currentUser);
+                    logger.debug("New Id of new Ds Division {} is   :{}", dsDivision.getEnDivisionName(), dsDivision.getDivisionId());
+                    msg = "New DSDivision Was Added :" + dsDivision.getEnDivisionName();
+                }
                 break;
             case 3:
-                bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                bdDivision.setActive(true);
-                dataManagementService.addBDDivision(bdDivision, currentUser);
-                logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
-                msg = "New BDDivision Was Added  :" + bdDivision.getEnDivisionName();
+                BDDivision checkBDDivision = bdDivisionDAO.getBDDivisionByCode(bdDivision.getDivisionId(), dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                if (checkBDDivision != null) {
+                    addFieldError("duplicateIdNumberError", "Division Id Number Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate District code number is :", checkBDDivision.getDivisionId());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    bdDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                    bdDivision.setActive(true);
+                    dataManagementService.addBDDivision(bdDivision, currentUser);
+                    logger.debug("New Id of New Division {} is   :{}", bdDivision.getEnDivisionName(), bdDivision.getDivisionId());
+                    msg = "New BDDivision Was Added  :" + bdDivision.getEnDivisionName();
+                }
                 break;
             case 4:
-                mrDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
-                mrDivision.setActive(true);
-                dataManagementService.addMRDivision(mrDivision, currentUser);
-                logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
-                msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
+                MRDivision checkMrDivision = mrDivisionDAO.getMRDivisionByCode(mrDivision.getDivisionId(), dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                if (checkMrDivision != null) {
+                    addFieldError("duplicateIdNumberError", "MR Division Id Number Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate MR Division code number is :", checkMrDivision.getDivisionId());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    mrDivision.setDsDivision(dsDivisionDAO.getDSDivisionByPK(dsDivisionId));
+                    mrDivision.setActive(true);
+                    dataManagementService.addMRDivision(mrDivision, currentUser);
+                    logger.debug("New Id of New MRDivision {} is   :{}", mrDivision.getEnDivisionName(), mrDivision.getDivisionId());
+                    msg = "New MRDivision Was Added  :" + mrDivision.getEnDivisionName();
+                }
                 break;
             case 5:
-                dataManagementService.addCourt(court, currentUser);
-                logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                msg = "New Court Was Added  :" + court.getEnCourtName();
+                Court checkCourt = courtDAO.getCourtByCode(court.getCourtId());
+                if (checkCourt != null) {
+                    addFieldError("duplicateIdNumberError", "Court Id Code Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate Court code number is :", checkCourt.getCourtId());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    dataManagementService.addCourt(court, currentUser);
+                    logger.debug("New Id of New Court {} is  :{}", locationDAO.getLocation(locationId), locationId);
+                    msg = "New Court Was Added  :" + court.getEnCourtName();
+                }
                 break;
             case 6:
-                dataManagementService.addLocation(location, currentUser);
-                logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
-                msg = "New Location Was Added  :" + location.getEnLocationName();
-
+                Location checkLocation = locationDAO.getLocationByCode(location.getLocationCode());
+                if (checkLocation != null) {
+                    addFieldError("duplicateIdNumberError", "Location Code Number Already Used. Please Insert Another Number");
+                    logger.debug("Duplicate Location code number is :", checkLocation.getLocationCode());
+                    checkDuplicate++;
+                }
+                if (checkDuplicate == 0) {
+                    dataManagementService.addLocation(location, currentUser);
+                    logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
+                    msg = "New Location Was Added  :" + location.getEnLocationName();
+                }
 
         }
-        setDivisionList();
+        if (checkDuplicate == 0) setDivisionList(true);
+        if (checkDuplicate == 1) setDivisionList(false);
         return SUCCESS;
     }
+
     public String selectUsers() {
         populate();
         int pageNo = 1;

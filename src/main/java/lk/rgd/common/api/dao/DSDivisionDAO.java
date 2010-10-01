@@ -2,6 +2,7 @@ package lk.rgd.common.api.dao;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.District;
 
 import java.util.List;
 import java.util.Map;
@@ -78,4 +79,11 @@ public interface DSDivisionDAO {
      * @return List of DSDivisons
      */
     public List<DSDivision> getAllDSDivisionByDistrictKey(int districtUKey);
+
+    /**
+     * @param dsDivisionId the unique DS Division ID
+     * @param district     District of the  DS Division
+     * @return the DS division object
+     */
+    public DSDivision getDSDivisionByCode(int dsDivisionId, District district);
 }

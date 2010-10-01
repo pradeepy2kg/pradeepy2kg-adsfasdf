@@ -10,7 +10,7 @@ import java.util.Map;
  * @author asankha
  */
 public interface CourtDAO {
-    
+
     /**
      * Returns the list of Courts for the given language
      *
@@ -23,7 +23,7 @@ public interface CourtDAO {
      * Return the name of the court in the selected language
      *
      * @param courtUKey the court unique key
-     * @param language     the selected language
+     * @param language  the selected language
      * @return the name of the court in the selected language
      */
     public String getNameByPK(int courtUKey, String language);
@@ -38,21 +38,30 @@ public interface CourtDAO {
 
     /**
      * Update a court
+     *
      * @param court the court updated
-     * @param user user performing the action
+     * @param user  user performing the action
      */
     public void update(Court court, User user);
 
     /**
      * Add a court
+     *
      * @param court the court added
-     * @param user user performing the action
+     * @param user  user performing the action
      */
     public void add(Court court, User user);
 
     /**
      * Return all Courts in the system
+     *
      * @return all Courts
      */
     public List<Court> findAll();
+
+    /**
+     * @param courtId
+     * @return the Court
+     */
+    public Court getCourtByCode(int courtId);
 }

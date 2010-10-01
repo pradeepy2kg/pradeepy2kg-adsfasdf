@@ -10,8 +10,12 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "COURTS", schema = "CRS")
-@NamedQuery(name = "findAllCourts", query = "SELECT c FROM Court c " +
-        "ORDER BY c.enCourtName desc")
+@NamedQueries({
+        @NamedQuery(name = "findAllCourts", query = "SELECT c FROM Court c " +
+                "ORDER BY c.enCourtName desc"),
+        @NamedQuery(name = "get.court.by.code", query = "SELECT c FROM Court c " +
+                "WHERE c.courtId=:courtId")
+})
 public class Court implements Serializable {
 
     /**

@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.dao;
 
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.crs.api.domain.MRDivision;
 
 import java.util.List;
@@ -53,4 +54,6 @@ public interface MRDivisionDAO {
      * @return all MR Divisions
      */
     public List<MRDivision> findAll();
+
+    public MRDivision getMRDivisionByCode(int mrDivisionId, DSDivision dsDivision);
 }

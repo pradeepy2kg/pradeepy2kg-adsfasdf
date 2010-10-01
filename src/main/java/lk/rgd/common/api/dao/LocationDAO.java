@@ -12,28 +12,34 @@ public interface LocationDAO {
 
     /**
      * Get the Location entry by PK
-     * @param locationUKey  location key
+     *
+     * @param locationUKey location key
      * @return the specific Location or null
      */
     public Location getLocation(int locationUKey);
 
     /**
      * Add a Location and create relationship to an already existing User and Location
+     *
      * @param userLocation the UserLocation to be added
-     * @param admin the user performing the action
+     * @param admin        the user performing the action
      */
     public void add(Location userLocation, User admin);
 
     /**
      * Update a Location
+     *
      * @param location the Location to be updated
-     * @param admin the user performing the action
+     * @param admin    the user performing the action
      */
     public void update(Location location, User admin);
 
     /**
      * Return all Locations that are active or inactive
+     *
      * @return filtered list of Locations
      */
     public List<Location> getAllLocations();
+
+    public Location getLocationByCode(int locationCode);
 }

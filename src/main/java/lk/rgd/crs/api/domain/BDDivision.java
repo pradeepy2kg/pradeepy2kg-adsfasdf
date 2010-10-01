@@ -9,16 +9,20 @@ import java.io.Serializable;
 /**
  * Represents a birth and death Registration BDDivision within a D.S. BDDivision of a District as maintained by the system.
  * A BDDivision has a unique ID, and multiple names in different languages that maps to the same ID
- *
+ * <p/>
  * Note: Marriage registration divisions and Birth/Death Registrar divisions are different
  *
  * @author asankha
  */
 @Entity
 @Table(name = "BD_DIVISIONS", schema = "CRS",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
-@NamedQuery(name = "findAllBDDivisions", query = "SELECT d FROM BDDivision d")
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"dsDivisionUKey", "divisionId"})})
+@NamedQueries({
+        @NamedQuery(name = "findAllBDDivisions", query = "SELECT d FROM BDDivision d"),
+        @NamedQuery(name = "get.bdDivision.by.code", query = "SELECT d FROM BDDivision d " +
+                "WHERE d.divisionId =:bdDivisionId AND d.dsDivision=:dsDivision")
+})
 public class BDDivision implements Serializable {
 
     /**
@@ -49,13 +53,14 @@ public class BDDivision implements Serializable {
      * A B.D. Division maybe marked as inactive if one is split into two, or amalgamated to create a new one
      * The UI will only show B.D. Divisions that are currently active for every data entry form
      */
-    @Column(name="active", columnDefinition="smallint not null default 1")
+    @Column(name = "active", columnDefinition = "smallint not null default 1")
     private boolean active;
 
-    public BDDivision() {}
+    public BDDivision() {
+    }
 
     public BDDivision(DSDivision dsDivision, int divisionId,
-        String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
+                      String siDivisionName, String enDivisionName, String taDivisionName, boolean active) {
         this.dsDivision = dsDivision;
         this.divisionId = divisionId;
         this.siDivisionName = siDivisionName;

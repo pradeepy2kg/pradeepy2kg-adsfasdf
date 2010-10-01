@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +21,12 @@ import java.util.TreeMap;
  * @author asankha
  */
 public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
-    
+
     private final Map<Integer, Court> courtsByPK = new HashMap<Integer, Court>();
     private final Map<Integer, String> siCourts = new TreeMap<Integer, String>();
     private final Map<Integer, String> enCourts = new TreeMap<Integer, String>();
     private final Map<Integer, String> taCourts = new TreeMap<Integer, String>();
-    
+
     /**
      * @inheritDoc
      */
@@ -89,6 +90,18 @@ public class CourtDAOImpl extends BaseDAO implements CourtDAO, PreloadableDAO {
     public List<Court> findAll() {
         Query q = em.createNamedQuery("findAllCourts");
         return q.getResultList();
+    }
+
+    @Override
+    public Court getCourtByCode(int courtId) {
+        Query q = em.createNamedQuery("get.court.by.code");
+        q.setParameter("courtId",courtId);
+        try {
+            return (Court) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return null;
+        }
     }
 
 

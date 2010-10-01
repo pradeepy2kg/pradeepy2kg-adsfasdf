@@ -141,4 +141,5 @@ public interface MasterDataManagementService {
      * @param user user invoking the action
      */
     public void inactivateCourt(int courtUKey, User user);
+    
 }
