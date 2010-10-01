@@ -64,7 +64,7 @@ public class MRDivisionDAOImpl extends BaseDAO implements MRDivisionDAO, Preload
         return AppConstants.EMPTY_STRING;
     }
 
-    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public MRDivision getMRDivisionByPK(int mrDivision) {
         return em.find(MRDivision.class, mrDivision);
     }

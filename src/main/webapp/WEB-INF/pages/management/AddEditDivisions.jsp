@@ -36,18 +36,6 @@
     // any other = passing district, will return DS list and the BD list for the first DS
 
     $(function() {
-        $('select#addDsDivisionDistrictId').bind('change', function(evt1) {
-            var id = $("select#addDsDivisionDistrictId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
-                    function(data) {
-                        var options1 = '';
-                        var ds = data.dsDivisionList;
-                        for (var i = 0; i < ds.length; i++) {
-                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
-                        }
-                        $("select#addDsDivisionDsDivisionId").html(options1);
-                    });
-        });
         $('select#adddivisionDistrictId').bind('change', function(evt1) {
             var id = $("select#adddivisionDistrictId").attr("value");
             $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
@@ -58,28 +46,22 @@
                             options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
                         $("select#adddivisionDsDivisionId").html(options1);
-
-                        var options2 = '';
-                        var bd = data.bdDivisionList;
-                        for (var j = 0; j < bd.length; j++) {
-                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
-                        }
-                        $("select#adddivisionDivisionId").html(options2);
                     });
         });
-
-        $('select#adddivisionDsDivisionId').bind('change', function(evt2) {
-            var id = $("select#adddivisionDsDivisionId").attr("value");
-            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+        $('select#addMrDivisionDistrictId').bind('change', function(evt1) {
+            var id = $("select#addMrDivisionDistrictId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id,mode:3},
                     function(data) {
-                        var options = '';
-                        var bd = data.bdDivisionList;
-                        for (var i = 0; i < bd.length; i++) {
-                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
                         }
-                        $("select#adddivisionDivisionId").html(options);
+                        $("select#addMrDivisionDsDivisionId").html(options1);
                     });
         });
+
+
     });
     function validate() {
         var errormsg = "";
@@ -281,12 +263,12 @@
                             <tr>
 
                                 <td>District</td>
-                                <td><s:select id="adddivisionDistrictId" name="UserDistrictId"
+                                <td><s:select id="addMrDivisionDistrictId" name="UserDistrictId"
                                               list="districtList"/></td>
                             </tr>
                             <tr>
                                 <td>Divisional Secretariat</td>
-                                <td><s:select id="adddivisionDsDivisionId" name="dsDivisionId"
+                                <td><s:select id="addMrDivisionDsDivisionId" name="dsDivisionId"
                                               list="dsDivisionList"/></td>
                             </tr>
                             </tbody>
@@ -390,14 +372,14 @@
             onsubmit="javascript:return validate()">
         <table class="add-inactive-divisions-outer-table" cellspacing="0" align="center" style="margin-top:15px;">
             <s:if test="!((pageType==1) ||(pageType==5) ||(pageType==6))">
-                <tr>
-                    <td colspan="2" headers="10px;">District</td>
+                <tr style="height:35px;">
+                    <td colspan="2">District</td>
                     <s:textfield name="UserDistrictId" cssStyle="visibility:hidden;"/>
                     <td><s:label name="" value="%{districtEn}" cssStyle=" margin-left:15px;"/></td>
                 </tr>
             </s:if>
             <s:if test="pageType==3 ||pageType==4">
-                <tr>
+                <tr style="height:35px;">
                     <s:textfield name="dsDivisionId" cssStyle="visibility:hidden;"/>
                     <td colspan="2">Divisional Secretariat</td>
                     <td><s:label name="" value="%{dsDivisionEn}" cssStyle=" margin-left:15px;"/></td>
@@ -484,8 +466,8 @@
             <tr>
                 <th><s:label name="name" value="    "/></th>
                 <th><s:label name="name" value="Name"/></th>
-                <th><s:label name="inactive" value="Inactive"/></th>
-                <th><s:label name="active" value="Active"/></th>
+                <th><s:label name="inactive" value=""/></th>
+                <th><s:label name="active" value=""/></th>
                 <s:set name="allowEdit" value="true"/>
             </tr>
             </thead>
@@ -545,11 +527,15 @@
                     <s:if test="pageType==4">
                         <s:url id="inactiveSelected" action="eprInactiveDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
-                            <s:param name="UserDistrictId" value="dsDivisionUKey"/>
+                            <s:param name="UserDistrictId" value="UserDistrictId"/>
+                            <s:param name="mrdivisionId" value="mrDivisionUKey"/>
+                            <s:param name="dsDivisionId" value="dsDivisionId"/>
                         </s:url>
                         <s:url id="activeSelected" action="eprActiveDivisionsAndDsDivisions.do">
                             <s:param name="pageType" value="pageType"/>
-                            <s:param name="dsDivisionId" value="dsDivisionUKey"/>
+                            <s:param name="UserDistrictId" value="UserDistrictId"/>
+                            <s:param name="mrdivisionId" value="mrDivisionUKey"/>
+                            <s:param name="dsDivisionId" value="dsDivisionId"/>
                         </s:url>
                     </s:if>
                     <s:if test="pageType==5">

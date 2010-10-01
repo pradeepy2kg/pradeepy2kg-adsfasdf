@@ -150,7 +150,6 @@ public class MasterDataManagementServiceImpl implements MasterDataManagementServ
     }
 
     private void updateMRActivation(int mrDivisionUKey, boolean activate, User user) {
-
         if (user.isAuthorized(Permission.SERVICE_MASTER_DATA_MANAGEMENT)) {
             try {
                 MRDivision existing = mrDivisionDAO.getMRDivisionByPK(mrDivisionUKey);
