@@ -1,7 +1,283 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+
 <div id="death-alteration-outer">
 <s:form method="post" action="eprCaptureDeathAlteration.do">
+<script type="text/javascript">
+var act;
+var informPerson;
+function setInformPerson(nICorPIN, name, address, tp, email)
+{
+    var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
+    var informantNICorPIN = document.getElementById("declarantName").value = name;
+    var informantAddress = document.getElementById("declarantAddress").value = address;
+    var informantTP = document.getElementById("declarant_tp").value = tp;
+    var informantEmail = document.getElementById("declarant_email").value = email;
+}
+
+function setAct(value) {
+    if (value == 7) {
+        act = 53;
+    } else {
+        act = 52;
+    }
+}
+
+function validateAct(value) {
+    if (value != act) {
+        alert("add massage conflict with selected act and row number 10")
+    }
+}
+
+$(function() {
+    $("#deathDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+$(function() {
+    $("#reciveDatePicker").datepicker({
+        changeYear: true,
+        yearRange: '1960:2020',
+        dateFormat:'yy-mm-dd',
+        startDate:'2000-01-01',
+        endDate:'2040-12-31'
+    });
+});
+
+/* time picker */
+(function($) {
+    $.cantipi = function(el, options) {
+        var base = this;
+        var minutes;
+        var hours;
+        var ctx;
+        var ampm = false;
+        var size;
+
+        base.$el = $(el);
+        base.el = el;
+        base.$el.data("cantipi", base);
+
+        base.init = function() {
+            base.options = $.extend({}, $.cantipi.defaultOptions, options);
+            size = base.options.size;
+
+            var canvas = document.createElement('canvas');
+            canvas.height = size;
+            canvas.width = size;
+            // Without this canvas can't get focus and can't fire blur event
+            canvas.tabIndex = 1;
+            canvas.style.display = 'none';
+            canvas.style.position = 'absolute';
+            canvas.style.background = '#FFF';
+            var offset = base.$el.offset();
+            canvas.style.top = offset.top + el.offsetHeight;
+            canvas.style.left = offset.left;
+
+            canvas.onmousedown = clickclock;
+            canvas.addEventListener('blur', function(e) {
+                canvas.style.display = 'none'
+            }, true);
+
+            ctx = canvas.getContext('2d');
+
+            var now = new Date();
+            minutes = now.getMinutes();
+            hours = now.getHours() % 12;
+
+            el.onfocus = function() {
+                canvas.style.display = 'block';
+                canvas.focus();
+            };
+
+            base.$el.after(canvas);
+            draw();
+        };
+
+        var clickclock = function(e) {
+            point = getMouse(e);
+            sethours(point);
+            var hr24 = ampm ? hours : hours + 12;
+            base.el.value = ('0' + hr24).substr(-2, 2) + ':' + ('0' + minutes).substr(-2, 2);
+            draw();
+        }
+
+        function draw() {
+
+            ctx.save();
+            ctx.clearRect(0, 0, size, size);
+            ctx.translate(size / 2, size / 2);
+            ctx.scale(size / 100, size / 100);
+            ctx.rotate(-Math.PI / 2);
+            ctx.strokeStyle = "#20";
+            ctx.fillStyle = "white";
+            ctx.lineWidth = 2;
+            ctx.lineCap = "round";
+
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.fillStyle = '#BABA00';
+            ctx.arc(0, 0, 35, 0, Math.PI * 2, true);
+            ctx.fill();
+
+
+            // Hour marks
+            ctx.save();
+            for (var i = 0; i < 12; i++) {
+                ctx.beginPath();
+                ctx.rotate(Math.PI / 6);
+                ctx.moveTo(41, 0);
+                ctx.lineTo(47, 0);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // Minute marks
+            ctx.save();
+            ctx.lineWidth = 1;
+            for (i = 0; i < 60; i++) {
+                if (i % 5 != 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(47, 0);
+                    ctx.lineTo(44, 0);
+                    ctx.stroke();
+                }
+                ctx.rotate(Math.PI / 30);
+            }
+            ctx.restore();
+
+            // write Hours
+            ctx.save();
+            ctx.rotate(hours * (Math.PI / 6) + (Math.PI / 360) * minutes)
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-12, 0);
+            ctx.lineTo(38, 0);
+            ctx.stroke();
+            ctx.beginPath();
+
+            ctx.beginPath();
+            ctx.arc(28, 0, 4, 0, Math.PI * 2, true);
+            ctx.stroke();
+
+            ctx.restore();
+
+            // write Minutes
+            ctx.save();
+            ctx.rotate((Math.PI / 30) * minutes)
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(-14, 0);
+            ctx.lineTo(44, 0);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(34, 0, 5, 0, Math.PI * 2, true);
+            ctx.stroke();
+            ctx.restore();
+
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#BABA00';
+            ctx.arc(0, 0, 49, 0, Math.PI * 2, true);
+            ctx.stroke();
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = "white";
+            ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+            ctx.fill();
+            ctx.rotate(Math.PI / 2);
+            var i = ampm ? 'AM' : 'PM';
+            ctx.font = 'normal 900 9px Lucida Grande';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = "black";
+            ctx.fillText(i, 0, 0);
+            ctx.restore();
+
+            ctx.restore();
+
+        }
+
+        function getTrueOffsetLeft(ele)
+        {
+            var n = 0;
+            while (ele)
+            {
+                n += ele.offsetLeft || 0;
+                ele = ele.offsetParent;
+            }
+            return n;
+        }
+
+        function getTrueOffsetTop(ele)
+        {
+            var n = 0;
+            while (ele)
+            {
+                n += ele.offsetTop || 0;
+                ele = ele.offsetParent;
+            }
+            return n;
+        }
+
+
+        function getMouse(e) {
+            var x = e.clientX - getTrueOffsetLeft(e.target) + window.pageXOffset - size / 2;
+            var y = e.clientY - getTrueOffsetTop(e.target) + window.pageYOffset - size / 2;
+            return { x:x, y:y };
+        }
+
+        ;
+
+        function sethours(point) {
+            var tumbler = ctx.isPointInPath(point.x + size / 2, point.y + size / 2);
+            ampm = tumbler ? !ampm : ampm;
+            if (tumbler) return;
+
+            var angle = Math.atan2(point.y, point.x) + Math.PI * 2;
+            var distance = Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
+            if (distance < size * 35 / 100) {
+                hours = (Math.floor(angle / (Math.PI / 6)) + 3) % 12;
+            } else {
+                minutes = Math.floor((Math.floor((angle / (Math.PI / 30)) + 15) % 60) / base.options.roundto) * base.options.roundto;
+            }
+        }
+
+        base.init();
+    };
+
+    $.cantipi.defaultOptions = {
+        size:150,
+        roundto: 1
+    };
+
+    $.fn.cantipi = function(options) {
+        return this.each(function() {
+            var clock = new $.cantipi(this, options);
+        });
+    };
+
+})(jQuery);
+
+
+$(function() {
+    $("#deathTimePicker").cantipi({size:140, roundto: 5});
+});
+<%--end of time picker--%>
+
+</script>
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
     <tr>
         <td width="30%"></td>
@@ -20,23 +296,25 @@
                         <s:label value=" Serial Number"/>
                     </td>
                     <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
-                                                 /></td>
+                            /></td>
                 </tr>
                 <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>
                         <s:label value="பிறப்பைப் பதிவு திி"/> <br>
                         <s:label value="Date of Acceptance"/>
                     </td>
-                    <td><s:textfield id="acceptanceDate" name="dateReceived"/></td>
+                    <td><s:textfield id="reciveDatePicker" name="deathAlteration.dateReceived"/></td>
                 <tr>
                     <td><s:label value="පනතේ වගන්තිය "/><br>
                         <s:label value="பிறப்பைப்"/> <br>
                         <s:label value="Section of the Act"/>
                     </td>
-                    <td><%--<s:select
-                                list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                                name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" disabled="true"
-                                id="sectionOfAct"/>--%></td>
+                    <td>
+                        <s:select
+                                list="#@java.util.HashMap@{'1':'52(1) a','2':'52(1) b','3':'52(1) d','4':'52(1) e','5':'52(1) h','6':'52(1) i','7':'53'}"
+                                name="register.preferredLanguage"
+                                cssStyle="width:190px; margin-left:5px;" onchange="setAct(value)"/>
+                    </td>
 
                 </tr>
             </table>
@@ -86,48 +364,55 @@
     <col style="width:20%"/>
     <tbody>
     <tr>
-        <td colspan="2">සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
+        <td colspan="2">(1)සහතිකයේ සඳහන් පුද්ගලයාගේ අනන්‍යතා අංකය <br>
             தனிநபர்அடையாள எண் <br>
             Person Identification Number (PIN) stated in the Certificate
         </td>
         <td>
-             <s:property value="deathRegister.deathPerson.deathPersonPINorNIC"/>
+            <s:property value="deathRegister.deathPerson.deathPersonPINorNIC"/>
         </td>
-        <td>සහතික පත්‍රයේ අංකය <br>
+        <td>(2)සහතික පත්‍රයේ අංකය <br>
             சான்றிதழ் இல <br>
             Certificate Number
         </td>
         <td>
-        <s:property value="deathRegister.idUKey"/>
+            <s:property value="deathRegister.idUKey"/>
         </td>
     </tr>
     <tr>
-        <td>දිස්ත්‍රික්කය <br>
+        <td>(3)දිස්ත්‍රික්කය <br>
             மாவட்டம் <br>
             District
         </td>
-        <td><s:label name="districtName"/></td>
-        <td>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
+        <td>
+            <s:property value="district"/>
+        </td>
+        <td>(4)ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
             பிரிவு <br>
             Divisional Secretariat
         </td>
-        <td colspan="2"><s:label name="dsDivisionName"/></td>
+        <td colspan="2"><s:property value="dsDivision"/></td>
     </tr>
     <tr>
-        <td>ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
+        <td>(5)ලියාපදිංචි කිරීමේ කොට්ඨාශය <br>
             பிரிவு <br>
             Registration Division
         </td>
-        <td><s:label name="bdDivisionName"/></td>
-        <td>ලියාපදිංචි කිරීමේ අංකය <br>
+        <td>
+            <s:property value="deathDivision"/>
+        </td>
+        <td>(6)ලියාපදිංචි කිරීමේ අංකය <br>
             சான்றிதழ் இல <br>
             Registration Number
         </td>
-        <td colspan="2"><s:label name="serialNo"/></td>
+        <td colspan="2">
+            <s:property value="deathRegister.death.deathSerialNo"/>
+        </td>
     </tr>
     </tbody>
 </table>
 <br>
+<%--
 <table class="death-alteration-table-style01" style="width:1030px;border-top:50px">
     <tr>
         <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
@@ -138,6 +423,7 @@
     </tr>
 </table>
 <br>
+
 <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;" cellpadding="2px">
     <caption></caption>
     <col width="350px">
@@ -168,6 +454,7 @@
     </tr>
 </table>
 <br>
+--%>
 <table class="death-alteration-table-style01" style="width:1030px;border-top:50px">
     <tr>
         <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
@@ -198,13 +485,21 @@
             xx <br>
             Yes (Section 53)
         </td>
-        <td>xxxxxxx</td>
+        <td align="center">
+            <s:radio name=""
+                     list="#@java.util.HashMap@{'53':''}"
+                     id="act53" onclick="validateAct(value)"/>
+        </td>
         <td>
             නැත (52 (1) වගන්තිය) <br>
             xx <br>
             No (Section 52 (1))
         </td>
-        <td>xxxxxxx</td>
+        <td align="center">
+            <s:radio name=""
+                     list="#@java.util.HashMap@{'52':''}"
+                     id="act52" onclick="validateAct(value)"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -212,13 +507,17 @@
             பிறந்த திகதி <br>
             Date of Death
         </td>
-        <td colspan="2"></td>
+        <td colspan="2" align="center">
+            <s:textfield name="deathAlteration.dateOfDeath" id="deathDatePicker" value="%{deathRegister.death.dateOfDeath}"/>
+        </td>
         <td>
             වෙලාව <br>
             in tamil<br>
             Time
         </td>
-        <td></td>
+        <td align="center">
+            <s:textfield name="deathAlteration.timeOfDeath" id="deathTimePicker" value="%{deathRegister.death.timeOfDeath}"/>
+        </td>
     </tr>
     <tr>
         <td rowspan="2">
@@ -231,7 +530,9 @@
             சிங்களம் தமிழ் <br>
             In Sinhala or Tamil
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textfield name="deathAlteration.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath" value="%{deathRegister.death.placeOfDeath}"/>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -239,7 +540,12 @@
             in tamil <br>
             In English
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textfield name="deathAlteration.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
+                         cssStyle="width:99%;" value="%{deathRegister.death.placeOfDeathInEnglish}"/>
+            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+                 id="place">
+        </td>
     </tr>
     <tr>
         <td>(13)මරණයට හේතුව තහවුරුද? <br>
@@ -249,29 +555,43 @@
         <td colspan="2">
             නැත / xx / No
         </td>
-        <td></td>
+        <td align="center">
+            <s:radio name="deathAlteration.causeOfDeathEstablished"
+                     list="#@java.util.HashMap@{'false':''}"
+                     id="" value="%{deathRegister.death.causeOfDeathEstablished}"/>
+        </td>
         <td>ඔව් / xx /Yes</td>
-        <td></td>
+        <td align="center">
+            <s:radio name="deathAlteration.causeOfDeathEstablished"
+                     list="#@java.util.HashMap@{'true':''}"
+                     id="" value="%{deathRegister.death.causeOfDeathEstablished}"/>
+        </td>
     </tr>
     <tr>
         <td>(14)මරණයට හේතුව <br>
             in tamil <br>
             Cause of death
         </td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <s:textarea name="deathAlteration.causeOfDeath" value="%{deathRegister.death.causeOfDeath}" cssStyle="width:420px; "/>
+        </td>
         <td>
             (15)හේතුවේ ICD කේත අංකය <br>
             in tamil <br>
             ICD Code of cause
         </td>
-        <td></td>
+        <td>
+            <s:textfield name="deathAlteration.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}" cssStyle="width:225px;"/>
+        </td>
     </tr>
     <tr>
         <td>(16)ආදාහන හෝ භූමදාන ස්ථානය <br>
             in tamil <br>
             Place of burial or cremation
         </td>
-        <td colspan="5"></td>
+        <td colspan="5">
+            <s:textarea name="deathAlteration.placeOfBurial" value="%{deathRegister.death.placeOfBurial}" id="placeOfBurial" cssStyle="width:99%;"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -303,7 +623,13 @@
             தனிநபர் அடையாள எண் <br>
             Identification Number
         </td>
-        <td colspan="3" rowspan="2"></td>
+        <td colspan="3" rowspan="2">
+            <s:textfield name="deathRegister.deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
+                         cssStyle="float:left;"/>
+            <img src="<s:url value="/images/search-father.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
+        </td>
+
         <td rowspan="2">
             (18)විදේශිකය‍කු නම් <br>
             வெளிநாட்டவர் <br>
@@ -314,7 +640,10 @@
             நாடு <br>
             Country
         </td>
-        <td>bbbbbbbbbbbbbbbbbbbb</td>
+        <td>
+                <%--            <s:select id="deathPersonCountryList" name="#" list="countryList" headerKey="0"
+                headerValue="%{getText('select_country.label')}"/>--%>
+        </td>
     </tr>
     <tr>
         <td>
@@ -322,7 +651,9 @@
             கடவுச் சீட்டு <br>
             Passport No.
         </td>
-        <td>bbbbbbbbbbbbbbbbb</td>
+        <td>
+            <s:textfield name="deathRegister.deathPerson.deathPersonPassportNo" cssStyle="width:180px;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -330,19 +661,28 @@
             பிறப்ப <br>
             Age or probable Age
         </td>
-        <td>vvvvvvvvvvvvvvvv</td>
+        <td><s:textfield name="deathRegister.deathPerson.deathPersonAge" cssStyle="width:180px;"/></td>
         <td>
             (20)ස්ත්‍රී පුරුෂ භාවය <br>
             பால் <br>
             Gender
         </td>
-        <td>vvvvvvvvvvvvvvvv</td>
+        <td>
+            <s:select
+                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                    name="deathRegister.deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                    id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
+        </td>
         <td>
             (21)ජාතිය <br>
             பிறப் <br>
             Race
         </td>
-        <td colspan="2"></td>
+        <td colspan="2">
+                <%--todo
+                            <s:select list="raceList" name="#" headerKey="0" headerValue="%{getText('select_race.label')}"
+                cssStyle="width:200px;" is="deathPersonRaceList/>--%>
+        </td>
     </tr>
     <tr>
         <td>
@@ -351,7 +691,9 @@
             பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
             Name in either of the official languages (Sinhala / Tamil)
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textarea name="deathRegister.deathPerson.deathPersonNameOfficialLang" cssStyle="width:99%;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -359,7 +701,9 @@
             பிறப்பு அத்தாட்சி ….. <br>
             Name in English
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textarea name="deathRegister.deathPerson.deathPersonNameInEnglish" cssStyle="width:99%;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -367,7 +711,9 @@
             தாயின் நிரந்தர வதிவிட முகவரி <br>
             Permanent Address
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textarea name="deathRegister.deathPerson.deathPersonPermanentAddress" cssStyle="width:99%;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -375,7 +721,9 @@
             தனிநபர் அடையாள எண் <br>
             Fathers Identification Number
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textfield name="deathRegister.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -383,7 +731,9 @@
             in tamil <br>
             Fathers full name
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textarea name="deathRegister.deathPerson.deathPersonFatherFullName" cssStyle="width:99%;"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -391,7 +741,9 @@
             தனிநபர் அடையாள எண் <br>
             Mothers Identification Number
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textfield name="deathRegister.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"/>
+        </td>
 
     </tr>
     <tr>
@@ -400,7 +752,9 @@
             in tamil <br>
             Mothers full name
         </td>
-        <td colspan="6">xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+        <td colspan="6">
+            <s:textarea name="deathRegister.deathPerson.deathPersonMotherFullName" cssStyle="width:99%;"/>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -446,7 +800,7 @@
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td colspan="2"><s:textarea name="otherDocuments"/></td>
+        <td colspan="2" style="width:98%"><s:textarea name="otherDocuments" cssStyle="width:98%"/></td>
     </tr>
 </table>
 <br>
@@ -471,7 +825,7 @@
     <col/>
     <tbody>
     <tr>
-        <td rowspan="2">
+        <td rowspan="2" width="200px">
             (30)දැනුම් දෙන්නේ කවරකු වශයෙන්ද <br>
             in tamil <br>
             Capacity for giving information
@@ -481,19 +835,32 @@
             in tamil <br>
             Father / Mother
         </td>
-        <td>ssssssssssss</td>
-        <td>
+        <td align="center">                                             <%--todo change--%>
+            <s:radio id="declarantType" name="declarant.declarantType"
+                     list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
+                     onchange="setInformPerson('','');"/>
+        </td>
+        <td align="center">
             ස්වාමිපුරුෂයා / භාර්යාව <br>
             in tamil <br>
             Husband / Wife
         </td>
-        <td>sssssssss</td>
+        <td width="45px" align="center">
+                <%--todo change--%>
+            <s:radio id="declarantType" name="declarant.declarantType"
+                     list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
+                     onchange="setInformPerson('','');"/>
+        </td>
         <td>
             සහෝදරයා සහෝදරිය <br>
             in tamil <br>
             Brother / Sister
         </td>
-        <td>ssssssssssssss</td>
+        <td align="center">
+            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+                     list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
+                     onchange="setInformPerson('','','','','');"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -501,27 +868,41 @@
             in tamil <br>
             Son / Daughter
         </td>
-        <td>ssssssssss</td>
+        <td align="center">
+            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+                     list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
+                     onchange="setInformPerson('','','','','');"/>
+        </td>
         <td>
             නෑයන් <br>
             பாதுகாவலர் <br>
             Relative
         </td>
-        <td>ssssssss</td>
+        <td align="center">
+            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+                     list="#@java.util.HashMap@{'RELATIVE':''}"
+                     onchange="setInformPerson('','','','','');"/>
+        </td>
         <td>
             වෙනත් <br>
             in tamil <br>
             Other
         </td>
-        <td>sssssss</td>
+        <td align="center">
+            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+                     list="#@java.util.HashMap@{'OTHER':''}"
+                     onchange="setInformPerson('','','','','');"/>
+        </td>
     </tr>
     <tr>
-        <td colspan="3">
+        <td colspan="1">
             (31)අනන්‍යතා අංකය <br>
             தனிநபர் அடையாள எண் <br>
             Identification Number
         </td>
-        <td colspan="4">ddddddddd</td>
+        <td colspan="6" align="left">
+            <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -529,7 +910,9 @@
             கொடுப்பவரின் பெயர் <br>
             Name
         </td>
-        <td colspan="6">bbbbbbbbbbbbbbb</td>
+        <td colspan="6">
+            <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%"/>
+        </td>
     </tr>
     <tr>
         <td>
@@ -537,8 +920,16 @@
             தபால் முகவரி <br>
             Postal Address
         </td>
-        <td colspan="6">bbbbbbbbbbbbbb</td>
+        <td colspan="6">
+            <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%"/>
+        </td>
     </tr>
+
+    </tbody>
+</table>
+<%--<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;border-top:none"
+       cellpadding="5px">
+    <tbody>
     <tr>
         <td>(34)ඇමතුම් විස්තර <br>
             இலக்க வகை <br>
@@ -549,19 +940,26 @@
             தொலைபேசி இலக்கம் <br>
             Telephone
         </td>
-        <td colspan="2">vvvv</td>
+        <td colspan="2" align="center">
+            <s:textfield id="declarant_tp" name="deathRegister.declarant.declarantPhone" maxLength="10"
+                         cssStyle="width:98%"/>
+        </td>
         <td>
             ඉ -තැපැල <br>
             மின்னஞ்சல் <br>
             Email
         </td>
-        <td colspan="2">vvvv</td>
+        <td colspan="2">
+            <s:textfield cssStyle="width:98%" id="declarant_email" name="deathRegister.declarant.declarantEMail"
+                         maxLength="10"/>
+        </td>
     </tr>
     </tbody>
-</table>
+</table>--%>
 <div class="form-submit">
     <s:submit value="%{getText('save.label')}"/>
 </div>
 <s:hidden name="pageNumber" value="1"/>
+<s:hidden name="deathId" value="%{deathRegister.idUKey}"/>
 </s:form>
 </div>

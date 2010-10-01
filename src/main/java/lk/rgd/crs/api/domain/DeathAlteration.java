@@ -61,15 +61,47 @@ public class DeathAlteration {
     // The date when the alteration request was received
     @Temporal(value = TemporalType.DATE)
     private Date dateReceived;
+/*
+    @Embedded
+    private DeathInfo death = new DeathInfo();*/
 
     @Embedded
-    private Alteration52_1 alt52_1;
+    private DeathPersonInfo deathPerson = new DeathPersonInfo();
 
     @Embedded
-    private DeclarantInfo declarant;
+    private DeclarantInfo declarant = new DeclarantInfo();
 
     @Embedded
     private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
+
+    @Column(nullable = false, length = 255)
+    private String placeOfDeath;
+
+    @Column(nullable = false)
+    @Temporal(value = TemporalType.DATE)
+    private Date dateOfDeath;
+
+    @Column(nullable = true)
+    private String timeOfDeath;
+
+    @Column(nullable = true, length = 255)
+    private String placeOfDeathInEnglish;
+
+    /**
+     * 1-Yes, 0-No
+     */
+    @Column(nullable = true)
+    private boolean causeOfDeathEstablished;
+
+    @Column(nullable = true, length = 600)
+    private String causeOfDeath;
+
+    @Column(nullable = true)
+    private String icdCodeOfCause;
+
+    @Column(nullable = false)
+    private String placeOfBurial;
+
 
     @Column
     private boolean bcOfFather;
@@ -86,6 +118,13 @@ public class DeathAlteration {
 
     @Column
     private float stampFee;
+
+    /**
+     * The Birth/Death registration division where the birth is registered (Includes District)
+     */
+    @ManyToOne
+    @JoinColumn(name = "bdDivisionUKey", nullable = true, insertable = false, updatable = false)
+    private BDDivision deathDivision;
 
     public State getStatus() {
         return status;
@@ -135,13 +174,6 @@ public class DeathAlteration {
         this.dateReceived = dateReceived;
     }
 
-    public Alteration52_1 getAlt52_1() {
-        return alt52_1;
-    }
-
-    public void setAlt52_1(Alteration52_1 alt52_1) {
-        this.alt52_1 = alt52_1;
-    }
 
     public DeclarantInfo getDeclarant() {
         return declarant;
@@ -205,5 +237,85 @@ public class DeathAlteration {
 
     public void setBcOfFather(boolean bcOfFather) {
         this.bcOfFather = bcOfFather;
+    }
+
+    public DeathPersonInfo getDeathPerson() {
+        return deathPerson;
+    }
+
+    public void setDeathPerson(DeathPersonInfo deathPerson) {
+        this.deathPerson = deathPerson;
+    }
+
+    public BDDivision getDeathDivision() {
+        return deathDivision;
+    }
+
+    public void setDeathDivision(BDDivision deathDivision) {
+        this.deathDivision = deathDivision;
+    }
+
+    public String getPlaceOfDeath() {
+        return placeOfDeath;
+    }
+
+    public void setPlaceOfDeath(String placeOfDeath) {
+        this.placeOfDeath = placeOfDeath;
+    }
+
+    public Date getDateOfDeath() {
+        return dateOfDeath;
+    }
+
+    public void setDateOfDeath(Date dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
+    }
+
+    public String getTimeOfDeath() {
+        return timeOfDeath;
+    }
+
+    public void setTimeOfDeath(String timeOfDeath) {
+        this.timeOfDeath = timeOfDeath;
+    }
+
+    public String getPlaceOfDeathInEnglish() {
+        return placeOfDeathInEnglish;
+    }
+
+    public void setPlaceOfDeathInEnglish(String placeOfDeathInEnglish) {
+        this.placeOfDeathInEnglish = placeOfDeathInEnglish;
+    }
+
+    public boolean isCauseOfDeathEstablished() {
+        return causeOfDeathEstablished;
+    }
+
+    public void setCauseOfDeathEstablished(boolean causeOfDeathEstablished) {
+        this.causeOfDeathEstablished = causeOfDeathEstablished;
+    }
+
+    public String getCauseOfDeath() {
+        return causeOfDeath;
+    }
+
+    public void setCauseOfDeath(String causeOfDeath) {
+        this.causeOfDeath = causeOfDeath;
+    }
+
+    public String getIcdCodeOfCause() {
+        return icdCodeOfCause;
+    }
+
+    public void setIcdCodeOfCause(String icdCodeOfCause) {
+        this.icdCodeOfCause = icdCodeOfCause;
+    }
+
+    public String getPlaceOfBurial() {
+        return placeOfBurial;
+    }
+
+    public void setPlaceOfBurial(String placeOfBurial) {
+        this.placeOfBurial = placeOfBurial;
     }
 }

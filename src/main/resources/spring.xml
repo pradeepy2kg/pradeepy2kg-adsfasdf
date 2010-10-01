@@ -353,5 +353,8 @@
     <bean id="deathAlterationAction" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction">
         <constructor-arg ref="deathAlterationService"/>
         <constructor-arg ref="deathRegisterService"/>
+        <constructor-arg ref="districtDAOImpl"/>
+        <constructor-arg ref="dsDivisionDAOImpl"/>
+        <constructor-arg ref="bdDivisionDAOImpl"/>
     </bean>
 </beans>
