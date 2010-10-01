@@ -61,7 +61,7 @@
 <div id="page1" style="page-break-after:always;">
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td align="center" style="font-size:12pt">
+        <td align="center" style="font-size:15pt">
             <img src="<s:url value="/images/official-logo.png" />" alt=""><br>
             <label>
                 රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව
@@ -89,7 +89,7 @@
         </td>
     </tr>
     <tr>
-        <td style="font-size:12pt;">
+        <td style="font-size:13pt;">
             දරුකමට හදාගත් ළමයෙකුගේ උපත නැවත ලියාපදිංචි කිරීම
             <br> மகவேற்புச் செய்யப்பட்ட பிள்ளையின் பிறப்பினை மீண்டும் பதிவு செய்தல்
             <br>Re-registration of the birth of an Adopted Child
@@ -109,7 +109,7 @@
 <table cellspacing="0" cellpadding="0" border="1" width="100%"
        style="margin-top:10px;float:left;border:1px solid #000; border-collapse:collapse;">
     <tr>
-        <td width="330px" height="40px">
+        <td width="330px" height="60px">
             අධිකරණය
             <br>நீதிமன்றம்
             <br>Court
@@ -117,7 +117,7 @@
         <td><s:label name="courtName"/></td>
     </tr>
     <tr>
-        <td height="40px">
+        <td height="60px">
             නියෝගය නිකුත් කල දිනය
             <br>கட்டளை வழங்கப்பட்ட திகதி
             <br>Issued Date
@@ -126,7 +126,7 @@
         </td>
     </tr>
     <tr>
-        <td height="40px">
+        <td height="60px">
             නියෝග අංකය
             <br>கட்டளை இலக்கம்
             <br>Serial number
@@ -157,7 +157,7 @@
 
 <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
     <tr>
-        <td height="40px" width="330px">
+        <td height="60px" width="330px">
             <label>
                 ලියාපදිංචි කිරීමේ අනුක්‍රමික අංකය
                 <br>பதிவு செய்தலின் தொடா் இலக்கம்
@@ -173,13 +173,13 @@
 </table>
 
 <ol>
-    <li>
-        <u style="font-size:14px">
+    <li style="font-size:13px">
+        <u style="font-size:15px">
             ලියාපදිංචි දරු ලේඛනයේ සහතික පිටපතක් (දරු සහතිකය) ලබාගැනීම
             <br>பதிவு செய்யப்பட்ட மகவேற்புப் பதிவேட்டின் பிரதியினை ( மகவேற்புச் சான்றிதழ்) பெற்றுக் கொள்ளல்
             <br>Obtaining a copy of the Certificate of Adoption </u>
 
-        <br>මේ සමග ඒවා ඇති දරු සහතික ඉල්ලුම් පත්‍රය නිසි පරිදි සම්පුර්ණ කර රු 25/- ක් වටිනා වලංගු මුද්දර එහි අලවා
+        <br><br>මේ සමග ඒවා ඇති දරු සහතික ඉල්ලුම් පත්‍රය නිසි පරිදි සම්පුර්ණ කර රු 25/- ක් වටිනා වලංගු මුද්දර එහි අලවා
         පහත සඳහන් ලිපිනයට එවන්න. ඔබගේ අයදුම්පත්‍රය සමග ඔබගේ නිවැරදි ලිපිනය සඳහන්, නියමිත තැපැල් ගාස්තු සඳහා
         මුද්දර අලවන ලද දිග ලියුම් කවරයක් ද අමුණ එවන්න.
         <br>இத்துடன் அனுப்பப்பட்டுள்ள மகவேற்புச் சான்றிதழ் விண்ணப்பப்படிவத்தினை உரியவாறு பூா்த்தி செய்து 25/-
@@ -192,9 +192,9 @@
         <br><br>
         <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
             <tr>
-                <td>
+                <td height="90px">
                     <label>
-                        රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
+                        රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව ,
                         <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
                         <br>බත්තරමුල්ල
                     </label>
@@ -216,9 +216,13 @@
             </tr>
         </table>
     </li>
+    </ol>
+</div>
 
-    <li>
-        <u style="font-size:14px">
+<div id="page2" style="page-break-after:always;">
+   <ol start="2">
+    <li style="font-size:13px">
+        <u style="font-size:15px">
             දරුවා හදාගන්නා මව්පියන් දරුවාගේ ජනක මව්පියන් වශයෙන් ඇතුලත් කර දරුවාගේ උපත නැවත ලියාපදිංචි කිරීම
             <br>மகவேற்பு செய்யும் பெற்றோர்களை பிள்ளையின் சொந்த பெற்றோராக உட்புகுத்துவதற்கு பிறப்பினை மீள பதிவு
             செய்தல்
@@ -261,9 +265,9 @@
         <br>
         <table class="adoption-reg-form-03-table01" cellspacing="0" cellpadding="0">
             <tr>
-                <td>
+                <td height="90px">
                     <label>
-                        රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව
+                        රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුව,
                         <br>234 / A 3, ඩෙන්සිල් කොබ්බැකඩුව මාවත,
                         <br>බත්තරමුල්ල
                     </label>
@@ -285,27 +289,33 @@
             </tr>
         </table>
     </li>
-    <br> මෙයට විශ්වාසී
-    <br>தங்கள் விசுவாசமுள்ள
-    <br>Yours Faithfully
-
-    <br><br>
-    රේජිස්ට්‍රර් ජනරාල් වෙනුවට
-    <br> பதிவாளா் நாயகத்திற்கு பதிலாக
-    <br>For, Registrar General
-
 </ol>
+<table style="float:right;">
+    <tr>
+        <td align="right">
+<br><br><br> මෙයට විශ්වාසී
+    <br>தங்கள் விசுவாசமுள்ள
+    <br>Yours Faithfully        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <br><br><br>රේජිස්ට්‍රර් ජනරාල් වෙනුවට
+                <br> பதிவாளா் நாயகத்திற்கு பதிலாக
+                <br>For, Registrar General
+           </td>
+    </tr>
 
-
+</table>
 </div>
+
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td style="font-size:16px">
+        <td style="font-size:18px">
             රෙජිස්ට්‍රාර් ජෙනරාල් දෙපාර්තමේන්තුව / பதிவாளா் நாயகம் திணைக்களம்/Registrar General's Department
         </td>
     </tr>
     <tr>
-        <td>
+        <td style="font-size:16px">
             <br><br> දරුකමට ගැනීම පිලිබඳ ලේඛනයේ සහතික පිටපත් ලබා ගැනීම සඳහා අයදුම්පත
             <br>மகவேற்புச் சம்பந்தமான சான்றிதழின் பிரதியினை பெற்றுக்கொள்வதற்கான விண்ணப்பப்படிவம்
             <br>Application to obtain a certified copy of the Certificate of Adoption
@@ -332,7 +342,7 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>අයදුම් කරුගේ විස්තර / விண்ணப்பதாரியின் விபரங்கள்/ Applicants Details
+        <td style="font-size:16px">අයදුම් කරුගේ විස්තර / விண்ணப்பதாரியின் விபரங்கள்/ Applicants Details
         </td>
     </tr>
 </table>
@@ -412,7 +422,7 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>ළමයාගේ විස්තර / பிள்ளை பற்றிய தகவல்/ Child's Information
+        <td style="font-size:16px">ළමයාගේ විස්තර / பிள்ளை பற்றிய தகவல்/ Child's Information
         </td>
     </tr>
 </table>
@@ -456,7 +466,7 @@
 
 <table class="adoption-reg-form-header-table">
     <tr>
-        <td>
+        <td style="font-size:16px">
             අධිකරණ නියෝගය පිලිබඳ විස්තර<br/>
             Information about the Adoption Order
         </td>
@@ -525,6 +535,7 @@
     </tr>
     </tbody>
 </table>
+<br><br><br><br><br>
 </div>
 <div class="form-submit">
     <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
