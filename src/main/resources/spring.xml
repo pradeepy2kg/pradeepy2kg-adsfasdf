@@ -359,4 +359,11 @@
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
     </bean>
+
+    <bean id="eventsManagementAction" class="lk.rgd.crs.web.action.EventsManagementAction">
+        <constructor-arg ref="appParametersDAOImpl"/>
+        <constructor-arg ref="eventDAOImpl"/>
+        <constructor-arg ref="eventManagementService"/>
+    </bean>
+
 </beans>
