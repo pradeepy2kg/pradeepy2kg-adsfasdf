@@ -86,7 +86,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      */
     public String deathAlterationSearch() {
         populatePrimaryLists();
-        populateOtherLists();
+
         return SUCCESS;
     }
 
@@ -130,7 +130,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     populatePrimaryLists();
                     return ERROR;
                 }
-                populatePrimaryLists();
+                populateOtherLists();
                 //setting up death district    ds and death division
                 district = districtDAO.getNameByPK(deathRegister.getDeath().getDeathDistrict().getDistrictUKey(), language);
                 DSDivision division = deathRegister.getDeath().getDeathDivision().getDsDivision();

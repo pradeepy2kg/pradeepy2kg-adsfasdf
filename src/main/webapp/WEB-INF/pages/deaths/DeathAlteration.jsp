@@ -277,6 +277,90 @@ $(function() {
 });
 <%--end of time picker--%>
 
+/*show hide*/
+$(function() {
+    $('#death-info-min').click(function() {
+        minimize("death-info");
+    });
+    $('#death-info-max').click(function() {
+        maximize("death-info");
+    });
+
+
+    $('#death-person-info-min').click(function() {
+        minimize("death-person-info");
+    });
+    $('#death-person-info-max').click(function() {
+        maximize("death-person-info");
+    });
+    $('#death-info-check').click(function() {
+        document.getElementById("death-info-check").disabled = true;
+        var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
+                'ICD_code', 'placeOfBurial','act5353','act5252','cause_of_death_yesfalse','cause_of_death_notrue');
+        enableFields(fieldIds);
+    });
+
+    $('#death-person-info-check').click(function() {
+        document.getElementById("death-person-info-check").disabled = true;
+        var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
+                'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
+        enableFields(fieldIds);
+    });
+  });
+
+
+function enableFields(fieldIds) {
+    for (var i = 0; i < fieldIds.length; i++) {
+        document.getElementById(fieldIds[i]).disabled = false;
+    }
+}
+
+function minimize(id) {
+    document.getElementById(id).style.display = 'none';
+    document.getElementById(id + "-min").style.display = 'none';
+    document.getElementById(id + "-max").style.display = 'block';
+    document.getElementById(id + "-check").style.display = 'none';
+    document.getElementById(id + "-check-lable").style.display = 'none';
+
+}
+
+function maximize(id, click) {
+    document.getElementById(id).style.display = 'block';
+    document.getElementById(id + "-max").style.display = 'none';
+    document.getElementById(id + "-min").style.display = 'block';
+    document.getElementById(id + "-check").style.display = 'block';
+    document.getElementById(id + "-check-lable").style.display = 'block';
+
+}
+
+
+function initPage() {
+    var idNames;
+    var checkIdNames;
+    var fieldIds;
+    document.getElementById('placeOfDeath').disabled = true;
+    idNames = new Array('death-info', 'death-person-info');
+    checkIdNames = new Array('death-person-info-check', 'death-info-check');
+    fieldIds = new Array(
+            'deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish',
+            'cause_of_death', 'ICD_code', 'placeOfBurial', 'deathPerson_PINorNIC', 'deathPersonCountryList',
+            'passportNumber', 'deathAge', 'deathPersonGender', 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic',
+            'fatherName', 'fatherNIC', 'motherName', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue'
+            );
+
+    for (var i = 0; i < idNames.length; i++) {
+        document.getElementById(idNames[i]).style.display = 'none';
+        document.getElementById(idNames[i] + "-min").style.display = 'none';
+    }
+
+    for (var i = 0; i < checkIdNames.length; i++) {
+        document.getElementById(checkIdNames[i]).style.display = 'none';
+        document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
+    }
+    for (var i = 0; i < fieldIds.length; i++) {
+        document.getElementById(fieldIds[i]).disabled = true;
+    }
+}
 </script>
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
     <tr>
@@ -455,316 +539,360 @@ $(function() {
 </table>
 <br>
 --%>
-<table class="death-alteration-table-style01" style="width:1030px;border-top:50px">
+
+<table class="death-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
+
     <tr>
-        <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
+        <td style="font-size:11pt;text-align:center;margin-top:20px;border-right:none">
             <s:label value="මරණය පිලිබඳ විස්තර"/> <br>
             <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
             <s:label value="Information about the Death"/>
         </td>
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="death-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:3%">
+            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
+        </td>
+        <td style="width:2%;border-left:none">
+            <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
+            <div class="birth-alteration-maximize-icon" id="death-info-max">[+]</div>
+        </td>
     </tr>
 </table>
 <br>
-<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;" cellpadding="2px">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td>
-            (10)හදිසි මරණයක්ද ? <br>
-            in tamil <br>
-            Sudden death?
-        </td>
-        <td colspan="2">
-            ඔව් (53 වගන්තිය) <br>
-            xx <br>
-            Yes (Section 53)
-        </td>
-        <td align="center">
-            <s:radio name=""
-                     list="#@java.util.HashMap@{'53':''}"
-                     id="act53" onclick="validateAct(value)"/>
-        </td>
-        <td>
-            නැත (52 (1) වගන්තිය) <br>
-            xx <br>
-            No (Section 52 (1))
-        </td>
-        <td align="center">
-            <s:radio name=""
-                     list="#@java.util.HashMap@{'52':''}"
-                     id="act52" onclick="validateAct(value)"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            (11)මරණය සිදු වූ දිනය <br>
-            பிறந்த திகதி <br>
-            Date of Death
-        </td>
-        <td colspan="2" align="center">
-            <s:textfield name="deathAlteration.dateOfDeath" id="deathDatePicker"
-                         value="%{deathRegister.death.dateOfDeath}"/>
-        </td>
-        <td>
-            වෙලාව <br>
-            in tamil<br>
-            Time
-        </td>
-        <td align="center">
-            <s:textfield name="deathAlteration.timeOfDeath" id="deathTimePicker"
-                         value="%{deathRegister.death.timeOfDeath}"/>
-        </td>
-    </tr>
-    <tr>
-        <td rowspan="2">
-            (12)මරණය සිදු වූ ස්ථානය <br>
-            பிறந்த இடம் <br>
-            Place of Death
-        </td>
-        <td colspan="2">
-            සිංහල හෝ දෙමළ භාෂාවෙන් <br>
-            சிங்களம் தமிழ் <br>
-            In Sinhala or Tamil
-        </td>
-        <td colspan="3">
-            <s:textfield name="deathAlteration.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath"
-                         value="%{deathRegister.death.placeOfDeath}"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            ඉංග්‍රීසි භාෂාවෙන් <br>
-            in tamil <br>
-            In English
-        </td>
-        <td colspan="3">
-            <s:textfield name="deathAlteration.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
-                         cssStyle="width:99%;" value="%{deathRegister.death.placeOfDeathInEnglish}"/>
-            <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
-                 id="place">
-        </td>
-    </tr>
-    <tr>
-        <td>(13)මරණයට හේතුව තහවුරුද? <br>
-            in tamil <br>
-            Cause of death established?
-        </td>
-        <td colspan="2">
-            නැත / xx / No
-        </td>
-        <td align="center">
-            <s:radio name="deathAlteration.causeOfDeathEstablished"
-                     list="#@java.util.HashMap@{'false':''}"
-                     id="" value="%{deathRegister.death.causeOfDeathEstablished}"/>
-        </td>
-        <td>ඔව් / xx /Yes</td>
-        <td align="center">
-            <s:radio name="deathAlteration.causeOfDeathEstablished"
-                     list="#@java.util.HashMap@{'true':''}"
-                     id="" value="%{deathRegister.death.causeOfDeathEstablished}"/>
-        </td>
-    </tr>
-    <tr>
-        <td>(14)මරණයට හේතුව <br>
-            in tamil <br>
-            Cause of death
-        </td>
-        <td colspan="3">
-            <s:textarea name="deathAlteration.causeOfDeath" value="%{deathRegister.death.causeOfDeath}"
-                        cssStyle="width:420px; "/>
-        </td>
-        <td>
-            (15)හේතුවේ ICD කේත අංකය <br>
-            in tamil <br>
-            ICD Code of cause
-        </td>
-        <td>
-            <s:textfield name="deathAlteration.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}"
-                         cssStyle="width:225px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>(16)ආදාහන හෝ භූමදාන ස්ථානය <br>
-            in tamil <br>
-            Place of burial or cremation
-        </td>
-        <td colspan="5">
-            <s:textarea name="deathAlteration.placeOfBurial" value="%{deathRegister.death.placeOfBurial}"
-                        id="placeOfBurial" cssStyle="width:99%;"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
 
+<div id="death-info">
+    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+           cellpadding="2px">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td>
+                (10)හදිසි මරණයක්ද ? <br>
+                in tamil <br>
+                Sudden death?
+            </td>
+            <td colspan="2">
+                ඔව් (53 වගන්තිය) <br>
+                xx <br>
+                Yes (Section 53)
+            </td>
+            <td align="center">
+                <s:radio name=""
+                         list="#@java.util.HashMap@{'53':''}"
+                         id="act53" onclick="validateAct(value)"/>
+            </td>
+            <td>
+                නැත (52 (1) වගන්තිය) <br>
+                xx <br>
+                No (Section 52 (1))
+            </td>
+            <td align="center">
+                <s:radio name=""
+                         list="#@java.util.HashMap@{'52':''}"
+                         id="act52" onclick="validateAct(value)"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                (11)මරණය සිදු වූ දිනය <br>
+                பிறந்த திகதி <br>
+                Date of Death
+            </td>
+            <td colspan="2" align="center">
+                <s:textfield name="deathAlteration.dateOfDeath" id="deathDatePicker"
+                             value="%{deathRegister.death.dateOfDeath}"/>
+            </td>
+            <td>
+                වෙලාව <br>
+                in tamil<br>
+                Time
+            </td>
+            <td align="center">
+                <s:textfield name="deathAlteration.timeOfDeath" id="deathTimePicker"
+                             value="%{deathRegister.death.timeOfDeath}"/>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                (12)මරණය සිදු වූ ස්ථානය <br>
+                பிறந்த இடம் <br>
+                Place of Death
+            </td>
+            <td colspan="2">
+                සිංහල හෝ දෙමළ භාෂාවෙන් <br>
+                சிங்களம் தமிழ் <br>
+                In Sinhala or Tamil
+            </td>
+            <td colspan="3">
+                <s:textfield name="deathAlteration.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath"
+                             value="%{deathRegister.death.placeOfDeath}"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                ඉංග්‍රීසි භාෂාවෙන් <br>
+                in tamil <br>
+                In English
+            </td>
+            <td colspan="3">
+                <s:textfield name="deathAlteration.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
+                             cssStyle="width:99%;" value="%{deathRegister.death.placeOfDeathInEnglish}"/>
+                <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
+                     id="place">
+            </td>
+        </tr>
+        <tr>
+            <td>(13)මරණයට හේතුව තහවුරුද? <br>
+                in tamil <br>
+                Cause of death established?
+            </td>
+            <td colspan="2">
+                නැත / xx / No
+            </td>
+            <td align="center">
+                <s:radio name="deathAlteration.causeOfDeathEstablished"
+                         list="#@java.util.HashMap@{'false':''}"
+                         id="cause_of_death_yes" value="%{deathRegister.death.causeOfDeathEstablished}"/>
+            </td>
+            <td>ඔව් / xx /Yes</td>
+            <td align="center">
+                <s:radio name="deathAlteration.causeOfDeathEstablished"
+                         list="#@java.util.HashMap@{'true':''}"
+                         id="cause_of_death_no" value="%{deathRegister.death.causeOfDeathEstablished}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>(14)මරණයට හේතුව <br>
+                in tamil <br>
+                Cause of death
+            </td>
+            <td colspan="3">
+                <s:textarea name="deathAlteration.causeOfDeath" value="%{deathRegister.death.causeOfDeath}"
+                            cssStyle="width:420px;" id="cause_of_death"/>
+            </td>
+            <td>
+                (15)හේතුවේ ICD කේත අංකය <br>
+                in tamil <br>
+                ICD Code of cause
+            </td>
+            <td>
+                <s:textfield name="deathAlteration.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}"
+                             cssStyle="width:225px;" id="ICD_code"/>
+            </td>
+        </tr>
+        <tr>
+            <td>(16)ආදාහන හෝ භූමදාන ස්ථානය <br>
+                in tamil <br>
+                Place of burial or cremation
+            </td>
+            <td colspan="5">
+                <s:textarea name="deathAlteration.placeOfBurial" value="%{deathRegister.death.placeOfBurial}"
+                            id="placeOfBurial" cssStyle="width:99%;"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <br>
-<table class="death-alteration-table-style01" style="width:1030px;border-top:50px">
+
+<table class="death-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
+
     <tr>
-        <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;">
+        <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;border-right:none">
             <s:label value="මරණයට පත් වූ පුද්ගලයාගේ විස්තර"/> <br>
             <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
             <s:label value="Information about the person Departed"/>
         </td>
+        <td style="width:20%;text-align:right;border-right:none">
+            <div id="death-person-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
+        </td>
+        <td style="border-right:none;width:3%">
+            <s:checkbox id="death-person-info-check" name="editDeathPersonInfo" cssStyle="float:right;"/>
+        </td>
+        <td style="width:2%">
+            <div class="birth-alteration-minimize-icon" id="death-person-info-min">[-]</div>
+            <div class="birth-alteration-maximize-icon" id="death-person-info-max">[+]</div>
+        </td>
     </tr>
 </table>
 <br>
-<table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;" cellpadding="2px">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td rowspan="2">
-            (17)අනන්‍යතා අංකය <br>
-            தனிநபர் அடையாள எண் <br>
-            Identification Number
-        </td>
-        <td colspan="3" rowspan="2">
-            <s:textfield name="deathRegister.deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
-                         cssStyle="float:left;"/>
-            <img src="<s:url value="/images/search-father.png" />"
-                 style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
-        </td>
 
-        <td rowspan="2">
-            (18)විදේශිකය‍කු නම් <br>
-            வெளிநாட்டவர் <br>
-            If a foreigner
-        </td>
-        <td>
-            රට <br>
-            நாடு <br>
-            Country
-        </td>
-        <td>
-   <%--         <s:select id="deathPersonCountryList" name="#" list="countryList" headerKey="0"
-                      headerValue="%{getText('select_country.label')}"/>--%>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            ගමන් බලපත්‍ර අංකය <br>
-            கடவுச் சீட்டு <br>
-            Passport No.
-        </td>
-        <td>
-            <s:textfield name="deathRegister.deathPerson.deathPersonPassportNo" cssStyle="width:180px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (19)වයස හෝ අනුමාන වයස <br>
-            பிறப்ப <br>
-            Age or probable Age
-        </td>
-        <td><s:textfield name="deathRegister.deathPerson.deathPersonAge" cssStyle="width:180px;"/></td>
-        <td>
-            (20)ස්ත්‍රී පුරුෂ භාවය <br>
-            பால் <br>
-            Gender
-        </td>
-        <td>
-            <s:select
-                    list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="deathRegister.deathPerson.deathPersonGender" headerKey="0"
-                    headerValue="%{getText('select_gender.label')}"
-                    id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
-        </td>
-        <td>
-            (21)ජාතිය <br>
-            பிறப் <br>
-            Race
-        </td>
-        <td colspan="2">
-<%--
-            <s:select list="raceList" name="#" headerKey="0" headerValue="%{getText('select_race.label')}"
-                      cssStyle="width:200px;" is="deathPersonRaceList"/>--%>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (22)නම රාජ්‍ය භාෂාවෙන් <br>
-            (සිංහල / දෙමළ)
-            பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
-            Name in either of the official languages (Sinhala / Tamil)
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathRegister.deathPerson.deathPersonNameOfficialLang" cssStyle="width:99%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (23)නම ඉංග්‍රීසි භාෂාවෙන් <br>
-            பிறப்பு அத்தாட்சி ….. <br>
-            Name in English
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathRegister.deathPerson.deathPersonNameInEnglish" cssStyle="width:99%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (24)ස්ථිර ලිපිනය <br>
-            தாயின் நிரந்தர வதிவிட முகவரி <br>
-            Permanent Address
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathRegister.deathPerson.deathPersonPermanentAddress" cssStyle="width:99%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (25)පියාගේ අනන්‍යතා අංකය <br>
-            தனிநபர் அடையாள எண் <br>
-            Fathers Identification Number
-        </td>
-        <td colspan="6">
-            <s:textfield name="deathRegister.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (26)පියාගේ සම්පුර්ණ නම <br>
-            in tamil <br>
-            Fathers full name
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathRegister.deathPerson.deathPersonFatherFullName" cssStyle="width:99%;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            (27)මවගේ අනන්‍යතා අංකය <br>
-            தனிநபர் அடையாள எண் <br>
-            Mothers Identification Number
-        </td>
-        <td colspan="6">
-            <s:textfield name="deathRegister.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"/>
-        </td>
+<div id="death-person-info">
+    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+           cellpadding="2px">
+        <caption></caption>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <tbody>
+        <tr>
+            <td rowspan="2">
+                (17)අනන්‍යතා අංකය <br>
+                தனிநபர் அடையாள எண் <br>
+                Identification Number
+            </td>
+            <td colspan="3" rowspan="2">
+                <s:textfield name="deathRegister.deathPerson.deathPersonPINorNIC" id="deathPerson_PINorNIC"
+                             cssStyle="float:left;"/>
+                <img src="<s:url value="/images/search-father.png" />"
+                     style="vertical-align:middle; margin-left:20px;" id="death_person_lookup">
+            </td>
 
-    </tr>
-    <tr>
-        <td>
-            (28)මවගේ සම්පුර්ණ නම <br>
-            in tamil <br>
-            Mothers full name
-        </td>
-        <td colspan="6">
-            <s:textarea name="deathRegister.deathPerson.deathPersonMotherFullName" cssStyle="width:99%;"/>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            <td rowspan="2">
+                (18)විදේශිකය‍කු නම් <br>
+                வெளிநாட்டவர் <br>
+                If a foreigner
+            </td>
+            <td>
+                රට <br>
+                நாடு <br>
+                Country
+            </td>
+            <td align="center">
+                <s:select id="deathPersonCountryList" name="deathRegister.deathPerson.deathPersonCountry"
+                          list="countryList"
+                          headerKey="0"
+                          headerValue="%{getText('select_country.label')}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ගමන් බලපත්‍ර අංකය <br>
+                கடவுச் சீட்டு <br>
+                Passport No.
+            </td>
+            <td>
+                <s:textfield name="deathRegister.deathPerson.deathPersonPassportNo" cssStyle="width:180px;"
+                             id="passportNumber"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (19)වයස හෝ අනුමාන වයස <br>
+                பிறப்ப <br>
+                Age or probable Age
+            </td>
+            <td><s:textfield name="deathRegister.deathPerson.deathPersonAge" cssStyle="width:180px;"
+                             id="deathAge"/></td>
+            <td>
+                (20)ස්ත්‍රී පුරුෂ භාවය <br>
+                பால் <br>
+                Gender
+            </td>
+            <td>
+                <s:select
+                        list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
+                        name="deathRegister.deathPerson.deathPersonGender" headerKey="0"
+                        headerValue="%{getText('select_gender.label')}"
+                        id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
+            </td>
+            <td>
+                (21)ජාතිය <br>
+                பிறப் <br>
+                Race
+            </td>
+            <td colspan="2" align="center">
+                <s:select list="raceList" name="deathRegister.deathPerson.deathPersonRace" headerKey="0"
+                          headerValue="%{getText('select_race.label')}"
+                          cssStyle="width:200px;" id="deathPersonRaceList"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (22)නම රාජ්‍ය භාෂාවෙන් <br>
+                (සිංහල / දෙමළ)
+                பிறப்பு அத்தாட்சி பாத்த.... (சிங்களம் / தமிழ்) <br>
+                Name in either of the official languages (Sinhala / Tamil)
+            </td>
+            <td colspan="6">
+                <s:textarea name="deathRegister.deathPerson.deathPersonNameOfficialLang" cssStyle="width:99%;"
+                            id="nameOfficialLang"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (23)නම ඉංග්‍රීසි භාෂාවෙන් <br>
+                பிறப்பு அத்தாட்சி ….. <br>
+                Name in English
+            </td>
+            <td colspan="6">
+                <s:textarea name="deathRegister.deathPerson.deathPersonNameInEnglish" cssStyle="width:99%;"
+                            id="nameEnglish"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (24)ස්ථිර ලිපිනය <br>
+                தாயின் நிரந்தர வதிவிட முகவரி <br>
+                Permanent Address
+            </td>
+            <td colspan="6">
+                <s:textarea name="deathRegister.deathPerson.deathPersonPermanentAddress" cssStyle="width:99%;"
+                            id="address"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (25)පියාගේ අනන්‍යතා අංකය <br>
+                தனிநபர் அடையாள எண் <br>
+                Fathers Identification Number
+            </td>
+            <td colspan="6">
+                <s:textfield name="deathRegister.deathPerson.deathPersonFatherPINorNIC" cssStyle="width:180px;"
+                             id="pinNic"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (26)පියාගේ සම්පුර්ණ නම <br>
+                in tamil <br>
+                Fathers full name
+            </td>
+            <td colspan="6">
+                <s:textarea name="deathRegister.deathPerson.deathPersonFatherFullName" cssStyle="width:99%;"
+                            id="fatherName"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                (27)මවගේ අනන්‍යතා අංකය <br>
+                தனிநபர் அடையாள எண் <br>
+                Mothers Identification Number
+            </td>
+            <td colspan="6">
+                <s:textfield name="deathRegister.deathPerson.deathPersonMotherPINorNIC" cssStyle="width:180px;"
+                             id="fatherNIC"/>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                (28)මවගේ සම්පුර්ණ නම <br>
+                in tamil <br>
+                Mothers full name
+            </td>
+            <td colspan="6">
+                <s:textarea name="deathRegister.deathPerson.deathPersonMotherFullName" cssStyle="width:99%;"
+                            id="motherName"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <br>
 <table class="death-alteration-table-style01" style=" margin-top:20px;width:100%;" cellpadding="0"
        cellspacing="0">
