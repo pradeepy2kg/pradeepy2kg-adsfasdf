@@ -81,7 +81,7 @@ function validatePINorNIC(domElement, errorText, errorCode) {
             var regNIC = /^([0-9]{9}[X|x|V|v])$/;
             if (domElement.value.search(regNIC) == 0) {
                 var day = domElement.value.substring(2, 5);
-                if ((day >= 367 && day <= 501) || (day >= 867)) {
+                if ((day >= 367 && day <= 500) || (day >= 867)) {
                     printMessage(errorText, errorCode);
                 }
             }
