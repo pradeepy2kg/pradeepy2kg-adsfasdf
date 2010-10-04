@@ -4,7 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.dao.EventDAO;
-import lk.rgd.common.api.service.EventsMamagementService;
+import lk.rgd.common.api.service.EventManagementService;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class EventsManagementAction extends ActionSupport  {
 
     private final EventDAO eventDAO;
-    private final EventsMamagementService service;
+    private final EventManagementService service;
 
     private Event event;
     private long idUKey;
@@ -35,17 +35,17 @@ public class EventsManagementAction extends ActionSupport  {
     private List<Event> printList;
 
 
-    public EventsManagementAction(EventDAO eventDAO,EventsMamagementService service) {
+    public EventsManagementAction(EventDAO eventDAO, EventManagementService service) {
         this.eventDAO = eventDAO;
         this.service = service;
     }
 
     public String initEventsManagement(){
-        printList =service.getEventsListByIdUKey(idUKey,user);
+//        printList =service.getEventsListByIdUKey(idUKey,user);
         return "success";
     }
     public String debugDisplay(){
-        event = service.getEventByIdUKey(idUKey,user);
+//        event = service.getEventByIdUKey(idUKey,user);
         debug=event.getDebug();
         return "success";
     }
@@ -80,7 +80,7 @@ public class EventsManagementAction extends ActionSupport  {
         return eventDAO;
     }
 
-    public EventsMamagementService getService() {
+    public EventManagementService getService() {
         return service;
     }
 

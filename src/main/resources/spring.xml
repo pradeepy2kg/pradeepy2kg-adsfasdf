@@ -216,9 +216,9 @@
         </property>
     </bean>
 
-    <bean id="eventsManagementService" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <bean id="eventManagementService" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target">
-            <bean class="lk.rgd.common.core.service.EventsManagementServiceImpl">
+            <bean class="lk.rgd.common.core.service.EventManagementServiceImpl">
                 <constructor-arg ref="eventDAOImpl"/>
             </bean>
         </property>

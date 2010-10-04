@@ -29,6 +29,11 @@
       <servlet-name>DivisionLookupService</servlet-name>
       <servlet-class>lk.rgd.crs.web.JSONDivisionLookupService</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>LocationLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONLocationLookupService</servlet-class>
+    </servlet>
     
     <servlet-mapping>
         <servlet-name>PersonLookupService</servlet-name>
@@ -38,6 +43,11 @@
     <servlet-mapping>
         <servlet-name>DivisionLookupService</servlet-name>
         <url-pattern>/crs/DivisionLookupService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LocationLookupService</servlet-name>
+        <url-pattern>/crs/LocationLookupService</url-pattern>
     </servlet-mapping>
 
     <filter-mapping>

@@ -101,7 +101,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String getRoleId() {
-
         return roleId;
     }
 
