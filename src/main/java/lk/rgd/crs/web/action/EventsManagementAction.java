@@ -4,10 +4,14 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.dao.EventDAO;
+import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.service.EventManagementService;
 
 import java.util.Date;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -16,9 +20,11 @@ import java.util.List;
  * Time: 9:14:30 AM
  * To change this template use File | Settings | File Templates.
  */
-public class EventsManagementAction extends ActionSupport  {
+public class EventsManagementAction extends ActionSupport {
+    private static final Logger logger = LoggerFactory.getLogger(EventsManagementAction.class);
 
     private final EventDAO eventDAO;
+    private final AppParametersDAO appParametersDAO;
     private final EventManagementService service;
 
     private Event event;
@@ -33,23 +39,83 @@ public class EventsManagementAction extends ActionSupport  {
     private String eventData;
     private String debug;
     private List<Event> printList;
+    private int pageNumber;
+    private int numberOfRows;
+    private int recordCounter;
+
+    private boolean nextFlag;
+    private boolean previousFlag;
+
+    private static final String EVENTS_ROWS_PER_PAGE = "common.event_rows_per_page";
 
 
-    public EventsManagementAction(EventDAO eventDAO, EventManagementService service) {
+    public EventsManagementAction(EventDAO eventDAO, EventManagementService service, AppParametersDAO appParametersDAO) {
         this.eventDAO = eventDAO;
         this.service = service;
+        this.appParametersDAO = appParametersDAO;
     }
 
-    public String initEventsManagement(){
-//        printList =service.getEventsListByIdUKey(idUKey,user);
-        return "success";
-    }
-    public String debugDisplay(){
-//        event = service.getEventByIdUKey(idUKey,user);
-        debug=event.getDebug();
+    public String initEventsManagement() {
+        setPageNumber(1);
+        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+        logger.debug("No of rows: {} ", numberOfRows);
+        printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+        paginationHandler(printList.size());
+        setPreviousFlag(false);
         return "success";
     }
 
+    public String nextPage() {
+        setPageNumber(getPageNumber() + 1);
+        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+        printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+        paginationHandler(printList.size());
+        setPreviousFlag(true);
+        setRecordCounter(getRecordCounter() + numberOfRows);
+        return "success";
+    }
+
+    public String previousPage() {
+
+        if (previousFlag && getPageNumber() == 2) {
+            setPreviousFlag(false);
+        } else if (getPageNumber() == 1) {
+            setPreviousFlag(false);
+        } else {
+            setPreviousFlag(true);
+        }
+        setNextFlag(true);
+        if (getPageNumber() > 1) {
+            setPageNumber(getPageNumber() - 1);
+        }
+        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+        printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+        paginationHandler(printList.size());
+        if (getRecordCounter() > 0) {
+            setRecordCounter(getRecordCounter() - numberOfRows);
+        }
+        return "success";
+    }
+
+    public String debugDisplay() {
+        event = service.getEventById(idUKey, user);
+        debug = event.getDebug();
+
+        return "success";
+    }
+
+    /**
+     * responsible whether to display the next link in the jsp or not and handles the page number
+     *
+     * @param recordsFound, no of events records found
+     */
+    public void paginationHandler(int recordsFound) {
+        if (recordsFound == appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE)) {
+            setNextFlag(true);
+        } else {
+            setNextFlag(false);
+        }
+    }
 
     public long getIdUKey() {
         return idUKey;
@@ -155,5 +221,45 @@ public class EventsManagementAction extends ActionSupport  {
 
     public void setPrintList(List<Event> printList) {
         this.printList = printList;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    public void setNumberOfRows(int numberOfRows) {
+        this.numberOfRows = numberOfRows;
+    }
+
+    public boolean isNextFlag() {
+        return nextFlag;
+    }
+
+    public void setNextFlag(boolean nextFlag) {
+        this.nextFlag = nextFlag;
+    }
+
+    public boolean isPreviousFlag() {
+        return previousFlag;
+    }
+
+    public void setPreviousFlag(boolean previousFlag) {
+        this.previousFlag = previousFlag;
+    }
+
+    public int getRecordCounter() {
+        return recordCounter;
+    }
+
+    public void setRecordCounter(int recordCounter) {
+        this.recordCounter = recordCounter;
     }
 }

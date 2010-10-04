@@ -69,6 +69,8 @@ public class Menu {
         adminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprInitEventsManagement.do", new Link("eventManege.label", "/ecivil/management/", "eprInitEventsManagement.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprDebugDisplay.do", new Link(null, "/ecivil/management/", "eprDebugDisplay.do", Permission.EVENTS_MANAGEMENT));
+        adminLink.put("eprEventPrevious.do", new Link(null, "/ecivil/management/", "eprEventPrevious.do", Permission.EVENTS_MANAGEMENT));
+        adminLink.put("eprEventNext.do", new Link(null, "/ecivil/management/", "eprEventNext.do", Permission.EVENTS_MANAGEMENT));
 
 
         //User Preferance

@@ -923,6 +923,14 @@
                 method="initEventsManagement">
             <result type="tiles" name="success">epr.eventManagement</result>
         </action>
+        <action name="eprEventPrevious" class="lk.rgd.crs.web.action.EventsManagementAction"
+                method="previousPage">
+            <result type="tiles" name="success">epr.eventManagement</result>
+        </action>
+        <action name="eprEventNext" class="lk.rgd.crs.web.action.EventsManagementAction"
+                method="nextPage">
+            <result type="tiles" name="success">epr.eventManagement</result>
+        </action>
         <action name="eprDebugDisplay" class="lk.rgd.crs.web.action.EventsManagementAction"
                 method="debugDisplay">
             <result type="tiles" name="success">epr.debugManegement</result>
