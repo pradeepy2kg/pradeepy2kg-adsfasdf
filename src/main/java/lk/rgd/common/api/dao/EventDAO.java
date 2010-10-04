@@ -13,17 +13,25 @@ public interface EventDAO {
 
     /**
      * Add an event to the database
-     */
-    public void addEvent(Event e);
-
-    /**
-     * Get event list from the database
      *
+     * @param event
      */
-    public List<Event> getEventsList(long idUKey);
+    public void addEvent(Event event);
 
     /**
-     * Get one event from the list
+     * Get an Event object for a given Id
+     *
+     * @param eventId the unique id assigned to an event
+     * @return the Event or null if none exist
      */
-    public Event getEvent(long idUKey) ;
+    public Event getById(long eventId);
+
+    /**
+     * Get paginated list of all available Events
+     *
+     * @param pageNo   page number
+     * @param noOfRows number of rows
+     * @return all records (paginated)
+     */
+    public List<Event> getPaginatedListForAll(int pageNo, int noOfRows);
 }

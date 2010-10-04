@@ -5,7 +5,6 @@ import lk.rgd.common.api.domain.Event;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Id;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -24,16 +23,20 @@ public class EventDAOImpl extends BaseDAO implements EventDAO {
     }
 
     /**
-     *
+     * @inheritDoc
      */
-    public List<Event> getEventsList(long idUKey) {
-        Query q = em.createNamedQuery("findAllEvents");
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Event getById(long eventIdUKey) {
+        logger.debug("Get Event by ID : {}", eventIdUKey);
+        return em.find(Event.class, eventIdUKey);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Event> getPaginatedListForAll(int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("findAllEvents").setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
         return q.getResultList();
     }
-
-    public Event getEvent(long idUKey){
-        logger.debug("Get Event by IdUKey : {}", idUKey);
-        return em.find(Event.class, idUKey);   
-    }
-
 }

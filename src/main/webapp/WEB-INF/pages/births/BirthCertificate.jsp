@@ -1,9 +1,15 @@
 <%-- @author Duminda Dharmakeerthi. --%>
 <%@ page import="lk.rgd.common.util.DateTimeUtils" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="lk.rgd.common.util.MarriedStatusUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+
+
 <style type="text/css">
     #birth-certificate-outer table tr td {
         padding: 0 5px;
@@ -20,7 +26,36 @@
     }
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
-<script type="text/javascript">
+<script>
+    $(function() {
+        $('select#locationId').bind('change', function(evt1) {
+            var id = $("select#locationId").attr('value');
+            var options = '';
+            if (id > 0) {
+                $.getJSON('/ecivil/crs/LocationLookupService', {userLocationId:id},
+                        function(data) {
+                            var users = data.authorizedUsers;
+                            options += '<option value="' + 0 + '"> Select Person</option>';
+                            for (var i = 0; i < users.length; i++) {
+                                options += '<option value="' + users[i].optionValue + '">' + users[i].optionDisplay + '</option>';
+                            }
+                            $("select#userListId").html(options);
+                        });
+            } else {
+                options += '<option value="' + 0 + '"> Select Person</option>';
+                $("select#userListId").html(options);
+            }
+        });
+
+        $('select#userListId').bind('change', function(evt2) {
+            var id = $('select#userListId').attr('value');
+            var options = "User Signature "+id;
+            $('label#signature').html(options);
+            var place = $('select#locationId').attr('value');
+            $('label#placeOfIssue').html(place);
+        });
+    });
+
     function initPage() {
     }
 </script>
@@ -59,17 +94,41 @@
     </s:url>
 </s:else>
 
-<s:if test="#request.allowPrintCertificate">
-    <div class="form-submit" style="margin:15px 0 0 10px; ">
-        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+<div style="width:60%;float:left;margin-top:5px;">
+    <s:if test="register.status.ordinal() == 8">
+        <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
+            <legend><b><s:label value="Select Option"/></b></legend>
+            <table>
+                <tr>
+                    <td>Place</td>
+                    <td>
+                            <%--<s:select id="locationId" list="locationList" headerKey="0" headerValue="Select Place"/>--%>
+                        <s:select id="locationId" list="{'1','2'}" headerKey="0" headerValue="Select Place"/>
+                    </td>
+                    <td width="10%"></td>
+                    <td>Assigned Person</td>
+                    <td>
+                        <s:select id="userListId" list="userList" headerKey="0" headerValue="Select Person"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </s:if>
+</div>
+
+<div style="width:40%;float:right;">
+    <s:if test="#request.allowPrintCertificate">
+        <div class="form-submit" style="margin:15px 0 0 10px; ">
+            <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+        </div>
+        <div class="form-submit">
+            <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+            <s:hidden id="printMessage" value="%{getText('print.message')}"/>
+        </div>
+    </s:if>
+    <div class="form-submit" style="margin-top:15px;">
+        <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
     </div>
-    <div class="form-submit">
-        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
-        <s:hidden id="printMessage" value="%{getText('print.message')}"/>
-    </div>
-</s:if>
-<div class="form-submit" style="margin-top:15px;">
-    <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
 
 <table style="width: 100%; border:none; border-collapse:collapse;">
@@ -321,14 +380,15 @@
             Name, Signature and Designation of certifying officer
         </td>
         <td colspan="2" style="font-size:12pt">
-            <s:label value="%{#request.register.confirmantFullName}"/>
+            <s:label id="signature" value="%{#request.register.confirmantFullName}"/>
         </td>
     </tr>
     <tr>
         <td colspan="2" height="70px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
         <td colspan="2">
-            <s:label value="%{#request.register.originalBCPlaceOfIssuePrint}" cssStyle="font-size:11pt;"/>
+            <s:label id="placeOfIssue" value="%{#request.register.originalBCPlaceOfIssuePrint}"
+                     cssStyle="font-size:11pt;"/>
         </td>
     </tr>
     </tbody>

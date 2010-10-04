@@ -6,16 +6,17 @@ import java.util.Date;
 
 /**
  * Represents a eCivil Registration system event. An event could be an error, situation or user action.
- *
+ * <p/>
  * Events are persisted into an event database and audit/reporting results generated against them.
+ *
  * @author asankha
  */
-@NamedQueries({
-        @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event")
-})
-
 @Entity
 @Table(name = "EVENT", schema = "COMMON")
+
+@NamedQueries({
+    @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event")
+})
 public class Event implements Serializable {
     private static final int STACK_TRACE_LEN = 2048;
     private static final int EVENT_DATA_LEN = 80;

@@ -51,6 +51,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
+    private Map<Integer, String> locationList;
+    private Map<Integer, String> userList;
     private List<UserWarning> warnings;
     private List<BirthDeclaration> archivedEntryList;
 
@@ -126,8 +128,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-                               AppParametersDAO appParametersDAO) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+        AppParametersDAO appParametersDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -362,7 +364,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -476,7 +478,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -603,7 +605,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
@@ -653,7 +655,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
                 /* if (birthType == BirthDeclaration.BirthType.LIVE) {
@@ -664,6 +666,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     service.markAdoptionBirthCertificateAsPrinted(bdf, user);
                 }*/
                 beanPopulate(bdf);
+                // TODO
+                String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
+                locationList = user.getActiveLocations(language);
+                userList=new HashMap();
 
                 gender = child.getChildGenderPrint();
                 genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
@@ -1435,5 +1441,21 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setCertificateSearch(boolean certificateSearch) {
         this.certificateSearch = certificateSearch;
+    }
+
+    public Map<Integer, String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(Map<Integer, String> locationList) {
+        this.locationList = locationList;
+    }
+
+    public Map<Integer, String> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Map<Integer, String> userList) {
+        this.userList = userList;
     }
 }

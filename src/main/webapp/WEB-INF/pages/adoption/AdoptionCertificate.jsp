@@ -390,7 +390,5 @@ Mother's Identification No.
 <div id="adoption-page" class="form-submit" style="margin:15px 0 0 10px; ">
     <s:a href="%{cancel}"><s:label value="%{getText('cancel.button')}"/></s:a>
 </div>
-
-
 </div>
 
