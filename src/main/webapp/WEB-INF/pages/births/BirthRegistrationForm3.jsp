@@ -168,7 +168,7 @@ function commonTags() {
 //generate Grand Father birth year
 function generateGrandFatherBirthYear(grandFatherNIC, grandFatherBirthYear) {
     var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-    domObject = document.getElementById(grandFatherNIC);
+    var domObject = document.getElementById(grandFatherNIC);
     var domYear = document.getElementById(grandFatherBirthYear) ;
     if (domObject.value.search(regNIC) == 0) {
         domYear.value = 19 + domObject.value.substring(0, 2);
@@ -324,7 +324,6 @@ function disableMarriage(mode) {
 
 
 function disableSigns(mode) {
-
     if (!mode) {
         var name = document.getElementById('fatherName');
         if (name.value.length == 0) {
@@ -341,8 +340,11 @@ function disableSigns(mode) {
 
 function initPage() {
     var declarationType = document.getElementById('birthTypeId');
-    if (declarationType.value != 0)
-        disableSigns(true);
+    if (declarationType.value != 0) {
+        if (document.getElementsByName("marriage.parentsMarried")[0].checked) {
+            disableSigns(true);
+        }
+    }
 }
 
 </script>
@@ -633,7 +635,7 @@ function initPage() {
     </tr>
 
     <tr>
-        <td ><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+        <td><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
             <br>අනන්‍යතා අංකය
             <br>அடையாள எண்
             <br>Identification Number</label></td>
