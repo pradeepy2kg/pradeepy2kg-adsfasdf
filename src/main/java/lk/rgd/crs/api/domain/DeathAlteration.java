@@ -37,8 +37,21 @@ public class DeathAlteration {
 
     }
 
+    public enum Act {
+        ACT_52_1_a,
+        ACT_52_1_b,
+        ACT_52_1_d,
+        ACT_52_1_e,
+        ACT_52_1_i,
+        ACT_52_1_h,
+        ACT_53,
+    }
+
     @Enumerated
     private State status;
+
+    @Enumerated
+    private Act act;
     /**
      * Contains the approval bit set for each field.
      */
@@ -317,5 +330,13 @@ public class DeathAlteration {
 
     public void setPlaceOfBurial(String placeOfBurial) {
         this.placeOfBurial = placeOfBurial;
+    }
+
+    public Act getAct() {
+        return act;
+    }
+
+    public void setAct(Act act) {
+        this.act = act;
     }
 }

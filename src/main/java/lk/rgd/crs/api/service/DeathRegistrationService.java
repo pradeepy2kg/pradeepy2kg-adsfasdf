@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * @author Indunil Moremada
+ * @authar amith jayasekara
  */
 public interface DeathRegistrationService {
 
@@ -169,4 +170,14 @@ public interface DeathRegistrationService {
      * @throws lk.rgd.crs.CRSRuntimeException for un-authorized operations
      */
     public List<DeathRegister> getPaginatedListForAllByDSDivision(DSDivision dsDivision, int pageNo, int noOfRows, User user);
+
+    /**
+     * retriving list of death register objects based on death persons pin or nic number
+     * note: list can be more than one in rare cases like duplications of nic number
+     *
+     * @param pinOrNic pin number or nic number not both
+     * @param user     user who has permissions to retrive death register
+     * @return give list of death register objects based on death persosns pin or NIC number
+     */
+    public List<DeathRegister> getByPinOrNic(long pinOrNic, User user);
 }

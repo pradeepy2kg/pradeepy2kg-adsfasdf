@@ -101,9 +101,14 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
     public DeathRegister getById(long deathRegisterIdUKey, User user) {
         logger.debug("Load death registration record : {}", deathRegisterIdUKey);
         DeathRegister deathRegister;
-        deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
-        validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
-        return deathRegister;
+        try {
+            deathRegister = deathRegisterDAO.getById(deathRegisterIdUKey);
+            validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+            return deathRegister;
+        } catch (NullPointerException e) {
+            logger.debug("no results found for death id : {}", deathRegisterIdUKey);
+            return null;
+        }
     }
 
     /**
@@ -305,5 +310,20 @@ public class DeathRegistrationServiceImpl implements DeathRegistrationService {
         logger.debug("Get all death registrations   Page : {}  with number of rows per page : {} ", pageNo, noOfRows);
         validateAccessToDSDivision(user, dsDivision);
         return deathRegisterDAO.getPaginatedListForAllByDSDivision(dsDivision, pageNo, noOfRows);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathRegister> getByPinOrNic(long pinOrNic, User user) {
+        List<DeathRegister> deathRegisterList = deathRegisterDAO.getDeathRegisterByDeathPersenPINorNIC("" + pinOrNic);
+        DeathRegister deathRegister = deathRegisterList.get(0);
+        validateAccessToBDDivision(user, deathRegister.getDeath().getDeathDivision());
+        if (deathRegisterList.size() > 0) {
+            return deathRegisterList;
+        } else {
+            return null;
+        }
     }
 }

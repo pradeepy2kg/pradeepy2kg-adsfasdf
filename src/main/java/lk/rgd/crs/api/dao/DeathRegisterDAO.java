@@ -96,7 +96,7 @@ public interface DeathRegisterDAO {
      * @return the death registration results
      */
     public List<DeathRegister> getByBDDivisionAndRegistrationDateRange(BDDivision deathDivision,
-        Date startDate, Date endDate, int pageNo, int noOfRows);
+                                                                       Date startDate, Date endDate, int pageNo, int noOfRows);
 
     /**
      * Get the list of death registrations for a given state based on given dsDivision

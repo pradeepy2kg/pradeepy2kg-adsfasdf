@@ -36,7 +36,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("adding a new death alteration : serial number : {}", da.getAlterationSerialNo());
-        //  validateAccessOfUser(da, user);
+        validateAccessToBDDivision(user, da.getDeathDivision());
         deathAlterationDAO.addBirthAlteration(da, user);
     }
 
@@ -50,25 +50,21 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteDeathAlteration(long idUKey, User user) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("about to remove alteration recode idUkey : {}", idUKey);
+        DeathAlteration da = deathAlterationDAO.getById(idUKey);
+        validateAccessToBDDivision(user, da.getDeathDivision());
+        deathAlterationDAO.deleteBirthAlteration(idUKey);
     }
 
     /**
      * @inheritDoc
      */
     public DeathAlteration getById(long idUKey, User user) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    private void validateAccessOfUser(DeathAlteration da, User user) {
-/*        if (da.getAlt52_1() != null) {
-            BDDivision bdDivision = da.getAlt52_1().getBirthDivision();
-            validateAccessToBDDivision(user, bdDivision);
-        } else {
-            DeathRegister dr = deathRegistrationService.getById(da.getIdUKey(), user);
-            validateAccessToBDDivision(user, dr.getDeath().getDeathDivision());
-        }*/
+        DeathAlteration da = deathAlterationDAO.getById(idUKey);
+        validateAccessToBDDivision(user, da.getDeathDivision());
+        return da;
     }
 
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
@@ -86,18 +82,6 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
             handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
                     bdDivision.getDistrict().getDistrictId() + " and/or DS Division : " +
                     bdDivision.getDsDivision().getDivisionId(), ErrorCodes.PERMISSION_DENIED);
-        }
-    }
-
-    private void validateAccessToDSDivison(DSDivision dsDivision, User user) {
-        if (!(User.State.ACTIVE == user.getStatus() &&
-                (Role.ROLE_ARG.equals(user.getRole().getRoleId())
-                        || (user.isAllowedAccessToBDDistrict(dsDivision.getDistrict().getDistrictUKey()))
-                        || (user.isAllowedAccessToBDDSDivision(dsDivision.getDsDivisionUKey()))
-                )
-        )) {
-            handleException("User : " + user.getUserId() + " is not allowed access to the District : " +
-                    dsDivision.getDistrictId(), ErrorCodes.PERMISSION_DENIED);
         }
     }
 
