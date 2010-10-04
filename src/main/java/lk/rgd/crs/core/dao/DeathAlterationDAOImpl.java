@@ -38,14 +38,15 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.MANDATORY)
     public void deleteBirthAlteration(long idUKey) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        em.remove(getById(idUKey));
     }
 
     /**
      * @inheritDoc
      */
     public DeathAlteration getById(long idUKey) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return em.find(DeathAlteration.class, idUKey);
     }
 }

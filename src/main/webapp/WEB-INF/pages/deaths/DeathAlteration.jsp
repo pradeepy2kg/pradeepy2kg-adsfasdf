@@ -296,14 +296,14 @@ $(function() {
                         <s:label value=" Serial Number"/>
                     </td>
                     <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
-                            /></td>
+                                                 value=""/></td>
                 </tr>
                 <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>
                         <s:label value="பிறப்பைப் பதிவு திி"/> <br>
                         <s:label value="Date of Acceptance"/>
                     </td>
-                    <td><s:textfield id="reciveDatePicker" name="deathAlteration.dateReceived"/></td>
+                    <td><s:textfield id="reciveDatePicker" name="deathAlteration.dateReceived" value="%{toDay}"/></td>
                 <tr>
                     <td><s:label value="පනතේ වගන්තිය "/><br>
                         <s:label value="பிறப்பைப்"/> <br>
@@ -311,8 +311,8 @@ $(function() {
                     </td>
                     <td>
                         <s:select
-                                list="#@java.util.HashMap@{'1':'52(1) a','2':'52(1) b','3':'52(1) d','4':'52(1) e','5':'52(1) h','6':'52(1) i','7':'53'}"
-                                name="register.preferredLanguage"
+                                list="#@java.util.HashMap@{'ACT_52_1_a':'52(1) a','ACT_52_1_b':'52(1) b','ACT_52_1_d':'52(1) d','ACT_52_1_e':'52(1) e','ACT_52_1_i':'52(1) h','ACT_52_1_h':'52(1) i','ACT_53':'53'}"
+                                name="deathAlteration.act"
                                 cssStyle="width:190px; margin-left:5px;" onchange="setAct(value)"/>
                     </td>
 
@@ -508,7 +508,8 @@ $(function() {
             Date of Death
         </td>
         <td colspan="2" align="center">
-            <s:textfield name="deathAlteration.dateOfDeath" id="deathDatePicker" value="%{deathRegister.death.dateOfDeath}"/>
+            <s:textfield name="deathAlteration.dateOfDeath" id="deathDatePicker"
+                         value="%{deathRegister.death.dateOfDeath}"/>
         </td>
         <td>
             වෙලාව <br>
@@ -516,7 +517,8 @@ $(function() {
             Time
         </td>
         <td align="center">
-            <s:textfield name="deathAlteration.timeOfDeath" id="deathTimePicker" value="%{deathRegister.death.timeOfDeath}"/>
+            <s:textfield name="deathAlteration.timeOfDeath" id="deathTimePicker"
+                         value="%{deathRegister.death.timeOfDeath}"/>
         </td>
     </tr>
     <tr>
@@ -531,7 +533,8 @@ $(function() {
             In Sinhala or Tamil
         </td>
         <td colspan="3">
-            <s:textfield name="deathAlteration.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath" value="%{deathRegister.death.placeOfDeath}"/>
+            <s:textfield name="deathAlteration.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath"
+                         value="%{deathRegister.death.placeOfDeath}"/>
         </td>
     </tr>
     <tr>
@@ -573,7 +576,8 @@ $(function() {
             Cause of death
         </td>
         <td colspan="3">
-            <s:textarea name="deathAlteration.causeOfDeath" value="%{deathRegister.death.causeOfDeath}" cssStyle="width:420px; "/>
+            <s:textarea name="deathAlteration.causeOfDeath" value="%{deathRegister.death.causeOfDeath}"
+                        cssStyle="width:420px; "/>
         </td>
         <td>
             (15)හේතුවේ ICD කේත අංකය <br>
@@ -581,7 +585,8 @@ $(function() {
             ICD Code of cause
         </td>
         <td>
-            <s:textfield name="deathAlteration.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}" cssStyle="width:225px;"/>
+            <s:textfield name="deathAlteration.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}"
+                         cssStyle="width:225px;"/>
         </td>
     </tr>
     <tr>
@@ -590,7 +595,8 @@ $(function() {
             Place of burial or cremation
         </td>
         <td colspan="5">
-            <s:textarea name="deathAlteration.placeOfBurial" value="%{deathRegister.death.placeOfBurial}" id="placeOfBurial" cssStyle="width:99%;"/>
+            <s:textarea name="deathAlteration.placeOfBurial" value="%{deathRegister.death.placeOfBurial}"
+                        id="placeOfBurial" cssStyle="width:99%;"/>
         </td>
     </tr>
     </tbody>
@@ -641,8 +647,8 @@ $(function() {
             Country
         </td>
         <td>
-                <%--            <s:select id="deathPersonCountryList" name="#" list="countryList" headerKey="0"
-                headerValue="%{getText('select_country.label')}"/>--%>
+   <%--         <s:select id="deathPersonCountryList" name="#" list="countryList" headerKey="0"
+                      headerValue="%{getText('select_country.label')}"/>--%>
         </td>
     </tr>
     <tr>
@@ -670,7 +676,8 @@ $(function() {
         <td>
             <s:select
                     list="#@java.util.HashMap@{'0':getText('male.label'),'1':getText('female.label'),'2':getText('unknown.label')}"
-                    name="deathRegister.deathPerson.deathPersonGender" headerKey="0" headerValue="%{getText('select_gender.label')}"
+                    name="deathRegister.deathPerson.deathPersonGender" headerKey="0"
+                    headerValue="%{getText('select_gender.label')}"
                     id="deathPersonGender" cssStyle="width:190px; margin-left:5px;"/>
         </td>
         <td>
@@ -679,9 +686,9 @@ $(function() {
             Race
         </td>
         <td colspan="2">
-                <%--todo
-                            <s:select list="raceList" name="#" headerKey="0" headerValue="%{getText('select_race.label')}"
-                cssStyle="width:200px;" is="deathPersonRaceList/>--%>
+<%--
+            <s:select list="raceList" name="#" headerKey="0" headerValue="%{getText('select_race.label')}"
+                      cssStyle="width:200px;" is="deathPersonRaceList"/>--%>
         </td>
     </tr>
     <tr>

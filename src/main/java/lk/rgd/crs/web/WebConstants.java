@@ -50,6 +50,8 @@ public class WebConstants {
     public static final int BIRTH_ALTERATION_APPROVE_ALT27 = 2;
     public static final boolean BIRTH_ALTERATION_APPROVE_TRUE = true;
 
+    //to track wtich has change in death alterations
+    public static final int DEATH_ALTERATION_APPROVE = 21;
 
     public static final String SESSION_UPDATED_USER = "updated_user";
 }
