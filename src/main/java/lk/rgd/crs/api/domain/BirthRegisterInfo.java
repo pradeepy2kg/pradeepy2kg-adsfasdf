@@ -1,14 +1,14 @@
 package lk.rgd.crs.api.domain;
 
-import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.District;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.web.util.WebUtils;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * An instance representing birth registration process specific official information

@@ -1,23 +1,24 @@
 package lk.rgd.crs.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import lk.rgd.common.api.dao.*;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.dao.CourtDAO;
+import lk.rgd.crs.api.dao.MRDivisionDAO;
+import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.Court;
+import lk.rgd.crs.api.domain.MRDivision;
+import lk.rgd.crs.api.service.MasterDataManagementService;
+import lk.rgd.crs.core.service.BirthRecordsIndexer;
+import lk.rgd.crs.core.service.DeathRecordsIndexer;
+import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import lk.rgd.common.api.domain.*;
-import lk.rgd.common.api.dao.*;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.dao.MRDivisionDAO;
-import lk.rgd.crs.api.dao.CourtDAO;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.MRDivision;
-import lk.rgd.crs.api.domain.Court;
-import lk.rgd.crs.api.service.MasterDataManagementService;
 
 
 /**
@@ -60,6 +61,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private boolean nextFlag;
     private boolean previousFlag;
     private int noOfRows;
+    private int indexRecord;
 
     private String districtEn;
     private String dsDivisionEn;
@@ -99,6 +101,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> currentbdDivisionList; //users current
     private Map<Integer, String> currentDistrictList;
 
+    private final BirthRecordsIndexer birthRecordsIndexer;
+    private final DeathRecordsIndexer deathRecordsIndexer;
+//    private final P
+
     public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
@@ -108,8 +114,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
-                               BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO) {
+        BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO, BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -122,6 +128,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.appParametersDAO = appParametersDAO;
         this.userLocationDAO = userLocationDAO;
         this.userDAO = userDAO;
+        this.birthRecordsIndexer = birthRecordsIndexer;
+        this.deathRecordsIndexer = deathRecordsIndexer;
     }
 
     public String creatUser() {
@@ -415,7 +423,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
             case 2:
                 DSDivision checkDSDivision = dsDivisionDAO.getDSDivisionByCode(dsDivision.getDivisionId(),
-                        districtDAO.getDistrict(UserDistrictId));
+                    districtDAO.getDistrict(UserDistrictId));
                 if (checkDSDivision != null) {
                     addFieldError("duplicateIdNumberError", "DS Division Id Number Already Used. Please Insert Another Number");
                     logger.debug("Duplicate District code number is :", checkDSDivision.getDivisionId());
@@ -510,6 +518,39 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         }
         session.put("viewUsers", usersList);
         return "success";
+    }
+
+    public String indexRecords() {
+        logger.debug("indexing records by indexRecord number : {}", indexRecord);
+
+        switch (indexRecord) {
+            case 0:
+                logger.debug("Indexing Record page loaded");
+                break;
+            case 1:
+                birthRecordsIndexer.indexAll();
+                logger.debug("Birth Records Re-indexed Successfully");
+                addActionMessage("Birth Record Re-Index Completed");
+                break;
+            case 2:
+                deathRecordsIndexer.indexAll();
+                logger.debug("Death Records Re-indexed Successfully");
+                addActionMessage("Death Record Re-Index Completed");
+                break;
+            case 3:
+                // TODO imlement method to index PRS data
+                addActionMessage("PRS Record Re-Index Completed");
+                logger.debug("PRS Records Re-indexed Successfully");
+                break;
+            default:
+                birthRecordsIndexer.indexAll();
+                deathRecordsIndexer.indexAll();
+                // TODO imlement method to index PRS data
+                addActionMessage("All Records Re-Index Completed");
+                logger.debug("All REcords Re-indexed Successfully");
+        }
+
+        return SUCCESS;
     }
 
     private void populate() {
@@ -967,5 +1008,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setUserLocationNameList(List<UserLocation> userLocationNameList) {
         this.userLocationNameList = userLocationNameList;
+    }
+
+    public int getIndexRecord() {
+        return indexRecord;
+    }
+
+    public void setIndexRecord(int indexRecord) {
+        this.indexRecord = indexRecord;
     }
 }

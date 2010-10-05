@@ -43,7 +43,7 @@ public class EventManagementServiceImpl implements EventManagementService {
         try {
             return eventDAO.getPaginatedListForAll(pageNo, noOfRows);
         } catch (Exception e) {
-            logger.error("Error Occurred while loading paginated Event list", e);
+            logger.error("Error occurred while loading paginated Event list", e);
             return Collections.emptyList();
         }
     }

@@ -1,3 +1,4 @@
+<%@ page import="lk.rgd.common.util.NameFormatUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -14,7 +15,7 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": false,
+            "bSort": true,
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
@@ -56,7 +57,11 @@
                         <tr class="<s:if test="#searchStatus.odd == true">odd</s:if><s:else>even</s:else>">
                             <td><s:property value="idUKey"/></td>
                             <td><s:property value="register.bdfSerialNo"/></td>
-                            <td><s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/></td>
+                            <td>
+                                <s:if test="child.childFullNameOfficialLang != null">
+                                    <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 50)%>
+                                </s:if>
+                            </td>
                             <td align="center">
                                 <s:if test="child.childGender == 0">
                                     <s:label value="%{getText('male.label')}"/>
@@ -67,7 +72,7 @@
                                 <s:elseif test="child.childGender == 2">
                                     <s:label value="%{getText('unknown.label')}"/>
                                 </s:elseif>
-
+                            </td>
                             <td align="center">
                                 <s:if test="register.birthType.ordinal() != 0">
                                     <s:label value="%{getText('yes.label')}"/>
@@ -104,7 +109,7 @@
                                 <s:elseif test="deathPerson.deathPersonGender == 2">
                                     <s:label value="%{getText('unknown.label')}"/>
                                 </s:elseif>
-
+                            </td>
                             <td align="center">
                                 <s:if test="deathType.ordinal() == 0">
                                     <s:label value="%{getText('normalDeath.label')}"/>
