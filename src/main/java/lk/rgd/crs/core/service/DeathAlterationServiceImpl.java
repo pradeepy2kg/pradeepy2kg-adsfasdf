@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
+import java.util.List;
+
 /**
  * @author amith jayasekara
  */
@@ -61,11 +63,18 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public DeathAlteration getById(long idUKey, User user) {
         DeathAlteration da = deathAlterationDAO.getById(idUKey);
         validateAccessToBDDivision(user, da.getDeathDivision());
         return da;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user) {
+        return deathAlterationDAO.getByCertificateNumber(idUKey);
+    }
+
 
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         if (!(User.State.ACTIVE == user.getStatus()

@@ -294,18 +294,18 @@ $(function() {
         maximize("death-person-info");
     });
     $('#death-info-check').click(function() {
-/*
-        document.getElementById("death-info-check").disabled = true;
-*/
+        /*
+         document.getElementById("death-info-check").disabled = true;
+         */
         var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
                 'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
         enableFields(fieldIds);
     });
 
     $('#death-person-info-check').click(function() {
-/*
-        document.getElementById("death-person-info-check").disabled = true;
-*/
+        /*
+         document.getElementById("death-person-info-check").disabled = true;
+         */
         var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
                 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
         enableFields(fieldIds);
@@ -987,10 +987,9 @@ function initPage() {
             in tamil <br>
             Father / Mother
         </td>
-        <td align="center">                                             <%--todo change--%>
-            <s:radio id="declarantType" name="declarant.declarantType"
-                     list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
-                     onchange="setInformPerson('','');"/>
+        <td align="center"><s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+                                    list="#@java.util.HashMap@{'FATHER':''}"
+                                    onchange="setInformPerson('','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td align="center">
             ස්වාමිපුරුෂයා / භාර්යාව <br>
@@ -999,9 +998,9 @@ function initPage() {
         </td>
         <td width="45px" align="center">
                 <%--todo change--%>
-            <s:radio id="declarantType" name="declarant.declarantType"
-                     list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
-                     onchange="setInformPerson('','');"/>
+            <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
+                     list="#@java.util.HashMap@{'SPOUSE':''}"
+                     onchange="setInformPerson('','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td>
             සහෝදරයා සහෝදරිය <br>
@@ -1011,7 +1010,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
-                     onchange="setInformPerson('','','','','');"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
     </tr>
     <tr>
@@ -1023,7 +1022,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
-                     onchange="setInformPerson('','','','','');"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td>
             නෑයන් <br>
@@ -1033,7 +1032,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'RELATIVE':''}"
-                     onchange="setInformPerson('','','','','');"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td>
             වෙනත් <br>
@@ -1043,7 +1042,7 @@ function initPage() {
         <td align="center">
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'OTHER':''}"
-                     onchange="setInformPerson('','','','','');"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
     </tr>
     <tr>
@@ -1053,7 +1052,7 @@ function initPage() {
             Identification Number
         </td>
         <td colspan="6" align="left">
-            <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10"/>
+            <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10" value=""/>
         </td>
     </tr>
     <tr>
@@ -1063,7 +1062,7 @@ function initPage() {
             Name
         </td>
         <td colspan="6">
-            <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%"/>
+            <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%" value=""/>
         </td>
     </tr>
     <tr>
@@ -1073,7 +1072,7 @@ function initPage() {
             Postal Address
         </td>
         <td colspan="6">
-            <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%"/>
+            <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%" value=""/>
         </td>
     </tr>
 

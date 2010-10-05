@@ -42,4 +42,13 @@ public interface DeathAlterationService {
      * @return retrive a unique death alteration object for given unique key.
      */
     public DeathAlteration getById(long idUKey, User user);
+
+    /**
+     * get list of DeathAlterations based on given death certificate number
+     *
+     * @param idUKey death certificate number
+     * @param user   user who has permission to get alterations
+     * @return list of death alterations
+     */
+    public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user);
 }

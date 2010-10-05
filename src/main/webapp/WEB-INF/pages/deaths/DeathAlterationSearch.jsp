@@ -54,7 +54,8 @@
 
 
 </script>
-      <s:actionerror/>
+<s:actionerror/>
+<s:actionmessage/>
 <s:form method="post" action="eprCaptureDeathAlteration.do">
     <%----%><%--section select act--%><%--
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">

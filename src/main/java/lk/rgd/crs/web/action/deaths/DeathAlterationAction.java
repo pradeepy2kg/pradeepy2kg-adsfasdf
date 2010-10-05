@@ -5,10 +5,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Date;
+import java.util.*;
 import java.lang.reflect.Method;
 
 import lk.rgd.common.api.domain.*;
@@ -106,8 +103,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
             //setting state to data entry
             deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-            //todo set this in JSP level
-            deathAlteration.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.BORTHER_OR_SISTER);
+
             //persisting only edited data
             //gettting exsisting recode (unchanged)  to compare
             DeathRegister dr = deathRegistrationService.getById(deathId, user);
@@ -116,6 +112,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
             deathAlteration = trimAlterationObject(deathAlteration, dr);
             deathAlterationService.addDeathAlteration(deathAlteration, user);
+            addActionMessage(getText("alt.massage.success"));
+            populatePrimaryLists();
             return SUCCESS;
         } else {
             //search by certificate number
@@ -131,6 +129,16 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (serialNumber != 0 && divisionUKey != 0) {
                 BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
                 deathRegister = deathRegistrationService.getByBDDivisionAndDeathSerialNo(deathDivision, serialNumber, user);
+            }
+            //check is there a ongoing alteration for this cartificate
+            List<DeathAlteration> exsistingAlterations = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
+            while (exsistingAlterations.iterator().hasNext()) {
+                DeathAlteration da = exsistingAlterations.iterator().next();
+                if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
+                    addActionError("error.exsisting.alteratios.data.entry");
+                    populatePrimaryLists();
+                    return ERROR;
+                }
             }
 
             deathAlteration = new DeathAlteration();

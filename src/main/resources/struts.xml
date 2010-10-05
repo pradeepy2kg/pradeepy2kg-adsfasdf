@@ -963,7 +963,7 @@
         <action name="eprIndexRecords" class="lk.rgd.crs.web.action.UserManagmentAction" method="indexRecords">
             <result type="tiles" name="success">epr.indexRecords</result>
         </action>
-  
+
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">
@@ -1030,11 +1030,12 @@
                 method="captureDeathAlterations">
             <result type="tiles" name="pageload">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
-            <result type="redirectAction" name="success">
+            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <!--            <result type="redirectAction" name="success">
                 <param name="actionName">
                     eprDeathAlterationSearchHome
                 </param>
-            </result>
+            </result>-->
         </action>
     </package>
 </struts>

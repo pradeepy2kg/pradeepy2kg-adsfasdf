@@ -7,7 +7,9 @@ import lk.rgd.common.core.dao.BaseDAO;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @authar amith jayasekara
@@ -46,7 +48,15 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.SUPPORTS)
     public DeathAlteration getById(long idUKey) {
         return em.find(DeathAlteration.class, idUKey);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathAlteration> getByCertificateNumber(long idUKey) {
+        Query q = em.createNamedQuery("get.alt.by.death.certificate.number");
+        q.setParameter("deathCertificateNumber", idUKey);
+        return q.getResultList();
     }
 }

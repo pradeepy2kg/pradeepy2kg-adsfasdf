@@ -3,6 +3,8 @@ package lk.rgd.crs.api.dao;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.DeathAlteration;
 
+import java.util.List;
+
 /**
  * @author amith jayasekara
  */
@@ -40,4 +42,12 @@ public interface DeathAlterationDAO {
      * @return DeathAlteration or null if none exist
      */
     public DeathAlteration getById(long idUKey);
+
+    /**
+     * get list of alterations where it matches to death certifiacte number
+     *
+     * @param idUKey certificate unique key
+     * @return list of death alteration objects
+     */
+    public List<DeathAlteration> getByCertificateNumber(long idUKey);
 }
