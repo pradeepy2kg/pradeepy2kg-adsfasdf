@@ -224,10 +224,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String assignedUserLocation() {
+        userLocation.setLocation(locationDAO.getLocation(locationId));
+        userLocation.setUserId(userId);
         if (pageType == 0) {
             UserLocation checkUserLocation = userLocationDAO.getUserLocation(userId, locationId);
-            userLocation.setLocation(locationDAO.getLocation(locationId));
-            userLocation.setUserId(userId);
             if (checkUserLocation != null) {
                 addFieldError("duplicateIdNumberError", "This Location  Already Assigned For User   :" + userId);
                 logger.debug("{} location is already assigned for user  :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
@@ -235,7 +235,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 userLocation.setUser(userDAO.getUserByPK(userId));
                 service.addUserLocation(userLocation, currentUser);
                 logger.debug("Add New User locatin \"{}\" for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
-                userLocation=null;
+                userLocation = null;
             }
         }
         if (pageType == 1) {
