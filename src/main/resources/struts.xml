@@ -1037,5 +1037,10 @@
                 </param>
             </result>-->
         </action>
+
+        <action name="eprApproveDeathAlterations" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deathAlterationApproval">
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
+        </action>
     </package>
 </struts>

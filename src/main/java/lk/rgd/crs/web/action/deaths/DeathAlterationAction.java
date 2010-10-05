@@ -166,6 +166,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return "pageload";
     }
 
+    public String deathAlterationApproval() {
+        return SUCCESS;
+    }
+
     private DeathAlteration trimAlterationObject(DeathAlteration da, DeathRegister dr) {
         //compare existing values with previous recode values
         if (editDeathInfo) {
