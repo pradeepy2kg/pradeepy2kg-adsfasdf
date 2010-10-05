@@ -297,7 +297,7 @@ function validate() {
         //validateSerialNo(domObject, "comError1", 'comError2');
     domObject = document.getElementById('acceptanceDate');
     if (isFieldEmpty(domObject))
-        isEmpty(domObject, "", 'childError3')
+        isEmpty(domObject, "", 'comError4')
     else
         isDate(domObject.value, "comError1", "comError4");
     domObject = document.getElementById('placeOfBirth');
