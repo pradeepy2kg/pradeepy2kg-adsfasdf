@@ -16,6 +16,8 @@
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ColVis.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
+<script type="text/javascript" src="../lib/daterangepicker/daterangepicker.jQuery.js"></script>
+<link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css" />
 <script>
     $(document).ready(function() {
 
@@ -32,20 +34,33 @@
 
         });
     });
+
+    $(document).ready(function() {
+        $('#queryDOBRange').daterangepicker({arrows:true});
+    });
 </script>
 
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend><b><s:label value="Events Menegement"/></b></legend>
     <table width="100%" cellpadding="5" cellspacing="0">
-                    <tr>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                    <tbody>
-           </tbody>
-        </table>
+        <tr>
+            <td>
+                    <s:label>Choose Date Range</s:label>
+
+            </td>
+            <td><s:textfield type="text" id="queryDOBRange" name="queryDOBRange"/></td>
+        </tr>
+        <tr>
+            <td>
+                    <s:label>Choose Event type</s:label>
+
+            </td>
+            <td></td>
+        </tr>
+        <tbody>
+        </tbody>
+    </table>
 
 </fieldset>
 
@@ -83,15 +98,15 @@
                         <td><s:property value="eventData"/></td>
                         <td align="center">
                             <s:if test="debug!=null">
-                                 <s:url id="debugPageUrl" action="eprDebugDisplay.do">
+                                <s:url id="debugPageUrl" action="eprDebugDisplay.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                 </s:url>
                                 <s:a href="%{debugPageUrl}" title="%{getText('print.label')}">
-                                   <img src="<s:url value='/images/debug.jpg'/>" border="none" width="25"
-                                             height="25"/>
+                                    <img src="<s:url value='/images/debug.jpg'/>" border="none" width="25"
+                                         height="25"/>
                                 </s:a>
                             </s:if>
-                            <%--<s:property value="debug"/>--%>
+                                <%--<s:property value="debug"/>--%>
                         </td>
                     </tr>
                 </s:iterator>
@@ -101,35 +116,35 @@
         </table>
     </div>
     <div class="next-previous">
-            <s:url id="previousUrl" action="eprEventPrevious.do" encode="true">
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNumber" value="%{#request.pageNumber}"/>
-                <s:param name="recordCounter" value="#request.recordCounter"/>
-                <%--<s:param name="startDate" value="#request.startDate"/>--%>
-                <%--<s:param name="endDate" value="#request.endDate"/>--%>
-                <%--<s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>--%>
-            </s:url>
+        <s:url id="previousUrl" action="eprEventPrevious.do" encode="true">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNumber" value="%{#request.pageNumber}"/>
+            <s:param name="recordCounter" value="#request.recordCounter"/>
+            <%--<s:param name="startDate" value="#request.startDate"/>--%>
+            <%--<s:param name="endDate" value="#request.endDate"/>--%>
+            <%--<s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>--%>
+        </s:url>
 
-            <s:url id="nextUrl" action="eprEventNext.do" encode="true">
-                <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-                <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-                <s:param name="pageNumber" value="%{#request.pageNumber}"/>
-                <s:param name="recordCounter" value="#request.recordCounter"/>
-                <%--<s:param name="startDate" value="#request.startDate"/>--%>
-                <%--<s:param name="endDate" value="#request.endDate"/>--%>
-                <%--<s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>--%>
-            </s:url>
-            
+        <s:url id="nextUrl" action="eprEventNext.do" encode="true">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNumber" value="%{#request.pageNumber}"/>
+            <s:param name="recordCounter" value="#request.recordCounter"/>
+            <%--<s:param name="startDate" value="#request.startDate"/>--%>
+            <%--<s:param name="endDate" value="#request.endDate"/>--%>
+            <%--<s:param name="searchDateRangeFlag" value="#request.searchDateRangeFlag"/>--%>
+        </s:url>
+
         <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
-                <img src="<s:url value='/images/previous.gif'/>"
-                     border="none"/></s:a><s:label value="%{getText('previous.label')}"
-                                                   cssStyle="margin-right:5px;"/></s:if>
+            <img src="<s:url value='/images/previous.gif'/>"
+                 border="none"/></s:a><s:label value="%{getText('previous.label')}"
+                                               cssStyle="margin-right:5px;"/></s:if>
 
-            <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
-                                                    cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
-                <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
-        </div>
+        <s:if test="#request.nextFlag"><s:label value="%{getText('next.label')}"
+                                                cssStyle="margin-left:5px;"/><s:a href="%{nextUrl}">
+            <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
+    </div>
 </fieldset>
 
 
