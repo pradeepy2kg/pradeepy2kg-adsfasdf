@@ -89,47 +89,47 @@ $(function() {
 
     $('img#father_lookup').bind('click', function(evt1) {
         var id1 = $("input#father_pinOrNic").attr("value");
-        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-        var day = id1.substring(2, 5);
-        if ((id1.search(regNIC) == 0 && (day >= 0 && day <= 367))) {
-            var fatherBirthYear = 19 + id1.substring(0, 2);
-            var D = new Date(fatherBirthYear, 01, 01) ;
-            D.setDate(D.getDate() + id1.substring(2, 5) - 1000);
-            $('#fatherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
-        } else {
-            alert(document.getElementById('error10').value)
-        }
+        var datePicker = $('#fatherDatePicker');
+        var error = document.getElementById('error10').value;
+        calculateBirthDay(id1, datePicker, error);
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id1},
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
                     $("input#fatherDatePicker").val(data1.dateOfBirth);
-
                 });
     });
 
     $('img#mother_lookup').bind('click', function(evt2) {
         var id2 = $("input#mother_pinOrNic").attr("value");
-        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
-        var day = id2.substring(2, 5);
-        if ((id2.search(regNIC) == 0) && (day >= 501 && day <= 867)) {
-            var motherBirthYear = 19 + id2.substring(0, 2);
-            var D = new Date(motherBirthYear, 01, 01) ;
-            D.setDate(D.getDate() + id2.substring(2, 5) - 1500);
-            $('#motherDatePicker').datepicker('setDate', new Date(D.getYear(), D.getMonth() - 1, D.getDate() - 1));
-        } else {
-            alert(document.getElementById('error11').value)
-        }
+        var datePicker = $('#motherDatePicker');
+        var error = document.getElementById('error11').value;
+        calculateBirthDay(id2, datePicker, error);
         $.getJSON('/ecivil/prs/PersonLookupService', {pinOrNic:id2},
                 function(data2) {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                     $("textarea#motherAddress").val(data2.lastAddress);
                     $("input#motherDatePicker").val(data2.dateOfBirth);
-
-
                 });
     });
+
+    function calculateBirthDay(id, datePicker, error) {
+        var regNIC = /^([0-9]{9}[X|x|V|v])$/;
+        var day = id.substring(2, 5);
+        var BirthYear = 19 + id.substring(0, 2);
+        var D = new Date(BirthYear) ;
+
+        if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
+            D.setDate(D.getDate() + id.substring(2, 5) - 1500);
+            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth() , D.getDate()));
+        } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
+            D.setDate(D.getDate() + id.substring(2, 5) - 1000);
+            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth() , D.getDate()));
+        } else {
+            alert(error);
+        }
+    };
 
     $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);

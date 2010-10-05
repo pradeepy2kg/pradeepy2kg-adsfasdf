@@ -2,9 +2,15 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-tags" %>
 
-<s:textarea cols="120" rows="20" name="debug" value="%{debug}" />
-<s:url id="back" action="eprInitEventsManagement.do"/>
+<s:textarea cols="120" rows="20" name="debug" value="%{debug}"/>
+<s:url id="back" action="eprInitEventsManagement.do">
+    <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+    <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+    <s:param name="pageNumber" value="%{#request.pageNumber}"/>
+    <s:param name="recordCounter" value="#request.recordCounter"/>
+</s:url>
 <br>
+
 <div class="form-submit" style="margin-top:15px;">
     <s:a href="%{back}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
