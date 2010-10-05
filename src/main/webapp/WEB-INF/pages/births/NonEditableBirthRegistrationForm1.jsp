@@ -142,28 +142,38 @@
     <%--TODO style not added--%>
 <s:if test="birthType.ordinal() == 2">
     <tr style="border-left:1px solid #000000;">
-        <td width="150px" colspan="2"><label>(1)දරුකමට ගැනීම පිළිබඳ සහතික පත්‍රයේ අංකය<br> * In Tamil<br>Serial
-            Number of the Certificate of Adoption</label></td>
+        <td width="150px" colspan="2"><label>
+            (1)දරුකමට ගැනීම පිලිබඳ සහතික පත්‍රයේ අංකය
+            <br>மகவேற்புச் செய்யப்பட்டது சம்பற்தமான சான்றிதழின் இலக்கம்
+            <br>Serial number of the Certificate of Adoption
+        </label></td>
         <td colspan="7">
             <s:label value="%{#session.birthRegister.register.adoptionUKey}"/>
         </td>
     </tr>
     <tr>
-        <td rowspan="5"><label>(2) ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනමි<br>* In Tamil<br>If the birth was
-            previously registered</label></td>
+        <td rowspan="5"><label>(2)ළමයාගේ උපත කලින් ලියාපදිංචි කර තිබුනේනම් /
+            <br>பிள்ளையின் பிறப்பு பதிவு செய்யப்பட்டிருந்தால் /
+            <br>If the birth was previously registered</label></td>
         <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:label value="%{#session.oldBdfForAdoption.districtName}"/>
         </td>
     </tr>
     <tr>
-        <td><label>ප්‍රාදේශීය ලේකමි කොටිඨාශය/<br>* In Tamil/<br>Divisional Secretariat</label></td>
+        <td><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /
+            <br>பிரதேச செயளாளா் பிரிவு /
+            <br>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/>
         </td>
     </tr>
     <tr>
-        <td><label>ලියාපදිංචි කිරීමේ කොටිඨාශය/<br>* In Tamil/<br>Registration Division</label></td>
+        <td><label>
+            ලියාපදිංචි කිරීමේ කොට්ඨාශය /
+            <br>பதிவுப் பிரிவு /
+            <br>Registration Division
+        </label></td>
         <td colspan="6" class="table_reg_cell_01">
             <s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/>
         </td>
