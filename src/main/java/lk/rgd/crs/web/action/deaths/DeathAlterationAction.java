@@ -9,10 +9,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Date;
+import java.lang.reflect.Method;
 
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
 import lk.rgd.common.api.dao.RaceDAO;
@@ -68,6 +67,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String dsDivision;
     private String deathDivision;
 
+    private boolean editDeathInfo;
+    private boolean editDeathPerson;
+
     public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService
             , DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO) {
         this.deathAlterationService = deathAlterationService;
@@ -104,6 +106,15 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
             //setting state to data entry
             deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
+            //todo set this in JSP level
+            deathAlteration.getDeclarant().setDeclarantType(DeclarantInfo.DeclarantType.BORTHER_OR_SISTER);
+            //persisting only edited data
+            //gettting exsisting recode (unchanged)  to compare
+            DeathRegister dr = deathRegistrationService.getById(deathId, user);
+            //setting death division
+            deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
+
+            deathAlteration = trimAlterationObject(deathAlteration, dr);
             deathAlterationService.addDeathAlteration(deathAlteration, user);
             return SUCCESS;
         } else {
@@ -147,9 +158,99 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return "pageload";
     }
 
+    private DeathAlteration trimAlterationObject(DeathAlteration da, DeathRegister dr) {
+        //compare existing values with previous recode values
+        if (editDeathInfo) {
+            if (compareStiring(da.getDeathInfo().getPlaceOfDeath(), dr.getDeath().getPlaceOfDeath()))
+                da.getDeathInfo().setPlaceOfDeath(null);
+            if (compareStiring(da.getDeathInfo().getPlaceOfDeathInEnglish(), dr.getDeath().getPlaceOfDeathInEnglish()))
+                da.getDeathInfo().setPlaceOfDeathInEnglish(null);
+            if (compareStiring(da.getDeathInfo().getTimeOfDeath(), dr.getDeath().getTimeOfDeath()))
+                da.getDeathInfo().setTimeOfDeath(null);
+            if (compareStiring(da.getDeathInfo().getTimeOfDeath(), dr.getDeath().getTimeOfDeath()))
+                da.getDeathInfo().setTimeOfDeath(null);
+            if (compareStiring(da.getDeathInfo().getCauseOfDeath(), dr.getDeath().getCauseOfDeath()))
+                da.getDeathInfo().setCauseOfDeath(null);
+            if (compareStiring(da.getDeathInfo().getIcdCodeOfCause(), dr.getDeath().getIcdCodeOfCause()))
+                da.getDeathInfo().setIcdCodeOfCause(null);
+            if (compareStiring(da.getDeathInfo().getPlaceOfBurial(), dr.getDeath().getPlaceOfBurial()))
+                da.getDeathInfo().setPlaceOfBurial(null);
+
+            if (compareDates(da.getDeathInfo().getDateOfDeath(), dr.getDeath().getDateOfDeath()))
+                da.getDeathInfo().setDateOfDeath(null);
+            //compare boolean
+/*          //todo
+            if(da.isCauseOfDeathEstablished() && dr.getDeath().isCauseOfDeathEstablished())
+                da.setCauseOfDeathEstablished(null);*/
+
+        } else {
+            da.setDeathInfo(new DeathAlterationInfo());
+        }
+        if (editDeathPerson) {
+            //todo improve with Method class
+            if (compareStiring(dr.getDeathPerson().getDeathPersonNameOfficialLang(), da.getDeathPerson().getDeathPersonNameOfficialLang()))
+                da.getDeathPerson().setDeathPersonNameOfficialLang(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonNameInEnglish(), da.getDeathPerson().getDeathPersonNameInEnglish()))
+                da.getDeathPerson().setDeathPersonNameInEnglish(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonFatherFullName(), da.getDeathPerson().getDeathPersonFatherFullName()))
+                da.getDeathPerson().setDeathPersonFatherFullName(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonMotherFullName(), da.getDeathPerson().getDeathPersonMotherFullName()))
+                da.getDeathPerson().setDeathPersonMotherFullName(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonPermanentAddress(), da.getDeathPerson().getDeathPersonPermanentAddress()))
+                da.getDeathPerson().setDeathPersonPermanentAddress(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonPINorNIC(), da.getDeathPerson().getDeathPersonPINorNIC()))
+                da.getDeathPerson().setDeathPersonPINorNIC(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonFatherPINorNIC(), da.getDeathPerson().getDeathPersonFatherPINorNIC()))
+                da.getDeathPerson().setDeathPersonFatherPINorNIC(null);
+            if (compareStiring(dr.getDeathPerson().getDeathPersonMotherPINorNIC(), da.getDeathPerson().getDeathPersonMotherPINorNIC()))
+                da.getDeathPerson().setDeathPersonMotherPINorNIC(null);
+
+            if (compareRaces(dr.getDeathPerson().getDeathPersonRace(), da.getDeathPerson().getDeathPersonRace()))
+                da.getDeathPerson().setDeathPersonRace(null);
+
+            if (compareCountry(dr.getDeathPerson().getDeathPersonCountry(), da.getDeathPerson().getDeathPersonCountry()))
+                da.getDeathPerson().setDeathPersonCountry(null);
+
+            if (compareInteger(dr.getDeathPerson().getDeathPersonAge(), da.getDeathPerson().getDeathPersonAge()))
+                da.getDeathPerson().setDeathPersonAge(null);
+            //todo gender
+
+        } else {
+            da.setDeathPerson(new DeathPersonInfo());
+        }
+        return da;
+    }
+
+    private boolean compareStiring(String exsisting, String current) {
+        if (current != null) {
+            int value = exsisting.compareTo(current.trim());
+            if (value == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    //todo implement a method to compare two date objects
+    private boolean compareDates(Date exsisting, Date current) {
+        return false;
+    }
+
+    private boolean compareRaces(Race ex, Race cu) {
+        return false;
+    }
+
+    private boolean compareInteger(Integer ex, Integer cu) {
+        return false;
+    }
+
+    private boolean compareCountry(Country ex, Country cu) {
+        return false;
+    }
 
     private void populatePrimaryLists() {
-        //todo get original values
         districtList = districtDAO.getDistrictNames(language, user);
         districtUKey = districtList.keySet().iterator().next();
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
@@ -365,4 +466,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.pin = pin;
     }
 
+    public boolean isEditDeathInfo() {
+        return editDeathInfo;
+    }
+
+    public void setEditDeathInfo(boolean editDeathInfo) {
+        this.editDeathInfo = editDeathInfo;
+    }
+
+    public boolean isEditDeathPerson() {
+        return editDeathPerson;
+    }
+
+    public void setEditDeathPerson(boolean editDeathPerson) {
+        this.editDeathPerson = editDeathPerson;
+    }
 }
