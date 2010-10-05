@@ -1,0 +1,6 @@
+# include text for tamil translation here
+
+* (No, but since married Tamil) නැත, නමුත් පසුව විවාහවී ඇත
+* (Unmarried) අවිවාහකයි
+* (Married) විවාහකයි
+* (Unknown) නොදනී
