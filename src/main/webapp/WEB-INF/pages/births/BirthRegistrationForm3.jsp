@@ -77,20 +77,47 @@ $(function() {
 });
 
 var informPerson;
-function setInformPerson(id, nICorPIN, name, address, phonoNo, email)
+function setInformPerson(id)
 {
-
+    var name,nICorPIN,address,phonoNo,email;
     var informantName = document.getElementById("informantName");
     var informantNICorPIN = document.getElementById("informantNICorPIN");
     var informantAddress = document.getElementById("informantAddress");
     var informantPhoneNo = document.getElementById("informantPhoneNo");
     var informantEmail = document.getElementById("informantEmail");
-
+    switch (id) {
+        case 1:
+            name = document.getElementById("motherFullNameLable").value;
+            nICorPIN = document.getElementById("motherNICorPINLable").value;
+            address = document.getElementById("motherAddressLable").value;
+            phonoNo = document.getElementById("motherPhoneNoLable").value;
+            email = document.getElementById("motherEmailLable").value;
+            break;
+        case 2:
+            name = document.getElementById("fatherFullNameLable").value;
+            nICorPIN = document.getElementById("fatherNICorPINLable").value;
+            address = "";
+            if (document.getElementById("marriedId1").checked) {
+                address = document.getElementById("motherAddressLable").value;
+            }
+            phonoNo = "";
+            email = "";
+            break;
+        case 3:
+            name = "";
+            nICorPIN = "";
+            address = "";
+            phonoNo = "";
+            email = "";
+            break;
+    }
     informantName.value = name;
     informantNICorPIN.value = nICorPIN;
     informantAddress.value = address;
     informantPhoneNo.value = phonoNo;
     informantEmail.value = email;
+
+
 }
 
 var errormsg = "";
@@ -403,7 +430,7 @@ function initPage() {
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
                         <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
-                                     onclick="disableMarriage(false);disableSigns(true)"/>
+                                     onclick="disableMarriage(false);disableSigns(true)" id="marriedId"/>
                         </td>
                     </tr>
                     <tr>
@@ -616,9 +643,7 @@ function initPage() {
                     <td><label>මව <br>மாதா <br>Mother</label></td>
                     <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType"
                                                               list="#@java.util.HashMap@{'MOTHER':''}"
-                                                              onchange="javascript:setInformPerson('MOTHER',
-            '%{parent.motherNICorPIN}', '%{parent.motherFullName}', '%{parent.motherAddress}',
-            '%{parent.motherPhoneNo}','%{parent.motherEmail}')"/></td>
+                                                              onchange="javascript:setInformPerson(1)"/></td>
                 </tr>
             </table>
         </td>
@@ -628,9 +653,7 @@ function initPage() {
                     <td><label>පියා<br> பிதா <br>Father</label></td>
                     <td align="center" width="150px"><s:radio id="informantType" name="informant.informantType"
                                                               list="#@java.util.HashMap@{'FATHER':''}"
-                                                              onchange="javascript:setInformPerson('FATHER',
-            '%{parent.fatherNICorPIN}',
-            '%{parent.fatherFullName}','','','')"/></td>
+                                                              onchange="javascript:setInformPerson(2)"/></td>
                 </tr>
             </table>
         </td>
@@ -642,14 +665,14 @@ function initPage() {
                         <td align="center" width="150px">
                             <s:radio id="informantType" name="informant.informantType"
                                      list="#@java.util.HashMap@{'GUARDIAN':''}"
-                                     onchange="javascript:setInformPerson('GUARDIAN','','','','','','')"/></td>
+                                     onchange="javascript:setInformPerson(3)"/></td>
                     </s:if>
                     <s:else>
                         <td><label>නෑයන් <br> பாதுகாவலர்<br>Relative</label></td>
                         <td align="center" width="150px">
                             <s:radio id="informantType" name="informant.informantType"
                                      list="#@java.util.HashMap@{'RELATIVE':''}"
-                                     onchange="javascript:setInformPerson('RELATIVE','','','','','','')"/></td>
+                                     onchange="javascript:setInformPerson(3)"/></td>
                     </s:else>
                 </tr>
             </table>
@@ -753,6 +776,17 @@ function initPage() {
 <s:hidden id="error16" value="%{getText('p3.Informant.telephone.error.value')}"/>
 <s:hidden id="error17" value="%{getText('p3.informdate.with.reg.date')}"/>
 <s:hidden id="infomantDate" value="%{getText('p3.informant.date')}"/>
+
+<%--Father information --%>
+<s:hidden id="fatherNICorPINLable" value="%{parent.fatherNICorPIN}"/>
+<s:hidden id="fatherFullNameLable" value="%{parent.fatherFullName}"/>
+<%--mother information --%>
+<s:hidden id="motherNICorPINLable" value="%{parent.motherNICorPIN}"/>
+<s:hidden id="motherFullNameLable" value="%{parent.motherFullName}"/>
+<s:hidden id="motherAddressLable" value="%{parent.motherAddress}"/>
+<s:hidden id="motherPhoneNoLable" value="%{parent.motherPhoneNo}"/>
+<s:hidden id="motherEmailLable" value="%{parent.motherEmail}"/>
+
 
 </div>
 
