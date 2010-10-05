@@ -68,11 +68,11 @@
     });
 
     var informPerson;
-    function setInformPerson(nICorPIN, name)
-    {
-        var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
-        var informantNICorPIN = document.getElementById("declarantFullName").value = name;
-    }
+    //    function setInformPerson(nICorPIN, name)
+    //    {
+    //        var informantName = document.getElementById("declarant_pinOrNic").value = nICorPIN;
+    //        var informantNICorPIN = document.getElementById("declarantFullName").value = name;
+    //    }
     var errormsg = "";
     function validate() {
         var domObject;
@@ -158,193 +158,249 @@
 </script>
 
 <div id="death-declaration-form-2-outer">
-    <s:form name="deathRegistrationForm2" action="eprDeathDeclaration.do" id="death-registration-form-2" method="POST"
-            onsubmit="javascript:return validate()">
-        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
-               class="font-9">
-            <col width="150px"/>
-            <col width="130px"/>
-            <col width="120px"/>
-            <col width="130px"/>
-            <col width="130px"/>
-            <col width="130px"/>
-            <col/>
-            <tbody>
-            <tr class="form-sub-title">
-                <td colspan="7">ප්‍රකාශකයාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்<br>Details of the Declarant</td>
-            </tr>
-            <tr>
-                <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ
-                    කවරකු
-                    වශයෙන්ද<br>*in tamil<br>Capacity for giving information
-                </td>
-                <td colspan="1">මව <br>*in tamil<br>Mother</td>
-                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'FATHER':''}"
-                                                        onchange="setInformPerson('%{deathPerson.deathPersonMotherPINorNIC}','%{deathPerson.deathPersonMotherFullName}');"/></td>
-                <td colspan="1">පියා<br>*in tamil<br>Father</td>
-                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'MOTHER':''}"
-                                                        onchange="setInformPerson('%{deathPerson.deathPersonFatherPINorNIC}','%{deathPerson.deathPersonFatherFullName}');"/></td>
-                <td colspan="1">සහෝදරයා සහෝදරිය<br>*in tamil<br>Brother / Sister</td>
-                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"
-                                                        onchange="setInformPerson('','');"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">පුත්‍රයා / දියණිය <br>*in tamil<br>Son / Daughter</td>
-                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"
-                                                        onchange="setInformPerson('','');"/></td>
-                <td colspan="1">නෑයන් <br>பாதுகாவலர் <br>Relative</td>
-                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'RELATIVE':''}"
-                                                        onchange="setInformPerson('','');"/></td>
-                <td colspan="1">වෙනත් <br>*in tamil<br>Other</td>
-                <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
-                                                        list="#@java.util.HashMap@{'OTHER':''}"
-                                                        onchange="setInformPerson('','');"/></td>
-            </tr>
-            <tr>
-                <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)පුද්ගල අනන්‍යතා අංකය /
-                    ජාතික හැදුනුම්පත් අංකය<br>தகவநபர் அடையாள எண் / அடையாள அட்டை இல.
-                    <br>PIN / NIC
-                </td>
-                <td colspan="3" class="find-person">
-                    <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="declarant_NIC_V" onclick="javascript:addXorV('declarant_pinOrNic','V','error12')">
-                    <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="declarant_NIC_X" onclick="javascript:addXorV('declarant_pinOrNic','X','error12')">
-                    <br>
-                    <s:textfield id="declarant_pinOrNic"
-                                 name="declarant.declarantNICorPIN"/><img
-                        src="<s:url value="/images/search-father.png"/>"
-                        style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
-            </tr>
-            <tr>
-                <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)නම<br>கொடுப்பவரின்
-                    பெயர்<br>Name
-                </td>
-                <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"
-                                            cssStyle="width:880px;"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
-                    முகவரி<br>Postal Address
-                </td>
-                <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"
-                                            cssStyle="width:880px;"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)ඇමතුම් විස්තර<br>இலக்க வகை
-                    <br>Contact Details
-                </td>
-                <td colspan="1">දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</td>
-                <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
-                <td colspan="1">ඉ -තැපැල<br>மின்னஞ்சல்<br>Email</td>
-                <td colspan="2">
-                    <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br> *in tamil<br>Declaranat Signed Date</td>
-                <td colspan="5">
-                    <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
-                    <s:textfield id="declarantDatePicker" name=""/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<s:form name="deathRegistrationForm2" action="eprDeathDeclaration.do" id="death-registration-form-2" method="POST"
+        onsubmit="javascript:return validate()">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
+       class="font-9">
+    <col width="150px"/>
+    <col width="130px"/>
+    <col width="120px"/>
+    <col width="130px"/>
+    <col width="130px"/>
+    <col width="130px"/>
+    <col/>
+    <tbody>
+    <tr class="form-sub-title">
+        <td colspan="7">
+            ප්‍රකාශකයාගේ විස්තර
+            <br>அறிவிப்பு கொடுப்பவரின் தகவல்கள்
+            <br>Details of the Declarant
+        </td>
+    </tr>
+    <tr>
+        <td rowspan="2" colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            (20)දැනුම් දෙන්නේ කවරකු වශයෙන්ද
+            <br>தகவல் வழங்குபவா்
+            <br>Capacity for giving information
+        </td>
+        <td colspan="1">
+            පියා / මව
+            <br>தந்தை/ தாய்
+            <br>Father / Mother
+        </td>
+        <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
+                                                list="#@java.util.HashMap@{'FATHER':''}"/></td>
+        <td colspan="1">
+            ස්වාමිපුරුෂයා / භාර්යාව
+            <br>கணவன்/ மனைவி
+            <br>Husband / Wife
+        </td>
+        <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
+                                                list="#@java.util.HashMap@{'MOTHER':''}"/></td>
+        <td colspan="1">
+            සහෝදරයා සහෝදරිය
+            <br>சகோதரான்/ சகோதரி
+            <br>Brother / Sister
+        </td>
+        <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
+                                                list="#@java.util.HashMap@{'BORTHER_OR_SISTER':''}"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            පුත්‍රයා / දියණිය
+            <br>மகன்/ மகள்
+            <br>Son / Daughter
+        </td>
+        <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
+                                                list="#@java.util.HashMap@{'SON_OR_DAUGHTER':''}"/></td>
+        <td colspan="1">
+            නෑයන්
+            <br>உறவினா்
+            <br>Relative
+        </td>
+        <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
+                                                list="#@java.util.HashMap@{'RELATIVE':''}"/></td>
+        <td colspan="1">
+            වෙනත්
+            <br>வேறு
+            <br>Other
+        </td>
+        <td colspan="1" align="center"><s:radio id="declarantType" name="declarant.declarantType"
+                                                list="#@java.util.HashMap@{'OTHER':''}"/></td>
+    </tr>
+    <tr>
+        <td colspan="4">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>Identification No.
+        </td>
+        <td colspan="3" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="declarant_NIC_V" onclick="javascript:addXorV('declarant_pinOrNic','V','error12')">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="declarant_NIC_X" onclick="javascript:addXorV('declarant_pinOrNic','X','error12')">
+            <br>
+            <s:textfield id="declarant_pinOrNic"
+                         name="declarant.declarantNICorPIN"/><img
+                src="<s:url value="/images/search-father.png"/>"
+                style="vertical-align:middle; margin-left:20px;" id="declarant_lookup"></td>
+    </tr>
+    <tr>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            නම
+            <br>பெயர்
+            <br>Name
+        </td>
+        <td colspan="6"><s:textarea id="declarantFullName" name="declarant.declarantFullName"
+                                    cssStyle="width:880px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            තැපැල් ලිපිනය
+            <br>தபால் முகவரி
+            <br>Postal Address
+        </td>
+        <td colspan="6"><s:textarea id="declarantAddress" name="declarant.declarantAddress"
+                                    cssStyle="width:880px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            ඇමතුම් විස්තර
+            <br>தொடா்பு விபரம்
+            <br>Contact Details
+        </td>
+        <td colspan="1">
+            දුරකතනය
+            <br>தொலைபேசி இலக்கம்
+            <br>Telephone
+        </td>
+        <td colspan="2"><s:textfield id="declarantPhone" name="declarant.declarantPhone"/></td>
+        <td colspan="1">
+            ඉ -තැපැල
+            <br>மின்னஞ்சல்
+            <br>Email
+        </td>
+        <td colspan="2">
+            <s:textfield id="declarantEMail" name="declarant.declarantEMail" cssStyle="text-transform:none;"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">ප්‍රකාශකයා අත්සන්කල දිනය<br> *in tamil<br>Declaranat Signed Date</td>
+        <td colspan="5">
+            <s:label value="YYYY-MM-DD" cssStyle="font-size:10px"/><br>
+            <s:textfield id="declarantDatePicker" name=""/>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
-        <table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
-               class="font-9">
-            <col width="150px"/>
-            <col width="400px"/>
-            <col width="100px"/>
-            <col/>
-            <tbody>
-            <tr class="form-sub-title">
-                <td colspan="4"><s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
-                    තොරතුරු වාර්තා කරන පාර්ශවය<br>அதிகாரியிடம் தெரிவித்தல்<br>Notifying Authority
-                </s:if>
-                    <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
-                        දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල් <br/>
-                        அதிகாரியிடம் தெரிவித்தல் <br/>
-                        District Registrar / Registrar General
-                    </s:elseif>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය<br>அடையாள எண் / அடையாள அட்டை இல. <br>PIN /
-                    NIC
-                </td>
-                <td colspan="2" class="find-person">
-                    <img src="<s:url value="/images/alphabet-V.gif" />"
-                         id="notifying_authority_NIC_V" onclick="javascript:addXorV('notifying_authority_NICorPIN','V','error12')">
-                    <img src="<s:url value="/images/alphabet-X.gif" />"
-                         id="notifying_authority_NIC_X" onclick="javascript:addXorV('notifying_authority_NICorPIN','X','error12')">
-                    <br>
-                    <s:textfield id="notifying_authority_NICorPIN"
-                                 name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
-                    <img src="<s:url value="/images/search-father.png" />"
-                         style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="1">නම<br>கொடுப்பவரின் பெயர்<br>Name</td>
-                <td colspan="3"><s:textarea id="notifyingAuthorityName"
-                                            name="notifyingAuthority.notifyingAuthorityName"
-                                            cssStyle="width:880px;"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">තැපැල් ලිපිනය<br>தபால் முகவரி<br>Postal Address</td>
-                <td colspan="3"><s:textarea id="notifyingAuthorityAddress"
-                                            name="notifyingAuthority.notifyingAuthorityAddress"
-                                            cssStyle="width:880px;"/></td>
-            </tr>
-            <tr>
-                <td colspan="1">අත්සන හා නිල මුද්‍රාව<br>தகவல் ...<br>Signature and Official Seal of the Notifying
-                    Authority
-                </td>
-                <td colspan="1"></td>
-                <td colspan="1">දිනය<br>திகதி<br>Date</td>
-                <td colspan="1">
-                    <s:label value="YYYY-MM-DD" cssStyle="margin-left:50%;font-size:10px"/><br>
-                    <s:textfield id="submitDatePicker"
-                                 name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
-            </tr>
-            </tbody>
-        </table>
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse;"
+       class="font-9">
+    <col width="150px"/>
+    <col width="400px"/>
+    <col width="100px"/>
+    <col/>
+    <tbody>
+    <tr class="form-sub-title">
+        <td colspan="4"><s:if test="deathType.ordinal() == 0 || deathType.ordinal() == 1">
+            තොරතුරු වාර්තා කරන පාර්ශවය / මරණ පරීක්ෂක හෝ අධිකරණ වෛද්‍ය නිලධාරී
+            <br>தகவல் அறிக்கையிடும் திறத்தார்/ மரண பரிசோதகா் அல்லது வைத்திய அதிகாரி
+            <br>Notifying Authority / Inquirer into deaths or Judicial Medical Officer </s:if>
+            <s:elseif test="deathType.ordinal() == 2 || deathType.ordinal() == 3">
+                දිස්ත්‍රික් රෙජිස්ට්‍රාර් / රෙජිස්ට්‍රාර් ජෙනරාල්
+                <br>மாவட்ட பதிவாளா்/ பதிவாளா் நாயகம்
+                <br>District Registrar / Registrar General
+            </s:elseif>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            අනන්‍යතා අංකය
+            <br>அடையாள எண்
+            <br>PIN
+        </td>
+        <td colspan="2" class="find-person">
+            <img src="<s:url value="/images/alphabet-V.gif" />"
+                 id="notifying_authority_NIC_V"
+                 onclick="javascript:addXorV('notifying_authority_NICorPIN','V','error12')">
+            <img src="<s:url value="/images/alphabet-X.gif" />"
+                 id="notifying_authority_NIC_X"
+                 onclick="javascript:addXorV('notifying_authority_NICorPIN','X','error12')">
+            <br>
+            <s:textfield id="notifying_authority_NICorPIN"
+                         name="notifyingAuthority.notifyingAuthorityPIN"> </s:textfield>
+            <img src="<s:url value="/images/search-father.png" />"
+                 style="vertical-align:middle; margin-left:20px;" id="notifying_authority_lookup"></td>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            නම
+            <br>பெயர்
+            <br>Name
+        </td>
+        <td colspan="3"><s:textarea id="notifyingAuthorityName"
+                                    name="notifyingAuthority.notifyingAuthorityName"
+                                    cssStyle="width:880px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            තැපැල් ලිපිනය
+            <br>தபால் முகவரி
+            <br>Postal Address
+        </td>
+        <td colspan="3"><s:textarea id="notifyingAuthorityAddress"
+                                    name="notifyingAuthority.notifyingAuthorityAddress"
+                                    cssStyle="width:880px;"/></td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            අත්සන හා නිල මුද්‍රාව
+            <br>கையொப்பமும் அதிகார முத்திரையும்
+            <br>Signature and Official Seal of the Notifying Authority
+        </td>
+        <td colspan="1"></td>
+        <td colspan="1">
+            දිනය
+            <br>திகதி
+            <br>Date
+        </td>
+        <td colspan="1">
+            <s:label value="YYYY-MM-DD" cssStyle="margin-left:50%;font-size:10px"/><br>
+            <s:textfield id="submitDatePicker"
+                         name="notifyingAuthority.notifyingAuthoritySignDate"/></td>
+    </tr>
+    </tbody>
+</table>
 
-        <s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
-        <s:hidden id="error2" value="%{getText('declarant_email.text')}"/>
-        <s:hidden id="error3" value="%{getText('declarant_phone_no.text')}"/>
-        <s:hidden id="error4" value="%{getText('declarant_pinOrNic.text')}"/>
-        <s:hidden id="error5" value="%{getText('declarantAndNotifyDate.text')}"/>
+<s:hidden id="error1" value="%{getText('p1.invalide.inputType')}"/>
+<s:hidden id="error2" value="%{getText('declarant_email.text')}"/>
+<s:hidden id="error3" value="%{getText('declarant_phone_no.text')}"/>
+<s:hidden id="error4" value="%{getText('declarant_pinOrNic.text')}"/>
+<s:hidden id="error5" value="%{getText('declarantAndNotifyDate.text')}"/>
 
-        <s:hidden id="p2error1" value="%{getText('p2.NIC.error.value')}"/>
-        <s:hidden id="p2error2" value="%{getText('p2.Name.error.value')}"/>
-        <s:hidden id="p2error3" value="%{getText('p2.submitDate.error.value')}"/>
-        <s:hidden id="p2error4" value="%{getText('p2.notifierAddress.text')}"/>
-        <s:hidden id="p2error5" value="%{getText('notifierNIC.text')}"/>
-        <s:hidden id="p2error6" value="%{getText('notifierDate.text')}"/>
-        <s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
-        <s:hidden id="p2error8" value="%{getText('declarentType.text')}"/>
-        <s:hidden id="error12" value="%{getText('NIC.error.add.VX')}"/>
+<s:hidden id="p2error1" value="%{getText('p2.NIC.error.value')}"/>
+<s:hidden id="p2error2" value="%{getText('p2.Name.error.value')}"/>
+<s:hidden id="p2error3" value="%{getText('p2.submitDate.error.value')}"/>
+<s:hidden id="p2error4" value="%{getText('p2.notifierAddress.text')}"/>
+<s:hidden id="p2error5" value="%{getText('notifierNIC.text')}"/>
+<s:hidden id="p2error6" value="%{getText('notifierDate.text')}"/>
+<s:hidden id="p2error7" value="%{getText('declarentDate.text')}"/>
+<s:hidden id="p2error8" value="%{getText('declarentType.text')}"/>
+<s:hidden id="error12" value="%{getText('NIC.error.add.VX')}"/>
 
-        <s:label><p class="font-8">පු.අ.අ. / ජා.හැ.අ. = පුද්ගල අනන්‍යතා අංකය / ජාතික හැදුනුම්පත් අංකය</p></s:label>
 
-        <div class="form-submit">
-            <s:hidden name="pageNo" value="2"/>
-            <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
-        </div>
-        <div class="next-previous">
-            <s:url id="backUrl" action="eprDeathDeclaration.do">
-                <s:param name="back" value="true"/>
-                <s:param name="pageNo" value="{pageNo - 1}"/>
-            </s:url>
-            <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
-        </div>
-    </s:form>
+<div class="form-submit">
+    <s:hidden name="pageNo" value="2"/>
+    <s:submit value="%{getText('next.label')}" cssStyle="margin-top:10px;"/>
+</div>
+<div class="next-previous">
+    <s:url id="backUrl" action="eprDeathDeclaration.do">
+        <s:param name="back" value="true"/>
+        <s:param name="pageNo" value="{pageNo - 1}"/>
+    </s:url>
+    <s:a href="%{backUrl}"><s:label value="%{getText('previous.label')}"/></s:a>
+</div>
+</s:form>
 </div>
