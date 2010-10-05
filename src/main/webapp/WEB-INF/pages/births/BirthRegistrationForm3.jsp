@@ -338,10 +338,32 @@ function disableSigns(mode) {
     }
 }
 
+function disableSignature() {
+    var mode;
+    var name = document.getElementById('fatherName');
+    if (name.value.length == 0) {
+        mode = true;
+    }
+    if (mode) {
+        document.getElementById('fatherSigned').checked = false;
+        document.getElementById('motherSigned').checked = false;
+        document.getElementById('motherSigned').disabled = true;
+        document.getElementById('fatherSigned').disabled = true;
+    }
+}
+
 function initPage() {
     var declarationType = document.getElementById('birthTypeId');
     if (declarationType.value != 0) {
         if (document.getElementsByName("marriage.parentsMarried")[0].checked) {
+            disableSigns(true);
+        } else if (document.getElementsByName("marriage.parentsMarried")[1].checked) {
+            disableMarriage(true);
+            disableSignature();
+        } else if (document.getElementsByName("marriage.parentsMarried")[2].checked) {
+            disableSignature();
+        } else if (document.getElementsByName("marriage.parentsMarried")[3].checked) {
+            disableMarriage(true);
             disableSigns(true);
         }
     }

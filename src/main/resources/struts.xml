@@ -955,6 +955,10 @@
                 method="debugDisplay">
             <result type="tiles" name="success">epr.debugManegement</result>
         </action>
+
+        <action name="eprIndexRecords" class="lk.rgd.crs.web.action.UserManagmentAction" method="indexRecords">
+            <result type="tiles" name="success">epr.indexRecords</result>
+        </action>
     </package>
 
     <package name="alteration" namespace="/alteration" extends="NG">

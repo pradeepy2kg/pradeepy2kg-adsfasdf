@@ -2,12 +2,11 @@ package lk.rgd.crs.web;
 
 import lk.rgd.Permission;
 import lk.rgd.common.api.domain.Role;
-
-import java.util.Map;
-import java.util.LinkedHashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Ashoka Ekanayaka
@@ -76,7 +75,7 @@ public class Menu {
         adminLink.put("eprInactiveUserLocation.do", new Link(null, "/ecivil/management/", "eprInactiveUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprActiveUserLocation.do", new Link(null, "/ecivil/management/", "eprActiveUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprEditAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprEditAssignedUserLocation.do", Permission.USER_MANAGEMENT));
-
+        adminLink.put("eprIndexRecords.do", new Link("indexRecords.label", "/ecivil/management/", "eprIndexRecords.do", Permission.INDEX_RECORDS));
 
         //User Preferance
         preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/ecivil/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
