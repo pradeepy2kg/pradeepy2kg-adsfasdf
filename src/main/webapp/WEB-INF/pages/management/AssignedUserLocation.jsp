@@ -70,7 +70,10 @@
             <tr>
                 <td colspan="1"><s:label value="Location List" cssClass="user-locaton-outer-lable"/></td>
                 <td colspan="2">
-                    <s:if test="pageType==1"><s:select list="locationList" name="locationId" disabled="true"/></s:if>
+                    <s:if test="pageType==1">
+                        <s:select list="locationList" name="locationId" disabled="true"/>
+                         <s:hidden name="locationId"/>
+                    </s:if>
                     <s:else>
                         <s:select list="locationList" name="locationId"/>
                     </s:else></td>

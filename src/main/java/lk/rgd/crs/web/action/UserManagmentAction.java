@@ -224,14 +224,14 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     }
 
     public String assignedUserLocation() {
-        userLocation.setLocation(locationDAO.getLocation(locationId));
-        userLocation.setUserId(userId);
         if (pageType == 0) {
             UserLocation checkUserLocation = userLocationDAO.getUserLocation(userId, locationId);
             if (checkUserLocation != null) {
                 addFieldError("duplicateIdNumberError", "This Location  Already Assigned For User   :" + userId);
                 logger.debug("{} location is already assigned for user  :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
             } else {
+                userLocation.setLocation(locationDAO.getLocation(locationId));
+                userLocation.setUserId(userId);
                 userLocation.setUser(userDAO.getUserByPK(userId));
                 service.addUserLocation(userLocation, currentUser);
                 logger.debug("Add New User locatin \"{}\" for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
@@ -240,9 +240,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         }
         if (pageType == 1) {
             try {
-                logger.debug("userId : {} ,location Id :{}", userLocation.getUserId(), userLocation.getLocationId());
+                userLocation.setLocation(locationDAO.getLocation(locationId));
+                userLocation.setUserId(userId);
                 service.updateUserLocation(userLocation, currentUser);
-                logger.debug("User Location end date :{}", userLocation.getEndDate());
+                logger.debug("Updated user location of {} is : {}", userLocation.getUserId(), userLocation.getLocation().getEnLocationName());
                 userLocation = null;
                 pageType = 0;
             }
