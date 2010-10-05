@@ -13,4 +13,6 @@
 *(Add Comments)අදහස් දක්වන්න
 *(Hospital Admission Number)රෝහලට ඇතුලත් කිරිමේ අංකය
 *(Hospital Admission Date)රෝහලට ඇතුලත් කිරිමේ දිනය
+*(Preferred Language for Death Certificate) මරණ සහතිකය නිකුත් කල යුතු භාෂාව 
+*(Declaranat Signed Date)ප්‍රකාශකයා අත්සන්කල දිනය 
               

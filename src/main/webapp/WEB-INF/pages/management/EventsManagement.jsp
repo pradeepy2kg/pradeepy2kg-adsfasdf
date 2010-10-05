@@ -16,6 +16,12 @@
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/ColVis.js"></script>
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
+<script type="text/javascript" language="javascript" src="../lib/timepicker/ui.timepickrjs"></script>
+<link rel="stylesheet" href="../css/ui.timepickr.css" type="text/css" />
+
+<%--<link rel="stylesheet" href="../lib/dist/jquery.utils.css" type="text/css"/>--%>
+
+
 <script type="text/javascript" src="../lib/daterangepicker/daterangepicker.jQuery.js"></script>
 <link rel="stylesheet" href="../css/ui.daterangepicker.css" type="text/css" />
 <script>
@@ -38,6 +44,15 @@
     $(document).ready(function() {
         $('#queryDOBRange').daterangepicker({arrows:true});
     });
+
+     $(function(){
+                //$('#test-1').timepickr({trigger: '#trigger-test'});
+              $('#time').timepickr().focus();
+              $('#time').timepickr({convention:12});
+              $('#time').next().find('ol').show().find('li:eq(2)').mouseover();
+              // temporary fix..
+              $('.ui-timepickr ol:eq(0) li:first').mouseover();
+            });
 </script>
 
 
@@ -61,6 +76,11 @@
                 <s:select
                 list="#@java.util.HashMap@{'0':getText('error.label'),'1':getText('audit.label')}"
                 name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                 <s:textfield type="text" id="time" name="time"/>
             </td>
         </tr>
         <tbody>
@@ -166,6 +186,8 @@
             <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
     </div>
 </fieldset>
+
+
 
 
 
