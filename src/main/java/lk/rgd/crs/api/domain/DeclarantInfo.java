@@ -17,7 +17,7 @@ public class DeclarantInfo implements Serializable {
 
     /**
      * 0 - father, 1 - mother, 2 - brotherOrSister,
-     * 3 - sonOrDaughter, 4 - relative, 5 - other
+     * 3 - sonOrDaughter, 4 - relative, 5 - other ,6 -spouse
      */
     public enum DeclarantType {
         FATHER,
@@ -25,7 +25,8 @@ public class DeclarantInfo implements Serializable {
         BORTHER_OR_SISTER,
         SON_OR_DAUGHTER,
         RELATIVE,
-        OTHER
+        OTHER,
+        SPOUSE //housband_or_wife
     }
 
     @Column(nullable = true)

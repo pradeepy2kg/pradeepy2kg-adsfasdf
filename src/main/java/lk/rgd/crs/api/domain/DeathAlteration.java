@@ -10,6 +10,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "ALT_DEATH", schema = "CRS")
+@NamedQueries(
+        @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da WHERE da.deathId =:deathCertificateNumber")
+)
 
 public class DeathAlteration {
 
