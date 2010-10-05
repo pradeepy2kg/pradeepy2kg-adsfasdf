@@ -38,6 +38,7 @@ public class EventsManagementAction extends ActionSupport {
     private String className;
     private String eventData;
     private String debug;
+    private String stackTrace;
     private List<Event> printList;
     private int pageNumber;
     private int numberOfRows;
@@ -100,7 +101,14 @@ public class EventsManagementAction extends ActionSupport {
     public String debugDisplay() {
         event = service.getEventById(idUKey, user);
         debug = event.getDebug();
+        timestamp=event.getTimestamp();
+        logger.debug("time stamp : {}",timestamp);
+        return "success";
+    }
 
+    public String stackTraceDisplay(){
+        event = service.getEventById(idUKey, user);
+        stackTrace = event.getStackTrace();
         return "success";
     }
 
@@ -261,5 +269,13 @@ public class EventsManagementAction extends ActionSupport {
 
     public void setRecordCounter(int recordCounter) {
         this.recordCounter = recordCounter;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
     }
 }

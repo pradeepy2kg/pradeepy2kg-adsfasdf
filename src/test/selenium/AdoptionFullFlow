@@ -61,7 +61,7 @@
 <tr>
 	<td>type</td>
 	<td>courtOrderNumber</td>
-	<td>111111</td>
+	<td>111115</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -139,11 +139,7 @@
 	<td>//div[@id='adoption-page']/table/tbody/tr/td[2]/a/label</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='adoption-page']/table/tbody/tr/td[2]/a/label</td>
-	<td></td>
-</tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='adoption-page']/a[1]/label</td>
@@ -411,12 +407,12 @@
 	<td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
-	<td></td>
-</tr>
 
+<tr>
+                    <td>clickAndWait</td>
+                    <td>//div[@id='birth-certificate-outer']/div[2]/div[1]/a/label</td>
+                    <td></td>
+                </tr>
 </tbody></table>
 </body>
 </html>
