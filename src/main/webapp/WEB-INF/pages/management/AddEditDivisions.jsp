@@ -437,6 +437,30 @@
                     <s:if test="pageType==6"><s:textfield name="location.taLocationName" id="taName"/></s:if>
                 </td>
             </tr>
+            <s:if test="pageType==6">
+                <tr>
+                    <td rowspan="3">Location Mailing Address</td>
+                    <td>Address in English</td>
+                    <td><s:textfield name="location.enLocationMailingAddress"/></td>
+                </tr>
+                <tr>
+                    <td>Address in Tamil</td>
+                    <td><s:textfield name="location.taLocationMailingAddress"/></td>
+                </tr>
+                <tr>
+                    <td>Address in Sinhala</td>
+                    <td><s:textfield name="location.siLocationMailingAddress"/></td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Location Signature</td>
+                    <td>Signature in Sinhala</td>
+                    <td><s:textfield/></td>
+                </tr>
+                <tr>
+                    <td>Signature in Tamil</td>
+                    <td><s:textfield/></td>
+                </tr>
+            </s:if>
         </table>
         <%--* pageType is used to load jsp page
 * checkPage is used to get value of page number in javascript--%>

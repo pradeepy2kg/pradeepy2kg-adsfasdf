@@ -71,6 +71,11 @@ public class Menu {
         adminLink.put("eprDebugDisplay.do", new Link(null, "/ecivil/management/", "eprDebugDisplay.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprEventPrevious.do", new Link(null, "/ecivil/management/", "eprEventPrevious.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprEventNext.do", new Link(null, "/ecivil/management/", "eprEventNext.do", Permission.EVENTS_MANAGEMENT));
+        adminLink.put("eprInitAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprInitAssignedUserLocation.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprAssignedUserLocation.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprInactiveUserLocation.do", new Link(null, "/ecivil/management/", "eprInactiveUserLocation.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprActiveUserLocation.do", new Link(null, "/ecivil/management/", "eprActiveUserLocation.do", Permission.USER_MANAGEMENT));
+        adminLink.put("eprEditAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprEditAssignedUserLocation.do", Permission.USER_MANAGEMENT));
 
 
         //User Preferance

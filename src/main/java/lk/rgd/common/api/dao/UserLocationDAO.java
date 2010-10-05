@@ -39,4 +39,12 @@ public interface UserLocationDAO {
      * @return filtered user locations
      */
     public List<UserLocation> getAllUserLocations(boolean active);
+    /**
+     * Return all user locations active or inactive
+     * @param userId filter for results
+     * @return filtered user locations
+     */
+    public List<UserLocation> getUserLocationsListByUserId(String userId);
+
+    
 }

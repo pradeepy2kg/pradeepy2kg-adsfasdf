@@ -62,29 +62,29 @@
         var domObject;
         domObject = document.getElementById("checkUserId");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error1").value+"\n";
+            errormsg = errormsg + document.getElementById("error1").value + "\n";
         }
         domObject = document.getElementById("userName");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error2").value+"\n";
+            errormsg = errormsg + document.getElementById("error2").value + "\n";
         }
         domObject = document.getElementById("userPin");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error3").value+"\n";
+            errormsg = errormsg + document.getElementById("error3").value + "\n";
         }
         else {
             var reg = /^([0-9]*)$/;
             if (reg.test(domObject.value.trim()) == false) {
-                errormsg = errormsg + document.getElementById("error4").value+"\n";
+                errormsg = errormsg + document.getElementById("error4").value + "\n";
             }
         }
         domObject = document.getElementById("districtId");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error5").value+"\n";
+            errormsg = errormsg + document.getElementById("error5").value + "\n";
         }
         domObject = document.getElementById("divisionId");
         if (isFieldEmpty(domObject)) {
-            errormsg = errormsg + document.getElementById("error6").value+"\n";
+            errormsg = errormsg + document.getElementById("error6").value + "\n";
         }
 
         if (errormsg != "") {
@@ -156,39 +156,38 @@
                 </td>
             </s:label>
             </tr>
-
-                <%--todo--%>
-            <div id="edit">
-                <tr>
-                    <td>
-                        <s:if test="user == null">
-                            <s:label value="%{getText('assigned_districts.label')}"/>
-                        </s:if>
-                    </td>
-                    <td>
-                        <s:if test="user == null">
-                            <s:select list="districtList" name="assignedDistricts" multiple="true"
-                                      size="10"
-                                      id="districtId"/>
-                        </s:if>
-                    </td>
-                <tr>
-                    <s:label>
+                    <%--todo--%>
+                <div id="edit">
+                    <tr>
                         <td>
                             <s:if test="user == null">
-                                <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                                <s:label value="%{getText('assigned_districts.label')}"/>
                             </s:if>
                         </td>
-                        <s:if test="user == null">
-                            <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
+                        <td>
+                            <s:if test="user == null">
+                                <s:select list="districtList" name="assignedDistricts" multiple="true"
                                           size="10"
-                                          id="divisionId"/>
-                        </s:if>
+                                          id="districtId"/>
+                            </s:if>
                         </td>
-                    </s:label>
-                </tr>
-            </div>
-                <%--todo end--%>
+                    <tr>
+                        <s:label>
+                            <td>
+                                <s:if test="user == null">
+                                    <s:label value="%{getText('assigned_ds_divisions.label')}"/>
+                                </s:if>
+                            </td>
+                            <s:if test="user == null">
+                                <td><s:select list=" dsDivisionList" name="assignedDivisions" multiple="true"
+                                              size="10"
+                                              id="divisionId"/>
+                            </s:if>
+                            </td>
+                        </s:label>
+                    </tr>
+                </div>
+                    <%--todo end--%>
 
 
             <tr>
@@ -226,6 +225,6 @@
     <s:hidden id="error5" value="%{getText('user.district')}"/>
     <s:hidden id="error6" value="%{getText('user.divisions')}"/>
 
-     </s:form>
+    </s:form>
 </div>
 

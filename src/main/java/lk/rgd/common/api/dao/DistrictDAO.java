@@ -36,7 +36,6 @@ public interface DistrictDAO {
      * @return the name of the district in the selected language
      */
     public String getNameByPK(int districtUKey, String language);
-
     /**
      * Return District by id
      *

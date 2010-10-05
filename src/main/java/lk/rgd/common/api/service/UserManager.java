@@ -16,7 +16,7 @@ public interface UserManager {
     /**
      * Authenticate user credentials
      *
-     * @param userId the user Id
+     * @param userId   the user Id
      * @param password the password
      * @return the User object if authorization succeeds
      * @throws AuthorizationException if authorization fails
@@ -25,6 +25,7 @@ public interface UserManager {
 
     /**
      * Internal API to access the System internal user
+     *
      * @return the internal system user
      */
     public User getSystemUser();
@@ -81,6 +82,7 @@ public interface UserManager {
 
     /**
      * Get the user by ID or null
+     *
      * @param userId user id to lookup
      * @return the corresponding user or null
      */
@@ -136,22 +138,39 @@ public interface UserManager {
 
     /**
      * Update the password of the user, along with a new password expiry date
+     *
      * @param newPass the new password
-     * @param user user account 
+     * @param user    user account
      */
     void updatePassword(String newPass, User user);
 
     /**
      * Add a user to a location or vice versa
+     *
      * @param userLocation user location object to be saved
-     * @param adminUser user performing the action
+     * @param adminUser    user performing the action
      */
     public void addUserLocation(UserLocation userLocation, User adminUser);
 
     /**
-     * Update a user location assignment - but not its existing relationships to user and location tables 
+     * Update a user location assignment - but not its existing relationships to user and location tables
+     *
      * @param userLocation user location object to be saved
-     * @param adminUser user performing the action
+     * @param adminUser    user performing the action
      */
     public void updateUserLocation(UserLocation userLocation, User adminUser);
+
+    /**
+     * @param userId     id of the user
+     * @param locationId id of the location
+     * @param adminUser  user performing the action
+     */
+    public void activeUserLocation(String userId, int locationId, User adminUser);
+    /**
+     * @param userId     id of the user
+     * @param locationId id of the location
+     * @param adminUser  user performing the action
+     */
+    public void inactiveUserLocation(String userId, int locationId, User adminUser);
+
 }

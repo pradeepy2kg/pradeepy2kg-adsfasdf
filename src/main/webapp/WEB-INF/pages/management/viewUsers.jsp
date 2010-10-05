@@ -64,9 +64,9 @@
 
             </s:form>
     </fieldset>
+    <s:if test="#session.viewUsers!=null">
 
-
-    <fieldset style="border:none">
+        <fieldset style="border:none">
             <s:form name="users_print" action="" method="POST">
                 <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                     <thead>
@@ -75,6 +75,7 @@
                         <th><s:label name="name" value="Name"/></th>
                         <th><s:label name="edit" value="Edit User"/></th>
                         <th><s:label name="edit" value="Delete User"/></th>
+                        <th><s:label name="edit" value="User Location"/></th>
                         <s:set name="allowEdit" value="true"/>
                     </tr>
                     </thead>
@@ -97,13 +98,21 @@
                                     src="<s:url value='/images/delete.gif'/>" width="25" height="25"
                                     border="none"/></s:a>
                             </td>
+
+                            <s:url id="assignedUserLocation" action="eprInitAssignedUserLocation.do">
+                                <s:param name="userId" value="userId"/>
+                            </s:url>
+                            <td align="center"><s:a href="%{assignedUserLocation}"><img
+                                    src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                            </td>
                         </tr>
                     </s:iterator>
                     </tbody>
                 </table>
             </s:form>
-    </fieldset>
-
+        </fieldset>
+    </s:if>
 
 </div>
 

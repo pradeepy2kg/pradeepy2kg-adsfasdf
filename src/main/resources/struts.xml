@@ -919,6 +919,26 @@
                 method="addDivisionsAndDsDivisions">
             <result type="tiles" name="success">epr.addEditDivisions</result>
         </action>
+        <action name="eprInitAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="initAssignedUserLocation">
+            <result type="tiles" name="success">epr.assignedUserLocation</result>
+        </action>
+        <action name="eprEditAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="editAssignedUserLocation">
+            <result type="tiles" name="success">epr.assignedUserLocation</result>
+        </action>
+        <action name="eprInactiveUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="inactiveUserLocation">
+            <result type="tiles" name="success">epr.assignedUserLocation</result>
+        </action>
+        <action name="eprActiveUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="activeUserLocation">
+            <result type="tiles" name="success">epr.assignedUserLocation</result>
+        </action>
+        <action name="eprAssignedUserLocation" class="lk.rgd.crs.web.action.UserManagmentAction"
+                method="assignedUserLocation">
+            <result type="tiles" name="success">epr.assignedUserLocation</result>
+        </action>
         <action name="eprInitEventsManagement" class="lk.rgd.crs.web.action.EventsManagementAction"
                 method="initEventsManagement">
             <result type="tiles" name="success">epr.eventManagement</result>

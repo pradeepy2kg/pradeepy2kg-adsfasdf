@@ -1792,6 +1792,12 @@ death-alteration-table-style01 td{border:none;}
 #birth-alteration-result-outer {width:1030px;}
 #birth-alteration-result-outer table{width:80%;margin-left:100px;margin-top:25px;}
 
+#user-locaton-outer table{width:80%;border-top:1px solid #000;border-left:1px solid #000;margin-top:20px;height:200px;}
+#user-locaton-outer td{border-right:1px solid #000;border-bottom:1px solid #000;width:30%;padding-left:5px;}
+#user-locaton-outer input{margin:5px;}
+#user-locaton-outer select{width:45%;}
+.user-locaton-outer-lable{}
+
 
 
 

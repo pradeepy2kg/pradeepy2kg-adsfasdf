@@ -11,11 +11,15 @@ import java.util.Date;
 @Entity
 @Table(schema = "COMMON", name = "USER_LOCATIONS")
 @IdClass(UserLocationID.class)
-@NamedQuery(name = "getAllUserLocations", query = "SELECT ul FROM UserLocation ul " +
-        "WHERE ul.lifeCycleInfo.active = :active " +
-        "ORDER BY ul.location.enLocationName desc")
+@NamedQueries({
+        @NamedQuery(name = "getAllUserLocations", query = "SELECT ul FROM UserLocation ul " +
+                "WHERE ul.lifeCycleInfo.active = :active " +
+                "ORDER BY ul.location.enLocationName desc"),
+        @NamedQuery(name = "getUserLocationsByUserId", query = "SELECT ul FROM UserLocation ul " +
+                "WHERE ul.userId = :userId " +
+                "ORDER BY ul.location.enLocationName desc")
+})
 public class UserLocation {
-
     @Id
     private String userId;
     @Id

@@ -4,6 +4,8 @@ import lk.rgd.common.api.dao.UserLocationDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.api.domain.UserLocationID;
+import lk.rgd.Permission;
+import lk.rgd.ErrorCodes;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +48,7 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
     @Transactional(propagation = Propagation.MANDATORY)
     public void update(UserLocation userLocation, User adminUser) {
         UserLocation existing =
-            em.find(UserLocation.class, new UserLocationID(userLocation.getUserId(), userLocation.getLocationId()));
+                em.find(UserLocation.class, new UserLocationID(userLocation.getUserId(), userLocation.getLocationId()));
         if (existing != null) {
             existing.setEndDate(userLocation.getEndDate());
             existing.setStartDate(userLocation.getStartDate());
@@ -58,6 +60,8 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
             existing.getLifeCycleInfo().setLastUpdatedUser(adminUser);
             existing.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
             em.merge(existing);
+
+            logger.debug("End date of the existing is :{}",existing.getEndDate());
         }
     }
 
@@ -70,4 +74,15 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
         q.setParameter("active", active);
         return q.getResultList();
     }
+
+    @Override
+    public List<UserLocation> getUserLocationsListByUserId(String userId) {
+        Query q = em.createNamedQuery("getUserLocationsByUserId");
+        q.setParameter("userId", userId);
+        return q.getResultList();
+    }
+
+
+
+
 }

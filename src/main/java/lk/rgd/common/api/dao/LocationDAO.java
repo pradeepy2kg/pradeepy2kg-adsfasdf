@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author asankha
@@ -41,5 +42,14 @@ public interface LocationDAO {
      */
     public List<Location> getAllLocations();
 
+    /**
+     * Return all Locations that are active or inactive
+     *
+     * @return filtered list of Locations
+     */
+    public Map<Integer, String> getLocationList(String language, User user);
+
     public Location getLocationByCode(int locationCode);
+
+
 }

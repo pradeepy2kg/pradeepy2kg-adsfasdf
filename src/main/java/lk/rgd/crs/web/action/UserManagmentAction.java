@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.Location;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
@@ -41,6 +38,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private String button;
     private int[] assignedDistricts;
     private int[] assignedDivisions;
+    private int[] assignedLocations;
     private List<User> usersList;
     private List<District> districtNameList;
     private List<DSDivision> dsDivisionNameList;
@@ -48,6 +46,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private List<MRDivision> mrDivisionNameList;
     private List<Court> courtNameList;
     private List<Location> locationNameList;
+    private List<UserLocation> userLocationNameList;
     private String nameOfUser;
     private String userId;
     private String userName;
@@ -71,6 +70,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private District district;
     private MRDivision mrDivision;
     private Court court;
+    private UserLocation userLocation;
 
 
     private Location location;
@@ -84,6 +84,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private final MRDivisionDAO mrDivisionDAO;
     private final CourtDAO courtDAO;
     private final LocationDAO locationDAO;
+    private final UserDAO userDAO;
+    private final UserLocationDAO userLocationDAO;
     private final AppParametersDAO appParametersDAO;
     private static final String BA_ROWS_PER_PAGE = "crs.br_rows_per_page";
 
@@ -91,6 +93,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> divisionList;
     private Map<String, String> roleList;
     private Map<Integer, String> dsDivisionList;
+    private Map<Integer, String> locationList;
 
     /*support variables*/
     private Map<Integer, String> currentbdDivisionList; //users current
@@ -106,7 +109,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
                                BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-                               AppParametersDAO appParametersDAO) {
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -117,6 +120,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.courtDAO = courtDAO;
         this.locationDAO = locationDAO;
         this.appParametersDAO = appParametersDAO;
+        this.userLocationDAO = userLocationDAO;
+        this.userDAO = userDAO;
     }
 
     public String creatUser() {
@@ -131,6 +136,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         User currentUser = (User) session.get(WebConstants.SESSION_USER_BEAN);
         user.setRole(roleDAO.getRole(roleId));
         user.setStatus(User.State.ACTIVE);
+
+        /*List<UserLocation> usersLocationList=null;
+        for (int i = 0; i < assignedLocations.length; i++) {
+             usersLocationList.add(locationDAO.getLocation(1));
+        }*/
+        //user.setLocations(assLocations);
+
         // creating assigned Districts
         Set assDistrict = new HashSet();
         for (int i = 0; i < assignedDistricts.length; i++) {
@@ -200,6 +212,72 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         populate();
         session.put("viewUsers", null);
         return "success";
+    }
+
+    public String initAssignedUserLocation() {
+        userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+        if (userLocationNameList != null) {
+            logger.debug("size of the user location list is :{}", userLocationNameList.size());
+        }
+        populate();
+        return SUCCESS;
+    }
+
+    public String assignedUserLocation() {
+        if (pageType == 0) {
+            UserLocation checkUserLocation = userLocationDAO.getUserLocation(userId, locationId);
+            userLocation.setLocation(locationDAO.getLocation(locationId));
+            userLocation.setUserId(userId);
+            if (checkUserLocation != null) {
+                addFieldError("duplicateIdNumberError", "This Location  Already Assigned For User   :" + userId);
+                logger.debug("{} location is already assigned for user  :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
+            } else {
+                userLocation.setUser(userDAO.getUserByPK(userId));
+                service.addUserLocation(userLocation, currentUser);
+                logger.debug("Add New User locatin \"{}\" for user :{}", locationDAO.getLocation(locationId).getEnLocationName(), userId);
+                userLocation=null;
+            }
+        }
+        if (pageType == 1) {
+            try {
+                logger.debug("userId : {} ,location Id :{}", userLocation.getUserId(), userLocation.getLocationId());
+                service.updateUserLocation(userLocation, currentUser);
+                logger.debug("User Location end date :{}", userLocation.getEndDate());
+                userLocation = null;
+                pageType = 0;
+            }
+            catch (Exception e) {
+                addFieldError("duplicateIdNumberError", "This Location Can Not Be Edit");
+            }
+        }
+        populate();
+        userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+        return SUCCESS;
+    }
+
+    public String activeUserLocation() {
+        service.activeUserLocation(userId, locationId, currentUser);
+        logger.debug("Active lacation of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
+        userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+        populate();
+        return SUCCESS;
+    }
+
+    public String inactiveUserLocation() {
+        service.inactiveUserLocation(userId, locationId, currentUser);
+        logger.debug("Inactive lacation of {} user is :{}", userId, locationDAO.getLocation(locationId).getEnLocationName());
+        userLocationNameList = userLocationDAO.getUserLocationsListByUserId(userId);
+        populate();
+        return SUCCESS;
+    }
+
+
+    public String editAssignedUserLocation() {
+        userLocationNameList = null;
+        userLocation = userLocationDAO.getUserLocation(userId, locationId);
+        pageType = 1;
+        populate();
+        return SUCCESS;
     }
 
     public String initAddDivisionsAndDsDivision() {
@@ -405,7 +483,6 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                     logger.debug("New Id of New Location {} is  :{}", locationDAO.getLocation(locationId), locationId);
                     msg = "New Location Was Added  :" + location.getEnLocationName();
                 }
-
         }
         if (checkDuplicate == 0) setDivisionList(true);
         if (checkDuplicate == 1) setDivisionList(false);
@@ -440,6 +517,10 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
             districtList = districtDAO.getAllDistrictNames(language, user);
         if (roleList == null)
             roleList = roleDAO.getRoleList();
+        if (locationList == null) {
+            locationList = locationDAO.getLocationList(language, currentUser);
+            logger.debug("size of the location list is :{}", locationList.size());
+        }
     }
 
     private void populateDynamicLists(String language) {
@@ -853,5 +934,37 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public void setPageType(int pageType) {
         this.pageType = pageType;
+    }
+
+    public Map<Integer, String> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(Map<Integer, String> locationList) {
+        this.locationList = locationList;
+    }
+
+    public int[] getAssignedLocations() {
+        return assignedLocations;
+    }
+
+    public void setAssignedLocations(int[] assignedLocations) {
+        this.assignedLocations = assignedLocations;
+    }
+
+    public UserLocation getUserLocation() {
+        return userLocation;
+    }
+
+    public void setUserLocation(UserLocation userLocation) {
+        this.userLocation = userLocation;
+    }
+
+    public List<UserLocation> getUserLocationNameList() {
+        return userLocationNameList;
+    }
+
+    public void setUserLocationNameList(List<UserLocation> userLocationNameList) {
+        this.userLocationNameList = userLocationNameList;
     }
 }
