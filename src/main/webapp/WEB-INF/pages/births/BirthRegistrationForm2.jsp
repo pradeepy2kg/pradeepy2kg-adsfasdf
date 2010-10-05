@@ -490,13 +490,10 @@ function commonTags() {
                 <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது <br>Mother's Age as at the date of birth of child
             </s:if>
             <s:else>
-                (<s:property value="#row"/><s:set name="row"
-                                                  value="#row+1"/><s:set name="i"
-                                                                         value="#i+1"/>)
-                ළමයාගේ මළ උපන් දිනට මවගේ වයස
+                (<s:property value="#row"/><s:set name="row" value="#row+1"/><s:set name="i" value="#i+1"/>)
+                මළ උපත් දිනට වයස
                 <br>பிள்ளை பிறந்த திகதியில் மாதாவின் வயது
-                <br>Mother's Age
-                as at the date of still-birth of child
+                <br>Age as at the date of still-birth
             </s:else>
         </label>
         </td>

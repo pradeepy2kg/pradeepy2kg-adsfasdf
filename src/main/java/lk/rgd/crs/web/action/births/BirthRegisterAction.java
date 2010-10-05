@@ -2,31 +2,26 @@ package lk.rgd.crs.web.action.births;
 
 
 import com.opensymphony.xwork2.ActionSupport;
-import lk.rgd.common.api.domain.AppParameter;
-import org.apache.struts2.interceptor.SessionAware;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
-import java.util.*;
-
+import lk.rgd.AppConstants;
+import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.api.domain.DSDivision;
+import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
-
+import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.api.service.AdoptionOrderService;
-import lk.rgd.crs.api.service.BirthAlterationService;
-import lk.rgd.crs.api.bean.UserWarning;
-
+import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
-import lk.rgd.Permission;
-import lk.rgd.AppConstants;
+import org.apache.struts2.interceptor.SessionAware;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 /**
  * EntryAction is a struts action class  responsible for  data capture for a birth declaration and the persistance of the same.
@@ -669,7 +664,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 // TODO
                 String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
                 locationList = user.getActiveLocations(language);
-                userList=new HashMap();
+                userList = new HashMap();
 
                 gender = child.getChildGenderPrint();
                 genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);

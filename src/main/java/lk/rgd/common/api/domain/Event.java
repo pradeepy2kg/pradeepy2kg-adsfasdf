@@ -15,7 +15,9 @@ import java.util.Date;
 @Table(name = "EVENT", schema = "COMMON")
 
 @NamedQueries({
-    @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event")
+    @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event"),
+    @NamedQuery(name = "filter.by.recorded.timestamp", query = "SELECT event FROM Event event " +
+        "WHERE event.timestamp BETWEEN :startTime AND :endTime ORDER BY event.timestamp DESC")
 })
 public class Event implements Serializable {
     private static final int STACK_TRACE_LEN = 2048;

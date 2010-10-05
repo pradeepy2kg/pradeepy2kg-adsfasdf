@@ -19,6 +19,10 @@
         .form-submit {
             display: none;
         }
+
+        #locationSignId {
+            display: none;
+        }
     }
 
     #birth-certificate-outer .form-submit {
@@ -49,7 +53,7 @@
 
         $('select#userListId').bind('change', function(evt2) {
             var id = $('select#userListId').attr('value');
-            var options = "User Signature "+id;
+            var options = "User Signature " + id;
             $('label#signature').html(options);
             var place = $('select#locationId').attr('value');
             $('label#placeOfIssue').html(place);
@@ -94,7 +98,7 @@
     </s:url>
 </s:else>
 
-<div style="width:60%;float:left;margin-top:5px;">
+<div style="width:60%;float:left;margin-top:5px;" id="locationSignId">
     <s:if test="register.status.ordinal() == 8">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
             <legend><b><s:label value="Select Option"/></b></legend>
@@ -256,6 +260,21 @@
                 <s:label name="" value="%{genderEn}"/>
             </td>
         </tr>
+        <tr height="70px">
+            <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
+            </td>
+            <td colspan="2">
+                <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:14pt;"/><br>
+                <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
+                         cssStyle="font-size:12pt;"/>
+            </td>
+            <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
+            </td>
+            <td colspan="2">
+                <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
+                <s:label name="" value="%{marriedStatusEn}"/>
+            </td>
+        </tr>
     </s:if>
     <s:else>
         <tr height="60px">
@@ -276,22 +295,17 @@
             </td>
             <td><s:label name="" value="%{#request.child.weeksPregnant}"/></td>
         </tr>
+        <tr height="70px">
+            <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
+            </td>
+            <td colspan="6">
+                <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:14pt;"/><br>
+                <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
+                         cssStyle="font-size:12pt;"/>
+            </td>
+        </tr>
     </s:else>
-    <tr height="70px">
-        <td>උපන් ස්ථානය <br>பிறந்த இடம்<br>Place of birth
-        </td>
-        <td colspan="2">
-            <s:label name="placeOfBirth" value="%{#request.child.placeOfBirth}" cssStyle="font-size:14pt;"/><br>
-            <s:label name="placeOfBirthEnglish" value="%{#request.child.placeOfBirthEnglish}"
-                     cssStyle="font-size:12pt;"/>
-        </td>
-        <td colspan="2">මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?
-        </td>
-        <td colspan="2">
-            <s:label name="" value="%{marriedStatus}" cssStyle="font-size:11pt;"/><br>
-            <s:label name="" value="%{marriedStatusEn}"/>
-        </td>
-    </tr>
+
     <s:if test="birthType.ordinal() != 0">
         <tr height="150px">
             <td>නම <br>பெயர்<br>Name

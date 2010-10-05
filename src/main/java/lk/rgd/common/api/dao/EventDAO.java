@@ -3,6 +3,7 @@ package lk.rgd.common.api.dao;
 import lk.rgd.common.api.domain.Event;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * The DAO to manage Events
@@ -34,4 +35,14 @@ public interface EventDAO {
      * @return all records (paginated)
      */
     public List<Event> getPaginatedListForAll(int pageNo, int noOfRows);
+
+    /**
+     * 
+     * @param pageNo
+     * @param noOfRows
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime);
 }

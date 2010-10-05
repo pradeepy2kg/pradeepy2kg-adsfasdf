@@ -246,23 +246,16 @@
         <td class="cell_011">5</td>
         <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்<br>Gender</label></td>
         <td colspan="6" style="font-size:12pt;">
-            <s:if test="child.childGender == 0">
-                <s:label value="%{getText('male.label')}"/>
-            </s:if>
-            <s:elseif test="child.childGender == 1">
-                <s:label value="%{getText('female.label')}"/>
-            </s:elseif>
-            <s:elseif test="child.childGender == 2">
-                <s:label value="%{getText('unknown.label')}"/>
-            </s:elseif></td>
+            <s:label value="%{child.childGenderPrint}"/>
+        </td>
         <td colspan="11">&nbsp;</td>
     </tr>
 
     <tr>
         <td rowspan="3" style="text-align:center;"> 6</td>
         <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் <br>District of Birth</label></td>
-        <td colspan="6">
-            <s:label value="%{getDsDivisionList().get(dsDivisionId)}" cssStyle="font-size:12pt;"/>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{register.districtPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
@@ -272,7 +265,7 @@
             பிரதேச செயலாளா் பிரிவு <br>
             Divisional Secretariat</label></td>
         <td colspan="6" style="font-size:12pt;">
-            <s:label value="%{getBdDivisionList().get(birthDivisionId)}"/>
+            <s:label value="%{register.dsDivisionPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
@@ -297,7 +290,9 @@
     <tr>
         <td class="cell_011">8</td>
         <td><label>පියාගේ ජාතිය <br>தந்தையின் இனம்<br>Father's Race</label></td>
-        <td colspan="6"><s:label value="%{getRaceList().get(fatherRace)}" cssStyle="font-size:12pt;"/></td>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{parent.fatherRacePrint}"/>
+        </td>
         <td colspan="11">&nbsp;</td>
     </tr>
     <tr>
@@ -311,16 +306,17 @@
     <tr>
         <td class="cell_011">10</td>
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
-        <td colspan="6"><s:label value="%{getRaceList().get(motherRace)}" cssStyle="font-size:12pt;"/></td>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{parent.motherRacePrint}"/>
+        </td>
         <td colspan="11">&nbsp;</td>
     </tr>
 
     <tr>
         <td class="cell_011">11</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றோர் விவாகம் செய்தவர்களா?<br>Were Parents Married?</label></td>
-        <td colspan="6">
-            <s:label name="marriage.parentsMarried" value="%{getText('married.status.'+marriage.parentsMarried)}"
-                     cssStyle="font-size:12pt;"/>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{marriage.parentsMarriedPrint}"/>
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>

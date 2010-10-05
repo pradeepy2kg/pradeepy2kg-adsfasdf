@@ -102,7 +102,10 @@ $(function() {
 
     function processResponse1(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("textarea#childFullNameEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 
     ;
@@ -129,7 +132,10 @@ $(function() {
 
     function processResponse2(respObj) {
         //respObj is a JSON equivalent of SOAP Response XML (all namespaces are dropped)
-        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].return[0].Text);
+        $("input#placeOfBirthEnglish").val(respObj.Body[0].transliterateResponse[0].
+        return[0].Text
+    )
+        ;
     }
 });
 
@@ -323,12 +329,12 @@ function initPage() {
             <s:elseif test="birthType.ordinal() == 0">
                 <label>
                     මළ උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර
-                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான  விபரங்கள்
+                    <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
                     <br>Particulars for Registration of a Still Birth</label>
             </s:elseif>
             <s:elseif test="birthType.ordinal() == 2">
                 දරුකමට හදාගත් ළමයකුගේ උප්පැන්නය නැවත ලියාපදිංචි කිරීම
-                <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான  விபரங்கள் 
+                <br>ஒரு பிறப்பைப் பதிவு செய்வதற்கான விபரங்கள்
                 <br>Re-registration of the Birth of an Adopted Child
             </s:elseif>
         </td>
@@ -353,14 +359,15 @@ function initPage() {
 
             <table class="table_reg_datePicker_page_01">
                 <tr>
-                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும் 
+                    <td colspan="2">කාර්යාල ප්‍රයෝජනය සඳහා පමණි <br>அலுவலக பாவனைக்காக மட்டும்
                         <br>For office use only
                         <hr>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label><span class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
+                        <label><span
+                                class="font-8">භාරගත්  දිනය<br>பிறப்பைப் பதிவு திகதி <br>Submitted Date</span></label>
                     </td>
                     <td><s:label value="YYYY-MM-DD" cssStyle="margin-left:20px;font-size:10px"/><br>
                         <s:textfield name="register.dateOfRegistration" id="submitDatePicker" maxLength="10"/>
@@ -383,15 +390,13 @@ function initPage() {
                 information provided in this form.
             </s:if>
             <s:elseif test="birthType.ordinal() == 0">
-                දැනුම් දෙන්නා (දෙමවිපියන් / භාරකරු) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය
-                යුතුය. මෙම
-                තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මළ උපත ලියාපදිංචි කරනු ලැබේ.
-                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம்
-                சமா்ப்பித்தல் வேண்டும். இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
-                <br>Should be perfected by the informant (Parent / Guardian) and the duly completed form should be
-                forwarded
-                to the Notifying Authority. The still birth will be registered in the Civil Registration System based on the
-                information provided in this form.
+                දැනුම් දෙන්නා (දෙමවිපියන් / නෑයන්) විසින් සම්පුර්ණ කර තොරතුරු වාර්තා කරන නිලධාරි වෙත භාර දිය යුතුය.
+                මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ මළ උපත ලියාපදිංචි කරනු ලැබේ.
+                <br>தகவல் தருபவரால் (பெற்றோர்/பொறுப்பாளர்) பூா்த்தி செய்யப்பட்டு தகவல் சேகரிக்கும் அதிகாரியிடம் சமா்ப்பித்தல் வேண்டும்.
+                இத்தகவலின்படி சிவில் பதிவு அமைப்பில் பிறப்பு பதிவு செய்யப்படும்
+                <br>Should be perfected by the informant (Parent / Relative) and the duly completed form should be
+                forwarded to the Notifying Authority. The still birth will be registered in the Civil Registration
+                System based on the information provided in this form.
             </s:elseif>
             <s:elseif test="birthType.ordinal() == 2">
                 දරුකමට හදාගන්න දෙමව්පියන් විසින් සම්පුර්ණ කර, දරුවා උපත ලැබූ දිස්ත්‍රික්කය අයත් සහකාර රෙජිස්ට්‍රාර් ජනරාල් වෙත හෝ කොළඹ රෙජිස්ට්‍රාර් ජනරාල් දෙපාර්තමේන්තුවේ ප්‍රධාන කාර්යාලය වෙත භාර දිය යුතුය. මෙම තොරතුරු මත සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ උපත නැවත ලියාපදිංචි කරනු ලැබේ.
@@ -527,8 +532,8 @@ function initPage() {
 <s:if test="birthType.ordinal() != 0">
     <tr>
         <td class="font-9"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            නම රාජ්‍ය භාෂාවෙන්  (සිංහල / දෙමළ)
-            <br>பெயா் அரச கரும மொழியில்  (சிங்களம் / தமிழ்)
+            නම රාජ්‍ය භාෂාවෙන් (සිංහල / දෙමළ)
+            <br>பெயா் அரச கரும மொழியில் (சிங்களம் / தமிழ்)
             <br>Name in any of the official languages (Sinhala / Tamil)</label>
         </td>
         <td colspan="7">
@@ -599,11 +604,19 @@ function initPage() {
 </tr>
 <tr>
     <td class="font-9">
-        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සජිවි
-            උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
+        <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            <s:if test="birthType.ordinal() != 0">
+            සජිවි උපත් අනුපිළි‍‍වල අනුව කීවෙනි ළමයා
             ද?
-            <br>பிறப்பு ஒழுங்கு 
-            <br>According to Live Birth Order, rank of the child?</label>
+            <br>பிறப்பு ஒழுங்கு
+            <br>According to Live Birth Order, rank of the child?
+            </s:if>
+            <s:else>
+                උපත් අනුපිළිවල අනුව කීවෙනි උපතද?
+                <br>பிறப்பு ஒழுங்கு
+                <br>Birth rank
+            </s:else>
+        </label>
     </td>
     <td colspan="3" class="font-9"><s:textfield name="child.childRank" id="childRank" maxLength="2"/></td>
     <td colspan="2" class="font-9">
