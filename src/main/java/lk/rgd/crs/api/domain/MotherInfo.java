@@ -23,7 +23,7 @@ public class MotherInfo {
     /**
      * Passport number if a foreigner
      */
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 15)
     private String motherPassportNo;
 
     /**
