@@ -196,21 +196,21 @@
                     <td></td>
                 </tr>
                 <tr>
-	<td>clickAndWait</td>
-	<td>birth_confirmation_print.label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//a[@id='eprBirthConfirmationBulkPrint_']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
-	<td></td>
-</tr>
-                
+                    <td>clickAndWait</td>
+                    <td>birth_confirmation_print.label</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>//a[@id='eprBirthConfirmationBulkPrint_']/img</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>clickAndWait</td>
+                    <td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
+                    <td></td>
+                </tr>
+
                 <tr>
                     <td>clickAndWait</td>
                     <td>birth_confirmation.label</td>
@@ -263,7 +263,7 @@
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
-                    <td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
+                    <td>//div[@id='birth-certificate-outer']/div[2]/div[1]/a/label</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -437,7 +437,7 @@
                     <td>link=අනුමත කරන්න</td>
                     <td></td>
                 </tr>
-              
+
                 <tr>
                     <td>click</td>
                     <td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
@@ -454,10 +454,10 @@
                     <td></td>
                 </tr>
                 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
-	<td></td>
-</tr>
+                    <td>clickAndWait</td>
+                    <td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td>clickAndWait</td>
                     <td>birth_confirmation.label</td>
@@ -510,7 +510,7 @@
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
-                    <td>//div[@id='birth-certificate-outer']/div[1]/a/label</td>
+                    <td>//div[@id='birth-certificate-outer']/div[2]/div[1]/a/label</td>
                     <td></td>
                 </tr>
 

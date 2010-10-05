@@ -295,8 +295,8 @@
 </tr>
 <tr>
 	<td>type</td>
+	<td>datePicker</td>
 	<td>2010-09-10</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

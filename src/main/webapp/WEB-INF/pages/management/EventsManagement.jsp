@@ -43,6 +43,7 @@
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend><b><s:label value="Events Menegement"/></b></legend>
+    <div>
     <table width="100%" cellpadding="5" cellspacing="0">
         <tr>
             <td>
@@ -56,12 +57,20 @@
                     <s:label>Choose Event type</s:label>
 
             </td>
-            <td></td>
+            <td>
+                <s:select
+                list="#@java.util.HashMap@{'0':getText('error.label'),'1':getText('audit.label')}"
+                name="child.childGender" cssStyle="width:190px; margin-left:5px;"/>
+            </td>
         </tr>
         <tbody>
         </tbody>
     </table>
+    </div>
+    <div class="form-submit" style="margin-top:15px;">
 
+        <s:submit name="refresh" value="%{getText('refresh.label')}"/>
+    </div>
 </fieldset>
 
 <fieldset style="border:none" width="100%">
@@ -80,6 +89,7 @@
                 <th><s:label value="Recode Id"/></th>
                 <th><s:label value="Event Data"/></th>
                 <th><s:label value="Debug"/></th>
+                <th><s:label value="Stack Trace"/></th>
 
             </tr>
             </thead>
@@ -101,12 +111,22 @@
                                 <s:url id="debugPageUrl" action="eprDebugDisplay.do">
                                     <s:param name="idUKey" value="idUKey"/>
                                 </s:url>
-                                <s:a href="%{debugPageUrl}" title="%{getText('print.label')}">
+                                <s:a href="%{debugPageUrl}" title="%{getText('debug.label')}">
                                     <img src="<s:url value='/images/debug.jpg'/>" border="none" width="25"
                                          height="25"/>
                                 </s:a>
                             </s:if>
-                                <%--<s:property value="debug"/>--%>
+                        </td>
+                        <td align="center">
+                            <s:if test="stackTrace!=null">
+                                <s:url id="stackTracePageUrl" action="eprStackTraceDisplay.do">
+                                    <s:param name="idUKey" value="idUKey"/>
+                                </s:url>
+                                <s:a href="%{stackTracePageUrl}" title="%{getText('stacTrace.label')}">
+                                    <img src="<s:url value='/images/debug.jpg'/>" border="none" width="25"
+                                         height="25"/>
+                                </s:a>
+                            </s:if>
                         </td>
                     </tr>
                 </s:iterator>
