@@ -294,19 +294,23 @@ $(function() {
         maximize("death-person-info");
     });
     $('#death-info-check').click(function() {
+/*
         document.getElementById("death-info-check").disabled = true;
+*/
         var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
-                'ICD_code', 'placeOfBurial','act5353','act5252','cause_of_death_yesfalse','cause_of_death_notrue');
+                'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
         enableFields(fieldIds);
     });
 
     $('#death-person-info-check').click(function() {
+/*
         document.getElementById("death-person-info-check").disabled = true;
+*/
         var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
                 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
         enableFields(fieldIds);
     });
-  });
+});
 
 
 function enableFields(fieldIds) {
@@ -338,7 +342,6 @@ function initPage() {
     var idNames;
     var checkIdNames;
     var fieldIds;
-    document.getElementById('placeOfDeath').disabled = true;
     idNames = new Array('death-info', 'death-person-info');
     checkIdNames = new Array('death-person-info-check', 'death-info-check');
     fieldIds = new Array(
@@ -541,8 +544,14 @@ function initPage() {
 --%>
 
 <table class="death-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
-
+    <caption/>
+    <col width="300px"/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
     <tr>
+        <td style="border-right:none"></td>
         <td style="font-size:11pt;text-align:center;margin-top:20px;border-right:none">
             <s:label value="මරණය පිලිබඳ විස්තර"/> <br>
             <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
@@ -705,8 +714,14 @@ function initPage() {
 <br>
 
 <table class="death-alteration-table-style02" style=" margin-top:20px;width:100%" cellpadding="0" cellspacing="0">
-
+    <caption/>
+    <col width="300px"/>
+    <col/>
+    <col/>
+    <col/>
+    <col/>
     <tr>
+        <td style="border-right:none"></td>
         <td colspan="3" style="font-size:11pt;text-align:center;margin-top:20px;border-right:none">
             <s:label value="මරණයට පත් වූ පුද්ගලයාගේ විස්තර"/> <br>
             <s:label value="பிள்ளை பற்றிய தகவல்"/> <br>
@@ -717,7 +732,9 @@ function initPage() {
                 <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
-            <s:checkbox id="death-person-info-check" name="editDeathPersonInfo" cssStyle="float:right;"/>
+
+            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
+
         </td>
         <td style="width:2%">
             <div class="birth-alteration-minimize-icon" id="death-person-info-min">[-]</div>
@@ -763,10 +780,10 @@ function initPage() {
                 Country
             </td>
             <td align="center">
-                <s:select id="deathPersonCountryList" name="deathRegister.deathPerson.deathPersonCountry"
-                          list="countryList"
-                          headerKey="0"
-                          headerValue="%{getText('select_country.label')}"/>
+                    <%--  <s:select id="deathPersonCountryList" name="deathRegister.deathPerson.deathPersonCountry"
+                    list="countryList"
+                    headerKey="0"
+                    headerValue="%{getText('select_country.label')}"/>--%>
             </td>
         </tr>
         <tr>
@@ -806,9 +823,9 @@ function initPage() {
                 Race
             </td>
             <td colspan="2" align="center">
-                <s:select list="raceList" name="deathRegister.deathPerson.deathPersonRace" headerKey="0"
-                          headerValue="%{getText('select_race.label')}"
-                          cssStyle="width:200px;" id="deathPersonRaceList"/>
+                    <%-- <s:select list="raceList" name="deathRegister.deathPerson.deathPersonRace" headerKey="0"
+                   headerValue="%{getText('select_race.label')}"
+                   cssStyle="width:200px;" id="deathPersonRaceList"/>--%>
             </td>
         </tr>
         <tr>

@@ -13,6 +13,31 @@ import java.util.Date;
 
 public class DeathAlteration {
 
+    public static final int SUDDEN_DEATH = 1;
+    public static final int DATE_OF_DEATH = 2;
+    public static final int TIME_OF_DEATH = 3;
+    public static final int PLACE_OF_DEATH_OFFICIAL = 4;
+    public static final int PLACE_OF_DEATH_ENGLISH = 5;
+    public static final int CAUSE_OF_DEATH_ESTABLISHED = 6;
+    public static final int CAUSE_OF_DEATH = 7;
+    public static final int ICD_CODE = 8;
+    public static final int BURIAL_PLACE = 9;
+
+    public static final int DEATH_PERSON_PIN = 10;
+    public static final int DEATH_PERSON_COUNTRY = 11;
+    public static final int DEATH_PERSON_PASSPORT = 12;
+    public static final int DEATH_PERSON_AGE = 13;
+    public static final int DEATH_PERSON_GENDER = 14;
+    public static final int DEATH_PERSON_RACE = 15;
+    public static final int DEATH_PERSON_NAME_OFFICIAL = 16;
+    public static final int DEATH_PERSON_NAME = 17;
+    public static final int DEATH_PERSON_ADDRESS = 18;
+
+    public static final int DEATH_PERSON_FATHER_NAME = 19;
+    public static final int DEATH_PERSON_FATHER_PIN = 20;
+    public static final int DEATH_PERSON_MOTHER_NAME = 21;
+    public static final int DEATH_PERSON_MOTHER_PIN = 22;
+
     public enum State {
         /**
          * 0 - A newly entered BDF - can be edited by DEO or ADR
@@ -52,69 +77,26 @@ public class DeathAlteration {
 
     @Enumerated
     private Act act;
-    /**
-     * Contains the approval bit set for each field.
-     */
-    @Column(nullable = true)
-    private BitSet approvalStatuses;
     @Id
     // This is an auto generated unique row identifier
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUKey;
 
-    // This is the serial number for the BirthAlteration
-    @Column(nullable = false, updatable = false)
-    private Long alterationSerialNo;
-
-    //id points to death declaration
-    @Column(nullable = false)
-    private long deathId;
-
     @Column(nullable = false)
     // The date when the alteration request was received
     @Temporal(value = TemporalType.DATE)
     private Date dateReceived;
-/*
-    @Embedded
-    private DeathInfo death = new DeathInfo();*/
-
-    @Embedded
-    private DeathPersonInfo deathPerson = new DeathPersonInfo();
-
-    @Embedded
-    private DeclarantInfo declarant = new DeclarantInfo();
-
-    @Embedded
-    private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
-
-    @Column(nullable = false, length = 255)
-    private String placeOfDeath;
-
-    @Column(nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private Date dateOfDeath;
-
-    @Column(nullable = true)
-    private String timeOfDeath;
-
-    @Column(nullable = true, length = 255)
-    private String placeOfDeathInEnglish;
-
+    // This is the serial number for the BirthAlteration
+    @Column(nullable = false, updatable = false)
+    private Long alterationSerialNo;
     /**
-     * 1-Yes, 0-No
+     * Contains the approval bit set for each field.
      */
     @Column(nullable = true)
-    private boolean causeOfDeathEstablished;
-
-    @Column(nullable = true, length = 600)
-    private String causeOfDeath;
-
-    @Column(nullable = true)
-    private String icdCodeOfCause;
-
+    private BitSet approvalStatuses;
+    //id points to death declaration
     @Column(nullable = false)
-    private String placeOfBurial;
-
+    private long deathId;
 
     @Column
     private boolean bcOfFather;
@@ -132,11 +114,22 @@ public class DeathAlteration {
     @Column
     private float stampFee;
 
+    @Embedded
+    private DeathAlterationInfo deathInfo = new DeathAlterationInfo();
+
+    @Embedded
+    private DeathPersonInfo deathPerson = new DeathPersonInfo();
+
+    @Embedded
+    private DeclarantInfo declarant = new DeclarantInfo();
+
+    @Embedded
+    private CRSLifeCycleInfo lifeCycleInfo = new CRSLifeCycleInfo();
+
     /**
      * The Birth/Death registration division where the birth is registered (Includes District)
      */
-    @ManyToOne
-    @JoinColumn(name = "bdDivisionUKey", nullable = true, insertable = false, updatable = false)
+    @Transient
     private BDDivision deathDivision;
 
     public State getStatus() {
@@ -260,83 +253,27 @@ public class DeathAlteration {
         this.deathPerson = deathPerson;
     }
 
-    public BDDivision getDeathDivision() {
-        return deathDivision;
-    }
-
-    public void setDeathDivision(BDDivision deathDivision) {
-        this.deathDivision = deathDivision;
-    }
-
-    public String getPlaceOfDeath() {
-        return placeOfDeath;
-    }
-
-    public void setPlaceOfDeath(String placeOfDeath) {
-        this.placeOfDeath = placeOfDeath;
-    }
-
-    public Date getDateOfDeath() {
-        return dateOfDeath;
-    }
-
-    public void setDateOfDeath(Date dateOfDeath) {
-        this.dateOfDeath = dateOfDeath;
-    }
-
-    public String getTimeOfDeath() {
-        return timeOfDeath;
-    }
-
-    public void setTimeOfDeath(String timeOfDeath) {
-        this.timeOfDeath = timeOfDeath;
-    }
-
-    public String getPlaceOfDeathInEnglish() {
-        return placeOfDeathInEnglish;
-    }
-
-    public void setPlaceOfDeathInEnglish(String placeOfDeathInEnglish) {
-        this.placeOfDeathInEnglish = placeOfDeathInEnglish;
-    }
-
-    public boolean isCauseOfDeathEstablished() {
-        return causeOfDeathEstablished;
-    }
-
-    public void setCauseOfDeathEstablished(boolean causeOfDeathEstablished) {
-        this.causeOfDeathEstablished = causeOfDeathEstablished;
-    }
-
-    public String getCauseOfDeath() {
-        return causeOfDeath;
-    }
-
-    public void setCauseOfDeath(String causeOfDeath) {
-        this.causeOfDeath = causeOfDeath;
-    }
-
-    public String getIcdCodeOfCause() {
-        return icdCodeOfCause;
-    }
-
-    public void setIcdCodeOfCause(String icdCodeOfCause) {
-        this.icdCodeOfCause = icdCodeOfCause;
-    }
-
-    public String getPlaceOfBurial() {
-        return placeOfBurial;
-    }
-
-    public void setPlaceOfBurial(String placeOfBurial) {
-        this.placeOfBurial = placeOfBurial;
-    }
-
     public Act getAct() {
         return act;
     }
 
     public void setAct(Act act) {
         this.act = act;
+    }
+
+    public DeathAlterationInfo getDeathInfo() {
+        return deathInfo;
+    }
+
+    public void setDeathInfo(DeathAlterationInfo deathInfo) {
+        this.deathInfo = deathInfo;
+    }
+
+    public BDDivision getDeathDivision() {
+        return deathDivision;
+    }
+
+    public void setDeathDivision(BDDivision deathDivision) {
+        this.deathDivision = deathDivision;
     }
 }
