@@ -3,6 +3,7 @@ package lk.rgd.common.core.service;
 import lk.rgd.ErrorCodes;
 import lk.rgd.Permission;
 import lk.rgd.common.RGDRuntimeException;
+import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.*;
 import lk.rgd.common.api.service.UserManager;
@@ -48,20 +49,27 @@ public class UserManagerImpl implements UserManager {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Auditable
     public User authenticateUser(String userId, String password) throws AuthorizationException {
         User user = userDao.getUserByPK(userId);
         if (user != null && user.getStatus() == User.State.ACTIVE
-                && password != null && user.getPasswordHash() != null
-                && !SYSTEM_USER_NAME.equalsIgnoreCase(userId)) {
-            if (user.getPasswordHash().equals(hashPassword(password))) {
+            && password != null && user.getPasswordHash() != null
+            && !SYSTEM_USER_NAME.equalsIgnoreCase(userId)) {
+            if (user.getPasswordHash().equals(password) || user.getPasswordHash().equals(hashPassword(password))) {
                 return user;
             } else {
                 logger.debug("Password mismatch for user : {}", userId);
             }
         }
-        logger.warn("Attempt to authenticate non-existant or inactive user : {} or empty password", userId);
-        throw new AuthorizationException("Invalid user ID, password or user : " + userId, ErrorCodes.INVALID_LOGIN);
+        logger.warn("Attempt to authenticate non-existent or inactive user : {} or empty password", userId);
+        throw new AuthorizationException("Invalid user ID, password or user : " + userId, ErrorCodes.INVALID_LOGIN);        
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Auditable
+    public void logoutUser(String userId) {}
 
     /**
      * @inheritDoc

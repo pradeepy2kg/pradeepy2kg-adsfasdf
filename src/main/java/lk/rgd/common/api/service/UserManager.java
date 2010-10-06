@@ -24,6 +24,12 @@ public interface UserManager {
     User authenticateUser(String userId, String password) throws AuthorizationException;
 
     /**
+     * This is a marker method to record the event into the event database
+     * @param userId the user logging out
+     */
+    public void logoutUser(String userId);
+
+    /**
      * Internal API to access the System internal user
      *
      * @return the internal system user
