@@ -1030,7 +1030,7 @@
                 method="captureDeathAlterations">
             <result type="tiles" name="pageload">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
-            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <result type="tiles" name="success">epr.deathAlterationApproval</result>
             <!--            <result type="redirectAction" name="success">
                 <param name="actionName">
                     eprDeathAlterationSearchHome
