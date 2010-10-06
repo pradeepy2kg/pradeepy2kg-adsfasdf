@@ -222,38 +222,50 @@ public class DeathRecordsIndexer {
         throw new CRSRuntimeException(msg, code, e);
     }
 
-    public void indexAll() {
+    public boolean indexAll() {
+
+        if (solrIndexManager.getDeathServer() == null) {
+            logger.error("Cannot connect to Solr server to index all death records");
+            return false;
+        }
 
         // delete all existing
         try {
+            logger.info("Deleting all death records off Solr index");
             solrIndexManager.getDeathServer().deleteByQuery("*:*");
         } catch (Exception e) {
-            logger.error("Error deleting existing records off Solr index");
+            logger.error("Error deleting existing death records off Solr index");
         }
 
         List<DeathRegister> ddfList = deathRegisterDAO.findAll();
 
         int count = 0;
         try {
+            logger.info("Begin re-indexing of all death records into Solr");
             for (DeathRegister ddf : ddfList) {
                 if (ddf.getStatus() == DeathRegister.State.DEATH_CERTIFICATE_PRINTED) {
                     addRecord(ddf);
                     count++;
+                    if (count % 10000 == 0) {
+                        logger.info("Indexed : {} records..", count);
+                    }
                 }
             }
 
             solrIndexManager.getDeathServer().optimize();
             solrIndexManager.getDeathServer().commit();
 
-            logger.debug("Successfully indexed : " + count + " death documents..");
+            logger.debug("Successfully indexed : " + count + " death records..");
+            return true;
 
         } catch (SolrServerException e) {
-            logger.error("Error from Solr server during re-indexing", e);
+            logger.error("Error from Solr server during death record re-indexing", e);
         } catch (IOException e) {
-            logger.error("IO Exception encountered during re-indexing", e);
+            logger.error("IO Exception encountered during death record re-indexing", e);
         } catch (Exception e) {
-            logger.error("Unexpected Exception encountered during re-indexing", e);
+            logger.error("Unexpected Exception encountered during death record re-indexing", e);
         }
+        return false;
     }
 
     public void addRecord(DeathRegister ddf) throws IOException, SolrServerException {

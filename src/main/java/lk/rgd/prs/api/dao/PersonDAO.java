@@ -72,4 +72,12 @@ public interface PersonDAO {
      * @return the matching persons
      */
     public List<Person> findPersonsByNIC(String nic);
+
+    /**
+     * Return all records - for indexing only
+     *
+     * @return all records
+     */
+    public List<Person> findAll();
+
 }
