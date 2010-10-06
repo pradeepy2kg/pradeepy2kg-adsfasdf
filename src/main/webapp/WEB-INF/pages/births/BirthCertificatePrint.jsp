@@ -120,15 +120,13 @@
     <div id="birth-register-approval-body">
         <s:actionmessage cssClass="alreadyPrinted"/>
         <s:actionerror/>
-            <%--<s:if test="printList.size==0 && printStart==0">--%>
-            <%--<p class="alreadyPrinted" align="center"><s:label value="%{getText('noitemMsg.label')}"/></p>--%>
-            <%--</s:if>--%>
         <s:if test="printList.size > 0">
             <fieldset style="border:none">
                 <table id="print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                     <thead>
                     <tr>
-                        <th width="15px"></th>
+                            <%--todo remove
+                           <th width="15px"></th>--%>
                         <th width="20px"><s:label value="%{getText('division.label')}"/></th>
                         <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                         <th><s:label name="name" value="%{getText('name.label')}"/></th>
@@ -143,9 +141,10 @@
                     <s:iterator status="printStatus" value="printList" id="printListId">
                         <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
                                 <%--<td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>--%>
-                            <td><s:checkbox name="index"
-                                            onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
-                                            fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>
+                                <%--                        todo remove
+               <td><s:checkbox name="index"
+                               onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"
+                               fieldValue="%{#printListId.idUKey}" value="%{#index}"/></td>--%>
                             <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                             <td align="center"><s:property value="register.bdfSerialNo"/></td>
                             <td>
@@ -184,6 +183,7 @@
                     </tbody>
                 </table>
             </fieldset>
+            <%--        todo remove
             <div class="form-submit"><s:if test="#request.allowPrintCertificate">
                 <s:label><s:checkbox name="allCheck"
                                      onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
@@ -197,7 +197,7 @@
                     <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                     <s:submit value="%{getText('print.label')}"/></s:label>
             </s:if>
-            </div>
+            </div>--%>
             <div class="next-previous">
                 <s:url id="previousUrl" action="eprCertificatePrintPrevious.do">
                     <s:param name="pageNo" value="%{#request.pageNo}"/>
