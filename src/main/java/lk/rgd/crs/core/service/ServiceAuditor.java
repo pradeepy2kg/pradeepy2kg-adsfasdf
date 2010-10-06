@@ -9,6 +9,8 @@ import lk.rgd.common.api.Auditable;
 import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.service.UserManager;
+import lk.rgd.common.core.service.UserManagerImpl;
 import lk.rgd.crs.api.domain.*;
 import lk.rgd.crs.api.service.*;
 import lk.rgd.prs.api.service.PopulationRegistry;
@@ -62,6 +64,7 @@ public class ServiceAuditor implements MethodInterceptor {
         serviceClasses.put(BirthAlterationService.class, BirthAlterationServiceImpl.class);
         serviceClasses.put(DeathAlterationService.class, DeathAlterationServiceImpl.class);
         serviceClasses.put(CertificateSearchService.class, CertificateSearchServiceImpl.class);
+        serviceClasses.put(UserManager.class, UserManagerImpl.class);
 
         // the domain objects to be debug audited
         debugClasses = new ArrayList<Class>();
@@ -188,10 +191,10 @@ public class ServiceAuditor implements MethodInterceptor {
         // get hold of the user and debug info if captureDebugBeforeExecution is enabled
         for (Object arg : methodInvocation.getArguments()) {
 
-            if (arg instanceof User) {
+            if (arg != null && arg instanceof User) {
                 event.setUser((User) arg);
 
-            } else if (debugInvocation && arg != null && debugClasses.contains(arg.getClass())) {
+            } else if (arg != null && debugInvocation && debugClasses.contains(arg.getClass())) {
 
                 // this is a class we are interested to debug
                 if (debugData == null) {

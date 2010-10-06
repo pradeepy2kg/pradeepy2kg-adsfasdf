@@ -63,7 +63,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         logger.debug("detected userName : {} ", userName);
         User user;
         try {
-            user = userManager.authenticateUser(userName, password);
+            user = userManager.authenticateUser(userName, userManager.hashPassword(password));
         } catch (AuthorizationException e) {
             addActionError("Incorrect username or password.");
             logger.error("{} : {}", e.getMessage(), e);
@@ -156,6 +156,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
             } else {
                 session = null;
             }
+            userManager.logoutUser(userName);
             return "success";
         }
         return "error";
