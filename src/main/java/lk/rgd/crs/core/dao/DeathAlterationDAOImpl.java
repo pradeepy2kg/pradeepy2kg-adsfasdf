@@ -59,4 +59,20 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
         q.setParameter("deathCertificateNumber", idUKey);
         return q.getResultList();
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<DeathAlteration> getPaginatedAlterationApprovalListBySerialAndDeathDivision(int pageNo, int noOfRows, long serial, int divisionId) {
+        Query q = em.createNamedQuery("get.alt.by.division.serial.number.death.division");
+        q.setParameter("deathSerialNo", serial);
+        q.setParameter("deathDivisionUkey", divisionId);
+        q.setFirstResult((pageNo - 1) * noOfRows);
+        q.setMaxResults(noOfRows);
+        return q.getResultList();
+    }
+
+    public List<DeathAlteration> getAlterationByDeathId(long deathId) {
+        //todo
+        return null;
+    }
+
 }

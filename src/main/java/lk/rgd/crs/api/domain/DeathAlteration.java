@@ -7,12 +7,15 @@ import java.util.Date;
 /**
  * @authar amith jayasekara
  * the entity class to store death alteration recodes
- */
+ */     //SELECT * FROM CRS.ALT_DEATH as a, CRS.DEATH_REGISTER as d WHERE a.deathid=d.idukey AND d.deathserialno=2010014566 AND d.bddivisionukey=1;
 @Entity
 @Table(name = "ALT_DEATH", schema = "CRS")
-@NamedQueries(
-        @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da WHERE da.deathId =:deathCertificateNumber")
-)
+@NamedQueries({
+        @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da WHERE da.deathId =:deathCertificateNumber"),
+        @NamedQuery(name = "get.alt.by.division.serial.number.death.division", query = "SELECT da FROM DeathAlteration da,DeathRegister dr"+
+                " WHERE da.deathId=dr.idUKey AND dr.death.deathSerialNo =:deathSerialNo"+
+                " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey")
+})
 
 public class DeathAlteration {
 

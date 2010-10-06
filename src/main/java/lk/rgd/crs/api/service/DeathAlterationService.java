@@ -54,11 +54,23 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user);
 
     /**
-     * get list of pending death alteration pprovals
+     * todo
      *
-     * @param deathDivision
+     * @param pageNo
+     * @param numRows
+     * @param serialNo
+     * @param divisionId
+     * @return
+     */
+    public List<DeathAlteration> getAlterationApprovalListBySerialAndDeathDivision(int pageNo, int numRows, long serialNo, int divisionId);
+
+    /**
+     * todo
+     *
+     * @param deathId
      * @param user
      * @return
      */
-    public List<DeathAlteration> getAlterationApprovalListByBDDivision(BDDivision deathDivision, User user);
+    public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
+
 }
