@@ -9,6 +9,7 @@
 <div class="birth-registration-form-outer" id="birth-registration-form-2-outer">
 <s:form action="eprViewBDFInNonEditableMode.do" name="nonEditableBirthRegistrationForm2" method="POST">
 <s:set value="%{#session.WW_TRANS_I18N_LOCALE.language}" name="userPreferedLang"/>
+<%--
 
 <table class="table_reg_page_02" cellspacing="0">
     <caption></caption>
@@ -61,8 +62,9 @@
     </tr>
     </tbody>
 </table>
+--%>
 
-<table class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
+<%--<table class="table_reg_page_02" cellspacing="0" style="margin:-10px auto; border-top:none;">
     <tr>
         <td width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)සම්පුර්ණ නම<br>தந்தையின் முழு பெயர்<br>Full Name</label></td>
         <td colspan="8">
@@ -78,8 +80,9 @@
         <td colspan="2"><s:label value="%{#session.birthRegister.parent.fatherPlaceOfBirth}"
                                  cssStyle="width:95%;"/></td>
     </tr>
-</table>
+</table>--%>
 
+<%--
 <table class="table_reg_page_02" cellspacing="0" style="border-top:none;">
     <tbody>
     <tr>
@@ -267,6 +270,7 @@
     </tr>
     </tbody>
 </table>
+--%>
 <s:hidden name="rowNumber" value="%{row}"/>
 <s:hidden name="pageNo" value="2"/>
 

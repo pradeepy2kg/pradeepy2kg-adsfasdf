@@ -1796,7 +1796,10 @@ death-alteration-table-style01 td{border:none;}
 #user-locaton-outer td{border-right:1px solid #000;border-bottom:1px solid #000;width:30%;padding-left:5px;}
 #user-locaton-outer input{margin:5px;}
 #user-locaton-outer select{width:45%;}
-.user-locaton-outer-lable{}
+
+
+.table_non_editable_reg_page {width: 1030px;border-top: 1px solid #000000;border-left:1px solid #000;font-size: 9pt;}
+.table_non_editable_reg_page td{border-right: 1px solid #000000;border-bottom: 1px solid #000000;padding:3px;}
 
 
 
