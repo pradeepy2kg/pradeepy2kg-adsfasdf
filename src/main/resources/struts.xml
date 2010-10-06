@@ -386,11 +386,11 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+<!--        <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="printBulkOfEntries">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
             <result type="tiles" name="error">epr.error</result>
-        </action>
+        </action>-->
 
         <action name="eprCertificatePrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
@@ -424,11 +424,11 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+<!--        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="printBulkOfEntries">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
-        </action>
+        </action>-->
 
         <action name="eprPrintNext" class="lk.rgd.crs.web.action.births.PrintAction" method="nextPage">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
@@ -1030,12 +1030,17 @@
                 method="captureDeathAlterations">
             <result type="tiles" name="pageload">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
-            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <result type="tiles" name="success">epr.deathAlterationApproval</result>
             <!--            <result type="redirectAction" name="success">
                 <param name="actionName">
                     eprDeathAlterationSearchHome
                 </param>
             </result>-->
+        </action>
+
+        <action name="eprApproveDeathAlterations" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deathAlterationApproval">
+            <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
         </action>
     </package>
 </struts>

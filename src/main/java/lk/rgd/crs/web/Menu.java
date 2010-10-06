@@ -268,7 +268,8 @@ public class Menu {
         //Birth Alteration for ARG
         argAlterationLink.putAll(adrAlterationLink);
         argAlterationLink.put("eprApproveSelectedAlteration.do", new Link(null, "/ecivil/alteration/", "eprApproveSelectedAlteration.do", Permission.APPROVE_BIRTH_ALTERATION));
-
+        //death alteration approvals
+        argAlterationLink.put("eprApproveDeathAlterations.do", new Link("label.approve,death.alterations", "/ecivil/alteration/", "eprApproveDeathAlterations.do", Permission.APPROVE_BIRTH_ALTERATION));
         // assemble menu for admins : insertion - order
         adminLinks.put("admin", adminLink);
         adminLinks.put("preference", preferanceLink);
