@@ -127,7 +127,9 @@
                     <table id="com-print-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
                         <thead>
                         <tr>
-                            <th width="15px"></th>
+                                <%--todo remove
+                                <th width="15px"></th>
+                                --%>
                             <th width="20px"><s:label value="%{getText('division.label')}"/></th>
                             <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
                             <th><s:label name="name" value="%{getText('name.label')}"/></th>
@@ -139,9 +141,11 @@
                         <tbody>                        <%--following code used for pagination--%>
                         <s:iterator status="printStatus" value="printList" id="printListId">
                             <tr class="<s:if test="#printStatus.odd == true">odd</s:if><s:else>even</s:else>">
-                                    <%--<td class="table-row-index"><s:property value="%{#printStatus.count+printStart}"/></td>--%>
-                                <td><s:checkbox name="index" fieldValue="%{#printListId.idUKey}" value="%{#index}"
-                                                onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>
+
+                                    <%--                  todo remove
+                    <td><s:checkbox name="index" fieldValue="%{#printListId.idUKey}" value="%{#index}"
+                                    onclick="javascript:selectall(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/></td>--%>
+
                                 <td><s:property value="register.birthDivision.bdDivisionUKey"/></td>
                                 <td align="center"><s:property value="register.bdfSerialNo"/></td>
                                 <td>
@@ -172,7 +176,7 @@
                     </table>
                 </fieldset>
 
-                <div class="form-submit">
+ <%--               <div class="form-submit">
                     <s:label><s:checkbox name="allCheck"
                                          onclick="javascript:selectallMe(document.birth_confirm_print,document.birth_confirm_print.allCheck)"/>
                         <span><s:label name="select_all" value="%{getText('select_all.label')}"/></span></s:label>
@@ -185,7 +189,7 @@
                         <s:hidden name="birthDivisionId" value="%{#request.birthDivisionId}"/>
                         <s:hidden name="dsDivisionId" value="%{#request.dsDivisionId}"/>
                         <s:submit value="%{getText('print.label')}"/></s:label>
-                </div>
+                </div>--%>
                 <div class="next-previous">
                     <s:url id="previousUrl" action="eprPrintPrevious.do">
                         <s:param name="confirmListFlag" value="true"/>
