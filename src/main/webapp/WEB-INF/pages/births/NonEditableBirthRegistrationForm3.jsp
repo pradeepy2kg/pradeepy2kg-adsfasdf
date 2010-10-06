@@ -5,7 +5,7 @@
 
 <div class="birth-registration-form-outer" id="birth-registration-form-3-outer">
 <s:form action="eprViewBDFInNonEditableMode.do" name="nonEditableBirthRegistrationForm1" method="POST">
-
+<%--
 <s:if test="session.birthRegister.register.birthType.ordinal() != 0">
     <table class="table_reg_page_03" cellspacing="0" style="margin-top:5px">
         <caption></caption>
@@ -244,7 +244,7 @@
         <td colspan="3"><s:label value="%{#session.birthRegister.informant.informantSignDate}"/></td>
     </tr>
     </tbody>
-</table>
+</table>--%>
 <s:hidden name="rowNumber" value="%{row}"/>
 <s:hidden name="pageNo" value="3"/>
 <div class="form-submit">

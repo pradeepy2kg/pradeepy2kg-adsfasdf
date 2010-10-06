@@ -62,9 +62,16 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
 
     }
 
-    @Override
     public Map<Integer, String> getLocationList(String language, User user) {
+        if (user == null) {
+            logger.error("Error getting Locations Names using null for User");
+            throw new IllegalArgumentException("User can not be null");
+        }
+        Map<Integer, String> result = getAllLocationNames(language);
+        return result;
+    }
 
+    private Map<Integer, String> getAllLocationNames(String language) {
         Map<Integer, String> result = null;
         if (AppConstants.SINHALA.equals(language)) {
             result = siLocationName;
@@ -75,16 +82,11 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
         } else {
             handleException("Unsupported language : " + language, ErrorCodes.INVALID_LANGUAGE);
         }
-
-        if (user == null) {
-            logger.error("Error getting DistrictNames using null for User");
-            throw new IllegalArgumentException("User can not be null");
-        }
         return result;
-
     }
 
-    @Override
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public Location getLocationByCode(int locationCode) {
         Query q = em.createNamedQuery("get.location.by.code");
         q.setParameter("locationCode", locationCode);
@@ -98,15 +100,13 @@ public class LocationDAOImpl extends BaseDAO implements LocationDAO, Preloadable
 
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
     public void preload() {
-
-        Query query = em.createQuery("SELECT l FROM Location l");
-        List<Location> results = query.getResultList();
-
+         Query q = em.createNamedQuery("getAllLocations");
+        List<Location> results = q.getResultList();
+        logger.debug("Loaded : {} Locations from the database", results.size());
         for (Location l : results) {
             updateCache(l);
         }
 
-        logger.debug("Loaded : {} Locations from the database", results.size());
     }
 
     private void updateCache(Location l) {

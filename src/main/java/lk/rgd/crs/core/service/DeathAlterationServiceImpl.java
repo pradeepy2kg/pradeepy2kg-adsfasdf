@@ -75,6 +75,11 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         return deathAlterationDAO.getByCertificateNumber(idUKey);
     }
 
+    @Override
+    public List<DeathAlteration> getAlterationApprovalListByBDDivision(BDDivision deathDivision, User user) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
     private void validateAccessToBDDivision(User user, BDDivision bdDivision) {
         if (!(User.State.ACTIVE == user.getStatus()
