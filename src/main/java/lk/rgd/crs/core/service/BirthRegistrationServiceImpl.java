@@ -11,6 +11,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.common.util.GenderUtil;
+import lk.rgd.common.util.IdentificationNumberUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.crs.CRSRuntimeException;
 import lk.rgd.crs.api.bean.UserWarning;
@@ -1403,11 +1404,64 @@ public class BirthRegistrationServiceImpl implements
         child.setPreferredLanguage(bdf.getRegister().getPreferredLanguage());
 
         // check mother and father
-        ParentInfo parent = bdf.getParent();
-        if (bdf.getParent() != null) {
-            Person mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
-            processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(),
-                mother, bdf.getMarriage(), bdf.getInformant());
+        final ParentInfo parent = bdf.getParent();
+        Person mother = null;
+        Person father = null;
+
+        if (parent != null) {
+            logger.debug("Processing mother of child : {} for BDF UKey : {}", bdf.getIdUKey());
+            mother = processMotherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage());
+
+            logger.debug("Processing father of child : {} for BDF UKey : {}", bdf.getIdUKey());
+            father = processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(),
+                            mother, bdf.getMarriage(), bdf.getInformant());
+
+            // child inherits fathers race if married
+            if (bdf.getMarriage().getParentsMarried() != null &&
+                (bdf.getMarriage().getParentsMarried() == 1 || bdf.getMarriage().getParentsMarried() == 3)) {
+                if (parent.getFatherRace() != null) {
+                    child.setRace(parent.getFatherRace());
+                }
+            } else {
+                // mother race
+                if (parent.getMotherRace() != null) {
+                    child.setRace(parent.getMotherRace());
+                }
+            }
+        }
+
+        final GrandFatherInfo gfInfo = bdf.getGrandFather();
+        if (gfInfo != null) {
+
+            logger.debug("Processing great grand father of child : {} for BDF UKey : {}", bdf.getIdUKey());
+            Person greatGrandFather = processPersonToPRS(
+                gfInfo.getGreatGrandFatherNICorPIN(), gfInfo.getGreatGrandFatherFullName(),
+                gfInfo.getGreatGrandFatherBirthPlace(), null, user);
+
+            Person grandFather = processPersonToPRS(
+                gfInfo.getGrandFatherNICorPIN(), gfInfo.getGrandFatherFullName(),
+                gfInfo.getGrandFatherBirthPlace(), null, user);
+
+            if (grandFather != null) {
+                logger.debug("Processing great/grand father of child : {} for BDF UKey : {}", bdf.getIdUKey());
+
+                // TODO use an enumeration for marriage
+                if ((bdf.getMarriage().getParentsMarried() == 1 ||
+                     bdf.getMarriage().getParentsMarried() == 3) && father != null) {
+                    // grand father of child is fathers, father
+                    father.setFather(grandFather);
+                    ecivil.updatePerson(father, user);
+                } else if (mother != null) {
+                    // grand father of child is mothers father
+                    mother.setFather(grandFather);
+                    ecivil.updatePerson(mother, user);
+                }
+
+                if (greatGrandFather != null) {
+                    grandFather.setFather(greatGrandFather);
+                    ecivil.updatePerson(grandFather, user);
+                }
+            }
         }
 
         // generate a PIN number
@@ -1424,6 +1478,48 @@ public class BirthRegistrationServiceImpl implements
         birthRecordsIndexer.add(bdf);
 
         return warnings;
+    }
+
+    /**
+     * Process the Grand father, Great grand father, Informant (if a Guardian) or the Registrar into the PRS
+     * @param nicOrPIN nic of the person. This method ignores those using PIN numbers
+     * @param fullName full name of the person to be added
+     * @param birthPlace place of birth
+     * @param address address if known
+     * @param user the user processing the transaction
+     * @return the Person added, if any or null
+     */
+    private Person processPersonToPRS(String nicOrPIN, String fullName, String birthPlace, String address, User user) {
+
+        if (IdentificationNumberUtil.isValidNIC(nicOrPIN)) {
+            List<Person> records = ecivil.findPersonsByNIC(nicOrPIN, user);
+
+            if ((records == null || records.isEmpty()) && !isEmptyString(fullName)) {
+                logger.debug("Adding person with NIC : {} to the PRS", nicOrPIN);
+
+                Person person = new Person();
+                person.setFullNameInOfficialLanguage(fullName);
+                person.setNic(nicOrPIN);
+                if (birthPlace != null) {
+                    person.setPlaceOfBirth(birthPlace);
+                }
+                person.setStatus(Person.Status.SEMI_VERIFIED);
+                // add person to PRS
+                ecivil.addPerson(person, user);
+
+                if (address != null) {
+                    final Address add = new Address(address);
+                    person.specifyAddress(add);
+                    // save new address to PRS
+                    ecivil.addAddress(add, user);
+                    // update person to reflect new address
+                    ecivil.updatePerson(person, user);
+                }
+
+                return person;
+            }
+        }
+        return null;
     }
 
     private Person processMotherToPRS(User user, Person person, ParentInfo parent, String prefLanguage) {
@@ -1445,7 +1541,7 @@ public class BirthRegistrationServiceImpl implements
                 List<Person> records = ecivil.findPersonsByNIC(motherNICorPIN, user);
                 if (records != null) {
                     if (records.size() == 1) {
-                        logger.debug("Found mother by INC : {}", records.get(0).getNic());
+                        logger.debug("Found mother by NIC : {}", records.get(0).getNic());
                         mother = records.get(0);
                     } else if (records.size() > 1) {
                         logger.debug("Could not locate a unique mother record using : {}", motherNICorPIN);
@@ -1465,6 +1561,14 @@ public class BirthRegistrationServiceImpl implements
                 mother.setStatus(Person.Status.UNVERIFIED);
                 mother.setLifeStatus(Person.LifeStatus.ALIVE);
                 mother.setPlaceOfBirth(parent.getMotherPlaceOfBirth());
+
+                // set mothers passport info
+                if (!isEmptyString(parent.getMotherPassportNo()) && parent.getMotherCountry() != null) {
+                    mother.addPassportNo(parent.getMotherCountry(), parent.getMotherPassportNo());
+                    mother.addCitizenship(parent.getMotherCountry());
+                }
+                // set mother race
+                mother.setRace(parent.getMotherRace());
 
                 // add mother to PRS
                 ecivil.addPerson(mother, user);
@@ -1489,7 +1593,7 @@ public class BirthRegistrationServiceImpl implements
         return mother;
     }
 
-    private void processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
+    private Person processFatherToPRS(User user, Person person, ParentInfo parent, String prefLanguage,
         Person mother, MarriageInfo marriage, InformantInfo informant) {
 
         logger.debug("Processing details of father to the PRS");
@@ -1537,6 +1641,14 @@ public class BirthRegistrationServiceImpl implements
                 father.setStatus(Person.Status.UNVERIFIED);
             }
             father.setPlaceOfBirth(parent.getFatherPlaceOfBirth());
+
+            // set fathers passport info
+            if (!isEmptyString(parent.getFatherPassportNo()) && parent.getFatherCountry() != null) {
+                father.addPassportNo(parent.getFatherCountry(), parent.getFatherPassportNo());
+                father.addCitizenship(parent.getFatherCountry());
+            }
+            // set fathers race
+            father.setRace(parent.getFatherRace());
 
             // add father to the PRS
             ecivil.addPerson(father, user);
@@ -1589,6 +1701,7 @@ public class BirthRegistrationServiceImpl implements
             // set father child relationship
             person.setFather(father);
         }
+        return father;
     }
 
     /**

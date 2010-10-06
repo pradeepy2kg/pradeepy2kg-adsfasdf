@@ -1,12 +1,12 @@
 package lk.rgd.prs.api.domain;
 
 import lk.rgd.common.api.domain.Country;
+import lk.rgd.common.api.domain.Race;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -82,10 +82,10 @@ public class Person implements Serializable {
     @Column(unique = true, nullable = true)
     private Long temporaryPin;
     /**
-     * The current passport number
+     * The passport numbers in the format "LK:M1203456 JP:F092434"
      */
-    @Column(nullable = true, length = 20)
-    private String passportNo;
+    @Column(nullable = true, length = 60)
+    private String passportNos;
     /**
      * The preferred language of for the record
      */
@@ -203,6 +203,10 @@ public class Person implements Serializable {
     @OneToOne
     @JoinColumn(name = "lastMarriageUKey")
     private Marriage lastMarriage;
+
+    @ManyToOne
+    @JoinColumn(name = "race")
+    private Race race;
 
     /**
      * Add a record of a marriage. Marks this marriage as the 'last' marriage
@@ -354,8 +358,11 @@ public class Person implements Serializable {
         return citizenship;
     }
 
-    public void setCitizenship(Set<Country> citizenship) {
-        this.citizenship = citizenship;
+    public void addCitizenship(Country country) {
+        if (this.citizenship == null) {
+            this.citizenship = new HashSet<Country>();
+        }
+        this.citizenship.add(country);
     }
 
     public long getPersonUKey() {
@@ -398,12 +405,16 @@ public class Person implements Serializable {
         this.lastAddress = lastAddress;
     }
 
-    public String getPassportNo() {
-        return passportNo;
+    public String getPassportNos() {
+        return passportNos;
     }
 
-    public void setPassportNo(String passportNo) {
-        this.passportNo = passportNo;
+    public void addPassportNo(Country country, String passportNo) {
+        if (this.passportNos == null) {
+            this.passportNos = country.getCountryCode() + ":" + passportNo;
+        } else {
+            this.passportNos = this.passportNos + " " + country.getCountryCode() + ":" + passportNo;
+        }
     }
 
     public Status getStatus() {
@@ -436,5 +447,13 @@ public class Person implements Serializable {
 
     public void setTemporaryPin(Long temporaryPin) {
         this.temporaryPin = temporaryPin;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 }
