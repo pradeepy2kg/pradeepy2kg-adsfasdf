@@ -54,12 +54,15 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int pageNumber; //use to track alteration capture page load and add or edit
     private int districtUKey;
     private int divisionUKey;
+    private int pageNo;  //to capture data table paginatins
+    private int rowNo;
 
     private long certificateNumber;
     private long serialNumber;
     private long alterationSerialNo;
     private long deathId;
     private long pin;
+    private long deathAlterationId;
 
     private String language;
     private String district;
@@ -168,15 +171,39 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String deathAlterationApproval() {
+        //todo remove
+        pageNumber = 1;
         if (pageNumber > 0) {
-            BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
-            approvalList = deathAlterationService.getAlterationApprovalListByBDDivision(deathDivision, user);
+            //todo remove
+            pageNo = 1;
+            rowNo = 50;
+            divisionUKey = 1;
+            serialNumber = 2010014566;
+            //search by serial number (alteration serial number)
+            if (serialNumber > 0) {
+            }
+            //search by death certificate number
+            if (certificateNumber > 0) {
+            }
+            approvalList = deathAlterationService.getAlterationApprovalListBySerialAndDeathDivision(pageNo, rowNo, serialNumber, divisionUKey);
             if (approvalList.size() < 1) {
                 addActionError(getText("no.pending.alterations"));
                 return ERROR;
             }
         } else {
             populatePrimaryLists();
+        }
+        return SUCCESS;
+    }
+
+    public String directApprove() {
+        List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
+        while (alterations.iterator().hasNext()) {
+            DeathAlteration da = alterations.iterator().next();
+            if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
+                deathAlteration = da;
+                break;
+            }
         }
         return SUCCESS;
     }
@@ -243,6 +270,51 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         }
         return da;
     }
+
+    /*
+   * type 0=string
+   * 1=int
+   * 2=long
+   * 3=boolean
+   * 4=country
+   * 5=dates
+   * 6=race
+   * */
+    private Map<Integer, List<String>> getDisplayList(int index, Object deathRegistreValue, Object deathAlterationValue, int type) {
+        Map<Integer, List<String>> pendingList = new HashMap<Integer, List<String>>();
+        switch (type) {
+            case 0:
+                if (compareStiring((String) deathRegistreValue, (String) deathAlterationValue)) {
+                    List<String> stringList = new ArrayList<String>();
+                    stringList.add(0, (String) deathRegistreValue);
+                    stringList.add(0, (String) deathAlterationValue);
+                    pendingList.put(index, stringList);
+                }
+                break;
+            case 1:
+                if (compareInteger((Integer) deathRegistreValue, (Integer) deathAlterationValue)) {
+                    List<String> intList = new ArrayList<String>();
+                    intList.add(0, Integer.toString((Integer) deathRegistreValue));
+                    intList.add(0, Integer.toString((Integer) deathAlterationValue));
+                    pendingList.put(index, intList);
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            default:
+
+        }
+     return pendingList;
+    }
+
 
     private boolean compareStiring(String exsisting, String current) {
         if (current != null) {
@@ -511,5 +583,29 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setApprovalList(List<DeathAlteration> approvalList) {
         this.approvalList = approvalList;
+    }
+
+    public int getRowNo() {
+        return rowNo;
+    }
+
+    public void setRowNo(int rowNo) {
+        this.rowNo = rowNo;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public long getDeathAlterationId() {
+        return deathAlterationId;
+    }
+
+    public void setDeathAlterationId(long deathAlterationId) {
+        this.deathAlterationId = deathAlterationId;
     }
 }

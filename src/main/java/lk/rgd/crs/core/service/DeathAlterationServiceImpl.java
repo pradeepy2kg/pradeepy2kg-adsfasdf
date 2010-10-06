@@ -75,9 +75,14 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         return deathAlterationDAO.getByCertificateNumber(idUKey);
     }
 
-    @Override
-    public List<DeathAlteration> getAlterationApprovalListByBDDivision(BDDivision deathDivision, User user) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<DeathAlteration> getAlterationApprovalListBySerialAndDeathDivision(int pageNo, int numRows, long serialNo, int divisionId) {
+        return deathAlterationDAO.getPaginatedAlterationApprovalListBySerialAndDeathDivision(pageNo, numRows, serialNo, divisionId);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<DeathAlteration> getAlterationByDeathId(long deathId, User user) {
+        return deathAlterationDAO.getAlterationByDeathId(deathId);
     }
 
 
