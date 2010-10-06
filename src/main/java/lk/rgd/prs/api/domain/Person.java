@@ -15,6 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "PERSON", schema = "PRS")
 @NamedQueries({
+    @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p"),
     @NamedQuery(name = "filter.by.pin", query = "SELECT p FROM Person p WHERE p.pin = :pin"),
     @NamedQuery(name = "filter.by.nic", query = "SELECT p FROM Person p WHERE p.nic = :nic")
 })

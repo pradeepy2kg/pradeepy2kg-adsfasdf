@@ -13,6 +13,7 @@ import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.service.MasterDataManagementService;
 import lk.rgd.crs.core.service.BirthRecordsIndexer;
 import lk.rgd.crs.core.service.DeathRecordsIndexer;
+import lk.rgd.crs.core.service.PRSRecordsIndexer;
 import lk.rgd.crs.web.WebConstants;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
@@ -103,7 +104,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final DeathRecordsIndexer deathRecordsIndexer;
-//    private final P
+    private final PRSRecordsIndexer prsRecordsIndexer;
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
@@ -115,7 +116,8 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
 
     public UserManagmentAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, RoleDAO roleDAO, UserManager service, CourtDAO courtDAO,
         BDDivisionDAO bdDivisionDAO, MasterDataManagementService dataManagementService, MRDivisionDAO mrDivisionDAO, LocationDAO locationDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO, BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer) {
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, UserDAO userDAO,
+        BirthRecordsIndexer birthRecordsIndexer, DeathRecordsIndexer deathRecordsIndexer, PRSRecordsIndexer prsRecordsIndexer) {
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.roleDAO = roleDAO;
@@ -130,6 +132,7 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
         this.userDAO = userDAO;
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.deathRecordsIndexer = deathRecordsIndexer;
+        this.prsRecordsIndexer = prsRecordsIndexer;
     }
 
     public String creatUser() {
@@ -528,19 +531,28 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 logger.debug("Indexing Record page loaded");
                 break;
             case 1:
-                birthRecordsIndexer.indexAll();
-                logger.debug("Birth Records Re-indexed Successfully");
-                addActionMessage("Birth Record Re-Index Completed");
+                if (birthRecordsIndexer.indexAll()) {
+                    logger.debug("Birth Records Re-indexed Successfully");
+                    addActionMessage("Birth Record Re-Index Completed");
+                } else {
+                    addActionMessage("Birth record re-indexing failed. Check log for details");
+                }
                 break;
             case 2:
-                deathRecordsIndexer.indexAll();
-                logger.debug("Death Records Re-indexed Successfully");
-                addActionMessage("Death Record Re-Index Completed");
+                if (deathRecordsIndexer.indexAll()) {
+                    logger.debug("Death Records Re-indexed Successfully");
+                    addActionMessage("Death Record Re-Index Completed");
+                } else {
+                    addActionMessage("Death record re-indexing failed. Check log for details");
+                }
                 break;
             case 3:
-                // TODO imlement method to index PRS data
-                addActionMessage("PRS Record Re-Index Completed");
-                logger.debug("PRS Records Re-indexed Successfully");
+                if (prsRecordsIndexer.indexAll()) {
+                    addActionMessage("PRS Record Re-Index Completed");
+                    logger.debug("PRS Records Re-indexed Successfully");
+                } else {
+                    addActionMessage("PRS record re-indexing failed. Check log for details");
+                }
                 break;
             default:
                 birthRecordsIndexer.indexAll();

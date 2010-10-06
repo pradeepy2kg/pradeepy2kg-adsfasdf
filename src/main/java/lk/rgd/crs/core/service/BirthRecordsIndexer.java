@@ -221,39 +221,51 @@ public class BirthRecordsIndexer {
         throw new CRSRuntimeException(msg, code, e);
     }
 
-    public void indexAll() {
+    public boolean indexAll() {
+
+        if (solrIndexManager.getBirthServer() == null) {
+            logger.error("Cannot connect to Solr server to index all birth records");
+            return false;
+        }
 
         // delete all existing
         try {
+            logger.info("Deleting all birth records off Solr index");
             solrIndexManager.getBirthServer().deleteByQuery("*:*");
         } catch (Exception e) {
-            logger.error("Error deleting existing records off Solr index");
+            logger.error("Error deleting existing birth records off Solr index");
         }
 
         List<BirthDeclaration> bdfList = birthDeclarationDAO.findAll();
 
         int count = 0;
         try {
+            logger.info("Begin re-indexing of all birth records into Solr");
             for (BirthDeclaration bdf : bdfList) {
                 if (bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED) {
                     addRecord(bdf);
                     count++;
+                    if (count % 10000 == 0) {
+                        logger.info("Indexed : {} birth records..", count);
+                    }
                 }
             }
 
             solrIndexManager.getBirthServer().optimize();
             solrIndexManager.getBirthServer().commit();
 
-            logger.debug("Successfully indexed : " + count + " birth documents..");
+            logger.debug("Successfully indexed : " + count + " birth records..");
+            return true;
 
             // TODO we do not print the stack trace for now..
         } catch (SolrServerException e) {
-            logger.error("Error from Solr server during re-indexing", e);
+            logger.error("Error from Solr server during birth record re-indexing", e);
         } catch (IOException e) {
-            logger.error("IO Exception encountered during re-indexing", e);
+            logger.error("IO Exception encountered during birth recordre-indexing", e);
         } catch (Exception e) {
-            logger.error("Unexpected Exception encountered during re-indexing", e);
+            logger.error("Unexpected Exception encountered during birth recordre-indexing", e);
         }
+        return false;
     }
 
     private void addRecord(BirthDeclaration bdf) throws SolrServerException, IOException {

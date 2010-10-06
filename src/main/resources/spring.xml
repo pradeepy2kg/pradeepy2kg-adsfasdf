@@ -207,6 +207,11 @@
         <constructor-arg ref="deathRegisterDAOImpl"/>
         <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
+    <bean id="prsRecordsIndexer" class="lk.rgd.crs.core.service.PRSRecordsIndexer">
+        <constructor-arg ref="solrIndexManager"/>
+        <constructor-arg ref="personDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
+    </bean>
 
     <!--Web module related classes-->
     <bean id="birthRegisterAction" scope="prototype" class="lk.rgd.crs.web.action.births.BirthRegisterAction">
@@ -290,6 +295,7 @@
         <constructor-arg ref="userDAOImpl"/>
         <constructor-arg ref="birthRecordsIndexer"/>
         <constructor-arg ref="deathRecordsIndexer"/>
+        <constructor-arg ref="prsRecordsIndexer"/>
     </bean>
 
     <bean id="registrarsManagmentAction" class="lk.rgd.crs.web.action.RegistrarsManagmentAction">

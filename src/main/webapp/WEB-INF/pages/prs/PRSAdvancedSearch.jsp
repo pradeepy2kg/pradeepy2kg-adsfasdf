@@ -82,7 +82,7 @@
             <div id="fragment-7">
                 <div id="searchAdvanced">
                     <span>Advanced Search</span>
-                    <input type="text" id="queryAdvanced" name="queryAdvanced" size="117"/>
+                    <input type="text" id="queryAdvanced" name="queryAdvanced" size="117"  style="text-transform:none;"/>
                 </div>
             </div>
         </div>

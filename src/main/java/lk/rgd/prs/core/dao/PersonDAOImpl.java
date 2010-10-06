@@ -83,4 +83,13 @@ public class PersonDAOImpl extends BaseDAO implements PersonDAO {
         q.setParameter("nic", nic);
         return q.getResultList();
     }
+
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Person> findAll() {
+        Query q = em.createNamedQuery("findAllPersons");
+        return q.getResultList();
+    }
 }
