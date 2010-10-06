@@ -47,6 +47,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
 
+    private List<DeathAlteration> approvalList;
+
     private int dsDivisionId;
     private int birthDivisionId;
     private int pageNumber; //use to track alteration capture page load and add or edit
@@ -85,7 +87,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      */
     public String deathAlterationSearch() {
         populatePrimaryLists();
-
         return SUCCESS;
     }
 
@@ -167,6 +168,16 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String deathAlterationApproval() {
+        if (pageNumber > 0) {
+            BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
+            approvalList = deathAlterationService.getAlterationApprovalListByBDDivision(deathDivision, user);
+            if (approvalList.size() < 1) {
+                addActionError(getText("no.pending.alterations"));
+                return ERROR;
+            }
+        } else {
+            populatePrimaryLists();
+        }
         return SUCCESS;
     }
 
@@ -492,5 +503,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setEditDeathPerson(boolean editDeathPerson) {
         this.editDeathPerson = editDeathPerson;
+    }
+
+    public List<DeathAlteration> getApprovalList() {
+        return approvalList;
+    }
+
+    public void setApprovalList(List<DeathAlteration> approvalList) {
+        this.approvalList = approvalList;
     }
 }

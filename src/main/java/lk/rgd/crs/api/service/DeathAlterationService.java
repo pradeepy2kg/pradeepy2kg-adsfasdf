@@ -1,6 +1,7 @@
 package lk.rgd.crs.api.service;
 
 import lk.rgd.crs.api.domain.DeathAlteration;
+import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
@@ -51,4 +52,13 @@ public interface DeathAlterationService {
      * @return list of death alterations
      */
     public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user);
+
+    /**
+     * get list of pending death alteration pprovals
+     *
+     * @param deathDivision
+     * @param user
+     * @return
+     */
+    public List<DeathAlteration> getAlterationApprovalListByBDDivision(BDDivision deathDivision, User user);
 }
