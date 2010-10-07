@@ -77,7 +77,8 @@
                     <td><s:label value="%{#request.register.bdfSerialNo}"/></td>
                 </tr>
             </table>
-            <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="width:300px;margin-top:10px;">
+            <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0"
+                   style="width:300px;margin-top:10px;">
                 <tr>
                     <td style="width:60%">
                         <label><span class="font-8">භාරගත් දිනය
@@ -172,7 +173,7 @@
             <br>If the birth was previously registered</label></td>
         <td><label>දිස්ත්‍රික්කය / மாவட்டம் / District</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:label value="%{#session.oldBdfForAdoption.districtName}"/>
+            <s:label value="%{#request.oldBDInfo.districtName}"/>
         </td>
     </tr>
     <tr>
@@ -180,7 +181,7 @@
             <br>பிரதேச செயளாளா் பிரிவு /
             <br>Divisional Secretariat</label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:label value="%{#session.oldBdfForAdoption.dsDivisionName}"/>
+            <s:label value="%{#request.oldBDInfo.dsDivisionName}"/>
         </td>
     </tr>
     <tr>
@@ -190,7 +191,7 @@
             <br>Registration Division
         </label></td>
         <td colspan="6" class="table_reg_cell_01">
-            <s:label value="%{#session.oldBdfForAdoption.bdDivisionName}"/>
+            <s:label value="%{#request.oldBDInfo.bdDivisionName}"/>
         </td>
     </tr>
     <tr>
@@ -377,10 +378,9 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)අනන්‍යතා අංකය
-            / ජාතික හැඳුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-            அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</label></td>
+        <td rowspan="2" width="200px"><label><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>Identification Number</label></td>
         <td rowspan="2" width="200px" class="find-person"><s:label
                 value="%{#request.parent.fatherNICorPIN}"/>
 
@@ -464,10 +464,9 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)අනන්‍යතා අංකය
-            / ජාතික හැඳුනුම්පත් අංකය <br>து தனிநபர் அடையாள எண் /தேசிய
-            அடையாள அட்டை
-            இலக்கம்<br>PIN / NIC Number</label></td>
+        <td rowspan="2" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) අනන්‍යතා
+            අංකය <br>
+            அடையாள எண் <br>Identification Number</label></td>
         <td rowspan="2" width="200px" class="find-person"><s:label
                 value="%{#request.parent.fatherNICorPIN}"/>
 
@@ -781,63 +780,96 @@
 
     <tbody>
     <tr>
-        <td colspan="6" style="text-align:center;font-size:12pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
+        <td colspan="5" style="text-align:center;font-size:12pt">දැනුම් දෙන්නාගේ විස්තර<br>அறிவிப்பு கொடுப்பவரின்
             தகவல்கள் <br>Details of the Informant
         </td>
     </tr>
     <tr>
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ කවුරුන්
+        <td colspan="1" width="200px"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නේ
+            කවුරුන්
             විසින් ද? <br>தகவல் வழங்குபவா் <br>Person Giving
             Information</label></td>
-        <td colspan="2">
-            <s:if test="request.informant.informantType.ordinal() == 1">
-
-            <label>මව <br>மாதா <br>Mother</label>
+        <td colspan="4">
+            <s:if test="#request.informant.informantType.ordinal() == 1">
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label value="මව"/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'ta'">
+                <s:label value="மாதா "/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'en'">
+                <s:label value="Mother"/>
+            </s:if>
             </s:if>
 
-            <s:elseif test="request.informant.informantType.ordinal() == 0">
-            <label>පියා<br> பிதா <br>Father</label>
+            <s:elseif test="#request.informant.informantType.ordinal() == 0">
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label value="පියා"/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'ta'">
+                <s:label value=" பிதா "/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'en'">
+                <s:label value="Father"/>
+            </s:if>
             </s:elseif>
-
-            <s:elseif test="request.informant.informantType.ordinal() == 2">
-            <label>භාරකරු<br> பாதுகாவலர் <br>Guardian</label>
+            <s:elseif test="#request.informant.informantType.ordinal() == 2">
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label value="භාරකරු"/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'ta'">
+                <s:label value=" பாதுகாவலர்"/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'en'">
+                <s:label value="Guardian"/>
+            </s:if>
             </s:elseif>
 
             <s:else>
-            <label>නෑයන් <br> பாதுகாவலர் <br>Relative</label>
+            <s:if test="#userPreferedLang == 'si'">
+                <s:label value="නෑයන්"/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'ta'">
+                <s:label value=" பாதுகாவலர் "/>
+            </s:if>
+            <s:if test="#userPreferedLang == 'en'">
+                <s:label value="Relative"/>
+            </s:if>
             </s:else>
     </tr>
     <tr>
-        <td colspan="2"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)දැනුම් දෙන්නාගේ පුද්ගල
-            අනන්‍යතා අංකය / ජාතික හැඳුනුම්පත් අංකය<br>தகவல்
-            கொடுப்பவரின்
-            தனிநபர்
-            அடையாள எண் / அடையாள அட்டை இல. <br>PIN / NIC of the Informant</label></td>
-        <td colspan="3"><s:label value="%{#request.informant.informantNICorPIN}"/></td>
+        <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>Identification Number</label></td>
+        <td colspan="4"><s:label value="%{#request.informant.informantNICorPIN}"/></td>
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) නම <br>கொடுப்பவரின் பெயர்
             <br>Name</label></td>
-        <td colspan="3"><s:label value="%{#request.informant.informantName}" cssStyle="width:98%;"/></td>
+        <td colspan="4"><s:label value="%{#request.informant.informantName}" cssStyle="width:98%;"/></td>
     </tr>
     <tr>
         <td colspan="1"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)තැපැල් ලිපිනය<br>தபால்
             முகவரி <br>Postal Address</label></td>
-        <td colspan="3"><s:label value="%{#request.informant.informantAddress}"
+        <td colspan="4"><s:label value="%{#request.informant.informantAddress}"
                                  cssStyle="width:98%;"/></td>
     </tr>
     <tr>
-        <td colspan="1"><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
-        <td colspan="1"><s:label value="%{#request.informant.informantPhoneNo}"
-                                 cssStyle="width:95%;"/></td>
-        <td colspan="1"><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
-        <td colspan="1"><s:label value="%{#request.informant.informantEmail}" id="informantEmail"
-                                 cssStyle="width:95%;"/></td>
+        <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
+            තැපැල් ලිපිනය <br>
+            தபால் முகவரி <br>
+            Postal Address
+        </td>
+        <td colspan="1" width="200px"><label>දුරකතනය<br>தொலைபேசி இலக்கம் <br>Telephone</label></td>
+        <td colspan="1" width="200px"><s:label value="%{#request.informant.informantPhoneNo}"
+                                               cssStyle="width:95%;"/></td>
+        <td colspan="1" width="200px"><label>ඉ -තැපැල <br>மின்னஞ்சல் <br>Email</label></td>
+        <td colspan="1" width="200px"><s:label value="%{#request.informant.informantEmail}" id="informantEmail"
+                                               cssStyle="width:95%;"/></td>
 
     </tr>
     <tr>
         <td colspan="1"><label>දිනය <br>திகதி <br>Date</label></td>
-        <td colspan="3"><s:label value="%{#request.informant.informantSignDate}"/></td>
+        <td colspan="4"><s:label value="%{#request.informant.informantSignDate}"/></td>
     </tr>
     </tbody>
 </table>
@@ -859,10 +891,8 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) පුද්ගල අනන්‍යතා අංකය /
-            ජාතික හැඳුනුම්පත් අංකය <br>தகவல் கொடுப்பவரின் தனிநபர்
-            அடையாள எண் / அடையாள
-            அட்டை இல.<br>PIN / NIC of the Notifying Authority</label></td>
+        <td colspan="3"><label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) අනන්‍යතා අංකය <br>
+            அடையாள எண் <br>Identification Number</label></td>
         <td colspan="2" class="find-person" width="200px">
             <s:label value="%{#request.notifyingAuthority.notifyingAuthorityPIN}"/>
         </td>
@@ -888,9 +918,6 @@
     </tr>
     </tbody>
 </table>
-
-<s:hidden name="pageNo" value="4"/>
-
 <s:if test="request.register.birthType.ordinal() == 1 || request.register.birthType.ordinal() == 3">
 <s:if test="bdfLateOrBelated ==1 || bdfLateOrBelated==2">
 <div id="late-belated-registration" class="font-9">
