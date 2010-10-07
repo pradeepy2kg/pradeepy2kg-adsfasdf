@@ -44,9 +44,13 @@ public class EventDAOImpl extends BaseDAO implements EventDAO {
     /**
      * @inheritDoc
      */
-    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime) {
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime , Event.Type eventType) {
         Query q = em.createNamedQuery("filter.by.recorded.timestamp").
-            setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        q.setParameter("startTime", startTime);
+        q.setParameter("endTime", endTime);
+        q.setParameter("eventType", eventType);
         return q.getResultList();
     }
 }

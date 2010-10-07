@@ -13,6 +13,7 @@ import lk.rgd.crs.CRSRuntimeException;
 import java.util.List;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * Manage events.
@@ -42,6 +43,15 @@ public class EventManagementServiceImpl implements EventManagementService {
     public List<Event> getPaginatedListForAll(int pageNo, int noOfRows, User user) {
         try {
             return eventDAO.getPaginatedListForAll(pageNo, noOfRows);
+        } catch (Exception e) {
+            logger.error("Error occurred while loading paginated Event list", e);
+            return Collections.emptyList();
+        }
+    }
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime,Event.Type eventType){
+        try {
+            return eventDAO.getPaginatedListByTimestampRange(pageNo, noOfRows,startTime,endTime,eventType);
         } catch (Exception e) {
             logger.error("Error occurred while loading paginated Event list", e);
             return Collections.emptyList();

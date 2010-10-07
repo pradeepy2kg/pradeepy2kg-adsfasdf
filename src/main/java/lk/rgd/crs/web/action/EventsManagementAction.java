@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
 import lk.rgd.common.api.service.EventManagementService;
+import lk.rgd.common.util.DateTimeUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,12 @@ public class EventsManagementAction extends ActionSupport {
     private int numberOfRows;
     private int recordCounter;
 
+    private Date searchStartDate;
+    private Date searchEndDate;
+    private String startTime;
+    private String endTime;
+    private String startDate;
+    private String endDate;
     private boolean nextFlag;
     private boolean previousFlag;
 
@@ -57,20 +64,12 @@ public class EventsManagementAction extends ActionSupport {
     }
 
     public String initEventsManagement() {
-        setPageNumber(1);
-        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
-        logger.debug("No of rows: {} ", numberOfRows);
-        printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
-        paginationHandler(printList.size());
-        setPreviousFlag(false);
         return "success";
     }
 
     public String nextPage() {
         setPageNumber(getPageNumber() + 1);
-        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
-        printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
-        paginationHandler(printList.size());
+        filter();
         setPreviousFlag(true);
         setRecordCounter(getRecordCounter() + numberOfRows);
         return "success";
@@ -89,9 +88,9 @@ public class EventsManagementAction extends ActionSupport {
         if (getPageNumber() > 1) {
             setPageNumber(getPageNumber() - 1);
         }
-        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
-        printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
-        paginationHandler(printList.size());
+
+        filter();
+
         if (getRecordCounter() > 0) {
             setRecordCounter(getRecordCounter() - numberOfRows);
         }
@@ -101,15 +100,33 @@ public class EventsManagementAction extends ActionSupport {
     public String debugDisplay() {
         event = service.getEventById(idUKey, user);
         debug = event.getDebug();
-        timestamp=event.getTimestamp();
-        logger.debug("time stamp : {}",timestamp);
+        timestamp = event.getTimestamp();
+        logger.debug("time stamp : {}", timestamp);
         return "success";
     }
 
-    public String stackTraceDisplay(){
+    public String stackTraceDisplay() {
         event = service.getEventById(idUKey, user);
         stackTrace = event.getStackTrace();
         return "success";
+    }
+
+    public String filterEvevtsList() {
+        setPageNumber(1);
+        filter();
+        paginationHandler(printList.size());
+        setPreviousFlag(false);
+        return SUCCESS;
+    }
+
+    private List<Event> filter() {
+        numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+        searchStartDate = DateTimeUtils.getDateFromISO8601String(startDate);
+        searchEndDate = DateTimeUtils.getDateFromISO8601String(endDate);
+        searchStartDate.setTime(searchStartDate.getTime() + Integer.parseInt(startTime.substring(0, 2)) * 60 * 60 * 1000L + Integer.parseInt(startTime.substring(3, 5)) * 60 * 1000L);
+        searchEndDate.setTime(searchEndDate.getTime() + Integer.parseInt(endTime.substring(0, 2)) * 60 * 60 * 1000L + Integer.parseInt(endTime.substring(3, 5)) * 60 * 1000L);
+        printList = service.getPaginatedListByTimestampRange(pageNumber, numberOfRows, searchStartDate, searchEndDate,eventType);
+        return printList;
     }
 
     /**
@@ -277,5 +294,55 @@ public class EventsManagementAction extends ActionSupport {
 
     public void setStackTrace(String stackTrace) {
         this.stackTrace = stackTrace;
+    }
+
+    public Date getSearchStartDate() {
+        return searchStartDate;
+    }
+
+    public void setSearchStartDate(Date searchStartDate) {
+        this.searchStartDate = searchStartDate;
+        startDate = DateTimeUtils.getISO8601FormattedString(searchStartDate);
+    }
+
+    public Date getSearchEndDate() {
+        return searchEndDate;
+    }
+
+    public void setSearchEndDate(Date searchEndDate) {
+        this.searchEndDate = searchEndDate;
+        endDate = DateTimeUtils.getISO8601FormattedString(searchEndDate);
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

@@ -44,5 +44,5 @@ public interface EventDAO {
      * @param endTime
      * @return
      */
-    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime);
+    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime,Event.Type eventType);
 }
