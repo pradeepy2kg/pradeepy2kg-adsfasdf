@@ -957,6 +957,12 @@
             <result type="tiles" name="success">epr.debugManegement</result>
         </action>
 
+        <action name="eprFilterEventsList" class="lk.rgd.crs.web.action.EventsManagementAction"
+                method="filterEvevtsList">
+            <result type="tiles" name="success">epr.eventManagement</result>
+            <result type="tiles" name="error">epr.error</result>
+        </action>
+
         <action name="eprIndexRecords" class="lk.rgd.crs.web.action.UserManagmentAction" method="indexRecords">
             <result type="tiles" name="success">epr.indexRecords</result>
         </action>

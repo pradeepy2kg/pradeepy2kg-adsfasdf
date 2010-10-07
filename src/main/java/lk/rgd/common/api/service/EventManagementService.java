@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * Manage events
@@ -32,4 +33,13 @@ public interface EventManagementService {
      */
     public List<Event> getPaginatedListForAll(int pageNo, int noOfRows, User user);
 
+   /**
+     *
+     * @param pageNo
+     * @param noOfRows
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public List<Event> getPaginatedListByTimestampRange(int pageNo, int noOfRows, Date startTime, Date endTime,Event.Type eventType);
 }
