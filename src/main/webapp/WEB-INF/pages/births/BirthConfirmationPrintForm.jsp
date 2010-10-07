@@ -48,7 +48,7 @@
         <s:param name="confirmListFlag" value="true"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
@@ -56,7 +56,7 @@
         <s:param name="confirmListFlag" value="true"/>
         <s:param name="pageNo" value="%{#request.pageNo}"/>
         <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
+        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
         <s:param name="printed" value="#request.printed"/>
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
@@ -252,7 +252,7 @@
     </tr>
 
     <tr>
-        <td rowspan="3" style="text-align:center;"> 6</td>
+        <td rowspan="4" style="text-align:center;"> 6</td>
         <td height="40px"><label>උපන් දිස්ත්‍රික්කය<br>மாவட்டம் <br>District of Birth</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.districtPrint}"/>
@@ -269,6 +269,17 @@
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
+
+    <tr>
+        <td height="40px"><label>ලියාපදිංචි කිරීමේ කොට්ඨාශය<br>
+            பதிவுப் பிரிவு <br>
+            Registration Division</label></td>
+        <td colspan="6" style="font-size:12pt;">
+            <s:label value="%{register.bdDivisionPrint}"/>
+        </td>
+        <td colspan="11">&nbsp;</td>
+    </tr>
+    
     <tr height="40px">
         <td><label>උපන් ස්ථානය
             <br>பிறந்த இடம்
