@@ -1,5 +1,6 @@
 package lk.rgd.prs.api.domain;
 
+import lk.rgd.AppConstants;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 
@@ -91,7 +92,7 @@ public class Person implements Serializable {
      * The preferred language of for the record
      */
     @Column(nullable = false, columnDefinition = "char(2) default 'si'")
-    private String preferredLanguage;
+    private String preferredLanguage = AppConstants.SINHALA;
     /**
      * The full name in the official language
      */

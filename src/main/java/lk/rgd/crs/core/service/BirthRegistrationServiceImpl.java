@@ -1446,7 +1446,8 @@ public class BirthRegistrationServiceImpl implements
                 logger.debug("Processing great/grand father of child : {} for BDF UKey : {}", bdf.getIdUKey());
 
                 // TODO use an enumeration for marriage
-                if ((bdf.getMarriage().getParentsMarried() == 1 ||
+                if (bdf.getMarriage().getParentsMarried() != null &&
+                    (bdf.getMarriage().getParentsMarried() == 1 ||
                      bdf.getMarriage().getParentsMarried() == 3) && father != null) {
                     // grand father of child is fathers, father
                     father.setFather(grandFather);
@@ -1500,6 +1501,7 @@ public class BirthRegistrationServiceImpl implements
                 Person person = new Person();
                 person.setFullNameInOfficialLanguage(fullName);
                 person.setNic(nicOrPIN);
+                person.setGender(AppConstants.Gender.MALE.ordinal());
                 if (birthPlace != null) {
                     person.setPlaceOfBirth(birthPlace);
                 }
