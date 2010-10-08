@@ -201,8 +201,9 @@
 
 
     <fieldset style="border:1px solid #c3dcee;margin-top:10px;">
-        <b><s:label name="confirmatinSearchLegend"
-                    value="%{getText('registrationSerchLegend1.label')}"/></b>
+        <legend>
+            <b><s:label name="confirmatinSearchLegend"
+                        value="%{getText('registrationSerchLegend1.label')}"/></b></legend>
         <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
             <tbody>
             <tr>

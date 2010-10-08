@@ -454,11 +454,11 @@
                 <tr>
                     <td rowspan="2">Location Signature</td>
                     <td>Signature in Sinhala</td>
-                    <td><s:textfield/></td>
+                    <td><s:textarea name="location.sienLocationSignature"/></td>
                 </tr>
                 <tr>
                     <td>Signature in Tamil</td>
-                    <td><s:textfield/></td>
+                    <td><s:textarea name="location.taenLocationSignature"/></td>
                 </tr>
             </s:if>
         </table>
@@ -483,15 +483,15 @@
 </fieldset>
 
 
-<fieldset style="border:none">
+<fieldset style="border:none;width:83%;margin-left:75px;" >
     <s:form name="users_print" action="" method="POST">
         <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>
             <tr>
-                <th><s:label name="name" value="    "/></th>
-                <th><s:label name="name" value="Name"/></th>
-                <th><s:label name="inactive" value=""/></th>
-                <th><s:label name="active" value=""/></th>
+                <th style="width:2%"><s:label name="name" value="    "/></th>
+                <th style="width:70%"><s:label name="name" value="Name"/></th>
+                <th style="width:10%"><s:label name="inactive" value=""/></th>
+                <th style="width:10%"><s:label name="active" value=""/></th>
                 <s:set name="allowEdit" value="true"/>
             </tr>
             </thead>

@@ -1762,6 +1762,7 @@
 .add-inactive-divisions-outer-table select,.adoption-certificate-existing-certificate-info select{width:80%;margin:5px;}
 .add-inactive-divisions-outer-table input,.adoption-certificate-existing-certificate-info input{width:80%;margin:5px;margin-left:10px}
 .add-inactive-divisions-outer-table label{width:80%;}
+.add-inactive-divisions-outer-table textarea{width:80%;margin-left:10px;}
 
 #birth-alteration-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
 #death-alteration-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
@@ -1788,6 +1789,7 @@ death-alteration-table-style01 td{border:none;}
 #alteration-approval-list-outer{width:1030px;background-color:#fff;padding: 10px;font-size:9pt;}
 .alteration-approval-list-table{width:98%;border-top:1px solid #000;border-left:1px solid #000;}
 .alteration-approval-list-table td{border-right:1px solid #000;border-bottom:1px solid #000;height:40px;}
+.alteration-approval-list-table textarea{border-right:1px solid #000;border-bottom:1px solid #000;width:95%}
 
 #birth-alteration-result-outer {width:1030px;}
 #birth-alteration-result-outer table{width:80%;margin-left:100px;margin-top:25px;}

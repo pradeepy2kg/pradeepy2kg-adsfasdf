@@ -21,7 +21,9 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "findAllBDDivisions", query = "SELECT d FROM BDDivision d"),
         @NamedQuery(name = "get.bdDivision.by.code", query = "SELECT d FROM BDDivision d " +
-                "WHERE d.divisionId =:bdDivisionId AND d.dsDivision=:dsDivision")
+                "WHERE d.divisionId =:bdDivisionId AND d.dsDivision=:dsDivision"),
+        @NamedQuery(name = "get.all.divisions.by.dsDivisionId", query = "SELECT d FROM BDDivision d " +
+                "WHERE d.dsDivision.dsDivisionUKey =:dsDivisionId ")
 })
 public class BDDivision implements Serializable {
 

@@ -65,4 +65,11 @@ public interface BDDivisionDAO {
      * @return all BD Divisions
      */
     public List<BDDivision> findAll();
+        /**
+     *
+     * @return  BD Divisions
+     */
+    public List<BDDivision> getAllDSDivisionByDsDivisionKey(int dsDivisionId);
+
+
 }
