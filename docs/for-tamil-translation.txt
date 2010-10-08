@@ -1,0 +1,20 @@
+# include text for tamil translation here
+
+* (No, but since married Tamil) නැත, නමුත් පසුව විවාහවී ඇත
+* (Unmarried) අවිවාහකයි
+* (Married) විවාහකයි
+* (Unknown) නොදනී
+
+*(Preferred Language for)සහතිකය නිකුත් කල යුතු භාෂාව 
+*(The serial number of the existing Birth Certificate)දැනට පවතින උප්පැන්න සහතිකයේ අණුක්‍රමික අංකය
+*(Late Birth Registration) පමා වූ උපත් ලියාපදිංචිය
+*(Belated Birth Registration)කල් පසු වූ උපත් ලියාපදිංචිය
+*(Case File Number)ලිපිගොනු අංකය
+*(Add Comments)අදහස් දක්වන්න
+*(Hospital Admission Number)රෝහලට ඇතුලත් කිරිමේ අංකය
+*(Hospital Admission Date)රෝහලට ඇතුලත් කිරිමේ දිනය
+*(Preferred Language for Death Certificate) මරණ සහතිකය නිකුත් කල යුතු භාෂාව 
+*(Declaranat Signed Date)ප්‍රකාශකයා අත්සන්කල දිනය 
+
+
+              
