@@ -12,9 +12,10 @@ import java.util.Date;
 @Table(name = "ALT_DEATH", schema = "CRS")
 @NamedQueries({
         @NamedQuery(name = "get.alt.by.death.certificate.number", query = "SELECT da FROM DeathAlteration da WHERE da.deathId =:deathCertificateNumber"),
-        @NamedQuery(name = "get.alt.by.division.serial.number.death.division", query = "SELECT da FROM DeathAlteration da,DeathRegister dr"+
-                " WHERE da.deathId=dr.idUKey AND dr.death.deathSerialNo =:deathSerialNo"+
-                " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey")
+        @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da,DeathRegister dr" +
+                " WHERE da.deathId=dr.idUKey " +
+                " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
+        @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId")
 })
 
 public class DeathAlteration {

@@ -76,8 +76,8 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<DeathAlteration> getAlterationApprovalListBySerialAndDeathDivision(int pageNo, int numRows, long serialNo, int divisionId) {
-        return deathAlterationDAO.getPaginatedAlterationApprovalListBySerialAndDeathDivision(pageNo, numRows, serialNo, divisionId);
+    public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId) {
+        return deathAlterationDAO.getPaginatedAlterationApprovalListByDeathDivision(pageNo, numRows, divisionId);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

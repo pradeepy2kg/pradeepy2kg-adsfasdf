@@ -2,9 +2,11 @@ package lk.rgd.crs.api.service;
 
 import lk.rgd.crs.api.domain.DeathAlteration;
 import lk.rgd.crs.api.domain.BDDivision;
+import lk.rgd.crs.api.domain.BirthAlteration;
 import lk.rgd.common.api.domain.User;
 
 import java.util.List;
+import java.util.Hashtable;
 
 /**
  * @authar amith jayasekara
@@ -54,15 +56,12 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user);
 
     /**
-     * todo
-     *
      * @param pageNo
      * @param numRows
-     * @param serialNo
      * @param divisionId
      * @return
      */
-    public List<DeathAlteration> getAlterationApprovalListBySerialAndDeathDivision(int pageNo, int numRows, long serialNo, int divisionId);
+    public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId);
 
     /**
      * todo
@@ -72,5 +71,8 @@ public interface DeathAlterationService {
      * @return
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
+
+    public void approveDeathAlteration(DeathAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved,boolean appStatus,User user);
+
 
 }
