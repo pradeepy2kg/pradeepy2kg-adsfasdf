@@ -312,13 +312,13 @@ public class UserManagmentAction extends ActionSupport implements SessionAware {
                 break;
             case 2:
                 districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
-                dsDivisionNameList = dsDivisionDAO.findAll();
+                dsDivisionNameList = dsDivisionDAO.getAllDSDivisionByDistrictKey(UserDistrictId);
                 if (setNull) dsDivision = null;
                 break;
             case 3:
                 districtEn = districtDAO.getNameByPK(UserDistrictId, "en");
                 dsDivisionEn = dsDivisionDAO.getNameByPK(dsDivisionId, "en");
-                bdDivisionNameList = bdDivisionDAO.findAll();
+                bdDivisionNameList = bdDivisionDAO.getAllDSDivisionByDsDivisionKey(dsDivisionId);
                 if (setNull) bdDivision = null;
                 break;
             case 4:

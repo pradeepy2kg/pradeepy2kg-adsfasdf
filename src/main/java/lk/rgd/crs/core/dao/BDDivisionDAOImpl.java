@@ -80,7 +80,7 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
             return (BDDivision) q.getSingleResult();
         }
         catch (NoResultException e) {
-            logger.debug("No id duplication of id :{}",bdDivisionId);
+            logger.debug("No id duplication of id :{}", bdDivisionId);
             return null;
         }
     }
@@ -109,6 +109,13 @@ public class BDDivisionDAOImpl extends BaseDAO implements BDDivisionDAO, Preload
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<BDDivision> findAll() {
         Query q = em.createNamedQuery("findAllBDDivisions");
+        return q.getResultList();
+    }
+
+     @Transactional(propagation = Propagation.SUPPORTS)
+    public List<BDDivision> getAllDSDivisionByDsDivisionKey(int dsDivisionId) {
+        Query q = em.createNamedQuery("get.all.divisions.by.dsDivisionId");
+        q.setParameter("dsDivisionId",dsDivisionId);
         return q.getResultList();
     }
 
