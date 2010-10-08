@@ -31,47 +31,32 @@
 </script>
 <div id="birth-register-approval-body">
     <s:if test="!(pendingList.size()==0)">
-        <table id="pendingApprovalTable" border="1">
-            <thead>
-            <th><s:label value="%{getText('th.index')}"/></th>
-            <th><s:label value="%{getText('th.exsists')}"/></th>
-            <th><s:label value="%{getText('th.alteration')}"/></th>
-            <th><s:label value="%{getText('th.approve')}"/></th>
-            </thead>
-            <tbody>
-            <s:iterator value="pendingList">
-                <tr>
-                    <td align="left"><s:property value="%{key}"/></td>
-                    <td><s:property value="%{value.get(0)}"/></td>
-                    <td><s:property value="%{value.get(1)}"/></td>
-                    <td align="center">
-                        <s:checkbox name="approvedIndex" fieldValue="%{key}"
-                                    id="%{key}" value="%{#approvedIndex}"/></td>
-                </tr>
-            </s:iterator>
-            </tbody>
-        </table>
-        <%-- <table id="pendingApprovalTable" width="100%" cellpadding="0" cellspacing="0" >
-            <thead>
-            <tr>
+        <s:form action="eprDeathAlterationSetBits" method="post">
+            <table id="pendingApprovalTable" border="1">
+                <thead>
                 <th><s:label value="%{getText('th.index')}"/></th>
                 <th><s:label value="%{getText('th.exsists')}"/></th>
                 <th><s:label value="%{getText('th.alteration')}"/></th>
                 <th><s:label value="%{getText('th.approve')}"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <s:iterator value="pendingList">
-                <tr>
-                    <td align="left"><s:property value="%{key}"/></td>
-                    <td><s:property value="%{value.get(0)}"/></td>
-                    <td><s:property value="%{value.get(1)}"/></td>
-                    <td align="center"><s:checkbox name="approvedIndex" value="%{#approvedIndex}" fieldValue="%{key}"
-                                                   id="%{key}"/></td>
-                </tr>
-            </s:iterator>
-            </tbody>
-        </table>--%>
+                </thead>
+                <tbody>
+                <s:iterator value="pendingList">
+                    <tr>
+                        <td align="left"><s:property value="%{key}"/></td>
+                        <td><s:property value="%{value.get(0)}"/></td>
+                        <td><s:property value="%{value.get(1)}"/></td>
+                        <td align="center">
+                            <s:checkbox value="%{#approvedIndex}" name="approvedIndex" fieldValue="%{key}"/>
+                        </td>
+                    </tr>
+                </s:iterator>
+                </tbody>
+            </table>
+            <div class="form-submit">
+            <s:submit name="submit" value="%{getText('lable.update')}"/>
+            <s:hidden name="deathAlterationId" value="%{#deathAlterationId}"/>
+        </s:form>
+        </div>
     </s:if>
     <s:else>
         <table align="center" style="width:50%">
@@ -90,12 +75,4 @@
             </tr>
         </table>
     </s:else>
-    <div class="form-submit">
-        <s:form action="eprDeathAlterationSetBits">
-            <s:submit name="submit" value="%{getText('lable.update')}"/>
-            <%--    <s:hidden name="deathAlterationId" value="deathAlteration.idUKey"/>--%>
-            <s:hidden name="deathId" value="100"/>
-        </s:form>
-    </div>
-
 </div>
