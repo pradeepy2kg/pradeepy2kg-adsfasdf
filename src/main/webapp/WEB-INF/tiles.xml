@@ -353,7 +353,7 @@
 
     <definition name="epr.debugManegement" extends="epr.template">
         <put-attribute name="body" value="/WEB-INF/pages/management/DebugDetails.jsp"/>
-        <put-attribute name="title" value="event.management.title"/>
+        <put-attribute name="title" value="event.debugDetails.title"/>
     </definition>
 
     <definition name="epr.indexRecords" extends="epr.template">

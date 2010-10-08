@@ -15,7 +15,7 @@ import java.util.Date;
 @Table(name = "EVENT", schema = "COMMON")
 
 @NamedQueries({
-    @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event"),
+    @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event ORDER BY event.timestamp DESC"),
     @NamedQuery(name = "filter.by.recorded.timestamp", query = "SELECT event FROM Event event " +
         "WHERE event.timestamp BETWEEN :startTime AND :endTime AND event.eventType= :eventType " +
             "ORDER BY event.timestamp DESC")

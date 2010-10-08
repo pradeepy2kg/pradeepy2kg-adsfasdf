@@ -51,8 +51,12 @@ public class EventsManagementAction extends ActionSupport {
     private String endTime;
     private String startDate;
     private String endDate;
+    private String userName;
     private boolean nextFlag;
     private boolean previousFlag;
+    private boolean debugFlag;
+    private boolean goBackFlag;
+    private boolean filterFlag;
 
     private static final String EVENTS_ROWS_PER_PAGE = "common.event_rows_per_page";
 
@@ -64,12 +68,36 @@ public class EventsManagementAction extends ActionSupport {
     }
 
     public String initEventsManagement() {
+        if (!filterFlag) {
+            setPageNumber(1);
+            numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+            printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+            paginationHandler(printList.size());
+            setPreviousFlag(false);
+        }
+        if (goBackFlag) {
+            if (filterFlag){
+                setPageNumber(pageNumber);
+                filter();
+            }else {
+                setPageNumber(pageNumber);
+                numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+                printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+            }
+            paginationHandler(printList.size());
+        }
+
         return "success";
     }
 
     public String nextPage() {
         setPageNumber(getPageNumber() + 1);
-        filter();
+        if (filterFlag)
+            filter();
+        else {
+            numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+            printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+        }
         setPreviousFlag(true);
         setRecordCounter(getRecordCounter() + numberOfRows);
         return "success";
@@ -88,9 +116,12 @@ public class EventsManagementAction extends ActionSupport {
         if (getPageNumber() > 1) {
             setPageNumber(getPageNumber() - 1);
         }
-
-        filter();
-
+        if (filterFlag)
+            filter();
+        else {
+            numberOfRows = appParametersDAO.getIntParameter(EVENTS_ROWS_PER_PAGE);
+            printList = service.getPaginatedListForAll(pageNumber, numberOfRows, user);
+        }
         if (getRecordCounter() > 0) {
             setRecordCounter(getRecordCounter() - numberOfRows);
         }
@@ -99,15 +130,13 @@ public class EventsManagementAction extends ActionSupport {
 
     public String debugDisplay() {
         event = service.getEventById(idUKey, user);
-        debug = event.getDebug();
         timestamp = event.getTimestamp();
-        logger.debug("time stamp : {}", timestamp);
-        return "success";
-    }
-
-    public String stackTraceDisplay() {
-        event = service.getEventById(idUKey, user);
+        methodName = event.getMethodName();
+        className = event.getClassName();
+        eventData = event.getEventData();
+        debug = event.getDebug();
         stackTrace = event.getStackTrace();
+        setGoBackFlag(true);
         return "success";
     }
 
@@ -125,7 +154,7 @@ public class EventsManagementAction extends ActionSupport {
         searchEndDate = DateTimeUtils.getDateFromISO8601String(endDate);
         searchStartDate.setTime(searchStartDate.getTime() + Integer.parseInt(startTime.substring(0, 2)) * 60 * 60 * 1000L + Integer.parseInt(startTime.substring(3, 5)) * 60 * 1000L);
         searchEndDate.setTime(searchEndDate.getTime() + Integer.parseInt(endTime.substring(0, 2)) * 60 * 60 * 1000L + Integer.parseInt(endTime.substring(3, 5)) * 60 * 1000L);
-        printList = service.getPaginatedListByTimestampRange(pageNumber, numberOfRows, searchStartDate, searchEndDate,eventType);
+        printList = service.getPaginatedListByTimestampRange(pageNumber, numberOfRows, searchStartDate, searchEndDate, eventType);
         return printList;
     }
 
@@ -344,5 +373,37 @@ public class EventsManagementAction extends ActionSupport {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isDebugFlag() {
+        return debugFlag;
+    }
+
+    public void setDebugFlag(boolean debugFlag) {
+        this.debugFlag = debugFlag;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public boolean isGoBackFlag() {
+        return goBackFlag;
+    }
+
+    public void setGoBackFlag(boolean goBackFlag) {
+        this.goBackFlag = goBackFlag;
+    }
+
+    public boolean isFilterFlag() {
+        return filterFlag;
+    }
+
+    public void setFilterFlag(boolean filterFlag) {
+        this.filterFlag = filterFlag;
     }
 }

@@ -67,11 +67,10 @@ public class Menu {
         adminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
         adminLink.put("eprInitEventsManagement.do", new Link("eventManege.label", "/ecivil/management/", "eprInitEventsManagement.do", Permission.EVENTS_MANAGEMENT));
-        adminLink.put("eprDebugDisplay.do", new Link(null, "/ecivil/management/", "eprDebugDisplay.do", Permission.EVENTS_MANAGEMENT));
+        adminLink.put("eprDetailsDisplay.do", new Link(null, "/ecivil/management/", "eprDetailsDisplay.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprEventPrevious.do", new Link(null, "/ecivil/management/", "eprEventPrevious.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprEventNext.do", new Link(null, "/ecivil/management/", "eprEventNext.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprFilterEventsList.do", new Link(null, "/ecivil/management/", "eprFilterEventsList.do", Permission.EVENTS_MANAGEMENT));
-        adminLink.put("eprStackTraceDisplay.do", new Link(null, "/ecivil/management/", "eprStackTraceDisplay.do", Permission.EVENTS_MANAGEMENT));
         adminLink.put("eprInitAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprInitAssignedUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprAssignedUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprInactiveUserLocation.do", new Link(null, "/ecivil/management/", "eprInactiveUserLocation.do", Permission.USER_MANAGEMENT));

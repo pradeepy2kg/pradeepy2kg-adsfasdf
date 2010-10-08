@@ -21,6 +21,7 @@
 <script type="text/javascript" src="../lib/timepicker/ui.timepickr.js"></script>
 <link rel="stylesheet" href="../css/ui.timepickr.css" type="text/css"/>
 
+<script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
 
 <script>
     $(document).ready(function() {
@@ -66,19 +67,57 @@
         });
     });
 
+    var errormsg = "";
+    function validate() {
+        var domObject;
+        var returnval = true;
+
+        // validate start  and end time
+        domObject = document.getElementById('startTime');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, "", 'error3')
+
+        domObject = document.getElementById('endTime');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, "", 'error4')
+
+        // validate start and end date
+        domObject = document.getElementById('startDatePicker');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, "", 'error2')
+        else
+            isDate(domObject.value, "error1", "error6");
+
+        domObject = document.getElementById('endDatePicker');
+        if (isFieldEmpty(domObject))
+            isEmpty(domObject, "", 'error3')
+        else
+            isDate(domObject.value, "error1", "error7");
+
+        if (errormsg != "") {
+            alert(errormsg);
+            returnval = false;
+        }
+        errormsg = "";
+        return returnval;
+    }
 
 </script>
 
 <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
     <legend><b><s:label value="Filter Events"/></b></legend>
-    <s:form action="eprFilterEventsList.do" method="POST">
+    <s:form action="eprFilterEventsList.do" method="POST" onsubmit="javascript:return validate()">
         <table width="100%" cellpadding="5" cellspacing="0">
-            <tr>
-                <td>
+            <col width="200px">
+            <col width="200px">
+            <col width="100px">
+            <col>
+            <tr >
+                <td height="50px">
                     <s:label value="Start Date"/>
                 </td>
                 <td>
-                    <s:textfield id="startDatePicker" maxLength="10" name="searchStartDate"/>
+                    <s:textfield id="startDatePicker" maxLength="10" name="searchStartDate" cssStyle="width:180px"/>
                 </td>
                 <td>
                     <s:label value="Time"/>
@@ -88,11 +127,11 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td height="50px">
                     <s:label value="End Date"/>
                 </td>
                 <td>
-                    <s:textfield id="endDatePicker" maxLength="10" name="searchEndDate"/>
+                    <s:textfield id="endDatePicker" maxLength="10" name="searchEndDate" cssStyle="width:180px"/>
                 </td>
                 <td>
                     <s:label value="Time"/>
@@ -102,14 +141,15 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td height="50px">
                     <s:label>Choose Event type</s:label>
 
                 </td>
 
                 <td>
-                     <s:select list="#@java.util.HashMap@{'AUDIT':getText('audit.label'),'ERROR':getText('error.label')}" name="eventType"
-                  cssStyle="width:190px; margin-left:5px;"/>
+                    <s:select list="#@java.util.HashMap@{'AUDIT':getText('audit.label'),'ERROR':getText('error.label')}"
+                              name="eventType"
+                              cssStyle="width:187px;"/>
                 </td>
             </tr>
             <tbody>
@@ -119,28 +159,32 @@
         <div class="form-submit" style="margin-top:15px;">
             <s:submit value="%{getText('filter.label')}"/>
         </div>
+        <s:hidden id="error1" value="%{getText('invalide.inputType')}"/>
+        <s:hidden id="error2" value="%{getText('startDate.error')}"/>
+        <s:hidden id="error3" value="%{getText('endDate.error')}"/>
+        <s:hidden id="error4" value="%{getText('startTime.error')}"/>
+        <s:hidden id="error5" value="%{getText('endTime.error')}"/>
+        <s:hidden id="error6" value="%{getText('invalid.startDate.error')}"/>
+        <s:hidden id="error7" value="%{getText('invalid.endDate.error')}"/>
     </s:form>
 </fieldset>
 
 
 <s:if test="printList != null">
-    <fieldset style="border:none" width="100%">
+    <fieldset style="border:none" width="1030px">
 
         <div id="event-management">
-            <table id="event-management-table" width="1024px" cellpadding="0" cellspacing="0" class="display">
+            <table id="event-management-table" cellpadding="0" cellspacing="0" class="display" style="width:1030px;">
                 <thead>
                 <tr class="table-title">
-                    <th><s:label name="name" value=""/></th>
-                    <th><s:label value="User Id"/></th>
-                    <th><s:label value="Time Stamp"/></th>
-                    <th><s:label value="Event Type"/></th>
-                    <th><s:label value="Event Code"/></th>
-                    <th><s:label value="Class Name"/></th>
-                    <th><s:label value="Method Name"/></th>
-                    <th><s:label value="Recode Id"/></th>
-                    <th><s:label value="Event Data"/></th>
-                    <th><s:label value="Debug"/></th>
-                    <th><s:label value="Stack Trace"/></th>
+                    <th width="30px"><s:label name="name" value=""/></th>
+                    <th width="80px" ><s:label value="User Id"/></th>
+                    <th width="50px" ><s:label value="Event Type"/></th>
+                    <th width="50px" ><s:label value="Event Code"/></th>
+                    <th width="150px"><s:label value="Class Name"/></th>
+                    <th ><s:label value="Method Name"/></th>
+                    <th width="50px"><s:label value="Recode Id"/></th>
+                    <th width="50px"><s:label value="Details"/></th>
 
                 </tr>
                 </thead>
@@ -148,32 +192,30 @@
                     <tbody>
                     <s:iterator status="" value="printList" id="printList">
                         <tr>
-                            <td><s:property value="idUKey"/></td>
-                            <td><s:property value="user.getUserId()"/></td>
-                            <td><s:property value="timestamp"/></td>
-                            <td><s:property value="eventType"/></td>
-                            <td><s:property value="eventCode"/></td>
-                            <td><s:property value="className"/></td>
-                            <td><s:property value="methodName"/></td>
-                            <td><s:property value="recordId"/></td>
-                            <td><s:property value="eventData"/></td>
+                            <td align="center"><s:property value="idUKey"/></td>
+                            <td ><s:property value="user.getUserId()"/></td>
+                            <td align="center"><s:property value="eventType"/></td>
+                            <td align="center"><s:property value="eventCode"/></td>
+                            <td ><s:property value="className"/></td>
+                            <td ><s:property value="methodName"/></td>
+                            <td align="center"><s:property value="recordId"/></td>
                             <td align="center">
                                 <s:if test="debug!=null">
-                                    <s:url id="debugPageUrl" action="eprDebugDisplay.do">
+                                    <s:url id="debugPageUrl" action="eprDetailsDisplay.do">
                                         <s:param name="idUKey" value="idUKey"/>
+                                        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+                                        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+                                        <s:param name="pageNumber" value="%{#request.pageNumber}"/>
+                                        <s:param name="recordCounter" value="#request.recordCounter"/>
+                                        <s:param name="startDate" value="#request.startDate"/>
+                                        <s:param name="endDate" value="#request.endDate"/>
+                                        <s:param name="startTime" value="#request.startTime"/>
+                                        <s:param name="endTime" value="#request.endTime"/>
+                                        <s:param name="eventType" value="#request.eventType"/>
+                                        <s:param name="goBackFlag" value="#request.goBackFlag"/>
+                                        <s:param name="filterFlag" value="#request.filterFlag"/>
                                     </s:url>
-                                    <s:a href="%{debugPageUrl}" title="%{getText('debug.label')}">
-                                        <img src="<s:url value='/images/debug.jpg'/>" border="none" width="25"
-                                             height="25"/>
-                                    </s:a>
-                                </s:if>
-                            </td>
-                            <td align="center">
-                                <s:if test="stackTrace!=null">
-                                    <s:url id="stackTracePageUrl" action="eprStackTraceDisplay.do">
-                                        <s:param name="idUKey" value="idUKey"/>
-                                    </s:url>
-                                    <s:a href="%{stackTracePageUrl}" title="%{getText('stacTrace.label')}">
+                                    <s:a href="%{debugPageUrl}" title="%{getText('details.label')}">
                                         <img src="<s:url value='/images/debug.jpg'/>" border="none" width="25"
                                              height="25"/>
                                     </s:a>
@@ -197,6 +239,7 @@
                 <s:param name="startTime" value="#request.startTime"/>
                 <s:param name="endTime" value="#request.endTime"/>
                 <s:param name="eventType" value="#request.eventType"/>
+                <s:param name="filterFlag" value="#request.filterFlag"/>
             </s:url>
 
             <s:url id="nextUrl" action="eprEventNext.do" encode="true">
@@ -209,6 +252,7 @@
                 <s:param name="startTime" value="#request.startTime"/>
                 <s:param name="endTime" value="#request.endTime"/>
                 <s:param name="eventType" value="#request.eventType"/>
+                <s:param name="filterFlag" value="#request.filterFlag"/>
             </s:url>
 
             <s:if test="#request.previousFlag"><s:a href="%{previousUrl}">
@@ -222,6 +266,7 @@
         </div>
     </fieldset>
 </s:if>
+
 
 
 

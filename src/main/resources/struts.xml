@@ -948,17 +948,13 @@
                 method="nextPage">
             <result type="tiles" name="success">epr.eventManagement</result>
         </action>
-        <action name="eprDebugDisplay" class="lk.rgd.crs.web.action.EventsManagementAction"
+        <action name="eprDetailsDisplay" class="lk.rgd.crs.web.action.EventsManagementAction"
                 method="debugDisplay">
             <result type="tiles" name="success">epr.debugManegement</result>
         </action>
-        <action name="eprStackTraceDisplay" class="lk.rgd.crs.web.action.EventsManagementAction"
-                method="stackTraceDisplay">
-            <result type="tiles" name="success">epr.debugManegement</result>
-        </action>
-
         <action name="eprFilterEventsList" class="lk.rgd.crs.web.action.EventsManagementAction"
                 method="filterEvevtsList">
+            <param name="filterFlag">true</param>
             <result type="tiles" name="success">epr.eventManagement</result>
             <result type="tiles" name="error">epr.error</result>
         </action>
