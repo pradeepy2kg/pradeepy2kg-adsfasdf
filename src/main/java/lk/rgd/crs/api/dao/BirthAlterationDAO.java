@@ -6,6 +6,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.DSDivision;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -68,10 +69,54 @@ public interface BirthAlterationDAO {
     /**
      * Get the active record by BD Division and Serial number
      *
-     * @param bdDivision the Birth Death declaration division
-     * @param alterationSerialNo   the Serial No within the division
-     * @param isAlt52_1  is alteration is in act 51_1 or not
+     * @param bdDivision         the Birth Death declaration division
+     * @param alterationSerialNo the Serial No within the division
+     * @param isAlt52_1          is alteration is in act 51_1 or not
      * @return the BDF marked as active, or null if none exist
      */
-    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo,boolean isAlt52_1);
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo, boolean isAlt52_1);
+
+
+    /**
+     * Returns a limited set of BirthAlterations based on given idUKey
+     *
+     * @param idUKey   idUKey of the birth alteration
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given recived date
+     *
+     * @param recivedDateFrom stared date of recived the birth alteration  to search birth alteration
+     * @param recivedDateTo   end  date of recived the birth alteration to search birth alteration
+     * @param pageNo          the page number for the results required (start from 1)
+     * @param noOfRows        number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByRecivedDate(Date recivedDateFrom, Date recivedDateTo, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given recived date
+     *
+     * @param bdDivision         birth Division Id  of the birth alteration
+     * @param alterationserialNo The serial Number of the birth Alteration
+     * @param pageNo             the page number for the results required (start from 1)
+     * @param noOfRows           number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndAlterationSerialNo(BDDivision bdDivision, Long alterationserialNo, int pageNo, int noOfRows);
+
+    /**
+     * Returns a limited set of BirthAlterations based on given recived date
+     *
+     * @param bdDivision    birth Division Id  of the birth alteration
+     * @param birthSerialNo The serial Number of the birth Declaration
+     * @param pageNo        the page number for the results required (start from 1)
+     * @param noOfRows      number of rows
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndBirthSerialNo(BDDivision bdDivision, Long birthSerialNo, int pageNo, int noOfRows);
 }
