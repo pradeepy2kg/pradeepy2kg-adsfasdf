@@ -46,8 +46,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private Map<Integer, String> bdDivisionList;
     private Map<Integer, String> raceList;
     private Map<Integer, String> countryList;
+    private Map<Integer, List<String>> pendingList = new HashMap<Integer, List<String>>();
 
     private List<DeathAlteration> approvalList;
+
+    private int[] approvedIndex;
+    private int[] index;
 
     private int dsDivisionId;
     private int birthDivisionId;
@@ -114,12 +118,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //setting death division
             deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
 
-            deathAlteration = trimAlterationObject(deathAlteration, dr);
+            //    deathAlteration = trimAlterationObject(deathAlteration, dr);
             deathAlterationService.addDeathAlteration(deathAlteration, user);
             addActionMessage(getText("alt.massage.success"));
             populatePrimaryLists();
+            //todo check already addedd data before add
             return SUCCESS;
         } else {
+            deathAlteration = new DeathAlteration();
             //search by certificate number
             if (certificateNumber != 0)
                 deathRegister = deathRegistrationService.getById(certificateNumber, user);
@@ -134,6 +140,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 BDDivision deathDivision = bdDivisionDAO.getBDDivisionByPK(divisionUKey);
                 deathRegister = deathRegistrationService.getByBDDivisionAndDeathSerialNo(deathDivision, serialNumber, user);
             }
+            if (deathRegister == null) {
+                addActionError(getText("error.cannot.find.death.registration"));
+                populatePrimaryLists();
+                return ERROR;
+            }
             //check is there a ongoing alteration for this cartificate
             List<DeathAlteration> exsistingAlterations = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
             while (exsistingAlterations.iterator().hasNext()) {
@@ -144,8 +155,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     return ERROR;
                 }
             }
-
-            deathAlteration = new DeathAlteration();
             //check death register is not null and in data approved state
             if (deathRegister != null) {
                 if (!deathRegister.getStatus().equals(DeathRegister.State.DEATH_CERTIFICATE_PRINTED)) {
@@ -162,7 +171,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 //setting reciving date to today
                 toDay = new Date();
             } else {
-                addActionError(getText("error.cannot.find.death.registration"));
+                addActionError(getText("error.unknown"));
                 populatePrimaryLists();
                 return ERROR;
             }
@@ -171,21 +180,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String deathAlterationApproval() {
-        //todo remove
-        pageNumber = 1;
         if (pageNumber > 0) {
             //todo remove
+            if (pageNumber == 1) {
+                //this means relaod the table with same parameter todo implemen
+                divisionUKey = 1;
+            }
             pageNo = 1;
             rowNo = 50;
-            divisionUKey = 1;
-            serialNumber = 2010014566;
-            //search by serial number (alteration serial number)
-            if (serialNumber > 0) {
+            //search by division
+            if (divisionUKey > 0) {
+                approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
             }
-            //search by death certificate number
-            if (certificateNumber > 0) {
-            }
-            approvalList = deathAlterationService.getAlterationApprovalListBySerialAndDeathDivision(pageNo, rowNo, serialNumber, divisionUKey);
+//todo search by date
             if (approvalList.size() < 1) {
                 addActionError(getText("no.pending.alterations"));
                 return ERROR;
@@ -193,10 +200,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         } else {
             populatePrimaryLists();
         }
+        populatePrimaryLists();
         return SUCCESS;
     }
 
     public String directApprove() {
+        //todo remove
         List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
         while (alterations.iterator().hasNext()) {
             DeathAlteration da = alterations.iterator().next();
@@ -205,10 +214,73 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 break;
             }
         }
+        //todo name english
+        //todo check sudden death
+        //todo check null before getting data
+        deathRegister = deathRegistrationService.getById(deathAlteration.getDeathId(), user);
+
+        getDisplayList(DeathAlteration.DATE_OF_DEATH, deathRegister.getDeath().getDateOfDeath(), deathAlteration.getDeathInfo().getDateOfDeath(), 5);
+        getDisplayList(DeathAlteration.TIME_OF_DEATH, deathRegister.getDeath().getTimeOfDeath(), deathAlteration.getDeathInfo().getTimeOfDeath(), 0);
+        getDisplayList(DeathAlteration.PLACE_OF_DEATH_OFFICIAL, deathRegister.getDeath().getPlaceOfDeath(), deathAlteration.getDeathInfo().getPlaceOfDeath(), 0);
+        getDisplayList(DeathAlteration.PLACE_OF_DEATH_OFFICIAL, deathRegister.getDeath().getPlaceOfDeathInEnglish(), deathAlteration.getDeathInfo().getPlaceOfDeathInEnglish(), 0);
+        getDisplayList(DeathAlteration.CAUSE_OF_DEATH_ESTABLISHED, deathRegister.getDeath().isCauseOfDeathEstablished(), deathAlteration.getDeathInfo().isCauseOfDeathEstablished(), 3);
+        getDisplayList(DeathAlteration.CAUSE_OF_DEATH, deathRegister.getDeath().getCauseOfDeath(), deathAlteration.getDeathInfo().getCauseOfDeath(), 0);
+        getDisplayList(DeathAlteration.ICD_CODE, deathRegister.getDeath().getIcdCodeOfCause(), deathAlteration.getDeathInfo().getIcdCodeOfCause(), 0);
+        getDisplayList(DeathAlteration.BURIAL_PLACE, deathRegister.getDeath().getPlaceOfBurial(), deathAlteration.getDeathInfo().getPlaceOfBurial(), 0);
+
+        getDisplayList(DeathAlteration.DEATH_PERSON_FATHER_PIN, deathRegister.getDeathPerson().getDeathPersonFatherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonFatherPINorNIC(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_COUNTRY, deathRegister.getDeathPerson().getDeathPersonCountry(), deathAlteration.getDeathPerson().getDeathPersonCountry(), 4);
+        getDisplayList(DeathAlteration.DEATH_PERSON_PASSPORT, deathRegister.getDeathPerson().getDeathPersonPassportNo(), deathAlteration.getDeathPerson().getDeathPersonPassportNo(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_AGE, deathRegister.getDeathPerson().getDeathPersonAge(), deathAlteration.getDeathPerson().getDeathPersonAge(), 1);
+        getDisplayList(DeathAlteration.DEATH_PERSON_GENDER, deathRegister.getDeathPerson().getDeathPersonGender(), deathAlteration.getDeathPerson().getDeathPersonGender(), 1);
+        getDisplayList(DeathAlteration.DEATH_PERSON_RACE, deathRegister.getDeathPerson().getDeathPersonRace(), deathAlteration.getDeathPerson().getDeathPersonRace(), 6);
+        getDisplayList(DeathAlteration.DEATH_PERSON_NAME_OFFICIAL, deathRegister.getDeathPerson().getDeathPersonNameOfficialLang(), deathAlteration.getDeathPerson().getDeathPersonNameOfficialLang(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_NAME_OFFICIAL, deathRegister.getDeathPerson().getDeathPersonNameInEnglish(), deathAlteration.getDeathPerson().getDeathPersonNameInEnglish(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_ADDRESS, deathRegister.getDeathPerson().getDeathPersonPermanentAddress(), deathAlteration.getDeathPerson().getDeathPersonPermanentAddress(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_FATHER_NAME, deathRegister.getDeathPerson().getDeathPersonFatherFullName(), deathAlteration.getDeathPerson().getDeathPersonFatherFullName(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_MOTHER_PIN, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), 0);
+        getDisplayList(DeathAlteration.DEATH_PERSON_MOTHER_NAME, deathRegister.getDeathPerson().getDeathPersonMotherFullName(), deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), 0);
+
+        populatePrimaryLists();
+        return SUCCESS;
+    }
+
+    public String setBitset() {
+        logger.info("setting bit set : {}");
+        DeathAlteration da = deathAlterationService.getById(deathAlterationId, user);
+        Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
+        int leangthOfBitSet = WebConstants.DEATH_ALTERATION_APPROVE;
+
+        for (int i = 0; i < approvedIndex.length; i++) {
+            int bit = approvedIndex[i];
+            approveBitset.put(bit, true);
+        }
+        logger.debug("index leangth : {} ,bit set leangth : {}", approvedIndex.length, approveBitset.size());
+        //todo wht happen if error  and add action massage for succcesfull add
+        //chaniging state and add bit set
+        da.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
+        //setting bit set
+
+        return SUCCESS;
+    }
+
+    public String editDeathAlteration() {
+        //todo implement
+        return SUCCESS;
+    }
+
+    public String deleteDeathAlteration() {
+        //todo implement
+        return SUCCESS;
+    }
+
+    public String rejectDeathAlteration() {
+        //todo implement
         return SUCCESS;
     }
 
     private DeathAlteration trimAlterationObject(DeathAlteration da, DeathRegister dr) {
+        //todo remove
         //compare existing values with previous recode values
         if (editDeathInfo) {
             if (compareStiring(da.getDeathInfo().getPlaceOfDeath(), dr.getDeath().getPlaceOfDeath()))
@@ -280,23 +352,26 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
    * 5=dates
    * 6=race
    * */
-    private Map<Integer, List<String>> getDisplayList(int index, Object deathRegistreValue, Object deathAlterationValue, int type) {
-        Map<Integer, List<String>> pendingList = new HashMap<Integer, List<String>>();
+    private void getDisplayList(int index, Object deathRegistreValue, Object deathAlterationValue, int type) {
         switch (type) {
             case 0:
-                if (compareStiring((String) deathRegistreValue, (String) deathAlterationValue)) {
-                    List<String> stringList = new ArrayList<String>();
-                    stringList.add(0, (String) deathRegistreValue);
-                    stringList.add(0, (String) deathAlterationValue);
-                    pendingList.put(index, stringList);
+                if (deathAlterationValue != null && deathRegistreValue != null) {
+                    if (compareStiring((String) deathRegistreValue, (String) deathAlterationValue)) {
+                        List<String> stringList = new ArrayList<String>();
+                        stringList.add(0, (String) deathRegistreValue);
+                        stringList.add(1, (String) deathAlterationValue);
+                        pendingList.put(index, stringList);
+                    }
                 }
                 break;
             case 1:
-                if (compareInteger((Integer) deathRegistreValue, (Integer) deathAlterationValue)) {
-                    List<String> intList = new ArrayList<String>();
-                    intList.add(0, Integer.toString((Integer) deathRegistreValue));
-                    intList.add(0, Integer.toString((Integer) deathAlterationValue));
-                    pendingList.put(index, intList);
+                if (deathAlterationValue != null && deathRegistreValue != null) {
+                    if (compareInteger((Integer) deathRegistreValue, (Integer) deathAlterationValue)) {
+                        List<String> intList = new ArrayList<String>();
+                        intList.add(0, Integer.toString((Integer) deathRegistreValue));
+                        intList.add(1, Integer.toString((Integer) deathAlterationValue));
+                        pendingList.put(index, intList);
+                    }
                 }
                 break;
             case 2:
@@ -312,7 +387,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             default:
 
         }
-     return pendingList;
     }
 
 
@@ -320,12 +394,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (current != null) {
             int value = exsisting.compareTo(current.trim());
             if (value == 0) {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         }
-        return false;
+        return true;
     }
 
     //todo implement a method to compare two date objects
@@ -607,5 +681,29 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setDeathAlterationId(long deathAlterationId) {
         this.deathAlterationId = deathAlterationId;
+    }
+
+    public Map<Integer, List<String>> getPendingList() {
+        return pendingList;
+    }
+
+    public void setPendingList(Map<Integer, List<String>> pendingList) {
+        this.pendingList = pendingList;
+    }
+
+    public int[] getApprovedIndex() {
+        return approvedIndex;
+    }
+
+    public void setApprovedIndex(int[] approvedIndex) {
+        this.approvedIndex = approvedIndex;
+    }
+
+    public int[] getIndex() {
+        return index;
+    }
+
+    public void setIndex(int[] index) {
+        this.index = index;
     }
 }

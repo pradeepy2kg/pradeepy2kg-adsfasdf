@@ -27,45 +27,100 @@
         });
     });
 
-</script>
-<s:url action="eprApproveDeathAlterations.do" id="submit">
-    <s:param name="pageNumber" value="1"/>
-</s:url>
-<s:form method="post" action="%{submit}">
-    <fieldset>
-        <legend align="right"><s:label value="%{getText('lable.search.by.serial.number')}"/></legend>
-        <table>
-            <caption/>
-            <col width="350px">
-            <col width="100px">
-            <col>
 
+    // mode 1 = passing District, will return DS list
+    // mode 2 = passing DsDivision, will return BD list
+    // any other = passing district, will return DS list and the BD list for the first DS
+    $(function() {
+        $('select#districtId').bind('change', function(evt1) {
+            var id = $("select#districtId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id},
+                    function(data) {
+                        var options1 = '';
+                        var ds = data.dsDivisionList;
+                        for (var i = 0; i < ds.length; i++) {
+                            options1 += '<option value="' + ds[i].optionValue + '">' + ds[i].optionDisplay + '</option>';
+                        }
+                        $("select#dsDivisionId").html(options1);
+
+                        var options2 = '';
+                        var bd = data.bdDivisionList;
+                        for (var j = 0; j < bd.length; j++) {
+                            options2 += '<option value="' + bd[j].optionValue + '">' + bd[j].optionDisplay + '</option>';
+                        }
+                        $("select#divisionId").html(options2);
+                    });
+        });
+
+        $('select#dsDivisionId').bind('change', function(evt2) {
+            var id = $("select#dsDivisionId").attr("value");
+            $.getJSON('/ecivil/crs/DivisionLookupService', {id:id, mode:2},
+                    function(data) {
+                        var options = '';
+                        var bd = data.bdDivisionList;
+                        for (var i = 0; i < bd.length; i++) {
+                            options += '<option value="' + bd[i].optionValue + '">' + bd[i].optionDisplay + '</option>';
+                        }
+                        $("select#divisionId").html(options);
+                    });
+        });
+    });
+
+</script>
+<s:form method="post" action="eprApproveDeathAlterations.do">
+    <fieldset>
+        <legend align="right"><s:label value="%{getText('lable.search.by.dsDivision')}"/></legend>
+        <table>
+            <caption></caption>
+            <col width="250px">
+            <col width="250px">
+            <col width="100px">
+            <col width="250px">
+            <col width="250px">
+            <tbody>
             <tr>
-                <td><s:label value="%{getText('lable.serial.number')}"/></td>
+                <td>
+                    <s:label value="%{getText('label.district')}"/>
+                </td>
+                <td>
+                    <s:select id="districtId" name="districtUKey" list="districtList" value="%{districtUKey}"
+                              cssStyle="width:98.5%; width:240px;"/>
+                </td>
                 <td></td>
-                <td><s:textfield name="serialNumber" value="" id="serial_id" maxLength="10"/></td>
+                <td>
+                    <s:label value="%{getText('label.dsDivision')}"/>
+                </td>
+                <td>
+                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
+                              cssStyle="float:left;  width:240px;"/>
+                </td>
             </tr>
+            <tr>
+                <td>
+                    <s:label value="%{getText('label.bdDivision')}"/>
+                </td>
+                <td>
+                    <s:select id="divisionId" name="divisionUKey" value="%{divisionUKey}"
+                              list="bdDivisionList"
+                              cssStyle="float:left;  width:240px;"/>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
         </table>
     </fieldset>
 
     <fieldset>
-        <legend align="right"><s:label value="%{getText('lable.search.by.certificate.id')}"/></legend>
-        <table>
-            <caption/>
-            <col width="350px">
-            <col width="100px">
-            <col>
+        <legend align="right"><s:label value="%{getText('lable.search.by.date')}"/></legend>
 
-            <tr>
-                <td><s:label value="%{getText('lable.certifiate.number')}"/></td>
-                <td></td>
-                <td><s:textfield name="certificateNumber" value="" id="certificate_number_id" maxLength="10"/></td>
-            </tr>
         </table>
     </fieldset>
     <div id="search_button" class="button" align="right">
-                <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
+        <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
     </div>
+    <s:hidden name="pageNumber" value="1"/>
 </s:form>
 
 <s:if test="approvalList.size()>0">
@@ -82,13 +137,35 @@
         </thead>
         <tbody>
         <s:iterator value="approvalList">
+            <s:url id="editSelected" action="eprDeathAlterationEdit"></s:url>
+            <s:url id="deleteSelected" action="eprDeathAlterationDelate"></s:url>
+            <s:url id="rejectSelected" action="eprDeathAlterationReject"></s:url>
+            <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
+                <s:param name="deathId" value="deathId"/>
+            </s:url>
             <tr>
-                <td>aa</td>
-                <td>bb</td>
-                <td>vv</td>
-                <td>rr</td>
-                <td>ww</td>
-                <td>ww</td>
+                <td><s:property value="alterationSerialNo"/></td>
+                <td><s:property value="status"/></td>
+                <td align="center">
+                    <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                             border="none"/></s:a>
+                </td>
+                <td align="center"><s:a href="%{deleteSelected}"
+                                        title="%{getText('deleteToolTip.label')}"><img
+                        src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                        border="none"/></s:a>
+                </td>
+                <td align="center">
+                    <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
+                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
+                    </s:a>
+                </td>
+                <td align="center">
+                    <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                             border="none"/></s:a>
+                </td>
             </tr>
         </s:iterator>
         </tbody>

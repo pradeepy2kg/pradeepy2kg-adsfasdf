@@ -52,15 +52,12 @@ public interface DeathAlterationDAO {
     public List<DeathAlteration> getByCertificateNumber(long idUKey);
 
     /**
-     * todo
-     *
      * @param pageNo
      * @param noOfRows
-     * @param serial
      * @param divisionId
      * @return
      */
-    public List<DeathAlteration> getPaginatedAlterationApprovalListBySerialAndDeathDivision(int pageNo, int noOfRows, long serial, int divisionId);
+    public List<DeathAlteration> getPaginatedAlterationApprovalListByDeathDivision(int pageNo, int noOfRows, int divisionId);
 
     /**
      * todo

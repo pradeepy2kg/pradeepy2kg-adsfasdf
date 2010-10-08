@@ -383,7 +383,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-<!--        <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+        <!--        <action name="eprBirthCertificateBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="printBulkOfEntries">
             <result type="tiles" name="success">epr.BirthCertificatePrint</result>
             <result type="tiles" name="error">epr.error</result>
@@ -421,7 +421,7 @@
             <result type="tiles" name="error">epr.error</result>
         </action>
 
-<!--        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
+        <!--        <action name="eprBirthConfirmationBulkPrint" class="lk.rgd.crs.web.action.births.PrintAction"
                 method="printBulkOfEntries">
             <result type="tiles" name="success">epr.birthConfirmationPrint</result>
             <result type="tiles" name="error">epr.error</result>
@@ -1029,17 +1029,40 @@
                 method="captureDeathAlterations">
             <result type="tiles" name="pageload">epr.deathAlterationCapture</result>
             <result type="tiles" name="error">epr.deathAlterationSearchHome</result>
-            <result type="tiles" name="success">epr.deathAlterationApproval</result>
-            <!--            <result type="redirectAction" name="success">
-                <param name="actionName">
-                    eprDeathAlterationSearchHome
-                </param>
-            </result>-->
+            <!--
+                        <result type="tiles" name="success">epr.deathAlterationApproval</result>
+            -->
+            <result type="tiles" name="success">epr.deathAlterationResult</result>
         </action>
 
         <action name="eprApproveDeathAlterations" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="deathAlterationApproval">
             <result type="tiles" name="success">epr.deathAlterationApprovalHome</result>
         </action>
+        <action name="eprApproveDeathAlterationsDirect" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="directApprove">
+            <result type="tiles" name="success">epr.deathAlterationApproval</result>
+        </action>
+
+        <action name="eprDeathAlterationSetBits" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="setBitset">
+            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+        </action>
+        <!--todo follow-->
+        <action name="eprDeathAlterationEdit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="editDeathAlteration">
+            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+        </action>
+
+        <action name="eprDeathAlterationDelate" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="deleteDeathAlteration">
+            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+        </action>
+
+        <action name="eprDeathAlterationReject" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
+                method="rejectDeathAlteration">
+            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+        </action>
+
     </package>
 </struts>

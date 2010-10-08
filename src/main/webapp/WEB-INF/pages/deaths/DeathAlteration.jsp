@@ -355,14 +355,13 @@ function initPage() {
         document.getElementById(idNames[i]).style.display = 'none';
         document.getElementById(idNames[i] + "-min").style.display = 'none';
     }
-
     for (var i = 0; i < checkIdNames.length; i++) {
         document.getElementById(checkIdNames[i]).style.display = 'none';
         document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
     }
-    for (var i = 0; i < fieldIds.length; i++) {
+/*    for (var i = 0; i < fieldIds.length; i++) {
         document.getElementById(fieldIds[i]).disabled = true;
-    }
+    }*/
 }
 </script>
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
@@ -617,7 +616,7 @@ function initPage() {
                 Date of Death
             </td>
             <td colspan="2" align="center">
-                <s:textfield name="deathAlteration.dateOfDeath" id="deathDatePicker"
+                <s:textfield name="deathAlteration.deathInfo.dateOfDeath" id="deathDatePicker"
                              value="%{deathRegister.death.dateOfDeath}"/>
             </td>
             <td>
@@ -626,7 +625,7 @@ function initPage() {
                 Time
             </td>
             <td align="center">
-                <s:textfield name="deathAlteration.timeOfDeath" id="deathTimePicker"
+                <s:textfield name="deathAlteration.deathInfo.timeOfDeath" id="deathTimePicker"
                              value="%{deathRegister.death.timeOfDeath}"/>
             </td>
         </tr>
@@ -642,7 +641,7 @@ function initPage() {
                 In Sinhala or Tamil
             </td>
             <td colspan="3">
-                <s:textfield name="deathAlteration.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath"
+                <s:textfield name="deathAlteration.deathInfo.placeOfDeath" cssStyle="width:99%;" id="placeOfDeath"
                              value="%{deathRegister.death.placeOfDeath}"/>
             </td>
         </tr>
@@ -653,7 +652,7 @@ function initPage() {
                 In English
             </td>
             <td colspan="3">
-                <s:textfield name="deathAlteration.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
+                <s:textfield name="deathAlteration.deathInfo.placeOfDeathInEnglish" id="placeOfDeathInEnglish"
                              cssStyle="width:99%;" value="%{deathRegister.death.placeOfDeathInEnglish}"/>
                 <img src="<s:url value="/images/transliterate.png"/>" style="vertical-align:middle;margin:5px 0;"
                      id="place">
@@ -668,13 +667,13 @@ function initPage() {
                 නැත / xx / No
             </td>
             <td align="center">
-                <s:radio name="deathAlteration.causeOfDeathEstablished"
+                <s:radio name="deathAlteration.deathInfo.causeOfDeathEstablished"
                          list="#@java.util.HashMap@{'false':''}"
                          id="cause_of_death_yes" value="%{deathRegister.death.causeOfDeathEstablished}"/>
             </td>
             <td>ඔව් / xx /Yes</td>
             <td align="center">
-                <s:radio name="deathAlteration.causeOfDeathEstablished"
+                <s:radio name="deathAlteration.deathInfo.causeOfDeathEstablished"
                          list="#@java.util.HashMap@{'true':''}"
                          id="cause_of_death_no" value="%{deathRegister.death.causeOfDeathEstablished}"/>
             </td>
@@ -685,7 +684,7 @@ function initPage() {
                 Cause of death
             </td>
             <td colspan="3">
-                <s:textarea name="deathAlteration.causeOfDeath" value="%{deathRegister.death.causeOfDeath}"
+                <s:textarea name="deathAlteration.deathInfo.causeOfDeath" value="%{deathRegister.death.causeOfDeath}"
                             cssStyle="width:420px;" id="cause_of_death"/>
             </td>
             <td>
@@ -694,7 +693,7 @@ function initPage() {
                 ICD Code of cause
             </td>
             <td>
-                <s:textfield name="deathAlteration.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}"
+                <s:textfield name="deathAlteration.deathInfo.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}"
                              cssStyle="width:225px;" id="ICD_code"/>
             </td>
         </tr>
@@ -704,7 +703,7 @@ function initPage() {
                 Place of burial or cremation
             </td>
             <td colspan="5">
-                <s:textarea name="deathAlteration.placeOfBurial" value="%{deathRegister.death.placeOfBurial}"
+                <s:textarea name="deathAlteration.deathInfo.placeOfBurial" value="%{deathRegister.death.placeOfBurial}"
                             id="placeOfBurial" cssStyle="width:99%;"/>
             </td>
         </tr>
@@ -989,7 +988,8 @@ function initPage() {
         </td>
         <td align="center"><s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                                     list="#@java.util.HashMap@{'FATHER':''}"
-                                    onchange="setInformPerson('','');" value="%{deathRegister.declarant.declarantType}"/>
+                                    onchange="setInformPerson('','');"
+                                    value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td align="center">
             ස්වාමිපුරුෂයා / භාර්යාව <br>
@@ -1052,7 +1052,8 @@ function initPage() {
             Identification Number
         </td>
         <td colspan="6" align="left">
-            <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10" value=""/>
+            <s:textfield id="declarant_pinOrNic" name="deathRegister.declarant.declarantNICorPIN" maxLength="10"
+                         value=""/>
         </td>
     </tr>
     <tr>
@@ -1062,7 +1063,8 @@ function initPage() {
             Name
         </td>
         <td colspan="6">
-            <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%" value=""/>
+            <s:textarea id="declarantName" name="deathRegister.declarant.declarantFullName" cssStyle="width:99%"
+                        value=""/>
         </td>
     </tr>
     <tr>
@@ -1072,7 +1074,8 @@ function initPage() {
             Postal Address
         </td>
         <td colspan="6">
-            <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%" value=""/>
+            <s:textarea id="declarantAddress" name="deathRegister.declarant.declarantAddress" cssStyle="width:99%"
+                        value=""/>
         </td>
     </tr>
 
