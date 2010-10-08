@@ -139,12 +139,12 @@
 	<td>//div[@id='adoption-page']/table/tbody/tr/td[2]/a/label</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='adoption-page']/a[1]/label</td>
 	<td></td>
 </tr>
+
 <tr>
 	<td>clickAndWait</td>
 	<td>adoption_applicant.label</td>
