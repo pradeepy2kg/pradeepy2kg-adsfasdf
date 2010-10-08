@@ -11,7 +11,24 @@
 <script type="text/javascript" src="../js/validate.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
-
+    $(function() {
+        $("#alterationRecivedToDateId").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+    $(function() {
+        $("#alterationRecivedFromDateId").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
 
     $(function() {
         $('select#birthDistrictId').bind('change', function(evt1) {
@@ -97,15 +114,7 @@
             "sPaginationType": "full_numbers"
         });
     });
-    $(function() {
-        $("#alterationRecivedDateId").datepicker({
-            changeYear: true,
-            yearRange: '1960:2020',
-            dateFormat:'yy-mm-dd',
-            startDate:'2000-01-01',
-            endDate:'2040-12-31'
-        });
-    });
+
     var errormsg = "";
     function validate() {
         var domObject;
@@ -132,7 +141,7 @@
             return false;
         }
         if (checkDate > 0) {
-            alert(document.getElementById("comError").value);
+            alert(document.getElementById("comError1").value);
             return false;
         }
     }
@@ -344,3 +353,4 @@
         <img src="<s:url value='/images/next.gif'/>" border="none"/></s:a></s:if>
 </div>
 <s:hidden id="comError" value="%{getText('alteration.search.error.lable')}"/>
+<s:hidden id="comError1" value="%{getText('date.range.error.lable')}"/>
