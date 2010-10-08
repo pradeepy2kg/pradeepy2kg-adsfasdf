@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.DSDivision;
 
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author Indunil Moremada
@@ -56,7 +57,7 @@ public interface BirthAlterationService {
      * @param user               the user initiating the action
      * @param appStatus          the alteration fully approved or not
      */
-    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved,boolean appStatus,User user);
+    public void approveBirthAlteration(BirthAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
 
     /**
      * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
@@ -92,5 +93,59 @@ public interface BirthAlterationService {
      * @param user       the user making the request
      * @return true if the serial number is unique and not used at present
      */
-    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user,boolean isAlt52_1);
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long serialNo, User user, boolean isAlt52_1);
+
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given idUKey of birth altaration
+     *
+     * @param idUKey   idUKey of the Birth Alteration
+     * @param pageNo   the page number for the results required (start from 1)
+     * @param noOfRows number of rows
+     * @param user     the user initiating the action
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByIdUKey(long idUKey, int pageNo, int noOfRows, User user);
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
+     *
+     * @param recivedDateFrom start of  recived Date of the birth alteration
+     * @param pageNo          the page number for the results required (start from 1)
+     * @param noOfRows        number of rows
+     * @param user            the user initiating the action
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByRecivedDate(Date recivedDateFrom, Date recivedDateTo, int pageNo, int noOfRows, User user);
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
+     *
+     * @param bdDivision             birth Division of the birth alteration
+     * @param pageNo                 the page number for the results required (start from 1)
+     * @param noOfRows               number of rows
+     * @param user                   the user initiating the action
+     * @param alterationSerialNumber Serial Number of the Birth Alteration
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByBDDivisionAndAlterationSerialNo
+            (BDDivision bdDivision, Long alterationSerialNumber, int pageNo, int noOfRows, User user);
+
+
+    /**
+     * Returns a limited set of BirthAlterations for which one or more fields in the statement 27,27A or statement
+     * 52_1 are awaiting approval by an ARG or higher authority based on given Recived date of birth alteration
+     *
+     * @param bdDivision        birth Division of the birth
+     * @param pageNo            the page number for the results required (start from 1)
+     * @param noOfRows          number of rows
+     * @param user              the user initiating the action
+     * @param birthSerialNumber Serial Number of the Birth Declaration
+     * @return the birth alteration results
+     */
+    public List<BirthAlteration> getApprovalPendingByBDDivisionAndBirthSerialNo
+            (BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user);
 }

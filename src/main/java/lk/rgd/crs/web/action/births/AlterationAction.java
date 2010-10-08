@@ -97,6 +97,10 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     private boolean nextFlag;
     private boolean previousFlag;
     private List<BirthAlteration> birthAlterationPendingApprovalList;
+    private int divisionAlt;
+    private Date alterationRecivedDate;
+    private Date dateReceivedFrom;
+    private Date dateReceivedTo;
 
 
     private String language;
@@ -122,7 +126,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     }
 
     //load birth alteration home page
-    public String birthAlterationHome(){
+    public String birthAlterationHome() {
         return SUCCESS;
     }
 
@@ -320,17 +324,38 @@ public class AlterationAction extends ActionSupport implements SessionAware {
     public String filter() {
         setPageNo(1);
         noOfRows = appParametersDAO.getIntParameter(BA_APPROVAL_ROWS_PER_PAGE);
-        if (birthDivisionId != 0) {
-            logger.debug("requested to filter birth alterations by birthDivisionId : {} ", birthDivisionId);
-            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
-                    bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+        if (serialNo != 0) {
+            logger.debug("filter Birth Alteration to approve by Birth Serial Number :{}", serialNo);
+            if (birthDivisionId != 0) {
+                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndBirthSerialNo(
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), serialNo, pageNo, noOfRows, user);
+            }
+        } else if (alterationSerialNo != null) {
+            logger.debug("filter Birth Alteration to approve by Birth Alteration Serial Number :{}", alterationSerialNo);
+            if (divisionAlt != 0)
+                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivisionAndAlterationSerialNo(
+                        bdDivisionDAO.getBDDivisionByPK(divisionAlt), alterationSerialNo, pageNo, noOfRows, user);
+        } else if (dateReceivedFrom != null && dateReceivedTo != null) {
+            logger.debug("filter Birth Alteration to approve by received date from :{} to:{}", dateReceivedFrom, dateReceivedTo);
+            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByRecivedDate
+                    (dateReceivedFrom, dateReceivedTo, pageNo, noOfRows, user);
         } else {
-            logger.debug("requested to filter birth alterations by dsDivisionId : {}", dsDivisionId);
-            birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
-                    dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+            if (birthDivisionId != 0) {
+                logger.debug("requested to filter birth alterations by birthDivisionId : {} ", birthDivisionId);
+                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByBDDivision(
+                        bdDivisionDAO.getBDDivisionByPK(birthDivisionId), pageNo, noOfRows, user);
+            } else {
+                logger.debug("requested to filter birth alterations by dsDivisionId : {}", dsDivisionId);
+                birthAlterationPendingApprovalList = alterationService.getApprovalPendingByDSDivision(
+                        dsDivisionDAO.getDSDivisionByPK(dsDivisionId), pageNo, noOfRows, user);
+            }
         }
-        paginationHandler(birthAlterationPendingApprovalList.size());
-        logger.debug("number of rows in Birth Alteration Approval List is :{}", birthAlterationPendingApprovalList.size());
+        if (birthAlterationPendingApprovalList != null) {
+            paginationHandler(birthAlterationPendingApprovalList.size());
+            logger.debug("number of rows in Birth Alteration Approval List is :{}", birthAlterationPendingApprovalList.size());
+        } else {
+            logger.info("The Birth Alteration List is Null");
+        }
         initPermission();
         populateBasicLists();
         return SUCCESS;
@@ -519,7 +544,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
             compareAndAdd(Alteration52_1.MOTHER_PASSPORT, parent.getMotherPassportNo(), mother.getMotherPassportNo());
             //if mother race is not null in both bdf and ba
-             if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
+            if (mother.getMotherRace() != null && parent.getMotherRace() != null) {
                 compareAndAdd(Alteration52_1.MOTHER_RACE, raceDAO.getRace(parent.getMotherRace().getRaceId()).getSiRaceName(),
                         raceDAO.getRace(mother.getMotherRace().getRaceId()).getSiRaceName());
             }
@@ -532,7 +557,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
             compareAndAdd(Alteration52_1.MOTHER_AGE_AT_BIRTH, parent.getMotherAgeAtBirth().toString(), mother.getMotherAgeAtBirth().toString());
             compareAndAdd(Alteration52_1.MOTHER_ADDRESS, parent.getMotherAddress(), mother.getMotherAddress());
         }
-        //compare the informant information     
+        //compare the informant information
         informant = alt52_1.getInformant();
         if (informant != null) {
             InformantInfo informantOriginal = bdf.getInformant();
@@ -1209,5 +1234,37 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     public void setPageType(int pageType) {
         this.pageType = pageType;
+    }
+
+    public Date getAlterationRecivedDate() {
+        return alterationRecivedDate;
+    }
+
+    public void setAlterationRecivedDate(Date alterationRecivedDate) {
+        this.alterationRecivedDate = alterationRecivedDate;
+    }
+
+    public int getDivisionAlt() {
+        return divisionAlt;
+    }
+
+    public void setDivisionAlt(int divisionAlt) {
+        this.divisionAlt = divisionAlt;
+    }
+
+    public Date getDateReceivedTo() {
+        return dateReceivedTo;
+    }
+
+    public void setDateReceivedTo(Date dateReceivedTo) {
+        this.dateReceivedTo = dateReceivedTo;
+    }
+
+    public Date getDateReceivedFrom() {
+        return dateReceivedFrom;
+    }
+
+    public void setDateReceivedFrom(Date dateReceivedFrom) {
+        this.dateReceivedFrom = dateReceivedFrom;
     }
 }

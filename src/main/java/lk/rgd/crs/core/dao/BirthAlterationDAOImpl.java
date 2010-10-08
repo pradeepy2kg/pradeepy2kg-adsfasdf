@@ -108,4 +108,51 @@ public class BirthAlterationDAOImpl extends BaseDAO implements BirthAlterationDA
         // NonUniqueResultException should not occur since only one record for a serial number + BD division will be
         // marked as active at any given point in time
     }
+
+    @Override
+    public List<BirthAlteration> getBulkOfAlterationByIdUKey(long idUKey, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("filter.alteration.by.idUKey").
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        logger.debug("get Approval pending list from idUKey number is :{}", idUKey);
+        q.setParameter("idUKey", idUKey);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<BirthAlteration> getBulkOfAlterationByRecivedDate(Date recivedDateFrom, Date recivedDateTo, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("filter.alteration.by.recived.date").
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        //logger.debug("get Approval pending list from recived date is :{}", recivedDate);
+        q.setParameter("recivedDateFrom", recivedDateFrom);
+        q.setParameter("recivedDateTo", recivedDateTo);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndAlterationSerialNo(BDDivision bdDivision, Long alterationSerialNo, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("filter.alteration.by.bdDivision.and.alteration.serial.number").
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        logger.debug("get Approval pending list from Alteration Serial Number  is :{}", alterationSerialNo);
+        q.setParameter("bdDivision", bdDivision);
+        q.setParameter("alterationSerialNo", alterationSerialNo);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<BirthAlteration> getBulkOfAlterationByBDDivisionAndBirthSerialNo(BDDivision bdDivision, Long birthSerialNo, int pageNo, int noOfRows) {
+        Query q = em.createNamedQuery("filter.alteration.by.bdDivision.and.birth.serial.number").
+                setFirstResult((pageNo - 1) * noOfRows).setMaxResults(noOfRows);
+        logger.debug("get Approval pending list from Birth Declaration Serial Number  is :{}", birthSerialNo);
+        q.setParameter("bdDivision", bdDivision);
+        q.setParameter("birthSerialNo", birthSerialNo);
+        q.setParameter("statusFullyApp", BirthAlteration.State.FULLY_APPROVED);
+        q.setParameter("statusPrint", BirthAlteration.State.PRINTED);
+        return q.getResultList();
+    }
 }

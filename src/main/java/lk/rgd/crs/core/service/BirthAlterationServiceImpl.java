@@ -236,17 +236,58 @@ public class BirthAlterationServiceImpl implements BirthAlterationService {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo, User user,boolean isAlt52_1) {
+    public BirthAlteration getActiveRecordByBDDivisionAndSerialNo(BDDivision bdDivision, long alterationSerialNo, User user, boolean isAlt52_1) {
         logger.debug("Get active Birth Alteration record by BDDivision ID : {} and Serial No : {}", bdDivision.getBdDivisionUKey(), alterationSerialNo);
 
-        BirthAlteration ba = birthAlterationDAO.getActiveRecordByBDDivisionAndSerialNo(bdDivision,alterationSerialNo,isAlt52_1);
+        BirthAlteration ba = birthAlterationDAO.getActiveRecordByBDDivisionAndSerialNo(bdDivision, alterationSerialNo, isAlt52_1);
         // does the user have access to the BA (i.e. check district and DS division)
         //calling validate access iff ba is not null otherwise it throws null pointer exception
         if (ba != null)
-            validateAccessOfUser(ba,user);
+            validateAccessOfUser(ba, user);
         return ba;
     }
 
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByIdUKey(long idUKey, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by idUKey: " + idUKey
+                    + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByIdUKey(idUKey, pageNo, noOfRows);
+        return getApprovalPendingAlterations(alterationList);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByRecivedDate(Date recivedDateFrom, Date recivedDateTo, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by recived Date From :{} to : " + recivedDateFrom
+                    + recivedDateTo + " Page : " + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByRecivedDate(recivedDateFrom, recivedDateTo, pageNo, noOfRows);
+        return getApprovalPendingAlterations(alterationList);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<BirthAlteration> getApprovalPendingByBDDivisionAndAlterationSerialNo(BDDivision bdDivision, Long serialNo, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by Birth Division : " + bdDivision.getEnDivisionName() + "And Alteration serial Number :" + serialNo
+                    + " Page :" + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByBDDivisionAndAlterationSerialNo(bdDivision, serialNo, pageNo, noOfRows);
+        return getApprovalPendingAlterations(alterationList);
+    }
+
+    @Override
+    public List<BirthAlteration> getApprovalPendingByBDDivisionAndBirthSerialNo(BDDivision bdDivision, Long birthSerialNumber, int pageNo, int noOfRows, User user) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Get birth alteration pending approval by Birth Division : " + bdDivision.getEnDivisionName() + "And Birth Declaration serial Number :" + birthSerialNumber
+                    + " Page :" + pageNo + " with number of rows per page : " + noOfRows);
+        }
+        List<BirthAlteration> alterationList = birthAlterationDAO.getBulkOfAlterationByBDDivisionAndBirthSerialNo(bdDivision, birthSerialNumber, pageNo, noOfRows);
+        return getApprovalPendingAlterations(alterationList);
+    }
+
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
     private void handleException(String message, int code) {
         logger.error(message);
         throw new CRSRuntimeException(message, code);
