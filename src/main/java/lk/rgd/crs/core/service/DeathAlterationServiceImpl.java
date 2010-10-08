@@ -7,6 +7,7 @@ import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.DeathRegister;
 import lk.rgd.crs.api.dao.DeathAlterationDAO;
 import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.crs.web.WebConstants;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Role;
 import lk.rgd.common.api.domain.DSDivision;
@@ -17,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
+import java.util.Hashtable;
+import java.util.Enumeration;
+import java.util.BitSet;
 
 /**
  * @author amith jayasekara
@@ -39,7 +43,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     public void addDeathAlteration(DeathAlteration da, User user) {
         logger.debug("adding a new death alteration : serial number : {}", da.getAlterationSerialNo());
         validateAccessToBDDivision(user, da.getDeathDivision());
-        deathAlterationDAO.addBirthAlteration(da, user);
+        deathAlterationDAO.addDeathAlteration(da, user);
     }
 
     /**
@@ -57,7 +61,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         logger.debug("about to remove alteration recode idUkey : {}", idUKey);
         DeathAlteration da = deathAlterationDAO.getById(idUKey);
         validateAccessToBDDivision(user, da.getDeathDivision());
-        deathAlterationDAO.deleteBirthAlteration(idUKey);
+        deathAlterationDAO.deleteDeathAlteration(idUKey);
     }
 
     /**
@@ -83,6 +87,33 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user) {
         return deathAlterationDAO.getAlterationByDeathId(deathId);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void approveDeathAlteration(long deathAlterationUkey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user) {
+        //no need to validate because only approval is allowed to ARG so he has permission to all divisions
+        //getting alteration to approve
+        DeathAlteration da = getById(deathAlterationUkey, user);
+        //setting bit set
+        BitSet approvalBitSet = new BitSet(WebConstants.DEATH_ALTERATION_APPROVE);
+        Enumeration<Integer> fieldList = fieldsToBeApproved.keys();
+        while (fieldList.hasMoreElements()) {
+            Integer aKey = fieldList.nextElement();
+            if (fieldsToBeApproved.get(aKey) == true) {
+                approvalBitSet.set(aKey, true);
+            }
+        }
+        //setting bit set
+        da.setApprovalStatuses(approvalBitSet);
+        //setting state
+        //true means fully
+        if (appStatus) {
+            da.setStatus(DeathAlteration.State.FULLY_APPROVED);
+        } else {
+            da.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
+        }
+        //merging object
+        deathAlterationDAO.updateDeathAlteration(da, user);
     }
 
 

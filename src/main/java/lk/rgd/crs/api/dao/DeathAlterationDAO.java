@@ -17,7 +17,7 @@ public interface DeathAlterationDAO {
      * @param da   the death alteration to be added
      * @param user the user who has permission to add death alteration
      */
-    public void addBirthAlteration(DeathAlteration da, User user);
+    public void addDeathAlteration(DeathAlteration da, User user);
 
     /**
      * Update a given death alteration
@@ -25,14 +25,14 @@ public interface DeathAlterationDAO {
      * @param da   the death alteration to be update
      * @param user the user who has permission to add death alteration
      */
-    public void updateBirthAlteration(DeathAlteration da, User user);
+    public void updateDeathAlteration(DeathAlteration da, User user);
 
     /**
      * remove a requested death alteration based on given idUKey
      *
      * @param idUKey the unique ID of the DeathAlteration to remove
      */
-    public void deleteBirthAlteration(long idUKey);
+    public void deleteDeathAlteration(long idUKey);
 
     /**
      * returns a Death alteration object for the given idUKey
@@ -60,10 +60,11 @@ public interface DeathAlterationDAO {
     public List<DeathAlteration> getPaginatedAlterationApprovalListByDeathDivision(int pageNo, int noOfRows, int divisionId);
 
     /**
-     * todo
+     * get list of death alterations by death id
      *
-     * @param deathId
-     * @return
+     * @param deathId death unique id
+     * @return list of death alteration objects
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId);
+
 }

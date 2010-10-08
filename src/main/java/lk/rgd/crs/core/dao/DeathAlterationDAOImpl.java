@@ -21,7 +21,7 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void addBirthAlteration(DeathAlteration da, User user) {
+    public void addDeathAlteration(DeathAlteration da, User user) {
         da.getLifeCycleInfo().setCreatedTimestamp(new Date());
         da.getLifeCycleInfo().setCreatedUser(user);
         da.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
@@ -33,7 +33,7 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     /**
      * @inheritDoc
      */
-    public void updateBirthAlteration(DeathAlteration da, User user) {
+    public void updateDeathAlteration(DeathAlteration da, User user) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -41,7 +41,7 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void deleteBirthAlteration(long idUKey) {
+    public void deleteDeathAlteration(long idUKey) {
         em.remove(getById(idUKey));
     }
 

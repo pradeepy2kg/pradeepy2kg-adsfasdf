@@ -51,7 +51,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private List<DeathAlteration> approvalList;
 
     private int[] approvedIndex;
-    private int[] index;
 
     private int dsDivisionId;
     private int birthDivisionId;
@@ -60,6 +59,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int divisionUKey;
     private int pageNo;  //to capture data table paginatins
     private int rowNo;
+    private int pendingListSize;
 
     private long certificateNumber;
     private long serialNumber;
@@ -246,21 +246,20 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String setBitset() {
-        logger.info("setting bit set : {}");
+        logger.info("setting bit set : {}", approvedIndex.length);
         DeathAlteration da = deathAlterationService.getById(deathAlterationId, user);
         Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
-        int leangthOfBitSet = WebConstants.DEATH_ALTERATION_APPROVE;
-
         for (int i = 0; i < approvedIndex.length; i++) {
             int bit = approvedIndex[i];
             approveBitset.put(bit, true);
         }
         logger.debug("index leangth : {} ,bit set leangth : {}", approvedIndex.length, approveBitset.size());
         //todo wht happen if error  and add action massage for succcesfull add
-        //chaniging state and add bit set
-        da.setStatus(DeathAlteration.State.PARTIALY_APPROVED);
-        //setting bit set
-
+        if (approvedIndex.length < pendingListSize) {
+            deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
+            return SUCCESS;
+        }
+        deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
         return SUCCESS;
     }
 
@@ -699,11 +698,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.approvedIndex = approvedIndex;
     }
 
-    public int[] getIndex() {
-        return index;
+    public int getPendingListSize() {
+        return pendingListSize;
     }
 
-    public void setIndex(int[] index) {
-        this.index = index;
+    public void setPendingListSize(int pendingListSize) {
+        this.pendingListSize = pendingListSize;
     }
 }

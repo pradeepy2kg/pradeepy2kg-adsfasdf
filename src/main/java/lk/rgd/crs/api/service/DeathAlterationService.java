@@ -72,7 +72,15 @@ public interface DeathAlterationService {
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
 
-    public void approveDeathAlteration(DeathAlteration ba, Hashtable<Integer, Boolean> fieldsToBeApproved,boolean appStatus,User user);
+    /**
+     * approve death alteration and set bit set base on state partially or fully
+     *
+     * @param deathAlterationUKey
+     * @param fieldsToBeApproved
+     * @param appStatus
+     * @param user
+     */
+    public void approveDeathAlteration(long deathAlterationUKey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
 
 
 }
