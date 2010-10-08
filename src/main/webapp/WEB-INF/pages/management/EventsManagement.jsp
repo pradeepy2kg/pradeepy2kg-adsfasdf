@@ -200,7 +200,7 @@
                             <td ><s:property value="methodName"/></td>
                             <td align="center"><s:property value="recordId"/></td>
                             <td align="center">
-                                <s:if test="debug!=null">
+                                <s:if test="debug!=null || stackTrace!=null">
                                     <s:url id="debugPageUrl" action="eprDetailsDisplay.do">
                                         <s:param name="idUKey" value="idUKey"/>
                                         <s:param name="nextFlag" value="%{#request.nextFlag}"/>
