@@ -185,20 +185,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public String deathAlterationApproval() {
         if (pageNumber > 0) {
-            //todo remove
-/*            if (pageNumber == 1) {
-                //this means relaod the table with same parameter todo implemen
-                divisionUKey = 1;
-            }*/
             pageNo = 1;
             rowNo = 50;
             //search by division
             if (divisionUKey > 0) {
                 approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
             }
-//todo search by date
+            //search by date frame
+            if (startDate != null & endDate != null) {
+                approvalList = deathAlterationService.getDeathAlterationByTimePeriod(startDate, endDate, user);
+            }
             if (approvalList.size() < 1) {
                 addActionError(getText("no.pending.alterations"));
+                populatePrimaryLists();
                 return ERROR;
             }
         } else {

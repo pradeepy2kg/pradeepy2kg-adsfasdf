@@ -4,6 +4,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.crs.api.domain.DeathAlteration;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * @author amith jayasekara
@@ -66,5 +67,14 @@ public interface DeathAlterationDAO {
      * @return list of death alteration objects
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId);
+
+    /**
+     * get list of death alterations by given time frame(Date of registration of a death alteration)
+     *
+     * @param startDate starting date
+     * @param endDate   ending date
+     * @return list of death alterations
+     */
+    public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate);
 
 }
