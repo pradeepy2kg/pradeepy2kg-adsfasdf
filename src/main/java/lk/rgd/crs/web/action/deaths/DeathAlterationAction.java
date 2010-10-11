@@ -90,38 +90,22 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         this.countryDAO = countryDAO;
     }
 
-    /**
-     * loading death alteration searching page
-     *
-     * @return success if successfully load the page
-     */
     public String deathAlterationSearch() {
         populatePrimaryLists();
         return SUCCESS;
     }
 
-    /**
-     * capturing death alterations
-     *
-     * @return success of alteration scuccess
-     */
     public String captureDeathAlterations() {
         if (pageNumber > 0) {
             deathAlteration.setAlterationSerialNo(alterationSerialNo);
             deathAlteration.setDeathId(deathId);
-            //setting alterations done to declarant ,death and death person
             deathAlteration.setDeclarant(deathRegister.getDeclarant());
             deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
-            //setting state to data entry
             deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
 
-            //persisting only edited data
-            //gettting exsisting recode (unchanged)  to compare
             DeathRegister dr = deathRegistrationService.getById(deathId, user);
-            //setting death division
             deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
-
-            //    deathAlteration = trimAlterationObject(deathAlteration, dr);
+            //deathAlteration = deleteDeathAlteration(deathAlteration, dr);
             deathAlterationService.addDeathAlteration(deathAlteration, user);
             addActionMessage(getText("alt.massage.success"));
             populatePrimaryLists();
@@ -323,7 +307,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         //todo implement
         return SUCCESS;
     }
-
+/*
     private DeathAlteration trimAlterationObject(DeathAlteration da, DeathRegister dr) {
         //todo remove
         //compare existing values with previous recode values
@@ -346,9 +330,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (compareDates(da.getDeathInfo().getDateOfDeath(), dr.getDeath().getDateOfDeath()))
                 da.getDeathInfo().setDateOfDeath(null);
             //compare boolean
-/*          //todo
+*//*          //todo
             if(da.isCauseOfDeathEstablished() && dr.getDeath().isCauseOfDeathEstablished())
-                da.setCauseOfDeathEstablished(null);*/
+                da.setCauseOfDeathEstablished(null);*//*
 
         } else {
             da.setDeathInfo(new DeathAlterationInfo());
@@ -386,7 +370,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             da.setDeathPerson(new DeathPersonInfo());
         }
         return da;
-    }
+    }*/
+
 
     /*
    * type 0=string
@@ -397,10 +382,11 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
    * 5=dates
    * 6=race
    * */
+
     private void getDisplayList(int index, Object deathRegistreValue, Object deathAlterationValue, int type) {
         switch (type) {
             case 0:
-                if (deathAlterationValue != null && deathRegistreValue != null) {
+                if (deathAlterationValue != null & deathRegistreValue != null) {
                     if (compareStiring((String) deathRegistreValue, (String) deathAlterationValue)) {
                         List<String> stringList = new ArrayList<String>();
                         stringList.add(0, (String) deathRegistreValue);
@@ -410,7 +396,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
                 break;
             case 1:
-                if (deathAlterationValue != null && deathRegistreValue != null) {
+                if (deathAlterationValue != null & deathRegistreValue != null) {
                     if (compareInteger((Integer) deathRegistreValue, (Integer) deathAlterationValue)) {
                         List<String> intList = new ArrayList<String>();
                         intList.add(0, Integer.toString((Integer) deathRegistreValue));
@@ -420,14 +406,39 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
                 break;
             case 2:
+                if (deathAlterationValue != null & deathRegistreValue != null) {
+                    if (compareLong((Long) deathRegistreValue, (Long) deathAlterationValue)) {
+                        List<String> intList = new ArrayList<String>();
+                        intList.add(0, Integer.toString((Integer) deathRegistreValue));
+                        intList.add(1, Integer.toString((Integer) deathAlterationValue));
+                        pendingList.put(index, intList);
+                    }
+                }
                 break;
             case 3:
+                if (deathAlterationValue != null & deathRegistreValue != null) {
+                    if (compareBoolean((Boolean) deathRegistreValue, (Boolean) deathAlterationValue)) {
+                        List<String> intList = new ArrayList<String>();
+                        intList.add(0, Integer.toString((Integer) deathRegistreValue));
+                        intList.add(1, Integer.toString((Integer) deathAlterationValue));
+                        pendingList.put(index, intList);
+                    }
+                }
                 break;
             case 4:
+                if (deathAlterationValue != null & deathRegistreValue != null) {
+
+                }
                 break;
             case 5:
+                if (deathAlterationValue != null & deathRegistreValue != null) {
+
+                }
                 break;
             case 6:
+                if (deathAlterationValue != null & deathRegistreValue != null) {
+
+                }
                 break;
             default:
 
@@ -447,7 +458,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return true;
     }
 
-    //todo implement a method to compare two date objects
     private boolean compareDates(Date exsisting, Date current) {
         return false;
     }
@@ -457,8 +467,29 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     private boolean compareInteger(Integer ex, Integer cu) {
-        return false;
+        if (ex.compareTo(cu) == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
+    private boolean compareBoolean(Boolean ex, Boolean cu) {
+        if (ex.compareTo(cu) == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean compareLong(Long ex, Long cu) {
+        if (ex.compareTo(cu) == 0)
+            return false;
+        else {
+            return true;
+        }
+    }
+
 
     private boolean compareCountry(Country ex, Country cu) {
         return false;

@@ -559,12 +559,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             // session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
             register = bdf.getRegister();
             child = bdf.getChild();
-            parent=bdf.getParent();
-            marriage=bdf.getMarriage();
-            grandFather=bdf.getGrandFather();
-            grandFather=bdf.getGrandFather();
-            informant=bdf.getInformant();
-            notifyingAuthority=bdf.getNotifyingAuthority();
+            parent = bdf.getParent();
+            marriage = bdf.getMarriage();
+            grandFather = bdf.getGrandFather();
+            grandFather = bdf.getGrandFather();
+            informant = bdf.getInformant();
+            notifyingAuthority = bdf.getNotifyingAuthority();
 
         } catch (Exception e) {
             handleErrors(e);
@@ -741,6 +741,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             register.setDateOfRegistration(oldBdf.getRegister().getDateOfRegistration());
             register.setBirthDivision(oldBdf.getRegister().getBirthDivision());
             register.setBirthType(BirthDeclaration.BirthType.LIVE);
+
+            child = new ChildInfo();
+            //set gender to male
+            child.setChildGender(0);
+
             birthDistrictId = oldBdf.getRegister().getBirthDistrict().getDistrictUKey();
             birthDivisionId = oldBdf.getRegister().getBirthDivision().getBdDivisionUKey();
             dsDivisionId = oldBdf.getRegister().getDsDivision().getDsDivisionUKey();
@@ -754,6 +759,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             bdf.setNotifyingAuthority(notifyingAuthority);
             bdf.setRegister(register);
+            bdf.setChild(child);
             session.put(WebConstants.SESSION_BIRTH_DECLARATION_BEAN, bdf);
             logger.debug("Districts, DS and BD divisions set from earlier (AddNewMode) info : {} {}", birthDistrictId, dsDivisionId);
             return;  // end of populating fields for this mode.
