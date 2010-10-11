@@ -97,7 +97,7 @@ function setInformPerson(id)
             name = document.getElementById("fatherFullNameLable").value;
             nICorPIN = document.getElementById("fatherNICorPINLable").value;
             address = "";
-            if (document.getElementById("marriedId1").checked) {
+            if (document.getElementById("marriedId1").checked || document.getElementById("marriedId3").checked) {
                 address = document.getElementById("motherAddressLable").value;
             }
             phonoNo = "";
@@ -442,7 +442,7 @@ function initPage() {
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label>
                         </td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}" id="marriedId"
                                      onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
                     </tr>
