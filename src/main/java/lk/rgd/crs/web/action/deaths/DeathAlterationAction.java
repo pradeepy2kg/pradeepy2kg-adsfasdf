@@ -314,7 +314,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String deleteDeathAlteration() {
-        //todo implement
+        deathAlterationService.deleteDeathAlteration(deathAlterationId, user);
+        populatePrimaryLists();
         return SUCCESS;
     }
 
