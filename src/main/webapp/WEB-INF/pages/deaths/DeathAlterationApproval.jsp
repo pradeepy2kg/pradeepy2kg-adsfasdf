@@ -54,7 +54,8 @@
             </table>
             <div class="form-submit">
             <s:submit name="submit" value="%{getText('lable.update')}"/>
-            <s:hidden name="deathAlterationId" value="%{#deathAlterationId}"/>
+            <s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
+            <s:hidden name="pendingListSize" value="%{pendingList.size()}"/>
         </s:form>
         </div>
     </s:if>

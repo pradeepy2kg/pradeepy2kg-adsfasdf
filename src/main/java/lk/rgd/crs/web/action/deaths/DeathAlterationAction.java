@@ -29,6 +29,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     private User user;
     private Date toDay;
+    private Date startDate;
+    private Date endDate;
     private DeathAlterationService deathAlterationService;
     private DeathRegistrationService deathRegistrationService;
     private DistrictDAO districtDAO;
@@ -60,6 +62,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int pageNo;  //to capture data table paginatins
     private int rowNo;
     private int pendingListSize;
+
 
     private long certificateNumber;
     private long serialNumber;
@@ -147,8 +150,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             }
             //check is there a ongoing alteration for this cartificate
             List<DeathAlteration> exsistingAlterations = deathAlterationService.getAlterationByDeathCertificateNumber(deathRegister.getIdUKey(), user);
-            while (exsistingAlterations.iterator().hasNext()) {
-                DeathAlteration da = exsistingAlterations.iterator().next();
+            Iterator<DeathAlteration> itr = exsistingAlterations.iterator();
+            while (itr.hasNext()) {
+                DeathAlteration da = itr.next();
                 if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
                     addActionError("error.exsisting.alteratios.data.entry");
                     populatePrimaryLists();
@@ -182,10 +186,10 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     public String deathAlterationApproval() {
         if (pageNumber > 0) {
             //todo remove
-            if (pageNumber == 1) {
+/*            if (pageNumber == 1) {
                 //this means relaod the table with same parameter todo implemen
                 divisionUKey = 1;
-            }
+            }*/
             pageNo = 1;
             rowNo = 50;
             //search by division
@@ -205,14 +209,27 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String directApprove() {
-        //todo remove
-        List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
-        while (alterations.iterator().hasNext()) {
-            DeathAlteration da = alterations.iterator().next();
-            if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
-                deathAlteration = da;
-                break;
+        if (deathAlterationId > 0) {
+            //get form list
+            deathAlteration = deathAlterationService.getById(deathAlterationId, user);
+
+        } else {
+            //todo remove
+            List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
+            Iterator<DeathAlteration> itr = alterations.iterator();
+            while (itr.hasNext()) {
+                DeathAlteration da = itr.next();
+                if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
+                    deathAlteration = da;
+                    break;
+                }
             }
+        }
+        //checking in data entry
+        if (!((deathAlteration.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) | (deathAlteration.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)))) {
+            addActionError(getText("cannot.approve.nt.in.correct.state"));
+            populatePrimaryLists();
+            return ERROR;
         }
         //todo name english
         //todo check sudden death
@@ -241,25 +258,54 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         getDisplayList(DeathAlteration.DEATH_PERSON_MOTHER_PIN, deathRegister.getDeathPerson().getDeathPersonMotherPINorNIC(), deathAlteration.getDeathPerson().getDeathPersonMotherPINorNIC(), 0);
         getDisplayList(DeathAlteration.DEATH_PERSON_MOTHER_NAME, deathRegister.getDeathPerson().getDeathPersonMotherFullName(), deathAlteration.getDeathPerson().getDeathPersonMotherFullName(), 0);
 
+        if (deathAlteration.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)) {
+            //retrimming for display
+            BitSet current = deathAlteration.getApprovalStatuses();
+            Iterator<Integer> itr = pendingList.keySet().iterator();
+            List<Integer> currentList = new ArrayList<Integer>();
+            while (itr.hasNext()) {
+                boolean available = current.get(itr.next());
+                if (available) {
+                    currentList.add(itr.next());
+                }
+            }
+            Iterator it = currentList.iterator();
+            while (it.hasNext()) {
+                pendingList.remove(it.next());
+            }
+        }
+
         populatePrimaryLists();
         return SUCCESS;
     }
 
     public String setBitset() {
         logger.info("setting bit set : {}", approvedIndex.length);
-        DeathAlteration da = deathAlterationService.getById(deathAlterationId, user);
         Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
+        DeathAlteration da = deathAlterationService.getById(deathAlterationId, user);
         for (int i = 0; i < approvedIndex.length; i++) {
             int bit = approvedIndex[i];
             approveBitset.put(bit, true);
         }
         logger.debug("index leangth : {} ,bit set leangth : {}", approvedIndex.length, approveBitset.size());
         //todo wht happen if error  and add action massage for succcesfull add
+        if (da.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)) {
+            if (approvedIndex.length < pendingListSize) {
+                deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
+                populatePrimaryLists();
+                return SUCCESS;
+            }
+            deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
+            populatePrimaryLists();
+            return SUCCESS;
+        }
         if (approvedIndex.length < pendingListSize) {
             deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
+            populatePrimaryLists();
             return SUCCESS;
         }
         deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
+        populatePrimaryLists();
         return SUCCESS;
     }
 
@@ -704,5 +750,21 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setPendingListSize(int pendingListSize) {
         this.pendingListSize = pendingListSize;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

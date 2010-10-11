@@ -15,7 +15,8 @@ import java.util.Date;
         @NamedQuery(name = "get.alt.by.division.death.division", query = "SELECT da FROM DeathAlteration da,DeathRegister dr" +
                 " WHERE da.deathId=dr.idUKey " +
                 " AND dr.death.deathDivision.bdDivisionUKey =:deathDivisionUkey"),
-        @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId")
+        @NamedQuery(name = "get.atl.by.death.id", query = "SELECT da FROM DeathAlteration da WHERE da.deathId=:deathId"),
+        @NamedQuery(name = "get.alt.by.date.period", query = "SELECT da FROM DeathAlteration da")
 })
 
 public class DeathAlteration {
@@ -59,11 +60,11 @@ public class DeathAlteration {
         * */
         FULLY_APPROVED,
         /**
-         * 3 - A BDF for which the parent confirmation form was printed
+         * 3 - A DC for which the parent confirmation form was printed
          */
         PRINTED,
         /**
-         * 4 - A BDF for which the parent confirmation form was printed
+         * 4 - A DC for which the parent confirmation form was printed
          */
         REJECT,
 

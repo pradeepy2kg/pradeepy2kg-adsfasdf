@@ -7,6 +7,7 @@ import lk.rgd.common.api.domain.User;
 
 import java.util.List;
 import java.util.Hashtable;
+import java.util.Date;
 
 /**
  * @authar amith jayasekara
@@ -82,5 +83,13 @@ public interface DeathAlterationService {
      */
     public void approveDeathAlteration(long deathAlterationUKey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user);
 
-
+    /**
+     * get list of death alterations based on given period (alteration registered date)
+     *
+     * @param startDate
+     * @param endDate
+     * @param user
+     * @return
+     */
+    public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate, User user);
 }

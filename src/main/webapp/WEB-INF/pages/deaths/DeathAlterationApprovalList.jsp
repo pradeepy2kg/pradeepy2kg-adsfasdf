@@ -27,6 +27,26 @@
         });
     });
 
+    $(function() {
+        $("#endDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+
+    $(function() {
+        $("#startDatePicker").datepicker({
+            changeYear: true,
+            yearRange: '1960:2020',
+            dateFormat:'yy-mm-dd',
+            startDate:'2000-01-01',
+            endDate:'2040-12-31'
+        });
+    });
+
 
     // mode 1 = passing District, will return DS list
     // mode 2 = passing DsDivision, will return BD list
@@ -82,7 +102,7 @@
                 <td>
                     <s:label value="%{getText('label.district')}"/>
                 </td>
-                <td>
+                <td align="left">
                     <s:select id="districtId" name="districtUKey" list="districtList" value="%{districtUKey}"
                               cssStyle="width:98.5%; width:240px;"/>
                 </td>
@@ -90,7 +110,7 @@
                 <td>
                     <s:label value="%{getText('label.dsDivision')}"/>
                 </td>
-                <td>
+                <td align="left">
                     <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
                               cssStyle="float:left;  width:240px;"/>
                 </td>
@@ -114,7 +134,28 @@
 
     <fieldset>
         <legend align="right"><s:label value="%{getText('lable.search.by.date')}"/></legend>
+        <table>
+            <caption></caption>
+            <col width="250px">
+            <col width="250px">
+            <col width="100px">
+            <col width="250px">
+            <col width="250px">
+            <tbody>
+            <tr>
+                <td><s:label value="%{getText('label.start.date')}"/></td>
+                <td align="left">
+                    <s:textfield name="startDate" id="startDatePicker" maxLength="10"/>
+                </td>
+                <td>
 
+                </td>
+                <td align="left"><s:label value="%{getText('label.end.date')}"/></td>
+                <td>
+                    <s:textfield name="endDate" id="endDatePicker" maxLength="10"/>
+                </td>
+            </tr>
+            </tbody>
         </table>
     </fieldset>
     <div id="search_button" class="button" align="right">
@@ -122,7 +163,7 @@
     </div>
     <s:hidden name="pageNumber" value="1"/>
 </s:form>
-
+<s:actionerror/>
 <s:if test="approvalList.size()>0">
     <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
         <thead>
@@ -137,36 +178,49 @@
         </thead>
         <tbody>
         <s:iterator value="approvalList">
-            <s:url id="editSelected" action="eprDeathAlterationEdit"></s:url>
-            <s:url id="deleteSelected" action="eprDeathAlterationDelate"></s:url>
-            <s:url id="rejectSelected" action="eprDeathAlterationReject"></s:url>
-            <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
-                <s:param name="deathId" value="deathId"/>
-            </s:url>
-            <tr>
-                <td><s:property value="alterationSerialNo"/></td>
-                <td><s:property value="status"/></td>
-                <td align="center">
-                    <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                             border="none"/></s:a>
-                </td>
-                <td align="center"><s:a href="%{deleteSelected}"
-                                        title="%{getText('deleteToolTip.label')}"><img
-                        src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                        border="none"/></s:a>
-                </td>
-                <td align="center">
-                    <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
-                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
-                    </s:a>
-                </td>
-                <td align="center">
-                    <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
-                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                             border="none"/></s:a>
-                </td>
-            </tr>
+            <%--todo remove--%>
+            <s:if test="status.ordinal()>-1">
+                <s:url id="editSelected" action="eprDeathAlterationEdit"></s:url>
+                <s:url id="deleteSelected" action="eprDeathAlterationDelate"></s:url>
+                <s:url id="rejectSelected" action="eprDeathAlterationReject"></s:url>
+                <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
+                    <s:param name="deathAlterationId" value="idUKey"/>
+                </s:url>
+                <tr>
+                    <td><s:property value="alterationSerialNo"/></td>
+                    <td><s:property value="status"/></td>
+                    <td align="center">
+                        <s:if test="status.ordinal()==0">
+                            <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                        </s:if>
+                    </td>
+
+                    <td align="center">
+                        <s:if test="status.ordinal()==0">
+                            <s:a href="%{deleteSelected}"
+                                 title="%{getText('deleteToolTip.label')}"><img
+                                    src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                    border="none"/></s:a>
+                        </s:if>
+                    </td>
+                    <td align="center">
+                        <s:if test="status.ordinal()==0">
+                            <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
+                                <img src="<s:url value='/images/reject.gif'/>" width="25" height="25" border="none"/>
+                            </s:a>
+                        </s:if>
+                    </td>
+                    <td align="center">
+                        <s:if test="status.ordinal()<2">
+                            <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                                <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                     border="none"/></s:a>
+                        </s:if>
+                    </td>
+                </tr>
+            </s:if>
         </s:iterator>
         </tbody>
     </table>

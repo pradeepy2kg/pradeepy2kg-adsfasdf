@@ -49,16 +49,16 @@ public class DeathDeclarationValidator {
                 isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityAddress()) ||
                 isEmptyString(deathRegister.getNotifyingAuthority().getNotifyingAuthorityPIN());
 
-        if (!primaryCondition) {
+        if (primaryCondition) {
             if (deathRegister.getIdUKey() > 0) {
                 handleException("Death declaration record ID : " + deathRegister.getIdUKey() + " is not complete. " +
                         "Check required field values", ErrorCodes.INVALID_DATA);
             } else if (deathRegister.getDeath().getDeathSerialNo() > 0) {
                 //todo needd of this  ????
-                handleException("Birth declaration record with serial number : " + deathRegister.getDeath().getDeathSerialNo() +
+                handleException("Death declaration record with serial number : " + deathRegister.getDeath().getDeathSerialNo() +
                         " is not complete. Check required field values", ErrorCodes.INVALID_DATA);
             } else {
-                handleException("Birth declaration record being processed is incomplete " +
+                handleException("Death declaration record being processed is incomplete " +
                         "Check required field values", ErrorCodes.INVALID_DATA);
             }
         }

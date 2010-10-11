@@ -17,10 +17,7 @@ import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
-import java.util.List;
-import java.util.Hashtable;
-import java.util.Enumeration;
-import java.util.BitSet;
+import java.util.*;
 
 /**
  * @author amith jayasekara
@@ -60,7 +57,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     public void deleteDeathAlteration(long idUKey, User user) {
         logger.debug("about to remove alteration recode idUkey : {}", idUKey);
         DeathAlteration da = deathAlterationDAO.getById(idUKey);
+/*
         validateAccessToBDDivision(user, da.getDeathDivision());
+*/
         deathAlterationDAO.deleteDeathAlteration(idUKey);
     }
 
@@ -70,7 +69,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public DeathAlteration getById(long idUKey, User user) {
         DeathAlteration da = deathAlterationDAO.getById(idUKey);
+/*
         validateAccessToBDDivision(user, da.getDeathDivision());
+*/
         return da;
     }
 
@@ -114,6 +115,10 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         }
         //merging object
         deathAlterationDAO.updateDeathAlteration(da, user);
+    }
+
+    public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate, User user) {
+        return null;
     }
 
 

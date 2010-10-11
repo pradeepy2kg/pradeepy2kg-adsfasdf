@@ -1,4 +1,3 @@
-this is result page
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
@@ -16,7 +15,7 @@ this is result page
     <div class="form-submit">
         <s:form method="post" action="eprApproveDeathAlterationsDirect.do">
             <s:submit name="approve" value="%{getText('lable.approve')}"/>
-           <s:hidden name="deathId" value="%{deathId}"/>
+            <s:hidden name="deathId" value="%{deathId}"/>
         </s:form>
     </div>
 </div>
