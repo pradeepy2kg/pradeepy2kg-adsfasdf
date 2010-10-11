@@ -30,7 +30,7 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": false,
+            "aaSorting": [[0,'desc']],
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
@@ -38,6 +38,7 @@
             "sDom": 'T,C,H<"clear">lftipr'
 
         });
+//        $('#event-management-table').sort({"idUKey":"desc"});
     });
 
     $(function() {
@@ -112,7 +113,7 @@
             <col width="200px">
             <col width="100px">
             <col>
-            <tr >
+            <tr>
                 <td height="50px">
                     <s:label value="Start Date"/>
                 </td>
@@ -178,11 +179,11 @@
                 <thead>
                 <tr class="table-title">
                     <th width="30px"><s:label name="name" value=""/></th>
-                    <th width="80px" ><s:label value="User Id"/></th>
-                    <th width="50px" ><s:label value="Event Type"/></th>
-                    <th width="50px" ><s:label value="Event Code"/></th>
+                    <th width="80px"><s:label value="User Id"/></th>
+                    <th width="50px"><s:label value="Event Type"/></th>
+                    <th width="50px"><s:label value="Event Code"/></th>
                     <th width="150px"><s:label value="Class Name"/></th>
-                    <th ><s:label value="Method Name"/></th>
+                    <th><s:label value="Method Name"/></th>
                     <th width="50px"><s:label value="Recode Id"/></th>
                     <th width="50px"><s:label value="Details"/></th>
 
@@ -193,11 +194,11 @@
                     <s:iterator status="" value="printList" id="printList">
                         <tr>
                             <td align="center"><s:property value="idUKey"/></td>
-                            <td ><s:property value="user.getUserId()"/></td>
+                            <td><s:property value="user.getUserId()"/></td>
                             <td align="center"><s:property value="eventType"/></td>
                             <td align="center"><s:property value="eventCode"/></td>
-                            <td ><s:property value="className"/></td>
-                            <td ><s:property value="methodName"/></td>
+                            <td><s:property value="className"/></td>
+                            <td><s:property value="methodName"/></td>
                             <td align="center"><s:property value="recordId"/></td>
                             <td align="center">
                                 <s:if test="debug!=null || stackTrace!=null">
