@@ -175,7 +175,7 @@ public class Person implements Serializable {
     /**
      * Countries of citizenship
      */
-    @OneToMany
+    @ManyToMany
     @JoinTable(schema = "PRS", name = "PERSON_CITIZENSHIP",
         joinColumns = @JoinColumn(name = "personUKey"),
         inverseJoinColumns = @JoinColumn(name = "countryId"))

@@ -1374,7 +1374,9 @@ public class BirthRegistrationServiceImpl implements
             child.setLastNameInEnglish(names[names.length - 1]);
             StringBuilder sb = new StringBuilder(16);
             for (int i = 0; i < names.length - 2; i++) {
-                sb.append(names[i].charAt(0)).append(". ");
+                if (!isEmptyString(names[i])) {
+                    sb.append(names[i].charAt(0)).append(". ");
+                }
             }
             child.setInitialsInEnglish(sb.toString());
             logger.debug("Derived child English initials as : {} and last name as : {}",
