@@ -117,8 +117,10 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         deathAlterationDAO.updateDeathAlteration(da, user);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate, User user) {
-        return null;
+        //add user validation if others also get permission (other than ARG and above)
+        return deathAlterationDAO.getDeathAlterationByTimePeriod(startDate, endDate);
     }
 
 
