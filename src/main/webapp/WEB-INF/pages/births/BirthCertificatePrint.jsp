@@ -15,7 +15,7 @@
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "aaSorting": [[3,'desc']],
             "bInfo": false,
             "bAutoWidth": false,
             "bJQueryUI": true,
