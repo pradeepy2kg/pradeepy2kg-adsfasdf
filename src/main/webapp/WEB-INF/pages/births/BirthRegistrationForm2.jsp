@@ -97,7 +97,10 @@ $(function() {
                 function(data1) {
                     $("textarea#fatherFullName").val(data1.fullNameInOfficialLanguage);
                     $("input#fatherPlaceOfBirth").val(data1.placeOfBirth);
-                    $("input#fatherDatePicker").val(data1.dateOfBirth);
+                    var fatherDOB = data1.dateOfBirth;
+                    if (fatherDOB != null) {
+                        $("input#fatherDatePicker").val(fatherDOB);
+                    }
                 });
     });
 
@@ -111,7 +114,10 @@ $(function() {
                     $("textarea#motherFullName").val(data2.fullNameInOfficialLanguage);
                     $("input#motherPlaceOfBirth").val(data2.placeOfBirth);
                     $("textarea#motherAddress").val(data2.lastAddress);
-                    $("input#motherDatePicker").val(data2.dateOfBirth);
+                    var motherDOB = data2.dateOfBirth;
+                    if (motherDOB != null) {
+                        $("input#motherDatePicker").val(motherDOB);
+                    }
                 });
     });
 
