@@ -652,7 +652,7 @@
         <action name="eprAdoptionAction" class="lk.rgd.crs.web.action.births.AdoptionAction"
                 method="addOrEditAdoption">
             <result type="tiles" name="success">epr.adoptionSummary</result>
-            <result type="tiles" name="invalidBirthCertificateNumber">eprBirthAlterationInit</result>
+            <result type="tiles" name="invalidBirthCertificateNumber">epr.AdoptionReg</result>
         </action>
 
         <action name="eprAdoptionDirectApproval" class="lk.rgd.crs.web.action.births.AdoptionAction"

@@ -309,7 +309,10 @@ function enableSerialNumber(mode) {
             <br>கட்டளை இலக்கம்
             <br>Serial number
         </td>
-        <td><s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber" cssStyle="margin-left:5px;"/></td>
+        <td>
+            <s:fielderror name="duplicateCourtOrderNumberError" cssStyle="color:red;font-size:10pt"/>
+            <s:textfield name="adoption.courtOrderNumber" id="courtOrderNumber" cssStyle="margin-left:5px;"/>
+        </td>
     </tr>
     <tr>
         <td>

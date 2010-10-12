@@ -95,6 +95,7 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     private String genderEn;
     private String genderSi;
     private String language;
+
     public AdoptionAction(DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO,
                           AdoptionOrderService service, CountryDAO countryDAO, AppParametersDAO appParametersDAO,
                           BirthRegistrationService birthRegistrationService, CourtDAO courtDAO) {
@@ -115,6 +116,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
     public String addOrEditAdoption() {
         User user = (User) session.get(WebConstants.SESSION_USER_BEAN);
         adoption.setStatus(AdoptionOrder.State.DATA_ENTRY);
+        populateBasicLists(language);
+        populateAllDSDivisionList();
         long birthCertificateNo = 0;
         //check applicant type
         if (adoption.isApplicantMother()) {
@@ -160,7 +163,8 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
             try {
                 service.addAdoptionOrder(adoption, user);
             } catch (CRSRuntimeException e) {
-                addActionError("er.court.order.number.not.unique");
+                basicLists();
+                addFieldError("duplicateCourtOrderNumberError", getText("er.court.order.number.not.unique"));
                 logger.error("error with adding adoption order :: court order number :{}", adoption.getCourtOrderNumber());
                 return "invalidBirthCertificateNumber";
             }
