@@ -641,7 +641,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      *
      * @return pageLoad
      */
-    //todo amith
+
     public String birthCetificatePrint() {
         try {
             BirthDeclaration bdf = service.getWithRelationshipsById(bdId, user);
@@ -661,7 +661,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     service.markAdoptionBirthCertificateAsPrinted(bdf, user);
                 }*/
                 beanPopulate(bdf);
-                // TODO
+
                 String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
                 locationList = user.getActiveLocations(language);
                 userList = new HashMap();

@@ -39,6 +39,7 @@ public class DeathAlteration {
     public static final int DEATH_PERSON_GENDER = 14;
     public static final int DEATH_PERSON_RACE = 15;
     public static final int DEATH_PERSON_NAME_OFFICIAL = 16;
+    public static final int DEATH_PERSON_NAME_ENGLISH = 16;
     public static final int DEATH_PERSON_NAME = 17;
     public static final int DEATH_PERSON_ADDRESS = 18;
 
