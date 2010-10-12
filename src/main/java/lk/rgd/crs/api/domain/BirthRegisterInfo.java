@@ -2,6 +2,7 @@ package lk.rgd.crs.api.domain;
 
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.District;
+import lk.rgd.common.api.domain.Location;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.util.DateTimeUtils;
 import lk.rgd.crs.web.util.WebUtils;
@@ -69,7 +70,7 @@ public class BirthRegisterInfo implements Serializable {
     /**
      * The user printing the confirmation
      */
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "confirmationPrintUserId", nullable = true)
     private User confirmationPrintUser;
 
@@ -91,16 +92,37 @@ public class BirthRegisterInfo implements Serializable {
     private String comments;
 
     /**
-     * The place of issue for the original birth certificate - free copy (Stores the DS Division ID)
+     * The place of issue for the original birth certificate - free copy (Stores the Location ID)
      */
-    @Column(nullable = true, updatable = false)
-    private Integer originalBCPlaceOfIssue;
+    @OneToOne
+    @JoinColumn(name = "originalBCPIssuelocationId", nullable = true)
+    private Location originalBCPlaceOfIssue;
 
     /**
-     * The original BC place of issue as a String in the preferred language
+     * The original BC place of issue as a String in the preferred language and english - e.g. කොළඹ / Colombo
      */
     @Transient
     private String originalBCPlaceOfIssuePrint;
+
+    /**
+     * The original BC place of issue signature as a String in preferred language and english
+     * e.g. ප්‍රාදේශීය ලේකම් කොට්ටාශ කාර්යාලය / Divisional Secretariat
+     */
+    @Transient
+    private String originalBCPlaceOfIssueSignPrint;
+
+    /**
+     * The original BC issued user
+     */
+    @OneToOne
+    @JoinColumn(name = "originalBCIssueUserId", nullable = true)
+    private User originalBCIssueUser;
+
+    /**
+     * The original BC issued user signature as a String in preferred language and english
+     */
+    @Transient
+    private String originalBCIssueUserSignPrint;
 
     /**
      * @see lk.rgd.crs.api.domain.BirthDeclaration.BirthType
@@ -130,11 +152,11 @@ public class BirthRegisterInfo implements Serializable {
         this.comments = WebUtils.filterBlanks(comments);
     }
 
-    public Integer getOriginalBCPlaceOfIssue() {
+    public Location getOriginalBCPlaceOfIssue() {
         return originalBCPlaceOfIssue;
     }
 
-    public void setOriginalBCPlaceOfIssue(Integer originalBCPlaceOfIssue) {
+    public void setOriginalBCPlaceOfIssue(Location originalBCPlaceOfIssue) {
         this.originalBCPlaceOfIssue = originalBCPlaceOfIssue;
     }
 
@@ -167,7 +189,7 @@ public class BirthRegisterInfo implements Serializable {
     }
 
     public String getDateOfRegistrationForPrint() {
-       return DateTimeUtils.getISO8601FormattedString(dateOfRegistration);
+        return DateTimeUtils.getISO8601FormattedString(dateOfRegistration);
     }
 
     public void setDateOfRegistration(Date dateOfRegistration) {
@@ -268,5 +290,29 @@ public class BirthRegisterInfo implements Serializable {
 
     public void setCaseFileNumber(String caseFileNumber) {
         this.caseFileNumber = caseFileNumber;
+    }
+
+    public String getOriginalBCPlaceOfIssueSignPrint() {
+        return originalBCPlaceOfIssueSignPrint;
+    }
+
+    public void setOriginalBCPlaceOfIssueSignPrint(String originalBCPlaceOfIssueSignPrint) {
+        this.originalBCPlaceOfIssueSignPrint = originalBCPlaceOfIssueSignPrint;
+    }
+
+    public User getOriginalBCIssueUser() {
+        return originalBCIssueUser;
+    }
+
+    public void setOriginalBCIssueUser(User originalBCIssueUser) {
+        this.originalBCIssueUser = originalBCIssueUser;
+    }
+
+    public String getOriginalBCIssueUserSignPrint() {
+        return originalBCIssueUserSignPrint;
+    }
+
+    public void setOriginalBCIssueUserSignPrint(String originalBCIssueUserSignPrint) {
+        this.originalBCIssueUserSignPrint = originalBCIssueUserSignPrint;
     }
 }

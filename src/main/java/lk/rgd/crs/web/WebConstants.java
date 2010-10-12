@@ -54,4 +54,6 @@ public class WebConstants {
     public static final int DEATH_ALTERATION_APPROVE = 23;
 
     public static final String SESSION_UPDATED_USER = "updated_user";
+    public static final String USER_ID = "userId";
+    public static final String CERTIFICATE_ID = "certificateId";
 }

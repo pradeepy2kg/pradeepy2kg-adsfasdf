@@ -2,6 +2,7 @@ package lk.rgd.common.api.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Represents a User assignment to a Location
@@ -12,14 +13,14 @@ import java.util.Date;
 @Table(schema = "COMMON", name = "USER_LOCATIONS")
 @IdClass(UserLocationID.class)
 @NamedQueries({
-        @NamedQuery(name = "getAllUserLocations", query = "SELECT ul FROM UserLocation ul " +
-                "WHERE ul.lifeCycleInfo.active = :active " +
-                "ORDER BY ul.location.enLocationName desc"),
-        @NamedQuery(name = "getUserLocationsByUserId", query = "SELECT ul FROM UserLocation ul " +
-                "WHERE ul.userId = :userId " +
-                "ORDER BY ul.location.enLocationName desc")
+    @NamedQuery(name = "getAllUserLocations", query = "SELECT ul FROM UserLocation ul " +
+        "WHERE ul.lifeCycleInfo.active = :active ORDER BY ul.location.enLocationName desc"),
+    @NamedQuery(name = "getUserLocationsByUserId", query = "SELECT ul FROM UserLocation ul " +
+        "WHERE ul.userId = :userId ORDER BY ul.location.enLocationName desc"),
+    @NamedQuery(name = "get.birthCertSign.user.by.locationId", query = "SELECT ul.user FROM UserLocation ul " +
+        "WHERE ul.locationId = :locationId AND ul.lifeCycleInfo.active = :active AND ul.signBirthCert IS TRUE")
 })
-public class UserLocation {
+public class UserLocation implements Serializable {
     @Id
     private String userId;
     @Id

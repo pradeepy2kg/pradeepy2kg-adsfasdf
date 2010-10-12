@@ -18,7 +18,7 @@ import java.util.Date;
     @NamedQuery(name = "findAllEvents", query = "SELECT event FROM Event event ORDER BY event.timestamp DESC"),
     @NamedQuery(name = "filter.by.recorded.timestamp", query = "SELECT event FROM Event event " +
         "WHERE event.timestamp BETWEEN :startTime AND :endTime AND event.eventType= :eventType " +
-            "ORDER BY event.timestamp DESC")
+        "ORDER BY event.timestamp DESC")
 })
 public class Event implements Serializable {
     private static final int STACK_TRACE_LEN = 2048;
@@ -166,7 +166,11 @@ public class Event implements Serializable {
     }
 
     public void setDebug(String debug) {
-        this.debug = debug;
+        if (debug != null && debug.length() > DEBUG_CLOB_LEN) {
+            this.debug = debug.substring(0, DEBUG_CLOB_LEN);
+        } else {
+            this.debug = debug;
+        }
     }
 
     public String getStackTrace() {

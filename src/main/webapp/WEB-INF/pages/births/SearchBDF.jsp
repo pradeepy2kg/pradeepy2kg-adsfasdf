@@ -84,7 +84,7 @@
         return returnval;
     }
 </script>
-<div id="birth-confirmation-search"> 
+<div id="birth-confirmation-search">
     <s:actionerror cssClass="alreadyPrinted"/>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             onsubmit="javascript:return validate()" method="post">

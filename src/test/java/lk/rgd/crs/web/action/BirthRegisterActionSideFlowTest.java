@@ -459,6 +459,8 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
 
         // mark as still birth certificate printed
         request.setParameter("bdId", approveId.toString());
+        request.setParameter("locationId", "1");
+        request.setParameter("issueUserId", "chathuranga");
         initAndExecute(BIRTH_CERT_DIRECT_PRINT, session);
         session = printAction.getSession();
         assertEquals(9, getBDFById(persistedBDId).getRegister().getStatus().ordinal());

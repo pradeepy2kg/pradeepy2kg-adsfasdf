@@ -1,14 +1,14 @@
 package lk.rgd.crs.web;
 
 public class SelectOption {
-    int optionValue;
-    String optionDisplay;
+    private String optionValue;
+    private String optionDisplay;
 
-    public int getOptionValue() {
+    public String getOptionValue() {
         return optionValue;
     }
 
-    public void setOptionValue(int optionValue) {
+    public void setOptionValue(String optionValue) {
         this.optionValue = optionValue;
     }
 

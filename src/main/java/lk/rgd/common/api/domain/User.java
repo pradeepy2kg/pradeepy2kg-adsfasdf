@@ -158,7 +158,10 @@ public class User implements Serializable {
     private List<UserLocation> locations = new ArrayList<UserLocation>();
 
     @Column
-    private String signatureText;
+    private String sienSignatureText;
+
+    @Column
+    private String taenSignatureText;
 
     public User() {
     }
@@ -309,12 +312,20 @@ public class User implements Serializable {
         this.locations = locations;
     }
 
-    public String getSignatureText() {
-        return signatureText;
+    public String getSienSignatureText() {
+        return sienSignatureText;
     }
 
-    public void setSignatureText(String signatureText) {
-        this.signatureText = signatureText;
+    public void setSienSignatureText(String sienSignatureText) {
+        this.sienSignatureText = sienSignatureText;
+    }
+
+    public String getTaenSignatureText() {
+        return taenSignatureText;
+    }
+
+    public void setTaenSignatureText(String taenSignatureText) {
+        this.taenSignatureText = taenSignatureText;
     }
 
     public boolean isAllowedAccessToBDDistrict(int id) {
@@ -360,7 +371,7 @@ public class User implements Serializable {
         while (it.hasNext()) {
             UserLocation location = it.next();
 
-            if (location.getLifeCycleInfo().isActive()) {                
+            if (location.getLifeCycleInfo().isActive()) {
                 if (AppConstants.SINHALA.equals(language)) {
                     al.put(location.getLocation().getLocationUKey(),
                         location.getLocation().getLocationCode() + " : " + location.getLocation().getSiLocationName());
@@ -375,5 +386,16 @@ public class User implements Serializable {
         }
 
         return al;
+    }
+
+    public String getUserSignature(String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return this.getSienSignatureText();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return this.getTaenSignatureText();
+        } else {
+            logger.error("No valid UserSignature, invalid language type : {}", language);
+            return null;
+        }
     }
 }

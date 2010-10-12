@@ -48,7 +48,7 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
     @Transactional(propagation = Propagation.MANDATORY)
     public void update(UserLocation userLocation, User adminUser) {
         UserLocation existing =
-                em.find(UserLocation.class, new UserLocationID(userLocation.getUserId(), userLocation.getLocationId()));
+            em.find(UserLocation.class, new UserLocationID(userLocation.getUserId(), userLocation.getLocationId()));
         if (existing != null) {
             existing.setEndDate(userLocation.getEndDate());
             existing.setStartDate(userLocation.getStartDate());
@@ -61,7 +61,7 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
             existing.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
             em.merge(existing);
 
-            logger.debug("End date of the existing is :{}",existing.getEndDate());
+            logger.debug("End date of the existing is :{}", existing.getEndDate());
         }
     }
 
@@ -82,7 +82,14 @@ public class UserLocationDAOImpl extends BaseDAO implements UserLocationDAO {
         return q.getResultList();
     }
 
-
-
-
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<User> getBirthCertSignUsersByLocationId(int locationId, boolean active) {
+        Query q = em.createNamedQuery("get.birthCertSign.user.by.locationId");
+        q.setParameter("locationId", locationId);
+        q.setParameter("active", active);
+        return q.getResultList();
+    }
 }
