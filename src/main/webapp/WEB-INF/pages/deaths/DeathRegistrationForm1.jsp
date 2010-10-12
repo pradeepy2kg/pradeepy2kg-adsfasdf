@@ -646,7 +646,7 @@ function initPage() {
     </s:elseif>
     <tr>
         <td>(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            (3)මරණය සිදු වූ දිනය
+            මරණය සිදු වූ දිනය
             <br>இறந்த திகதி
             <br>Date of Death
         </td>
@@ -665,7 +665,7 @@ function initPage() {
     </tr>
     <tr>
         <td rowspan="5">(<s:property value="#row"/><s:set name="row" value="#row+1"/>)
-            (3)මරණය සිදු වූ ස්ථානය
+            මරණය සිදු වූ ස්ථානය
             <br>இறப்பு நிகழந்த இடம்
             <br>Place of Death
         </td>

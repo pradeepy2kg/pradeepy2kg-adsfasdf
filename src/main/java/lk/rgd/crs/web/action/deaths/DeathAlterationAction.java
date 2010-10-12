@@ -65,6 +65,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private int pageNo;  //to capture data table paginatins
     private int rowNo;
     private int pendingListSize;
+    private int deathPersonCountry;
+    private int deathPersonRace;
 
 
     private long certificateNumber;
@@ -106,6 +108,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             deathAlteration.setDeclarant(deathRegister.getDeclarant());
             deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
             deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
+            //setting country
+            Country deathCountry = new Country();
+            if (deathPersonCountry > 0) {
+                deathCountry = countryDAO.getCountry(deathPersonCountry);
+            }
+            deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
+            //setting race
+            Race deathRace = new Race();
+            deathPersonRace = 100;
+            if (deathPersonRace > 0) {
+                deathRace = raceDAO.getRace(deathPersonRace);
+            }
+            deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
 
             DeathRegister dr = deathRegistrationService.getById(deathId, user);
             deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
@@ -113,6 +128,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             deathAlterationService.addDeathAlteration(deathAlteration, user);
             addActionMessage(getText("alt.massage.success"));
             populatePrimaryLists();
+            logger.debug("capturing alteration serial number : {} success ", serialNumber);
             //todo check already addedd data before add
             return SUCCESS;
         } else {
@@ -124,7 +140,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //search by pin
             if (pin != 0) {
                 //only get firts recode others ignored
-                deathRegister = deathRegistrationService.getByPinOrNic(pin, user).get(0);
+                List<DeathRegister> deathAltList = deathRegistrationService.getByPinOrNic(pin, user);
+                if (deathAltList != null)
+                    deathRegister = deathAltList.get(0);
             }
             //search by  serial and death division
             if (serialNumber != 0 && divisionUKey != 0) {
@@ -833,5 +851,21 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getDeathPersonCountry() {
+        return deathPersonCountry;
+    }
+
+    public void setDeathPersonCountry(int deathPersonCountry) {
+        this.deathPersonCountry = deathPersonCountry;
+    }
+
+    public int getDeathPersonRace() {
+        return deathPersonRace;
+    }
+
+    public void setDeathPersonRace(int deathPersonRace) {
+        this.deathPersonRace = deathPersonRace;
     }
 }

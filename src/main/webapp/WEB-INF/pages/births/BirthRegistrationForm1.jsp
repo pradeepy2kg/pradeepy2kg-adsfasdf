@@ -347,12 +347,12 @@ function initPage() {
                     <td><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
                     <td>
-                        <s:if test="editMode">
+<%--                        <s:if test="editMode">
                             <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" readonly="true"/>
                         </s:if>
-                        <s:else>
+                        <s:else>--%>
                             <s:textfield name="register.bdfSerialNo" id="bdfSerialNo" maxLength="10"/>
-                        </s:else>
+                    <%--    </s:else>--%>
                     </td>
                 </tr>
             </table>

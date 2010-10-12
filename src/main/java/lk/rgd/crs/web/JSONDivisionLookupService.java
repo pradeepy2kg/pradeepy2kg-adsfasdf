@@ -92,7 +92,7 @@ public class JSONDivisionLookupService extends HttpServlet {
             return;
         }
 
-        response.setContentType("application/json; charset=utf-8");
+      
         PrintWriter out = response.getWriter();
 
         mapper.writeValue(out, optionLists);

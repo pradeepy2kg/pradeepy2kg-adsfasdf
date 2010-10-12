@@ -153,10 +153,6 @@ public class AdoptionAction extends ActionSupport implements SessionAware {
                 if (bdf == null) {
                     addActionError(getText("er.invalid.birth.certificate.number"));
                     basicLists();
-                    //todo remove follow section
-/*                    populate();
-                    populateBasicLists(language);
-                    populateAllDSDivisionList();*/
                     return "invalidBirthCertificateNumber";
                 }
             }

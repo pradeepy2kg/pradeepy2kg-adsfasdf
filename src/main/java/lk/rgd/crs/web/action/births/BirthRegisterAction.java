@@ -226,6 +226,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     bdId = bdf.getIdUKey();  // JPA is nice to us. it will populate this field after a new add.
                     addActionMessage(getText("saveSuccess.label"));
                 } else {
+                    //check before update
+                    BirthDeclaration exBdf = service.getActiveRecordByBDDivisionAndSerialNo(bdf.getRegister().getBirthDivision(), bdf.getRegister().getBdfSerialNo(), user);
+                    if (exBdf != null) {
+                        //trying to duplicate
+                        addFieldError("duplicateSerialNumberError", getText("p1.duplicateSerialNumber.label"));
+                        pageNo = 0;
+                    }
                     if (birthType == BirthDeclaration.BirthType.LIVE) {
                         service.editLiveBirthDeclaration(bdf, true, user);
                     } else if (birthType == BirthDeclaration.BirthType.STILL) {
