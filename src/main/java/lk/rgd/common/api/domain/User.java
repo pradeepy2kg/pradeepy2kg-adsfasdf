@@ -155,7 +155,7 @@ public class User implements Serializable {
      * The Locations assigned to this user
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<UserLocation> locations = new ArrayList<UserLocation>();
+    private Set<UserLocation> locations = new HashSet<UserLocation>();
 
     @Column
     private String sienSignatureText;
@@ -304,11 +304,11 @@ public class User implements Serializable {
         this.lifeCycleInfo = lifeCycleInfo;
     }
 
-    public List<UserLocation> getLocations() {
+    public Set<UserLocation> getLocations() {
         return locations;
     }
 
-    public void setLocations(List<UserLocation> locations) {
+    public void setLocations(Set<UserLocation> locations) {
         this.locations = locations;
     }
 

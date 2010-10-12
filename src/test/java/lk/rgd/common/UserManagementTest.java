@@ -156,6 +156,6 @@ public class UserManagementTest extends TestCase {
 
         newUser4 = userManager.getUserByID("newUser4");
         Assert.assertEquals(1, newUser4.getLocations().size());
-        Assert.assertEquals(ul.getLocation().getLocationUKey(), newUser4.getLocations().get(0).getLocation().getLocationUKey());
+        Assert.assertEquals(ul.getLocation().getLocationUKey(), newUser4.getLocations().iterator().next().getLocation().getLocationUKey());
     }
 }
