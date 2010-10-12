@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import lk.rgd.UnitTestManager;
 import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
 import lk.rgd.common.core.AuthorizationException;
@@ -37,6 +38,7 @@ public class BirthRegistrationServiceTest extends TestCase {
     protected final CertificateSearchService certSearchSvc;
     protected final BDDivisionDAO bdDivisionDAO;
     protected final CountryDAO countryDAO;
+    protected final RaceDAO raceDAO;
     protected final UserManager userManager;
     protected final BDDivision colomboBDDivision;
     protected final BDDivision negamboBDDivision;
@@ -61,6 +63,7 @@ public class BirthRegistrationServiceTest extends TestCase {
         certSearchSvc = (CertificateSearchService) ctx.getBean("certificateSearchService", CertificateSearchService.class);
         bdDivisionDAO = (BDDivisionDAO) ctx.getBean("bdDivisionDAOImpl", BDDivisionDAO.class);
         countryDAO = (CountryDAO) ctx.getBean("countryDAOImpl", CountryDAO.class);
+        raceDAO = (RaceDAO) ctx.getBean("raceDAOImpl", RaceDAO.class);
         userManager = (UserManager) ctx.getBean("userManagerService", UserManager.class);
 
         try {
@@ -686,27 +689,29 @@ public class BirthRegistrationServiceTest extends TestCase {
         BirthDeclaration bdf1 = getMinimalBDF(2010106015, dob.getTime(), colomboBDDivision);
 
         // set child name to one word
-        bdf1.getChild().setChildFullNameOfficialLang("සමන්");
-        bdf1.getChild().setChildFullNameEnglish("Saman");
+        bdf1.getChild().setChildFullNameOfficialLang("සමන් ප්‍රියශාන් යෝෂි");
+        bdf1.getChild().setChildFullNameEnglish("SAMAN PRIYASHAN YOSHI");
 
-        bdf1.getParent().setMotherFullName("Mother full name");
-        bdf1.getParent().setMotherDOB(DateTimeUtils.getDateFromISO8601String("1975-12-07"));
-        bdf1.getParent().setMotherAddress("Address of mother");
+        bdf1.getParent().setMotherFullName("වේඩික්කාරගේ සුමනාවතී");
+        bdf1.getParent().setMotherDOB(DateTimeUtils.getDateFromISO8601String("1984-02-21"));
+        bdf1.getParent().setMotherAddress("23 පන්සල් වත්ත පාර, රාහුලගම");
         bdf1.getParent().setMotherNICorPIN("755011236V");
-        bdf1.getParent().setMotherPlaceOfBirth("Mother place of birth");
-        bdf1.getParent().setFatherFullName("Japanese Father full name 1");
-        bdf1.getParent().setFatherDOB(DateTimeUtils.getDateFromISO8601String("1975-07-29"));
-        bdf1.getParent().setFatherCountry(countryDAO.getCountry(2));
-        bdf1.getParent().setFatherPassportNo("M1604104");
-        bdf1.getParent().setFatherPlaceOfBirth("Father place of birth");
+        bdf1.getParent().setMotherPlaceOfBirth("පේරාදෙණිය ශික්ෂණ රෝහල");
+        bdf1.getParent().setMotherRace(raceDAO.getRace(1));
 
-        bdf1.getInformant().setInformantName("Mother full name");
-        bdf1.getInformant().setInformantAddress("Address of mother");
-        bdf1.getInformant().setInformantNICorPIN("755011235V");
+        bdf1.getParent().setFatherFullName("ෂින් ක්වාන් යෝෂි");
+        bdf1.getParent().setFatherDOB(DateTimeUtils.getDateFromISO8601String("1982-12-23"));
+        bdf1.getParent().setFatherCountry(countryDAO.getCountry(2));    // japan
+        bdf1.getParent().setFatherPassportNo("M1604104");
+        bdf1.getParent().setFatherPlaceOfBirth("යොකොහාමා ජපානය    ");
+        bdf1.getParent().setFatherRace(raceDAO.getRace(11)); // other foreigner
+
+        bdf1.getInformant().setInformantName("වේඩික්කාරගේ සුමනාවතී");
+        bdf1.getInformant().setInformantAddress("23 පන්සල් වත්ත පාර, රාහුලගම");
         bdf1.getInformant().setInformantType(InformantInfo.InformantType.MOTHER);
 
         bdf1.getMarriage().setDateOfMarriage(DateTimeUtils.getDateFromISO8601String("2010-01-21"));
-        bdf1.getMarriage().setPlaceOfMarriage("Place of marriage");
+        bdf1.getMarriage().setPlaceOfMarriage("යොකොහාමා");
 
         birthRegSvc.addLiveBirthDeclaration(bdf1, false, deoColomboColombo);
 

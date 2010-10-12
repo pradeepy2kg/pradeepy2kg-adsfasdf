@@ -28,7 +28,7 @@ public class PINGeneratorImpl implements PINGenerator {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public int generateTemporaryPINNumber(Date dob, boolean male) {
+    public long generateTemporaryPINNumber(Date dob, boolean male) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dob);
         cal.add(Calendar.YEAR, 600);
@@ -39,16 +39,14 @@ public class PINGeneratorImpl implements PINGenerator {
      * @inheritDoc
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public int generatePINNumber(Date dob, boolean male) {
-
-        logger.debug("Generating a PIN number for DOB : {}", dob);
+    public long generatePINNumber(Date dob, boolean male) {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(dob);
         int year = cal.get(Calendar.YEAR); // returns a 4 digit year e.g. 2010
         int dayOfYear = cal.get(Calendar.DAY_OF_YEAR); // returns the day of the year
 
-        int dateOfBirth;
+        long dateOfBirth;
         if (year < 1900 || year > 2900) {
             logger.error("Unsupported century for year of birth : {}", year);
             throw new IllegalArgumentException("Unsupported century for year of birth : " + year);
@@ -79,18 +77,23 @@ public class PINGeneratorImpl implements PINGenerator {
         }
         dateOfBirth = (dateOfBirth * 1000) + dayOfYear;
 
-        PINNumber lastPINNumber = pinNumberDAO.getLastPINNumber(dateOfBirth);
+        PINNumber lastPINNumber = pinNumberDAO.getLastPINNumber((int) dateOfBirth);
+        long result = 0;
+
         if (lastPINNumber != null) {
             int newSerial = lastPINNumber.getLastSerial() + 1;
             lastPINNumber.setLastSerial(newSerial);
             pinNumberDAO.updateLastPINNumber(lastPINNumber);
-            return (dateOfBirth * 10000) + newSerial;
+            result = (dateOfBirth * 10000) + newSerial;
         } else {
             lastPINNumber = new PINNumber();
-            lastPINNumber.setDateOfBirth(dateOfBirth);
+            lastPINNumber.setDateOfBirth((int) dateOfBirth);
             lastPINNumber.setLastSerial(1);
             pinNumberDAO.addLastPINNumber(lastPINNumber);
-            return (dateOfBirth * 10000) + 1;
+            result = (dateOfBirth * 10000) + 1;
         }
+
+        logger.debug("Generated PIN number {} for DOB : {}", result, dob);
+        return result;
     }
 }

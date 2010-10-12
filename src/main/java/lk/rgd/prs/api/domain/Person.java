@@ -22,6 +22,8 @@ import java.util.Set;
 })
 public class Person implements Serializable {
 
+    private static String[] EMPTY_NAME = new String[2];
+
     /**
      * Record status
      * Verified records are known to be accurate
@@ -258,6 +260,7 @@ public class Person implements Serializable {
 
     public void setFullNameInOfficialLanguage(String fullNameInOfficialLanguage) {
         this.fullNameInOfficialLanguage = fullNameInOfficialLanguage;
+        setInitialsAndLastnameOfficial(fullNameInOfficialLanguage);
     }
 
     public String getFullNameInEnglishLanguage() {
@@ -266,6 +269,7 @@ public class Person implements Serializable {
 
     public void setFullNameInEnglishLanguage(String fullNameInEnglishLanguage) {
         this.fullNameInEnglishLanguage = fullNameInEnglishLanguage;
+        setInitialsAndLastnameEnglish(fullNameInEnglishLanguage);
     }
 
     public String getLastNameInEnglish() {
@@ -457,5 +461,39 @@ public class Person implements Serializable {
 
     public void setRace(Race race) {
         this.race = race;
+    }
+
+    private void setInitialsAndLastnameEnglish(String fullname) {
+        if (fullname != null && !isEmptyString(fullname)) {
+            String[] names = fullname.split(" ");
+            lastNameInEnglish = names[names.length - 1];
+
+            StringBuilder sb = new StringBuilder(16);
+            for (int i = 0; i < names.length - 1; i++) {
+                if (!isEmptyString(names[i])) {
+                    sb.append(names[i].charAt(0)).append(". ");
+                }
+            }
+            initialsInEnglish = sb.toString();
+        }
+    }
+
+    private void setInitialsAndLastnameOfficial(String fullname) {
+        if (fullname != null && !isEmptyString(fullname)) {
+            String[] names = fullname.split(" ");
+            lastNameInOfficialLanguage = names[names.length - 1];
+
+            StringBuilder sb = new StringBuilder(16);
+            for (int i = 0; i < names.length - 1; i++) {
+                if (!isEmptyString(names[i])) {
+                    sb.append(names[i].charAt(0)).append(". ");
+                }
+            }
+            initialsInOfficialLanguage = sb.toString();
+        }
+    }
+
+    private static final boolean isEmptyString(String s) {
+        return s == null || s.trim().length() == 0;
     }
 }
