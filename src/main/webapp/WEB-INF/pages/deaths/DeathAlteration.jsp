@@ -294,18 +294,22 @@ $(function() {
         maximize("death-person-info");
     });
     $('#death-info-check').click(function() {
-        /*
-         document.getElementById("death-info-check").disabled = true;
-         */
+
+/*
+        document.getElementById("death-info-check").disabled = true;
+*/
+
         var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
                 'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
         enableFields(fieldIds);
     });
 
     $('#death-person-info-check').click(function() {
-        /*
-         document.getElementById("death-person-info-check").disabled = true;
-         */
+
+/*
+        document.getElementById("death-person-info-check").disabled = true;
+*/
+
         var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
                 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
         enableFields(fieldIds);
@@ -359,9 +363,9 @@ function initPage() {
         document.getElementById(checkIdNames[i]).style.display = 'none';
         document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
     }
-/*    for (var i = 0; i < fieldIds.length; i++) {
+    for (var i = 0; i < fieldIds.length; i++) {
         document.getElementById(fieldIds[i]).disabled = true;
-    }*/
+    }
 }
 </script>
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
@@ -693,7 +697,8 @@ function initPage() {
                 ICD Code of cause
             </td>
             <td>
-                <s:textfield name="deathAlteration.deathInfo.icdCodeOfCause" value="%{deathRegister.death.icdCodeOfCause}"
+                <s:textfield name="deathAlteration.deathInfo.icdCodeOfCause"
+                             value="%{deathRegister.death.icdCodeOfCause}"
                              cssStyle="width:225px;" id="ICD_code"/>
             </td>
         </tr>
@@ -779,10 +784,10 @@ function initPage() {
                 Country
             </td>
             <td align="center">
-                    <%--  <s:select id="deathPersonCountryList" name="deathRegister.deathPerson.deathPersonCountry"
-                    list="countryList"
-                    headerKey="0"
-                    headerValue="%{getText('select_country.label')}"/>--%>
+<%--                <s:select id="deathPersonCountryList" name="deathRegister.deathPerson.deathPersonCountry"
+                          list="countryList"
+                          headerKey="0"
+                          headerValue="%{getText('select_country.label')}"/>--%>
             </td>
         </tr>
         <tr>
@@ -822,9 +827,9 @@ function initPage() {
                 Race
             </td>
             <td colspan="2" align="center">
-                    <%-- <s:select list="raceList" name="deathRegister.deathPerson.deathPersonRace" headerKey="0"
-                   headerValue="%{getText('select_race.label')}"
-                   cssStyle="width:200px;" id="deathPersonRaceList"/>--%>
+<%--                <s:select list="raceList" name="deathRegister.deathPerson.deathPersonRace" headerKey="0"
+                          headerValue="%{getText('select_race.label')}"
+                          cssStyle="width:200px;" id="deathPersonRaceList"/>--%>
             </td>
         </tr>
         <tr>
@@ -933,25 +938,25 @@ function initPage() {
         </td>
     </tr>
     <tr>
-        <td style="width:5%"><s:checkbox name="bcOfFather"/></td>
+        <td style="width:5%"><s:checkbox name="deathAlteration.bcOfFather"/></td>
         <td style="width:90%"><s:label
                 value=" පියාගේ උප්පැන්න සහතිකය  / in Tamil / Fathers Birth Certificate"
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td style="width:5%"><s:checkbox name="bcOfMother"/></td>
+        <td style="width:5%"><s:checkbox name="deathAlteration.bcOfMother"/></td>
         <td style="width:90%"><s:label
                 value="මවගේ උප්පැන්න සහතිකය / in Tamil / Mothers Birth Certificate"
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td style="width:5%"><s:checkbox name="mcOfParents"/></td>
+        <td style="width:5%"><s:checkbox name="deathAlteration.mcOfParents"/></td>
         <td style="width:90%"><s:label
                 value=" මව්පියන්ගේ විවාහ සහතිකය / in Tamil / Parents Marriage Certificate"
                 cssStyle="margin-left:5px;"/></td>
     </tr>
     <tr>
-        <td colspan="2" style="width:98%"><s:textarea name="otherDocuments" cssStyle="width:98%"/></td>
+        <td colspan="2" style="width:98%"><s:textarea name="deathAlteration.otherDocuments" cssStyle="width:98%"/></td>
     </tr>
 </table>
 <br>

@@ -104,8 +104,10 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
                 approvalBitSet.set(aKey, true);
             }
         }
-        //setting bit set
-        da.setApprovalStatuses(approvalBitSet);
+        //merge  with exsisting
+        BitSet ex = da.getApprovalStatuses();
+        ex.or(approvalBitSet);
+        da.setApprovalStatuses(ex);
         //setting state
         //true means fully
         if (appStatus) {

@@ -65,7 +65,7 @@ public interface DeathAlterationService {
     public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId);
 
     /**
-     * todo
+     * get death alteration object list by death id(forign key for death alteration)
      *
      * @param deathId
      * @param user
