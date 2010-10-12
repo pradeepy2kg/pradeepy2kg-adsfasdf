@@ -231,6 +231,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     } else if (birthType == BirthDeclaration.BirthType.BELATED) {
                         service.editBelatedBirthDeclaration(bdf, true, user);
                     }
+                    addActionMessage(getText("edit.Data.Save.Success.label"));
                 }
                 session.remove(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
                 session.remove(WebConstants.SESSION_OLD_BD_FOR_ADOPTION);
