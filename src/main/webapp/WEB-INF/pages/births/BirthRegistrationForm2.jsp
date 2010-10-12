@@ -119,17 +119,29 @@ $(function() {
         var day = id.substring(2, 5);
         var BirthYear = 19 + id.substring(0, 2);
         var D = new Date(BirthYear) ;
-
         if ((id.search(regNIC) == 0) && (day >= 501 && day <= 866)) {
-            D.setDate(D.getDate() + id.substring(2, 5) - 1500);
-            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth() , D.getDate()));
+            if ((day > 559) && ((D.getFullYear() % 4) != 0 )) {
+                day = id.substring(2, 5) - 2;
+                D.setDate(D.getDate() + day - 500);
+            } else {
+                D.setDate(D.getDate() + day - 1500);
+            }
+            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
         } else if ((id.search(regNIC) == 0) && (day > 0 && day <= 366)) {
-            D.setDate(D.getDate() + id.substring(2, 5) - 1000);
-            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth() , D.getDate()));
+            if ((day > 59) && ((D.getFullYear() % 4) != 0 )) {
+                day = id.substring(2, 5) - 2;
+                D.setDate(D.getDate() + day);
+            } else {
+                D.setDate(D.getDate() + day - 1000);
+            }
+
+            datePicker.datepicker('setDate', new Date(D.getYear(), D.getMonth(), D.getDate()));
         } else {
             alert(error);
         }
-    };
+    }
+
+    ;
 
     $('#mother_lookup').click(function() {
         var child_bday = new Date(document.getElementById('childDateOfBirth').value);
