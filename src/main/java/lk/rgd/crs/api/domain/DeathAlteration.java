@@ -22,9 +22,9 @@ import java.util.Date;
 
 public class DeathAlteration {
 
-    public static final int SUDDEN_DEATH = 1;
-    public static final int DATE_OF_DEATH = 2;
-    public static final int TIME_OF_DEATH = 3;
+    public static final int SUDDEN_DEATH = 10;
+    public static final int DATE_OF_DEATH = 11;
+    public static final int TIME_OF_DEATH = 12;
     public static final int PLACE_OF_DEATH_OFFICIAL = 4;
     public static final int PLACE_OF_DEATH_ENGLISH = 5;
     public static final int CAUSE_OF_DEATH_ESTABLISHED = 6;

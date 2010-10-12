@@ -26,7 +26,7 @@ public class BirthRegisterInfo implements Serializable {
     /**
      * This is the serial number captured from the BDF
      */
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = true)
     private Long bdfSerialNo;
 
     /**

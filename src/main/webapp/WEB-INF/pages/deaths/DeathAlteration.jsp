@@ -295,9 +295,9 @@ $(function() {
     });
     $('#death-info-check').click(function() {
 
-/*
-        document.getElementById("death-info-check").disabled = true;
-*/
+        /*
+         document.getElementById("death-info-check").disabled = true;
+         */
 
         var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
                 'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
@@ -306,9 +306,9 @@ $(function() {
 
     $('#death-person-info-check').click(function() {
 
-/*
-        document.getElementById("death-person-info-check").disabled = true;
-*/
+        /*
+         document.getElementById("death-person-info-check").disabled = true;
+         */
 
         var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
                 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
@@ -354,6 +354,8 @@ function initPage() {
             'passportNumber', 'deathAge', 'deathPersonGender', 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic',
             'fatherName', 'fatherNIC', 'motherName', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue'
             );
+
+    //set serial number
 
     for (var i = 0; i < idNames.length; i++) {
         document.getElementById(idNames[i]).style.display = 'none';
@@ -562,10 +564,10 @@ function initPage() {
         </td>
         <td style="width:20%;text-align:right;border-right:none">
             <div id="death-info-check-lable">
-                <s:label value="%{getText('edit.lable')}"/></div>
+                    <%-- <s:label value="%{getText('edit.lable')}"/></div>--%>
         </td>
         <td style="border-right:none;width:3%">
-            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
+                <%-- <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>--%>
         </td>
         <td style="width:2%;border-left:none">
             <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
@@ -576,7 +578,7 @@ function initPage() {
 <br>
 
 <div id="death-info">
-    <table border="1" style="margin-top:0px;width:100%;border:1px solid #000;border-collapse:collapse;"
+    <table border="1" style="margin-top:1px;width:100%;border:1px solid #000;border-collapse:collapse;"
            cellpadding="2px">
         <caption></caption>
         <col/>
@@ -732,12 +734,12 @@ function initPage() {
             <s:label value="Information about the person Departed"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-            <div id="death-person-info-check-lable">
-                <s:label value="%{getText('edit.lable')}"/></div>
+                <%--            <div id="death-person-info-check-lable">
+               <s:label value="%{getText('edit.lable')}"/></div>--%>
         </td>
         <td style="border-right:none;width:3%">
 
-            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
+                <%--            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>--%>
 
         </td>
         <td style="width:2%">
@@ -784,10 +786,10 @@ function initPage() {
                 Country
             </td>
             <td align="center">
-<%--                <s:select id="deathPersonCountryList" name="deathRegister.deathPerson.deathPersonCountry"
+                <s:select id="deathPersonCountryList" name="deathPersonCountry" value=""
                           list="countryList"
                           headerKey="0"
-                          headerValue="%{getText('select_country.label')}"/>--%>
+                          headerValue="%{getText('select_country.label')}"/>
             </td>
         </tr>
         <tr>
@@ -827,9 +829,9 @@ function initPage() {
                 Race
             </td>
             <td colspan="2" align="center">
-<%--                <s:select list="raceList" name="deathRegister.deathPerson.deathPersonRace" headerKey="0"
-                          headerValue="%{getText('select_race.label')}"
-                          cssStyle="width:200px;" id="deathPersonRaceList"/>--%>
+                             <s:select list="raceList" name="deathPersonRace" headerKey="0"
+                   headerValue="%{getText('select_race.label')}"
+                   cssStyle="width:200px;" id="deathPersonRaceList"/>
             </td>
         </tr>
         <tr>
@@ -993,7 +995,7 @@ function initPage() {
         </td>
         <td align="center"><s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                                     list="#@java.util.HashMap@{'FATHER':''}"
-                                    onchange="setInformPerson('','');"
+                                    onchange="setInformPerson('','','','','');"
                                     value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td align="center">
@@ -1005,7 +1007,7 @@ function initPage() {
                 <%--todo change--%>
             <s:radio id="declarantType" name="deathRegister.declarant.declarantType"
                      list="#@java.util.HashMap@{'SPOUSE':''}"
-                     onchange="setInformPerson('','');" value="%{deathRegister.declarant.declarantType}"/>
+                     onchange="setInformPerson('','','','','');" value="%{deathRegister.declarant.declarantType}"/>
         </td>
         <td>
             සහෝදරයා සහෝදරිය <br>
