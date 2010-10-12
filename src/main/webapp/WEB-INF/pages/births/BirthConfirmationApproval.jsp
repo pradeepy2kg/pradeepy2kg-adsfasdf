@@ -223,7 +223,6 @@
                         <s:if test="child.childFullNameOfficialLang != null">
                             <%= NameFormatUtil.getDisplayName((String) request.getAttribute("child.childFullNameOfficialLang"), 40)%>
                         </s:if>
-                        <%--<s:property value="%{child.getChildFullNameOfficialLangToLength(50)}"/>--%>
                     </td>
                     <td><s:property value="confirmant.confirmationProcessedTimestamp"/></td>
                     <td align="center">

@@ -32,14 +32,14 @@ public interface UserDAO {
      * Add a user
      *
      * @param userToCreate the user to be added
-     * @param adminUser the admin user performing the operation
+     * @param adminUser    the admin user performing the operation
      */
     public void addUser(User userToCreate, User adminUser);
 
     /**
      * Update a user
      *
-     * @param user the updated user
+     * @param user      the updated user
      * @param adminUser the admin user performing the operation
      */
     public void updateUser(User user, User adminUser);

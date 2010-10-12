@@ -1,5 +1,7 @@
 package lk.rgd.common.api.domain;
 
+import lk.rgd.AppConstants;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -149,5 +151,31 @@ public class Location implements Serializable {
 
     public void setTaenLocationSignature(String taenLocationSignature) {
         this.taenLocationSignature = taenLocationSignature;
+    }
+
+    public String getLocationName(String language) {
+        StringBuilder sb = new StringBuilder();
+        if (AppConstants.SINHALA.equals(language)) {
+            sb.append(this.getSiLocationName());
+            sb.append(" / ");
+            sb.append(this.getEnLocationName());
+        } else if (AppConstants.TAMIL.equals(language)) {
+            sb.append(this.getTaLocationName());
+            sb.append(" / ");
+            sb.append(this.getEnLocationName());
+        } else {
+            sb = null;
+        }
+        return sb.toString();
+    }
+
+    public String getLocationSignature(String language) {
+        if (AppConstants.SINHALA.equals(language)) {
+            return this.getSienLocationSignature();
+        } else if (AppConstants.TAMIL.equals(language)) {
+            return this.getTaenLocationSignature();
+        } else {
+            return null;
+        }
     }
 }

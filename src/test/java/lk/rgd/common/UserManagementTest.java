@@ -128,14 +128,15 @@ public class UserManagementTest extends TestCase {
         }
 
         // user locations testing
-        for (int i=0; i<10; i++) {
+        // TODO 
+        /*for (int i=0; i<10; i++) {
             Location location = new Location();
             location.setLocationCode(i);
             location.setEnLocationName("Location " + i);
             location.setSiLocationName("@Location " + i + "@");
             location.setTaLocationName("#Location " + i + "#");
             masterDataManagementService.addLocation(location, admin);
-        }
+        }*/
 
         User newUser4 = new User();
         newUser4.setUserId("newUser4");

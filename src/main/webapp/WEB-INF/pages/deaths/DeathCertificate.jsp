@@ -37,6 +37,8 @@
         <s:url id="print" action="eprMarkDeathCertificateSearch.do">
             <s:param name="idUKey" value="#request.idUKey"/>
         </s:url>
+        <s:url id="cancel" action="eprDeathCertificateSearch.do">
+        </s:url>
     </s:if>
     <s:else>
         <s:url id="print" action="eprPrintDeathCertificate.do">
@@ -48,15 +50,15 @@
             <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
             <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
         </s:url>
+        <s:url id="cancel" action="eprDeathBackToPreviousState.do">
+            <s:param name="nextFlag" value="%{#request.nextFlag}"/>
+            <s:param name="previousFlag" value="%{#request.previousFlag}"/>
+            <s:param name="pageNo" value="%{#request.pageNo}"/>
+            <s:param name="currentStatus" value="%{#request.currentStatus}"/>
+            <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
+            <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
+        </s:url>
     </s:else>
-    <s:url id="cancel" action="eprDeathBackToPreviousState.do">
-        <s:param name="nextFlag" value="%{#request.nextFlag}"/>
-        <s:param name="previousFlag" value="%{#request.previousFlag}"/>
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="currentStatus" value="%{#request.currentStatus}"/>
-        <s:param name="dsDivisionId" value="%{#request.dsDivisionId}"/>
-        <s:param name="deathDivisionId" value="%{#request.deathDivisionId}"/>
-    </s:url>
 </s:else>
 <s:if test="#request.allowPrintCertificate">
     <div id="birthRegistration-page" class="form-submit" style="margin-top:15px;float:right;">

@@ -31,8 +31,8 @@
     </servlet>
 
     <servlet>
-        <servlet-name>LocationLookupService</servlet-name>
-        <servlet-class>lk.rgd.crs.web.JSONLocationLookupService</servlet-class>
+        <servlet-name>CertSignUserLookupService</servlet-name>
+        <servlet-class>lk.rgd.crs.web.JSONCertSignUserLookupService</servlet-class>
     </servlet>
     
     <servlet-mapping>
@@ -46,8 +46,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>LocationLookupService</servlet-name>
-        <url-pattern>/crs/LocationLookupService</url-pattern>
+        <servlet-name>CertSignUserLookupService</servlet-name>
+        <url-pattern>/crs/CertSignUserLookupService</url-pattern>
     </servlet-mapping>
 
     <filter-mapping>

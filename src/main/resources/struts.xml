@@ -479,7 +479,6 @@
             <result type="redirectAction" name="success">
                 <param name="actionName">eprBirthCertificateSearch</param>
             </result>
-            <!--<result type="tiles" name="success">epr.certificateSearch</result>-->
         </action>
     </package>
 

@@ -36,27 +36,49 @@
             var id = $("select#locationId").attr('value');
             var options = '';
             if (id > 0) {
-                $.getJSON('/ecivil/crs/LocationLookupService', {userLocationId:id},
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:1,certificateId:0},
                         function(data) {
                             var users = data.authorizedUsers;
-                            options += '<option value="' + 0 + '"> Select Person</option>';
                             for (var i = 0; i < users.length; i++) {
                                 options += '<option value="' + users[i].optionValue + '">' + users[i].optionDisplay + '</option>';
                             }
-                            $("select#userListId").html(options);
+                            $("select#issueUserId").html(options);
+
+                            var id = $('select#locationId').attr('value');
+                            var user = $('select#issueUserId').attr('value');
+                            var certId = $('label#certificateId').text();
+                            alert(id + " " + user + " " + certId)
+                            $("text#user").html(user);
+                            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
+                                    function(data) {
+                                        var officerSign = data.officerSignature;
+                                        var locationSign = data.locationSignature;
+                                        var location = data.locationName;
+                                        $("label#signature").html(officerSign);
+                                        $("label#placeSign").html(locationSign);
+                                        $("label#placeName").html(location);
+                                    });
                         });
+
             } else {
-                options += '<option value="' + 0 + '"> Select Person</option>';
-                $("select#userListId").html(options);
+                $("select#issueUserId").html(options);
             }
         });
 
-        $('select#userListId').bind('change', function(evt2) {
-            var id = $('select#userListId').attr('value');
-            var options = "User Signature " + id;
-            $('label#signature').html(options);
-            var place = $('select#locationId').attr('value');
-            $('label#placeOfIssue').html(place);
+        $('select#issueUserId').bind('change', function(evt2) {
+            var id = $('select#locationId').attr('value');
+            var user = $('select#issueUserId').attr('value');
+            var certId = $('label#certificateId').text();
+            $("text#user").html(user);
+            $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
+                    function(data) {
+                        var officerSign = data.officerSignature;
+                        var locationSign = data.locationSignature;
+                        var location = data.locationName;
+                        $("label#signature").html(officerSign);
+                        $("label#placeSign").html(locationSign);
+                        $("label#placeName").html(location);
+                    });
         });
     });
 
@@ -65,22 +87,21 @@
 </script>
 
 <div id="birth-certificate-outer">
+
 <s:if test="directPrint">
-    <s:url id="print" action="eprDirectPrintBirthCertificate.do">
-        <s:param name="bdId" value="#request.bdId"/>
-    </s:url>
+    <s:url id="print" value="eprDirectPrintBirthCertificate.do"/>
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
 </s:if>
 <s:else>
     <s:if test="#request.certificateSearch">
-        <s:url id="print" action="eprMarkBirthCertificateSearch.do">
-            <s:param name="idUKey" value="#request.idUKey"/>
+        <s:url id="print" value="eprMarkBirthCertificateSearch.do"/>
+        <s:url id="cancel" action="eprBirthCertificateSearch.do">
         </s:url>
     </s:if>
     <s:else>
-        <s:url id="print" action="eprMarkCertificateAsPrinted.do">
+        <s:url id="print" value="eprMarkCertificateAsPrinted.do"/>
+        <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
             <s:param name="pageNo" value="%{#request.pageNo}"/>
-            <s:param name="bdId" value="%{#request.bdId}"/>
             <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
             <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
             <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
@@ -88,42 +109,44 @@
             <s:param name="printStart" value="#request.printStart"/>
         </s:url>
     </s:else>
-    <s:url id="cancel" action="eprBirthCancelCertificatePrint.do">
-        <s:param name="pageNo" value="%{#request.pageNo}"/>
-        <s:param name="birthDistrictId" value="#request.register.birthDivision.dsDivision.district.districtUKey"/>
-        <s:param name="birthDivisionId" value="#request.register.birthDivision.bdDivisionUKey"/>
-        <s:param name="dsDivisionId" value="#request.register.birthDivision.dsDivision.dsDivisionUKey"/>
-        <s:param name="printed" value="#request.printed"/>
-        <s:param name="printStart" value="#request.printStart"/>
-    </s:url>
 </s:else>
-
-<div style="width:60%;float:left;margin-top:5px;" id="locationSignId">
+<div style="width:65%;float:left;margin-top:5px;" id="locationSignId">
+    <s:form action="%{print}" method="post">
     <s:if test="register.status.ordinal() == 8">
         <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
-            <legend><b><s:label value="Select Option"/></b></legend>
+            <legend><b><s:label value="%{getText('selectoption.label')}"/></b></legend>
             <table>
                 <tr>
-                    <td>Place</td>
                     <td>
-                            <%--<s:select id="locationId" list="locationList" headerKey="0" headerValue="Select Place"/>--%>
-                        <s:select id="locationId" list="{'1','2'}" headerKey="0" headerValue="Select Place"/>
+                        <s:label value="%{getText('placeOfIssue.label')}"/>
                     </td>
-                    <td width="10%"></td>
-                    <td>Assigned Person</td>
                     <td>
-                        <s:select id="userListId" list="userList" headerKey="0" headerValue="Select Person"/>
+                        <s:select id="locationId" name="locationId" list="locationList" cssStyle="width:300px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><s:label value="%{getText('signOfficer.label')}"/></td>
+                    <td>
+                        <s:select id="issueUserId" name="issueUserId" list="userList" cssStyle="width:300px;"/>
                     </td>
                 </tr>
             </table>
         </fieldset>
     </s:if>
 </div>
+    <%--TODO remove--%>
+<s:hidden name="idUKey" value="%{#request.idUKey}"/>
 
-<div style="width:40%;float:right;">
+<s:hidden name="pageNo" value="%{#request.pageNo}"/>
+<s:hidden name="bdId" value="%{#request.bdId}"/>
+<s:hidden name="birthDistrictId" value="%{#request.register.birthDivision.dsDivision.district.districtUKey}"/>
+<s:hidden name="birthDivisionId" value="%{#request.register.birthDivision.bdDivisionUKey}"/>
+<s:hidden name="dsDivisionId" value="%{#request.register.birthDivision.dsDivision.dsDivisionUKey}"/>
+
+<div style="width:35%;float:left;">
     <s:if test="#request.allowPrintCertificate">
-        <div class="form-submit" style="margin:15px 0 0 10px; ">
-            <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+        <div class="form-submit" style="margin:5px 0 0 5px;">
+            <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
         </div>
         <div class="form-submit">
             <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
@@ -135,7 +158,7 @@
     </div>
 </div>
 
-<table style="width: 100%; border:none; border-collapse:collapse;">
+<table style="width:100%; border:none; border-collapse:collapse;">
     <col width="300px">
     <col width="400px">
     <col width="340px">
@@ -153,9 +176,10 @@
                     <td>සහතික පත්‍රයේ අංකය<br>சான்றிதழ் இல<br>Certificate Number</td>
                 </tr>
                 <tr height="40px">
-                    <td align="center"><s:label name="register.bdfSerialNo"
-                                                cssStyle="font-size:11pt;"/></td>
-                    <td align="center"><s:label name="bdId" cssStyle="font-size:11pt;"/></td>
+                    <td align="center"><s:property value="%{#page.location}"/>
+                        <s:label name="register.bdfSerialNo" cssStyle="font-size:11pt;"/>
+                    </td>
+                    <td align="center"><s:label id="certificateId" name="bdId" cssStyle="font-size:11pt;"/></td>
                 </tr>
             </table>
         </td>
@@ -179,7 +203,7 @@
     </tbody>
 </table>
 
-<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:30px 0;font-size:10pt">
+<table border="1" style="width: 100%; border:1px solid #000; border-collapse:collapse; margin:10px 0;font-size:10pt">
     <col width="185px">
     <col width="230px">
     <col width="180px">
@@ -394,15 +418,15 @@
             Name, Signature and Designation of certifying officer
         </td>
         <td colspan="2" style="font-size:12pt">
-            <s:label id="signature" value="%{#request.register.confirmantFullName}"/>
+            <s:label id="signature" value="%{#request.register.originalBCIssueUserSignPrint}"/>
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="70px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        <td colspan="2" height="60px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
-        <td colspan="2">
-            <s:label id="placeOfIssue" value="%{#request.register.originalBCPlaceOfIssuePrint}"
-                     cssStyle="font-size:11pt;"/>
+        <td colspan="2" cssStyle="font-size:11pt;">
+            <s:label id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}"/><br>
+            <s:label id="placeName" value="%{#request.register.originalBCPlaceOfIssuePrint}"/>
         </td>
     </tr>
     </tbody>
@@ -414,7 +438,7 @@
     பிறப்பு இறப்பு பதிவு செய்யும் சட்டத்தின்(110 ஆம் அத்தியாயத்தின்) கீழ் பதிவாளர் நாயகம் திணைக்களத்தினால் வழங்கப்பட்டது<br>
     Issued by Registrar General's Department according to Birth and Death Registration Act (Chapter 110)
 </p>
-<%--<br>--%>
+
 <div style="page-break-after:always;">
 </div>
 <hr style="border-style:dashed ; float:left;width:100% ;margin-bottom:30px;margin-top:30px;">
@@ -462,7 +486,6 @@
         </td>
 
         <td style="text-align:right;margin-left:auto;margin-right:0;">
-            <%--<%= DateTimeUtils.getISO8601FormattedString(new Date()) %>--%>
         </td>
     </tr>
     </tbody>
@@ -471,8 +494,8 @@
 <br><br>
 
 <s:if test="#request.allowPrintCertificate">
-    <div class="form-submit" style="margin:15px 0 0 10px; ">
-        <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
+    <div class="form-submit" style="margin:5px 0 0 5px; ">
+        <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
     </div>
     <div class="form-submit">
         <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
@@ -482,5 +505,7 @@
 <div class="form-submit" style="margin-top:15px;">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
 </div>
+</s:form>
+
 </div>
 <%-- Styling Completed --%>

@@ -8,8 +8,10 @@ import lk.rgd.common.api.dao.*;
 import lk.rgd.common.api.domain.AppParameter;
 import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
+import lk.rgd.common.api.domain.UserLocation;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
+import lk.rgd.common.util.NameFormatUtil;
 import lk.rgd.crs.api.bean.UserWarning;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.domain.*;
@@ -39,6 +41,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final BDDivisionDAO bdDivisionDAO;
     private final DSDivisionDAO dsDivisionDAO;
     private final AppParametersDAO appParametersDAO;
+    private final UserLocationDAO userLocationDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -48,7 +51,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private Map<Integer, String> allDistrictList;
     private Map<Integer, String> allDSDivisionList;
     private Map<Integer, String> locationList;
-    private Map<Integer, String> userList;
+    private Map<String, String> userList;
     private List<UserWarning> warnings;
     private List<BirthDeclaration> archivedEntryList;
 
@@ -124,8 +127,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-                               AppParametersDAO appParametersDAO) {
+        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -134,6 +137,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.bdDivisionDAO = bdDivisionDAO;
         this.dsDivisionDAO = dsDivisionDAO;
         this.appParametersDAO = appParametersDAO;
+        this.userLocationDAO = userLocationDAO;
     }
 
     /**
@@ -361,7 +365,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             populate(bdf);
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -475,7 +479,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -600,12 +604,12 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("bdId is {} ", bdId);
                 logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) ||
-                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
                     bcf = new BirthDeclaration();
-                    bdId=0;
+                    bdId = 0;
                 }
             }
             catch (Exception e) {
@@ -613,7 +617,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 addActionError(getText("cp1.error.entryNotAvailable"));
                 bdf = new BirthDeclaration();
                 bcf = new BirthDeclaration();
-                bdId=0;
+                bdId = 0;
             }
         } else {
             bdf = new BirthDeclaration(); // just go to the confirmation 1 page
@@ -653,21 +657,32 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
-                /* if (birthType == BirthDeclaration.BirthType.LIVE) {
-                    service.markLiveBirthCertificateAsPrinted(bdf, user);
-                } else if (birthType == BirthDeclaration.BirthType.STILL) {
-                    service.markStillBirthCertificateAsPrinted(bdf, user);
-                } else if (birthType == BirthDeclaration.BirthType.ADOPTION) {
-                    service.markAdoptionBirthCertificateAsPrinted(bdf, user);
-                }*/
-                beanPopulate(bdf);
 
+                beanPopulate(bdf);
                 String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
                 locationList = user.getActiveLocations(language);
-                userList = new HashMap();
+                if (!locationList.isEmpty()) {
+                    int selectedLocationId = locationList.keySet().iterator().next();
+                    userList = new HashMap<String, String>();
+                    // TODO temporaray solution have to change this after caching done for user locations
+                    for (User u : userLocationDAO.getBirthCertSignUsersByLocationId(selectedLocationId, true)) {
+                        userList.put(u.getUserId(), NameFormatUtil.getDisplayName(u.getUserName(), 50));
+                    }
+                }
+                if (bdf.getRegister().getOriginalBCIssueUser() == null &&
+                    bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
+                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
+                    UserLocation userLocation = userLocationDAO.getUserLocation(
+                        userList.keySet().iterator().next(), locationList.keySet().iterator().next());
+                    String prefLang = bdf.getRegister().getPreferredLanguage();
+
+                    bdf.getRegister().setOriginalBCIssueUserSignPrint(userLocation.getUser().getUserSignature(prefLang));
+                    bdf.getRegister().setOriginalBCPlaceOfIssueSignPrint(userLocation.getLocation().getLocationSignature(prefLang));
+                    bdf.getRegister().setOriginalBCPlaceOfIssuePrint(userLocation.getLocation().getLocationName(prefLang));
+                }
 
                 gender = child.getChildGenderPrint();
                 genderEn = GenderUtil.getGender(child.getChildGender(), AppConstants.ENGLISH);
@@ -676,12 +691,6 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 childDsDivision = register.getDsDivisionPrint();
                 childDsDivisionEn = register.getDsDivision().getEnDivisionName();
                 fatherRacePrint = parent.getFatherRacePrint();
-                //setting transiant value place of isse for printing
-//                User issuedUser = bdf.getLifeCycleInfo().getApprovalOrRejectUser();
-//                //get certifacte prefered language
-//                String lang = bdf.getRegister().getPreferredLanguage();
-//                String place = dsDivisionDAO.getNameByPK(issuedUser.getPrefBDDSDivision().getDsDivisionUKey(), lang);
-//                bdf.getRegister().setOriginalBCPlaceOfIssuePrint(place);
 
                 if (parent.getFatherRace() != null) {
                     fatherRacePrintEn = raceDAO.getNameByPK(parent.getFatherRace().getRaceId(), AppConstants.ENGLISH);
@@ -1455,11 +1464,11 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.locationList = locationList;
     }
 
-    public Map<Integer, String> getUserList() {
+    public Map<String, String> getUserList() {
         return userList;
     }
 
-    public void setUserList(Map<Integer, String> userList) {
+    public void setUserList(Map<String, String> userList) {
         this.userList = userList;
     }
 }

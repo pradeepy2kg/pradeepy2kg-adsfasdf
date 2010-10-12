@@ -49,14 +49,14 @@ public class BirthRegistrationServiceImpl implements
     private final UserManager userManager;
     private final BirthRecordsIndexer birthRecordsIndexer;
     private final AdoptionOrderDAO adoptionOrderDAO;
+    private final UserDAO userDAO;
     private final BirthDeclarationValidator birthDeclarationValidator;
 
     public BirthRegistrationServiceImpl(
         BirthDeclarationDAO birthDeclarationDAO, DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO,
-        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO,
-        PopulationRegistry ecivil, AppParametersDAO appParametersDAO, UserManager userManager,
-        BirthRecordsIndexer birthRecordsIndexer, AdoptionOrderDAO adoptionOrderDAO,
-        BirthDeclarationValidator birthDeclarationValidator) {
+        BDDivisionDAO bdDivisionDAO, CountryDAO countryDAO, RaceDAO raceDAO, PopulationRegistry ecivil,
+        AppParametersDAO appParametersDAO, UserManager userManager, BirthRecordsIndexer birthRecordsIndexer,
+        AdoptionOrderDAO adoptionOrderDAO, UserDAO userDAO, BirthDeclarationValidator birthDeclarationValidator) {
         this.birthDeclarationDAO = birthDeclarationDAO;
         this.districtDAO = districtDAO;
         this.dsDivisionDAO = dsDivisionDAO;
@@ -68,6 +68,7 @@ public class BirthRegistrationServiceImpl implements
         this.userManager = userManager;
         this.birthRecordsIndexer = birthRecordsIndexer;
         this.adoptionOrderDAO = adoptionOrderDAO;
+        this.userDAO = userDAO;
         this.birthDeclarationValidator = birthDeclarationValidator;
     }
 
@@ -859,6 +860,8 @@ public class BirthRegistrationServiceImpl implements
         // does the user have access to the existing BDF (if district and division is changed somehow)
         validateAccessOfUser(user, existing);
 
+        existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
+        existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
@@ -885,6 +888,8 @@ public class BirthRegistrationServiceImpl implements
         // does the user have access to the existing BDF (if district and division is changed somehow)
         validateAccessOfUser(user, existing);
 
+        existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
+        existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
@@ -911,6 +916,8 @@ public class BirthRegistrationServiceImpl implements
         // does the user have access to the existing BDF (if district and division is changed somehow)
         validateAccessOfUser(user, existing);
 
+        existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
+        existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
@@ -937,6 +944,8 @@ public class BirthRegistrationServiceImpl implements
         // does the user have access to the existing BDF (if district and division is changed somehow)
         validateAccessOfUser(user, existing);
 
+        existing.getRegister().setOriginalBCPlaceOfIssue(bdf.getRegister().getOriginalBCPlaceOfIssue());
+        existing.getRegister().setOriginalBCIssueUser(bdf.getRegister().getOriginalBCIssueUser());
         existing.getRegister().setStatus(BirthDeclaration.State.ARCHIVED_CERT_PRINTED);
         final Date originalBCDateOfIssue = new Date();
         // TODO existing.getRegister().setOriginalBCPlaceOfIssue();
@@ -1301,13 +1310,19 @@ public class BirthRegistrationServiceImpl implements
         child.setChildGenderPrint(GenderUtil.getGender(bdf.getChild().getChildGender(), prefLanguage));
         logger.debug("check for certificate");
         BirthRegisterInfo brInfo = bdf.getRegister();
-        if (brInfo.getOriginalBCPlaceOfIssue() != null) {
-            brInfo.setOriginalBCPlaceOfIssuePrint(dsDivisionDAO.getNameByPK(brInfo.getOriginalBCPlaceOfIssue(), prefLanguage));
+
+        if (brInfo.getOriginalBCPlaceOfIssue() != null && brInfo.getOriginalBCIssueUser() != null &&
+            BirthDeclaration.State.ARCHIVED_CERT_PRINTED == brInfo.getStatus()) {
+            brInfo.setOriginalBCPlaceOfIssuePrint(brInfo.getOriginalBCPlaceOfIssue().getLocationName(prefLanguage));
+            brInfo.setOriginalBCPlaceOfIssueSignPrint(brInfo.getOriginalBCPlaceOfIssue().getLocationSignature(prefLanguage));
+            brInfo.setOriginalBCIssueUserSignPrint(brInfo.getOriginalBCIssueUser().getUserSignature(prefLanguage));
+            
         }
         if (brInfo.getBirthDivision() != null) {
             brInfo.setDistrictPrint(districtDAO.getNameByPK(brInfo.getBirthDistrict().getDistrictUKey(), prefLanguage));
             brInfo.setDsDivisionPrint(dsDivisionDAO.getNameByPK(brInfo.getDsDivision().getDsDivisionUKey(), prefLanguage));
             brInfo.setBdDivisionPrint(bdDivisionDAO.getNameByPK(brInfo.getBirthDivision().getBdDivisionUKey(), prefLanguage));
+            
         }
 
         ParentInfo parent = bdf.getParent();
@@ -1416,7 +1431,7 @@ public class BirthRegistrationServiceImpl implements
 
             logger.debug("Processing father of child : {} for BDF UKey : {}", bdf.getIdUKey());
             father = processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(),
-                            mother, bdf.getMarriage(), bdf.getInformant());
+                mother, bdf.getMarriage(), bdf.getInformant());
 
             // child inherits fathers race if married
             if (bdf.getMarriage().getParentsMarried() != null &&
@@ -1450,7 +1465,7 @@ public class BirthRegistrationServiceImpl implements
                 // TODO use an enumeration for marriage
                 if (bdf.getMarriage().getParentsMarried() != null &&
                     (bdf.getMarriage().getParentsMarried() == 1 ||
-                     bdf.getMarriage().getParentsMarried() == 3) && father != null) {
+                        bdf.getMarriage().getParentsMarried() == 3) && father != null) {
                     // grand father of child is fathers, father
                     father.setFather(grandFather);
                     ecivil.updatePerson(father, user);
@@ -1485,11 +1500,12 @@ public class BirthRegistrationServiceImpl implements
 
     /**
      * Process the Grand father, Great grand father, Informant (if a Guardian) or the Registrar into the PRS
-     * @param nicOrPIN nic of the person. This method ignores those using PIN numbers
-     * @param fullName full name of the person to be added
+     *
+     * @param nicOrPIN   nic of the person. This method ignores those using PIN numbers
+     * @param fullName   full name of the person to be added
      * @param birthPlace place of birth
-     * @param address address if known
-     * @param user the user processing the transaction
+     * @param address    address if known
+     * @param user       the user processing the transaction
      * @return the Person added, if any or null
      */
     private Person processPersonToPRS(String nicOrPIN, String fullName, String birthPlace, String address, User user) {

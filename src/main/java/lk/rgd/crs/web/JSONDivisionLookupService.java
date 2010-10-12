@@ -72,19 +72,17 @@ public class JSONDivisionLookupService extends HttpServlet {
                 optionLists.put("dsDivisionList", getAllDSDivisions(lang, divisionId, user));
             } else if ("4".equals(mode)) {
                 optionLists.put("districtList", getAllDisList(lang, user));
-            }
-            else if("5".equals(mode)){
-                              // passing districtId, return DS List and the BD List for the 1st DS division
+            } else if ("5".equals(mode)) {
+                // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getAllDSDivisions(lang, divisionId, user);
-                int dsDivisionId = ((SelectOption) ds.get(0)).getOptionValue();
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
-                optionLists.put("bdDivisionList", bd);  
-            }
-            else {
+                optionLists.put("bdDivisionList", bd);
+            } else {
                 // passing districtId, return DS List and the BD List for the 1st DS division
                 List ds = getDSDivisions(lang, divisionId, user);
-                int dsDivisionId = ((SelectOption) ds.get(0)).getOptionValue();
+                int dsDivisionId = Integer.parseInt(((SelectOption) ds.get(0)).getOptionValue());
                 List bd = getBDDivisions(lang, dsDivisionId, user);
                 optionLists.put("dsDivisionList", ds);
                 optionLists.put("bdDivisionList", bd);
@@ -133,7 +131,7 @@ public class JSONDivisionLookupService extends HttpServlet {
 
         for (Map.Entry<Integer, String> e : map.entrySet()) {
             SelectOption option = new SelectOption();
-            option.setOptionValue(e.getKey());
+            option.setOptionValue(e.getKey().toString());
             option.setOptionDisplay(e.getValue());
             ds.add(option);
         }
