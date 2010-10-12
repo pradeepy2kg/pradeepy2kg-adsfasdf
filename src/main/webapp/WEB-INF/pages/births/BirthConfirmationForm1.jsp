@@ -142,6 +142,7 @@
         if (domObject.value.trim() == 0) {
             domObject.value = null;
         }
+        document.getElementById('searchOk').style.display = 'none';
     }
 </script>
 
@@ -193,7 +194,7 @@
                         <s:hidden name="bdId" value="%{#request.bdId}"/>
                         <td align="left" class="button">
                             <s:submit id="searchOk" name="searchOk" value="%{getText('skip.label')}"
-                                                                  cssStyle="margin-right:8px;"/>
+                                                                  cssStyle="margin-right:8px;font-size:9.3pt;padding:0;width:115px;"/>
                         </td>
                     </tr>
                 </table>
@@ -227,15 +228,6 @@
                          name="#session.birthConfirmation_db.register.bdfSerialNo"/>
             <s:textfield cssClass="disable" disabled="true"
                          name="#session.birthConfirmation_db.register.dateOfRegistration"/></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td><label>
-            යම් වෙනසක් සිදු කලයුතු නම් රෙජිස්ට්‍රාර් ජනරාල් වෙත දැනුම් දිය යුතු අවසන් දිනය <br>
-            மாற்றங்கள் பதிவாளர் அதிகாரியின் அலுவலகத்தை அடைய வேண்டிய இறுதித் திகதி
-            <br>Last date by which changes should be received by the registrar generals office.
-        </label></td>
-        <td><s:textfield cssClass="disable" disabled="true" name="register.lastDayForConfirmation"/></td>
     </tr>
     </tbody>
 </table>
@@ -276,7 +268,7 @@
             <br>If there are spelling mistakes or changes in existing details.</label></td>
     </tr>
     <tr>
-        <td class="cell_01">3</td>
+        <td class="cell_01">2</td>
         <td class="cell_04"><label>උපන් දිනය<br>பிறந்த திகதி<br>Date of birth</label></td>
         <td class="cell_03"><label>අවුරුද්ද  <br>இயர் <br>Year</label></td>
         <td class="cell_03"><s:textfield value="%{#session.birthConfirmation_db.child.dateOfBirth.year+1900}"
@@ -295,7 +287,7 @@
         </td>
     </tr>
     <tr>
-        <td>4</td>
+        <td>3</td>
         <td><label>ස්ත්‍රී පුරුෂ භාවය <br>பால்பால்<br>Gender</label></td>
         <td colspan="6">
             <s:if test="bdId != 0">
@@ -315,7 +307,7 @@
                 name="child.childGender"/></td>
     </tr>
     <tr>
-        <td>5</td>
+        <td>4</td>
         <td colspan="14"><label>උපන් ස්ථානය / பிறந்தபிறந்த இடம் / Place of birth</label></td>
     </tr>
     <tr>
@@ -363,14 +355,14 @@
         </td>
     </tr>
     <tr>
-        <td>6</td>
+        <td>5</td>
         <td><label>පියාගේ අනන්‍යතා අංකය <br>தந்நையின் தனிநபர் அடையாள எண்<br>Father's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.fatherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.fatherNICorPIN" size="35" id="fatherNICorPIN"/></td>
     </tr>
     <tr>
-        <td>7</td>
+        <td>6</td>
         <td><label>පියාගේ ජාතිය <br>தந்நையின் இனம்<br>Father's Race</label></td>
         <td colspan="6">
             <s:textfield value="%{getRaceList().get(fatherRace)}" cssClass="disable" disabled="true"/>
@@ -382,14 +374,14 @@
     <tr>
 
     <tr>
-        <td>8</td>
+        <td>7</td>
         <td><label>ම‌වගේ අනන්‍යතා අංකය <br>தாயின் தனிநபர் அடையாள எண<br>Mother's PIN</label></td>
         <td colspan="6"><s:textfield name="#session.birthConfirmation_db.parent.motherNICorPIN" cssClass="disable"
                                      disabled="true"/></td>
         <td colspan="6"><s:textfield name="parent.motherNICorPIN" size="35" id="motherNICorPIN"/></td>
     </tr>
     <tr>
-        <td>9</td>
+        <td>8</td>
         <td><label>මවගේ ජාතිය <br>தாயின் இனம்<br>Mother's Race</label></td>
         <td colspan="6"><s:textfield value="%{getRaceList().get(motherRace)}" cssClass="disable"
                                      disabled="true"/></td>
@@ -398,7 +390,7 @@
         </td>
     </tr>
     <tr>
-        <td>10</td>
+        <td>9</td>
         <td><label>මව්පියන් විවාහකද? <br>பெற்றார் விவாகஞ் செய்தவர்களா? <br>Were Parents Married?</label></td>
         <td colspan="6">
             <s:if test="bdId != 0">
@@ -406,7 +398,7 @@
                              disabled="true" value="%{getText('married.status.'+marriage.parentsMarried)}"/>
             </s:if>
         </td>
-        <td style="border:none;">
+        <td style="border:none;padding:0">
             <table style="border:none;" cellspacing="0">
                 <col width="200px"/>
                 <col/>

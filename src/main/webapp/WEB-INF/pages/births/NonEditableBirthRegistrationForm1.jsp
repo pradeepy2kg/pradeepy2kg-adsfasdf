@@ -74,7 +74,8 @@
                 <tr>
                     <td style="width:60%"><label><span class="font-8">අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</span></label>
                     </td>
-                    <td><s:label value="%{#request.register.bdfSerialNo}"/></td>
+                    <%--<td><s:label value="%{#request.register.bdfSerialNo}"/></td>--%>
+                    <td><s:label name="bdId"/></td>
                 </tr>
             </table>
             <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0"

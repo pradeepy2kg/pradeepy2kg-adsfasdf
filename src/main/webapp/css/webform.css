@@ -1378,6 +1378,7 @@
 .table_con_page_01 td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
+    padding:3px;    
 }
 
 .table_con_page_01 select, .table_con_page_01 input {
