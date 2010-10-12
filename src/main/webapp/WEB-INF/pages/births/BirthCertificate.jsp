@@ -47,7 +47,6 @@
                             var id = $('select#locationId').attr('value');
                             var user = $('select#issueUserId').attr('value');
                             var certId = $('label#certificateId').text();
-                            alert(id + " " + user + " " + certId)
                             $("text#user").html(user);
                             $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,mode:10,userId:user,certificateId:certId},
                                     function(data) {
