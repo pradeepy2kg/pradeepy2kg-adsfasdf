@@ -88,7 +88,7 @@
 
 </script>
 <s:form method="post" action="eprApproveDeathAlterations.do">
-    <fieldset>
+    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend align="right"><s:label value="%{getText('lable.search.by.dsDivision')}"/></legend>
         <table>
             <caption></caption>
@@ -132,7 +132,7 @@
         </table>
     </fieldset>
 
-    <fieldset>
+    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend align="right"><s:label value="%{getText('lable.search.by.date')}"/></legend>
         <table>
             <caption></caption>
