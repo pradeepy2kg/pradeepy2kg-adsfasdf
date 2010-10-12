@@ -103,6 +103,16 @@
         }
         return true;
     }
+
+
+    function isNumberKey(evt)
+    {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
 </script>
 
 <div id="add-inactive-divisions-outer">
@@ -388,12 +398,18 @@
             <tr>
                 <td colspan="2">Id</td>
                 <td>
-                    <s:if test="pageType==1"><s:textfield name="district.districtId" id="id"/></s:if>
-                    <s:if test="pageType==2"><s:textfield name="dsDivision.divisionId" id="id"/> </s:if>
-                    <s:if test="pageType==3"><s:textfield name="bdDivision.divisionId" id="id"/></s:if>
-                    <s:if test="pageType==4"><s:textfield name="mrDivision.divisionId" id="id"/></s:if>
-                    <s:if test="pageType==5"><s:textfield name="mrDivision.divisionId" id="id"/></s:if>
-                    <s:if test="pageType==6"><s:textfield name="location.locationCode" id="id"/></s:if>
+                    <s:if test="pageType==1"><s:textfield name="district.districtId" id="id"
+                                                          onkeypress="return isNumberKey(event)"/></s:if>
+                    <s:if test="pageType==2"><s:textfield name="dsDivision.divisionId" id="id"
+                                                          onkeypress="return isNumberKey(event)"/> </s:if>
+                    <s:if test="pageType==3"><s:textfield name="bdDivision.divisionId" id="id"
+                                                          onkeypress="return isNumberKey(event)"/></s:if>
+                    <s:if test="pageType==4"><s:textfield name="mrDivision.divisionId" id="id"
+                                                          onkeypress="return isNumberKey(event)"/></s:if>
+                    <s:if test="pageType==5"><s:textfield name="mrDivision.divisionId" id="id"
+                                                          onkeypress="return isNumberKey(event)"/></s:if>
+                    <s:if test="pageType==6"><s:textfield name="location.locationCode" id="id"
+                                                          onkeypress="return isNumberKey(event)"/></s:if>
                 </td>
             </tr>
             <tr>
@@ -483,7 +499,7 @@
 </fieldset>
 
 
-<fieldset style="border:none;width:83%;margin-left:75px;" >
+<fieldset style="border:none;width:83%;margin-left:75px;">
     <s:form name="users_print" action="" method="POST">
         <table id="users-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
             <thead>

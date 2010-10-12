@@ -17,6 +17,7 @@ import lk.rgd.crs.api.service.AdoptionOrderService;
 import lk.rgd.crs.api.service.BirthRegistrationService;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.util.DateState;
+import lk.rgd.crs.CRSRuntimeException;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -596,14 +597,16 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 bdf = service.getById(bdId, user);
                 bcf = service.getById(bdId, user);
                 logger.debug("bdId is {} ", bdId);
-                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED)) {
+                logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
+                if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) ||
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
                     bcf = new BirthDeclaration();
                 }
-            } catch (NullPointerException e) {
+            }
+            catch (Exception e) {
                 handleErrors(e);
                 addActionError(getText("cp1.error.entryNotAvailable"));
                 bdf = new BirthDeclaration();
