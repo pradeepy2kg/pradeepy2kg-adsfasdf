@@ -605,6 +605,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
                     bcf = new BirthDeclaration();
+                    bdId=0;
                 }
             }
             catch (Exception e) {
@@ -612,6 +613,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 addActionError(getText("cp1.error.entryNotAvailable"));
                 bdf = new BirthDeclaration();
                 bcf = new BirthDeclaration();
+                bdId=0;
             }
         } else {
             bdf = new BirthDeclaration(); // just go to the confirmation 1 page
