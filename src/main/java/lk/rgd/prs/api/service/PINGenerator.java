@@ -36,7 +36,7 @@ public interface PINGenerator {
      * @param male true if the PIN is generated for a male, false for a female
      * @return the generated 10 digit PIN number
      */
-    public int generatePINNumber(Date dateOfBirth,  boolean male);
+    public long generatePINNumber(Date dateOfBirth,  boolean male);
 
     /**
      * Generate a temporary PIN number for the given date by changing the DOB = DOB + 600
@@ -45,5 +45,5 @@ public interface PINGenerator {
      * @param male true if the PIN is generated for a male, false for a female
      * @return the generated 10 digit PIN number
      */
-    public int generateTemporaryPINNumber(Date dateOfBirth,  boolean male);
+    public long generateTemporaryPINNumber(Date dateOfBirth,  boolean male);
 }

@@ -47,7 +47,7 @@ public class PINGeneratorImplTest extends TestCase {
         try {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.YEAR, -200);
-            int pin = pinGenerator.generatePINNumber(cal.getTime(), true);
+            long pin = pinGenerator.generatePINNumber(cal.getTime(), true);
             fail("Should only generate PINs for 1900 to 2099");
         } catch (Exception expected) {}
 
@@ -55,7 +55,7 @@ public class PINGeneratorImplTest extends TestCase {
         try {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.YEAR, + 1000);
-            int pin = pinGenerator.generatePINNumber(cal.getTime(), true);
+            long pin = pinGenerator.generatePINNumber(cal.getTime(), true);
             fail("Should only generate PINs for 1900 to 2999");
         } catch (Exception expected) {}
 
@@ -64,7 +64,7 @@ public class PINGeneratorImplTest extends TestCase {
             GregorianCalendar cal = new GregorianCalendar();
             cal.set(1975, Calendar.JULY, 29, 20, 15, 00);
             
-            int pin = pinGenerator.generatePINNumber(cal.getTime(), true);
+            long pin = pinGenerator.generatePINNumber(cal.getTime(), true);
             // should be 752100001
             Assert.assertEquals("wrong pin generated", 752100001, pin);
             pin = pinGenerator.generatePINNumber(cal.getTime(), true);
@@ -85,7 +85,7 @@ public class PINGeneratorImplTest extends TestCase {
             GregorianCalendar cal = new GregorianCalendar();
             cal.set(2010, Calendar.JULY, 29, 20, 15, 00);
 
-            int pin = pinGenerator.generatePINNumber(cal.getTime(), true);
+            long pin = pinGenerator.generatePINNumber(cal.getTime(), true);
             // should be 0752110001
             Assert.assertEquals("wrong pin generated", 1102100001, pin);
             pin = pinGenerator.generatePINNumber(cal.getTime(), true);
@@ -97,6 +97,27 @@ public class PINGeneratorImplTest extends TestCase {
             pin = pinGenerator.generatePINNumber(cal.getTime(), false);
             // should be 0757110002
             Assert.assertEquals("wrong pin generated", 1107100002, pin);
+        } catch (Exception expected) {
+            fail("Did not expect a failure");
+        }
+
+        // generate temporary PINs for a birth in 2000's
+        try {
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.set(2010, Calendar.JULY, 29, 20, 15, 00);
+
+            long pin = pinGenerator.generateTemporaryPINNumber(cal.getTime(), true);
+            // should be 6102100001
+            Assert.assertEquals("wrong pin generated", 6102100001L, pin);
+            pin = pinGenerator.generateTemporaryPINNumber(cal.getTime(), true);
+            // should be 6102100002
+            Assert.assertEquals("wrong pin generated", 6102100002L, pin);
+            pin = pinGenerator.generateTemporaryPINNumber(cal.getTime(), false);
+            // should be 6107100001
+            Assert.assertEquals("wrong pin generated", 6107100001L, pin);
+            pin = pinGenerator.generateTemporaryPINNumber(cal.getTime(), false);
+            // should be 6107100002
+            Assert.assertEquals("wrong pin generated", 6107100002L, pin);
         } catch (Exception expected) {
             fail("Did not expect a failure");
         }

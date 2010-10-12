@@ -1385,32 +1385,14 @@ public class BirthRegistrationServiceImpl implements
 
         if (!isEmptyString(childInfo.getChildFullNameEnglish())) {
             child.setFullNameInEnglishLanguage(childInfo.getChildFullNameEnglish());
-            String[] names = childInfo.getChildFullNameEnglish().split(" ");
-            child.setLastNameInEnglish(names[names.length - 1]);
-            StringBuilder sb = new StringBuilder(16);
-            for (int i = 0; i < names.length - 2; i++) {
-                if (!isEmptyString(names[i])) {
-                    sb.append(names[i].charAt(0)).append(". ");
-                }
-            }
-            child.setInitialsInEnglish(sb.toString());
-            logger.debug("Derived child English initials as : {} and last name as : {}",
-                sb.toString(), names[names.length - 1]);
+            logger.debug("Derived child English language initials as : {} and last name as : {}",
+                child.getInitialsInEnglish(), child.getLastNameInEnglish());
         }
 
         if (!isEmptyString(childInfo.getChildFullNameOfficialLang())) {
             child.setFullNameInOfficialLanguage(childInfo.getChildFullNameOfficialLang());
-            String[] names = childInfo.getChildFullNameOfficialLang().split(" ");
-            child.setLastNameInOfficialLanguage(names[names.length - 1]);
-            StringBuilder sb = new StringBuilder(16);
-            for (int i = 0; i < names.length - 2; i++) {
-                if (!isEmptyString(names[i])) {
-                    sb.append(names[i].charAt(0)).append(". ");
-                }
-            }
-            child.setInitialsInOfficialLanguage(sb.toString());
             logger.debug("Derived child Official language initials as : {} and last name as : {}",
-                sb.toString(), names[names.length - 1]);
+                child.getInitialsInOfficialLanguage(), child.getLastNameInOfficialLanguage());
         }
 
         child.setDateOfBirth(childInfo.getDateOfBirth());
@@ -1439,6 +1421,12 @@ public class BirthRegistrationServiceImpl implements
                 if (parent.getFatherRace() != null) {
                     child.setRace(parent.getFatherRace());
                 }
+                if (mother != null) {
+                    mother.setCivilStatus(Person.CivilStatus.MARRIED);
+                }
+                if (father != null) {
+                    father.setCivilStatus(Person.CivilStatus.MARRIED);
+                }
             } else {
                 // mother race
                 if (parent.getMotherRace() != null) {
@@ -1454,10 +1442,16 @@ public class BirthRegistrationServiceImpl implements
             Person greatGrandFather = processPersonToPRS(
                 gfInfo.getGreatGrandFatherNICorPIN(), gfInfo.getGreatGrandFatherFullName(),
                 gfInfo.getGreatGrandFatherBirthPlace(), null, user);
+            if (greatGrandFather != null && greatGrandFather.getPin() != null) {
+                gfInfo.setGreatGrandFatherNICorPIN(greatGrandFather.getPin().toString());
+            }
 
             Person grandFather = processPersonToPRS(
                 gfInfo.getGrandFatherNICorPIN(), gfInfo.getGrandFatherFullName(),
                 gfInfo.getGrandFatherBirthPlace(), null, user);
+            if (grandFather != null && grandFather.getPin() != null) {
+                gfInfo.setGrandFatherNICorPIN(grandFather.getPin().toString());
+            }
 
             if (grandFather != null) {
                 logger.debug("Processing great/grand father of child : {} for BDF UKey : {}", bdf.getIdUKey());
@@ -1592,6 +1586,9 @@ public class BirthRegistrationServiceImpl implements
 
                 // add mother to PRS
                 ecivil.addPerson(mother, user);
+                if (mother.getPin() != null) {
+                    parent.setMotherNICorPIN(mother.getPin().toString());
+                }
 
                 if (parent.getMotherAddress() != null) {
                     final Address address = new Address(parent.getMotherAddress());
@@ -1672,6 +1669,9 @@ public class BirthRegistrationServiceImpl implements
 
             // add father to the PRS
             ecivil.addPerson(father, user);
+            if (father.getPin() != null) {
+                parent.setFatherNICorPIN(father.getPin().toString());
+            }
 
             // locate address of father if he is the informant
             if (InformantInfo.InformantType.FATHER.equals(informant.getInformantType())) {
