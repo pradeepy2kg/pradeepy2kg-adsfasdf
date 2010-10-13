@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>BirthAlterationTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BirthAlterationTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ecivil/eprHome.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>logout-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_userName</td>
+	<td>rg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprLogin_password</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprLogin_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>acceptanceDate</td>
+	<td>2010-10-06</td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>father-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>father-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>father_pinOrNic</td>
+	<td>661584621V</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>fatherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>fatherCountryId</td>
+	<td>label=LK : Sri Lanka</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>fatherPlaceOfBirth</td>
+	<td>Badulla</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>marriage-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-after-marriage-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-after-marriage-info-min</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>grandFather-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>grandFather-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>grandFatherFullName</td>
+	<td>Grand Father Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>greatGrandFatherFullNameId</td>
+	<td>Dreat grand father name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprBirthAlteration_comments</td>
+	<td>forgotten to enter </td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfFather</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfMother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_mcOfParents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Declarant_pinOrNic</td>
+	<td>451245555v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantName</td>
+	<td>Guardian </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>declarantAddress</td>
+	<td>Guardian address</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveSelectedAlteration_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>12</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>13</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>15</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprBirthAlterationSearch_sectionOfAct</td>
+	<td>label=52(1)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2010000003</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>acceptanceDate</td>
+	<td>2010-10-06</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>errors-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>errors-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>childBirthDatePicker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>childBirthDatePicker</td>
+	<td>2010-07-03</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>mother-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherCountryId</td>
+	<td>label=LK : Sri Lanka</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>motherRaceId</td>
+	<td>label=1 : Sinhalese</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informant-info-max</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informant-info-check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeFATHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>informantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>informentAddress</td>
+	<td>MOTHER ADDRESS new</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>eprBirthAlteration_comments</td>
+	<td>Mistake</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfFather</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_bcOfMother</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>eprBirthAlteration_mcOfParents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveSelectedAlteration_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>12</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=ALTERATION</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>birth_alteration.label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>eprBirthAlterationSearch_sectionOfAct</td>
+	<td>label=27</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNoIdSearch</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlterationSearch_search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>bdfSerialNo</td>
+	<td>2010000004</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>acceptanceDate</td>
+	<td>2010-10-06</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameInOfficialLanguages</td>
+	<td>CHILD NAME IN SINHALA new</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>nameInEnglish</td>
+	<td>2010000013 BABY NAME ENGLISH new</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>declarantTypeMOTHER</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprBirthAlteration_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveSelectedAlteration_approve</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprApproveAlteration_0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
