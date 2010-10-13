@@ -207,7 +207,7 @@
                 </tr>
                 <tr>
                     <td>clickAndWait</td>
-                    <td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
+                    <td>//div[@id='birth-confirmation-print-form-outer-page']/div[2]/a/label</td>
                     <td></td>
                 </tr>
 
@@ -252,20 +252,15 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>clickAndWait</td>
-                    <td>print_birthcertificate.label</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//a[@id='eprBirthCertificateBulkPrint_']/img</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birth-certificate-outer']/div[2]/div[1]/a/label</td>
-                    <td></td>
-                </tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprDirectPrintBirthCertificate_0</td>
+	<td></td>
+</tr>
                 <tr>
                     <td>clickAndWait</td>
                     <td>link=උපත් ලියාපදිංචිය</td>
@@ -438,26 +433,16 @@
                     <td></td>
                 </tr>
 
-                <tr>
-                    <td>click</td>
-                    <td>eprDirectApproveIgnoreWarning_ignoreWarning</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>eprDirectApproveIgnoreWarning_approve</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
-                    <td></td>
-                </tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/a[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[2]/a/label</td>
+	<td></td>
+</tr>
                 <tr>
                     <td>clickAndWait</td>
                     <td>birth_confirmation.label</td>
@@ -504,15 +489,20 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>clickAndWait</td>
-                    <td>//div[@id='birth-certificate-outer']/div[2]/div[1]/a/label</td>
-                    <td></td>
-                </tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='birth-register-approval-footer']/table/tbody/tr/td[2]/a/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>eprDirectPrintBirthCertificate_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=මුල් පිටුවට</td>
+	<td></td>
+</tr>
 
             </tbody>
         </table>

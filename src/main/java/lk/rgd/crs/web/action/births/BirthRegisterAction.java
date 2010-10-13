@@ -681,6 +681,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             } else {
 
                 beanPopulate(bdf);
+
                 String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
                 locationList = user.getActiveLocations(language);
                 if (!locationList.isEmpty()) {
