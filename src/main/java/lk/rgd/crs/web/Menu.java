@@ -38,6 +38,7 @@ public class Menu {
     private static final Map adrAdoptionLink = new LinkedHashMap();
     private static final Map adrDeathLink = new LinkedHashMap();
     private static final Map adrAlterationLink = new LinkedHashMap();
+    private static final Map adrAdminLink = new LinkedHashMap();
 
     //arg menu items
     private static final Map argBirthLink = new LinkedHashMap();
@@ -77,6 +78,16 @@ public class Menu {
         adminLink.put("eprActiveUserLocation.do", new Link(null, "/ecivil/management/", "eprActiveUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprEditAssignedUserLocation.do", new Link(null, "/ecivil/management/", "eprEditAssignedUserLocation.do", Permission.USER_MANAGEMENT));
         adminLink.put("eprIndexRecords.do", new Link("indexRecords.label", "/ecivil/management/", "eprIndexRecords.do", Permission.INDEX_RECORDS));
+
+        adrAdminLink.put("eprRegistrarsManagment.do", new Link("registrars.managment", "/ecivil/management/", "eprRegistrarsManagment.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprRegistrarsView.do", new Link(null, "/ecivil/management/", "eprRegistrarsView.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprRegistrarsFilter.do", new Link(null, "/ecivil/management/", "eprRegistrarsFilter.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprRegistrarsAdd.do", new Link("registrar.add", "/ecivil/management/", "eprRegistrarsAdd.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprAssignmentAddDirect.do", new Link(null, "/ecivil/management/", "eprAssignmentAddDirect.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprAssignmentAdd.do", new Link(null, "/ecivil/management/", "eprAssignmentAdd.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprSearchRegistrarByPin.do", new Link(null, "/ecivil/management/", "eprSearchRegistrarByPin.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprAssignmentEdit.do", new Link(null, "/ecivil/management/", "eprAssignmentEdit.do", Permission.REGISTRAR_MANAGEMENT));
+        adrAdminLink.put("eprUpdateRegistrar.do", new Link(null, "/ecivil/management/", "eprUpdateRegistrar.do", Permission.REGISTRAR_MANAGEMENT));
 
         //User Preferance
         preferanceLink.put("eprUserPreferencesInit.do", new Link("userPreference.label", "/ecivil/preferences/", "eprUserPreferencesInit.do", Permission.USER_PREFERENCES));
@@ -164,6 +175,7 @@ public class Menu {
         adrBirthLink.put("ConfirmationDirectApprovalIngoreWarning.do", new Link(null, "/ecivil/births/", "ConfirmationDirectApprovalIngoreWarning.do", Permission.APPROVE_BDF_CONFIRMATION));
         adrBirthLink.put("eprApproveAlteration.do", new Link(null, "/ecivil/births/", "eprApproveAlteration.do", Permission.APPROVE_BDF));
         adrBirthLink.put("eprRejectSelectedAlteration.do", new Link(null, "/ecivil/births/", "eprRejectSelectedAlteration", Permission.APPROVE_BDF));
+
 
         //Birth for ARG
         argBirthLink.putAll(adrBirthLink);
@@ -293,6 +305,7 @@ public class Menu {
         adrLinks.put("preference", preferanceLink);
         adrLinks.put("prs", prsLink);
         adrLinks.put("certificateSearch", searchLink);
+        adrLinks.put("admin", adrAdminLink);
 
         //assemble menu for arg
         argLinks.put("birth", argBirthLink);
