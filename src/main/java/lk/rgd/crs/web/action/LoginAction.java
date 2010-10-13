@@ -21,7 +21,8 @@ import lk.rgd.Permission;
  * action class which handles the login and logout actions
  * of the EPR system
  */
-public class LoginAction extends ActionSupport implements SessionAware {
+public class
+        LoginAction extends ActionSupport implements SessionAware {
     private String userName;
     private String password;
     private Map session;
@@ -138,7 +139,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     /**
      * logout action which invalidates the session of the user
-     *
+     *                   https://192.168.1.6:9080
      * @return String
      */
     public String logout() {

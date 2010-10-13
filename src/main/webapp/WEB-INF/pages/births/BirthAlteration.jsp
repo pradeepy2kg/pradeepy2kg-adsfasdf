@@ -131,6 +131,7 @@ $(function() {
         maximize("header-info");
     });
     $('#errors-info-check').click(function() {
+        document.getElementById("tempBirthDivisionId").disabled = true;
         document.getElementById("errors-info-check").disabled = true;
         var fieldIds = new Array('childBirthDatePicker', 'childBirthDistrictId', 'childDsDivisionId', 'childBirthDivisionId',
                 'placeOfBirth', 'placeOfBirthEnglish', 'childGender');
@@ -294,8 +295,8 @@ function validate() {
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'comError3');
     else
-    //validateSerialNo(domObject, "comError1", 'comError2');
-        domObject = document.getElementById('acceptanceDate');
+        validateSerialNo(domObject, "comError1", 'comError2');
+    domObject = document.getElementById('acceptanceDate');
     if (isFieldEmpty(domObject))
         isEmpty(domObject, "", 'comError4')
     else
@@ -616,10 +617,20 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <s:label value="பிறப்பைப்"/> <br>
                         <s:label value="Section of the Act"/>
                     </td>
-                    <td><s:select
-                            list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
-                            name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" disabled="true"
-                            id="sectionOfAct"/></td>
+                    <td><s:if test="sectionOfAct !=2">
+                        <s:select
+                                list="#@java.util.HashMap@{'1':'27','2':'52(1)','3':'27 (A)'}"
+                                name="sectionOfAct" cssStyle="width:190px; margin-left:5px;" disabled="true"/>
+                    </s:if>
+                        <s:if test="sectionOfAct ==2">
+                            <s:select
+                                    list="#@java.util.HashMap@{'Alt52_1_A':'52(1)A','Alt52_1_B':'52(1)B','Alt52_1_D':'52(1)D',
+                                    'Alt52_1_E':'52(1)E','Alt52_1_H':'52(1)H','Alt52_1_I':'52(1)I'}"
+                                    name="alt52_1.sectionOfAct52_1" cssStyle="width:190px; margin-left:5px"
+                                    />
+
+                        </s:if>
+                    </td>
 
                 </tr>
             </table>
@@ -633,16 +644,19 @@ function validateBirthYear(domElement, errorText, errorCode) {
         <tr>
             <td colspan="3" style="font-size:12pt;text-align:center;">
                 <s:if test="sectionOfAct==1">
+                    <s:hidden id="sectionOfAct" value="1"/>
                     <s:label value="නම ඇතුලත් කිරීම හෝ වෙනස් කිරීම (27 වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/>் <br>
                     <s:label value="Insertion or Alteration of the Name (Section 27)"/>
                 </s:if>
                 <s:if test="sectionOfAct==2">
+                    <s:hidden id="sectionOfAct" value="2"/>
                     <s:label value="උප්පැන සහතිකයක දෝෂ නිවැරදි කිරීම (52 (1) වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/> <br>
                     <s:label value="Correction of Errors of a Birth Certificate (Section  52 (1))"/>
                 </s:if>
                 <s:if test="sectionOfAct==3">
+                    <s:hidden id="sectionOfAct" value="3"/>
                     <s:label value="උප්පැන්න සහතිකයක තොරතුරු සංශෝදනය කිරීම (27 A වගන්තිය)"/> <br>
                     <s:label value="தந்தை பற்றிய தகவல்"/> <br>
                     <s:label value="Amendment of Birth Registration Entry (Section 27 A)"/>
@@ -796,6 +810,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
             <td rowspan="5"><s:label value=" උපන් ස්ථානය"/><br>
                 <s:label value="பிறந்த இடம்"/><br>
                 <s:label value="Place of Birth"/>
+                <s:textfield name="birthDivisionId" cssStyle="visibility:hidden;margin:0px;" id="tempBirthDivisionId"/>
             </td>
             <td colspan="2"><s:label value=" දිස්ත්‍රික්කය /"/> <br>
                 <s:label value="மாவட்டம் /"/><br>
@@ -821,7 +836,8 @@ function validateBirthYear(domElement, errorText, errorCode) {
             </td>
             <td colspan="4"><s:select id="childBirthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
                                       list="bdDivisionList"
-                                      cssStyle="float:left;  width:95%; "/></td>
+                                      cssStyle="float:left;  width:95%; "/>
+            </td>
         </tr>
         <tr>
             <td rowspan="2"><s:label value=" ස්ථානය "/><br>
@@ -1485,7 +1501,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </td>
         <td>
             <table style="border:none;width:100%">
-                <tr> D
+                <tr>
                     <td style="width:75%;border:none"> භාරකරු<br> பாதுகாவலர் <br> Guardian
                     </td>
                     <td style="width:25%;border:none;">
