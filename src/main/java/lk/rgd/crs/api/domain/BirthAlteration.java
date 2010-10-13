@@ -7,9 +7,8 @@ import java.util.BitSet;
 
 /**
  * @author Ashoka Ekanayaka
- *         The entity to store a single field alteration of a death, marriage or a birth record.
- *         There will be many to one relationship with one of those tables. after approval, alterations will be aplied to the base death/birth/marrige
- *         record .
+ *         The entity to store an alteration of a birth record.
+ *         There will be many to one relationship with BDF records. After approval, an alteration will be aplied to the base birth record .
  */
 @Entity
 @Table(name = "ALT_BIRTH", schema = "CRS")
@@ -52,19 +51,19 @@ public class BirthAlteration {
          */
         DATA_ENTRY,
         /**
-         * 1 - An ADR or higher partialy approved ba
+         * 1 - An ARG or higher partialy approved ba
          */
         PARTIALY_APPROVED,
         /*
-        * 2 - An ADR or higher fully approved ba
+        * 2 - An ARG or higher fully approved ba
         * */
         FULLY_APPROVED,
         /**
-         * 3 - A BDF for which the parent confirmation form was printed
+         * 3 - A fully completed alteration for which the BDF has being changed.
          */
         PRINTED,
         /**
-         * 4 - A BDF for which the parent confirmation form was printed
+         * 4 - A rejected alteration
          */
         REJECT,
 
