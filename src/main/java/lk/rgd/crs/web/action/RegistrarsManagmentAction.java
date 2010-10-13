@@ -11,10 +11,7 @@ import lk.rgd.common.api.dao.DistrictDAO;
 import lk.rgd.common.api.dao.CountryDAO;
 import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.dao.DSDivisionDAO;
-import lk.rgd.common.api.domain.District;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.BaseLifeCycleInfo;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.crs.api.dao.BDDivisionDAO;
 import lk.rgd.crs.api.dao.MRDivisionDAO;
 import lk.rgd.crs.api.domain.BDDivision;
@@ -266,8 +263,14 @@ public class RegistrarsManagmentAction extends ActionSupport implements SessionA
 
     private void populateLists(int distirictId, int dsDivisionId) {
         String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
-        districtList = districtDAO.getAllDistrictNames(language, user);
-        dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(distirictId, language, user);
+        if (user.getRole().getRoleId().equals(Role.ROLE_ADMIN)) {
+            districtList = districtDAO.getAllDistrictNames(language, user);
+            dsDivisionList = dsDivisionDAO.getAllDSDivisionNames(distirictId, language, user);
+        } else {
+            districtList = districtDAO.getDistrictNames(language, user);
+            dsDivisionList = dsDivisionDAO.getDSDivisionNames(distirictId, language, user);
+        }
+
         divisionList = bdDivisionDAO.getBDDivisionNames(dsDivisionList.keySet().iterator().next(), language, user);
         //todo load marrage divison list
     }

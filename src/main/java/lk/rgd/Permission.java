@@ -28,6 +28,7 @@ public final class Permission {
     public static final int SEARCH_DDF = 23;
     public static final int PRINT_DDF = 24;
     public static final int INDEX_RECORDS = 25;
+    public static final int REGISTRAR_MANAGEMENT_ADR = 26;
 
     // permission for PRS
     public static final int PRS_ADD_PERSON = 50;
