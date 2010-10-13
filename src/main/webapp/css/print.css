@@ -2,9 +2,7 @@
 @media print {
     body {
         background-color: white !important;
-        font-family: BhashitaComplex, verdana, arial, sans-serif;
-        
-        /*font-size: 10pt;        */
+        font-family: BhashitaComplex, verdana, arial, sans-serif; /*font-size: 10pt;        */
     }
 
     * {
@@ -47,7 +45,7 @@
     }
 
     .page-break {
-        display:block;
+        display: block;
         page-break-before: always;
     }
 
@@ -55,6 +53,7 @@
         display: none
     }
 }
+
 /*@media print {*/
 
 /*div.header {*/
