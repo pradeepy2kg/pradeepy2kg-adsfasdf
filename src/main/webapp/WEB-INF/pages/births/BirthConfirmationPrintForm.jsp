@@ -5,7 +5,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <style type="text/css">
     #birth-confirmation-print-form-outer-page table tr td {
         padding: 0 5px;
@@ -24,7 +23,6 @@
     #birth-confirmation-print-form-outer-page .form-submit {
         margin: 5px 0 15px 0;
     }
-
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
@@ -97,6 +95,7 @@
             </tr>
             </tbody>
         </table>
+    </fieldset>
 </div>
 <div class="form-submit" style="float:right;margin-top:15px;">
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
@@ -110,7 +109,8 @@
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
     </fieldset>
 </div>
-<div id="page1" style="page-break-after:always;">
+
+<div class="page-break">
 <table style="width:70%;float:left;">
     <caption></caption>
     <col/>
@@ -154,9 +154,8 @@
         </td>
     </tbody>
 </table>
-
-
-<table border="0" style="margin-bottom:10px;width:100%;float:left;">
+<br>
+<table border="0" style="margin-bottom:10px;width:100%;">
     <caption></caption>
     <col/>
     <tbody>
@@ -187,7 +186,7 @@
 </table>
 
 
-<table class="table_con_page_01" style="float:left;" width="100%" cellspacing="0">
+<table class="table_con_page_01" width="100%" cellspacing="0">
     <caption></caption>
     <col/>
     <col/>
@@ -227,8 +226,7 @@
     </tr>
     </tbody>
 </table>
-
-<table border="0" style="width:100%;float:left;margin-top:5px;">
+<table border="0" style="width:100%;margin-top:5px;">
     <col/>
     <tbody>
     <tr>
@@ -241,7 +239,7 @@
     </tbody>
 </table>
 
-<table class="table_con_page_01" width="100%" cellspacing="0" style="float:left;">
+<table class="table_con_page_01" width="100%" cellspacing="0">
     <caption></caption>
     <col width="36px"/>
     <col width="230px"/>
@@ -379,12 +377,10 @@
         </td>
         <td colspan="11">&nbsp;</td>
     </tr>
-
     </tbody>
 </table>
 </div>
 
-<%--<div id="page2" style="page-break-after:always;">--%>
 <table border="0" style="width:100%;float:left;">
     <caption></caption>
     <col/>
@@ -521,7 +517,7 @@
     </tr>
     </tbody>
 </table>
-<%--<div style="page-break-after:always;"></div>--%>
+
 <table class="table_con_page2_table" cellspacing="0" width="100%">
     <caption></caption>
     <col/>
@@ -562,9 +558,9 @@
     </tbody>
 </table>
 
-<div style="page-break-after:always;"></div>
-<div id="page3" class="page_break">
+<br class="page-break">
 
+<div id="page3">
     <table border="0" style="width:100%;float:left;">
         <caption></caption>
         <col/>
@@ -772,10 +768,9 @@
     </tr>
     </tbody>
 </table>
-<hr style="border-style:dashed ; float:left;width:100% ;margin-top:20px;"/>
-<br><br>
+<hr style="border-style:dashed ; float:left;width:100% ;margin-top:15px;"/>
+<br>
 
-<%--</div>--%>
 <div class="form-submit" style="float:right;margin-top:15px;">
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
