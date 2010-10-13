@@ -43,7 +43,7 @@ public class JSONCertSignUserLookupService extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         WebApplicationContext context =
-            WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+                WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
         userLocationDAO = (UserLocationDAO) context.getBean("userLocationDAOImpl");
         userDAO = (UserDAO) context.getBean("userDAOImpl");
         birthDeclarationDAO = (BirthDeclarationDAO) context.getBean("birthDeclarationDAOImpl");
@@ -79,7 +79,13 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                 optionList.put("authorizedUsers", getAdoptionCertSignUsers(locationId));
             } else if ("4".equals(mode)) {
                 optionList.put("authorizedUsers", getMarriageCertSignUsers(locationId));
+            } else if ("5".equals(mode)) {
             } else {
+                if (userId == null) {
+                    //get user id from session
+                    User user = (User) session.getAttribute(WebConstants.SESSION_USER_BEAN);
+                    userId = user.getUserId();
+                }
                 UserLocation userLocation = userLocationDAO.getUserLocation(userId, locationId);
                 String lang = getUserPrefLang(certificateId);
 
@@ -87,6 +93,10 @@ public class JSONCertSignUserLookupService extends HttpServlet {
                     optionList.put("officerSignature", userLocation.getUser().getUserSignature(lang));
                     optionList.put("locationSignature", userLocation.getLocation().getLocationSignature(lang));
                     optionList.put("locationName", userLocation.getLocation().getLocationName(lang));
+                    if (AppConstants.SINHALA.equals(lang))
+                        optionList.put("locationAddress", userLocation.getLocation().getSiLocationMailingAddress());
+                    if (AppConstants.TAMIL.equals(lang))
+                        optionList.put("locationAddress", userLocation.getLocation().getTaLocationMailingAddress());
 
                 } else {
                     // TODO throw exception

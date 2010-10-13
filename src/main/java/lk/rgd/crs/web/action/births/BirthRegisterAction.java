@@ -5,10 +5,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lk.rgd.AppConstants;
 import lk.rgd.Permission;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.domain.AppParameter;
-import lk.rgd.common.api.domain.DSDivision;
-import lk.rgd.common.api.domain.User;
-import lk.rgd.common.api.domain.UserLocation;
+import lk.rgd.common.api.domain.*;
 import lk.rgd.common.util.GenderUtil;
 import lk.rgd.common.util.MarriedStatusUtil;
 import lk.rgd.common.util.NameFormatUtil;
@@ -42,6 +39,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private final DSDivisionDAO dsDivisionDAO;
     private final AppParametersDAO appParametersDAO;
     private final UserLocationDAO userLocationDAO;
+    private final LocationDAO locationDAO;
 
     private Map<Integer, String> districtList;
     private Map<Integer, String> countryList;
@@ -120,6 +118,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     private String motherRacePrintEn;
     private String marriedStatus;
     private String marriedStatusEn;
+    private String returnAddress;
 
 
     public String welcome() {
@@ -127,8 +126,8 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
     }
 
     public BirthRegisterAction(BirthRegistrationService service, AdoptionOrderService adoptionService, DistrictDAO districtDAO,
-        CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
-        AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO) {
+                               CountryDAO countryDAO, RaceDAO raceDAO, BDDivisionDAO bdDivisionDAO, DSDivisionDAO dsDivisionDAO,
+                               AppParametersDAO appParametersDAO, UserLocationDAO userLocationDAO, LocationDAO locationDAO) {
         this.service = service;
         this.adoptionService = adoptionService;
         this.districtDAO = districtDAO;
@@ -138,6 +137,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
         this.dsDivisionDAO = dsDivisionDAO;
         this.appParametersDAO = appParametersDAO;
         this.userLocationDAO = userLocationDAO;
+        this.locationDAO = locationDAO;
     }
 
     /**
@@ -361,6 +361,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
      */
     public String confirmationPrintPageLoad() {
         try {
+            // String language = ((Locale) session.get(WebConstants.SESSION_USER_LANG)).getLanguage();
             BirthDeclaration bdf = service.getById(bdId, user);
             Calendar cal1 = new GregorianCalendar();
             cal1.add(Calendar.DATE, appParametersDAO.getIntParameter(AppParameter.CRS_BIRTH_CONFIRMATION_DAYS_PRINTED));
@@ -370,9 +371,20 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             bdf = service.loadValuesForPrint(bdf, user);
             bdId = bdf.getIdUKey();
             populate(bdf);
+            //populate location list
+            String language = bdf.getRegister().getPreferredLanguage();
+            locationList = user.getActiveLocations(language);
+            int defId = locationList.keySet().iterator().next();
+            Location location = locationDAO.getLocation(defId);
+            if (language.equals(AppConstants.SINHALA))
+                returnAddress = location.getSiLocationMailingAddress();
+            if (language.equals(AppConstants.TAMIL))
+                returnAddress = location.getTaLocationMailingAddress();
+            if (language.equals(AppConstants.ENGLISH))
+                returnAddress = location.getEnLocationMailingAddress();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.APPROVED)) {
                 return ERROR;
             } else {
                 beanPopulate(bdf);
@@ -486,7 +498,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
             if (existSerial != 0 && existBDivisionId != 0) {
                 existingBDF = service.getActiveRecordByBDDivisionAndSerialNo(
-                    bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
+                        bdDivisionDAO.getBDDivisionByPK(existBDivisionId), existSerial, user);
             } else {
                 addActionError(getText("adoption_invalid_BDivision_or_serialNo.label"));
             }
@@ -611,7 +623,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                 logger.debug("bdId is {} ", bdId);
                 logger.debug("value of the status of bdf is :{}", bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED);
                 if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_PRINTED) ||
-                    bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
+                        bdf.getRegister().getStatus() == BirthDeclaration.State.CONFIRMATION_CHANGES_CAPTURED) {
                     addActionError(getText("cp1.error.editNotAllowed"));
                     //otherwise it will populate details while giving error massage cannot edit
                     bdf = new BirthDeclaration();
@@ -664,7 +676,7 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
             birthType = bdf.getRegister().getBirthType();
 
             if (!(bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_GENERATED ||
-                bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
+                    bdf.getRegister().getStatus() == BirthDeclaration.State.ARCHIVED_CERT_PRINTED)) {
                 return ERROR;
             } else {
 
@@ -680,10 +692,10 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
                     }
                 }
                 if (bdf.getRegister().getOriginalBCIssueUser() == null &&
-                    bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
-                    BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
+                        bdf.getRegister().getOriginalBCPlaceOfIssue() == null &&
+                        BirthDeclaration.State.ARCHIVED_CERT_GENERATED == bdf.getRegister().getStatus()) {
                     UserLocation userLocation = userLocationDAO.getUserLocation(
-                        userList.keySet().iterator().next(), locationList.keySet().iterator().next());
+                            userList.keySet().iterator().next(), locationList.keySet().iterator().next());
                     String prefLang = bdf.getRegister().getPreferredLanguage();
 
                     bdf.getRegister().setOriginalBCIssueUserSignPrint(userLocation.getUser().getUserSignature(prefLang));
@@ -1477,5 +1489,13 @@ public class BirthRegisterAction extends ActionSupport implements SessionAware {
 
     public void setUserList(Map<String, String> userList) {
         this.userList = userList;
+    }
+
+    public String getReturnAddress() {
+        return returnAddress;
+    }
+
+    public void setReturnAddress(String returnAddress) {
+        this.returnAddress = returnAddress;
     }
 }
