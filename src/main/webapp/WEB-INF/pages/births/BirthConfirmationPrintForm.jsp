@@ -28,6 +28,24 @@
 </style>
 <script type="text/javascript" src="<s:url value="/js/print.js"/>"></script>
 <script type="text/javascript">
+
+    $(function() {
+        $('select#locationId').bind('change', function(evt1) {
+            var id = $("select#locationId").attr('value');
+            var certId = $('label#certificateId').text();
+            var options = '';
+            if (id > 0) {
+                $.getJSON('/ecivil/crs/CertSignUserLookupService', {userLocationId:id,certificateId:certId},
+                        function(data) {
+                            var locationAddress = data.locationAddress;
+                            $("label#retAddress").html(locationAddress);
+                        });
+            } else {
+                $("select#retAddress").html(options);
+            }
+        });
+    });
+
     function initPage() {
     }
 </script>
@@ -61,7 +79,25 @@
         <s:param name="printStart" value="#request.printStart"/>
     </s:url>
 </s:else>
+<div id="confermationRetAddress">
+    <fieldset style="margin-bottom:10px;border:2px solid #c3dcee;">
 
+        <table>
+            <caption/>
+            <col/>
+            <col/>
+            <tbody>
+            <tr>
+                <td>
+                    <s:label value="%{getText('placeOfIssue.label')}"/>
+                </td>
+                <td>
+                    <s:select id="locationId" name="" list="locationList" cssStyle="width:300px;"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+</div>
 <div class="form-submit" style="float:right;margin-top:15px;">
     <s:a href="%{print}"><s:label value="%{getText('mark_as_print.button')}"/></s:a>
 </div>
@@ -72,6 +108,7 @@
 
 <div class="form-submit" style="float:right;margin-left:10px; margin-top:16px;">
     <s:a href="%{cancel}"><s:label value="%{getText('previous.label')}"/></s:a>
+    </fieldset>
 </div>
 <div id="page1" style="page-break-after:always;">
 <table style="width:70%;float:left;">
@@ -97,7 +134,7 @@
             <label>අනුක්‍රමික අංකය<br>தொடர் இலக்கம்<br>Serial Number</label>
         </td>
         <td style="text-align:center;width:100px">
-            <s:label name="bdId"/>
+            <s:label name="bdId" id="certificateId"/>
         </td>
     </tr>
     </tbody>
@@ -162,7 +199,7 @@
         <td colspan="2">
             සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය හා
             දිනය
-            <br>"பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும் 
+            <br>"பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
         <td width="200px"><s:label name="register.bdfSerialNo"/><br>
@@ -185,7 +222,7 @@
             Address to post any changes
         </td>
         <td colspan="2">
-            &nbsp;
+            <s:label id="retAddress" value="%{returnAddress}"/>
         </td>
     </tr>
     </tbody>
@@ -197,7 +234,7 @@
     <tr>
         <td colspan="20" style="text-align:center;font-size:12pt">
             <label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
-                <br>சிவில் பதிவு நடைமுறையில்  உள்ளடக்கப்பட்டுள்ள விபரம் 
+                <br>சிவில் பதிவு நடைமுறையில் உள்ளடக்கப்பட்டுள்ள விபரம்
                 <br>Information included in Civil Registration System</label>
         </td>
     </tr>
@@ -381,7 +418,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர் 
+            <br>திருத்தப்பட்ட பெயர்
             <br>Corrected name</label>
 
             <p></p></td>
@@ -412,7 +449,7 @@
         <td class="cell_001">13</td>
         <td width="200px"><p></p>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
-                <br>குழந்தையின் பெயர் ஆங்கிலத்தில் 
+                <br>குழந்தையின் பெயர் ஆங்கிலத்தில்
                 <br>Child's name in English
             </label>
 

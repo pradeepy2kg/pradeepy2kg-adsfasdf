@@ -54,6 +54,10 @@
     }
 }
 
+#confermationRetAddress {
+    display: none;
+}
+
 /*@media print {*/
 
 /*div.header {*/
