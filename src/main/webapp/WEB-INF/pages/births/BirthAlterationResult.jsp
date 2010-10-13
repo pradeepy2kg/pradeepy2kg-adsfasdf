@@ -9,7 +9,7 @@
         <table align="center">
             <tr>
                 <td></td>
-                <td style="text-align:center;">
+                <td style="text-align:left;">
                     <s:label value="%{getText('saveSuccess.label')}"/>
                 </td>
                 <td></td>

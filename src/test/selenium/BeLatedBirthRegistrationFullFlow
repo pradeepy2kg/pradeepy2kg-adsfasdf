@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[1]/a/label</td>
+	<td>//div[@id='birth-confirmation-print-form-outer-page']/div[2]/a/label</td>
 	<td></td>
 </tr>
 <tr>
