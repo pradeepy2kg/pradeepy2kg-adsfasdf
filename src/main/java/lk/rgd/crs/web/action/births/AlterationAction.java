@@ -234,6 +234,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         boolean isAlt52_1;
         if (sectionOfAct == 2) isAlt52_1 = true;
         else isAlt52_1 = false;
+        logger.debug("division Id :{} ,serial number :{}", birthDivisionId, alterationSerialNo);
         BirthAlteration baCheck = alterationService.getActiveRecordByBDDivisionAndSerialNo(
                 bdDivisionDAO.getBDDivisionByPK(birthDivisionId), alterationSerialNo, user, isAlt52_1);
         int checkDuplicate = 0;
@@ -511,11 +512,14 @@ public class AlterationAction extends ActionSupport implements SessionAware {
 
     private void changesOfAlt52_1(BirthDeclaration bdf, String language) {
         child = bdf.getChild();
+        logger.debug("child : {},alt52.1 :{}", child.getPlaceOfBirth(), alt52_1.getPlaceOfBirthEnglish());
         register = bdf.getRegister();
         if (alt52_1.getDateOfBirth() != null)
             compareAndAdd(Alteration52_1.DATE_OF_BIRTH, alt52_1.getDateOfBirth().toString(), child.getDateOfBirth().toString());
-        compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, alt52_1.getPlaceOfBirth(), child.getPlaceOfBirth());
-        compareAndAdd(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, alt52_1.getPlaceOfBirthEnglish(), child.getPlaceOfBirthEnglish());
+        if (alt52_1.getPlaceOfBirth() != null)
+            compareAndAdd(Alteration52_1.PLACE_OF_BIRTH, child.getPlaceOfBirth(), alt52_1.getPlaceOfBirth());
+        if (alt52_1.getPlaceOfBirthEnglish() != null)
+            compareAndAdd(Alteration52_1.PLACE_OF_BIRTH_ENGLISH, child.getPlaceOfBirthEnglish(), alt52_1.getPlaceOfBirthEnglish());
 
         if (alt52_1.getBirthDivision() != null && register.getBirthDivision() != null)
             compareAndAdd(Alteration52_1.BIRTH_DIVISION, bdDivisionDAO.getNameByPK(register.getBirthDivision().getBdDivisionUKey(), language),
@@ -583,7 +587,7 @@ public class AlterationAction extends ActionSupport implements SessionAware {
         } else compareChanges[2] = null;
         boolean checkApp = true;
         if (!(indexCheck.get(index))) {
-            if (compareChanges[1] != null && compareChanges != null) {
+            if (compareChanges[1] != null && compareChanges[2] != null) {
                 if (!compareChanges[2].equals(compareChanges[1])) {
                     birthAlterationApprovalList.add(compareChanges);
                     numberOfAppPending++;
