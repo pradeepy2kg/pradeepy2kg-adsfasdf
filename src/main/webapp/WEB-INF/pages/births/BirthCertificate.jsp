@@ -420,9 +420,9 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" height="60px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
+        <td colspan="2" height="70px">නිකුත් කළ ස්ථානය / வழங்கிய இடம்/ Place of Issue
         </td>
-        <td colspan="2" cssStyle="font-size:11pt;">
+        <td colspan="2" cssStyle="font-size:12pt;">
             <s:label id="placeSign" value="%{#request.register.originalBCPlaceOfIssueSignPrint}"/><br>
             <s:label id="placeName" value="%{#request.register.originalBCPlaceOfIssuePrint}"/>
         </td>
