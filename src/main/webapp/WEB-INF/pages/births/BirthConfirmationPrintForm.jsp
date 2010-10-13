@@ -83,12 +83,6 @@
     <tr>
         <td width="270px"></td>
         <td align="center" style="font-size:14pt"><img src="<s:url value="/images/official-logo.png" />" alt=""/><br>
-            <label>
-                ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA<br><br>
-                දෙමව්පියන් / භාරකරු විසින් උපත තහවුරු කිරීම
-                ﻿﻿ <br>﻿﻿ பெற்றோர் அல்லது பாதுகாப்பாளா் மூலம் பிறப்பை உறுதிப்படுத்தல்
-                <br>Confirmation of Birth by Parents / Guardian
-            </label>
         </td>
     </tbody>
 </table>
@@ -109,6 +103,22 @@
     </tbody>
 </table>
 
+<table style="width:100%;float:left;">
+    <col/>
+    <tbody>
+    <tr>
+        <td align="center" style="font-size:14pt">
+            <label>
+                ශ්‍රී ලංකා / ﻿இலங்கை / SRI LANKA<br><br>
+                දෙමව්පියන් / භාරකරු විසින් උපත තහවුරු කිරීම
+                ﻿﻿ <br>பெற்றோர் / பாதுகாப்பாளர் மூலம் பிறப்பை உறுதிப்படுத்தல்
+                <br>Confirmation of Birth by Parents / Guardian
+            </label>
+        </td>
+    </tbody>
+</table>
+
+
 <table border="0" style="margin-bottom:10px;width:100%;float:left;">
     <caption></caption>
     <col/>
@@ -120,20 +130,20 @@
             ඇතුලත් කර ඇත. එසේ ඇතුලත් කර ඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කළ යුතු නම්, එම තොරතුරු අදාල ස්ථානයෙහි
             සදහන් කර දින 14 ක් තුල මා වෙත ලැබෙන්න සලස්වන්න. එම කාලය තුල දී මෙම අකෘති පත්‍රය මා වෙත නොලැබුනහොත්, සිවිල්
             ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුලත් කර ඇති තොරතුරු නිවැරදි බවට සහතික කර උපත ලියාපදිංචි කරනු ලැබේ.
-            <br><br>
+            <br>
             பிறப்பை பதிவு செய்வதற்காக தங்களால் சமர்ப்பிக்கப்பட்ட "பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும்
             பlடிவத்தின்படியே இப்படிவம் தயாரிக்கப்பட்டுள்ளது. அதில் தரப்பட்டுள்ள தகவல்கள் ‘சிவில் பதிவு அமைப்பில்’
             உள்ளடக்கப்பட்டுள்ளது. அவ்வாறு உள்ளடக்கப்பட்டுள்ள பின்வரும் தகவல்களில் ஏதாவது பிழைகள் இருப்பின் அது
             திருத்தப்பட வேண்டுமாயின், அது தொடர்பான விபரங்களை உரிய இடங்களில் குறிப்பிட்டு 14 நாட்களுக்குள் எனக்கு
             கிடைக்கக்கூடியதாக அனுப்பி வைக்கவும். உரியக்காலத்துக்குள் இப்படிவம் எனக்கு கிடைக்காதுவிடின், ‘சிவில் பதிவு
             அமைப்பில்’ உள்ளடக்கப்பட்ட விபரம் சரியானதெனக் கருதி பிறப்புப் பதிவு செய்யப்படும்.
-            <br><br>
+            <br>
 
             Particulars appearing in this form are based on the information provided by you in the ‘Particulars for
             Registration of a Birth’ form. These particulars are included in the Civil Registration System. If there are
             any errors appearing in the given details, make the necessary corrections in the relevant place and submit
             to me within 14 days. If I do not receive this form within the specified period, the birth particulars in
-            the Civil Registration System will be confirmed as accurate and the birth will be registered. <br>
+            the Civil Registration System will be confirmed as accurate and the birth will be registered.
         </label></td>
     </tr>
     </tbody>
@@ -152,7 +162,7 @@
         <td colspan="2">
             සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ අදාල “උපතක් ලියාපදිංචි කිරීම සඳහා විස්තර” ප්‍රකාශනයේ අනුක්‍රමික අංකය හා
             දිනය
-            <br>"பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும்
+            <br>"பிறப்பை பதிவு செய்வதற்கான விபரம்" எனும் படிவத்தின் தொடா் இலக்கமும் திகதியும் 
             <br>Serial Number and the Date of the ‘Particulars for Registration of a Birth’ form
         </td>
         <td width="200px"><s:label name="register.bdfSerialNo"/><br>
@@ -175,20 +185,19 @@
             Address to post any changes
         </td>
         <td colspan="2">
-            <%--todo--%>
+            &nbsp;
         </td>
     </tr>
     </tbody>
 </table>
 
-<table border="0" style="width:100%; float:left;margin-top:10px;">
-    <caption></caption>
+<table border="0" style="width:100%;float:left;margin-top:5px;">
     <col/>
     <tbody>
     <tr>
         <td colspan="20" style="text-align:center;font-size:12pt">
             <label>සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියේ ඇතුළත් විස්තර
-                <br>சிவில் பதிவு அமைப்பில் உள்ளடக்கப்பட்டுள்ள விபரம்
+                <br>சிவில் பதிவு நடைமுறையில்  உள்ளடக்கப்பட்டுள்ள விபரம் 
                 <br>Information included in Civil Registration System</label>
         </td>
     </tr>
@@ -213,12 +222,12 @@
     <col width="70px"/>
     <tbody>
 
-    <tr style="font-size:9pt;">
+    <tr>
         <td colspan="2"><label>විස්තර <br>விபரங்கள் <br>Particulars </label></td>
         <td colspan="6"><label>දැනට අඩංගු විස්තර
             <br>தற்போதய தகவல்
             <br>Current Information </label></td>
-        <td class="cell_02" colspan="11"><label>
+        <td class="cell_02" colspan="11" style="font-size:9pt;"><label>
             ඇතුලත් කර ඇති තොරතුරු හෝ යම් අක්ෂර දෝෂයක් නිවැරදි කල යුතුනම්, වෙනස් විය යුතු ආකාරය ඇතුලත් කරන්න
             <br>புதிய விபரங்களை இடுக அல்லது இருக்கும் விபரத்தை திருத்துக
             <br>If there are spelling mistakes or changes in existing details.</label></td>
@@ -264,7 +273,7 @@
 
     <tr>
         <td height="40px"><label>ප්‍රාදේශීය ලේකම් කොට්ඨාශය <br>
-            பிரதேச செயலாளா் பிரிவு <br>
+            பிரதேச செயலாளர் பிரிவு <br>
             Divisional Secretariat</label></td>
         <td colspan="6" style="font-size:12pt;">
             <s:label value="%{register.dsDivisionPrint}"/>
@@ -345,7 +354,7 @@
     <tbody>
     <tr>
         <td colspan="3" style="text-align:center;font-size:12pt;">
-            <label><br>නම් වල අක්ෂර දෝෂ වෙනස් වීම් ඇතුලත් කිරීම / பெயரிலுள்ள மாற்றங்கள் /
+            <label><br>නම් වල අක්ෂර දෝෂ වෙනස් වීම් ඇතුලත් කිරීම / பெயரிலுள்ள எழுத்துப்பிழைகளை திருத்துதல் /
                 Correction of errors in Names</label>
         </td>
     </tr>
@@ -362,7 +371,7 @@
         <td class="cell_001">12</td>
         <td width="200px"><p></p><label>ළම‌යාගේ නම රාජ්‍ය භාෂාවෙන්
             (සිංහල / දෙමළ)
-            <br>குழந்தையின் பெயர் அதிகார மொழிகளில்
+            <br>குழந்தையின் பெயர் அரசகரும மொழிகளில்
             (சிங்களம்/தமிழ்)
             <br>Child's name in the official languages (Sinhala / Tamil)</label>
 
@@ -372,7 +381,7 @@
     <tr>
         <td rowspan="5" class="cell_012">&nbsp;</td>
         <td rowspan="5"><p></p><label>නම වෙනස් විය යුතු අයුරු
-            <br>திருத்தப்பட்ட பெயர்
+            <br>திருத்தப்பட்ட பெயர் 
             <br>Corrected name</label>
 
             <p></p></td>
@@ -403,7 +412,7 @@
         <td class="cell_001">13</td>
         <td width="200px"><p></p>
             <label>ළම‌යාගේ නම ඉංග්‍රීසි භාෂාවෙන්
-                <br>குழந்தையின் பெயர் ஆங்கிலத்தில்
+                <br>குழந்தையின் பெயர் ஆங்கிலத்தில் 
                 <br>Child's name in English
             </label>
 
@@ -560,7 +569,7 @@
             <td>&nbsp;</td>
             <td>පියා <br>தந்தை<br>Father</td>
             <td>&nbsp;</td>
-            <td>භාරකරු <br>பாதுகாவலா்<br>Guardian</td>
+            <td>භාරකරු <br>பாதுகாவலர் <br>Guardian</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -659,7 +668,7 @@
             <p></p>
             <label>
                 ඉහත සදහන් තොරතුරු සිවිල් ලියාපදිංචි කිරිමේ පද්ධතියට ඇතුලත් කරන ලදී.
-                <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு அமைப்பில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளா் / மேலதிக
+                <br>மேற்குறிப்பிட்ட விபரங்கள் ‘சிவில் பதிவு முறையில்’ உள்ளடக்கப்பட்டன (மாவட்டப் பதிவாளர் / மேலதிக
                 மாவட்டப் பதிவாளர்)
                 <br>Above information has been entered into the Civil Registration System.
             </label>

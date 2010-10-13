@@ -86,7 +86,6 @@
 </script>
 
 <div id="birth-certificate-outer">
-
 <s:if test="directPrint">
     <s:url id="print" value="eprDirectPrintBirthCertificate.do"/>
     <s:url id="cancel" action="eprBirthRegistrationHome.do"/>
@@ -144,11 +143,11 @@
 
 <div style="width:35%;float:left;">
     <s:if test="#request.allowPrintCertificate">
-        <div class="form-submit" style="margin:5px 0 0 5px;">
+        <div class="form-submit" style="margin:5px 0 0 0;">
             <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
         </div>
-        <div class="form-submit">
-            <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+        <div class="form-submit" style="margin:15px 0 0 5px;">
+            <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}" /></s:a>
             <s:hidden id="printMessage" value="%{getText('print.message')}"/>
         </div>
     </s:if>
@@ -209,7 +208,7 @@
     <col width="220px">
     <col width="215px">
     <tbody>
-    <tr height="80px">
+    <tr height="70px">
         <td>දිස්ත්‍රික්කය<br>மாவட்டம் <br>District</td>
         <td>
             <s:label name="" value="%{childDistrict}" cssStyle="font-size:11pt;"/><br/>
@@ -493,11 +492,11 @@
 <br><br>
 
 <s:if test="#request.allowPrintCertificate">
-    <div class="form-submit" style="margin:5px 0 0 5px; ">
+    <div class="form-submit" style="margin:5px 0 0 0;">
         <s:submit value="%{getText('mark_as_print.button')}" type="submit"/>
     </div>
-    <div class="form-submit">
-        <s:submit type="button" value="%{getText('print.button')}" onclick="printPage()"/>
+    <div class="form-submit" style="margin:15px 0 0 5px;">
+        <s:a href="%{printPage}" onclick="printPage()"><s:label value="%{getText('print.button')}" /></s:a>
         <s:hidden id="printMessage" value="%{getText('print.message')}"/>
     </div>
 </s:if>
