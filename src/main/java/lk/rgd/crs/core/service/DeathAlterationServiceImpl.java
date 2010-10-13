@@ -56,10 +56,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteDeathAlteration(long idUKey, User user) {
         logger.debug("about to remove alteration recode idUkey : {}", idUKey);
-        DeathAlteration da = deathAlterationDAO.getById(idUKey);
-/*
-        validateAccessToBDDivision(user, da.getDeathDivision());
-*/
+        /*
+                validateAccessToBDDivision(user, da.getDeathDivision());
+        */
         deathAlterationDAO.deleteDeathAlteration(idUKey);
     }
 
@@ -106,8 +105,13 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         }
         //merge  with exsisting
         BitSet ex = da.getApprovalStatuses();
-        ex.or(approvalBitSet);
-        da.setApprovalStatuses(ex);
+        if (ex != null) {
+            ex.or(approvalBitSet);
+            da.setApprovalStatuses(ex);
+        } else {
+            da.setApprovalStatuses(approvalBitSet);
+        }
+
         //setting state
         //true means fully
         if (appStatus) {

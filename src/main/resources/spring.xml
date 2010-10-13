@@ -319,6 +319,7 @@
         <constructor-arg ref="bdDivisionDAOImpl"/>
         <constructor-arg ref="raceDAOImpl"/>
         <constructor-arg ref="countryDAOImpl"/>
+        <constructor-arg ref="appParametersDAOImpl"/>
     </bean>
 
     <bean id="eventsManagementAction" class="lk.rgd.crs.web.action.EventsManagementAction">

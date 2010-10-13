@@ -295,9 +295,9 @@ $(function() {
     });
     $('#death-info-check').click(function() {
 
-        /*
-         document.getElementById("death-info-check").disabled = true;
-         */
+
+        document.getElementById("death-info-check").disabled = true;
+
 
         var fieldIds = new Array('deathDatePicker', 'deathTimePicker', 'placeOfDeath', 'placeOfDeathInEnglish', 'cause_of_death',
                 'ICD_code', 'placeOfBurial', 'act5353', 'act5252', 'cause_of_death_yesfalse', 'cause_of_death_notrue');
@@ -306,9 +306,9 @@ $(function() {
 
     $('#death-person-info-check').click(function() {
 
-        /*
-         document.getElementById("death-person-info-check").disabled = true;
-         */
+
+        document.getElementById("death-person-info-check").disabled = true;
+
 
         var fieldIds = new Array('deathPerson_PINorNIC', 'deathPersonCountryList', 'passportNumber', 'deathAge', 'deathPersonGender',
                 'deathPersonRaceList', 'nameOfficialLang', 'nameEnglish', 'address', 'pinNic', 'fatherName', 'fatherNIC', 'motherName');
@@ -564,10 +564,10 @@ function initPage() {
         </td>
         <td style="width:20%;text-align:right;border-right:none">
             <div id="death-info-check-lable">
-                    <%-- <s:label value="%{getText('edit.lable')}"/></div>--%>
+                <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
-                <%-- <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>--%>
+            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
         </td>
         <td style="width:2%;border-left:none">
             <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
@@ -734,12 +734,12 @@ function initPage() {
             <s:label value="Information about the person Departed"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-                <%--            <div id="death-person-info-check-lable">
-               <s:label value="%{getText('edit.lable')}"/></div>--%>
+            <div id="death-person-info-check-lable">
+                <s:label value="%{getText('edit.lable')}"/></div>
         </td>
         <td style="border-right:none;width:3%">
 
-                <%--            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>--%>
+            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
 
         </td>
         <td style="width:2%">
@@ -829,9 +829,9 @@ function initPage() {
                 Race
             </td>
             <td colspan="2" align="center">
-                             <s:select list="raceList" name="deathPersonRace" headerKey="0"
-                   headerValue="%{getText('select_race.label')}"
-                   cssStyle="width:200px;" id="deathPersonRaceList"/>
+                <s:select list="raceList" name="deathPersonRace" headerKey="0"
+                          headerValue="%{getText('select_race.label')}"
+                          cssStyle="width:200px;" id="deathPersonRaceList"/>
             </td>
         </tr>
         <tr>

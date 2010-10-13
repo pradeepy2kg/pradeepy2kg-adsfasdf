@@ -32,7 +32,7 @@
 <div id="birth-register-approval-body">
     <s:if test="!(pendingList.size()==0)">
         <s:form action="eprDeathAlterationSetBits" method="post">
-            <table id="pendingApprovalTable" border="1">
+            <table id="pendingApprovalTable" border="1" width="100%">
                 <thead>
                 <th><s:label value="%{getText('th.index')}"/></th>
                 <th><s:label value="%{getText('th.exsists')}"/></th>

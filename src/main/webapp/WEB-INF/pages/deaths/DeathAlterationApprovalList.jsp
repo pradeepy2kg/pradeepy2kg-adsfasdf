@@ -167,67 +167,69 @@
 <s:actionerror/>
 <div id="cc">
     <s:if test="approvalList.size()>0">
-    <fieldset>
-        <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
-            <thead>
-            <tr>
-                <th width="20px"><s:label value="%{getText('alt.serial.number')}"/></th>
-                <th width="650px"><s:label value="%{getText('name.label')}"/></th>
-                <th width="100px"><s:label value="%{getText('edit.label')}"/></th>
-                <th width="100px"><s:label value="%{getText('delete.label')}"/></th>
-                <th width="100px"><s:label value="%{getText('reject.label')}"/></th>
-                <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <s:iterator value="approvalList">
-                <%--todo remove--%>
-                <s:if test="status.ordinal()>-1">
-                    <s:url id="editSelected" action="eprDeathAlterationEdit"></s:url>
-                    <s:url id="deleteSelected" action="eprDeathAlterationDelate"></s:url>
-                    <s:url id="rejectSelected" action="eprDeathAlterationReject"></s:url>
-                    <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
-                        <s:param name="deathAlterationId" value="idUKey"/>
-                    </s:url>
-                    <tr>
-                        <td><s:property value="alterationSerialNo"/></td>
-                        <td><s:property value="status"/></td>
-                        <td align="center">
-                            <s:if test="status.ordinal()==0">
-                                <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
-                                    <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
-                                         border="none"/></s:a>
-                            </s:if>
-                        </td>
+        <fieldset>
+            <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
+                <thead>
+                <tr>
+                    <th width="20px"><s:label value="%{getText('alt.serial.number')}"/></th>
+                    <th width="650px"><s:label value="%{getText('name.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('edit.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('delete.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('reject.label')}"/></th>
+                    <th width="100px"><s:label value="%{getText('approve.label')}"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <s:iterator value="approvalList">
+                    <%--todo remove--%>
+                    <s:if test="status.ordinal()>-1">
+                        <s:url id="editSelected" action="eprDeathAlterationEdit"></s:url>
+                        <s:url id="deleteSelected" action="eprDeathAlterationDelate">
+                            <s:param name="deathAlterationId" value="idUKey"/>
+                        </s:url>
+                        <s:url id="rejectSelected" action="eprDeathAlterationReject"></s:url>
+                        <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
+                            <s:param name="deathAlterationId" value="idUKey"/>
+                        </s:url>
+                        <tr>
+                            <td><s:property value="alterationSerialNo"/></td>
+                            <td><s:property value="status"/></td>
+                            <td align="center">
+                                <s:if test="status.ordinal()==0">
+                                    <s:a href="%{editSelected}" title="%{getText('editTooltip.label')}">
+                                        <img src="<s:url value='/images/edit.png'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:if>
+                            </td>
 
-                        <td align="center">
-                            <s:if test="status.ordinal()==0">
-                                <s:a href="%{deleteSelected}"
-                                     title="%{getText('deleteToolTip.label')}"><img
-                                        src="<s:url value='/images/delete.gif'/>" width="25" height="25"
-                                        border="none"/></s:a>
-                            </s:if>
-                        </td>
-                        <td align="center">
-                            <s:if test="status.ordinal()==0">
-                                <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
-                                    <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
-                                         border="none"/>
-                                </s:a>
-                            </s:if>
-                        </td>
-                        <td align="center">
-                            <s:if test="status.ordinal()<2">
-                                <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
-                                    <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
-                                         border="none"/></s:a>
-                            </s:if>
-                        </td>
-                    </tr>
-                </s:if>
-            </s:iterator>
-            </tbody>
-        </table>
+                            <td align="center">
+                                <s:if test="status.ordinal()==0">
+                                    <s:a href="%{deleteSelected}"
+                                         title="%{getText('deleteToolTip.label')}"><img
+                                            src="<s:url value='/images/delete.gif'/>" width="25" height="25"
+                                            border="none"/></s:a>
+                                </s:if>
+                            </td>
+                            <td align="center">
+                                <s:if test="status.ordinal()==0">
+                                    <s:a href="%{rejectSelected}" title="%{getText('rejectTooltip.label')}">
+                                        <img src="<s:url value='/images/reject.gif'/>" width="25" height="25"
+                                             border="none"/>
+                                    </s:a>
+                                </s:if>
+                            </td>
+                            <td align="center">
+                                <s:if test="status.ordinal()<2">
+                                    <s:a href="%{approveSelected}" title="%{getText('approveTooltip.label')}">
+                                        <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
+                                             border="none"/></s:a>
+                                </s:if>
+                            </td>
+                        </tr>
+                    </s:if>
+                </s:iterator>
+                </tbody>
+            </table>
         </fieldset>
     </s:if>
 </div>

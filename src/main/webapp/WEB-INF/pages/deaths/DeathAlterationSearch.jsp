@@ -52,11 +52,47 @@
         });
     });
 
+    var errormsg = "";
+    var counter = 0;
+
+    function validateForm() {
+
+        var pin = document.getElementById('identificationNumber').value;
+        var serial = document.getElementById('serialNumber').value;
+        var certifcateNumber = document.getElementById('certificateNumber').value;
+        var valueArray = new Array(pin, serial, certifcateNumber);
+
+        for (var i = 0; i < valueArray.length; i++) {
+            var c = valueArray[i];
+            if (c != "") {
+                counter++
+            }
+        }
+        if (counter != 1) {
+            errormsg = errormsg + document.getElementById('oneMethodErr').value;
+        }
+
+        //validate   number fields
+        isNumeric(certifcateNumber, 'invalideDateErr', 'certificateNumberFi')
+        isNumeric(serial, 'invalideDateErr', 'serialNumnerFi')
+        isNumeric(pin, 'invalideDateErr', 'pinNumberFi')
+
+        if (errormsg != "") {
+            alert(errormsg)
+            errormsg = "";
+            counter = 0;
+            return false;
+        }
+        else {
+            return true;
+        }
+        return false;
+    }
 
 </script>
 <s:actionerror/>
 <s:actionmessage/>
-<s:form method="post" action="eprCaptureDeathAlteration.do">
+<s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validateForm()">
     <%----%><%--section select act--%><%--
     <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
         <legend align="right">
@@ -179,5 +215,9 @@
     <div class="form-submit">
         <s:submit type="submit" value="%{getText('button.search')}" id="searchButton"/>
     </div>
-
+    <s:hidden id="oneMethodErr" value="%{getText('err.use.one,method.to.search')}"/>
+    <s:hidden id="invalideDateErr" value="%{getText('err.invalide.data')}"/>
+    <s:hidden id="serialNumnerFi" value="%{getText('field.serial.number')}"/>
+    <s:hidden id="pinNumberFi" value="%{getText('field.pin.number')}"/>
+    <s:hidden id="certificateNumberFi" value="%{getText('field.certificate.number')}"/>
 </s:form>
