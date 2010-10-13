@@ -165,7 +165,7 @@
 
 <s:form action="eprAssignmentAdd.do" method="post" onsubmit="javascript:return validateForm()">
 
-    <fieldset>
+    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <table>
             <tbody>
             <tr>
@@ -197,7 +197,7 @@
             </tbody>
         </table>
     </fieldset>
-    <fieldset>
+    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <table cellspacing="0" cellpadding="0">
             <caption></caption>
             <tbody>
@@ -214,7 +214,7 @@
     </fieldset>
 
     <s:if test="assignment != null">
-        <fieldset>
+        <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
             <table cellspacing="0" cellpadding="0">
                 <caption></caption>
                 <tbody>
@@ -242,7 +242,7 @@
     </s:if>
 
 
-    <fieldset>
+    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
         <table>
             <caption/>
             <col width="200px">

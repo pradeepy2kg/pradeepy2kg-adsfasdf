@@ -117,11 +117,11 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.pin')}"/></td>
-                <td align="left"><s:textfield id="registrarPin" name="registrar.pin"/></td>
+                <td align="left"><s:textfield id="registrarPin" name="registrar.pin" maxLength="10"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.nic')}"/></td>
-                <td align="left"><s:textfield id="registrarNIC" name="registrar.nic"/></td>
+                <td align="left"><s:textfield id="registrarNIC" name="registrar.nic" maxLength="10"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.gender')}"/></td>
@@ -131,7 +131,7 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.dateofbirth')}"/></td>
-                <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker"/></td>
+                <td align="left"><s:textfield name="registrar.dateOfBirth" id="dateOfBirthDatePicker" maxLength="10"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.address')}"/></td>
@@ -140,7 +140,7 @@
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.phone')}"/></td>
-                <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo"/></td>
+                <td align="left"><s:textfield id="registrarPhone" name="registrar.phoneNo" maxLength="10"/></td>
             </tr>
             <tr>
                 <td align="left"><s:property value="%{getText('registrar.email')}"/></td>
