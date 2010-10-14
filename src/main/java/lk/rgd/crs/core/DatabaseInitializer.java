@@ -77,7 +77,7 @@ public class DatabaseInitializer implements ApplicationContextAware {
         entityClasses.add(DeathAlteration.class);
     }
 
-    public void setDataSource(DataSource dataSource) {                    web
+    public void setDataSource(DataSource dataSource) {                    
         this.dataSource = dataSource;
     }
 
