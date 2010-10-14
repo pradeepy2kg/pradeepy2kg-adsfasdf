@@ -5,7 +5,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
-import lk.rgd.common.api.service.EventManagementService;
+import lk.rgd.common.api.service.EventViewerService;
 import lk.rgd.common.util.DateTimeUtils;
 
 import java.util.Date;
@@ -21,12 +21,12 @@ import org.slf4j.LoggerFactory;
  * Time: 9:14:30 AM
  * To change this template use File | Settings | File Templates.
  */
-public class EventsManagementAction extends ActionSupport {
-    private static final Logger logger = LoggerFactory.getLogger(EventsManagementAction.class);
+public class EventsViewerAction extends ActionSupport {
+    private static final Logger logger = LoggerFactory.getLogger(EventsViewerAction.class);
 
     private final EventDAO eventDAO;
     private final AppParametersDAO appParametersDAO;
-    private final EventManagementService service;
+    private final EventViewerService service;
 
     private Event event;
     private long idUKey;
@@ -61,7 +61,7 @@ public class EventsManagementAction extends ActionSupport {
     private static final String EVENTS_ROWS_PER_PAGE = "common.event_rows_per_page";
 
 
-    public EventsManagementAction(EventDAO eventDAO, EventManagementService service, AppParametersDAO appParametersDAO) {
+    public EventsViewerAction(EventDAO eventDAO, EventViewerService service, AppParametersDAO appParametersDAO) {
         this.eventDAO = eventDAO;
         this.service = service;
         this.appParametersDAO = appParametersDAO;
@@ -200,7 +200,7 @@ public class EventsManagementAction extends ActionSupport {
         return eventDAO;
     }
 
-    public EventManagementService getService() {
+    public EventViewerService getService() {
         return service;
     }
 
