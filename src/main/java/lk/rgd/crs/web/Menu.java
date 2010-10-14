@@ -45,6 +45,7 @@ public class Menu {
     private static final Map argDeathLink = new LinkedHashMap();
     private static final Map argAdoptionLink = new LinkedHashMap();
     private static final Map argAlterationLink = new LinkedHashMap();
+    private static final Map argAdminLink = new LinkedHashMap();
 
     static {
         //Admin
@@ -187,6 +188,8 @@ public class Menu {
         argBirthLink.put("eprRejectBelatedBirthDeclaration.do", new Link(null, "/ecivil/births/", "eprRejectBelatedBirthDeclaration.do", Permission.APPROVE_BDF_BELATED));
         argBirthLink.put("eprDeleteBelatedApprovalPending.do", new Link(null, "/ecivil/births/", "eprDeleteBelatedApprovalPending.do", Permission.APPROVE_BDF_BELATED));
 
+        argAdminLink.putAll(adrAdminLink);
+
         //Death Registration for DEO
         deoDeathLink.put("eprInitDeathDeclaration.do", new Link("death_registration.label", "/ecivil/deaths/", "eprInitDeathDeclaration.do", Permission.EDIT_DEATH));
         deoDeathLink.put("eprInitLateDeathDeclaration.do", new Link("late_death_registration.label", "/ecivil/deaths/", "eprInitLateDeathDeclaration.do", Permission.EDIT_DEATH));
@@ -317,6 +320,7 @@ public class Menu {
         argLinks.put("preference", preferanceLink);
         argLinks.put("prs", prsLink);
         argLinks.put("certificateSearch", searchLink);
+        argLinks.put("admin", argAdminLink);
     }
 
     public static Map<String, Map> getAllowedLinks(Role role) {
