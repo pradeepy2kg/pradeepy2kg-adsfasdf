@@ -411,6 +411,13 @@ function validateBirthYear(domElement, errorText, errorCode) {
     }
 }
 </script>
+
+<script>
+    $(document).ready(function() {
+        $("#tabs").tabs();
+    });
+</script>
+
 <script type="text/javascript">
     var errormsg = "";
     function validate2() {
@@ -491,7 +498,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
 
 </script>
 <s:if test="pageType==0">
-    <div id="birth-confirmation-search">
+    <div id="birth-confirmation-search">          
     <s:actionerror cssClass="alreadyPrinted"/>
     <s:form action="eprBirthAlterationSearch.do" onsubmit="javascript:return validate2()">
         <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
@@ -504,75 +511,73 @@ function validateBirthYear(domElement, errorText, errorCode) {
                 </tr>
             </table>
         </fieldset>
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend>
-                <b><s:label name="confirmatinSearchLegend"
-                            value="%{getText('registrationSerchLegend3.label')}"/></b>
-            </legend>
-            <table class="search-option-table">
-                <tr>
-                    <td width="135px"><s:label name="confirmationSearch"
-                                               value="%{getText('certificateNumber.lable')}"/></td>
-                    <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
-                                                   onkeypress="return isNumberKey(event)"/></td>
-                </tr>
-            </table>
-        </fieldset>
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend>
-                <b><s:label name="confirmatinSearchLegend"
-                            value="%{getText('registrationSerchLegend2.label')}"/></b>
-            </legend>
-            <table class="search-option-table">
-                <tr>
-                    <td width="135px"><s:label name="confirmationSearch"
-                                               value="%{getText('idNumber.lable')}"/></td>
-                    <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
+        <div id="tabs">
+            <ul>
+                    <li><a href="#fragment-1"><span> <s:label name="confirmatinSearchLegend"
+                                    value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
+                    <li><a href="#fragment-2"><span><s:label name="confirmatinSearchLegend"
+                                    value="%{getText('registrationSerchTab2.label')}"/></span></a></li>
+                    <li><a href="#fragment-3"><span><s:label name="registrationSerchLegend"
+                                    value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
+                </ul>
+            
+            <div id="fragment-1">
+                    <table class="search-option-table">
+                        <tr>
+                            <td width="135px"><s:label name="confirmationSearch"
+                                                       value="%{getText('certificateNumber.lable')}"/></td>
+                            <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
+                                                           onkeypress="return isNumberKey(event)"/></td>
+                        </tr>
+                    </table>
+            </div>
+            <div id="fragment-2">
+                    <table class="search-option-table">
+                        <tr>
+                            <td width="135px"><s:label name="confirmationSearch"
+                                                       value="%{getText('idNumber.lable')}"/></td>
+                            <td width="200px"><s:textfield name="nicOrPin" id="idNumberSearch" maxLength="10"/></td>
 
-                </tr>
-            </table>
-        </fieldset>
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend>
-                <b><s:label name="registrationSerchLegend"
-                            value="%{getText('registrationSerchLegend1.label')}"/></b>
-            </legend>
-            <table class="search-option-table">
-                <caption></caption>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-                <tbody>
-                <tr>
-                    <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
-                    <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value="" maxLength="10"
-                                     onkeypress="return isNumberKey(event)"/></td>
-                    <td><s:label value="%{getText('district.label')}"/></td>
-                    <td>
-                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="birthDistrictId" cssStyle="width:240px;float:right;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
-                    <td>
-                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
-                                  value="%{dsDivisionId}"
-                                  cssStyle="float:left;  width:240px;"/>
-                    </td>
-                    <td><s:label value="%{getText('select_BD_division.label')}"/></td>
-                    <td>
-                        <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                  list="bdDivisionList" cssStyle=" width:240px;float:right;"
-                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-
+                        </tr>
+                    </table>
+            </div>
+            <div id="fragment-3">
+                    <table class="search-option-table">
+                        <caption></caption>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <tbody>
+                        <tr>
+                            <td><s:label value="%{getText('searchDeclarationSearial.label')}"/></td>
+                            <td><s:textfield name="serialNo" id="bdfSearchSerialNoId" value="" maxLength="10"
+                                             onkeypress="return isNumberKey(event)"/></td>
+                            <td><s:label value="%{getText('district.label')}"/></td>
+                            <td>
+                                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                          value="birthDistrictId" cssStyle="width:240px;float:right;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+                            <td>
+                                <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList"
+                                          value="%{dsDivisionId}"
+                                          cssStyle="float:left;  width:240px;"/>
+                            </td>
+                            <td><s:label value="%{getText('select_BD_division.label')}"/></td>
+                            <td>
+                                <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
+                                          list="bdDivisionList" cssStyle=" width:240px;float:right;"
+                                          headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
         <br/>
 
         <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
