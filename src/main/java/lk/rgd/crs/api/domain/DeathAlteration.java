@@ -22,9 +22,9 @@ import java.util.Date;
 
 public class DeathAlteration {
 
-    public static final int SUDDEN_DEATH = 10;
-    public static final int DATE_OF_DEATH = 11;
-    public static final int TIME_OF_DEATH = 12;
+    public static final int SUDDEN_DEATH = 1;
+    public static final int DATE_OF_DEATH = 2;
+    public static final int TIME_OF_DEATH = 3;
     public static final int PLACE_OF_DEATH_OFFICIAL = 4;
     public static final int PLACE_OF_DEATH_ENGLISH = 5;
     public static final int CAUSE_OF_DEATH_ESTABLISHED = 6;
@@ -39,14 +39,14 @@ public class DeathAlteration {
     public static final int DEATH_PERSON_GENDER = 14;
     public static final int DEATH_PERSON_RACE = 15;
     public static final int DEATH_PERSON_NAME_OFFICIAL = 16;
-    public static final int DEATH_PERSON_NAME_ENGLISH = 16;
-    public static final int DEATH_PERSON_NAME = 17;
-    public static final int DEATH_PERSON_ADDRESS = 18;
+    public static final int DEATH_PERSON_NAME_ENGLISH = 17;
+    public static final int DEATH_PERSON_NAME = 18;
+    public static final int DEATH_PERSON_ADDRESS = 19;
 
-    public static final int DEATH_PERSON_FATHER_NAME = 19;
-    public static final int DEATH_PERSON_FATHER_PIN = 20;
-    public static final int DEATH_PERSON_MOTHER_NAME = 21;
-    public static final int DEATH_PERSON_MOTHER_PIN = 22;
+    public static final int DEATH_PERSON_FATHER_NAME = 20;
+    public static final int DEATH_PERSON_FATHER_PIN = 21;
+    public static final int DEATH_PERSON_MOTHER_NAME = 22;
+    public static final int DEATH_PERSON_MOTHER_PIN = 23;
 
     public enum State {
         /**
