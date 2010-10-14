@@ -85,103 +85,77 @@
 
 <s:actionerror/>
 <s:form action="eprDeathFilterByStatus" method="post">
+    <fieldset style="margin-bottom:10px;margin-top:5px;border:2px solid #c3dcee;">
+        <legend><b><s:label value="%{getText('searchOption.label')}"/></b></legend>
     <table width="100%" cellpadding="5" cellspacing="0">
+        <col width="300px"/>
         <col/>
-        <col/>
-        <col/>
+        <col width="100px"/>
+        <col width="300px"/>
         <col/>
         <tbody>
         <tr>
-            <td colspan="1">
-                <s:label name="district" value="%{getText('district.label')}"/>
+            <td><s:label name="district" value="%{getText('district.label')}"/></td>
+            <td>
+                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="birthDistrictId"
+                          cssStyle="width:240px;"/>
             </td>
-            <td colspan="1">
-                <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                          value="birthDistrictId" cssStyle="width:240px;"/>
-            </td>
-            <td colspan="1"></td>
-            <td colspan="1">
-                <s:select id="deathDivisionId" name="deathDivisionId" value="%{deathDivisionId}"
-                          list="bdDivisionList" headerValue="%{getText('all.divisions.label')}" headerKey="0"
-                          cssStyle=" width:240px;float:right;"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="1">
-                <s:label name="division" value="%{getText('select_ds_division.label')}"/>
-            </td>
-            <td colspan="1">
+            <td></td>
+            <td><s:label name="division" value="%{getText('select_DS_division.label')}"/></td>
+            <td>
                 <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
                           cssStyle="float:left;  width:240px;"/>
             </td>
         </tr>
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <table width="100%" cellpadding="5" cellspacing="0">
-        <col>
-        <col>
-        <col>
-        <tbody>
         <tr>
+            <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
+            <td>
+                <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}" list="bdDivisionList"
+                          headerValue="%{getText('all.divisions.label')}" headerKey="0"
+                          cssStyle=" width:240px;float:left;"/>
+            </td>
+            <td></td>
+
+
             <td colspan="1"><s:label value="%{getText('death_select_state.lable')}"/></td>
-            <td colspan="2" width="230px">
+            <td colspan="2">
                 <s:select list="#@java.util.HashMap@{'1':getText('data.entry.label'),'2':getText('Approved.label'),
-        '3':getText('rejected.label'),'4':getText('death.certificate.printed.label')}"
+                                '3':getText('rejected.label'),'4':getText('death.certificate.printed.label')}"
                           name="currentStatus" value="%{#request.currentStatus}" headerKey="0"
-                          headerValue="%{getText('death_select_all.lable')}"
-                          cssStyle="width:200px; margin-left:5px;"></s:select>
+                          headerValue="%{getText('death_select_all.label')}"
+                          cssStyle="width:240px;"/>
             </td>
         </tr>
-        </tbody>
-
-    </table>
-
-    <table cellpadding="5" cellspacing="0">
-
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-
-        <tbody>
         <tr>
-            <td>
-                <s:label value="%{getText('date.from.label')}"/>
+            <td align="left">
+                <s:label value="%{getText('date.from.label')}" cssStyle=" margin-right:5px;"/>
+                <s:textfield id="searchStartDatePicker" name="searchStartDate" cssStyle="width:150px" maxLength="10"/>
             </td>
-            <td>
-                <s:textfield name="fromDate" id="fromDateId"/>
+            <td align="right">
+                <s:label value="%{getText('date.to.label')}" cssStyle=" margin-right:5px;"/>
+                <s:textfield id="searchEndDatePicker" name="searchEndDate" cssStyle="width:150px" maxLength="10"/>
             </td>
-            <td><s:label value="%{getText('date.to.label')}"/></td>
-            <td>
-                <s:textfield name="endDate" id="endDateId"/>
+            <td></td>
+            <td></td>
+            <td colspan="4" class="button" align="right">
+                <s:hidden name="searchDateRangeFlag" value="%{#request.searchDateRangeFlag}"/>
+                <s:submit name="refresh" value="%{getText('bdfSearch.button')}"/>
             </td>
-            <td colspan="2" class="button" align="left"><s:submit name="refresh"
-                                                                  value="%{getText('refresh.label')}"/></td>
         </tr>
-        </tbody>
+    </tbody>
     </table>
-
+    </fieldset>
 </s:form>
 
 <div id="birth-register-approval-body">
 
 <fieldset style="margin-bottom:10px;margin-top:20px;border:none">
-<legend></legend>
 <table id="approval-list-table" width="100%" cellpadding="0" cellspacing="0" class="display">
 <thead>
 <tr>
     <th width="70px"><s:label name="serial" value="%{getText('serial.label')}"/></th>
     <th><s:label name="name" value="%{getText('name.label')}"/></th>
     <th><s:label name="state" value="%{getText('state.label')}"/></th>
-    <%--<th><s:label name="edit" value="%{getText('edit.label')}"/></th>--%>
-    <%--<th><s:label name="approve" value="%{getText('approve.label')}"/></th>--%>
-    <%--<th><s:label name="reject" value="%{getText('reject.label')}"/></th>--%>
-    <%--<th><s:label name="delete" value="%{getText('delete.label')}"/></th>--%>
-    <%--<th><s:label name="veiw" value="%{getText('view.label')}"/></th>--%>
-    <%--<th><s:label name="print" value="%{getText('printCertificete.label')}"/></th>--%>
     <th width="20px"></th>
     <th width="20px"></th>
     <th width="20px"></th>
@@ -253,26 +227,26 @@
                          border="none"/></s:a>
             </td>
             <td align="center"><s:a href="%{approveSelected}"
-                                                 title="%{getText('approveTooltip.label')}">
+                                    title="%{getText('approveTooltip.label')}">
                 <img src="<s:url value='/images/approve.gif'/>" width="25" height="25"
                      border="none" id="approveImage"/></s:a>
             </td>
             <td align="center"><s:a href="%{rejectSelected}"
-                                                 title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
-                                                                                                src="<s:url value='/images/reject.gif'/>"
-                                                                                                width="25"
-                                                                                                height="25"
-                                                                                                border="none"/></s:a>
+                                    title="%{getText('rejectTooltip.label')}"><img id="rejectImage"
+                                                                                   src="<s:url value='/images/reject.gif'/>"
+                                                                                   width="25"
+                                                                                   height="25"
+                                                                                   border="none"/></s:a>
             </td>
             <td align="center"><s:a href="%{deleteSelected}"
-                                                 title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
-                                                                                                src="<s:url value='/images/delete.gif'/>"
-                                                                                                width="25"
-                                                                                                height="25"
-                                                                                                border="none"/></s:a>
+                                    title="%{getText('deleteToolTip.label')}"><img id='deleteImage'
+                                                                                   src="<s:url value='/images/delete.gif'/>"
+                                                                                   width="25"
+                                                                                   height="25"
+                                                                                   border="none"/></s:a>
             </td>
             <td align="center"><s:a href="%{viewSelected}"
-                                                 title="%{getText('viewDeathRegistrationTooltip.label')}">
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
@@ -301,7 +275,7 @@
             <td></td>
             <td></td>
             <td align="center"><s:a href="%{viewSelected}"
-                                                 title="%{getText('viewDeathRegistrationTooltip.label')}">
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
@@ -330,7 +304,7 @@
             <td></td>
 
             <td align="center"><s:a href="%{viewSelected}"
-                                                 title="%{getText('viewDeathRegistrationTooltip.label')}">
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
@@ -350,7 +324,7 @@
             <td></td>
 
             <td align="center"><s:a href="%{viewSelected}"
-                                                 title="%{getText('viewDeathRegistrationTooltip.label')}">
+                                    title="%{getText('viewDeathRegistrationTooltip.label')}">
                 <img id='viewImage' src="<s:url value='/images/view.gif'/>" width="25" height="25"
                      border="none"/></s:a>
             </td>
@@ -378,6 +352,7 @@
 </s:iterator>
 </tbody>
 </table>
+</fieldset>
 <%--customize based on user role--%>
 
 <s:if test="!#request.allowEditDeath">
