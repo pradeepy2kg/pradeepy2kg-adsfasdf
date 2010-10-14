@@ -365,9 +365,9 @@ function initPage() {
         document.getElementById(checkIdNames[i]).style.display = 'none';
         document.getElementById(checkIdNames[i] + "-lable").style.display = 'none';
     }
-    for (var i = 0; i < fieldIds.length; i++) {
-        document.getElementById(fieldIds[i]).disabled = true;
-    }
+    /*    for (var i = 0; i < fieldIds.length; i++) {
+     document.getElementById(fieldIds[i]).disabled = true;
+     }*/
 }
 </script>
 <table class="death-alteration-table-style01" style="width:1030px;" cellpadding="2px">
@@ -563,11 +563,11 @@ function initPage() {
             <s:label value="Information about the Death"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-            <div id="death-info-check-lable">
-                <s:label value="%{getText('edit.lable')}"/></div>
+                <%-- <div id="death-info-check-lable">
+               <s:label value="%{getText('edit.lable')}"/></div>--%>
         </td>
         <td style="border-right:none;width:3%">
-            <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>
+                <%-- <s:checkbox id="death-info-check" name="editDeathInfo" cssStyle="float:right;"/>--%>
         </td>
         <td style="width:2%;border-left:none">
             <div class="birth-alteration-minimize-icon" id="death-info-min">[-]</div>
@@ -734,12 +734,12 @@ function initPage() {
             <s:label value="Information about the person Departed"/>
         </td>
         <td style="width:20%;text-align:right;border-right:none">
-            <div id="death-person-info-check-lable">
-                <s:label value="%{getText('edit.lable')}"/></div>
+                <%-- <div id="death-person-info-check-lable">
+               <s:label value="%{getText('edit.lable')}"/></div>--%>
         </td>
         <td style="border-right:none;width:3%">
 
-            <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>
+                <%--  <s:checkbox id="death-person-info-check" name="editDeathPerson" cssStyle="float:right;"/>--%>
 
         </td>
         <td style="width:2%">
