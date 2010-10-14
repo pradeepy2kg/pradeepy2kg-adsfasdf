@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 
+ <script>
+  $(document).ready(function() {
+    $("#tabs").tabs();
+  });
+  </script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#approval-list-table').dataTable({
@@ -89,8 +95,16 @@
 </script>
 
 <s:form method="post" action="eprApproveDeathAlterations.do">
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend align="right"><s:label value="%{getText('lable.search.by.dsDivision')}"/></legend>
+
+        <div id="tabs">
+            <ul>
+                    <li><a href="#fragment-1"><span> <s:label
+                                    value="%{getText('lable.search.by.dsDivision')}"/></span></a></li>
+                    <li><a href="#fragment-2"><span><s:label 
+                                    value="%{getText('lable.search.by.date')}"/></span></a></li>
+                </ul>
+
+            <div id="fragment-1">
         <table>
             <caption></caption>
             <col width="250px">
@@ -131,10 +145,9 @@
             </tr>
             </tbody>
         </table>
-    </fieldset>
 
-    <fieldset style="margin-bottom:1px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend align="right"><s:label value="%{getText('lable.search.by.date')}"/></legend>
+   </div>
+    <div id="fragment-2">
         <table>
             <caption></caption>
             <col width="250px">
@@ -158,7 +171,9 @@
             </tr>
             </tbody>
         </table>
-    </fieldset>
+  
+    </div>
+    </div>
     <div id="search_button" class="button" align="right">
         <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
     </div>

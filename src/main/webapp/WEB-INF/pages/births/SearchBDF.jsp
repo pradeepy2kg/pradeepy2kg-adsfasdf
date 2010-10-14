@@ -9,12 +9,22 @@
 </style>
 
 <!--//todo not completed JSON -->
-
+<script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
+<script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/validate.js"></script>
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 
 <s:hidden id="error5" value="%{getText('p1.serial.text')}"/>
 <s:hidden id="error13" value="%{getText('p1.invalide.inputType')}"/>
+
+<script>
+    $(document).ready(function() {
+        $("#birth-confirmation-search").tabs();
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('#search-list-table').dataTable({
@@ -86,12 +96,19 @@
 </script>
 <div id="birth-confirmation-search">
     <s:actionerror cssClass="alreadyPrinted"/>
+
+        <ul>
+            <li><a href="#fragment-1"><span> <s:label name="registrationSearch"
+                                                      value="%{getText('registrationSerchTab.label')}"/></span></a>
+            </li>
+            <li><a href="#fragment-2"><span><s:label name="confirmationSearch"
+                                                     value="%{getText('confirmationSearchTab.label')}"/></span></a></li>
+        </ul>
     <s:form action="eprBDFSearchBySerialNo.do" name="birthConfirmationSearchForm" id="search-bdf-form"
             onsubmit="javascript:return validate()" method="post">
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend>
-                <b><s:label name="registrationSerchLegend" value="%{getText('registrationSerchLegend.label')}"/></b>
-            </legend>
+
+
+        <div id="fragment-1">
 
             <table class="search-option-table">
                 <caption></caption>
@@ -108,7 +125,7 @@
                     <td><s:label name="district" value="%{getText('district.label')}"/></td>
                     <td>
                         <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                  value="birthDistrictId" cssStyle="width:240px;float:right;"/>
+                                  value="birthDistrictId" cssStyle="width:240px;float:left;"/>
                     </td>
                 </tr>
                 <tr>
@@ -118,40 +135,44 @@
                                   cssStyle="float:left;  width:240px;"/>
                     </td>
                     <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"/></td>
-                    <td>
+                    <td >
                         <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                  list="bdDivisionList" cssStyle=" width:240px;float:right;"
-                                headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
+                                  list="bdDivisionList" cssStyle=" width:240px;float:left;"
+                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
                     <td>
-                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search"/></div>
+                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search" cssStyle="float:left;margin :5px 63px 0 5px;"/></div>
                     </td>
                 </tr>
                 </tbody>
             </table>
-        </fieldset>
-    </s:form>
-    <br/>
-    <s:form action="eprBDFSearchByIdUKey.do" method="post" onsubmit="javascript:return validate()">
-        <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-            <legend>
-                <b><s:label name="confirmatinSearchLegend" value="%{getText('confirmationSearchLegend.label')}"/></b>
-            </legend>
-            <table class="search-option-table">
-                <tr>
-                    <td width="250px"><s:label name="confirmationSearch"
-                                               value="%{getText('searchConfirmationSerial.label')}"/></td>
-                    <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
-                    <td>
-                        <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}" name="search"/></div>
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </s:form>
+
+
+            </s:form>
+        </div>
+        <%--   <br/>--%>
+        <div id="fragment-2">
+            <s:form action="eprBDFSearchByIdUKey.do" method="post" onsubmit="javascript:return validate()">
+                <table class="search-option-table">
+                    
+                    <tr>
+                        <td width="250px"><s:label name="confirmationSearch"
+                                                   value="%{getText('searchConfirmationSerial.label')}"/></td>
+                        <td width="250px"><s:textfield name="idUKey" id="bdfSerialNoId2"/></td>
+                        <td width="250px">
+                            <div class="form-submit"><s:submit value="%{getText('bdfSearch.button')}"
+                                                               name="search" cssStyle="float:left;margin :5px 30px 7px 5px;"/></div>
+                        </td>
+                        <td width="750px"></td>
+                    </tr>
+                </table>
+
+            </s:form>
+
+    </div>
 </div>
 <br/>
 
