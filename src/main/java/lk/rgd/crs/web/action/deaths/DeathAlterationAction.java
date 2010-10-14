@@ -78,8 +78,9 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String dsDivision;
     private String deathDivision;
 
-    private boolean editDeathInfo;
+    private boolean editDeathInfo;     //todo remove follow two variables no usage
     private boolean editDeathPerson;
+    private boolean editMode;
 
     public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService
             , DistrictDAO districtDAO, DSDivisionDAO dsDivisionDAO, BDDivisionDAO bdDivisionDAO, RaceDAO raceDAO, CountryDAO countryDAO, AppParametersDAO appParametersDAO) {
@@ -108,39 +109,59 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      */
     public String captureDeathAlterations() {
         if (pageNumber > 0) {
-            logger.debug("capturing death alteration alteration serial number : {}", alterationSerialNo);
-            try {
-                DeathRegister dr = deathRegistrationService.getById(deathId, user);
+            if (!editMode) {
+                logger.debug("capturing death alteration alteration serial number : {}", alterationSerialNo);
+                try {
+                    DeathRegister dr = deathRegistrationService.getById(deathId, user);
 
-                deathAlteration.setAlterationSerialNo(alterationSerialNo);
-                deathAlteration.setDeathId(deathId);
+                    deathAlteration.setAlterationSerialNo(alterationSerialNo);
+                    deathAlteration.setDeathId(deathId);
+                    deathAlteration.setDeclarant(deathRegister.getDeclarant());
+                    deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
+                    deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
+                    deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
+                    deathAlterationService.addDeathAlteration(deathAlteration, user);
+
+                    Country deathCountry;
+                    if (deathPersonCountry > 0) {
+                        deathCountry = countryDAO.getCountry(deathPersonCountry);
+                        deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
+                    }
+
+                    Race deathRace;
+                    if (deathPersonRace > 0) {
+                        deathRace = raceDAO.getRace(deathPersonRace);
+                        deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
+                    }
+
+                    addActionMessage(getText("alt.massage.success"));
+                    populatePrimaryLists();
+                    logger.debug("capturing alteration serial number : {} success ", serialNumber);
+                    return SUCCESS;
+                }
+                catch (Exception e) {
+                    logger.error("error accoured while adding death alteration : serial number : {}", serialNumber);
+                    populatePrimaryLists();
+                    return ERROR;
+                }
+            } else {
+                logger.debug("attempt to edit death alteration : idUKey : {}", deathAlteration.getIdUKey());
+                DeathAlteration exsisting = deathAlterationService.getById(deathAlterationId, user);
+
                 deathAlteration.setDeclarant(deathRegister.getDeclarant());
                 deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
+                deathAlteration.setIdUKey(deathAlterationId);
+                deathAlteration.setDeathId(deathId);
                 deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-                deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
-                deathAlterationService.addDeathAlteration(deathAlteration, user);
+                deathAlteration.setAlterationSerialNo(alterationSerialNo);
+                deathAlteration.setLifeCycleInfo(exsisting.getLifeCycleInfo());
 
-                Country deathCountry;
-                if (deathPersonCountry > 0) {
-                    deathCountry = countryDAO.getCountry(deathPersonCountry);
-                    deathAlteration.getDeathPerson().setDeathPersonCountry(deathCountry);
-                }
+                deathAlterationService.updateDeathAlteration(deathAlteration, user);
 
-                Race deathRace;
-                if (deathPersonRace > 0) {
-                    deathRace = raceDAO.getRace(deathPersonRace);
-                    deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
-                }
-
-                addActionMessage(getText("alt.massage.success"));
+                addActionMessage(getText("alt.edit.massage.success"));
+                logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
                 populatePrimaryLists();
-                logger.debug("capturing alteration serial number : {} success ", serialNumber);
                 return SUCCESS;
-            }
-            catch (Exception e) {
-                logger.error("error accoured while adding death alteration : serial number : {}", serialNumber);
-                populatePrimaryLists();
-                return ERROR;
             }
         } else {
             logger.debug("attempting to load death alteration capture page");
@@ -353,8 +374,28 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String editDeathAlteration() {
-        logger.debug("attempt to edit death alteration : idUKey :{}", deathAlterationId);
-        //todo implement
+        logger.debug("attempt to edit a death alteration : idUKey : {} ", deathAlterationId);
+        deathAlteration = deathAlterationService.getById(deathAlterationId, user);
+        if (deathAlteration != null) {
+            if (deathAlteration.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
+                //populate death person info at alteration
+                deathRegister = deathRegistrationService.getById(deathAlteration.getDeathId(), user); //this is no use bt cannot set for null object so popullate it aswell
+                deathRegister.setDeathPerson(deathAlteration.getDeathPerson());
+                //populate death info
+                deathRegister.setDeath(populateDeathInfo(deathAlteration.getDeathInfo(), deathRegister.getDeath()));
+                editMode = true;
+                toDay = deathAlteration.getDateReceived();
+            } else {
+                logger.debug("cannot edit death alteration idUKey : {} : not in DATA_ENTRY mode", deathAlterationId);
+                populatePrimaryLists();
+                return ERROR;
+            }
+        } else {
+            logger.debug("unble to find death alteration : idUKey : {} : for edit", deathAlterationId);
+            populatePrimaryLists();
+            return ERROR;
+        }
+        populateOtherLists();
         return SUCCESS;
     }
 
@@ -399,6 +440,19 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 */
+    private DeathInfo populateDeathInfo(DeathAlterationInfo dai, DeathInfo di) {
+
+        di.setDateOfDeath(dai.getDateOfDeath());
+        di.setCauseOfDeath(dai.getCauseOfDeath());
+        di.setIcdCodeOfCause(dai.getIcdCodeOfCause());
+        di.setPlaceOfBurial(dai.getPlaceOfBurial());
+        di.setPlaceOfDeath(dai.getPlaceOfDeath());
+        di.setPlaceOfDeathInEnglish(dai.getPlaceOfDeathInEnglish());
+        di.setTimeOfDeath(dai.getTimeOfDeath());
+        di.setCauseOfDeathEstablished(dai.isCauseOfDeathEstablished());
+
+        return di;
+    }
 
     /**
      * type
@@ -873,5 +927,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setDeathPersonRace(int deathPersonRace) {
         this.deathPersonRace = deathPersonRace;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }
