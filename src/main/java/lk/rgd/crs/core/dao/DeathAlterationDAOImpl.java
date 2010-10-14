@@ -51,6 +51,16 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void rejectDeathAlteration(DeathAlteration da, User user) {
+        da.getLifeCycleInfo().setApprovalOrRejectTimestamp(new Date());
+        da.getLifeCycleInfo().setApprovalOrRejectUser(user);
+        em.merge(da);
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.SUPPORTS)
     public DeathAlteration getById(long idUKey) {
         return em.find(DeathAlteration.class, idUKey);

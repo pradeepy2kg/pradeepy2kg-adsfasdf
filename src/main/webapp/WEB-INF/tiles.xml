@@ -261,6 +261,12 @@
         <put-attribute name="title" value="death.alteration.results.title"/>
     </definition>
 
+
+    <definition name="epr.deathAlterationRejectGetComment" extends="epr.template">
+        <put-attribute name="body" value="/WEB-INF/pages/deaths/DeathAlterationRejectComment.jsp"/>
+        <put-attribute name="title" value="death.alteration.reject.comment"/>
+    </definition>
+
     <!-- Death Registration Tiles -->
 
     <definition name="epr.deathHome" extends="epr.template">

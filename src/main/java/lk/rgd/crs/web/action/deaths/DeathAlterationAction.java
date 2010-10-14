@@ -77,6 +77,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String district;
     private String dsDivision;
     private String deathDivision;
+    private String rejectComment;
 
     private boolean editDeathInfo;     //todo remove follow two variables no usage
     private boolean editDeathPerson;
@@ -256,9 +257,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
-        } /*else {
-            populatePrimaryLists();
-        }*/
+        }
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
@@ -270,7 +269,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             //approving from deaht alteration approval list
             deathAlteration = deathAlterationService.getById(deathAlterationId, user);
         } else {
-            //todo remove
             List<DeathAlteration> alterations = deathAlterationService.getAlterationByDeathId(deathId, user);
             Iterator<DeathAlteration> itr = alterations.iterator();
             while (itr.hasNext()) {
@@ -410,10 +408,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     }
 
     public String rejectDeathAlteration() {
-        logger.debug("attemp to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
-        //todo implement
-        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-        return SUCCESS;
+        if (pageNumber > 0) {
+            logger.debug("attemp to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
+            deathAlterationService.rejectDeathAlteration(deathAlterationId, user, rejectComment);
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
+            return SUCCESS;
+        }
+        deathAlteration = deathAlterationService.getById(deathAlterationId, user);
+        return "pageLoad";
     }
 
 
@@ -535,7 +537,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 }
                 break;
             case 6:
-                //todo befor add convert race in to race name
                 List<String> raceList = new ArrayList<String>();
                 Race exRace = (Race) deathRegistreValue;
                 Race cuRace = (Race) deathAlterationValue;
@@ -939,5 +940,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public String getRejectComment() {
+        return rejectComment;
+    }
+
+    public void setRejectComment(String rejectComment) {
+        this.rejectComment = rejectComment;
     }
 }

@@ -1064,6 +1064,7 @@
         <action name="eprDeathAlterationReject" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="rejectDeathAlteration">
             <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <result type="tiles" name="pageLoad">epr.deathAlterationRejectGetComment</result>
         </action>
 
     </package>

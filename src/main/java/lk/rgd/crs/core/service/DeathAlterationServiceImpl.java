@@ -58,10 +58,17 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteDeathAlteration(long idUKey, User user) {
         logger.debug("about to remove alteration recode idUkey : {}", idUKey);
-        /*
-                validateAccessToBDDivision(user, da.getDeathDivision());
-        */
         deathAlterationDAO.deleteDeathAlteration(idUKey);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public void rejectDeathAlteration(long idUKey, User user, String comment) {
+        DeathAlteration exsisting = getById(idUKey, user);
+        exsisting.setStatus(DeathAlteration.State.REJECT);
+        exsisting.setComments(comment);
+        deathAlterationDAO.rejectDeathAlteration(exsisting, user);
     }
 
     /**
@@ -70,27 +77,36 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public DeathAlteration getById(long idUKey, User user) {
         DeathAlteration da = deathAlterationDAO.getById(idUKey);
-/*
-        validateAccessToBDDivision(user, da.getDeathDivision());
-*/
         return da;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getAlterationByDeathCertificateNumber(long idUKey, User user) {
         return deathAlterationDAO.getByCertificateNumber(idUKey);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getAlterationApprovalListByDeathDivision(int pageNo, int numRows, int divisionId) {
         return deathAlterationDAO.getPaginatedAlterationApprovalListByDeathDivision(pageNo, numRows, divisionId);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user) {
         return deathAlterationDAO.getAlterationByDeathId(deathId);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public void approveDeathAlteration(long deathAlterationUkey, Hashtable<Integer, Boolean> fieldsToBeApproved, boolean appStatus, User user) {
         //no need to validate because only approval is allowed to ARG so he has permission to all divisions
@@ -125,6 +141,9 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
         deathAlterationDAO.updateDeathAlteration(da, user);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<DeathAlteration> getDeathAlterationByTimePeriod(Date startDate, Date endDate, User user) {
         //add user validation if others also get permission (other than ARG and above)

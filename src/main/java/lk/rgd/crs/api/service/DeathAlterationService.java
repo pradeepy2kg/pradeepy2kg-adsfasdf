@@ -39,6 +39,15 @@ public interface DeathAlterationService {
     public void deleteDeathAlteration(long idUKey, User user);
 
     /**
+     * reject selected death alteration
+     *
+     * @param idUKey  death alteration unique key
+     * @param user    user who has permission to reject a death alteration
+     * @param comment cause for rejection
+     */
+    public void rejectDeathAlteration(long idUKey, User user, String comment);
+
+    /**
      * retrive a DeathAlteration object for a given idUKey
      *
      * @param idUKey Unique key for death alteration.

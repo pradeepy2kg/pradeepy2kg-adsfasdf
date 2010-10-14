@@ -36,6 +36,14 @@ public interface DeathAlterationDAO {
     public void deleteDeathAlteration(long idUKey);
 
     /**
+     * reject a selected death alteration
+     *
+     * @param da   death alteration object   to be rejected
+     * @param user user who has permission to reject a death alteration
+     */
+    public void rejectDeathAlteration(DeathAlteration da, User user);
+
+    /**
      * returns a Death alteration object for the given idUKey
      *
      * @param idUKey Death Alteration Id for the given
