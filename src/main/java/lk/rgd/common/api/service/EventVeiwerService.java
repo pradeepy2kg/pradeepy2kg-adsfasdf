@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Chathuranga Withana
  * @author Janith
  */
-public interface EventManagementService {
+public interface EventVeiwerService {
 
     /**
      * Returns the Event object for a given Id
