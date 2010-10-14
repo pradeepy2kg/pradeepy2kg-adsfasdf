@@ -176,7 +176,7 @@
         <constructor-arg ref="deathRecordsIndexer"/>
     </bean>
 
-    <bean id="eventManagementService" class="lk.rgd.common.core.service.EventVeiwerServiceImpl">
+    <bean id="eventManagementService" class="lk.rgd.common.core.service.EventViewerServiceImpl">
         <constructor-arg ref="eventDAOImpl"/>
     </bean>
 

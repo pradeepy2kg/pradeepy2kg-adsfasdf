@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.service.EventVeiwerService;
+import lk.rgd.common.api.service.EventViewerService;
 
 import java.util.List;
 import java.util.Collections;
@@ -16,13 +16,13 @@ import java.util.Date;
 /**
  * Manage events.
  */
-public class EventVeiwerServiceImpl implements EventVeiwerService {
+public class EventViewerServiceImpl implements EventViewerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EventVeiwerServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventViewerServiceImpl.class);
 
     private final EventDAO eventDAO;
 
-    public EventVeiwerServiceImpl(EventDAO eventDAO) {
+    public EventViewerServiceImpl(EventDAO eventDAO) {
         this.eventDAO = eventDAO;
     }
 

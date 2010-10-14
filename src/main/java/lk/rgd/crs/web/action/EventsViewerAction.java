@@ -5,7 +5,7 @@ import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.domain.Event;
 import lk.rgd.common.api.dao.EventDAO;
 import lk.rgd.common.api.dao.AppParametersDAO;
-import lk.rgd.common.api.service.EventVeiwerService;
+import lk.rgd.common.api.service.EventViewerService;
 import lk.rgd.common.util.DateTimeUtils;
 
 import java.util.Date;
@@ -26,7 +26,7 @@ public class EventsViewerAction extends ActionSupport {
 
     private final EventDAO eventDAO;
     private final AppParametersDAO appParametersDAO;
-    private final EventVeiwerService service;
+    private final EventViewerService service;
 
     private Event event;
     private long idUKey;
@@ -61,7 +61,7 @@ public class EventsViewerAction extends ActionSupport {
     private static final String EVENTS_ROWS_PER_PAGE = "common.event_rows_per_page";
 
 
-    public EventsViewerAction(EventDAO eventDAO, EventVeiwerService service, AppParametersDAO appParametersDAO) {
+    public EventsViewerAction(EventDAO eventDAO, EventViewerService service, AppParametersDAO appParametersDAO) {
         this.eventDAO = eventDAO;
         this.service = service;
         this.appParametersDAO = appParametersDAO;
@@ -200,7 +200,7 @@ public class EventsViewerAction extends ActionSupport {
         return eventDAO;
     }
 
-    public EventVeiwerService getService() {
+    public EventViewerService getService() {
         return service;
     }
 
