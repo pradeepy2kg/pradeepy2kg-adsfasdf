@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
 
- <script>
-  $(document).ready(function() {
-    $("#tabs").tabs();
-  });
-  </script>
+<script>
+    $(document).ready(function() {
+        $("#tabs").tabs();
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -96,83 +96,83 @@
 
 <s:form method="post" action="eprApproveDeathAlterations.do">
 
-        <div id="tabs">
-            <ul>
-                    <li><a href="#fragment-1"><span> <s:label
-                                    value="%{getText('lable.search.by.dsDivision')}"/></span></a></li>
-                    <li><a href="#fragment-2"><span><s:label 
-                                    value="%{getText('lable.search.by.date')}"/></span></a></li>
-                </ul>
+    <div id="tabs">
+        <ul>
+            <li><a href="#fragment-1"><span> <s:label
+                    value="%{getText('lable.search.by.dsDivision')}"/></span></a></li>
+            <li><a href="#fragment-2"><span><s:label
+                    value="%{getText('lable.search.by.date')}"/></span></a></li>
+        </ul>
 
-            <div id="fragment-1">
-        <table>
-            <caption></caption>
-            <col width="250px">
-            <col width="250px">
-            <col width="100px">
-            <col width="250px">
-            <col width="250px">
-            <tbody>
-            <tr>
-                <td>
-                    <s:label value="%{getText('label.district')}"/>
-                </td>
-                <td align="left">
-                    <s:select id="districtId" name="districtUKey" list="districtList" value="%{districtUKey}"
-                              cssStyle="width:98.5%; width:240px;"/>
-                </td>
-                <td></td>
-                <td>
-                    <s:label value="%{getText('label.dsDivision')}"/>
-                </td>
-                <td align="left">
-                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <s:label value="%{getText('label.bdDivision')}"/>
-                </td>
-                <td>
-                    <s:select id="divisionId" name="divisionUKey" value="%{divisionUKey}"
-                              list="bdDivisionList"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
+        <div id="fragment-1">
+            <table>
+                <caption></caption>
+                <col width="250px">
+                <col width="250px">
+                <col width="100px">
+                <col width="250px">
+                <col width="250px">
+                <tbody>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('label.district')}"/>
+                    </td>
+                    <td align="left">
+                        <s:select id="districtId" name="districtUKey" list="districtList" value="%{districtUKey}"
+                                  cssStyle="width:98.5%; width:240px;"/>
+                    </td>
+                    <td></td>
+                    <td>
+                        <s:label value="%{getText('label.dsDivision')}"/>
+                    </td>
+                    <td align="left">
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{divisionUKey}"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <s:label value="%{getText('label.bdDivision')}"/>
+                    </td>
+                    <td>
+                        <s:select id="divisionId" name="divisionUKey" value="%{divisionUKey}"
+                                  list="bdDivisionList"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
 
-   </div>
-    <div id="fragment-2">
-        <table>
-            <caption></caption>
-            <col width="250px">
-            <col width="250px">
-            <col width="100px">
-            <col width="250px">
-            <col width="250px">
-            <tbody>
-            <tr>
-                <td><s:label value="%{getText('label.start.date')}"/></td>
-                <td align="left">
-                    <s:textfield name="startDate" id="startDatePicker" maxLength="10"/>
-                </td>
-                <td>
+        </div>
+        <div id="fragment-2">
+            <table>
+                <caption></caption>
+                <col width="250px">
+                <col width="250px">
+                <col width="100px">
+                <col width="250px">
+                <col width="250px">
+                <tbody>
+                <tr>
+                    <td><s:label value="%{getText('label.start.date')}"/></td>
+                    <td align="left">
+                        <s:textfield name="startDate" id="startDatePicker" maxLength="10"/>
+                    </td>
+                    <td>
 
-                </td>
-                <td align="left"><s:label value="%{getText('label.end.date')}"/></td>
-                <td>
-                    <s:textfield name="endDate" id="endDatePicker" maxLength="10"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-  
-    </div>
+                    </td>
+                    <td align="left"><s:label value="%{getText('label.end.date')}"/></td>
+                    <td>
+                        <s:textfield name="endDate" id="endDatePicker" maxLength="10"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
     </div>
     <div id="search_button" class="button" align="right">
         <s:submit name="refresh" value="%{getText('label.button.filter')}"/>
@@ -204,7 +204,9 @@
                         <s:url id="deleteSelected" action="eprDeathAlterationDelate">
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
-                        <s:url id="rejectSelected" action="eprDeathAlterationReject"></s:url>
+                        <s:url id="rejectSelected" action="eprDeathAlterationReject">
+                            <s:param name="deathAlterationId" value="idUKey"/> 
+                        </s:url>
                         <s:url id="approveSelected" action="eprApproveDeathAlterationsDirect">
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
