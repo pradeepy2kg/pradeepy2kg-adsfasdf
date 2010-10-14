@@ -388,7 +388,7 @@ function initPage() {
                         <s:label value=" Serial Number"/>
                     </td>
                     <td width="60%"><s:textfield id="bdfSerialNo" name="alterationSerialNo" maxLength="10"
-                                                 value=""/></td>
+                                                 value="%{deathAlteration.alterationSerialNo}"/></td>
                 </tr>
                 <tr>
                     <td><s:label value="භාරගත් දිනය"/><br>
@@ -1122,5 +1122,8 @@ function initPage() {
 </div>
 <s:hidden name="pageNumber" value="1"/>
 <s:hidden name="deathId" value="%{deathRegister.idUKey}"/>
+<s:hidden name="editMode" value="%{editMode}"/>
+<s:hidden name="deathAlterationId" value="%{deathAlteration.idUKey}"/>
 </s:form>
 </div>
+

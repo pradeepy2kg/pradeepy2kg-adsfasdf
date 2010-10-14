@@ -46,8 +46,10 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathAlteration(DeathAlteration da, User user) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("updatign death alteration : idUKey : {}", da.getIdUKey());
+        deathAlterationDAO.updateDeathAlteration(da, user);
     }
 
     /**

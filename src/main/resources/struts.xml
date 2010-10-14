@@ -1052,7 +1052,7 @@
         <!--todo follow-->
         <action name="eprDeathAlterationEdit" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"
                 method="editDeathAlteration">
-            <result type="tiles" name="success">epr.deathAlterationSearchHome</result>
+            <result type="tiles" name="success">epr.deathAlterationCapture</result>
         </action>
 
         <action name="eprDeathAlterationDelate" class="lk.rgd.crs.web.action.deaths.DeathAlterationAction"

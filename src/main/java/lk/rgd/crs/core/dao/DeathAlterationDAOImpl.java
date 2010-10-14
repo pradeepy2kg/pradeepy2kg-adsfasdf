@@ -33,8 +33,11 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
     /**
      * @inheritDoc
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateDeathAlteration(DeathAlteration da, User user) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        da.getLifeCycleInfo().setLastUpdatedTimestamp(new Date());
+        da.getLifeCycleInfo().setLastUpdatedUser(user);
+        em.merge(da);
     }
 
     /**
