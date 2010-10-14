@@ -6,12 +6,21 @@
 <script src="/ecivil/lib/jquery/jqSOAPClient.js" type="text/javascript"></script>
 <script src="/ecivil/lib/jquery/jqXMLUtils.js" type="text/javascript"></script>
 <script type="text/javascript" src="<s:url value="/js/validate.js"/>"></script>
-
+<link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
+<script type="text/javascript" src="/ecivil/lib/jqueryui/jquery-ui.min.js"></script>
+<script >
+  $(document).ready(function() {
+    $("#tabs").tabs();
+  });
+  </script>
 <style type="text/css">
     #serialNumber {
         width: 232px
     }
 </style>
+
+
+
 <script type="text/javascript">
 
     // mode 1 = passing District, will return DS list
@@ -90,6 +99,7 @@
     }
 
 </script>
+
 <s:actionerror/>
 <s:actionmessage/>
 <s:form method="post" action="eprCaptureDeathAlteration.do" onsubmit="javascript:return validateForm()">
@@ -119,10 +129,18 @@
     </fieldset>
 --%>
     <%--section search by death certificate number--%>
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend align="right">
-            <s:label value="%{getText('label.legend.search.by.certificate.number')}"/>
-        </legend>
+    <div id="tabs">
+            <ul>
+                    <li><a href="#fragment-1"><span> <s:label name="confirmatinSearchLegend"
+                                    value="%{getText('label.tab.search.by.certificate.number')}"/></span></a></li>
+                    <li><a href="#fragment-2"><span><s:label name="confirmatinSearchLegend"
+                                    value="%{getText('label.tab.search.by.identification.number')}"/></span></a></li>
+                    <li><a href="#fragment-3"><span><s:label name="registrationSerchLegend"
+                                    value="%{getText('label.tab.search.by.serial.number')}"/></span></a></li>
+                </ul>
+
+            <div id="fragment-1">
+
         <table cellpadding="2px" cellspacing="0">
             <caption></caption>
             <col width="500px">
@@ -138,13 +156,11 @@
             </tr>
             </tbody>
         </table>
-    </fieldset>
 
+    </div>
+        <div id="fragment-2">
     <%--section serch by identification number--%>
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend align="right">
-            <s:label value="%{getText('label.legend.search.by.identification.number')}"/>
-        </legend>
+
         <table cellpadding="2px" cellspacing="0">
             <caption></caption>
             <col width="500px">
@@ -160,13 +176,11 @@
             </tr>
             </tbody>
         </table>
-    </fieldset>
 
+    </div>
+        <div id="fragment-3">
     <%--secton search by serial number and bd/death division--%>
-    <fieldset style="margin-bottom:10px;margin-top:20px;border:2px solid #c3dcee;">
-        <legend align="right">
-            <s:label value="%{getText('label.legend.search.by.serial.number')}"/>
-        </legend>
+
         <table>
             <caption></caption>
             <col width="250px">
@@ -209,8 +223,9 @@
                 </td>
             </tr>
         </table>
-    </fieldset>
 
+   </div>
+    </div>
     <%--section search button--%>
     <div class="form-submit">
         <s:submit type="submit" value="%{getText('button.search')}" id="searchButton"/>

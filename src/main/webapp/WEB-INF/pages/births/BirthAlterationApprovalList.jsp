@@ -10,6 +10,12 @@
 <link rel="stylesheet" href="../lib/datatables/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css"/>
 <script type="text/javascript" src="../js/validate.js"></script>
 <script type="text/javascript" language="javascript" src="../lib/datatables/media/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#tabs").tabs();
+    });
+</script>
 <script type="text/javascript">
     $(function() {
         $("#alterationRecivedToDateId").datepicker({
@@ -155,108 +161,112 @@
         return true;
     }
 </script>
+
+
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <s:actionerror/>
 <s:form action="eprFilterAlteration" method="post" onsubmit="javascript:return validate()">
-    <fieldset style="border:1px solid #c3dcee;margin-top:10px;">
-        <legend>
-            <b><s:label name="confirmatinSearchLegend"
-                        value="%{getText('registrationSerchLegend5.label')}"/></b>
-        </legend>
-        <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
-            <tbody>
-            <tr>
-                <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"
-                                               cssStyle="margin-left:10px;"/></td>
-                <td style="width:25%">
-                    <s:select id="districtIdSerial" name="districtId" list="districtList" cssStyle="width:240px;"/>
-                </td>
-                <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
-                                               cssStyle="margin-left:10px;"/></td>
-                <td style="width:25%">
-                    <s:select id="dsDivisionIdSerial" name="dsDivisionIdSerial" list="dsDivisionList"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-            </tr>
-            <tr>
-                <td><s:label name="bdDivisionSerial" value="%{getText('select_BD_division.label')}"
-                             cssStyle="margin-left:10px;"/></td>
-                <td>
-                    <s:select id="bdDivisionSerial" name="divisionAlt" list="bdDivisionList"
-                              headerValue="%{getText('all.divisions.label')}" headerKey="0"
-                              cssStyle=" width:240px;float:left;"/>
-                </td>
-                <td><s:label value="%{getText('searchDeclarationSearial.label')}" cssStyle="margin-left:10px"/></td>
-                <td><s:textfield id="serialAltNumberId" name="alterationSerialNo" value="" cssStyle="width:235px"
-                                 onkeypress="return isNumberKey(event)" maxlength="10lecture "/></td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
+    <div id="tabs">
+        <ul>
+            <li><a href="#fragment-1"><span> <s:label name="confirmatinSearchLegend"
+                                                      value="%{getText('registrationSerchTab5.label')}"/></span></a>
+            </li>
+            <li><a href="#fragment-2"><span><s:label name="confirmatinSearchLegend"
+                                                     value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
+            <li><a href="#fragment-3"><span><s:label name="registrationSerchLegend"
+                                                     value="%{getText('registrationSerchTab4.label')}"/></span></a></li>
+        </ul>
 
+        <div id="fragment-1">
+            <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
+                <tbody>
+                <tr>
+                    <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"
+                                                   cssStyle="margin-left:10px;"/></td>
+                    <td style="width:25%">
+                        <s:select id="districtIdSerial" name="districtId" list="districtList" cssStyle="width:240px;"/>
+                    </td>
+                    <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
+                                                   cssStyle="margin-left:10px;"/></td>
+                    <td style="width:25%">
+                        <s:select id="dsDivisionIdSerial" name="dsDivisionIdSerial" list="dsDivisionList"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><s:label name="bdDivisionSerial" value="%{getText('select_BD_division.label')}"
+                                 cssStyle="margin-left:10px;"/></td>
+                    <td>
+                        <s:select id="bdDivisionSerial" name="divisionAlt" list="bdDivisionList"
+                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"
+                                  cssStyle=" width:240px;float:left;"/>
+                    </td>
+                    <td><s:label value="%{getText('searchDeclarationSearial.label')}" cssStyle="margin-left:10px"/></td>
+                    <td><s:textfield id="serialAltNumberId" name="alterationSerialNo" value="" cssStyle="width:235px"
+                                     onkeypress="return isNumberKey(event)" maxlength="10lecture "/></td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="fragment-2">
 
-    <fieldset style="border:1px solid #c3dcee;margin-top:10px;">
-        <legend>
-            <b><s:label name="confirmatinSearchLegend"
-                        value="%{getText('registrationSerchLegend1.label')}"/></b></legend>
-        <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
-            <tbody>
-            <tr>
-                <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"
-                                               cssStyle="margin-left:10px;"/></td>
-                <td style="width:25%">
-                    <s:select id="birthDistrictId" name="birthDistrictId" list="districtList" value="birthDistrictId"
-                              cssStyle="width:240px;"/>
-                </td>
-                <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
-                                               cssStyle="margin-left:10px;"/></td>
-                <td style="width:25%">
-                    <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
-                              cssStyle="float:left;  width:240px;"/>
-                </td>
-            </tr>
-            <tr>
-                <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"
-                             cssStyle="margin-left:10px;"/></td>
-                <td>
-                    <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}"
-                              list="bdDivisionList"
-                              headerValue="%{getText('all.divisions.label')}" headerKey="0"
-                              cssStyle=" width:240px;float:left;"/>
-                </td>
-                <td><s:label value="%{getText('searchDeclarationSearial.label')}" cssStyle="margin-left:10px"/></td>
-                <td><s:textfield id="serialNumberId" name="serialNo" value="" cssStyle="width:235px"
-                                 onkeypress="return isNumberKey(event)" maxlength="10lecture "/></td>
-                <td class="button"></td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
-    <fieldset style="border:1px solid #c3dcee;margin-top:10px;">
-        <legend>
-            <b><s:label name="confirmatinSearchLegend"
-                        value="%{getText('registrationSerchLegend4.label')}"/></b>
-        </legend>
-        <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
-            <tr>
-                <td width="350px"><s:label value="%{getText('alteration.received.date.lable')}"/></td>
-                <td><s:label value="%{getText('from.lable')}" cssStyle="margin-right:10px;"/><s:textfield
-                        name="dateReceivedFrom" id="alterationRecivedFromDateId"/></td>
-                <td><s:label value="%{getText('to.lable')}" cssStyle="margin-right:10px;"/><s:textfield
-                        name="dateReceivedTo" id="alterationRecivedToDateId"/></td>
-            </tr>
-        </table>
-    </fieldset>
+            <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
+                <tbody>
+                <tr>
+                    <td style="width:25%"><s:label name="district" value="%{getText('district.label')}"
+                                                   cssStyle="margin-left:10px;"/></td>
+                    <td style="width:25%">
+                        <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
+                                  value="birthDistrictId"
+                                  cssStyle="width:240px;"/>
+                    </td>
+                    <td style="width:25%"><s:label name="division" value="%{getText('select_DS_division.label')}"
+                                                   cssStyle="margin-left:10px;"/></td>
+                    <td style="width:25%">
+                        <s:select id="dsDivisionId" name="dsDivisionId" list="dsDivisionList" value="%{dsDivisionId}"
+                                  cssStyle="float:left;  width:240px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><s:label name="bdDivision" value="%{getText('select_BD_division.label')}"
+                                 cssStyle="margin-left:10px;"/></td>
+                    <td>
+                        <s:select id="birthDivisionId" name="birthDivisionId" value="{birthDivisionId}"
+                                  list="bdDivisionList"
+                                  headerValue="%{getText('all.divisions.label')}" headerKey="0"
+                                  cssStyle=" width:240px;float:left;"/>
+                    </td>
+                    <td><s:label value="%{getText('searchDeclarationSearial.label')}" cssStyle="margin-left:10px"/></td>
+                    <td><s:textfield id="serialNumberId" name="serialNo" value="" cssStyle="width:235px"
+                                     onkeypress="return isNumberKey(event)" maxlength="10lecture "/></td>
+                    <td class="button"></td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="fragment-3">
 
+            <table cellpadding="5" cellspacing="0" style="margin-left:20px;width:95%;padding:5px;">
+                <tr>
+                    <td width="350px"><s:label value="%{getText('alteration.received.date.lable')}"/></td>
+                    <td><s:label value="%{getText('from.lable')}" cssStyle="margin-right:10px;"/><s:textfield
+                            name="dateReceivedFrom" id="alterationRecivedFromDateId"/></td>
+                    <td><s:label value="%{getText('to.lable')}" cssStyle="margin-right:10px;"/><s:textfield
+                            name="dateReceivedTo" id="alterationRecivedToDateId"/></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
     <div class="form-submit">
         <s:submit name="refresh" value="%{getText('refresh.label')}" cssStyle="float:right;"/>
     </div>

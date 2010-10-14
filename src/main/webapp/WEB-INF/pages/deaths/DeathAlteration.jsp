@@ -380,7 +380,7 @@ function initPage() {
                     <td colspan="2" style="text-align:center;">කාර්යාල ප්‍රයෝජනය සඳහා පමණි /<br>
                         அலுவலக பாவனைக்காக மட்டும் / <br>
                         For office use only
-                    </td>
+                    </td>                                                         
                 </tr>
                 <tr>
                     <td width="40%"><s:label value="අනුක්‍රමික අංකය"/><br>
