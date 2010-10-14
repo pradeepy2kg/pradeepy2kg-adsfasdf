@@ -935,23 +935,23 @@
                 method="assignedUserLocation">
             <result type="tiles" name="success">epr.assignedUserLocation</result>
         </action>
-        <action name="eprInitEventsManagement" class="lk.rgd.crs.web.action.EventsManagementAction"
+        <action name="eprInitEventsManagement" class="lk.rgd.crs.web.action.EventsViewerAction"
                 method="initEventsManagement">
             <result type="tiles" name="success">epr.eventManagement</result>
         </action>
-        <action name="eprEventPrevious" class="lk.rgd.crs.web.action.EventsManagementAction"
+        <action name="eprEventPrevious" class="lk.rgd.crs.web.action.EventsViewerAction"
                 method="previousPage">
             <result type="tiles" name="success">epr.eventManagement</result>
         </action>
-        <action name="eprEventNext" class="lk.rgd.crs.web.action.EventsManagementAction"
+        <action name="eprEventNext" class="lk.rgd.crs.web.action.EventsViewerAction"
                 method="nextPage">
             <result type="tiles" name="success">epr.eventManagement</result>
         </action>
-        <action name="eprDetailsDisplay" class="lk.rgd.crs.web.action.EventsManagementAction"
+        <action name="eprDetailsDisplay" class="lk.rgd.crs.web.action.EventsViewerAction"
                 method="debugDisplay">
             <result type="tiles" name="success">epr.debugManegement</result>
         </action>
-        <action name="eprFilterEventsList" class="lk.rgd.crs.web.action.EventsManagementAction"
+        <action name="eprFilterEventsList" class="lk.rgd.crs.web.action.EventsViewerAction"
                 method="filterEvevtsList">
             <param name="filterFlag">true</param>
             <result type="tiles" name="success">epr.eventManagement</result>
