@@ -184,7 +184,7 @@
                     <th width="50px"><s:label value="Event Code"/></th>
                     <th width="150px"><s:label value="Class Name"/></th>
                     <th><s:label value="Method Name"/></th>
-                    <th width="100px"><s:label value="Recode Id"/></th>
+                    <th width="100px"><s:label value="Record Id"/></th>
                     <th width="50px"><s:label value="Details"/></th>
 
                 </tr>

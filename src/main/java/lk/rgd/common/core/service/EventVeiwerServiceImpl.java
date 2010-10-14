@@ -7,24 +7,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 import lk.rgd.common.api.dao.*;
-import lk.rgd.common.api.service.EventManagementService;
-import lk.rgd.crs.CRSRuntimeException;
+import lk.rgd.common.api.service.EventVeiwerService;
 
 import java.util.List;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
 /**
  * Manage events.
  */
-public class EventManagementServiceImpl implements EventManagementService {
+public class EventVeiwerServiceImpl implements EventVeiwerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EventManagementServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventVeiwerServiceImpl.class);
 
     private final EventDAO eventDAO;
 
-    public EventManagementServiceImpl(EventDAO eventDAO) {
+    public EventVeiwerServiceImpl(EventDAO eventDAO) {
         this.eventDAO = eventDAO;
     }
 
