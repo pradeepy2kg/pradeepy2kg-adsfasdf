@@ -99,7 +99,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
      */
     public String deathAlterationSearch() {
         logger.debug("loading death alteration search page");
-        populatePrimaryLists();
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
@@ -135,13 +135,13 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     }
 
                     addActionMessage(getText("alt.massage.success"));
-                    populatePrimaryLists();
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     logger.debug("capturing alteration serial number : {} success ", serialNumber);
                     return SUCCESS;
                 }
                 catch (Exception e) {
                     logger.error("error accoured while adding death alteration : serial number : {}", serialNumber);
-                    populatePrimaryLists();
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }
             } else {
@@ -160,7 +160,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
                 addActionMessage(getText("alt.edit.massage.success"));
                 logger.debug("editing death alteration : idUKey : {} success", deathAlterationId);
-                populatePrimaryLists();
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return SUCCESS;
             }
         } else {
@@ -184,7 +184,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             if (deathRegister == null) {
                 logger.debug("can not find a death registretion for alterations : serial {} or :certificatenumber : {}", serialNumber, certificateNumber);
                 addActionError(getText("error.cannot.find.death.registration"));
-                populatePrimaryLists();
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
             //check is there a ongoing alteration for this cartificate
@@ -195,7 +195,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
                     logger.error("exsisting recode with DATA_ENTRY mode found");
                     addActionError("error.exsisting.alteratios.data.entry");
-                    populatePrimaryLists();
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }
             }
@@ -204,7 +204,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 if (!deathRegister.getStatus().equals(DeathRegister.State.DEATH_CERTIFICATE_PRINTED)) {
                     logger.error("cannot capture alterations certificate is not in correct state for alteration");
                     addActionError(getText("error.death.certificate.must.print.before"));
-                    populatePrimaryLists();
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }
                 populateOtherLists();
@@ -218,7 +218,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             } else {
                 logger.error("unknown error");
                 addActionError(getText("error.unknown"));
-                populatePrimaryLists();
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
         }
@@ -233,30 +233,33 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (pageNumber > 0) {
             pageNo = 1;
             rowNo = appParametersDAO.getIntParameter(DA_APPROVAL_ROWS_PER_PAGE);
-            //search by division
-            if (divisionUKey > 0) {
-                approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
-            }
+
             //search by date frame
             if (startDate != null & endDate != null) {
                 approvalList = deathAlterationService.getDeathAlterationByTimePeriod(startDate, endDate, user);
             } else {
                 if (!(startDate == null & endDate == null)) {
                     addActionError(getText("invalide.searching.schema.data.enter.both.dates"));
-                    populatePrimaryLists();
+                    startDate = null;
+                    endDate = null;
+                    populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }
+            }
+            //search by division
+            if (divisionUKey > 0) {
+                approvalList = deathAlterationService.getAlterationApprovalListByDeathDivision(pageNo, rowNo, divisionUKey);
             }
             if (approvalList.size() < 1) {
                 logger.debug("no pending list found ");
                 addActionError(getText("no.pending.alterations"));
-                populatePrimaryLists();
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
         } /*else {
             populatePrimaryLists();
         }*/
-        populatePrimaryLists();
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
@@ -282,7 +285,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         if (!((deathAlteration.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) | (deathAlteration.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)))) {
             logger.error("cannot approve death alteration : id {} :in valide alteration state", deathAlteration.getIdUKey());
             addActionError(getText("cannot.approve.nt.in.correct.state"));
-            populatePrimaryLists();
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return ERROR;
         }
         //todo check sudden death
@@ -339,7 +342,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 pendingList.remove(currentList.get(i));
             }
         }
-        populatePrimaryLists();
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
@@ -356,20 +359,20 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             logger.debug("alteration is partially approved : idUKey : {}", da.getIdUKey());
             if (approvedIndex.length < pendingListSize) {
                 deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
-                populatePrimaryLists();
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return SUCCESS;
             }
             deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
-            populatePrimaryLists();
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return SUCCESS;
         }
         if (approvedIndex.length < pendingListSize) {
             deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
-            populatePrimaryLists();
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return SUCCESS;
         }
         deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
-        populatePrimaryLists();
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
@@ -387,12 +390,12 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 toDay = deathAlteration.getDateReceived();
             } else {
                 logger.debug("cannot edit death alteration idUKey : {} : not in DATA_ENTRY mode", deathAlterationId);
-                populatePrimaryLists();
+                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                 return ERROR;
             }
         } else {
             logger.debug("unble to find death alteration : idUKey : {} : for edit", deathAlterationId);
-            populatePrimaryLists();
+            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
             return ERROR;
         }
         populateOtherLists();
@@ -402,13 +405,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     public String deleteDeathAlteration() {
         logger.debug("attempt to delete death alteration : idUKey :{} by User : {}", deathAlterationId, user.getUserName());
         deathAlterationService.deleteDeathAlteration(deathAlterationId, user);
-        populatePrimaryLists();
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
     public String rejectDeathAlteration() {
         logger.debug("attemp to reject death alteration : idUKey : {} by User : {}", deathAlterationId, user.getUserName());
         //todo implement
+        populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
 
@@ -606,7 +610,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     /**
      * basic list district/divisions/DS
      */
-    private void populatePrimaryLists() {
+    private void populatePrimaryLists(int districtUKey, int dsDivisionId, String language, User user) {
         districtList = districtDAO.getDistrictNames(language, user);
         districtUKey = districtList.keySet().iterator().next();
         dsDivisionList = dsDivisionDAO.getDSDivisionNames(districtUKey, language, user);
