@@ -1208,7 +1208,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>Yes
                         </label></td>
                         <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
-                                                         list="#@java.util.HashMap@{'1':''}" value="1"/>
+                                                         list="#@java.util.HashMap@{'MARRIED':''}" value="1"/>
                         </td>
                     </tr>
                     <tr>
@@ -1218,7 +1218,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>No
                         </label></td>
                         <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
-                                                         list="#@java.util.HashMap@{'2':''}"/>
+                                                         list="#@java.util.HashMap@{'UNMARRIED':''}"/>
                         </td>
                     </tr>
                     <tr>
@@ -1228,13 +1228,13 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <br>No, but since married
                         </label></td>
                         <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
-                                                         list="#@java.util.HashMap@{'3':''}"/>
+                                                         list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border:none"><label>නොදනී<br>*in tamil<br>Unknown</label></td>
                         <td style="border:none"><s:radio name="alt27A.marriage.parentsMarried" id="parentsMarried"
-                                                         list="#@java.util.HashMap@{'0':''}"/>
+                                                         list="#@java.util.HashMap@{'UNKNOWN':''}"/>
                         </td>
                     </tr>
                     </tbody>

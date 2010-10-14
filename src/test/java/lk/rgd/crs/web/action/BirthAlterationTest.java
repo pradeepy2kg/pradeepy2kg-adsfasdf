@@ -1,29 +1,29 @@
 package lk.rgd.crs.web.action;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;
-import lk.rgd.crs.web.action.births.AlterationAction;
-import lk.rgd.crs.web.action.births.BirthRegisterAction;
-import lk.rgd.crs.web.WebConstants;
-import lk.rgd.crs.api.domain.*;
-import lk.rgd.crs.api.dao.BDDivisionDAO;
-import lk.rgd.crs.api.service.BirthRegistrationService;
+import com.opensymphony.xwork2.ActionProxy;
+import junit.extensions.TestSetup;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import lk.rgd.UnitTestManager;
+import lk.rgd.common.CustomStrutsTestCase;
+import lk.rgd.common.api.dao.CountryDAO;
+import lk.rgd.common.api.dao.RaceDAO;
 import lk.rgd.common.api.domain.Country;
 import lk.rgd.common.api.domain.Race;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.api.service.UserManager;
-import lk.rgd.common.api.dao.CountryDAO;
-import lk.rgd.common.api.dao.RaceDAO;
-import lk.rgd.common.CustomStrutsTestCase;
 import lk.rgd.common.core.AuthorizationException;
-import lk.rgd.UnitTestManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.extensions.TestSetup;
+import lk.rgd.crs.api.dao.BDDivisionDAO;
+import lk.rgd.crs.api.domain.*;
+import lk.rgd.crs.api.service.BirthRegistrationService;
+import lk.rgd.crs.web.WebConstants;
+import lk.rgd.crs.web.action.births.AlterationAction;
+import lk.rgd.crs.web.action.births.BirthRegisterAction;
+import org.apache.struts2.dispatcher.mapper.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 import java.util.*;
 
@@ -226,7 +226,7 @@ public class BirthAlterationTest extends CustomStrutsTestCase {
 
             //marriage info
             MarriageInfo marriage = new MarriageInfo();
-            marriage.setParentsMarried(new Integer("1"));
+            marriage.setParentsMarried(MarriageInfo.MarriedStatus.MARRIED);
             gCal.add(Calendar.YEAR, -1);
             marriage.setDateOfMarriage(gCal.getTime());
             marriage.setPlaceOfMarriage("Kaduwela");

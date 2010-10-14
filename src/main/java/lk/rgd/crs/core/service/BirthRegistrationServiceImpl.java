@@ -1316,13 +1316,13 @@ public class BirthRegistrationServiceImpl implements
             brInfo.setOriginalBCPlaceOfIssuePrint(brInfo.getOriginalBCPlaceOfIssue().getLocationName(prefLanguage));
             brInfo.setOriginalBCPlaceOfIssueSignPrint(brInfo.getOriginalBCPlaceOfIssue().getLocationSignature(prefLanguage));
             brInfo.setOriginalBCIssueUserSignPrint(brInfo.getOriginalBCIssueUser().getUserSignature(prefLanguage));
-            
+
         }
         if (brInfo.getBirthDivision() != null) {
             brInfo.setDistrictPrint(districtDAO.getNameByPK(brInfo.getBirthDistrict().getDistrictUKey(), prefLanguage));
             brInfo.setDsDivisionPrint(dsDivisionDAO.getNameByPK(brInfo.getDsDivision().getDsDivisionUKey(), prefLanguage));
             brInfo.setBdDivisionPrint(bdDivisionDAO.getNameByPK(brInfo.getBirthDivision().getBdDivisionUKey(), prefLanguage));
-            
+
         }
 
         ParentInfo parent = bdf.getParent();
@@ -1417,7 +1417,8 @@ public class BirthRegistrationServiceImpl implements
 
             // child inherits fathers race if married
             if (bdf.getMarriage().getParentsMarried() != null &&
-                (bdf.getMarriage().getParentsMarried() == 1 || bdf.getMarriage().getParentsMarried() == 3)) {
+                (bdf.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED ||
+                    bdf.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.NO_SINCE_MARRIED)) {
                 if (parent.getFatherRace() != null) {
                     child.setRace(parent.getFatherRace());
                 }
@@ -1458,8 +1459,9 @@ public class BirthRegistrationServiceImpl implements
 
                 // TODO use an enumeration for marriage
                 if (bdf.getMarriage().getParentsMarried() != null &&
-                    (bdf.getMarriage().getParentsMarried() == 1 ||
-                        bdf.getMarriage().getParentsMarried() == 3) && father != null) {
+                    (bdf.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED ||
+                        bdf.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.NO_SINCE_MARRIED) &&
+                    father != null) {
                     // grand father of child is fathers, father
                     father.setFather(grandFather);
                     ecivil.updatePerson(father, user);

@@ -8,11 +8,23 @@ import java.util.Date;
 
 @Embeddable
 public class MarriageInfo implements Serializable {
+
     /**
-     * Were parents married at birth - 0 - unknown, 1 - yes, 2 - no, 3 - no but married later 
+     * The Enumeration defining the type of married status.
      */
+    public enum MarriedStatus {
+        UNKNOWN,            /** 0 - married status unknown */
+        MARRIED,            /** 1 - married */
+        UNMARRIED,          /** 2 - unmarried */
+        NO_SINCE_MARRIED    /** 3 - no but married later - e.g. for births -after child birth */
+    }
+
+    /**
+     * @see lk.rgd.crs.api.domain.MarriageInfo.MarriedStatus
+     */
+    @Enumerated
     @Column(nullable = true)
-    private Integer parentsMarried;
+    private MarriedStatus parentsMarried;
 
     /**
      * Parents married status as a String in the preferred language
@@ -45,11 +57,11 @@ public class MarriageInfo implements Serializable {
     @Column(nullable = true)
     private boolean fatherSigned;
 
-    public Integer getParentsMarried() {
+    public MarriedStatus getParentsMarried() {
         return parentsMarried;
     }
 
-    public void setParentsMarried(Integer parentsMarried) {
+    public void setParentsMarried(MarriedStatus parentsMarried) {
         this.parentsMarried = parentsMarried;
     }
 

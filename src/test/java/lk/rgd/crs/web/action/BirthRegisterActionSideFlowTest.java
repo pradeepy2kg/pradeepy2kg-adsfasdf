@@ -17,6 +17,7 @@ import lk.rgd.crs.api.dao.BirthDeclarationDAO;
 import lk.rgd.crs.api.domain.BDDivision;
 import lk.rgd.crs.api.domain.BirthDeclaration;
 import lk.rgd.crs.api.domain.InformantInfo;
+import lk.rgd.crs.api.domain.MarriageInfo;
 import lk.rgd.crs.web.WebConstants;
 import lk.rgd.crs.web.action.births.BirthRegisterAction;
 import lk.rgd.crs.web.action.births.BirthRegisterApprovalAction;
@@ -301,7 +302,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         assertEquals("0715516541", bdf.getParent().getMotherPhoneNo());
 
         // check BDF form 2 data
-        assertEquals(sampleBD.getMarriage().getParentsMarried().intValue(), bdf.getMarriage().getParentsMarried().intValue());
+        assertEquals(sampleBD.getMarriage().getParentsMarried().ordinal(), bdf.getMarriage().getParentsMarried().ordinal());
         assertEquals(sampleBD.getMarriage().getPlaceOfMarriage(), bdf.getMarriage().getPlaceOfMarriage());
         assertEquals(DateTimeUtils.getISO8601FormattedString(sampleBD.getMarriage().getDateOfMarriage()),
             DateTimeUtils.getISO8601FormattedString(bdf.getMarriage().getDateOfMarriage()));
@@ -514,7 +515,7 @@ public class BirthRegisterActionSideFlowTest extends CustomStrutsTestCase {
         bdf.getParent().setMotherAdmissionDate(dob);
         bdf.getParent().setMotherPhoneNo("0715516541");
 
-        bdf.getMarriage().setParentsMarried(1);
+        bdf.getMarriage().setParentsMarried(MarriageInfo.MarriedStatus.MARRIED);
         bdf.getMarriage().setPlaceOfMarriage("Maharagama");
         bdf.getMarriage().setDateOfMarriage(DateTimeUtils.getDateFromISO8601String("2009-04-27"));
 

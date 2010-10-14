@@ -26,7 +26,7 @@ public class DeclarantInfo implements Serializable {
         SON_OR_DAUGHTER,
         RELATIVE,
         OTHER,
-        SPOUSE //housband_or_wife
+        SPOUSE //husband_or_wife
     }
 
     @Column(nullable = true)
