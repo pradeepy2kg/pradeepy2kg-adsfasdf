@@ -169,12 +169,12 @@
 <s:form action="eprFilterAlteration" method="post" onsubmit="javascript:return validate()">
     <div id="tabs">
         <ul>
-            <li><a href="#fragment-1"><span> <s:label name="confirmatinSearchLegend"
+            <li><a href="#fragment-1"><span> <s:label
                                                       value="%{getText('registrationSerchTab5.label')}"/></span></a>
             </li>
-            <li><a href="#fragment-2"><span><s:label name="confirmatinSearchLegend"
+            <li><a href="#fragment-2"><span><s:label
                                                      value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
-            <li><a href="#fragment-3"><span><s:label name="registrationSerchLegend"
+            <li><a href="#fragment-3"><span><s:label 
                                                      value="%{getText('registrationSerchTab4.label')}"/></span></a></li>
         </ul>
 

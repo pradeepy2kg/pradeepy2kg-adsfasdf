@@ -513,11 +513,11 @@ function validateBirthYear(domElement, errorText, errorCode) {
         </fieldset>
         <div id="tabs">
             <ul>
-                    <li><a href="#fragment-1"><span> <s:label name="confirmatinSearchLegend"
+                    <li><a href="#fragment-1"><span> <s:label
                                     value="%{getText('registrationSerchTab3.label')}"/></span></a></li>
-                    <li><a href="#fragment-2"><span><s:label name="confirmatinSearchLegend"
+                    <li><a href="#fragment-2"><span><s:label
                                     value="%{getText('registrationSerchTab2.label')}"/></span></a></li>
-                    <li><a href="#fragment-3"><span><s:label name="registrationSerchLegend"
+                    <li><a href="#fragment-3"><span><s:label 
                                     value="%{getText('registrationSerchTab1.label')}"/></span></a></li>
                 </ul>
             
@@ -526,7 +526,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                         <tr>
                             <td width="135px"><s:label name="confirmationSearch"
                                                        value="%{getText('certificateNumber.lable')}"/></td>
-                            <td width="200px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
+                            <td width="500px"><s:textfield name="idUKey" id="bdfSerialNoIdSearch" maxLength="10"
                                                            onkeypress="return isNumberKey(event)"/></td>
                         </tr>
                     </table>
@@ -557,7 +557,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <td><s:label value="%{getText('district.label')}"/></td>
                             <td>
                                 <s:select id="birthDistrictId" name="birthDistrictId" list="districtList"
-                                          value="birthDistrictId" cssStyle="width:240px;float:right;"/>
+                                          value="birthDistrictId" cssStyle="width:240px;float:left;"/>
                             </td>
                         </tr>
                         <tr>
@@ -570,7 +570,7 @@ function validateBirthYear(domElement, errorText, errorCode) {
                             <td><s:label value="%{getText('select_BD_division.label')}"/></td>
                             <td>
                                 <s:select id="birthDivisionId" name="birthDivisionId" value="%{birthDivisionId}"
-                                          list="bdDivisionList" cssStyle=" width:240px;float:right;"
+                                          list="bdDivisionList" cssStyle=" width:240px;float:left;"
                                           headerValue="%{getText('all.divisions.label')}" headerKey="0"/>
                             </td>
                         </tr>
