@@ -117,7 +117,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
             //Birth Register info
             BirthRegisterInfo register = new BirthRegisterInfo();
             register.setPreferredLanguage("si");
-            register.setBdfSerialNo(new Long(2010012330 + i));               
+            register.setBdfSerialNo(new Long(2010012330 + i));
             register.setPreferredLanguage("si");
             //birth division
             register.setBirthDivision(colomboBDDivision);
@@ -307,7 +307,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("2010012331"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+            new Long("2010012331"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         logger.debug("found bdId : {} and current state : {}", bdTemp.getIdUKey(), bdTemp.getRegister().getStatus());
         //change state to APPROVE
         birthRegistrationService.approveLiveBirthDeclaration(bdTemp.getIdUKey(), true, user);
@@ -327,7 +327,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_BEAN);
         assertNotNull("failed to populate Confirmation session bean", bd);
         assertNotNull("failed to populate Confirmation Database bean",
-                session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
+            session.get(WebConstants.SESSION_BIRTH_CONFIRMATION_DB_BEAN));
         //loading the 2 of 3BCFs
         request.setParameter("pageNo", "1");
         request.setParameter("register.bdfSerialNo", "07000805");
@@ -342,7 +342,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         request.setParameter("child.placeOfBirthEnglish", "colombo port");
         request.setParameter("fatherRace", "3");
         request.setParameter("motherRace", "1");
-        request.setParameter("marriage.parentsMarried", "3");
+        request.setParameter("marriage.parentsMarried", MarriageInfo.MarriedStatus.NO_SINCE_MARRIED.toString());
         request.setParameter("parent.fatherNICorPIN", "853303399v");
         request.setParameter("parent.motherNICorPIN", "666666666v");
         request.setParameter("child.childGender", "1");
@@ -401,7 +401,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         bdId = action.getBdId();
         logger.debug("bdId for the new entry {}", bdId);
         logger.debug("current state after capturing confirmation changes : {}", (action.getService().getById(bdId,
-                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //dirct approval of confirmation changes
         request.setParameter("bdId", Long.toString(bdId));
@@ -410,7 +410,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         session = approvalAction.getSession();
 
         logger.debug("current state after direct approval of confrimation chages : {}", (approvalAction.getService().getById(bdId,
-                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificate print after direct approval
         request.setParameter("bdId", Long.toString(approvalAction.getBdId()));
@@ -418,7 +418,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
         session = action.getSession();
         logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
-                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 
     public void testSkipConfirmationChangesForConfirmationPrintedEntry() throws Exception {
@@ -431,7 +431,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthConfirmationInit.do", session);
         //getting the required bdId which is not having confirmation changes
         BirthDeclaration bdTemp = action.getService().getActiveRecordByBDDivisionAndSerialNo(action.getBDDivisionDAO().getBDDivisionByPK(1),
-                new Long("2010012332"), (User) session.get(WebConstants.SESSION_USER_BEAN));
+            new Long("2010012332"), (User) session.get(WebConstants.SESSION_USER_BEAN));
         //searching the required entry for which confirmation changes to be skipped
 
         //change state to APPROVE
@@ -478,7 +478,7 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         logger.debug("SkipConfirmationChanges : {} ", action.isSkipConfirmationChages());
 
         logger.debug("current state after skipping confirmation changes : {}", (action.getService().getById(bdId,
-                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
 
         //direct birth certificate print after skipping confirmation changes
         request.setParameter("bdId", Long.toString(action.getBdId()));
@@ -486,6 +486,6 @@ public class BirthConfirmationSideFlowTest extends CustomStrutsTestCase {
         initAndExecute("/births/eprBirthCertificatDirectPrint.do", session);
         session = action.getSession();
         logger.debug("current state after direct printing the BC : {}", (action.getService().getById(bdId,
-                (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
+            (User) session.get(WebConstants.SESSION_USER_BEAN))).getRegister().getStatus());
     }
 }

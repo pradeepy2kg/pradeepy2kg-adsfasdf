@@ -260,7 +260,7 @@ public class BirthConfirmationTest extends CustomStrutsTestCase {
         request.setParameter("child.placeOfBirth", "කොළඹ කොටුව");
         request.setParameter("child.placeOfBirthEnglish", "colombo port");
         request.setParameter("fatherRace", "3");
-        request.setParameter("marriage.parentsMarried", "3");
+        request.setParameter("marriage.parentsMarried", MarriageInfo.MarriedStatus.NO_SINCE_MARRIED.toString());
         request.setParameter("parent.fatherNICorPIN", "853303399v");
         request.setParameter("parent.motherNICorPIN", "666666666v");
         request.setParameter("child.childGender", "1");

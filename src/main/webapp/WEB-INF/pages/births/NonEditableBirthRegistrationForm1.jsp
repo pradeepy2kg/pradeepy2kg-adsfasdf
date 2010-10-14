@@ -636,16 +636,16 @@
             Married?</label></td>
         <td rowspan="2" width="150px">
 
-            <s:if test="#request.marriage.parentsMarried == 0">
+            <s:if test="#request.marriage.parentsMarried.ordinal() == 0">
                 <s:label value="%{getText('radio_married_unknown.label')}"/>
             </s:if>
-            <s:if test="#request.marriage.parentsMarried == 1">
+            <s:if test="#request.marriage.parentsMarried.ordinal() == 1">
                 <s:label value="%{getText('radio_married_yes.label')}"/>
             </s:if>
-            <s:if test="#request.marriage.parentsMarried == 2">
+            <s:if test="#request.marriage.parentsMarried.ordinal() == 2">
                 <s:label value="%{getText('radio_married_no.label')}"/>
             </s:if>
-            <s:if test="#request.marriage.parentsMarried == 3">
+            <s:if test="#request.marriage.parentsMarried.ordinal() == 3">
                 <s:label value="%{getText('radio_married_since.label')}"/>
             </s:if>
         </td>
@@ -736,41 +736,6 @@
     </tbody>
 </table>
 </s:if>
-<s:elseif test="requestrequest.register.birthType.ordinal() == 0">
-<table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;">
-    <caption></caption>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <col/>
-    <tbody>
-    <tr>
-        <td colspan="5" style="text-align:center;font-size:12pt">විවාහයේ විස්තර<br>திருமணத்தின் விபரங்கள் <br>Details of
-            the
-            Marriage
-        </td>
-    </tr>
-    <tr>
-        <td class="font-9" colspan="3">
-            <label>(<s:property value="#row"/><s:set name="row" value="#row+1"/>) මවි පියන් විවාහකද?
-                <br>பெற்றோர்கள் திருமணம் முடித்தவர்களா? <br>Were
-                Parents Married ?</label>
-        </td>
-        <td class="font-9" colspan="1">
-            <s:if test="request.marriage.parentsMarried == 1"> <s:label
-                    value="%{getText('radio_married_yes.label')}"/> </s:if>
-            <label> ඔවි/ஆம்/ Yes</label>
-        </td>
-        <td class="font-9" colspan="1">
-            <s:if test="request.marriage.parentsMarried == 2"> <s:label
-                    value="%{getText('radio_married_no.label')}"/> </s:if>
-            <label> නැත / இல்லை / No</label>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</s:elseif>
 
 <table class="table_non_editable_reg_page" cellspacing="0" cellpadding="0" style="margin-top:20px;">
     <caption></caption>

@@ -395,7 +395,7 @@
         <td colspan="6">
             <s:if test="bdId != 0">
                 <s:textfield name="#session.birthConfirmation_db.marriage.parentsMarried" cssClass="disable"
-                             disabled="true" value="%{getText('married.status.'+marriage.parentsMarried)}"/>
+                             disabled="true" value="%{getText('married.status.'+marriage.parentsMarried.ordinal())}"/>
             </s:if>
         </td>
         <td style="border:none;padding:0">
@@ -407,13 +407,13 @@
                 <tr>
                     <td><label id="yes" class="label">ඔව්<br>ஆம்<br>Yes</label></td>
                     <td>
-                        <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'1':''}"
+                        <s:radio name="marriage.parentsMarried" id="parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}"
                                  value="1"/>
                     </td>
                     <td><label class="label">නැත<br>இல்லை<br>No</label></td>
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried"
-                                 list="#@java.util.HashMap@{'2':''}"/>
+                                 list="#@java.util.HashMap@{'UNMARRIED':''}"/>
                     </td>
                 </tr>
                 <tr>
@@ -422,10 +422,10 @@
                         No but since married</label></td>
                     <td>
                         <s:radio name="marriage.parentsMarried" id="parentsMarried"
-                                 list="#@java.util.HashMap@{'3':''}"/>
+                                 list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}"/>
                     </td>
                     <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
-                    <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"/></td>
+                    <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"/></td>
                 </tr>
             </table>
         </td>

@@ -429,26 +429,26 @@ function initPage() {
                     <tbody>
                     <tr>
                         <td><label>ඔව්<br>ஆம்<br>Yes</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'1':''}" value="1"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'MARRIED':''}" value="1"
                                      onclick="disableMarriage(false);disableSigns(true)" id="marriedId"/>
                         </td>
                     </tr>
                     <tr>
                         <td><label>නැත<br>இல்லை<br>No</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'2':''}"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNMARRIED':''}"
                                      onclick="disableMarriage(true);disableSigns(false)"/>
                         </td>
                     </tr>
                     <tr>
                         <td><label>නැත - පසුව විවාහවී ඇත<br>இல்லை, பின் விவாகமாணவா்கள்<br>No but since married</label>
                         </td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'3':''}" id="marriedId"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'NO_SINCE_MARRIED':''}" id="marriedId"
                                      onclick="disableMarriage(false);disableSigns(false)"/>
                         </td>
                     </tr>
                     <tr>
                         <td><label>නොදනී<br>*in tamil<br>Unknown</label></td>
-                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'0':''}"
+                        <td><s:radio name="marriage.parentsMarried" list="#@java.util.HashMap@{'UNKNOWN':''}"
                                      onclick="disableMarriage(true);disableSigns(true)" id="unknownMarriage"/>
                         </td>
                     </tr>

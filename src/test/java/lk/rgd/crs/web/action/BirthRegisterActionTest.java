@@ -329,7 +329,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         //for 4 of 4BDF
         request.setParameter("pageNo", "3");
-        request.setParameter("marriage.parentsMarried", "1");
+        request.setParameter("marriage.parentsMarried", MarriageInfo.MarriedStatus.MARRIED.toString());
         request.setParameter("marriage.placeOfMarriage", "Kaduwela");
         request.setParameter("marriage.dateOfMarriage", "2008-08-09");
 
@@ -347,7 +347,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Action errors for 4 of 4BDF", 0, action.getActionErrors().size());
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
-        assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
+        assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().ordinal());
         assertEquals("failed to update birth declaration session with place of marriage", "KADUWELA", bd.getMarriage().getPlaceOfMarriage());
         assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", DateTimeUtils.getISO8601FormattedString(bd.getMarriage().getDateOfMarriage()));
         assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
@@ -482,7 +482,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
 
         //for 4 of 4BDF
         request.setParameter("pageNo", "3");
-        request.setParameter("marriage.parentsMarried", "1");
+        request.setParameter("marriage.parentsMarried", MarriageInfo.MarriedStatus.MARRIED.toString());
         request.setParameter("marriage.placeOfMarriage", "Kaduwela");
         request.setParameter("marriage.dateOfMarriage", "2008-08-09");
 
@@ -500,7 +500,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("Action errors for 4 of 4BDF", 0, action.getActionErrors().size());
         bd = (BirthDeclaration) session.get(WebConstants.SESSION_BIRTH_DECLARATION_BEAN);
 
-        assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().intValue());
+        assertEquals("failed to update birth declaration session with parent married", 1, bd.getMarriage().getParentsMarried().ordinal());
         assertEquals("failed to update birth declaration session with place of marriage", "KADUWELA", bd.getMarriage().getPlaceOfMarriage());
         assertEquals("failed to update birth declaration session with date of marriage", "2008-08-09", DateTimeUtils.getISO8601FormattedString(bd.getMarriage().getDateOfMarriage()));
         assertEquals("failed to update birth declaration session with informant type", 1, bd.getInformant().getInformantType().ordinal());
@@ -639,7 +639,7 @@ public class BirthRegisterActionTest extends CustomStrutsTestCase {
         assertEquals("No action errors", 0, action.getActionErrors().size());
 
         // Still birth page three.
-        request.setParameter("marriage.parentsMarried", "1");
+        request.setParameter("marriage.parentsMarried", MarriageInfo.MarriedStatus.MARRIED.toString());
         request.setParameter("informant.informantType", "GUARDIAN");
         request.setParameter("informant.informantNICorPIN", "33333333v");
         request.setParameter("informant.informantName", "informant name");
