@@ -79,8 +79,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
     private String deathDivision;
     private String rejectComment;
 
-    private boolean editDeathInfo;     //todo remove follow two variables no usage
-    private boolean editDeathPerson;
     private boolean editMode;
 
     public DeathAlterationAction(DeathAlterationService deathAlterationService, DeathRegistrationService deathRegistrationService
@@ -104,7 +102,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         return SUCCESS;
     }
 
-    //todo check already addedd data before add
+
     /**
      * loading death alteration page and capture death alterations
      */
@@ -119,6 +117,7 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     deathAlteration.setDeathPerson(deathRegister.getDeathPerson());
                     deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
                     deathAlteration.setDeathDivision(dr.getDeath().getDeathDivision());
+
                     Country deathCountry;
                     if (deathPersonCountry > 0) {
                         deathCountry = countryDAO.getCountry(deathPersonCountry);
@@ -131,23 +130,15 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                         deathAlteration.getDeathPerson().setDeathPersonRace(deathRace);
                     }
 
-                    //check is thre onther with same serial number in given death division
-/*                    List<DeathAlteration> exsistingSameSerial = deathAlterationService.geAlterationBySerialAndDeathDivision(serialNumber, user);
-                    //todo change comparision
-                    if (exsistingSameSerial.size() > 1) {
-                        addFieldError("duplicateSerialNumberError", "err.serial.number.duplication");
-                        populateOtherLists();
-                        return "pageLoad";
-                    }*/
                     deathAlterationService.addDeathAlteration(deathAlteration, user);
 
                     addActionMessage(getText("alt.massage.success"));
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                    logger.debug("capturing alteration serial number : {} success ", serialNumber);
+                    logger.debug("capturing alteration success ");
                     return SUCCESS;
                 }
                 catch (Exception e) {
-                    logger.error("error accoured while adding death alteration : serial number : {}", serialNumber);
+                    logger.error("error accoured while adding death alteration ");
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
                 }
@@ -160,9 +151,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                 deathAlteration.setIdUKey(deathAlterationId);
                 deathAlteration.setDeathId(deathId);
                 deathAlteration.setStatus(DeathAlteration.State.DATA_ENTRY);
-/*
-                deathAlteration.setAlterationSerialNo(alterationSerialNo);
-*/
                 deathAlteration.setLifeCycleInfo(exsisting.getLifeCycleInfo());
 
                 deathAlterationService.updateDeathAlteration(deathAlteration, user);
@@ -201,8 +189,8 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
             Iterator<DeathAlteration> itr = exsistingAlterations.iterator();
             while (itr.hasNext()) {
                 DeathAlteration da = itr.next();
-                if (da.getStatus().equals(DeathAlteration.State.DATA_ENTRY)) {
-                    logger.error("exsisting recode with DATA_ENTRY mode found");
+                if (!da.getStatus().equals(DeathAlteration.State.PRINTED)) {
+                    logger.error("there is a onging alteration so cannot add a new");
                     addActionError("error.exsisting.alteratios.data.entry");
                     populatePrimaryLists(districtUKey, dsDivisionId, language, user);
                     return ERROR;
@@ -359,13 +347,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
          *retrimming death alteration pending list for partially approvals
          */
         if (deathAlteration.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)) {
-            List<Integer> currentList = new ArrayList<Integer>();
+            List currentList = new ArrayList();
             BitSet current = deathAlteration.getApprovalStatuses();
             for (Map.Entry e : pendingList.entrySet()) {
-                int key = (Integer) e.getKey();
+                List keyEntry = (List) e.getKey();
+                int key = (Integer) keyEntry.get(0);
                 boolean available = current.get(key);
                 if (available) {
-                    currentList.add(key);
+                    currentList.add(keyEntry);
                 }
             }
             for (int i = 0; i < currentList.size(); i++) {
@@ -380,28 +369,16 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
         logger.info("setting bit set : {}", approvedIndex.length);
 
         Hashtable<Integer, Boolean> approveBitset = new Hashtable<Integer, Boolean>();
-        DeathAlteration da = deathAlterationService.getById(deathAlterationId, user);
         for (int i = 0; i < approvedIndex.length; i++) {
             int bit = approvedIndex[i];
             approveBitset.put(bit, true);
         }
-        if (da.getStatus().equals(DeathAlteration.State.PARTIALY_APPROVED)) {
-            logger.debug("alteration is partially approved : idUKey : {}", da.getIdUKey());
-            if (approvedIndex.length < pendingListSize) {
-                deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
-                populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-                return SUCCESS;
-            }
-            deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            return SUCCESS;
-        }
         if (approvedIndex.length < pendingListSize) {
             deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, false, user);
-            populatePrimaryLists(districtUKey, dsDivisionId, language, user);
-            return SUCCESS;
+        } else {
+            deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
         }
-        deathAlterationService.approveDeathAlteration(deathAlterationId, approveBitset, true, user);
+
         populatePrimaryLists(districtUKey, dsDivisionId, language, user);
         return SUCCESS;
     }
@@ -564,10 +541,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     }
                 } else {
                     if (!(ex == null & cu == null)) {
-                        if (ex != null)
+                        if (ex != null) {
                             countryList.add(0, ex.getEnCountryName());
-                        if (cu != null)
+                            countryList.add(1, null);
+                        }
+                        if (cu != null) {
+                            countryList.add(0, null);
                             countryList.add(1, cu.getEnCountryName());
+                        }
                         pendingList.put(indexList, countryList);
                     }
                 }
@@ -584,10 +565,14 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
                     }
                 } else {
                     if (!(deathAlterationValue == null & deathRegistreValue == null))
-                        if (exRace != null)
+                        if (exRace != null) {
                             raceList.add(0, exRace.getEnRaceName());
-                    if (cuRace != null)
-                        raceList.add(1, cuRace.getEnRaceName());
+                            raceList.add(1, null);
+                        }
+                    if (cuRace != null) {
+                        raceList.add(0, null);
+                        raceList.add(1, cuRace.getEnRaceName()); //due to bug array index out of bound couse by adding to 1 position when 0 position is empty
+                    }
                     pendingList.put(indexList, raceList);
                 }
                 break;
@@ -864,22 +849,6 @@ public class DeathAlterationAction extends ActionSupport implements SessionAware
 
     public void setPin(long pin) {
         this.pin = pin;
-    }
-
-    public boolean isEditDeathInfo() {
-        return editDeathInfo;
-    }
-
-    public void setEditDeathInfo(boolean editDeathInfo) {
-        this.editDeathInfo = editDeathInfo;
-    }
-
-    public boolean isEditDeathPerson() {
-        return editDeathPerson;
-    }
-
-    public void setEditDeathPerson(boolean editDeathPerson) {
-        this.editDeathPerson = editDeathPerson;
     }
 
     public List<DeathAlteration> getApprovalList() {
