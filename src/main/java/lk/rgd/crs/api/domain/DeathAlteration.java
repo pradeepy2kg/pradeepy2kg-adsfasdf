@@ -3,11 +3,13 @@ package lk.rgd.crs.api.domain;
 import javax.persistence.*;
 import java.util.BitSet;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @authar amith jayasekara
  * the entity class to store death alteration recodes
- */     //SELECT * FROM CRS.ALT_DEATH as a, CRS.DEATH_REGISTER as d WHERE a.deathid=d.idukey AND d.deathserialno=2010014566 AND d.bddivisionukey=1;
+ */
 @Entity
 @Table(name = "ALT_DEATH", schema = "CRS")
 @NamedQueries({
@@ -22,31 +24,34 @@ import java.util.Date;
 
 public class DeathAlteration {
 
-    public static final int SUDDEN_DEATH = 1;
-    public static final int DATE_OF_DEATH = 2;
-    public static final int TIME_OF_DEATH = 3;
-    public static final int PLACE_OF_DEATH_OFFICIAL = 4;
-    public static final int PLACE_OF_DEATH_ENGLISH = 5;
-    public static final int CAUSE_OF_DEATH_ESTABLISHED = 6;
-    public static final int CAUSE_OF_DEATH = 7;
-    public static final int ICD_CODE = 8;
-    public static final int BURIAL_PLACE = 9;
+    public static final Map<Integer, String> indexMap = new HashMap<Integer, String>();
 
-    public static final int DEATH_PERSON_PIN = 10;
-    public static final int DEATH_PERSON_COUNTRY = 11;
-    public static final int DEATH_PERSON_PASSPORT = 12;
-    public static final int DEATH_PERSON_AGE = 13;
-    public static final int DEATH_PERSON_GENDER = 14;
-    public static final int DEATH_PERSON_RACE = 15;
-    public static final int DEATH_PERSON_NAME_OFFICIAL = 16;
-    public static final int DEATH_PERSON_NAME_ENGLISH = 17;
-    public static final int DEATH_PERSON_NAME = 18;
-    public static final int DEATH_PERSON_ADDRESS = 19;
+    static {
 
-    public static final int DEATH_PERSON_FATHER_NAME = 20;
-    public static final int DEATH_PERSON_FATHER_PIN = 21;
-    public static final int DEATH_PERSON_MOTHER_NAME = 22;
-    public static final int DEATH_PERSON_MOTHER_PIN = 23;
+        indexMap.put(1, "field.sudden.death");
+        indexMap.put(2, "field.date.death");
+        indexMap.put(3, "field.time.death");
+        indexMap.put(4, "field.place.death");
+        indexMap.put(5, "field.place.death.english");
+        indexMap.put(6, "field.cause.death.established");
+        indexMap.put(7, "field.cause.death");
+        indexMap.put(8, "field.icd.code");
+        indexMap.put(9, "field.burial.place");
+
+        indexMap.put(10, "field.pin.number");
+        indexMap.put(11, "field.country");
+        indexMap.put(12, "field.passPort");
+        indexMap.put(13, "field.age");
+        indexMap.put(14, "field.gender");
+        indexMap.put(15, "field.race");
+        indexMap.put(16, "field.name");
+        indexMap.put(17, "field.name.english");
+        indexMap.put(18, "field.address");
+        indexMap.put(19, "field.pin.father");
+        indexMap.put(20, "field.name.father");
+        indexMap.put(21, "field.pin.mother");
+        indexMap.put(22, "field.name.mother");
+    }
 
     public enum State {
         /**
