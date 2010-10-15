@@ -41,6 +41,7 @@ import java.util.Date;
                 "(a.marriageDivision IS NOT NULL AND a.marriageDivision.mrDivisionUKey = :divisionUKey))" +
                 "AND a.lifeCycleInfo.active = :active AND a.registrar.acting = :acting")         
 })
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 public class Assignment implements Serializable {
 
     /**

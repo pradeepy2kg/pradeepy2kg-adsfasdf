@@ -1415,21 +1415,10 @@ public class BirthRegistrationServiceImpl implements
             father = processFatherToPRS(user, child, parent, bdf.getRegister().getPreferredLanguage(),
                 mother, bdf.getMarriage(), bdf.getInformant());
 
-            // child inherits fathers race if married
-            if (bdf.getMarriage().getParentsMarried() != null &&
-                (bdf.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.MARRIED ||
-                    bdf.getMarriage().getParentsMarried() == MarriageInfo.MarriedStatus.NO_SINCE_MARRIED)) {
-                if (parent.getFatherRace() != null) {
-                    child.setRace(parent.getFatherRace());
-                }
-                if (mother != null) {
-                    mother.setCivilStatus(Person.CivilStatus.MARRIED);
-                }
-                if (father != null) {
-                    father.setCivilStatus(Person.CivilStatus.MARRIED);
-                }
-            } else {
-                // mother race
+            // child inherits fathers race if a father exists, else mothers if a mother exists
+            if (!isEmptyString(parent.getFatherFullName()) && parent.getFatherRace() != null) {
+                child.setRace(parent.getFatherRace());
+            } else if (parent.getMotherRace() != null) {
                 if (parent.getMotherRace() != null) {
                     child.setRace(parent.getMotherRace());
                 }

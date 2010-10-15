@@ -38,6 +38,11 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.2.0</version>
+        </dependency>
 
         <!-- MySql -->
         <dependency>
