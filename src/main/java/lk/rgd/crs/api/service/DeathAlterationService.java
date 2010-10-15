@@ -81,7 +81,6 @@ public interface DeathAlterationService {
      * @return
      */
     public List<DeathAlteration> getAlterationByDeathId(long deathId, User user);
-
     /**
      * approve death alteration and set bit set base on state partially or fully
      *

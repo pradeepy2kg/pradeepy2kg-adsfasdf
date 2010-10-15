@@ -211,7 +211,7 @@
                             <s:param name="deathAlterationId" value="idUKey"/>
                         </s:url>
                         <tr>
-                            <td><s:property value="alterationSerialNo"/></td>
+                            <td><s:property value="idUKey"/></td>
                             <td><s:property value="status"/></td>
                             <td align="center">
                                 <s:if test="status.ordinal()==0">

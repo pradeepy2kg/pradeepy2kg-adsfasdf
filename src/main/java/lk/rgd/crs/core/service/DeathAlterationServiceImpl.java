@@ -38,7 +38,7 @@ public class DeathAlterationServiceImpl implements DeathAlterationService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void addDeathAlteration(DeathAlteration da, User user) {
-        logger.debug("adding a new death alteration : serial number : {}", da.getAlterationSerialNo());
+        logger.debug("adding a new death alteration");
         validateAccessToBDDivision(user, da.getDeathDivision());
         deathAlterationDAO.addDeathAlteration(da, user);
     }

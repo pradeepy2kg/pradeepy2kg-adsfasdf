@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @authar amith jayasekara
@@ -96,5 +97,4 @@ public class DeathAlterationDAOImpl extends BaseDAO implements DeathAlterationDA
         q.setParameter("endDate", endDate);
         return q.getResultList();
     }
-
 }
