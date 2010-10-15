@@ -1,12 +1,9 @@
 package lk.rgd.crs.core.dao;
 
-import lk.rgd.common.api.domain.DSDivision;
 import lk.rgd.common.api.domain.User;
 import lk.rgd.common.core.dao.BaseDAO;
 import lk.rgd.crs.api.dao.AssignmentDAO;
 import lk.rgd.crs.api.domain.Assignment;
-import lk.rgd.crs.api.domain.BDDivision;
-import lk.rgd.crs.api.domain.MRDivision;
 import lk.rgd.crs.api.domain.Registrar;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,4 +113,17 @@ public class AssignmentDAOImpl extends BaseDAO implements AssignmentDAO {
         return result;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Transactional(propagation = Propagation.NEVER, readOnly = true)
+    public List<Assignment> getAllAssignmentsByBDorMRDivisionAndType(int divisionUKey, Assignment.Type type,
+        boolean active, boolean acting) {
+        Query q = em.createNamedQuery("get.assignments.by.type.and.division");
+        q.setParameter("type", type);
+        q.setParameter("divisionUKey", divisionUKey);
+        q.setParameter("active", active);
+        q.setParameter("acting", acting);
+        return q.getResultList();
+    }
 }
